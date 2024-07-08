@@ -40,6 +40,18 @@ export class SingleGachaLog {
     this.rank_type = rank_type;
     this.id = id;
   }
+
+  /**
+   *
+   * @param {SingleGachaLog} item
+   */
+  equals(item) {
+    return (
+      this.uid === item.uid &&
+      this.gacha_id === item.gacha_id &&
+      this.gacha_type === this.gacha_type
+    );
+  }
 }
 
 /**
@@ -59,7 +71,22 @@ export class ZZZGachaLogResp {
     const { page, size, list, region, region_time_zone } = data;
     this.page = page;
     this.size = size;
-    this.list = list;
+    this.list = list.map(
+      item =>
+        new SingleGachaLog(
+          item.uid,
+          item.gacha_id,
+          item.gacha_type,
+          item.item_id,
+          item.count,
+          item.time,
+          item.name,
+          item.lang,
+          item.item_type,
+          item.rank_type,
+          item.id
+        )
+    );
     this.region = region;
     this.region_time_zone = region_time_zone;
   }

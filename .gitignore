@@ -4,3 +4,5 @@ config/**/*.*
 
 .DS_Store
 
+data/**/*.*
+!data/.gitkeep

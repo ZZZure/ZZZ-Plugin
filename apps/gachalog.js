@@ -3,6 +3,8 @@ import _ from 'lodash';
 import render from '../lib/render.js';
 import { ZZZNoteResp } from '../model/note.js';
 import { rulePrefix } from '../lib/common.js';
+import { getAuthKey, getStoken } from '../lib/authkey.js';
+import { updateGachaLog } from '../lib/gacha.js';
 
 export class GachaLog extends ZZZPlugin {
   constructor() {
@@ -13,41 +15,69 @@ export class GachaLog extends ZZZPlugin {
       priority: 100,
       rule: [
         {
-          reg: `${rulePrefix}抽卡记录$`,
-          fnc: 'gachaLog',
+          reg: `${rulePrefix}抽卡链接$`,
+          fnc: 'startGachaLog',
+        },
+        {
+          reg: `${rulePrefix}刷新抽卡链接$`,
+          fnc: 'refreshGachaLog',
+        },
+        {
+          reg: `^${rulePrefix}抽卡帮助$`,
+          fnc: 'gachaHelp',
         },
       ],
     });
   }
-  async gachaLog(e) {
-    const { api, deviceFp } = await this.getAPI();
-    if (!api) return false;
-    let userData = await api.getData('zzzUser');
-    if (!userData?.data || _.isEmpty(userData.data.list)) {
-      await e.reply('[zzznote]玩家信息获取失败');
+  async gachaHelp() {
+    const reply_msg = [
+      'StarRail-Plugin 抽卡链接绑定方法：',
+      '1. 输入【#zzz抽卡链接】，等待 bot 回复【请发送抽卡链接】',
+      '2. 获取抽卡链接',
+      '3. 将获取到的抽卡链接发送给 bot',
+    ].join('\n');
+    await this.reply(reply_msg);
+  }
+  async startGachaLog() {
+    if (!this.e.isPrivate) {
+      await this.reply('请私聊发送抽卡链接', false, { at: true });
       return false;
     }
-    userData = userData?.data?.list[0];
-    let noteData = await api.getData('zzzNote', { deviceFp });
-    noteData = await api.checkCode(e, noteData, 'zzzNote', {});
-    if (!noteData || noteData.retcode !== 0) {
-      await e.reply('[zzznote]每日数据获取失败');
+    this.setContext('gachaLog');
+    await this.reply('请发送抽卡链接', false, { at: true });
+  }
+  async gachaLog() {
+    if (!this.e.isPrivate) {
+      await this.reply('请私聊发送抽卡链接', false, { at: true });
       return false;
     }
-    noteData = noteData.data;
-    noteData = new ZZZNoteResp(noteData);
-    let avatar = this.e.bot.avatar;
-    // 头像
-    if (this.e.member?.getAvatarUrl) {
-      avatar = await this.e.member.getAvatarUrl();
-    } else if (this.e.friend?.getAvatarUrl) {
-      avatar = await this.e.friend.getAvatarUrl();
+    let key = this.e.msg.trim();
+    key = key?.split?.('authkey=')?.[1]?.split('&')?.[0];
+    if (!key) {
+      await this.reply('抽卡链接格式错误，请重新发送');
+      this.finish('gachaLog');
+      return false;
     }
-    const finalData = {
-      avatar,
-      player: userData,
-      note: noteData,
-    };
-    await render(e, 'note/index.html', finalData);
+    this.finish('gachaLog');
+    this.getLog(key);
+  }
+  async refreshGachaLog() {
+    const uid = await this.getUID();
+    const key = await getAuthKey(this.e, uid);
+    if (!key) {
+      await this.reply('authKey获取失败，请检查cookie是否过期');
+      return false;
+    }
+    this.getLog(key);
+  }
+  async getLog(key) {
+    const uid = await this.getUID();
+    const data = await updateGachaLog(key, uid);
+    let msg = `抽卡记录更新成功，共${Object.keys(data).length}个卡池`;
+    for (const name in data) {
+      msg += `\n${name}一共${data[name].length}条记录`;
+    }
+    await this.reply(msg);
+    return false;
   }
 }

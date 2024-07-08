@@ -4,3 +4,5 @@ export const converSecondsToHM = seconds => {
   const mm = d.getUTCMinutes();
   return [hh, mm];
 };
+
+export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
