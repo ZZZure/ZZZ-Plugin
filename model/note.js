@@ -52,6 +52,7 @@ export class EnergyProgress {
   constructor(max, current) {
     this.max = max;
     this.current = current;
+    this.percent = parseInt((Number(current) / Number(max)) * 100);
   }
 }
 
@@ -64,11 +65,10 @@ export class Energy {
    * @param {number} restore
    */
   constructor(progress, restore) {
-    this.progress = progress;
+    this.progress = new EnergyProgress(progress.max, progress.current);
     this.restore = restore;
     const leftHM = converSecondsToHM(restore);
     this.progress.rest = `${leftHM[0]}小时${leftHM[1]}分钟`;
-    this.percent = parseInt((progress.current / progress.max) * 100);
   }
 }
 
