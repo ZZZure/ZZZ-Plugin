@@ -1,0 +1,284 @@
+.container {
+  padding-top: 3em;
+}
+.card {
+  border-image: url('./images/BgFrame.png');
+  border-image-slice: 325 0 162.5 0 fill;
+  border-image-width: 10em 0em 5em 0em;
+  border-image-repeat: round stretch;
+  min-height: 30em;
+  overflow: hidden;
+  padding: 5em 2.2em 2.2em 2.2em;
+  .user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em;
+    margin-top: 1.7em;
+    gap: 1em;
+    padding: 0 1em;
+    .avatar {
+      width: 4em;
+      height: 4em;
+      border-radius: 50%;
+      border-image: url('./images/SuitBg.png');
+      border-image-width: 0;
+      border-image-outset: 0.4em;
+      border-image-repeat: round;
+      border-image-slice: 1 fill;
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+      }
+    }
+    .info-bar {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      flex: 1;
+      gap: 0.2em;
+      .info {
+        width: 100%;
+        display: flex;
+        overflow: hidden;
+        gap: 0.5em;
+        padding-left: 0.5em;
+        .nickname {
+          font-size: 1.2em;
+          font-weight: bold;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .label {
+          $label-width: 0.2em;
+          -webkit-clip-path: polygon(
+            $label-width 0%,
+            calc(100% - $label-width) 0%,
+            100% $label-width,
+            100% calc(100% - $label-width),
+            calc(100% - $label-width) 100%,
+            $label-width 100%,
+            0% calc(100% - $label-width),
+            0% $label-width
+          );
+          clip-path: polygon(
+            $label-width 0%,
+            calc(100% - $label-width) 0%,
+            100% $label-width,
+            100% calc(100% - $label-width),
+            calc(100% - $label-width) 100%,
+            $label-width 100%,
+            0% calc(100% - $label-width),
+            0% $label-width
+          );
+          padding: 0 0.4em;
+          font-size: 0.9em;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: rgb(43, 38, 40);
+          margin: 0.1em 0;
+
+          &.level {
+            background-color: rgb(243, 203, 69);
+          }
+
+          &.server {
+            background-color: rgb(81, 177, 253);
+          }
+        }
+      }
+      .uid {
+        border-image: url('./images/UIDBg.png');
+        border-image-slice: 0 100 0 100 fill;
+        border-image-width: 0em 1.6em 0em 1.6em;
+        border-image-outset: 0;
+        border-image-repeat: stretch stretch;
+        padding: 0.3em 1.6em;
+        font-size: 0.9em;
+        color: rgba(255, 255, 255, 0.6);
+      }
+    }
+  }
+  > .title {
+    width: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    align-items: stretch;
+    padding: 0 0.4em;
+    position: relative;
+    margin: 0.5em 0;
+    .parallelograms {
+      $pwidth: 0.7em;
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: flex-end;
+      position: inherit;
+      padding-bottom: 0.4em;
+      z-index: 1;
+      span {
+        width: 1.3em;
+        height: 80%;
+        background-color: rgb(246, 202, 69);
+        margin-right: -0.2em;
+        -webkit-clip-path: polygon(
+          $pwidth 0%,
+          100% 0%,
+          calc(100% - $pwidth) 100%,
+          0% 100%
+        );
+        clip-path: polygon(
+          $pwidth 0%,
+          100% 0%,
+          calc(100% - $pwidth) 100%,
+          0% 100%
+        );
+      }
+    }
+    .bg-content {
+      position: absolute;
+      bottom: -0.1em;
+      left: 50%;
+      transform: translate(-50%, 0) skewX(-8deg);
+      color: rgba(255, 255, 255, 0.1);
+      font-size: 2.7em;
+    }
+    .content {
+      flex-grow: 1;
+      flex-shrink: 1;
+      font-size: 1.5em;
+      text-align: center;
+      position: inherit;
+      z-index: 1;
+    }
+  }
+  .battery {
+    display: flex;
+    align-items: center;
+    gap: 1.5em;
+    padding: 0.5em;
+    border: solid 0.2em rgb(174, 174, 174);
+    border-radius: 0.7em;
+    color: rgb(167, 167, 167);
+    background: url('./images/batteryBg.png') no-repeat center center;
+    background-size: cover;
+    margin: 1.5em 0;
+    .icon {
+      width: 7em;
+      height: 7em;
+      border-radius: 50%;
+      border-image: url('./images/PetSelectBG.png');
+      border-image-width: 0;
+      border-image-outset: 0em;
+      border-image-repeat: round;
+      border-image-slice: 1 fill;
+      overflow: hidden;
+      padding: 1.4em;
+      flex-grow: 0;
+      flex-shrink: 0;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+      }
+    }
+    .info {
+      flex-grow: 1;
+      flex-shrink: 1;
+      margin-right: 1em;
+      .bvalue {
+        display: flex;
+        align-items: flex-end;
+        .title {
+          font-size: 1.2em;
+        }
+        .value {
+          .big {
+            font-size: 1.5em;
+            color: rgb(253, 209, 73);
+            margin: 0 0.7em;
+          }
+        }
+      }
+      .bleft {
+        display: flex;
+        gap: 0.2em;
+        font-size: 0.8em;
+        .value {
+          color: white;
+        }
+      }
+      .texture {
+        width: 100%;
+        border-image: url('./images/ActivityGeneralBtnBg02.png');
+        border-image-slice: 30 40 30 24 fill;
+        border-image-width: 1em 1.5em 1em 0.9em;
+        border-image-repeat: stretch stretch;
+        padding: 1.1em 1.23em 1.1em 0.6em;
+        margin-top: 0.7em;
+        .progress {
+          height: 0.5em;
+          border-radius: 0.3em;
+          background-color: rgb(244, 198, 68);
+        }
+      }
+    }
+  }
+  .active-list {
+    font-size: 1.2em;
+    padding: 0 1em;
+    margin-top: -0.5em;
+    .active {
+      display: flex;
+      border-bottom: solid 0.07em rgba(255, 255, 255, 0.3);
+      align-items: center;
+      color: rgb(216, 216, 216);
+      gap: 0.5em;
+      padding-right: 1em;
+      padding-top: 1em;
+      padding-bottom: 0.2em;
+      .status {
+        width: 1.8em;
+        height: 1.8em;
+        border-radius: 50%;
+        background-color: rgb(34, 39, 37);
+        flex-grow: 0;
+        flex-shrink: 0;
+        background: url('./images/no.png') no-repeat center center;
+        background-size: contain;
+        &.finish {
+          background: url('./images/yes.png') no-repeat center center;
+          background-size: contain;
+        }
+      }
+      .title {
+        flex-grow: 1;
+        padding: 0;
+        font-size: 1.1em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .value {
+        display: flex;
+        align-items: flex-end;
+        font-size: 1.2em;
+        color: rgb(253, 209, 73);
+        flex-grow: 0;
+        flex-shrink: 0;
+        .sub {
+          font-size: 0.8em;
+          color: rgb(255, 255, 255);
+          margin-left: 0.2em;
+        }
+      }
+    }
+  }
+}

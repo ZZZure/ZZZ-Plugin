@@ -1,0 +1,10 @@
+{
+  "name": "zzz-plugin",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "ZZZure",
+  "license": "ISC"
+}
