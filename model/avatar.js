@@ -187,25 +187,28 @@ export class ZZZAvatarInfo {
  */
 export class ZZZUser {
   /**
-   * @param {string} game_biz
-   * @param {string} region
-   * @param {string} game_uid
-   * @param {string} nickname
-   * @param {number} level
-   * @param {boolean} is_chosen
-   * @param {string} region_name
-   * @param {boolean} is_official
+   * @param {{
+   *  game_biz: string;
+   *  region: string;
+   *  game_uid: string;
+   *  nickname: string;
+   *  level: number;
+   *  is_chosen: boolean;
+   *  region_name: string;
+   *  is_official: boolean;
+   * }} data
    */
-  constructor(
-    game_biz,
-    region,
-    game_uid,
-    nickname,
-    level,
-    is_chosen,
-    region_name,
-    is_official
-  ) {
+  constructor(data) {
+    const {
+      game_biz,
+      region,
+      game_uid,
+      nickname,
+      level,
+      is_chosen,
+      region_name,
+      is_official,
+    } = data;
     this.game_biz = game_biz;
     this.region = region;
     this.game_uid = game_uid;

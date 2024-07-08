@@ -1,6 +1,26 @@
 /**
  * @class
  */
+export class Item {
+  /**
+   * @param {number} id
+   * @param {string} name
+   * @param {string} rarity
+   * @param {number} level
+   * @param {number} star
+   */
+  constructor(id, name, rarity, level, star) {
+    this.id = id;
+    this.name = name;
+    this.rarity = rarity;
+    this.level = level;
+    this.star = star;
+  }
+}
+
+/**
+ * @class
+ */
 export class BangbooWiki {
   /**
    * @param {string} item_id

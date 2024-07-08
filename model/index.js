@@ -49,35 +49,18 @@ export class Stats {
  */
 export class ZZZIndexResp {
   /**
-   * @param {Stats} stats
-   * @param {Avatar[]} avatar_list
-   * @param {string} cur_head_icon_url
-   * @param {Buddy[]} buddy_list
+   * @param {{
+   *  stats: Stats;
+   *  avatar_list: Avatar[];
+   *  cur_head_icon_url: string;
+   *  buddy_list: Buddy[];
+   * }} data
    */
-  constructor(stats, avatar_list, cur_head_icon_url, buddy_list) {
+  constructor(data) {
+    const { stats, avatar_list, cur_head_icon_url, buddy_list } = data;
     this.stats = stats;
     this.avatar_list = avatar_list;
     this.cur_head_icon_url = cur_head_icon_url;
     this.buddy_list = buddy_list;
-  }
-}
-
-/**
- * @class
- */
-export class Item {
-  /**
-   * @param {number} id
-   * @param {string} name
-   * @param {string} rarity
-   * @param {number} level
-   * @param {number} star
-   */
-  constructor(id, name, rarity, level, star) {
-    this.id = id;
-    this.name = name;
-    this.rarity = rarity;
-    this.level = level;
-    this.star = star;
   }
 }

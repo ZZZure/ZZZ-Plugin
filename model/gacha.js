@@ -47,13 +47,16 @@ export class SingleGachaLog {
  */
 export class ZZZGachaLogResp {
   /**
-   * @param {string} page
-   * @param {string} size
-   * @param {SingleGachaLog[]} list
-   * @param {string} region
-   * @param {number} region_time_zone
+   * @param {{
+   *  page: string;
+   *  size: string;
+   *  list: SingleGachaLog[];
+   *  region: string;
+   *  region_time_zone: number;
+   * }} data
    */
-  constructor(page, size, list, region, region_time_zone) {
+  constructor(data) {
+    const { page, size, list, region, region_time_zone } = data;
     this.page = page;
     this.size = size;
     this.list = list;

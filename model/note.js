@@ -77,7 +77,12 @@ export class Energy {
  */
 export class ZZZNoteResp {
   /**
-   * @param {{ energy: Energy, vitality:Vitality, vhs_sale: VhsSale, card_sign: string }} data
+   * @param {{
+   *  energy: Energy;
+   *  vitality:Vitality;
+   *  vhs_sale: VhsSale;
+   *  card_sign: string;
+   * }} data
    */
   constructor(data) {
     const { energy, vitality, vhs_sale, card_sign } = data;

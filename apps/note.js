@@ -22,6 +22,7 @@ export class test extends ZZZPlugin {
   }
   async note(e) {
     const { api, deviceFp } = await this.getAPI();
+    if (!api) return false;
     let userData = await api.getData('zzzUser');
     if (!userData?.data || _.isEmpty(userData.data.list)) {
       await e.reply('[zzznote]玩家信息获取失败');
