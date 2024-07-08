@@ -4,22 +4,22 @@ import render from '../lib/render.js';
 import { ZZZNoteResp } from '../model/note.js';
 import { rulePrefix } from '../lib/common.js';
 
-export class Note extends ZZZPlugin {
+export class GachaLog extends ZZZPlugin {
   constructor() {
     super({
-      name: '[ZZZ-Plugin]Note',
-      dsc: 'zzznote',
+      name: '[ZZZ-Plugin]GachaLog',
+      dsc: 'zzzGachaLog',
       event: 'message',
       priority: 100,
       rule: [
         {
-          reg: `${rulePrefix}note$`,
-          fnc: 'note',
+          reg: `${rulePrefix}抽卡记录$`,
+          fnc: 'gachaLog',
         },
       ],
     });
   }
-  async note(e) {
+  async gachaLog(e) {
     const { api, deviceFp } = await this.getAPI();
     if (!api) return false;
     let userData = await api.getData('zzzUser');
