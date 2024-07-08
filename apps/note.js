@@ -3,6 +3,7 @@ import _ from 'lodash';
 import render from '../lib/render.js';
 import { ZZZNoteResp } from '../model/note.js';
 import { rulePrefix } from '../lib/common.js';
+import { ZZZIndexResp } from '../model/index.js';
 
 export class Note extends ZZZPlugin {
   constructor() {
@@ -19,35 +20,21 @@ export class Note extends ZZZPlugin {
       ],
     });
   }
-  async note(e) {
+  async note() {
     const { api, deviceFp } = await this.getAPI();
-    if (!api) return false;
-    let userData = await api.getData('zzzUser');
-    if (!userData?.data || _.isEmpty(userData.data.list)) {
-      await e.reply('[zzznote]玩家信息获取失败');
-      return false;
-    }
-    userData = userData?.data?.list[0];
+    const userData = await this.getPlayerInfo();
+    if (!userData) return false;
     let noteData = await api.getData('zzzNote', { deviceFp });
-    noteData = await api.checkCode(e, noteData, 'zzzNote', {});
+    noteData = await api.checkCode(this.e, noteData, 'zzzNote', {});
     if (!noteData || noteData.retcode !== 0) {
-      await e.reply('[zzznote]每日数据获取失败');
+      await this.reply('[zzznote]每日数据获取失败');
       return false;
     }
     noteData = noteData.data;
     noteData = new ZZZNoteResp(noteData);
-    let avatar = this.e.bot.avatar;
-    // 头像
-    if (this.e.member?.getAvatarUrl) {
-      avatar = await this.e.member.getAvatarUrl();
-    } else if (this.e.friend?.getAvatarUrl) {
-      avatar = await this.e.friend.getAvatarUrl();
-    }
     const finalData = {
-      avatar,
-      player: userData,
       note: noteData,
     };
-    await render(e, 'note/index.html', finalData);
+    await render(this.e, 'note/index.html', finalData);
   }
 }

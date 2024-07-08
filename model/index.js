@@ -1,22 +1,5 @@
-/**
- * @class
- */
-export class Buddy {
-  /**
-   * @param {number} id
-   * @param {string} name
-   * @param {string} rarity
-   * @param {number} level
-   * @param {number} star
-   */
-  constructor(id, name, rarity, level, star) {
-    this.id = id;
-    this.name = name;
-    this.rarity = rarity;
-    this.level = level;
-    this.star = star;
-  }
-}
+import { ZZZAvatarInfo } from './avatar.js';
+import { Buddy } from './bangboo.js';
 
 /**
  * @class
@@ -51,7 +34,7 @@ export class ZZZIndexResp {
   /**
    * @param {{
    *  stats: Stats;
-   *  avatar_list: Avatar[];
+   *  avatar_list: ZZZAvatarInfo[];
    *  cur_head_icon_url: string;
    *  buddy_list: Buddy[];
    * }} data
@@ -59,8 +42,8 @@ export class ZZZIndexResp {
   constructor(data) {
     const { stats, avatar_list, cur_head_icon_url, buddy_list } = data;
     this.stats = stats;
-    this.avatar_list = avatar_list;
+    this.avatar_list = avatar_list.map(item => new ZZZAvatarInfo(item));
     this.cur_head_icon_url = cur_head_icon_url;
-    this.buddy_list = buddy_list;
+    this.buddy_list = buddy_list.map(item => new Buddy(item));
   }
 }

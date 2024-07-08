@@ -6,19 +6,7 @@
 
 {{block 'main'}}
 <div class="card">
-  <div class="user-info">
-    <div class="avatar">
-      <img src="{{avatar}}" alt="Avatar">
-    </div>
-    <div class="info-bar">
-      <div class="info">
-        <div class="nickname">{{player.nickname}}</div>
-        <div class="label level">Lv{{player.level}}</div>
-        <div class="label server">{{player.region_name}}</div>
-      </div>
-      <div class="uid">UID {{player.game_uid}}</div>
-    </div>
-  </div>
+  {{include sys.playerInfo}}
   <div class="title">
     <div class="bg-content">
       STAMINA

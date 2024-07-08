@@ -1,0 +1,76 @@
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  padding: 0 1em;
+  padding-bottom: 1em;
+  padding-top: 1.7em;
+}
+.user-info .avatar {
+  width: 4em;
+  height: 4em;
+  border-radius: 50%;
+  border-image: url("../images/SuitBg.png");
+  border-image-width: 0;
+  border-image-outset: 0.4em;
+  border-image-repeat: round;
+  border-image-slice: 1 fill;
+  overflow: hidden;
+}
+.user-info .avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.user-info .info-bar {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  gap: 0.2em;
+}
+.user-info .info-bar .info {
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  gap: 0.5em;
+  padding-left: 0.5em;
+}
+.user-info .info-bar .info .nickname {
+  font-size: 1.2em;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.user-info .info-bar .info .label {
+  -webkit-clip-path: polygon(0.2em 0%, calc(100% - 0.2em) 0%, 100% 0.2em, 100% calc(100% - 0.2em), calc(100% - 0.2em) 100%, 0.2em 100%, 0% calc(100% - 0.2em), 0% 0.2em);
+  clip-path: polygon(0.2em 0%, calc(100% - 0.2em) 0%, 100% 0.2em, 100% calc(100% - 0.2em), calc(100% - 0.2em) 100%, 0.2em 100%, 0% calc(100% - 0.2em), 0% 0.2em);
+  padding: 0 0.4em;
+  font-size: 0.9em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(43, 38, 40);
+  margin: 0.1em 0;
+}
+.user-info .info-bar .info .label.level {
+  background-color: rgb(243, 203, 69);
+}
+.user-info .info-bar .info .label.server {
+  background-color: rgb(81, 177, 253);
+}
+.user-info .info-bar .uid {
+  border-image: url("../images/UIDBg.png");
+  border-image-slice: 0 100 0 100 fill;
+  border-image-width: 0em 1.6em 0em 1.6em;
+  border-image-outset: 0;
+  border-image-repeat: stretch stretch;
+  padding: 0.3em 1.6em;
+  font-size: 0.9em;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/*# sourceMappingURL=playerinfo.css.map */

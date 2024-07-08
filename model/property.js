@@ -1,7 +1,7 @@
 /**
  * @class
  */
-class Property {
+export class Property {
   /**
    * @param {string} property_name
    * @param {number} property_id

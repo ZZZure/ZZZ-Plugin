@@ -1,6 +1,29 @@
 /**
  * @class
  */
+export class Buddy {
+  /**
+   * @param {{
+   *  id: number;
+   *  name: string;
+   *  rarity: string;
+   *  level: number;
+   *  star: number;
+   * }} data
+   */
+  constructor(data) {
+    const { id, name, rarity, level, star } = data;
+    this.id = id;
+    this.name = name;
+    this.rarity = rarity;
+    this.level = level;
+    this.star = star;
+  }
+}
+
+/**
+ * @class
+ */
 export class Item {
   /**
    * @param {number} id

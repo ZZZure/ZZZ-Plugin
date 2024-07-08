@@ -1,0 +1,86 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" href="{{@sys.currentPath}}/index.css">
+{{/block}}
+
+{{block 'main'}}
+<div class="card">
+  {{include sys.playerInfo}}
+  <div class="status">
+    <div class="item">
+      <div class="value">{{card.stats.active_days}}</div>
+      <div class="label">活跃天数</div>
+    </div>
+    <div class="item">
+      <div class="value">{{card.stats.avatar_num}}</div>
+      <div class="label">获得代理人</div>
+    </div>
+    <div class="item">
+      <div class="value">{{card.stats.buddy_num}}</div>
+      <div class="label">获得邦布</div>
+    </div>
+    <div class="item">
+      <div class="value">{{card.stats.cur_period_zone_layer_count}}</div>
+      <div class="label">式舆防卫战</div>
+    </div>
+  </div>
+  <div class="title">
+    <div class="bg-content">
+      AGENT
+    </div>
+    <div class="parallelograms">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="content">
+      代理人信息
+    </div>
+    <div class="parallelograms">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+
+
+  <div class="list">
+    {{each card.avatar_list char i}}
+    <div class="item rank{{char.rarity}}">
+      <div class="rank rank{{char.rarity}}"></div>
+      <div class="property {{char.element_str}}"></div>
+      <div class="image">
+        <img src="./images/status.png" alt="">
+      </div>
+      <div class="level">等级{{char.level}}</div>
+    </div>
+    {{/each}}
+  </div>
+
+
+  <div class="title">
+    <div class="bg-content">
+      BANGBOO
+    </div>
+    <div class="parallelograms">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="content">
+      邦布信息
+    </div>
+    <div class="parallelograms">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+
+
+  <div class="list">
+    {{each card.buddy_list bangboo i}}
+    <div class="item rank{{bangboo.rarity}}">
+      <div class="rank rank{{bangboo.rarity}}"></div>
+      <div class="image">
+        <img src="./images/status.png" alt="">
+      </div>
+      <div class="level">等级{{bangboo.level}}</div>
+    </div>
+    {{/each}}
+  </div>
+</div>
+{{/block}}

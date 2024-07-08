@@ -1,3 +1,8 @@
+import { element } from '../lib/convert.js';
+import { Equip, Weapon } from './equip.js';
+import { Property } from './property.js';
+import { Skill } from './skill.js';
+
 /**
  * @class
  */
@@ -42,6 +47,8 @@ export class Avatar {
     this.hollow_icon_path = hollow_icon_path;
     this.rank = rank;
     this.is_chosen = is_chosen;
+
+    this.element_str = element.IDToElement(element_type);
   }
 }
 
@@ -100,6 +107,8 @@ export class ZZZAvatarBasic {
     this.icon_paths = icon_paths;
     this.rank = rank;
     this.is_chosen = is_chosen;
+
+    this.element_str = element.IDToElement(element_type);
   }
 }
 
@@ -128,41 +137,44 @@ export class Rank {
  */
 export class ZZZAvatarInfo {
   /**
-   * @param {number} id
-   * @param {number} level
-   * @param {string} name_mi18n
-   * @param {string} full_name_mi18n
-   * @param {number} element_type
-   * @param {string} camp_name_mi18n
-   * @param {number} avatar_profession
-   * @param {string} rarity
-   * @param {string} group_icon_path
-   * @param {string} hollow_icon_path
-   * @param {Equip[]} equip
-   * @param {Weapon} weapon
-   * @param {Property[]} properties
-   * @param {Skill[]} skills
-   * @param {number} rank
-   * @param {Rank[]} ranks
+   * @param {{
+   *  id: number;
+   *  level: number;
+   *  name_mi18n: string;
+   *  full_name_mi18n: string;
+   *  element_type: number;
+   *  camp_name_mi18n: string;
+   *  avatar_profession: number;
+   *  rarity: string;
+   *  group_icon_path: string;
+   *  hollow_icon_path: string;
+   *  equip: Equip[];
+   *  weapon: Weapon;
+   *  properties: Property[];
+   *  skills: Skill[];
+   *  rank: number;
+   *  ranks: Rank[];
+   * }} data
    */
-  constructor(
-    id,
-    level,
-    name_mi18n,
-    full_name_mi18n,
-    element_type,
-    camp_name_mi18n,
-    avatar_profession,
-    rarity,
-    group_icon_path,
-    hollow_icon_path,
-    equip,
-    weapon,
-    properties,
-    skills,
-    rank,
-    ranks
-  ) {
+  constructor(data) {
+    const {
+      id,
+      level,
+      name_mi18n,
+      full_name_mi18n,
+      element_type,
+      camp_name_mi18n,
+      avatar_profession,
+      rarity,
+      group_icon_path,
+      hollow_icon_path,
+      equip,
+      weapon,
+      properties,
+      skills,
+      rank,
+      ranks,
+    } = data;
     this.id = id;
     this.level = level;
     this.name_mi18n = name_mi18n;
@@ -179,6 +191,8 @@ export class ZZZAvatarInfo {
     this.skills = skills;
     this.rank = rank;
     this.ranks = ranks;
+
+    this.element_str = element.IDToElement(element_type);
   }
 }
 

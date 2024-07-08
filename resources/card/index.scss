@@ -1,0 +1,188 @@
+.card {
+  margin: 0 1em;
+  .user-info {
+    margin: 0 1em;
+  }
+  > .title {
+    width: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    align-items: stretch;
+    padding: 0 2.4em;
+    position: relative;
+    margin: 0.5em 0;
+    .parallelograms {
+      $pwidth: 0.7em;
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: flex-end;
+      position: inherit;
+      padding-bottom: 0.4em;
+      z-index: 1;
+      span {
+        width: 1.3em;
+        height: 80%;
+        background-color: rgb(246, 202, 69);
+        margin-right: -0.2em;
+        -webkit-clip-path: polygon(
+          $pwidth 0%,
+          100% 0%,
+          calc(100% - $pwidth) 100%,
+          0% 100%
+        );
+        clip-path: polygon(
+          $pwidth 0%,
+          100% 0%,
+          calc(100% - $pwidth) 100%,
+          0% 100%
+        );
+      }
+    }
+    .bg-content {
+      position: absolute;
+      bottom: -0.1em;
+      left: 50%;
+      transform: translate(-50%, 0) skewX(-8deg);
+      color: rgba(255, 255, 255, 0.1);
+      font-size: 2.7em;
+    }
+    .content {
+      flex-grow: 1;
+      flex-shrink: 1;
+      font-size: 1.5em;
+      text-align: center;
+      position: inherit;
+      z-index: 1;
+    }
+  }
+  .status {
+    display: flex;
+    align-items: center;
+    background: url('./images/status.png') no-repeat center center;
+    background-size: 110% 160%;
+    aspect-ratio: 2.4;
+    overflow: hidden;
+    margin: 0 1em;
+    margin-bottom: 1.5em;
+    padding-top: 4em;
+    padding-left: 3em;
+    padding-right: 3em;
+    padding-bottom: 3.5em;
+    justify-content: space-around;
+    .item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .value {
+        font-size: 1.8em;
+      }
+      .label {
+        font-size: 0.95em;
+        color: #e2e2e2;
+      }
+    }
+  }
+  .list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1em;
+    padding: 0.5em 3em;
+    margin-bottom: 1.5em;
+    .item {
+      width: 100%;
+      position: relative;
+      * {
+        position: inherit;
+        z-index: 1;
+      }
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0.2em;
+        left: -0.2em;
+        width: 100%;
+        height: 100%;
+        background: rgb(138, 51, 183);
+        z-index: 0;
+      }
+      .rank {
+        position: absolute;
+        top: 0.2em;
+        left: 0.1em;
+        width: 1.5em;
+        aspect-ratio: 1;
+        background: url('./images/RANK_A.png') no-repeat center center;
+        background-size: contain;
+        color: white;
+        z-index: 2;
+      }
+      &.rankS {
+        &::after {
+          background: rgb(230, 119, 51);
+        }
+        .rank {
+          background-image: url('./images/RANK_S.png');
+        }
+      }
+      &.rankB {
+        &::after {
+          background: rgb(93, 183, 249);
+        }
+        .rank {
+          background-image: url('./images/RANK_B.png');
+        }
+      }
+      .image {
+        width: 100%;
+        aspect-ratio: 0.8;
+        background-color: #e2e2e2;
+        img {
+          width: 100%;
+          display: block;
+        }
+      }
+      .level {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: rgb(0, 0, 0);
+        color: white;
+        text-align: center;
+      }
+      .property {
+        position: absolute;
+        top: 0.2em;
+        right: 0.1em;
+        width: 1.6em;
+        aspect-ratio: 1;
+        background-color: #000;
+        border-radius: 50%;
+        border: solid 0.1em #000;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        color: white;
+        z-index: 2;
+        &.fire {
+          background-image: url('./images/IconFire.png');
+        }
+        &.ice {
+          background-image: url('./images/IconIce.png');
+        }
+        &.physdmg {
+          background-image: url('./images/IconPhysDmg.png');
+        }
+        &.thunder {
+          background-image: url('./images/IconThunder.png');
+        }
+        &.dungeon {
+          background-image: url('./images/IconDungeonBuffEther.png');
+        }
+      }
+    }
+  }
+}
