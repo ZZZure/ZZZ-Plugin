@@ -30,11 +30,11 @@ export class Guide extends ZZZPlugin {
       // 来源：新艾利都快讯
       [2712859],
     ]
+    this.source = ['新艾利都快讯']
   }
   async Guide() {
     let reg = new RegExp(`${rulePrefix}角色攻略(\\S+)$`);
     let [,,,, name] = this.e.msg.match(reg);
-    console.log(name)
     let id = atlasToName(name);
     if (!id) {
       await this.reply('该角色不存在');
