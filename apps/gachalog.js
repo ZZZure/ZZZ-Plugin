@@ -97,6 +97,7 @@ export class GachaLog extends ZZZPlugin {
       return false;
     }
     await this.getPlayerInfo();
+    await this.reply('正在查询抽卡记录，首次下载资源可能耗费一些时间，请稍等');
     const data = await anaylizeGachaLog(uid);
     if (!data) {
       await this.reply('未查询到抽卡记录，请先发送抽卡链接');

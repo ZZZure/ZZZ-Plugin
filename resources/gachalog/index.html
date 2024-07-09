@@ -40,9 +40,9 @@
     <div class="item rankS {{inv.isUp && 'up'}}">
       <div class="rank rankS"></div>
       <div class="image">
-        <img src="./images/role_square_avatar_1011.png" alt="">
+        <img src="{{inv.square_icon}}" alt="">
       </div>
-      <div class="count">{{inv?.totalCount || '-'}}抽</div>
+      <div class="count">{{inv?.totalCount}}抽</div>
     </div>
     {{/each}}
   </div>

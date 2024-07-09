@@ -1,3 +1,5 @@
+import { getSquareAvatar, getSquareBangboo } from '../lib/download.js';
+
 /**
  * @class
  */
@@ -39,6 +41,8 @@ export class SingleGachaLog {
     this.item_type = item_type;
     this.rank_type = rank_type;
     this.id = id;
+
+    this.square_icon = '';
   }
 
   /**
@@ -51,6 +55,17 @@ export class SingleGachaLog {
       this.id === item.id &&
       this.gacha_type === this.gacha_type
     );
+  }
+
+  async get_assets() {
+    if (this.item_type === '音擎') {
+    } else if (this.item_type === '邦布') {
+      const result = await getSquareBangboo(this.item_id);
+      this.square_icon = result;
+    } else {
+      const result = await getSquareAvatar(this.item_id);
+      this.square_icon = result;
+    }
   }
 }
 
