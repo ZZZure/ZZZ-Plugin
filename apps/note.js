@@ -22,8 +22,8 @@ export class Note extends ZZZPlugin {
   }
   async note() {
     const { api, deviceFp } = await this.getAPI();
-    const userData = await this.getPlayerInfo();
-    if (!userData) return false;
+    if (!api) return false;
+    await this.getPlayerInfo();
     let noteData = await api.getData('zzzNote', { deviceFp });
     noteData = await api.checkCode(this.e, noteData, 'zzzNote', {});
     if (!noteData || noteData.retcode !== 0) {

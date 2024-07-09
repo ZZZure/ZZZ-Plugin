@@ -21,8 +21,8 @@ export class Card extends ZZZPlugin {
   }
   async card() {
     const { api, deviceFp } = await this.getAPI();
-    const userData = await this.getPlayerInfo();
-    if (!userData) return false;
+    if (!api) return false;
+    await this.getPlayerInfo();
     let indexData = await api.getData('zzzIndex', { deviceFp });
     indexData = await api.checkCode(this.e, indexData, 'zzzIndex', {});
     if (!indexData || indexData.retcode !== 0) {
@@ -32,6 +32,7 @@ export class Card extends ZZZPlugin {
     indexData = indexData.data;
     indexData = new ZZZIndexResp(indexData);
     this.e.playerCard.player.region_name = indexData.stats.world_level_name;
+    await indexData.get_assets();
     const data = {
       card: indexData,
     };

@@ -1,3 +1,5 @@
+import { getSquareBangboo } from '../lib/download.js';
+
 /**
  * @class
  */
@@ -19,6 +21,11 @@ export class Buddy {
     this.level = level;
     this.star = star;
   }
+
+  async get_assets() {
+    const result = await getSquareBangboo(this.id);
+    this.square_icon = result;
+  }
 }
 
 /**
@@ -38,6 +45,11 @@ export class Item {
     this.rarity = rarity;
     this.level = level;
     this.star = star;
+  }
+
+  async get_assets() {
+    const result = await getSquareBangboo(this.id);
+    this.square_icon = result;
   }
 }
 
@@ -66,5 +78,11 @@ export class ZZZBangbooResp {
   constructor(items, bangboo_wiki) {
     this.items = items;
     this.bangboo_wiki = bangboo_wiki;
+  }
+
+  async get_assets() {
+    for (const item of this.items) {
+      await item.get_assets();
+    }
   }
 }

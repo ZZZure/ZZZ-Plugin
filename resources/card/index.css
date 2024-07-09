@@ -130,6 +130,8 @@
 }
 .card .list .item .image img {
   width: 100%;
+  height: 100%;
+  object-fit: contain;
   display: block;
 }
 .card .list .item .level {

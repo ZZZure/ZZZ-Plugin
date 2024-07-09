@@ -46,4 +46,13 @@ export class ZZZIndexResp {
     this.cur_head_icon_url = cur_head_icon_url;
     this.buddy_list = buddy_list.map(item => new Buddy(item));
   }
+
+  async get_assets() {
+    for (const avatar of this.avatar_list) {
+      await avatar.get_assets();
+    }
+    for (const buddy of this.buddy_list) {
+      await buddy.get_assets();
+    }
+  }
 }

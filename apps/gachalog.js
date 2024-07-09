@@ -71,13 +71,14 @@ export class GachaLog extends ZZZPlugin {
     this.getLog(key);
   }
   async getLog(key) {
+    const uid = await this.getUID();
     const lastQueryTime = await redis.get(`ZZZ:GACHA:${uid}:LASTTIME`);
     if (lastQueryTime && Date.now() - lastQueryTime < 1000 * 60 * 5) {
       await this.reply('1分钟内只能刷新一次，请稍后重试');
       return false;
     }
     await redis.set(`ZZZ:GACHA:${uid}:LASTTIME`, Date.now());
-    const uid = await this.getUID();
+    this.reply('正在更新抽卡记录，可能需要一段时间，请耐心等待');
     const data = await updateGachaLog(key, uid);
     let msg = `抽卡记录更新成功，共${Object.keys(data).length}个卡池`;
     for (const name in data) {

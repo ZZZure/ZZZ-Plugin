@@ -1,4 +1,5 @@
 import { element } from '../lib/convert.js';
+import { getSquareAvatar } from '../lib/download.js';
 import { Equip, Weapon } from './equip.js';
 import { Property } from './property.js';
 import { Skill } from './skill.js';
@@ -193,6 +194,10 @@ export class ZZZAvatarInfo {
     this.ranks = ranks;
 
     this.element_str = element.IDToElement(element_type);
+  }
+  async get_assets() {
+    const result = await getSquareAvatar(this.id);
+    this.square_icon = result;
   }
 }
 
