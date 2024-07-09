@@ -48,7 +48,7 @@ export class SingleGachaLog {
   equals(item) {
     return (
       this.uid === item.uid &&
-      this.gacha_id === item.gacha_id &&
+      this.id === item.id &&
       this.gacha_type === this.gacha_type
     );
   }

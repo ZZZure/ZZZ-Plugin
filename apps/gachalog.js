@@ -1,10 +1,9 @@
 import { ZZZPlugin } from '../lib/plugin.js';
 import _ from 'lodash';
 import render from '../lib/render.js';
-import { ZZZNoteResp } from '../model/note.js';
 import { rulePrefix } from '../lib/common.js';
-import { getAuthKey, getStoken } from '../lib/authkey.js';
-import { updateGachaLog } from '../lib/gacha.js';
+import { getAuthKey } from '../lib/authkey.js';
+import { anaylizeGachaLog, updateGachaLog } from '../lib/gacha.js';
 
 export class GachaLog extends ZZZPlugin {
   constructor() {
@@ -25,6 +24,10 @@ export class GachaLog extends ZZZPlugin {
         {
           reg: `^${rulePrefix}抽卡帮助$`,
           fnc: 'gachaHelp',
+        },
+        {
+          reg: `^${rulePrefix}抽卡分析$`,
+          fnc: 'gachaLogAnalysis',
         },
       ],
     });
@@ -86,5 +89,22 @@ export class GachaLog extends ZZZPlugin {
     }
     await this.reply(msg);
     return false;
+  }
+
+  async gachaLogAnalysis() {
+    const uid = await this.getUID();
+    if (!uid) {
+      return false;
+    }
+    await this.getPlayerInfo();
+    const data = await anaylizeGachaLog(uid);
+    if (!data) {
+      await this.reply('未查询到抽卡记录，请先发送抽卡链接');
+      return false;
+    }
+    const result = {
+      data,
+    };
+    await render(this.e, 'gachalog/index.html', result);
   }
 }

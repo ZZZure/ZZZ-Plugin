@@ -1,0 +1,54 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" href="{{@sys.currentPath}}/index.css">
+{{/block}}
+
+{{block 'main'}}
+<div class="card">
+  {{include sys.playerInfo}}
+  {{each data item i}}
+  <div class="title t{{i+1}}">
+    <div class="info">
+      <div class="type">
+        <div class="label">{{item.name}}</div>
+        <div class="status">已<span class="value">{{item.lastFive}}</span>抽未出S级</div>
+      </div>
+      <div class="time">{{item.timeRange}}</div>
+      <div class="analysis">
+        <div class="item">
+          <div class="value">{{item.avgFive}}</div>
+          <div class="label">平均出金</div>
+        </div>
+        <div class="item">
+          <div class="value">{{item.avgUp}}</div>
+          <div class="label">平均UP</div>
+        </div>
+        <div class="item">
+          <div class="value">{{item.totalCount}}</div>
+          <div class="label">抽卡总数</div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="comment e1">
+      <div class="icon"></div>
+      <div class="label">平稳保底</div>
+    </div> -->
+  </div>
+  <div class="list">
+    {{each item.list inv j}}
+    <div class="item rankS {{inv.isUp && 'up'}}">
+      <div class="rank rankS"></div>
+      <div class="image">
+        <img src="./images/role_square_avatar_1011.png" alt="">
+      </div>
+      <div class="count">{{inv?.totalCount || '-'}}抽</div>
+    </div>
+    {{/each}}
+  </div>
+
+
+  {{/each}}
+
+</div>
+{{/block}}

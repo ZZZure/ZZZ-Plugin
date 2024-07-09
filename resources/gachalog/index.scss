@@ -1,0 +1,172 @@
+.card {
+  margin: 0 1em;
+  .user-info {
+    margin: 0 1em;
+    margin-bottom: 1.5em;
+  }
+  .title {
+    border-image-slice: 37 27 37 131 fill;
+    border-image-width: 1em 1em 1em 4.5em;
+    border-image-outset: 0em 0em 0em 0em;
+    border-image-repeat: stretch stretch;
+    min-height: 7em;
+    padding: 0.7em 2.3em 0.7em 3.7em;
+    display: flex;
+    align-items: center;
+    @for $i from 1 through 4 {
+      &.t#{$i} {
+        border-image-source: url('./images/bg#{$i}.png');
+      }
+    }
+    .info {
+      flex-grow: 1;
+      flex-shrink: 1;
+      .type {
+        display: flex;
+        align-items: flex-end;
+        gap: 0.1em;
+        .label {
+          font-size: 1.5em;
+          text-shadow: 0.05em 0.05em 0.03em rgba(0, 0, 0, 0.4);
+        }
+        .status {
+          font-size: 0.8em;
+          color: #e4e4e4;
+          margin-bottom: 0.2em;
+          background: rgba(0, 0, 0, 0.5);
+          padding: 0em 0.5em;
+          border-radius: 1em;
+          backdrop-filter: blur(0.3em);
+          .value {
+            color: rgb(128, 237, 84);
+            margin: 0 0.1em;
+          }
+        }
+      }
+      .time {
+        font-size: 0.6em;
+        color: #e4e4e4;
+      }
+      .analysis {
+        width: 15em;
+        display: flex;
+        background-color: rgba(0, 0, 0, 0.5);
+        margin-left: 1em;
+        margin-top: 0.3em;
+        margin-bottom: 0.2em;
+        border-radius: 2em;
+        padding: 0.1em 0.5em;
+        .item {
+          flex-grow: 1;
+          flex-shrink: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          .value {
+            font-size: 1.3em;
+          }
+          .label {
+            font-size: 0.8em;
+            color: #e4e4e4;
+          }
+        }
+      }
+    }
+    .comment {
+      flex-grow: 0;
+      flex-shrink: 0;
+      .icon {
+        width: 4.5em;
+        aspect-ratio: 1;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        margin-bottom: 0.5em;
+      }
+      @for $i from 1 through 16 {
+        &.e#{$i} {
+          .icon {
+            background-image: url('./images/emoji/#{$i}.png');
+          }
+        }
+      }
+      .label {
+        font-size: 1em;
+        text-align: center;
+      }
+    }
+  }
+  .list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1em;
+    padding: 0.5em 1.7em;
+    margin-bottom: 1.5em;
+    .item {
+      width: 100%;
+      position: relative;
+      border-radius: 0.5em;
+      overflow: hidden;
+      border: 0.2em solid #000000;
+      &.up {
+        &::after {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 0.1em;
+          left: 0.2em;
+          width: 1.7em;
+          height: 1.7em;
+          background: url('./images/IconTabUP.png') no-repeat center center;
+          background-size: contain;
+          z-index: 1;
+        }
+      }
+      .rank {
+        position: absolute;
+        top: 0.2em;
+        right: 0.2em;
+        width: 1.5em;
+        aspect-ratio: 1;
+        background: url('./images/RANK_A.png') no-repeat center center;
+        background-size: contain;
+        color: white;
+        z-index: 2;
+      }
+      &.rankS {
+        .rank {
+          background-image: url('./images/RANK_S.png');
+        }
+      }
+      &.rankB {
+        .rank {
+          background-image: url('./images/RANK_B.png');
+        }
+      }
+      .image {
+        width: 100%;
+        aspect-ratio: 1.5;
+        background-color: #e2e2e2;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+          display: block;
+        }
+      }
+      .count {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(0.3em);
+        border-top-right-radius: 0.5em;
+        color: white;
+        text-align: center;
+        padding: 0 0.3em;
+        font-size: 0.9em;
+      }
+    }
+  }
+}
