@@ -3,7 +3,6 @@ import _ from 'lodash';
 import render from '../lib/render.js';
 import { ZZZNoteResp } from '../model/note.js';
 import { rulePrefix } from '../lib/common.js';
-import { ZZZIndexResp } from '../model/index.js';
 
 export class Note extends ZZZPlugin {
   constructor() {

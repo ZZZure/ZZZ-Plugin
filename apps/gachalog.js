@@ -4,6 +4,7 @@ import render from '../lib/render.js';
 import { rulePrefix } from '../lib/common.js';
 import { getAuthKey } from '../lib/authkey.js';
 import { anaylizeGachaLog, updateGachaLog } from '../lib/gacha.js';
+import { getQueryVariable } from '../utils/network.js';
 
 export class GachaLog extends ZZZPlugin {
   constructor() {
@@ -14,16 +15,16 @@ export class GachaLog extends ZZZPlugin {
       priority: 100,
       rule: [
         {
+          reg: `^${rulePrefix}抽卡帮助$`,
+          fnc: 'gachaHelp',
+        },
+        {
           reg: `${rulePrefix}抽卡链接$`,
           fnc: 'startGachaLog',
         },
         {
           reg: `${rulePrefix}刷新抽卡链接$`,
           fnc: 'refreshGachaLog',
-        },
-        {
-          reg: `^${rulePrefix}抽卡帮助$`,
-          fnc: 'gachaHelp',
         },
         {
           reg: `^${rulePrefix}抽卡分析$`,
@@ -34,10 +35,15 @@ export class GachaLog extends ZZZPlugin {
   }
   async gachaHelp() {
     const reply_msg = [
-      'StarRail-Plugin 抽卡链接绑定方法：',
-      '1. 输入【#zzz抽卡链接】，等待 bot 回复【请发送抽卡链接】',
-      '2. 获取抽卡链接',
+      'ZZZ-Plugin 抽卡链接绑定方法：',
+      '一、（不推荐）抓包获取',
+      '1. 私聊 bot 发送【#zzz抽卡链接】，等待 bot 回复【请发送抽卡链接】',
+      '2. 抓包获取抽卡链接',
       '3. 将获取到的抽卡链接发送给 bot',
+      '二、通过 Cookie 刷新抽卡链接（需 bot 主人安装逍遥插件）',
+      '1. 前提绑定 Cookie 或者 扫码登录',
+      '2. 发送【#zzz刷新抽卡链接】',
+      '当抽卡链接绑定完后，可以通过命令【#zzz抽卡分析】来查看抽卡分析',
     ].join('\n');
     await this.reply(reply_msg);
   }
@@ -54,8 +60,8 @@ export class GachaLog extends ZZZPlugin {
       await this.reply('请私聊发送抽卡链接', false, { at: true });
       return false;
     }
-    let key = this.e.msg.trim();
-    key = key?.split?.('authkey=')?.[1]?.split('&')?.[0];
+    const msg = this.e.msg.trim();
+    const key = getQueryVariable(msg, 'authkey');
     if (!key) {
       await this.reply('抽卡链接格式错误，请重新发送');
       this.finish('gachaLog');
@@ -66,6 +72,7 @@ export class GachaLog extends ZZZPlugin {
   }
   async refreshGachaLog() {
     const uid = await this.getUID();
+    if (!uid) return false;
     const key = await getAuthKey(this.e, uid);
     if (!key) {
       await this.reply('authKey获取失败，请检查cookie是否过期');
@@ -75,6 +82,9 @@ export class GachaLog extends ZZZPlugin {
   }
   async getLog(key) {
     const uid = await this.getUID();
+    if (!uid) {
+      return false;
+    }
     const lastQueryTime = await redis.get(`ZZZ:GACHA:${uid}:LASTTIME`);
     if (lastQueryTime && Date.now() - lastQueryTime < 1000 * 60 * 5) {
       await this.reply('1分钟内只能刷新一次，请稍后重试');
