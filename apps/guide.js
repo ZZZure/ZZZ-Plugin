@@ -1,13 +1,15 @@
-import {ZZZPlugin} from '../lib/plugin.js';
-import {rulePrefix} from '../lib/common.js';
+import {ZZZPlugin} from '../lib/plugin.js'
+import {rulePrefix} from '../lib/common.js'
 import {atlasToName} from '../lib/convert/char.js'
-import path from 'path';
-import fs from 'fs';
+import path from 'path'
+import fs from 'fs'
 import {imageResourcesPath} from '../lib/path.js'
 import fetch from 'node-fetch'
 import lodash from 'lodash'
 
-const ZZZ_GUIDES_PATH = path.join(imageResourcesPath, 'guides');
+const ZZZ_GUIDES_PATH = path.join(imageResourcesPath, 'guides')
+// 最大攻略数量
+const maxNum = 2
 
 export class Guide extends ZZZPlugin {
   constructor() {
@@ -18,7 +20,7 @@ export class Guide extends ZZZPlugin {
       priority: 100,
       rule: [
         {
-          reg: `${rulePrefix}角色攻略\\S+$`,
+          reg: `${rulePrefix}(更新)?\\S+攻略([0-${maxNum}])?$`,
           fnc: 'Guide',
         },
       ],
@@ -29,28 +31,73 @@ export class Guide extends ZZZPlugin {
       [],
       // 来源：新艾利都快讯
       [2712859],
+      [2727116]
     ]
-    this.source = ['新艾利都快讯']
+    this.source = [
+      '新艾利都快讯',
+      '清茶沐沐Kiyotya'
+    ]
   }
+
+  async init () {
+    for (let group = 1; group <= maxNum; group++) {
+      let guideFolder = this.getGuideFolder(group)
+      if (!fs.existsSync(guideFolder)) {
+        fs.mkdirSync(guideFolder, { recursive: true })
+      }
+    }
+  }
+
+  getGuideFolder(groupIndex) {
+    let guideFolder = path.join(ZZZ_GUIDES_PATH, this.source[groupIndex-1])
+    return guideFolder
+  }
+
+  getGuidePath(groupIndex, characterName) {
+    let filename = `role_guide_${characterName}.png`
+    let guidePath = path.join(this.getGuideFolder(groupIndex), filename)
+    return guidePath
+  }
+
   async Guide() {
-    let reg = new RegExp(`${rulePrefix}角色攻略(\\S+)$`);
-    let [,,,, name] = this.e.msg.match(reg);
-    let id = atlasToName(name);
+    logger.warn('123')
+    let reg = new RegExp(`${rulePrefix}(更新)?(\\S+)攻略([0-${maxNum}])?$`)
+    let [,,,, isUpdate, name,
+      group = 1 // setting.getConfig('mys')?.defaultSource
+    ] = this.e.msg.match(reg)
+    let id = atlasToName(name)
     if (!id) {
-      await this.reply('该角色不存在');
-      return;
-    }
-    const filename = `role_guide_${id}.png`;
-    const guidePath = path.join(ZZZ_GUIDES_PATH, filename);
-    if (fs.existsSync(guidePath)) {
-      await this.e.reply(segment.image(`file://${guidePath}`));
-      return;
-    }
-    //目前攻略较少,暂为1
-    if (await this.getImg(id, 1)) {
-      await this.e.reply(segment.image(`file://${guidePath}`))
+      await this.reply('该角色不存在')
+      return
     }
 
+    if (group === 0) {
+      // eslint-disable-next-line no-unused-vars
+      let msg = []
+      // eslint-disable-next-line no-unused-vars
+      for (let i = 1; i <= maxNum; i++) {
+        let guildePath = this.getGuidePath(i, name)
+        if (fs.existsSync(this.sfPath) && !isUpdate) {
+          msg.push(segment.image(`file://${guidePath}`))
+          continue
+        }
+        if (i < 4 && await this.getImg(role, i)) {
+          msg.push(segment.image(`file://${guidePath}`))
+        }
+      }
+      if (msg.length) { await this.reply(await common.makeForwardMsg(this.e, [msg])) }
+      return false
+    }
+
+    let guidePath = this.getGuidePath(group, name)
+    if (fs.existsSync(guidePath)) {
+      await this.e.reply(segment.image(`file://${guidePath}`))
+      return
+    }
+
+    if (await this.getImg(name, group)) {
+      await this.e.reply(segment.image(`file://${guidePath}`))
+    }
   }
 
   /** 下载攻略图 */
@@ -84,15 +131,11 @@ export class Guide extends ZZZPlugin {
     }
     console.log(`${this.e.logFnc} 下载${name}攻略图`)
 
-    const download = await fetch(url);
-    const arrayBuffer = await download.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    const filename = `role_guide_${name}.png`;
-    const avatarPath = path.join(ZZZ_GUIDES_PATH, filename);
-    if (!fs.existsSync(ZZZ_GUIDES_PATH)) {
-      fs.mkdirSync(ZZZ_GUIDES_PATH, { recursive: true });
-    }
-    fs.writeFileSync(avatarPath , buffer);
+    const download = await fetch(url)
+    const arrayBuffer = await download.arrayBuffer()
+    const buffer = Buffer.from(arrayBuffer)
+    let guidePath = this.getGuidePath(group, name)
+    fs.writeFileSync(guidePath , buffer)
 
     console.log(`${this.e.logFnc} 下载${name}攻略成功`)
 
