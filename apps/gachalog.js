@@ -34,7 +34,7 @@ export class GachaLog extends ZZZPlugin {
   }
   async gachaHelp() {
     const reply_msg = [
-      'StarRail-Plugin 抽卡链接绑定方法：',
+      'ZZZ-Plugin 抽卡链接绑定方法：',
       '1. 输入【#zzz抽卡链接】，等待 bot 回复【请发送抽卡链接】',
       '2. 获取抽卡链接',
       '3. 将获取到的抽卡链接发送给 bot',
