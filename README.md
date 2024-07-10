@@ -3,8 +3,8 @@
 <p align="center">
   <a href="https://github.com/ZZZure/ZZZ-Plugin"><img src="https://s2.loli.net/2024/04/19/hOEDmsoUFy6nH5d.jpg" width="480" height="270" alt="ZZZ-Plugin"></a>
 </p>
-<h1 align = "center">ZZZ- Plugin</h1>
-<h4 align = "center">🚧Yunzai绝区零Bot插件🚧</h4>
+<h1 align = "center">ZZZ-Plugin</h1>
+<h4 align = "center">🚧Yunzai绝区零Bot插件 ｜ 交流群 973399270🚧</h4>
 
 # 安装
 
