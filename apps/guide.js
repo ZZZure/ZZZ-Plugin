@@ -40,14 +40,14 @@ export class Guide extends ZZZPlugin {
       await this.reply('该角色不存在');
       return;
     }
-    const filename = `role_guide_${name}.png`;
+    const filename = `role_guide_${id}.png`;
     const guidePath = path.join(ZZZ_GUIDES_PATH, filename);
     if (fs.existsSync(guidePath)) {
       await this.e.reply(segment.image(`file://${guidePath}`));
       return;
     }
     //目前攻略较少,暂为1
-    if (await this.getImg(name, 1)) {
+    if (await this.getImg(id, 1)) {
       await this.e.reply(segment.image(`file://${guidePath}`))
     }
 
