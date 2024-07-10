@@ -18,7 +18,7 @@ git clone --depth=1 https://github.com/ZZZure/ZZZ-Plugin.git ./plugins/ZZZ-Plugi
 
 ## 注意
 
-刷新抽卡链接需要“逍遥插件”支持。需要刷新抽卡链接功能请安装逍遥插件。
+刷新抽卡链接需要“[逍遥插件](https://github.com/ctrlcvs/xiaoyao-cvs-plugin)”支持。需要刷新抽卡链接功能请安装逍遥插件。
 
 # 功能
 
@@ -33,7 +33,7 @@ git clone --depth=1 https://github.com/ZZZure/ZZZ-Plugin.git ./plugins/ZZZ-Plugi
 </details>
 
 <details>
-  <summary>更新抽卡记录（需要逍遥插件支持） - 命令: #zzz刷新抽卡记录、%刷新抽卡记录</summary>
+  <summary>更新抽卡记录（需要逍遥插件支持） - 命令: #zzz刷新抽卡链接、%刷新抽卡链接</summary>
   <p><a><img src="https://s2.loli.net/2024/07/10/K6dg5EFGaHV7SW2.png"></a></p>
 </details>
 
@@ -54,6 +54,24 @@ git clone --depth=1 https://github.com/ZZZure/ZZZ-Plugin.git ./plugins/ZZZ-Plugi
 **请注意：**
 
 * 你的 CSS 必须是 `scss` 编写
+
+# 鸣谢
+
+* 特别鸣谢 **[Wuyi无疑](https://github.com/KimigaiiWuyi)** 为 `ZZZeroUID` 和 `ZZZ-Plugin` 作出的巨大贡献！本插件的功能按照 **Wuyi无疑** 的设计进行编写。欢迎给本仓库以及 [`ZZZeroUID`](https://github.com/ZZZure/ZZZeroUID) 点个 Star！
+* 特别鸣谢 **[听语惊花](https://github.com/Nwflower)** 等攻略作者做出的贡献！
+
+## 仓库贡献者
+
+<a href="https://github.com/ZZZure/ZZZ-Plugin/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=ZZZure/ZZZ-Plugin" />
+</a>
+
+## Reportbeats
+![Alt](https://repobeats.axiom.co/api/embed/613a1e7717c6651ca1b725ceb710f6dc03fdb937.svg "Repobeats analytics image")
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=ZZZure/ZZZ-Plugin&type=Date)](https://star-history.com/#ZZZure/ZZZ-Plugin&Date)
 
 # 其他
 
