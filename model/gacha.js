@@ -1,4 +1,8 @@
-import { getSquareAvatar, getSquareBangboo } from '../lib/download.js';
+import {
+  getSquareAvatar,
+  getSquareBangboo,
+  getWeaponImage,
+} from '../lib/download.js';
 
 /**
  * @class
@@ -59,6 +63,8 @@ export class SingleGachaLog {
 
   async get_assets() {
     if (this.item_type === '音擎') {
+      const result = await getWeaponImage(this.item_id);
+      this.square_icon = result;
     } else if (this.item_type === '邦布') {
       const result = await getSquareBangboo(this.item_id);
       this.square_icon = result;
