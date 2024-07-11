@@ -30,6 +30,13 @@ export class Card extends ZZZPlugin {
       return false;
     }
     indexData = indexData.data;
+
+    let zzzAvatarList = await api.getData('zzzAvatarList', { deviceFp });
+    indexData.avatar_list = zzzAvatarList.data.avatar_list;
+
+    let zzzBuddyList = await api.getData('zzzBuddyList', { deviceFp });
+    indexData.buddy_list = zzzBuddyList.data.list;
+
     indexData = new ZZZIndexResp(indexData);
     this.e.playerCard.player.region_name = indexData.stats.world_level_name;
     await indexData.get_assets();
