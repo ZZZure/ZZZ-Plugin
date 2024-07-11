@@ -23,7 +23,7 @@ export class GachaLog extends ZZZPlugin {
           fnc: 'startGachaLog',
         },
         {
-          reg: `${rulePrefix}刷新抽卡链接$`,
+          reg: `${rulePrefix}刷新抽卡(链接|记录)$`,
           fnc: 'refreshGachaLog',
         },
         {

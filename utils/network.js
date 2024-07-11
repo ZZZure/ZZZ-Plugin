@@ -16,7 +16,7 @@ export async function checkLatency(url) {
         });
       })
       .on('error', err => {
-        logger.mark(`Error checking ${url}:`, err.message);
+        logger.debug(`下载节点 ${url} 连接失败:`, err.message);
         resolve({ url, latency: Infinity });
       });
   });

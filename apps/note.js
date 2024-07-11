@@ -13,7 +13,7 @@ export class Note extends ZZZPlugin {
       priority: 100,
       rule: [
         {
-          reg: `${rulePrefix}note$`,
+          reg: `${rulePrefix}(note|每日|体力|便笺|便签)$`,
           fnc: 'note',
         },
       ],

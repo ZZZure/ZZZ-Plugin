@@ -13,7 +13,7 @@ export class Card extends ZZZPlugin {
       priority: 100,
       rule: [
         {
-          reg: `${rulePrefix}card$`,
+          reg: `${rulePrefix}(card|卡片|个人信息)$`,
           fnc: 'card',
         },
       ],

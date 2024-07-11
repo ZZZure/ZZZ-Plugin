@@ -30,11 +30,14 @@
         </div>
       </div>
     </div>
-    <div class="comment e1">
+    <div class="comment e{{item.emoji}}">
       <div class="icon"></div>
       <div class="label">{{item.tag}}</div>
     </div>
   </div>
+  {{if item.list.length === 0}}
+  <div style="margin: 1em auto; text-align: center;">暂无数据</div>
+  {{/if}}
   <div class="list">
     {{each item.list inv j}}
     <div class="item rankS {{inv.isUp && 'up'}}">
