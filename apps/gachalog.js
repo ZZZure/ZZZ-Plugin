@@ -1,5 +1,4 @@
 import { ZZZPlugin } from '../lib/plugin.js';
-import _ from 'lodash';
 import render from '../lib/render.js';
 import { rulePrefix } from '../lib/common.js';
 import { getAuthKey } from '../lib/authkey.js';

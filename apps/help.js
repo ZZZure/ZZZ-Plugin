@@ -1,5 +1,4 @@
 import { ZZZPlugin } from '../lib/plugin.js';
-import _ from 'lodash';
 import { rulePrefix } from '../lib/common.js';
 
 export class Help extends ZZZPlugin {

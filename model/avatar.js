@@ -72,31 +72,34 @@ export class AvatarIconPaths {
  */
 export class ZZZAvatarBasic {
   /**
-   * @param {number} id
-   * @param {number} level
-   * @param {string} name_mi18n
-   * @param {string} full_name_mi18n
-   * @param {number} element_type
-   * @param {string} camp_name_mi18n
-   * @param {number} avatar_profession
-   * @param {string} rarity
-   * @param {AvatarIconPaths} icon_paths
-   * @param {number} rank
-   * @param {boolean} is_chosen
+   * @param {{
+   *  id: number;
+   *  level: number;
+   *  name_mi18n: string;
+   *  full_name_mi18n: string;
+   *  element_type: number;
+   *  camp_name_mi18n: string;
+   *  avatar_profession: number;
+   *  rarity: string;
+   *  icon_paths: AvatarIconPaths;
+   *  rank: number;
+   *  is_chosen: boolean;
+   * }} data
    */
-  constructor(
-    id,
-    level,
-    name_mi18n,
-    full_name_mi18n,
-    element_type,
-    camp_name_mi18n,
-    avatar_profession,
-    rarity,
-    icon_paths,
-    rank,
-    is_chosen
-  ) {
+  constructor(data) {
+    const {
+      id,
+      level,
+      name_mi18n,
+      full_name_mi18n,
+      element_type,
+      camp_name_mi18n,
+      avatar_profession,
+      rarity,
+      icon_paths,
+      rank,
+      is_chosen,
+    } = data;
     this.id = id;
     this.level = level;
     this.name_mi18n = name_mi18n;
@@ -155,6 +158,8 @@ export class ZZZAvatarInfo {
    *  skills: Skill[];
    *  rank: number;
    *  ranks: Rank[];
+   *
+   *  isNew?: boolean;
    * }} data
    */
   constructor(data) {
@@ -175,6 +180,7 @@ export class ZZZAvatarInfo {
       skills,
       rank,
       ranks,
+      isNew,
     } = data;
     this.id = id;
     this.level = level;
@@ -194,10 +200,16 @@ export class ZZZAvatarInfo {
     this.ranks = ranks;
 
     this.element_str = element.IDToElement(element_type);
+    this.isNew = isNew;
   }
-  async get_assets() {
+
+  async get_basic_assets() {
     const result = await getSquareAvatar(this.id);
     this.square_icon = result;
+  }
+
+  async get_assets() {
+    await this.get_basic_assets();
   }
 }
 

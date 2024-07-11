@@ -1,5 +1,4 @@
 import { ZZZPlugin } from '../lib/plugin.js';
-import _ from 'lodash';
 import render from '../lib/render.js';
 import { ZZZNoteResp } from '../model/note.js';
 import { rulePrefix } from '../lib/common.js';
@@ -23,14 +22,11 @@ export class Note extends ZZZPlugin {
     const { api, deviceFp } = await this.getAPI();
     if (!api) return false;
     await this.getPlayerInfo();
-    let noteData = await api.getData('zzzNote', { deviceFp });
-    noteData = await api.checkCode(this.e, noteData, 'zzzNote', {});
-    if (!noteData || noteData.retcode !== 0) {
-      await this.reply('[zzznote]每日数据获取失败');
-      return false;
-    }
-    noteData = noteData.data;
-    noteData = new ZZZNoteResp(noteData);
+    const noteResponse = await api.getFinalData(this.e, 'zzzNote', {
+      deviceFp,
+    });
+    if (!noteResponse) return false;
+    const noteData = new ZZZNoteResp(noteResponse);
     const finalData = {
       note: noteData,
     };

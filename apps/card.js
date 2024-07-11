@@ -1,5 +1,4 @@
 import { ZZZPlugin } from '../lib/plugin.js';
-import _ from 'lodash';
 import render from '../lib/render.js';
 import { rulePrefix } from '../lib/common.js';
 import { ZZZIndexResp } from '../model/index.js';
@@ -23,25 +22,27 @@ export class Card extends ZZZPlugin {
     const { api, deviceFp } = await this.getAPI();
     if (!api) return false;
     await this.getPlayerInfo();
-    let indexData = await api.getData('zzzIndex', { deviceFp });
-    indexData = await api.checkCode(this.e, indexData, 'zzzIndex', {});
-    if (!indexData || indexData.retcode !== 0) {
-      await this.reply('[zzznote]Index数据获取失败');
-      return false;
-    }
-    indexData = indexData.data;
+    const indexData = await api.getFinalData(this.e, 'zzzIndex', { deviceFp });
+    if (!indexData) return false;
 
-    let zzzAvatarList = await api.getData('zzzAvatarList', { deviceFp });
-    indexData.avatar_list = zzzAvatarList.data.avatar_list;
+    let zzzAvatarList = await api.getFinalData(this.e, 'zzzAvatarList', {
+      deviceFp,
+    });
+    if (!zzzAvatarList) return false;
+    indexData.avatar_list = zzzAvatarList.avatar_list;
 
-    let zzzBuddyList = await api.getData('zzzBuddyList', { deviceFp });
-    indexData.buddy_list = zzzBuddyList.data.list;
+    let zzzBuddyList = await api.getFinalData(this.e, 'zzzBuddyList', {
+      deviceFp,
+    });
+    if (!zzzBuddyList) return false;
+    indexData.buddy_list = zzzBuddyList.list;
 
-    indexData = new ZZZIndexResp(indexData);
-    this.e.playerCard.player.region_name = indexData.stats.world_level_name;
-    await indexData.get_assets();
+    const finalIndexData = new ZZZIndexResp(indexData);
+    this.e.playerCard.player.region_name =
+      finalIndexData.stats.world_level_name;
+    await finalIndexData.get_assets();
     const data = {
-      card: indexData,
+      card: finalIndexData,
     };
     await render(this.e, 'card/index.html', data);
   }
