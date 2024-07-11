@@ -73,12 +73,16 @@ export class GachaLog extends ZZZPlugin {
   async refreshGachaLog() {
     const uid = await this.getUID();
     if (!uid) return false;
-    const key = await getAuthKey(this.e, uid);
-    if (!key) {
-      await this.reply('authKey获取失败，请检查cookie是否过期');
-      return false;
+    try {
+      const key = await getAuthKey(this.e, this.User, uid);
+      if (!key) {
+        await this.reply('authKey获取失败，请检查cookie是否过期');
+        return false;
+      }
+      this.getLog(key);
+    } catch (error) {
+      await this.reply(error.message);
     }
-    this.getLog(key);
   }
   async getLog(key) {
     const uid = await this.getUID();
