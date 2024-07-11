@@ -1,11 +1,12 @@
+import path from 'path'
+import fs from 'fs'
+import fetch from 'node-fetch'
+import lodash from 'lodash'
+import common from '../../../lib/common/common.js'
 import {ZZZPlugin} from '../lib/plugin.js'
 import {rulePrefix} from '../lib/common.js'
 import {atlasToName} from '../lib/convert/char.js'
-import path from 'path'
-import fs from 'fs'
 import {imageResourcesPath} from '../lib/path.js'
-import fetch from 'node-fetch'
-import lodash from 'lodash'
 
 const ZZZ_GUIDES_PATH = path.join(imageResourcesPath, 'guides')
 
@@ -43,6 +44,9 @@ export class Guide extends ZZZPlugin {
     ]
     // 最大攻略数量
     this.maxNum = this.source.length
+
+    // 最大显示攻略数量
+    this.maxForwardGuides = 4
   }
 
   async init () {
@@ -98,7 +102,7 @@ export class Guide extends ZZZPlugin {
           msg.push(segment.image(`file://${guidePath}`))
           continue
         }
-        if (i < 4 && await this.getImg(role, i)) {
+        if (i < this.maxForwardGuides && await this.getImg(name, i)) {
           msg.push(segment.image(`file://${guidePath}`))
         }
       }
