@@ -8,8 +8,6 @@ import fetch from 'node-fetch'
 import lodash from 'lodash'
 
 const ZZZ_GUIDES_PATH = path.join(imageResourcesPath, 'guides')
-// 最大攻略数量
-const maxNum = 2
 
 export class Guide extends ZZZPlugin {
   constructor() {
@@ -20,7 +18,7 @@ export class Guide extends ZZZPlugin {
       priority: 100,
       rule: [
         {
-          reg: `${rulePrefix}(更新)?\\S+攻略([0-${maxNum}])?$`,
+          reg: `${rulePrefix}(更新)?\\S+攻略(\\d+)?$`,
           fnc: 'Guide',
         },
       ],
@@ -31,16 +29,22 @@ export class Guide extends ZZZPlugin {
       [],
       // 来源：新艾利都快讯
       [2712859],
-      [2727116]
+      [2727116],
+      [2721968],
+      [2724610]
     ]
     this.source = [
       '新艾利都快讯',
-      '清茶沐沐Kiyotya'
+      '清茶沐沐Kiyotya',
+      '小橙子阿',
+      '猫冬'
     ]
+    // 最大攻略数量
+    this.maxNum = this.source.length
   }
 
   async init () {
-    for (let group = 1; group <= maxNum; group++) {
+    for (let group = 1; group <= this.maxNum; group++) {
       let guideFolder = this.getGuideFolder(group)
       if (!fs.existsSync(guideFolder)) {
         fs.mkdirSync(guideFolder, { recursive: true })
@@ -61,10 +65,15 @@ export class Guide extends ZZZPlugin {
 
   async Guide() {
     logger.warn('123')
-    let reg = new RegExp(`${rulePrefix}(更新)?(\\S+)攻略([0-${maxNum}])?$`)
+    let reg = new RegExp(`${rulePrefix}(更新)?(\\S+)攻略(\\d+)?$`)
     let [,,,, isUpdate, name,
-      group = 1 // setting.getConfig('mys')?.defaultSource
+      group = '1' // setting.getConfig('mys')?.defaultSource
     ] = this.e.msg.match(reg)
+    group = +group
+    if (group > this.maxNum) {
+      await this.reply(`超过攻略数量（${this.maxNum}）`)
+      return
+    }
     let id = atlasToName(name)
     if (!id) {
       await this.reply('该角色不存在')
@@ -75,8 +84,8 @@ export class Guide extends ZZZPlugin {
       // eslint-disable-next-line no-unused-vars
       let msg = []
       // eslint-disable-next-line no-unused-vars
-      for (let i = 1; i <= maxNum; i++) {
-        let guildePath = this.getGuidePath(i, name)
+      for (let i = 1; i <= this.maxNum; i++) {
+        let guidePath = this.getGuidePath(i, name)
         if (fs.existsSync(this.sfPath) && !isUpdate) {
           msg.push(segment.image(`file://${guidePath}`))
           continue
