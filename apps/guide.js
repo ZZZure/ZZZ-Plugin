@@ -31,13 +31,15 @@ export class Guide extends ZZZPlugin {
       [2712859],
       [2727116],
       [2721968],
-      [2724610]
+      [2724610],
+      [2722266]
     ]
     this.source = [
       '新艾利都快讯',
       '清茶沐沐Kiyotya',
       '小橙子阿',
-      '猫冬'
+      '猫冬',
+      '月光中心'
     ]
     // 最大攻略数量
     this.maxNum = this.source.length
@@ -63,8 +65,14 @@ export class Guide extends ZZZPlugin {
     return guidePath
   }
 
+  canGetImageFromFile(guidePath, isUpdate) {
+    return (
+      fs.existsSync(guidePath) &&
+      !isUpdate
+    )
+  }
+
   async Guide() {
-    logger.warn('123')
     let reg = new RegExp(`${rulePrefix}(更新)?(\\S+)攻略(\\d+)?$`)
     let [,,,, isUpdate, name,
       group = '1' // setting.getConfig('mys')?.defaultSource
@@ -86,7 +94,7 @@ export class Guide extends ZZZPlugin {
       // eslint-disable-next-line no-unused-vars
       for (let i = 1; i <= this.maxNum; i++) {
         let guidePath = this.getGuidePath(i, name)
-        if (fs.existsSync(this.sfPath) && !isUpdate) {
+        if (this.canGetImageFromFile(guidePath, isUpdate)) {
           msg.push(segment.image(`file://${guidePath}`))
           continue
         }
@@ -99,7 +107,7 @@ export class Guide extends ZZZPlugin {
     }
 
     let guidePath = this.getGuidePath(group, name)
-    if (fs.existsSync(guidePath)) {
+    if (this.canGetImageFromFile(guidePath, isUpdate)) {
       await this.e.reply(segment.image(`file://${guidePath}`))
       return
     }
@@ -128,7 +136,12 @@ export class Guide extends ZZZPlugin {
       if (val.post.subject.includes(name)) {
         let max = 0
         val.image_list.forEach((v, i) => {
-          if (Number(v.size) >= Number(val.image_list[max].size)) max = i
+          if (
+            Number(v.size) >= Number(val.image_list[max].size) &&
+            v.format != 'gif' // 动图天生 size 会撑得很大
+          ) {
+            max = i
+          }
         })
         url = val.image_list[max].url
         break
