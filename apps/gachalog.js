@@ -3,7 +3,11 @@ import _ from 'lodash';
 import render from '../lib/render.js';
 import { rulePrefix } from '../lib/common.js';
 import { getAuthKey } from '../lib/authkey.js';
-import { anaylizeGachaLog, updateGachaLog } from '../lib/gacha.js';
+import {
+  anaylizeGachaLog,
+  updateGachaLog,
+  getZZZGachaLink,
+} from '../lib/gacha.js';
 import { getQueryVariable } from '../utils/network.js';
 
 export class GachaLog extends ZZZPlugin {
@@ -23,12 +27,16 @@ export class GachaLog extends ZZZPlugin {
           fnc: 'startGachaLog',
         },
         {
-          reg: `${rulePrefix}刷新抽卡(链接|记录)$`,
+          reg: `${rulePrefix}(刷新|更新)抽卡(链接|记录)$`,
           fnc: 'refreshGachaLog',
         },
         {
-          reg: `^${rulePrefix}抽卡分析$`,
+          reg: `^${rulePrefix}抽卡(分析|记录)$`,
           fnc: 'gachaLogAnalysis',
+        },
+        {
+          reg: `^${rulePrefix}获取抽卡链接$`,
+          fnc: 'getGachaLink',
         },
       ],
     });
@@ -111,7 +119,9 @@ export class GachaLog extends ZZZPlugin {
       return false;
     }
     await this.getPlayerInfo();
-    await this.reply('正在查询抽卡记录，首次下载资源可能耗费一些时间，请稍等');
+    await this.reply(
+      '正在分析抽卡记录，首次下载图片资源可能耗费一些时间，请稍等'
+    );
     const data = await anaylizeGachaLog(uid);
     if (!data) {
       await this.reply('未查询到抽卡记录，请先发送抽卡链接');
@@ -121,5 +131,22 @@ export class GachaLog extends ZZZPlugin {
       data,
     };
     await render(this.e, 'gachalog/index.html', result);
+  }
+  async getGachaLink() {
+    if (!this.e.isPrivate) {
+      await this.reply('请私聊获取抽卡链接', false, { at: true });
+      return false;
+    }
+    const uid = await this.getUID();
+    if (!uid) {
+      return false;
+    }
+    const key = await getAuthKey(this.e, this.User, uid);
+    if (!key) {
+      await this.reply('authKey获取失败，请检查cookie是否过期');
+      return false;
+    }
+    const link = await getZZZGachaLink(key);
+    await this.reply(link);
   }
 }
