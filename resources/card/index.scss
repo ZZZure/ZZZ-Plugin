@@ -113,9 +113,6 @@
         top: 0.2em;
         left: 0.1em;
         width: 1.5em;
-        aspect-ratio: 1;
-        background: url('./images/RANK_A.png') no-repeat center center;
-        background-size: contain;
         color: white;
         z-index: 2;
       }
@@ -123,16 +120,10 @@
         &::after {
           background: rgb(230, 119, 51);
         }
-        .rank {
-          background-image: url('./images/RANK_S.png');
-        }
       }
       &.rankB {
         &::after {
           background: rgb(93, 183, 249);
-        }
-        .rank {
-          background-image: url('./images/RANK_B.png');
         }
       }
       .image {

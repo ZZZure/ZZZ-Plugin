@@ -39,3 +39,23 @@
     'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
     sans-serif;
 }
+
+.rank-icon {
+  width: 1.5em;
+  aspect-ratio: 1;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  &.s,
+  &.S {
+    background-image: url('../images/RANK_S.png');
+  }
+  &.a,
+  &.A {
+    background-image: url('../images/RANK_A.png');
+  }
+  &.b,
+  &.B {
+    background-image: url('../images/RANK_B.png');
+  }
+}

@@ -127,21 +127,8 @@
         top: 0.2em;
         right: 0.2em;
         width: 1.5em;
-        aspect-ratio: 1;
-        background: url('./images/RANK_A.png') no-repeat center center;
-        background-size: contain;
         color: white;
         z-index: 2;
-      }
-      &.rankS {
-        .rank {
-          background-image: url('./images/RANK_S.png');
-        }
-      }
-      &.rankB {
-        .rank {
-          background-image: url('./images/RANK_B.png');
-        }
       }
       .image {
         width: 100%;

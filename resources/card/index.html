@@ -44,7 +44,7 @@
   <div class="list">
     {{each card.avatar_list char i}}
     <div class="item rank{{char.rarity}}">
-      <div class="rank rank{{char.rarity}}"></div>
+      <div class="rank rank-icon {{char.rarity}}"></div>
       <div class="property {{char.element_str}}"></div>
       <div class="image">
         <img src="{{char.square_icon}}" alt="">
@@ -74,7 +74,7 @@
   <div class="list">
     {{each card.buddy_list bangboo i}}
     <div class="item rank{{bangboo.rarity}}">
-      <div class="rank rank{{bangboo.rarity}}"></div>
+      <div class="rank rank-icon {{bangboo.rarity}}"></div>
       <div class="image">
         <img src="{{bangboo.square_icon}}" alt="">
       </div>
