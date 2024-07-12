@@ -151,30 +151,11 @@
         top: 0.2em;
         right: 0.1em;
         width: 1.6em;
-        aspect-ratio: 1;
         background-color: #000;
         border-radius: 50%;
         border: solid 0.1em #000;
-        background-size: contain;
-        background-position: center;
-        background-repeat: no-repeat;
         color: white;
         z-index: 2;
-        &.fire {
-          background-image: url('./images/IconFire.png');
-        }
-        &.ice {
-          background-image: url('./images/IconIce.png');
-        }
-        &.physdmg {
-          background-image: url('./images/IconPhysDmg.png');
-        }
-        &.thunder {
-          background-image: url('./images/IconThunder.png');
-        }
-        &.dungeon {
-          background-image: url('./images/IconDungeonBuffEther.png');
-        }
       }
     }
   }

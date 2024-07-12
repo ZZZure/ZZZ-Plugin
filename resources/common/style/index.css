@@ -19,7 +19,6 @@
 }
 
 .rank-icon {
-  width: 1.5em;
   aspect-ratio: 1;
   background-repeat: no-repeat;
   background-position: center;
@@ -33,6 +32,28 @@
 }
 .rank-icon.b, .rank-icon.B {
   background-image: url("../images/RANK_B.png");
+}
+
+.property {
+  aspect-ratio: 1;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.property.fire {
+  background-image: url("../images/IconFire.png");
+}
+.property.ice {
+  background-image: url("../images/IconIce.png");
+}
+.property.physdmg {
+  background-image: url("../images/IconPhysDmg.png");
+}
+.property.thunder {
+  background-image: url("../images/IconThunder.png");
+}
+.property.dungeon {
+  background-image: url("../images/IconDungeonBuffEther.png");
 }
 
 /*# sourceMappingURL=index.css.map */

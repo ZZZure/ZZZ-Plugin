@@ -41,7 +41,6 @@
 }
 
 .rank-icon {
-  width: 1.5em;
   aspect-ratio: 1;
   background-repeat: no-repeat;
   background-position: center;
@@ -57,5 +56,27 @@
   &.b,
   &.B {
     background-image: url('../images/RANK_B.png');
+  }
+}
+
+.property {
+  aspect-ratio: 1;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  &.fire {
+    background-image: url('../images/IconFire.png');
+  }
+  &.ice {
+    background-image: url('../images/IconIce.png');
+  }
+  &.physdmg {
+    background-image: url('../images/IconPhysDmg.png');
+  }
+  &.thunder {
+    background-image: url('../images/IconThunder.png');
+  }
+  &.dungeon {
+    background-image: url('../images/IconDungeonBuffEther.png');
   }
 }
