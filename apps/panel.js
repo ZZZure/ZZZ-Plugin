@@ -16,7 +16,7 @@ export class Panel extends ZZZPlugin {
           fnc: 'refreshPanel',
         },
         {
-          reg: `${rulePrefix}面板列表$`,
+          reg: `${rulePrefix}面板(列表)?$`,
           fnc: 'getCharPanelList',
         },
         {
@@ -52,8 +52,9 @@ export class Panel extends ZZZPlugin {
     await this.getPlayerInfo();
     let str = '面板列表获取成功，共计' + noteData.length + '个角色：';
     for (const item of noteData) {
-      str += '\n' + item.name_mi18n;
+      str += item.name_mi18n + '、';
     }
+    str = str.slice(0, -1);
     await this.reply(str);
     // const finalData = {
     //   list: noteData,

@@ -106,8 +106,8 @@ export class GachaLog extends ZZZPlugin {
     const { data, count } = await updateGachaLog(key, uid);
     let msg = `抽卡记录更新成功，共${Object.keys(data).length}个卡池`;
     for (const name in data) {
-      msg += `\n${name}一共${data[name].length}条记录，新增${
-        count[name] || 0
+      msg += `\n${name}新增${count[name] || 0}条记录，一共${
+        data[name].length
       }条记录`;
     }
     await this.reply(msg);
