@@ -59,6 +59,33 @@
   }
 }
 
+.rarity-icon {
+  aspect-ratio: 1;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  &.a,
+  &.A {
+    background-image: url('../images/Rarity_A.png');
+  }
+  &.b,
+  &.B {
+    background-image: url('../images/Rarity_B.png');
+  }
+  &.c,
+  &.C {
+    background-image: url('../images/Rarity_C.png');
+  }
+  &.s,
+  &.S {
+    background-image: url('../images/Rarity_S.png');
+  }
+  &.x,
+  &.X {
+    background-image: url('../images/Rarity_X.png');
+  }
+}
+
 .property {
   aspect-ratio: 1;
   background-size: contain;
@@ -78,6 +105,89 @@
   }
   &.dungeon {
     background-image: url('../images/IconDungeonBuffEther.png');
+  }
+}
+
+.prop-icon {
+  aspect-ratio: 1;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  &.attack {
+    background-image: url('../images/property/IconAttack.png');
+  }
+  &.breakstun {
+    background-image: url('../images/property/IconBreakStun.png');
+  }
+  &.crit {
+    background-image: url('../images/property/IconCrit.png');
+  }
+  &.critdam {
+    background-image: url('../images/property/IconCritDam.png');
+  }
+  &.def {
+    background-image: url('../images/property/IconDef.png');
+  }
+  &.dungeonbuffether {
+    background-image: url('../images/property/IconDungeonBuffEther.png');
+  }
+  &.elementabnormalpower {
+    background-image: url('../images/property/IconElementAbnormalPower.png');
+  }
+  &.elementmystery {
+    background-image: url('../images/property/IconElementMystery.png');
+  }
+  &.fire {
+    background-image: url('../images/property/IconFire.png');
+  }
+  &.hpmax {
+    background-image: url('../images/property/IconHpMax.png');
+  }
+  &.ice {
+    background-image: url('../images/property/IconIce.png');
+  }
+  &.penratio {
+    background-image: url('../images/property/IconPenRatio.png');
+  }
+  &.penvalue {
+    background-image: url('../images/property/IconPenValue.png');
+  }
+  &.physdmg {
+    background-image: url('../images/property/IconPhysDmg.png');
+  }
+  &.spgetratio {
+    background-image: url('../images/property/IconSpGetRatio.png');
+  }
+  &.spmax {
+    background-image: url('../images/property/IconSpMax.png');
+  }
+  &.sprecover {
+    background-image: url('../images/property/IconSpRecover.png');
+  }
+  &.thunder {
+    background-image: url('../images/property/IconThunder.png');
+  }
+}
+
+.pro-icon {
+  aspect-ratio: 1;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  &.anomaly {
+    background-image: url('../images/prop/IconAnomaly.png');
+  }
+  &.attack {
+    background-image: url('../images/prop/IconAttack.png');
+  }
+  &.defense {
+    background-image: url('../images/prop/IconDefence.png');
+  }
+  &.stun {
+    background-image: url('../images/prop/IconStun.png');
+  }
+  &.support {
+    background-image: url('../images/prop/IconSupport.png');
   }
 }
 

@@ -103,10 +103,12 @@ export class GachaLog extends ZZZPlugin {
     }
     await redis.set(`ZZZ:GACHA:${uid}:LASTTIME`, Date.now());
     this.reply('正在更新抽卡记录，可能需要一段时间，请耐心等待');
-    const data = await updateGachaLog(key, uid);
+    const { data, count } = await updateGachaLog(key, uid);
     let msg = `抽卡记录更新成功，共${Object.keys(data).length}个卡池`;
     for (const name in data) {
-      msg += `\n${name}一共${data[name].length}条记录`;
+      msg += `\n${name}一共${data[name].length}条记录，新增${
+        count[name] || 0
+      }条记录`;
     }
     await this.reply(msg);
     return false;

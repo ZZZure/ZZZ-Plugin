@@ -17,11 +17,14 @@ export class SkillItem {
  */
 export class Skill {
   /**
-   * @param {number} level
-   * @param {number} skill_type
-   * @param {SkillItem[]} items
+   * @param {{
+   *  level: number,
+   *  skill_type: number,
+   *  items: SkillItem[]
+   * }} data
    */
-  constructor(level, skill_type, items) {
+  constructor(data) {
+    const { level, skill_type, items } = data;
     this.level = level;
     this.skill_type = skill_type;
     this.items = items;

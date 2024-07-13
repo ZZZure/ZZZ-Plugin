@@ -25,62 +25,37 @@
       <div class="label">式舆防卫战</div>
     </div>
   </div>
-  <div class="special-title">
-    <div class="bg-content">
-      AGENT
-    </div>
-    <div class="parallelograms">
-      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-    </div>
-    <div class="content">
-      代理人信息
-    </div>
-    <div class="parallelograms">
-      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-    </div>
-  </div>
-
-
-  <div class="list">
-    {{each card.avatar_list char i}}
-    <div class="item rank{{char.rarity}}">
-      <div class="rank rank-icon {{char.rarity}}"></div>
-      <div class="property {{char.element_str}}"></div>
-      <div class="image">
-        <img src="{{char.square_icon}}" alt="">
+  <% include(sys.specialTitle, {en: 'AGENT' , cn: '代理人信息' }) %>
+    <div class="list">
+      {{each card.avatar_list char i}}
+      <div class="item rank{{char.rarity}}">
+        <div class="rank rank-icon {{char.rarity}}"></div>
+        <div class="property {{char.element_str}}"></div>
+        <div class="image">
+          <img src="{{char.square_icon}}" alt="">
+        </div>
+        <div class="c-info">
+          <div class="ranks r{{char.rank}}">{{char.rank}}命</div>
+          <div class="level">等级{{char.level}}</div>
+        </div>
       </div>
-      <div class="level">等级{{char.level}}</div>
+      {{/each}}
     </div>
-    {{/each}}
-  </div>
 
-
-  <div class="special-title">
-    <div class="bg-content">
-      BANGBOO
-    </div>
-    <div class="parallelograms">
-      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-    </div>
-    <div class="content">
-      邦布信息
-    </div>
-    <div class="parallelograms">
-      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-    </div>
-  </div>
-
-
-  <div class="list">
-    {{each card.buddy_list bangboo i}}
-    <div class="item rank{{bangboo.rarity}}">
-      <div class="rank rank-icon {{bangboo.rarity}}"></div>
-      <div class="image">
-        <img src="{{bangboo.square_icon}}" alt="">
+    <% include(sys.specialTitle, {en: 'BANGBOO' , cn: '邦布信息' }) %>
+      <div class="list">
+        {{each card.buddy_list bangboo i}}
+        <div class="item rank{{bangboo.rarity}}">
+          <div class="rank rank-icon {{bangboo.rarity}}"></div>
+          <div class="image">
+            <img src="{{bangboo.square_icon}}" alt="">
+          </div>
+          <div class="c-info">
+            <div class="ranks r{{bangboo.star}}">{{bangboo.star}}命</div>
+            <div class="level">等级{{bangboo.level}}</div>
+          </div>
+        </div>
+        {{/each}}
       </div>
-      <div class="level">等级{{bangboo.level}}</div>
-    </div>
-    {{/each}}
-  </div>
 </div>
 {{/block}}

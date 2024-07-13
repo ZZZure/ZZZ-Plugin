@@ -34,6 +34,28 @@
   background-image: url("../images/RANK_B.png");
 }
 
+.rarity-icon {
+  aspect-ratio: 1;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+.rarity-icon.a, .rarity-icon.A {
+  background-image: url("../images/Rarity_A.png");
+}
+.rarity-icon.b, .rarity-icon.B {
+  background-image: url("../images/Rarity_B.png");
+}
+.rarity-icon.c, .rarity-icon.C {
+  background-image: url("../images/Rarity_C.png");
+}
+.rarity-icon.s, .rarity-icon.S {
+  background-image: url("../images/Rarity_S.png");
+}
+.rarity-icon.x, .rarity-icon.X {
+  background-image: url("../images/Rarity_X.png");
+}
+
 .property {
   aspect-ratio: 1;
   background-size: contain;
@@ -54,6 +76,89 @@
 }
 .property.dungeon {
   background-image: url("../images/IconDungeonBuffEther.png");
+}
+
+.prop-icon {
+  aspect-ratio: 1;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.prop-icon.attack {
+  background-image: url("../images/property/IconAttack.png");
+}
+.prop-icon.breakstun {
+  background-image: url("../images/property/IconBreakStun.png");
+}
+.prop-icon.crit {
+  background-image: url("../images/property/IconCrit.png");
+}
+.prop-icon.critdam {
+  background-image: url("../images/property/IconCritDam.png");
+}
+.prop-icon.def {
+  background-image: url("../images/property/IconDef.png");
+}
+.prop-icon.dungeonbuffether {
+  background-image: url("../images/property/IconDungeonBuffEther.png");
+}
+.prop-icon.elementabnormalpower {
+  background-image: url("../images/property/IconElementAbnormalPower.png");
+}
+.prop-icon.elementmystery {
+  background-image: url("../images/property/IconElementMystery.png");
+}
+.prop-icon.fire {
+  background-image: url("../images/property/IconFire.png");
+}
+.prop-icon.hpmax {
+  background-image: url("../images/property/IconHpMax.png");
+}
+.prop-icon.ice {
+  background-image: url("../images/property/IconIce.png");
+}
+.prop-icon.penratio {
+  background-image: url("../images/property/IconPenRatio.png");
+}
+.prop-icon.penvalue {
+  background-image: url("../images/property/IconPenValue.png");
+}
+.prop-icon.physdmg {
+  background-image: url("../images/property/IconPhysDmg.png");
+}
+.prop-icon.spgetratio {
+  background-image: url("../images/property/IconSpGetRatio.png");
+}
+.prop-icon.spmax {
+  background-image: url("../images/property/IconSpMax.png");
+}
+.prop-icon.sprecover {
+  background-image: url("../images/property/IconSpRecover.png");
+}
+.prop-icon.thunder {
+  background-image: url("../images/property/IconThunder.png");
+}
+
+.pro-icon {
+  aspect-ratio: 1;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.pro-icon.anomaly {
+  background-image: url("../images/prop/IconAnomaly.png");
+}
+.pro-icon.attack {
+  background-image: url("../images/prop/IconAttack.png");
+}
+.pro-icon.defense {
+  background-image: url("../images/prop/IconDefence.png");
+}
+.pro-icon.stun {
+  background-image: url("../images/prop/IconStun.png");
+}
+.pro-icon.support {
+  background-image: url("../images/prop/IconSupport.png");
 }
 
 .special-title {

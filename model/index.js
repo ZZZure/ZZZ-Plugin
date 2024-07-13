@@ -1,4 +1,4 @@
-import { ZZZAvatarInfo } from './avatar.js';
+import { ZZZAvatarBasic } from './avatar.js';
 import { Buddy } from './bangboo.js';
 
 /**
@@ -34,7 +34,7 @@ export class ZZZIndexResp {
   /**
    * @param {{
    *  stats: Stats;
-   *  avatar_list: ZZZAvatarInfo[];
+   *  avatar_list: ZZZAvatarBasic[];
    *  cur_head_icon_url: string;
    *  buddy_list: Buddy[];
    * }} data
@@ -42,7 +42,7 @@ export class ZZZIndexResp {
   constructor(data) {
     const { stats, avatar_list, cur_head_icon_url, buddy_list } = data;
     this.stats = stats;
-    this.avatar_list = avatar_list.map(item => new ZZZAvatarInfo(item));
+    this.avatar_list = avatar_list.map(item => new ZZZAvatarBasic(item));
     this.cur_head_icon_url = cur_head_icon_url;
     this.buddy_list = buddy_list.map(item => new Buddy(item));
   }

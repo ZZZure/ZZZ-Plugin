@@ -36,7 +36,6 @@ export class Card extends ZZZPlugin {
     });
     if (!zzzBuddyList) return false;
     indexData.buddy_list = zzzBuddyList.list;
-
     const finalIndexData = new ZZZIndexResp(indexData);
     this.e.playerCard.player.region_name =
       finalIndexData.stats.world_level_name;

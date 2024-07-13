@@ -1,0 +1,449 @@
+.card {
+  padding-top: 0.8em;
+  overflow: hidden;
+  .star {
+    width: 5.5em;
+    height: 1.5em;
+    @for $i from 0 through 5 {
+      &.star#{$i} {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url('./images/star/#{$i}.png');
+      }
+    }
+  }
+  .basic {
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    .char {
+      width: 55%;
+      position: relative;
+      flex-grow: 1;
+      .avatar {
+        height: 100%;
+        padding-top: 1em;
+        overflow: hidden;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top center;
+          position: absolute;
+        }
+      }
+      .skills {
+        position: absolute;
+        width: 120%;
+        height: 3.5em;
+        background: url('./images/skill_bg.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        bottom: 3em;
+        right: -1.6em;
+        display: flex;
+        align-items: flex-end;
+        padding-left: 2.5em;
+        padding-bottom: 0.2em;
+        .skill {
+          width: 1.4em;
+          aspect-ratio: 1;
+          margin-right: 1.38em;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+    .info {
+      width: 45%;
+      flex-grow: 0;
+      flex-shrink: 0;
+      font-size: 1.2em;
+      position: relative;
+      z-index: 2;
+      .char_info {
+        width: 140%;
+        position: relative;
+        right: 20%;
+        padding: 0.3em 0.2em;
+        padding-right: 20%;
+        padding-left: 8%;
+        border-image-slice: 0 30 0 40 fill;
+        border-image-width: 0em 1.5em 0em 2em;
+        border-image-outset: 0 0 0 0;
+        border-image-repeat: stretch stretch;
+        border-image-source: url('./images/CurseBG04.png');
+        filter: drop-shadow(0 0 0.1em rgb(0, 0, 0));
+        .base {
+          display: flex;
+          align-items: center;
+          gap: 0.2em;
+          overflow: hidden;
+          .rank {
+            width: 1.2em;
+            flex-grow: 0;
+            flex-shrink: 0;
+          }
+          .property {
+            width: 1em;
+            flex-grow: 0;
+            flex-shrink: 0;
+          }
+          .name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+        .addition {
+          display: flex;
+          align-items: center;
+          font-size: 0.7em;
+          gap: 0.2em;
+          padding-left: 1em;
+          .level {
+            background-color: #000;
+            padding: 0em 0.7em;
+            border-radius: 1em;
+          }
+          .role_ranks {
+            display: flex;
+            gap: 0.1em;
+            span {
+              width: 1.2em;
+              aspect-ratio: 1;
+              border-radius: 1em;
+              background-size: contain;
+              background-repeat: no-repeat;
+              background-position: center;
+              opacity: 0.4;
+            }
+            @for $i from 1 through 7 {
+              span:nth-child(#{$i}) {
+                background-image: url('./images/ranks/#{$i}.png');
+              }
+              &.r#{$i} {
+                @for $j from 1 through $i {
+                  span:nth-child(#{$j}) {
+                    opacity: 1 !important;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .property_info {
+        background-color: rgb(47, 47, 47);
+        border-left: 0.1em solid rgb(0, 0, 0);
+        padding-top: 0.2em;
+        background: url('./images/BgFrame01.png') center / 150% no-repeat;
+        .title {
+          font-size: 0.6em;
+          .special-title {
+            margin-bottom: 0;
+            padding-bottom: 0;
+          }
+        }
+        .list {
+          display: flex;
+          flex-direction: column;
+          gap: 0.2em;
+          padding-bottom: 0.2em;
+          .properties {
+            display: flex;
+            align-items: center;
+            gap: 0.4em;
+            padding: 0.05em 1em 0em 0.05em;
+            &:nth-child(odd) {
+              background-color: rgba(221, 224, 221, 0.25);
+            }
+            .prop-icon {
+              width: 1em;
+              flex-grow: 0;
+              flex-shrink: 0;
+              margin: 0 0.4em;
+            }
+            .label {
+              flex-grow: 1;
+              flex-shrink: 1;
+              font-size: 0.65em;
+              color: rgb(166, 166, 166);
+              &.yellow {
+                color: rgb(247, 199, 54);
+              }
+              &.blue {
+                color: rgb(65, 147, 237);
+              }
+            }
+            .value {
+              flex-grow: 0;
+              flex-shrink: 0;
+              font-size: 0.8em;
+            }
+          }
+        }
+      }
+      .weapon_info {
+        border-image-slice: 118 0 68 43 fill;
+        border-image-width: 4.5em 0em 2.7em 1.7em;
+        border-image-outset: 0em 0em 0em 0em;
+        border-image-repeat: stretch stretch;
+        border-image-source: url('./images/weapon_bg.png');
+        margin-top: -0.8em;
+        width: 115%;
+        margin-left: -15%;
+        font-size: 0.8em;
+        padding: 2em 1.2em;
+        padding-bottom: 3em;
+        position: relative;
+        overflow: hidden;
+        .info {
+          width: 100%;
+          position: relative;
+          z-index: 2;
+          .base {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+            .rarity-icon {
+              width: 2em;
+            }
+            .name {
+              text-shadow: 0 0 0.2em rgb(0, 0, 0);
+            }
+          }
+          .main {
+            display: flex;
+            flex-direction: column;
+            justify-content: stretch;
+            width: max-content;
+            .addition {
+              font-size: 0.8em;
+              display: flex;
+              align-items: center;
+              gap: 0.4em;
+              .level {
+                $label-width: 0.2em;
+                -webkit-clip-path: polygon(
+                  $label-width 0%,
+                  calc(100% - $label-width) 0%,
+                  100% $label-width,
+                  100% calc(100% - $label-width),
+                  calc(100% - $label-width) 100%,
+                  $label-width 100%,
+                  0% calc(100% - $label-width),
+                  0% $label-width
+                );
+                clip-path: polygon(
+                  $label-width 0%,
+                  calc(100% - $label-width) 0%,
+                  100% $label-width,
+                  100% calc(100% - $label-width),
+                  calc(100% - $label-width) 100%,
+                  $label-width 100%,
+                  0% calc(100% - $label-width),
+                  0% $label-width
+                );
+                padding: 0 0.4em;
+                font-size: 0.9em;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: rgb(43, 38, 40);
+                margin: 0.1em 0;
+                background-color: rgb(243, 203, 69);
+              }
+            }
+            .properties {
+              display: flex;
+              align-items: center;
+              background-color: rgb(65, 147, 237);
+              gap: 0.2em;
+              padding: 0 0.5em;
+              border-radius: 1em;
+              margin: 0.2em 0;
+              &.sub {
+                background-color: rgb(0, 0, 0);
+              }
+              .prop-icon {
+                width: 1em;
+                flex-grow: 0;
+                flex-shrink: 0;
+              }
+              .label {
+                flex-grow: 1;
+                flex-shrink: 1;
+                font-size: 0.7em;
+                color: rgb(222, 222, 222);
+              }
+            }
+          }
+        }
+        .icon {
+          position: absolute;
+          top: 1.2em;
+          right: 0;
+          z-index: 1;
+          height: 70%;
+          margin-right: -1em;
+          img {
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+  .other {
+    border-image-source: url('./images/BgFrame01.png');
+    border-image-slice: 200 100 70 280 fill;
+    border-image-width: 2em 1em 0.7em 2.8em;
+    border-image-outset: 2em 1em 0.7em 2.8em;
+    border-image-repeat: stretch stretch;
+    padding-bottom: 3.3em;
+    margin-top: -1.4em;
+    position: relative;
+    z-index: 5;
+  }
+  .equip-list {
+    display: grid;
+    gap: 1em;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0 1.8em;
+    align-items: stretch;
+    margin-top: 1em;
+    .box {
+      $size: 3em;
+      border-image-source: url('./images/equip_bg.png');
+      border-image-slice: 190 90 110 170 fill;
+      border-image-width: 1.9 * $size 0.9 * $size 1.1 * $size 1.7 * $size;
+      border-image-outset: 0.6 * $size 0.5 * $size 0.6 * $size 0.5 * $size;
+      border-image-repeat: stretch stretch;
+      position: relative;
+      margin-top: 1.3em;
+      padding-bottom: 1em;
+      min-height: 10em;
+      &.empty {
+        &::after {
+          content: '';
+          position: absolute;
+          width: 2.5em;
+          height: 2.5em;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background-image: url('./images/empty_equip_07.png');
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+      }
+      @for $i from 1 through 6 {
+        &:nth-child(#{$i}) {
+          &::before {
+            content: '0#{$i}';
+            position: absolute;
+            font-size: 2em;
+            left: 50%;
+            top: -0.85em;
+            transform: translate(-50%, 0);
+            z-index: -1;
+          }
+        }
+      }
+      .icon {
+        width: 0.9 * $size;
+        aspect-ratio: 1;
+        position: relative;
+        left: -0.3 * $size;
+        top: -0.4 * $size;
+        background-color: rgb(0, 0, 0);
+        background-image: url('./images/empty_equip_03.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 50%;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          display: block;
+        }
+      }
+      .info {
+        display: flex;
+        padding-left: 2.2em;
+        margin-top: -2.5em;
+        gap: 0.5em;
+        align-items: center;
+        .level {
+          flex-grow: 1;
+          flex-shrink: 1;
+          text-align: center;
+          font-size: 0.76em;
+          background-color: #000;
+          padding: 0.1em 0.5em;
+          border-radius: 1em;
+          margin-bottom: 0.3em;
+        }
+        .rarity-icon {
+          width: 2.2em;
+        }
+      }
+      .name {
+        padding: 0 0.5em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-align: center;
+      }
+      .property-list {
+        padding: 0 0.5em;
+        .properties {
+          display: flex;
+          align-items: center;
+          background-color: rgb(0, 0, 0);
+          gap: 0.2em;
+          padding: 0 0.5em;
+          border-radius: 1em;
+          margin: 0.2em 0;
+          .prop-icon {
+            width: 1em;
+            flex-grow: 0;
+            flex-shrink: 0;
+          }
+          .label {
+            flex-grow: 1;
+            flex-shrink: 1;
+            font-size: 0.7em;
+            color: rgb(222, 222, 222);
+          }
+          .value {
+            color: rgb(249, 189, 64);
+            font-size: 0.7em;
+          }
+          &.main {
+            background-color: rgb(65, 147, 237);
+            .prop-icon {
+              width: 1.2em;
+              margin-bottom: 0.2em;
+            }
+            .value {
+              color: rgb(255, 255, 255);
+              font-size: 1em;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.copyright {
+  margin-top: -3.3em;
+  position: relative;
+  z-index: 5;
+}

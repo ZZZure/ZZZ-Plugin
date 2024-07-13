@@ -1,5 +1,5 @@
 import { element } from '../lib/convert.js';
-import { getSquareAvatar } from '../lib/download.js';
+import { getRoleImage, getSquareAvatar } from '../lib/download.js';
 import { Equip, Weapon } from './equip.js';
 import { Property } from './property.js';
 import { Skill } from './skill.js';
@@ -114,20 +114,40 @@ export class ZZZAvatarBasic {
 
     this.element_str = element.IDToElement(element_type);
   }
+
+  async get_assets() {
+    const result = await getSquareAvatar(this.id);
+    this.square_icon = result;
+  }
 }
 
 /**
  * @class
  */
 export class Rank {
+  // 类型标注
+  /** @type {number} */
+  id;
+  /** @type {string} */
+  name;
+  /** @type {string} */
+  desc;
+  /** @type {number} */
+  pos;
+  /** @type {boolean} */
+  is_unlocked;
+
   /**
-   * @param {number} id
-   * @param {string} name
-   * @param {string} desc
-   * @param {number} pos
-   * @param {boolean} is_unlocked
+   * @param {{
+   *  id: number;
+   *  name: string;
+   *  desc: string;
+   *  pos: number;
+   *  is_unlocked: boolean;
+   * }} data
    */
-  constructor(id, name, desc, pos, is_unlocked) {
+  constructor(data) {
+    const { id, name, desc, pos, is_unlocked } = data;
     this.id = id;
     this.name = name;
     this.desc = desc;
@@ -158,11 +178,46 @@ export class ZZZAvatarInfo {
    *  skills: Skill[];
    *  rank: number;
    *  ranks: Rank[];
-   *
    *  isNew?: boolean;
    * }} data
    */
   constructor(data) {
+    // 类型标注
+    /** @type {number} */
+    this.id;
+    /** @type {number} */
+    this.level;
+    /** @type {string} */
+    this.name_mi18n;
+    /** @type {string} */
+    this.full_name_mi18n;
+    /** @type {number} */
+    this.element_type;
+    /** @type {string} */
+    this.camp_name_mi18n;
+    /** @type {number} */
+    this.avatar_profession;
+    /** @type {string} */
+    this.rarity;
+    /** @type {string} */
+    this.group_icon_path;
+    /** @type {string} */
+    this.hollow_icon_path;
+    /** @type {Equip[]} */
+    this.equip;
+    /** @type {Weapon} */
+    this.weapon;
+    /** @type {Property[]} */
+    this.properties;
+    /** @type {Skill[]} */
+    this.skills;
+    /** @type {number} */
+    this.rank;
+    /** @type {Rank[]} */
+    this.ranks;
+    /** @type {boolean} */
+    this.isNew;
+
     const {
       id,
       level,
@@ -192,20 +247,57 @@ export class ZZZAvatarInfo {
     this.rarity = rarity;
     this.group_icon_path = group_icon_path;
     this.hollow_icon_path = hollow_icon_path;
-    this.equip = equip;
-    this.weapon = weapon;
-    this.properties = properties;
-    this.skills = skills;
+    this.equip =
+      equip &&
+      (Array.isArray(equip)
+        ? equip.map(equip => new Equip(equip))
+        : new Equip(equip));
+    this.weapon = weapon ? new Weapon(weapon) : null;
+    this.properties =
+      properties && properties.map(property => new Property(property));
+    this.skills = skills && skills.map(skill => new Skill(skill));
     this.rank = rank;
-    this.ranks = ranks;
+    this.ranks = ranks && ranks.map(rank => new Rank(rank));
+
+    this.ranks_num = this.ranks.filter(rank => rank.is_unlocked).length;
 
     this.element_str = element.IDToElement(element_type);
     this.isNew = isNew;
   }
 
+  getProperty(name) {
+    return this.properties.find(property => property.property_name === name);
+  }
+
+  get basic_properties() {
+    const data = {
+      hpmax: this.getProperty('生命值'),
+      attack: this.getProperty('攻击力'),
+      def: this.getProperty('防御力'),
+      breakstun: this.getProperty('冲击力'),
+      crit: this.getProperty('暴击率'),
+      critdam: this.getProperty('暴击伤害'),
+      elementabnormalpower: this.getProperty('异常掌控'),
+      elementmystery: this.getProperty('异常精通'),
+      penratio: this.getProperty('穿透率'),
+      sprecover: this.getProperty('能量自动回复'),
+    };
+    logger.debug('basic_properties', data);
+    return data;
+  }
+
   async get_basic_assets() {
     const result = await getSquareAvatar(this.id);
     this.square_icon = result;
+  }
+
+  async get_detail_assets() {
+    const role_icon = await getRoleImage(this.id);
+    this.role_icon = role_icon;
+    await this.weapon.get_assets();
+    for (const equip of this.equip) {
+      await equip.get_assets();
+    }
   }
 
   async get_assets() {

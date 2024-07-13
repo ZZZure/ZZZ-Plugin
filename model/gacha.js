@@ -8,32 +8,58 @@ import {
  * @class
  */
 export class SingleGachaLog {
+  // 类型标注
+  /** @type {string} */
+  uid;
+  /** @type {string} */
+  gacha_id;
+  /** @type {string} */
+  gacha_type;
+  /** @type {string} */
+  item_id;
+  /** @type {string} */
+  count;
+  /** @type {string} */
+  time;
+  /** @type {string} */
+  name;
+  /** @type {string} */
+  lang;
+  /** @type {string} */
+  item_type;
+  /** @type {string} */
+  rank_type;
+  /** @type {string} */
+  id;
   /**
-   * @param {string} uid
-   * @param {string} gacha_id
-   * @param {string} gacha_type
-   * @param {string} item_id
-   * @param {string} count
-   * @param {string} time
-   * @param {string} name
-   * @param {string} lang
-   * @param {string} item_type
-   * @param {string} rank_type
-   * @param {string} id
+   * @param {{
+   *  uid: string;
+   *  gacha_id: string;
+   *  gacha_type: string;
+   *  item_id: string;
+   *  count: string;
+   *  time: string;
+   *  name: string;
+   *  lang: string;
+   *  item_type: string;
+   *  rank_type: string;
+   *  id: string;
+   * }} data
    */
-  constructor(
-    uid,
-    gacha_id,
-    gacha_type,
-    item_id,
-    count,
-    time,
-    name,
-    lang,
-    item_type,
-    rank_type,
-    id
-  ) {
+  constructor(data) {
+    const {
+      uid,
+      gacha_id,
+      gacha_type,
+      item_id,
+      count,
+      time,
+      name,
+      lang,
+      item_type,
+      rank_type,
+      id,
+    } = data;
     this.uid = uid;
     this.gacha_id = gacha_id;
     this.gacha_type = gacha_type;
@@ -93,22 +119,7 @@ export class ZZZGachaLogResp {
     const { page, size, list, region, region_time_zone } = data;
     this.page = page;
     this.size = size;
-    this.list = list.map(
-      item =>
-        new SingleGachaLog(
-          item.uid,
-          item.gacha_id,
-          item.gacha_type,
-          item.item_id,
-          item.count,
-          item.time,
-          item.name,
-          item.lang,
-          item.item_type,
-          item.rank_type,
-          item.id
-        )
-    );
+    this.list = list.map(item => new SingleGachaLog(item));
     this.region = region;
     this.region_time_zone = region_time_zone;
   }

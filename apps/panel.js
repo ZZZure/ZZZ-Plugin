@@ -17,11 +17,11 @@ export class Panel extends ZZZPlugin {
         },
         {
           reg: `${rulePrefix}面板列表$`,
-          fnc: 'getPanelList',
+          fnc: 'getCharPanelList',
         },
         {
           reg: `${rulePrefix}(.+)面板$`,
-          fnc: 'getPanel',
+          fnc: 'getCharPanel',
         },
       ],
     });
@@ -32,10 +32,11 @@ export class Panel extends ZZZPlugin {
     await this.getPlayerInfo();
     const result = await refreshPanel(this.e, api, uid, deviceFp);
     const newChar = result.filter(item => item.isNew);
-    let str = '面板列表获取成功，本次共刷新了' + newChar.length + '个角色：';
+    let str = '面板列表获取成功，本次共刷新了' + newChar.length + '个角色：\n';
     for (const item of result) {
-      str += '\n' + item.name_mi18n;
+      str += item.name_mi18n + (item.isNew ? '（新）' : '') + '、';
     }
+    str = str.slice(0, -1);
     str += '\n总计' + result.length + '个角色';
     await this.reply(str);
     // const finalData = {
@@ -43,7 +44,7 @@ export class Panel extends ZZZPlugin {
     // };
     // await render(this.e, 'panel/refresh.html', finalData);
   }
-  async getPanelList() {
+  async getCharPanelList() {
     const uid = await this.getUID();
     if (!uid) return false;
     const noteData = getPanelList(uid);
@@ -59,16 +60,20 @@ export class Panel extends ZZZPlugin {
     // };
     // await render(this.e, 'panel/list.html', finalData);
   }
-  async getPanel() {
+  async getCharPanel() {
     const uid = await this.getUID();
     if (!uid) return false;
     const reg = new RegExp(`${rulePrefix}(.+)面板$`);
     const name = this.e.msg.match(reg)[4];
     const data = getPanel(uid, name);
-    await this.reply(JSON.stringify(data, null, 2));
-    // const finalData = {
-    //   list: noteData,
-    // };
-    // await render(this.e, 'panel/list.html', finalData);
+    if (!data) {
+      await this.reply(`未找到角色${name}的面板信息`);
+      return false;
+    }
+    await data.get_detail_assets();
+    const finalData = {
+      charData: data,
+    };
+    await render(this.e, 'panel/card.html', finalData);
   }
 }
