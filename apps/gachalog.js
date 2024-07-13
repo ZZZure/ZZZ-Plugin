@@ -98,7 +98,7 @@ export class GachaLog extends ZZZPlugin {
       return false;
     }
     const lastQueryTime = await redis.get(`ZZZ:GACHA:${uid}:LASTTIME`);
-    const coldTime = settings.getConfig('panel').interval || 300;
+    const coldTime = settings.getConfig('gacha').interval || 300;
     if (lastQueryTime && Date.now() - lastQueryTime < 1000 * coldTime) {
       await this.reply(`${coldTime}秒内只能刷新一次，请稍后再试`);
       return false;
