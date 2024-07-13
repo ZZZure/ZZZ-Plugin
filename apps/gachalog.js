@@ -2,6 +2,7 @@ import { ZZZPlugin } from '../lib/plugin.js';
 import render from '../lib/render.js';
 import { rulePrefix } from '../lib/common.js';
 import { getAuthKey } from '../lib/authkey.js';
+import settings from '../lib/settings.js';
 import {
   anaylizeGachaLog,
   updateGachaLog,
@@ -97,8 +98,9 @@ export class GachaLog extends ZZZPlugin {
       return false;
     }
     const lastQueryTime = await redis.get(`ZZZ:GACHA:${uid}:LASTTIME`);
-    if (lastQueryTime && Date.now() - lastQueryTime < 1000 * 60 * 5) {
-      await this.reply('1分钟内只能刷新一次，请稍后重试');
+    const coldTime = settings.getConfig('panel').interval || 300;
+    if (lastQueryTime && Date.now() - lastQueryTime < 1000 * coldTime) {
+      await this.reply(`${coldTime}秒内只能刷新一次，请稍后再试`);
       return false;
     }
     await redis.set(`ZZZ:GACHA:${uid}:LASTTIME`, Date.now());

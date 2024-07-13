@@ -2,6 +2,7 @@ import { ZZZPlugin } from '../lib/plugin.js';
 import render from '../lib/render.js';
 import { rulePrefix } from '../lib/common.js';
 import { getPanelList, refreshPanel, getPanel } from '../lib/avatar.js';
+import settings from '../lib/settings.js';
 
 export class Panel extends ZZZPlugin {
   constructor() {
@@ -27,8 +28,18 @@ export class Panel extends ZZZPlugin {
     });
   }
   async refreshPanel() {
-    const { api, deviceFp, uid } = await this.getAPI();
-    if (!api || !uid) return false;
+    const uid = await this.getUID();
+    if (!uid) return;
+    const lastQueryTime = await redis.get(`ZZZ:PANEL:${uid}:LASTTIME`);
+    const coldTime = settings.getConfig('gacha').interval || 300;
+    if (lastQueryTime && Date.now() - lastQueryTime < 1000 * coldTime) {
+      await this.reply(`${coldTime}秒内只能刷新一次，请稍后再试`);
+      return;
+    }
+    const { api, deviceFp } = await this.getAPI();
+    if (!api) return false;
+    await redis.set(`ZZZ:PANEL:${uid}:LASTTIME`, Date.now());
+    await this.reply('正在刷新面板列表，请稍后...');
     await this.getPlayerInfo();
     const result = await refreshPanel(this.e, api, uid, deviceFp);
     const newChar = result.filter(item => item.isNew);
@@ -66,11 +77,13 @@ export class Panel extends ZZZPlugin {
     if (!uid) return false;
     const reg = new RegExp(`${rulePrefix}(.+)面板$`);
     const name = this.e.msg.match(reg)[4];
+    if (['刷新', '更新'].includes(name)) return this.getCharPanelList();
     const data = getPanel(uid, name);
     if (!data) {
       await this.reply(`未找到角色${name}的面板信息`);
-      return false;
+      return;
     }
+    await this.reply('正在下载面板图片资源，请稍后...');
     await data.get_detail_assets();
     const finalData = {
       charData: data,

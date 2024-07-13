@@ -294,7 +294,7 @@ export class ZZZAvatarInfo {
   async get_detail_assets() {
     const role_icon = await getRoleImage(this.id);
     this.role_icon = role_icon;
-    await this.weapon.get_assets();
+    await this?.weapon?.get_assets?.();
     for (const equip of this.equip) {
       await equip.get_assets();
     }
