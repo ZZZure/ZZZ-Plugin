@@ -56,4 +56,48 @@
   background-image: url("../images/IconDungeonBuffEther.png");
 }
 
+.special-title {
+  width: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  align-items: stretch;
+  padding: 0 2.4em;
+  position: relative;
+  margin: 0.5em 0;
+}
+.special-title .parallelograms {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  position: inherit;
+  padding-bottom: 0.4em;
+  z-index: 1;
+}
+.special-title .parallelograms span {
+  width: 1.3em;
+  height: 80%;
+  background-color: rgb(246, 202, 69);
+  margin-right: -0.2em;
+  -webkit-clip-path: polygon(0.7em 0%, 100% 0%, calc(100% - 0.7em) 100%, 0% 100%);
+  clip-path: polygon(0.7em 0%, 100% 0%, calc(100% - 0.7em) 100%, 0% 100%);
+}
+.special-title .bg-content {
+  position: absolute;
+  bottom: -0.1em;
+  left: 50%;
+  transform: translate(-50%, 0) skewX(-8deg);
+  color: rgba(255, 255, 255, 0.1);
+  font-size: 2.7em;
+}
+.special-title .content {
+  flex-grow: 1;
+  flex-shrink: 1;
+  font-size: 1.5em;
+  text-align: center;
+  position: inherit;
+  z-index: 1;
+}
+
 /*# sourceMappingURL=index.css.map */
