@@ -27,29 +27,52 @@ git clone --depth=1 https://github.com/ZZZure/ZZZ-Plugin.git ./plugins/ZZZ-Plugi
 
 # 功能
 
+以下所有功能前缀为：`#zzz`、`%`、`#ZZZ`、`#绝区零` 任选其一
+
 <details>
-  <summary>便签 - 命令: #zzznote、%note</summary>
+  <summary>便签 - 命令: note、便签、便笺、体力、每日</summary>
   <p><a><img src="https://s2.loli.net/2024/07/10/zM472pxdVIS3hvF.jpg"></a></p>
 </details>
 
 <details>
-  <summary>基本信息汇总 - 命令: #zzzcard、%card</summary>
+  <summary>基本信息汇总（角色和邦布） - 命令: card、卡片、个人信息</summary>
   <p><a><img src="https://s2.loli.net/2024/07/10/GiZmV1Cf7wTLOUp.jpg"></a></p>
 </details>
 
 <details>
-  <summary>更新抽卡记录（需要逍遥插件支持） - 命令: #zzz刷新抽卡链接、%刷新抽卡链接</summary>
+  <summary>更新抽卡记录（需要逍遥插件支持） - 命令: 刷新抽卡链接、更新抽卡链接、刷新抽卡记录、更新抽卡记录</summary>
   <p><a><img src="https://s2.loli.net/2024/07/10/K6dg5EFGaHV7SW2.png"></a></p>
 </details>
 
 <details>
-  <summary>抽卡记录 - 命令: #zzz抽卡分析、%抽卡分析</summary>
+  <summary>获取抽卡记录链接（需要逍遥插件支持） - 命令: 获取抽卡链接</summary>
+  <p>暂时没有图片</p>
+</details>
+
+<details>
+  <summary>抽卡记录 - 命令: 抽卡分析、抽卡记录</summary>
   <p><a><img src="https://s2.loli.net/2024/07/10/RTxz5IvcQBNOVMi.jpg"></a></p>
 </details>
 
 <details>
-  <summary>角色攻略 - 命令: #zzz角色攻略+角色名称/别名、%角色攻略+角色名称/别名</summary>
+  <summary>角色攻略 - 命令: 角色名称/别名+攻略+(可选)来源数字</summary>
+  <p>老图片，功能差不多</p>
   <p><a><img src="https://s2.loli.net/2024/07/10/sqRC2BpntlkNgP6.png"></a></p>
+</details>
+
+<details>
+  <summary>刷新角色面板 - 命令: 刷新面板、更新面板、面板刷新、面板更新</summary>
+  <p>暂时没有图片</p>
+</details>
+
+<details>
+  <summary>查看角色面板列表 - 命令: 面板、面板列表</summary>
+  <p>暂时没有图片</p>
+</details>
+
+<details>
+  <summary>查看角色面板 - 命令: 角色名/别名+面板</summary>
+  <p><a><img src="https://s2.loli.net/2024/07/13/8FVT1AfD6IxYpcq.jpg"></a></p>
 </details>
 
 # 贡献
