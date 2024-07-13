@@ -31,7 +31,7 @@ export class Panel extends ZZZPlugin {
     const uid = await this.getUID();
     if (!uid) return;
     const lastQueryTime = await redis.get(`ZZZ:PANEL:${uid}:LASTTIME`);
-    const coldTime = settings.getConfig('gacha').interval || 300;
+    const coldTime = settings.getConfig('panel').interval || 300;
     if (lastQueryTime && Date.now() - lastQueryTime < 1000 * coldTime) {
       await this.reply(`${coldTime}秒内只能刷新一次，请稍后再试`);
       return;
