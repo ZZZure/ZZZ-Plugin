@@ -39,7 +39,13 @@ export class Card extends ZZZPlugin {
     const finalIndexData = new ZZZIndexResp(indexData);
     this.e.playerCard.player.region_name =
       finalIndexData.stats.world_level_name;
+    const timer = setTimeout(() => {
+      if (this?.reply) {
+        this.reply('查询成功，正在下载图片资源，请稍候。');
+      }
+    }, 3000);
     await finalIndexData.get_assets();
+    clearTimeout(timer);
     const data = {
       card: finalIndexData,
     };

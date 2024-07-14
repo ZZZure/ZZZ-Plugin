@@ -39,7 +39,7 @@ export class Panel extends ZZZPlugin {
     const { api, deviceFp } = await this.getAPI();
     if (!api) return false;
     await redis.set(`ZZZ:PANEL:${uid}:LASTTIME`, Date.now());
-    await this.reply('正在刷新面板列表，请稍后...');
+    await this.reply('正在刷新面板列表，请稍候...');
     await this.getPlayerInfo();
     const result = await refreshPanel(this.e, api, uid, deviceFp);
     const newChar = result.filter(item => item.isNew);
@@ -83,8 +83,13 @@ export class Panel extends ZZZPlugin {
       await this.reply(`未找到角色${name}的面板信息`);
       return;
     }
-    await this.reply('正在下载面板图片资源，请稍后...');
+    const timer = setTimeout(() => {
+      if (this?.reply) {
+        this.reply('查询成功，正在下载图片资源，请稍候。');
+      }
+    }, 3000);
     await data.get_detail_assets();
+    clearTimeout(timer);
     const finalData = {
       charData: data,
     };
