@@ -17,7 +17,7 @@ export class GachaLog extends ZZZPlugin {
       name: '[ZZZ-Plugin]GachaLog',
       dsc: 'zzzGachaLog',
       event: 'message',
-      priority: 100,
+      priority: _.get(settings.getConfig('priority'), 'gachalog', 1),
       rule: [
         {
           reg: `^${rulePrefix}抽卡帮助$`,

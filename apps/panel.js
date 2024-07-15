@@ -3,7 +3,7 @@ import render from '../lib/render.js';
 import { rulePrefix } from '../lib/common.js';
 import { getPanelList, refreshPanel, getPanel } from '../lib/avatar.js';
 import settings from '../lib/settings.js';
-import _ from 'lodash'
+import _ from 'lodash';
 
 export class Panel extends ZZZPlugin {
   constructor() {
@@ -11,7 +11,7 @@ export class Panel extends ZZZPlugin {
       name: '[ZZZ-Plugin]Panel',
       dsc: 'zzzpanel',
       event: 'message',
-      priority: 100,
+      priority: _.get(settings.getConfig('priority'), 'panel', 1),
       rule: [
         {
           reg: `${rulePrefix}((刷新|更新)面板|面板(刷新|更新))$`,

@@ -1,5 +1,7 @@
 import { ZZZPlugin } from '../lib/plugin.js';
 import { rulePrefix } from '../lib/common.js';
+import settings from '../lib/settings.js';
+import _ from 'lodash';
 
 export class Challenge extends ZZZPlugin {
   constructor() {
@@ -7,7 +9,7 @@ export class Challenge extends ZZZPlugin {
       name: '[ZZZ-Plugin]challenge',
       dsc: 'zzz式舆防卫战',
       event: 'message',
-      priority: 100,
+      priority: _.get(settings.getConfig('priority'), 'challenge', 1),
       rule: [
         {
           reg: `${rulePrefix}(式舆防卫战|式舆|深渊|防卫战|防卫)$`,
@@ -20,7 +22,9 @@ export class Challenge extends ZZZPlugin {
     const { api, deviceFp } = await this.getAPI();
     if (!api) return false;
     await this.getPlayerInfo();
-    const indexData = await api.getFinalData(this.e, 'zzzChallenge', { deviceFp });
+    const indexData = await api.getFinalData(this.e, 'zzzChallenge', {
+      deviceFp,
+    });
     await this.reply('data:' + JSON.stringify(indexData));
   }
 }
