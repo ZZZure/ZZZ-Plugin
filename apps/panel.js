@@ -3,6 +3,7 @@ import render from '../lib/render.js';
 import { rulePrefix } from '../lib/common.js';
 import { getPanelList, refreshPanel, getPanel } from '../lib/avatar.js';
 import settings from '../lib/settings.js';
+import _ from 'lodash'
 
 export class Panel extends ZZZPlugin {
   constructor() {
