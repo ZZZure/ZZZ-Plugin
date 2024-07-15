@@ -3,6 +3,7 @@ import render from '../lib/render.js';
 import { rulePrefix } from '../lib/common.js';
 import { getAuthKey } from '../lib/authkey.js';
 import settings from '../lib/settings.js';
+import _ from 'lodash';
 import {
   anaylizeGachaLog,
   updateGachaLog,
@@ -81,6 +82,14 @@ export class GachaLog extends ZZZPlugin {
   async refreshGachaLog() {
     const uid = await this.getUID();
     if (!uid) return false;
+    const lastQueryTime = await redis.get(`ZZZ:GACHA:${uid}:LASTTIME`);
+    const gachaConfig = settings.getConfig('gacha');
+    const coldTime = _.get(gachaConfig, 'interval', 300);
+    if (lastQueryTime && Date.now() - lastQueryTime < 1000 * coldTime) {
+      await this.reply(`${coldTime}秒内只能刷新一次，请稍后再试`);
+      return false;
+    }
+    await redis.set(`ZZZ:GACHA:${uid}:LASTTIME`, Date.now());
     try {
       const key = await getAuthKey(this.e, this.User, uid);
       if (!key) {
@@ -97,13 +106,6 @@ export class GachaLog extends ZZZPlugin {
     if (!uid) {
       return false;
     }
-    const lastQueryTime = await redis.get(`ZZZ:GACHA:${uid}:LASTTIME`);
-    const coldTime = settings.getConfig('gacha').interval || 300;
-    if (lastQueryTime && Date.now() - lastQueryTime < 1000 * coldTime) {
-      await this.reply(`${coldTime}秒内只能刷新一次，请稍后再试`);
-      return false;
-    }
-    await redis.set(`ZZZ:GACHA:${uid}:LASTTIME`, Date.now());
     this.reply('正在更新抽卡记录，可能需要一段时间，请耐心等待');
     const { data, count } = await updateGachaLog(key, uid);
     let msg = `抽卡记录更新成功，共${Object.keys(data).length}个卡池`;

@@ -1,2 +1,4 @@
 render:
   scale: 100
+query:
+  others: true

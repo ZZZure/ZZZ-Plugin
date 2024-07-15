@@ -45,6 +45,12 @@ export function supportGuoba() {
           },
         },
         {
+          field: 'config.query.others',
+          label: '允许查询他人信息',
+          bottomHelpMessage: '是否允许查询他人信息',
+          component: 'Switch',
+        },
+        {
           component: 'Divider',
           label: '抽卡设置',
         },
