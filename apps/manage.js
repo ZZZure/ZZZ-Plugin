@@ -20,7 +20,7 @@ export class Panel extends ZZZPlugin {
       name: '[ZZZ-Plugin]Manage',
       dsc: 'zzzmanage',
       event: 'message',
-      priority: _.get(settings.getConfig('priority'), 'manage', 1),
+      priority: _.get(settings.getConfig('priority'), 'manage', 70),
       rule: [
         {
           reg: `${rulePrefix}下载(全部|所有)资源$`,

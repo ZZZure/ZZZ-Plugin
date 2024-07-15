@@ -11,7 +11,7 @@ export class Panel extends ZZZPlugin {
       name: '[ZZZ-Plugin]Panel',
       dsc: 'zzzpanel',
       event: 'message',
-      priority: _.get(settings.getConfig('priority'), 'panel', 1),
+      priority: _.get(settings.getConfig('priority'), 'panel', 70),
       rule: [
         {
           reg: `${rulePrefix}((刷新|更新)面板|面板(刷新|更新))$`,

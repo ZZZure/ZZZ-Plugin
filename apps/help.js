@@ -9,7 +9,7 @@ export class Help extends ZZZPlugin {
       name: '[ZZZ-Plugin]Help',
       dsc: 'zzzhelp',
       event: 'message',
-      priority: _.get(settings.getConfig('priority'), 'help', 1),
+      priority: _.get(settings.getConfig('priority'), 'help', 70),
       rule: [
         {
           reg: `${rulePrefix}(帮助|help)$`,

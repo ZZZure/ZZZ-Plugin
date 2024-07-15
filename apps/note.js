@@ -11,7 +11,7 @@ export class Note extends ZZZPlugin {
       name: '[ZZZ-Plugin]Note',
       dsc: 'zzznote',
       event: 'message',
-      priority: _.get(settings.getConfig('priority'), 'note', 1),
+      priority: _.get(settings.getConfig('priority'), 'note', 70),
       rule: [
         {
           reg: `${rulePrefix}(note|每日|体力|便笺|便签)$`,

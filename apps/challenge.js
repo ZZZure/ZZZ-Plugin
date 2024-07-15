@@ -9,7 +9,7 @@ export class Challenge extends ZZZPlugin {
       name: '[ZZZ-Plugin]challenge',
       dsc: 'zzz式舆防卫战',
       event: 'message',
-      priority: _.get(settings.getConfig('priority'), 'challenge', 1),
+      priority: _.get(settings.getConfig('priority'), 'challenge', 70),
       rule: [
         {
           reg: `${rulePrefix}(式舆防卫战|式舆|深渊|防卫战|防卫)$`,

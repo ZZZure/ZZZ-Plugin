@@ -11,7 +11,7 @@ export class Card extends ZZZPlugin {
       name: '[ZZZ-Plugin]Card',
       dsc: 'zzzcard',
       event: 'message',
-      priority: _.get(settings.getConfig('priority'), 'card', 1),
+      priority: _.get(settings.getConfig('priority'), 'card', 70),
       rule: [
         {
           reg: `${rulePrefix}(card|卡片|个人信息)$`,

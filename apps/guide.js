@@ -18,7 +18,7 @@ export class Guide extends ZZZPlugin {
       name: '[ZZZ-Plugin]Guide',
       dsc: '#zzz角色攻略',
       event: 'message',
-      priority: _.get(settings.getConfig('priority'), 'guide', 1),
+      priority: _.get(settings.getConfig('priority'), 'guide', 70),
       rule: [
         {
           reg: `${rulePrefix}(更新)?\\S+攻略(\\d+)?$`,

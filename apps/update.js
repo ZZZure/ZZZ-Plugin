@@ -27,7 +27,7 @@ export class Update extends ZZZPlugin {
       name: '[ZZZ-Plugin]Update',
       dsc: 'zzzupdate',
       event: 'message',
-      priority: _.get(settings.getConfig('priority'), 'update', 1),
+      priority: _.get(settings.getConfig('priority'), 'update', 70),
       rule: [
         {
           reg: `^${rulePrefix}(插件)?(强制)?更新$`,
