@@ -1,3 +1,4 @@
+import _ from 'lodash';
 /**
  * 生成随机字符串
  * @param {number} length 长度

@@ -44,6 +44,10 @@ export class Panel extends ZZZPlugin {
     await this.reply('正在刷新面板列表，请稍候...');
     await this.getPlayerInfo();
     const result = await refreshPanel(this.e, api, uid, deviceFp);
+    if (!result) {
+      await this.reply('面板列表刷新失败，请稍后再试');
+      return;
+    }
     const newChar = result.filter(item => item.isNew);
     let str = '面板列表获取成功，本次共刷新了' + newChar.length + '个角色：\n';
     for (const item of result) {
