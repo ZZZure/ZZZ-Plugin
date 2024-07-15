@@ -2,6 +2,8 @@ import { ZZZPlugin } from '../lib/plugin.js';
 import render from '../lib/render.js';
 import { rulePrefix } from '../lib/common.js';
 import { ZZZIndexResp } from '../model/index.js';
+import settings from '../lib/settings.js';
+import _ from 'lodash';
 
 export class Card extends ZZZPlugin {
   constructor() {
@@ -9,7 +11,7 @@ export class Card extends ZZZPlugin {
       name: '[ZZZ-Plugin]Card',
       dsc: 'zzzcard',
       event: 'message',
-      priority: 100,
+      priority: _.get(settings.getConfig('priority'), 'card', 1),
       rule: [
         {
           reg: `${rulePrefix}(card|卡片|个人信息)$`,

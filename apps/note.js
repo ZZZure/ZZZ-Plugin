@@ -2,6 +2,8 @@ import { ZZZPlugin } from '../lib/plugin.js';
 import render from '../lib/render.js';
 import { ZZZNoteResp } from '../model/note.js';
 import { rulePrefix } from '../lib/common.js';
+import settings from '../lib/settings.js';
+import _ from 'lodash';
 
 export class Note extends ZZZPlugin {
   constructor() {
@@ -9,7 +11,7 @@ export class Note extends ZZZPlugin {
       name: '[ZZZ-Plugin]Note',
       dsc: 'zzznote',
       event: 'message',
-      priority: 100,
+      priority: _.get(settings.getConfig('priority'), 'note', 1),
       rule: [
         {
           reg: `${rulePrefix}(note|每日|体力|便笺|便签)$`,

@@ -1,5 +1,7 @@
 import { ZZZPlugin } from '../lib/plugin.js';
 import { rulePrefix } from '../lib/common.js';
+import settings from '../lib/settings.js';
+import _ from 'lodash';
 
 export class Help extends ZZZPlugin {
   constructor() {
@@ -7,7 +9,7 @@ export class Help extends ZZZPlugin {
       name: '[ZZZ-Plugin]Help',
       dsc: 'zzzhelp',
       event: 'message',
-      priority: 100,
+      priority: _.get(settings.getConfig('priority'), 'help', 1),
       rule: [
         {
           reg: `${rulePrefix}(帮助|help)$`,

@@ -4,6 +4,7 @@ import { getAllCharactersID } from '../lib/convert/char.js';
 import { getAllEquipID } from '../lib/convert/equip.js';
 import { getAllWeaponID } from '../lib/convert/weapon.js';
 import { imageResourcesPath } from '../lib/path.js';
+import settings from '../lib/settings.js';
 import fs from 'fs';
 import {
   getRoleImage,
@@ -11,6 +12,7 @@ import {
   getSuitImage,
   getWeaponImage,
 } from '../lib/download.js';
+import _ from 'lodash';
 
 export class Panel extends ZZZPlugin {
   constructor() {
@@ -18,7 +20,7 @@ export class Panel extends ZZZPlugin {
       name: '[ZZZ-Plugin]Manage',
       dsc: 'zzzmanage',
       event: 'message',
-      priority: 100,
+      priority: _.get(settings.getConfig('priority'), 'manage', 1),
       rule: [
         {
           reg: `${rulePrefix}下载(全部|所有)资源$`,

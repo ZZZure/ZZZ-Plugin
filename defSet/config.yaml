@@ -1,4 +1,4 @@
 render:
-  scale: 100
+  scale: 100 # 渲染精度
 query:
-  others: true
+  others: true # 允许查询他人信息

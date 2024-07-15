@@ -4,6 +4,7 @@ import { exec } from 'child_process';
 import { ZZZPlugin } from '../lib/plugin.js';
 import { rulePrefix } from '../lib/common.js';
 import { pluginPath, pluginName } from '../lib/path.js';
+import settings from '../lib/settings.js';
 
 let Restart = null;
 
@@ -26,7 +27,7 @@ export class Update extends ZZZPlugin {
       name: '[ZZZ-Plugin]Update',
       dsc: 'zzzupdate',
       event: 'message',
-      priority: 1000,
+      priority: _.get(settings.getConfig('priority'), 'update', 1),
       rule: [
         {
           reg: `^${rulePrefix}(插件)?(强制)?更新$`,
