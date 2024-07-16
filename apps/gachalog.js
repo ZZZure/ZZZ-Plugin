@@ -4,6 +4,7 @@ import { rulePrefix } from '../lib/common.js';
 import { getAuthKey } from '../lib/authkey.js';
 import settings from '../lib/settings.js';
 import _ from 'lodash';
+import common from '../../../lib/common/common.js'
 import {
   anaylizeGachaLog,
   updateGachaLog,
@@ -106,15 +107,16 @@ export class GachaLog extends ZZZPlugin {
     if (!uid) {
       return false;
     }
-    this.reply('正在更新抽卡记录，可能需要一段时间，请耐心等待');
+    this.reply('抽卡记录获取中请稍等...可能需要一段时间，请耐心等待');
     const { data, count } = await updateGachaLog(key, uid);
-    let msg = `抽卡记录更新成功，共${Object.keys(data).length}个卡池`;
+    let msg = [] 
+    msg.push(`抽卡记录更新成功，共${Object.keys(data).length}个卡池`)
     for (const name in data) {
-      msg += `\n${name}新增${count[name] || 0}条记录，一共${
+      msg.push(`${name}新增${count[name] || 0}条记录，一共${
         data[name].length
-      }条记录`;
+      }条记录`);
     }
-    await this.reply(msg);
+    await this.reply(await common.makeForwardMsg(this.e,msg,'抽卡记录更新成功'));
     return false;
   }
 
@@ -138,7 +140,7 @@ export class GachaLog extends ZZZPlugin {
     await render(this.e, 'gachalog/index.html', result);
   }
   async getGachaLink() {
-    if (!this.e.isPrivate) {
+    if (!this.e.isPrivate||this.e.isGroup) {
       await this.reply('请私聊获取抽卡链接', false, { at: true });
       return false;
     }
