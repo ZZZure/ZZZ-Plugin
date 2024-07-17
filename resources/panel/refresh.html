@@ -1,0 +1,32 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" href="{{@sys.currentPath}}/refresh.css">
+{{/block}}
+
+{{block 'main'}}
+<div class="panel">
+  <div class="icon">
+    <div class="img"></div>
+  </div>
+  <div class="info">你好，已为 UID{{uid}} 成功更新 {{newChar}} 个角色！</div>
+  <div class="list">
+    {{each list item}}
+    <div class="item">
+      <div class="icon">
+        <img class="streng" src="{{item.square_icon}}" alt="" />
+        <div class="level r{{item.rank}}">
+          <span> {{item.rank}} </span>
+        </div>
+      </div>
+      <div class="name">
+        <div class="img {{item.rarity}}"></div>
+        <span>{{item.name_mi18n}}</span>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
+{{/block}}
+
+</html>
