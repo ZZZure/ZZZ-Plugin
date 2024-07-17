@@ -1,0 +1,137 @@
+.container {
+  background-image: url('./images/bg1.jpg');
+  background-size: cover;
+}
+.panel {
+  & > .icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.5em;
+    padding-top: 0.5em;
+    .img {
+      width: 2em;
+      height: 2em;
+      background-image: url(./images/refresh_title.png);
+      background-size: 100% 100%;
+    }
+  }
+  & > .info {
+    color: white;
+    font-size: 1em;
+    font-weight: normal;
+    margin-bottom: 1em;
+    display: flex;
+    justify-content: center;
+  }
+  & > .list {
+    border: 0.1em solid rgba(87, 80, 102);
+    background-color: rgba(0, 0, 0, 0.5);
+    margin: 0 1.5em 1.5em;
+    border-radius: 0.5em;
+    min-height: 3em;
+    min-width: 5em;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    padding: 0.4em 0.6em 0.5em;
+
+    .item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 20%;
+      align-items: center;
+      padding: 0.2em 0em;
+      .icon {
+        background-image: url('./images/@~8B@XO~\)U1BIPPR}NN9CI7.png');
+        background-size: contain;
+        margin-bottom: 0.2em;
+        position: relative;
+        img.streng {
+          width: 3.5em;
+          height: 3.5em;
+          border-radius: 50%;
+          padding: 0.25em 0.25em 0.3em 0.25em;
+        }
+        .level {
+          position: absolute;
+          // right: 0.2em;
+          // bottom: 0.25em;
+          right: 1.25em;
+          bottom: -0.1em;
+          border-radius: 50%;
+          color: white;
+          width: 1em;
+          height: 1em;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 0.05em;
+          background-color: rgb(117, 117, 117);
+          span {
+            font-size: 0.7em;
+          }
+          &.r1 {
+            background-color: rgb(58, 116, 43);
+          }
+          &.r2 {
+            background-color: rgb(61, 132, 214);
+          }
+          &.r3 {
+            background-color: rgb(223, 118, 118);
+          }
+          &.r4 {
+            background-color: rgb(51, 54, 161);
+          }
+          &.r5 {
+            background-color: rgb(102, 127, 19);
+          }
+          &.r6 {
+            background-color: rgb(218, 48, 32);
+          }
+        }
+      }
+      .name {
+        height: 1.4em;
+        width: 5.4em;
+        overflow: visible;
+        background-image: url('./images/refresh_char_bg.png');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        padding: 0 0.7em;
+        .img {
+          width: 1em;
+          height: 1em;
+          display: inline-block;
+          margin-right: 0.05em;
+          background-size: 100% 100%;
+          transform: translateY(0.03em);
+          &.S,
+          &.s {
+            background-image: url(./images/SRANK.png);
+          }
+          &.A,
+          &.a {
+            background-image: url(./images/ARANK.png);
+          }
+          &.B,
+          &.b {
+            background-image: url(./images/BRANK.png);
+          }
+        }
+
+        span {
+          font-size: 0.7em;
+          text-align: center;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+}
