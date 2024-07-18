@@ -14,20 +14,23 @@ export class Panel extends ZZZPlugin {
       priority: _.get(settings.getConfig('priority'), 'panel', 70),
       rule: [
         {
-          reg: `${rulePrefix}((刷新|更新)面板|面板(刷新|更新))$`,
-          fnc: 'refreshPanel',
-        },
-        {
-          reg: `${rulePrefix}面板(列表)?$`,
-          fnc: 'getCharPanelList',
-        },
-        {
-          reg: `${rulePrefix}(.+)面板$`,
-          fnc: 'getCharPanel',
+          reg: `${rulePrefix}(.*)面板(.*)$`,
+          fnc: 'handleRule',
         },
       ],
     });
   }
+  async handleRule() {
+    if (!this.e.msg) return;
+    const reg = new RegExp(`${rulePrefix}(.*)面板(.*)$`);
+    const pre = this.e.msg.match(reg)[4].trim();
+    const suf = this.e.msg.match(reg)[5].trim();
+    if (['刷新', '更新'].includes(pre) || ['刷新', '更新'].includes(suf))
+      return this.refreshPanel();
+    if (!pre || suf === '列表') return this.getCharPanelList();
+    return this.getCharPanel();
+  }
+
   async refreshPanel() {
     const uid = await this.getUID();
     if (!uid) return;
@@ -36,7 +39,7 @@ export class Panel extends ZZZPlugin {
     const coldTime = _.get(panelSettings, 'interval', 300);
     if (lastQueryTime && Date.now() - lastQueryTime < 1000 * coldTime) {
       await this.reply(`${coldTime}秒内只能刷新一次，请稍后再试`);
-      return;
+      return false;
     }
     const { api, deviceFp } = await this.getAPI();
     if (!api) return false;
@@ -46,39 +49,38 @@ export class Panel extends ZZZPlugin {
     const result = await refreshPanel(this.e, api, uid, deviceFp);
     if (!result) {
       await this.reply('面板列表刷新失败，请稍后再试');
-      return;
+      return false;
     }
-    const newChar = result.filter((item) => item.isNew);
-    // let str = '面板列表获取成功，本次共刷新了' + newChar.length + '个角色：\n'
-    // for (const item of result) {
-    //   str += item.name_mi18n + (item.isNew ? '（新）' : '') + '、'
-    // }
-    // str = str.slice(0, -1)
-    // str += '\n总计' + result.length + '个角色'
-    // await this.reply(str)
+    const newChar = result.filter(item => item.isNew);
     const finalData = {
-      uid: uid,
       newChar: newChar.length,
       list: result,
-    }
+    };
     await render(this.e, 'panel/refresh.html', finalData);
   }
   async getCharPanelList() {
     const uid = await this.getUID();
     if (!uid) return false;
-    const noteData = getPanelList(uid);
-    if (!noteData) return false;
-    await this.getPlayerInfo();
-    let str = '面板列表获取成功，共计' + noteData.length + '个角色：';
-    for (const item of noteData) {
-      str += item.name_mi18n + '、';
+    const result = getPanelList(uid);
+    if (!result) {
+      await this.reply('未找到面板列表，请先刷新面板');
+      return false;
     }
-    str = str.slice(0, -1);
-    await this.reply(str);
-    // const finalData = {
-    //   list: noteData,
-    // };
-    // await render(this.e, 'panel/list.html', finalData);
+    await this.getPlayerInfo();
+    const timer = setTimeout(() => {
+      if (this?.reply) {
+        this.reply('查询成功，正在下载图片资源，请稍候。');
+      }
+    }, 3000);
+    for (const item of result) {
+      await item.get_basic_assets();
+    }
+    clearTimeout(timer);
+    const finalData = {
+      count: result?.length || 0,
+      list: result,
+    };
+    await render(this.e, 'panel/list.html', finalData);
   }
   async getCharPanel() {
     const uid = await this.getUID();
@@ -88,7 +90,7 @@ export class Panel extends ZZZPlugin {
     if (['刷新', '更新'].includes(name)) return this.getCharPanelList();
     const data = getPanel(uid, name);
     if (!data) {
-      await this.reply(`未找到角色${name}的面板信息`);
+      await this.reply(`未找到角色${name}的面板信息，请先刷新面板`);
       return;
     }
     const timer = setTimeout(() => {
@@ -99,6 +101,7 @@ export class Panel extends ZZZPlugin {
     await data.get_detail_assets();
     clearTimeout(timer);
     const finalData = {
+      uid: uid,
       charData: data,
     };
     await render(this.e, 'panel/card.html', finalData);

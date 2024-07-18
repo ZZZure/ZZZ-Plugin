@@ -3,25 +3,51 @@
   background-size: cover;
 }
 
-.panel > .icon {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 0.5em;
-  padding-top: 0.5em;
-}
-.panel > .icon .img {
-  width: 2em;
-  height: 2em;
-  background-image: url(./images/refresh_title.png);
-  background-size: 100% 100%;
-}
 .panel > .info {
-  color: white;
-  font-size: 1em;
-  font-weight: normal;
-  margin-bottom: 1em;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  font-size: 0.7em;
+  padding: 0 2em;
+  margin-bottom: 1em;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(0.2em);
+}
+.panel > .info .user-info {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.panel > .info .count {
+  font-size: 1.4em;
+  flex-shrink: 0;
+  flex-grow: 0;
+  padding: 0.3em 0.7em;
+  border-radius: 0.5em;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  filter: drop-shadow(0 0 0.1em rgba(216, 255, 254, 0.6));
+  margin-right: 0.6em;
+  position: relative;
+}
+.panel > .info .count::after {
+  content: "";
+  position: absolute;
+  right: -0.38em;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 0.4em solid transparent;
+  border-left: 0.4em solid rgba(0, 0, 0, 0.8);
+  border-bottom: 0.4em solid transparent;
+}
+.panel > .info .icon {
+  width: 3.5em;
+  flex-grow: 0;
+  flex-shrink: 0;
+  aspect-ratio: 1;
+  display: flex;
+  background: url("./images/refresh_title.png") center/contain no-repeat;
 }
 .panel > .list {
   border: 0.1em solid rgb(87, 80, 102);
@@ -44,8 +70,7 @@
   padding: 0.2em 0em;
 }
 .panel > .list .item .icon {
-  background-image: url("./images/@~8B@XO~)U1BIPPR}NN9CI7.png");
-  background-size: contain;
+  background: url("./images/avatar_box.png") center/contain no-repeat;
   margin-bottom: 0.2em;
   position: relative;
 }
@@ -54,8 +79,10 @@
   height: 3.5em;
   border-radius: 50%;
   padding: 0.25em 0.25em 0.3em 0.25em;
+  object-fit: cover;
+  object-position: center;
 }
-.panel > .list .item .icon .level {
+.panel > .list .item .icon .rank {
   position: absolute;
   right: 1.25em;
   bottom: -0.1em;
@@ -69,56 +96,50 @@
   padding: 0.05em;
   background-color: rgb(117, 117, 117);
 }
-.panel > .list .item .icon .level span {
+.panel > .list .item .icon .rank span {
   font-size: 0.7em;
 }
-.panel > .list .item .icon .level.r1 {
+.panel > .list .item .icon .rank.r1 {
   background-color: rgb(58, 116, 43);
 }
-.panel > .list .item .icon .level.r2 {
+.panel > .list .item .icon .rank.r2 {
   background-color: rgb(61, 132, 214);
 }
-.panel > .list .item .icon .level.r3 {
+.panel > .list .item .icon .rank.r3 {
   background-color: rgb(223, 118, 118);
 }
-.panel > .list .item .icon .level.r4 {
+.panel > .list .item .icon .rank.r4 {
   background-color: rgb(51, 54, 161);
 }
-.panel > .list .item .icon .level.r5 {
+.panel > .list .item .icon .rank.r5 {
   background-color: rgb(102, 127, 19);
 }
-.panel > .list .item .icon .level.r6 {
+.panel > .list .item .icon .rank.r6 {
   background-color: rgb(218, 48, 32);
 }
 .panel > .list .item .name {
-  height: 1.4em;
   width: 5.4em;
   overflow: visible;
-  background-image: url("./images/refresh_char_bg.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  padding: 0.1em 0;
+  padding-left: 0.5em;
+  border-image-slice: 0 30 0 40 fill;
+  border-image-width: 0em 0.45em 0em 0.7em;
+  border-image-outset: 0 0.11em 0 0;
+  border-image-repeat: stretch stretch;
+  border-image-source: url("./images/CurseBG04.png");
   display: flex;
   align-items: center;
-  justify-content: center;
   color: white;
-  padding: 0 0.7em;
 }
 .panel > .list .item .name .img {
   width: 1em;
-  height: 1em;
   display: inline-block;
-  margin-right: 0.05em;
-  background-size: 100% 100%;
-  transform: translateY(0.03em);
-}
-.panel > .list .item .name .img.S, .panel > .list .item .name .img.s {
-  background-image: url(./images/SRANK.png);
-}
-.panel > .list .item .name .img.A, .panel > .list .item .name .img.a {
-  background-image: url(./images/ARANK.png);
-}
-.panel > .list .item .name .img.B, .panel > .list .item .name .img.b {
-  background-image: url(./images/BRANK.png);
+  flex-shrink: 0;
+  flex-grow: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  background-size: 70%;
+  box-shadow: 0 0 0 0.07em rgba(85, 85, 85, 0.5);
 }
 .panel > .list .item .name span {
   font-size: 0.7em;
@@ -126,4 +147,8 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}/*# sourceMappingURL=refresh.css.map */
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+/*# sourceMappingURL=refresh.css.map */

@@ -1,6 +1,23 @@
 .card {
   padding-top: 0.8em;
   overflow: hidden;
+  position: relative;
+}
+.card .uid {
+  font-size: 0.6em;
+  text-align: center;
+  position: absolute;
+  border-image-source: url("./images/GroceryActivityBtnBg.png");
+  border-image-slice: 30 90 30 90 fill;
+  border-image-width: 0.4em 1.2em 0.4em 1.2em;
+  border-image-outset: 0em 0em 0em 0em;
+  border-image-repeat: stretch stretch;
+  padding: 0.5em 1.2em;
+  font-size: 1em;
+  top: 0.1em;
+  color: rgb(255, 255, 255);
+  stroke: 0.05em rgba(0, 0, 0, 0.6);
+  -webkit-text-stroke: 0.05em rgba(0, 0, 0, 0.6);
 }
 .card .star {
   width: 5.5em;
@@ -299,6 +316,9 @@
   flex-shrink: 1;
   font-size: 0.65em;
   color: rgb(166, 166, 166);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .card .basic .info .property_info .list .properties .label.yellow {
   color: rgb(247, 199, 54);
@@ -389,6 +409,9 @@
   flex-shrink: 1;
   font-size: 0.7em;
   color: rgb(222, 222, 222);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .card .basic .info .weapon_info .icon {
   position: absolute;
@@ -566,6 +589,9 @@
   flex-shrink: 1;
   font-size: 0.7em;
   color: rgb(222, 222, 222);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .card .equip-list .box .property-list .properties .value {
   color: rgb(249, 189, 64);
