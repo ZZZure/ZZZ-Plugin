@@ -62,10 +62,6 @@ export class Panel extends ZZZPlugin {
     const uid = await this.getUID();
     if (!uid) return false;
     const result = getPanelList(uid);
-    if (!result) {
-      await this.reply('未找到面板列表，请先刷新面板');
-      return false;
-    }
     await this.getPlayerInfo();
     const timer = setTimeout(() => {
       if (this?.reply) {

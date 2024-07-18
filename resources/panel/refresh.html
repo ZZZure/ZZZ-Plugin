@@ -12,9 +12,15 @@
     <div class="icon"></div>
   </div>
   <div class="list">
+    {{if list.length === 0}}
+    <div class="empty">暂无数据，请确认查询正确</div>
+    {{/if}}
     {{each list item}}
     <div class="item">
       <div class="icon">
+        {{if item?.isNew}}
+        <div class="new"></div>
+        {{/if}}
         <img class="streng" src="{{item.square_icon}}" alt="" />
         <div class="rank r{{item.rank}}">
           <span> {{item.rank}} </span>
