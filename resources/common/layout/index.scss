@@ -31,18 +31,12 @@ body {
   .highlight {
     color: #fff;
     position: relative;
-  }
-  .with-version {
-    padding-right: 1.8em;
+    display: flex;
+    align-items: flex-start;
     .version {
-      // background-color: #3f3f3f;
-      padding: 0.1em 0.3em;
-      border-radius: 0.2em;
+      vertical-align: super;
       font-size: 0.8em;
-      color: #fff;
-      position: absolute;
-      top: -0.5em;
-      right: -0.5em;
+      margin-top: -0.3em;
     }
   }
 }
