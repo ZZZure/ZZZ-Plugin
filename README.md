@@ -86,7 +86,12 @@ git clone --depth=1 https://github.com/ZZZure/ZZZ-Plugin.git ./plugins/ZZZ-Plugi
 # 鸣谢
 
 * 特别鸣谢 **[Wuyi无疑](https://github.com/KimigaiiWuyi)** 为 `ZZZeroUID` 和 `ZZZ-Plugin` 作出的巨大贡献！本插件的功能按照 **Wuyi无疑** 的设计进行编写。欢迎给本仓库以及 [`ZZZeroUID`](https://github.com/ZZZure/ZZZeroUID) 点个 Star！
-* 特别鸣谢 **[听语惊花](https://github.com/Nwflower)** 等攻略作者做出的贡献！
+* 特别鸣谢以下攻略作者：
+  * 新艾利都快讯
+  * 清茶沐沐Kiyotya
+  * 小橙子阿
+  * 猫冬
+  * 月光中心
 
 ## 仓库贡献者
 
