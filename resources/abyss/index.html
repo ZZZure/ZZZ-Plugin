@@ -1,0 +1,140 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" href="{{@sys.currentPath}}/index.css">
+{{/block}}
+
+{{block 'main'}}
+<div class="card">
+  {{include sys.playerInfo}}
+  <div class="status">
+    <div class="info">
+      <div class="time">{{abyss.begin_time}}</div>
+      <div class="ranks">
+        <div class="rank">
+          <div class="rank-icon s"></div>
+          <div class="count">{{abyss.rate_count.S}}</div>
+        </div>
+        <div class="rank">
+          <div class="rank-icon a"></div>
+          <div class="count">{{abyss.rate_count.A}}</div>
+        </div>
+        <div class="rank">
+          <div class="rank-icon b"></div>
+          <div class="count">{{abyss.rate_count.B}}</div>
+        </div>
+      </div>
+      <div class="time">{{abyss.end_time}}</div>
+    </div>
+    <div class="cost">
+      <div class="item">
+        <div class="label">当期最快通关时间</div>
+        <div class="value">{{abyss.fast_layer_time_str}}</div>
+      </div>
+      <div class="item">
+        <div class="label">最高通关防线</div>
+        <div class="value">第{{abyss.max_layer}}防线</div>
+      </div>
+    </div>
+  </div>
+
+  <% include(sys.specialTitle, {en: 'ABYSS' , cn: '式舆防卫战' }) %>
+
+    {{each abyss.all_floor_detail floor i}}
+    <div class="item-card">
+      <div class="title {{floor.rating}}">
+        <div class="rank-icon {{floor.rating}}"></div>
+        <div class="content" data-content="{{floor.zone_name}}">{{floor.zone_name}}</div>
+      </div>
+      <div class="team">
+        <div class="info">
+          <div class="label">队伍1</div>
+          <div class="time">{{floor.formattedTime}}</div>
+          <div class="advantage">
+            <span>有利</span>
+            {{each floor.node_1.elements element i}}
+            <div class="property {{element}}"></div>
+            {{/each}}
+          </div>
+        </div>
+        <div class="list">
+          <% for(let i=0 ; i < 3 ; i++) { %>
+            {{if floor.node_1.avatars?.[i]}}
+            <div class="item char rank{{floor.node_1.avatars[i].rarity}}">
+              <div class="rank rank-icon {{floor.node_1.avatars[i].rarity}}"></div>
+              <div class="property {{floor.node_1.avatars[i].element}}"></div>
+              <div class="image">
+                <img src="{{floor.node_1.avatars[i].square_icon}}" alt="">
+              </div>
+              <div class="c-info">
+                <div class="level">等级{{floor.node_1.avatars[i].level}}</div>
+              </div>
+            </div>
+            {{else}}
+              <div class="item bangboo rankb"></div>
+              {{/if}}
+              <% } %>
+                {{if floor.node_1.buddy}}
+                <div class="item bangboo rank{{floor.node_1.buddy.rarity}}">
+                  <div class="rank rank-icon {{floor.node_1.buddy.rarity}}"></div>
+                  <div class="image">
+                    <img src="{{floor.node_1.buddy.square_icon}}" alt="">
+                  </div>
+                  <div class="c-info">
+                    <div class="level">等级{{floor.node_1.buddy.level}}</div>
+                  </div>
+                </div>
+                {{else}}
+                  <div class="item bangboo rankb"></div>
+                  {{/if}}
+        </div>
+      </div>
+
+      <div class="team">
+        <div class="info">
+          <div class="label">队伍2</div>
+          <div class="time">{{floor.formattedTime}}</div>
+          <div class="advantage">
+            <span>有利</span>
+            {{each floor.node_2.elements element i}}
+            <div class="property {{element}}"></div>
+            {{/each}}
+          </div>
+        </div>
+        <div class="list">
+          <% for(let i=0 ; i < 3 ; i++) { %>
+            {{if floor.node_2.avatars?.[i]}}
+            <div class="item char rank{{floor.node_2.avatars[i].rarity}}">
+              <div class="rank rank-icon {{floor.node_2.avatars[i].rarity}}"></div>
+              <div class="property {{floor.node_2.avatars[i].element}}"></div>
+              <div class="image">
+                <img src="{{floor.node_2.avatars[i].square_icon}}" alt="">
+              </div>
+              <div class="c-info">
+                <div class="level">等级{{floor.node_2.avatars[i].level}}</div>
+              </div>
+            </div>
+            {{else}}
+              <div class="item bangboo rankb"></div>
+              {{/if}}
+              <% } %>
+                {{if floor.node_2.buddy}}
+                <div class="item bangboo rank{{floor.node_2.buddy.rarity}}">
+                  <div class="rank rank-icon {{floor.node_2.buddy.rarity}}"></div>
+                  <div class="image">
+                    <img src="{{floor.node_2.buddy.square_icon}}" alt="">
+                  </div>
+                  <div class="c-info">
+                    <div class="level">等级{{floor.node_2.buddy.level}}</div>
+                  </div>
+                </div>
+                {{else}}
+                  <div class="item bangboo rankb"></div>
+                  {{/if}}
+        </div>
+      </div>
+    </div>
+    {{/each}}
+</div>
+
+{{/block}}

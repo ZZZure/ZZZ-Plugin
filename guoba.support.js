@@ -101,7 +101,7 @@ export function supportGuoba() {
           },
         },
         {
-          field: 'priority.challenge',
+          field: 'priority.abyss',
           label: '深渊查询',
           bottomHelpMessage: '设置深渊查询指令优先级',
           component: 'InputNumber',

@@ -1,0 +1,235 @@
+.container {
+  background-image: url('./images/bg2.jpg');
+}
+.card {
+  margin: 0 1em;
+  .user-info {
+    margin: 0 1em;
+  }
+  .status {
+    background: url('./images/status.png') no-repeat center center;
+    background-size: 110% 160%;
+    aspect-ratio: 2.4;
+    overflow: hidden;
+    margin: 0 1em;
+    margin-bottom: 1.5em;
+    padding-top: 5.2em;
+    padding-left: 2em;
+    padding-right: 2em;
+    justify-content: space-around;
+    .info {
+      display: flex;
+      font-size: 2em;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.1em;
+      padding: 0 0.6em;
+      .time {
+        color: rgb(127, 127, 127);
+      }
+      .ranks {
+        display: flex;
+        gap: 0.5em;
+        .rank {
+          width: 1.5em;
+          position: relative;
+          .count {
+            position: absolute;
+            bottom: -0.3em;
+            right: -0.5em;
+            font-size: 0.6em;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.2em;
+            height: 1.2em;
+            background-color: rgba(0, 0, 0, 0.5);
+          }
+        }
+      }
+    }
+    .cost {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.2em;
+      .item {
+        display: flex;
+        align-items: flex-end;
+        gap: 0.5em;
+        .label {
+          font-size: 0.68em;
+          margin-bottom: 0.1em;
+          color: rgb(176, 176, 176);
+        }
+      }
+    }
+  }
+  .item-card {
+    border-image-source: url('./images/BgFrame01.png');
+    border-image-slice: 200 100 70 280 fill;
+    border-image-width: 2em 1em 0.7em 2.8em;
+    border-image-outset: 0em 0em 0em 0em;
+    border-image-repeat: stretch stretch;
+    padding: 0.8em 0.5em;
+    margin-bottom: 1em;
+    .title {
+      display: flex;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.5);
+      gap: 0.5em;
+      padding: 0.2em 0.5em;
+      font-size: 1.2em;
+      box-shadow: 0 0.1em 0.05em rgba(0, 0, 0, 0.5);
+      .rank-icon {
+        width: 1em;
+      }
+      .content {
+        z-index: 0;
+        position: relative;
+        &::after {
+          content: attr(data-content);
+          -webkit-text-stroke: 0.22em #000;
+          position: absolute;
+          left: 0;
+          top: 0;
+          z-index: -1;
+        }
+      }
+      &.a,
+      &.A {
+        color: rgb(195, 56, 240);
+      }
+      &.b,
+      &.B {
+        color: rgb(93, 189, 246);
+      }
+      &.s,
+      &.S {
+        color: rgb(240, 145, 53);
+      }
+    }
+
+    .team {
+      padding: 0.5em 2em;
+      .info {
+        display: flex;
+        background-color: rgba(0, 0, 0, 0.2);
+        align-items: center;
+        margin-bottom: 0.5em;
+        .label {
+          margin-right: auto;
+          padding: 0 0.5em;
+        }
+        .time {
+          background-color: rgba(23, 135, 255, 0.2);
+          padding: 0 0.2em;
+          font-size: 0.7em;
+          color: rgba(255, 255, 255, 0.8);
+        }
+        .advantage {
+          display: flex;
+          align-items: center;
+          margin-left: 0.3em;
+          font-size: 0.8em;
+          gap: 0.3em;
+          background-color: rgba(0, 0, 0, 0.6);
+          backdrop-filter: blur(0.1em);
+          height: 100%;
+          padding: 0.1em 0.4em;
+          border-radius: 0.4em 0 0 0.4em;
+          min-width: 5.5em;
+          .property {
+            width: 1em;
+          }
+        }
+      }
+      .list {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 0.8fr;
+        align-items: flex-end;
+        gap: 2em;
+        .item {
+          width: 100%;
+          position: relative;
+          > * {
+            position: inherit;
+            z-index: 1;
+          }
+          &.bangboo {
+            font-size: 0.8em;
+          }
+          &::after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0.2em;
+            left: -0.2em;
+            width: 100%;
+            height: 100%;
+            background: rgb(138, 51, 183);
+            z-index: 0;
+          }
+          .rank {
+            position: absolute;
+            top: 0.2em;
+            left: 0.1em;
+            width: 1.5em;
+            color: white;
+            z-index: 2;
+          }
+          &.rankS {
+            &::after {
+              background: rgb(230, 119, 51);
+            }
+          }
+          &.rankB {
+            &::after {
+              background: rgb(93, 183, 249);
+            }
+          }
+          .image {
+            width: 100%;
+            aspect-ratio: 0.8;
+            background-color: #e2e2e2;
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: contain;
+              display: block;
+            }
+          }
+          .c-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgb(0, 0, 0);
+            color: white;
+            display: flex;
+            text-align: center;
+            .level {
+              flex-grow: 1;
+              flex-shrink: 1;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              text-align: center;
+            }
+          }
+          .property {
+            position: absolute;
+            top: 0.2em;
+            right: 0.1em;
+            width: 1.6em;
+            background-color: #000;
+            border-radius: 50%;
+            border: solid 0.1em #000;
+            color: white;
+            z-index: 2;
+          }
+        }
+      }
+    }
+  }
+}

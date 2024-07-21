@@ -1,5 +1,5 @@
 card: 70 # 玩家信息（卡片）
-challenge: 70 # 深渊
+abyss: 70 # 深渊
 gachalog: 70 # 抽卡
 guide: 70 # 攻略
 help: 70 # 帮助
