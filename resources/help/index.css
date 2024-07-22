@@ -1,0 +1,122 @@
+.special-title {
+  padding: 0;
+  font-size: 1.2em;
+}
+
+.card {
+  margin: 0 1em;
+  padding: 1em 0;
+}
+.card .part {
+  border-radius: 0.5em;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(1em);
+  margin-top: 1.5em;
+}
+.card .part .title {
+  font-size: 1.2em;
+  padding: 0.3em 0.7em;
+  border-bottom: 1px solid rgba(126, 126, 126, 0.5);
+  display: flex;
+  gap: 0.2em;
+  align-items: flex-end;
+  color: rgb(234, 225, 213);
+  box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.5);
+  background-color: rgba(152, 152, 152, 0.3);
+  border-radius: 0.5em 0.5em 0 0;
+  position: relative;
+}
+.card .part .title .property {
+  width: 1.8em;
+  position: absolute;
+  filter: drop-shadow(0.06em 0.06em 0 rgba(255, 255, 255, 0.5));
+  left: 0.3em;
+}
+.card .part .title .content {
+  flex: 1;
+  margin-bottom: -0.13em;
+  filter: drop-shadow(0.06em 0.06em 0 rgba(0, 0, 0, 0.5));
+  margin-left: 1.6em;
+}
+.card .part .list {
+  width: 100%;
+  overflow: hidden;
+  padding: 0.6em;
+  display: grid;
+  gap: 0.5em;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: flex-start;
+}
+.card .part .list .item {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 0.4em;
+  padding: 0.4em 0.7em;
+  font-size: 0.8em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  box-shadow: 0 0 0.7em rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+.card .part .list .item .name {
+  width: 100%;
+  font-size: 1.2em;
+  display: flex;
+  overflow: hidden;
+  align-items: flex-start;
+}
+.card .part .list .item .name.ck::before {
+  content: "CK";
+  margin-top: 0.3em;
+  margin-right: 0.3em;
+  font-size: 0.6em;
+  padding: 0.1em 0.3em;
+  border-radius: 0.3em;
+  background-color: rgb(249, 149, 55);
+  text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.5);
+}
+.card .part .list .item .name.sk::before {
+  content: "SK";
+  margin-top: 0.3em;
+  margin-right: 0.3em;
+  font-size: 0.6em;
+  padding: 0.1em 0.3em;
+  border-radius: 0.3em;
+  background-color: rgb(249, 65, 55);
+  text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.5);
+}
+.card .part .list .item .commands {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3em;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-weight: 500;
+  font-size: 0.9em;
+}
+.card .part .list .item .commands .command {
+  height: 1.6em;
+  line-height: 1.6em;
+  padding: 0em 0.5em;
+  border-radius: 0.5em 0.2em 0.5em 0.2em;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  color: rgb(255, 186, 96);
+  box-shadow: 0 0 0.1em rgba(0, 0, 0, 0.6);
+  border-bottom: 0.1em solid rgba(241, 22, 22, 0.7);
+}
+.card .part .list .item .commands .command::before {
+  content: "%";
+  color: rgba(112, 13, 13, 0.45);
+  text-shadow: none;
+  margin-right: 0.1em;
+  margin-left: -0.2em;
+}
+.card .part .list .item .desc {
+  font-size: 1em;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 0.8em;
+  color: rgb(225, 225, 225);
+}
+
+/*# sourceMappingURL=index.css.map */

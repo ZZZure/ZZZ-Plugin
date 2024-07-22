@@ -1,0 +1,33 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" href="{{@sys.currentPath}}/index.css">
+{{/block}}
+
+{{block 'main'}}
+<div class="card">
+  <% include(sys.specialTitle, {en: 'HELP' , cn: '绝区零帮助' }) %>
+    {{each helpData help i}}
+    <div class="part">
+      <div class="title">
+        <div class="property {{help.icon}}"></div>
+        <div class="content">{{help.title}}</div>
+      </div>
+      <div class="list">
+        {{each help.items item j}}
+        <div class="item">
+          <div class="name {{item?.needSK ? 'sk' : item?.needCK ? 'ck' : ''}}">{{item.title}}</div>
+          <div class="commands">
+            {{each item.commands command k}}
+            <span class="command">{{command}}</span>
+            {{/each}}
+          </div>
+          <div class="desc">{{item.desc}}</div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{/each}}
+
+</div>
+{{/block}}
