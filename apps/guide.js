@@ -147,7 +147,7 @@ export class Guide extends ZZZPlugin {
     let posts = lodash.flatten(lodash.map(msyRes, item => item.data.posts));
     let url;
     for (let val of posts) {
-      if (val.post.subject.includes(name)) {
+      if (val.post.subject.replace(/【[^】]*本[^】]*】/g, '').includes(name)) {
         let max = 0;
         val.image_list.forEach((v, i) => {
           if (
