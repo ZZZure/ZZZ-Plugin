@@ -42,6 +42,16 @@ git clone --depth=1 https://github.com/ZZZure/ZZZ-Plugin.git ./plugins/ZZZ-Plugi
 * [Mora-Plugin](https://gitee.com/Rrrrrrray/mora-plugin)
   Mora-Plugin是一个Yunzai-Bot的插件 仅用于自我学习其他优秀插件
 
+## 自定义面板图
+
+将你下载的面板图放在`zzz插件目录/resources/images/panel/[角色名简称]/`文件夹下。若文件夹不存在请自行创建。
+
+**角色名简称**请参考官方wiki中代理人名称：[米游社·绝区零 绳网情报站](https://baike.mihoyo.com/zzz/wiki/channel/map/2/43)
+
+**请注意**：
+
+执行`%删除全部资源`也会删除自定义面板图，该指令用于将插件回归原始状态（数据除外）。
+
 # 贡献
 
 请先 `fork` 本仓库，修改并测试完成后提交PR。

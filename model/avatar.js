@@ -297,7 +297,7 @@ export class ZZZAvatarInfo {
   async get_detail_assets() {
     const custom_panel_images = path.join(
       imageResourcesPath,
-      `panel/${this.id}`
+      `panel/${this.name_mi18n}`
     );
     let role_icon = '';
     if (fs.existsSync(custom_panel_images)) {
