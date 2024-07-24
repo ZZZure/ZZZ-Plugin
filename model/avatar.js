@@ -1,8 +1,11 @@
 import { element } from '../lib/convert.js';
 import { getRoleImage, getSquareAvatar } from '../lib/download.js';
+import { imageResourcesPath } from '../lib/path.js';
 import { Equip, Weapon } from './equip.js';
 import { Property } from './property.js';
 import { Skill } from './skill.js';
+import fs from 'fs';
+import path from 'path';
 
 /**
  * @class
@@ -292,7 +295,24 @@ export class ZZZAvatarInfo {
   }
 
   async get_detail_assets() {
-    const role_icon = await getRoleImage(this.id);
+    const custom_panel_images = path.join(
+      imageResourcesPath,
+      `panel/${this.id}`
+    );
+    let role_icon = '';
+    if (fs.existsSync(custom_panel_images)) {
+      const panel_images = fs
+        .readdirSync(custom_panel_images)
+        .map(file => path.join(custom_panel_images, file));
+      if (panel_images.length > 0) {
+        role_icon =
+          panel_images[Math.floor(Math.random() * panel_images.length)];
+      }
+    }
+    if (!role_icon) {
+      role_icon = await getRoleImage(this.id);
+    }
+
     this.role_icon = role_icon;
     await this?.weapon?.get_assets?.();
     for (const equip of this.equip) {
