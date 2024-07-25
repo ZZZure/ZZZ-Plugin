@@ -182,7 +182,7 @@ export class Guide extends ZZZPlugin {
     }
     if (!url) {
       this.e.reply(
-        `暂无${name}攻略（${this.source[group - 1]}）\n请尝试其他的攻略来源查询`
+        `暂无${name}攻略 (${this.source[group - 1]})\n请尝试其他的攻略来源查询`
       );
       return false;
     }
@@ -208,18 +208,18 @@ export class Guide extends ZZZPlugin {
     return await response.json();
   }
 
-  /** #攻略帮助 */
+  /** %攻略帮助 */
   async GuideHelp () {
-    reply_msg = [
+    let reply_msg = [
       '绝区零角色攻略帮助:',
       '%艾莲攻略+攻略id',
       '%更新艾莲攻略+攻略id',
       '%设置默认攻略+攻略id',
-      '%设置默认攻略+攻略id',
+      '%设置所有攻略显示个数+攻略id',
       '示例: %艾莲攻略2',
       '',
       '攻略来源:'
-    ] + this.source.map((element, index) => `${index + 1}: ${element}`)
+    ].concat(this.source.map((element, index) => `${index + 1}: ${element}`))
     await this.e.reply(reply_msg.join('\n'))
   }
 
