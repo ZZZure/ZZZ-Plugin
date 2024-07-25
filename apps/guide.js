@@ -97,7 +97,7 @@ export class Guide extends ZZZPlugin {
       ,
       ,
       isUpdate,
-      name,
+      atlas,
       group = _.get(settings.getConfig('guide'), 'default_guide', 1).toString(),
     ] = this.e.msg.match(reg);
     // all -> 0
@@ -109,8 +109,8 @@ export class Guide extends ZZZPlugin {
       await this.reply(`超过攻略数量（${this.maxNum}）`);
       return;
     }
-    let id = atlasToName(name);
-    if (!id) {
+    let name = atlasToName(atlas);
+    if (!name) {
       await this.reply('该角色不存在');
       return;
     }
@@ -161,10 +161,13 @@ export class Guide extends ZZZPlugin {
       return false;
     }
 
+    // 搜索时过滤特殊符号，譬如「11号」
+    const filtered_name = name.replace(/[^\w\s]|_/g, '')
+
     let posts = lodash.flatten(lodash.map(mysRes, item => item.data.posts));
     let url, created_at, updated_at;
     for (let val of posts) {
-      if (val.post.subject.replace(/【[^】]*本[^】]*】/g, '').includes(name)) {
+      if (val.post.subject.replace(/【[^】]*本[^】]*】/g, '').includes(filtered_name)) {
         let max = 0;
         val.image_list.forEach((v, i) => {
           if (
