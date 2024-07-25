@@ -21,7 +21,7 @@ export class Guide extends ZZZPlugin {
       priority: _.get(settings.getConfig('priority'), 'guide', 70),
       rule: [
         {
-          reg: `${rulePrefix}(更新)?\\S+攻略(\\d+)?$`,
+          reg: `${rulePrefix}(更新)?\\S+攻略(\\d+|all)?$`,
           fnc: 'Guide',
         },
       ],
@@ -49,7 +49,7 @@ export class Guide extends ZZZPlugin {
     this.maxNum = this.source.length;
 
     // 最大显示攻略数量
-    this.maxForwardGuides = 4;
+    this.maxForwardGuides = _.get(settings.getConfig('guide'), 'max_forward_guides', 4);
   }
 
   async init() {
@@ -77,7 +77,7 @@ export class Guide extends ZZZPlugin {
   }
 
   async Guide() {
-    let reg = new RegExp(`${rulePrefix}(更新)?(\\S+)攻略(\\d+)?$`);
+    let reg = new RegExp(`${rulePrefix}(更新)?(\\S+)攻略(\\d+|all)?$`);
     let [
       ,
       ,
@@ -85,8 +85,12 @@ export class Guide extends ZZZPlugin {
       ,
       isUpdate,
       name,
-      group = '1', // setting.getConfig('mys')?.defaultSource
+      group = _.get(settings.getConfig('guide'), 'default_guide', 1).toString(),
     ] = this.e.msg.match(reg);
+    // all -> 0
+    if (group == 'all') {
+      group = '0';
+    }
     group = +group;
     if (group > this.maxNum) {
       await this.reply(`超过攻略数量（${this.maxNum}）`);
@@ -108,7 +112,7 @@ export class Guide extends ZZZPlugin {
           msg.push(segment.image(`file://${guidePath}`));
           continue;
         }
-        if (i < this.maxForwardGuides && (await this.getImg(name, i))) {
+        if (i <= this.maxForwardGuides && (await this.getImg(name, i))) {
           msg.push(segment.image(`file://${guidePath}`));
         }
       }
@@ -131,21 +135,21 @@ export class Guide extends ZZZPlugin {
 
   /** 下载攻略图 */
   async getImg(name, group) {
-    let msyRes = [];
+    let mysRes = [];
     this.collection_id[group].forEach(id =>
-      msyRes.push(this.getData(this.url + id))
+      mysRes.push(this.getData(this.url + id))
     );
 
     try {
-      msyRes = await Promise.all(msyRes);
+      mysRes = await Promise.all(mysRes);
     } catch (error) {
       this.e.reply('暂无攻略数据，请稍后再试');
       console.log(`米游社接口报错：${error}}`);
       return false;
     }
 
-    let posts = lodash.flatten(lodash.map(msyRes, item => item.data.posts));
-    let url;
+    let posts = lodash.flatten(lodash.map(mysRes, item => item.data.posts));
+    let url, created_at, updated_at;
     for (let val of posts) {
       if (val.post.subject.replace(/【[^】]*本[^】]*】/g, '').includes(name)) {
         let max = 0;
@@ -158,6 +162,8 @@ export class Guide extends ZZZPlugin {
           }
         });
         url = val.image_list[max].url;
+        created_at = val.post.created_at;
+        updated_at = val.post.updated_at;
         break;
       }
     }
@@ -167,7 +173,7 @@ export class Guide extends ZZZPlugin {
       );
       return false;
     }
-    console.log(`${this.e.logFnc} 下载${name}攻略图`);
+    console.log(`${this.e.logFnc} 下载${name}攻略图 - ${this.source[group - 1]}`);
 
     const download = await fetch(url);
     const arrayBuffer = await download.arrayBuffer();
@@ -175,7 +181,7 @@ export class Guide extends ZZZPlugin {
     let guidePath = this.getGuidePath(group, name);
     fs.writeFileSync(guidePath, buffer);
 
-    console.log(`${this.e.logFnc} 下载${name}攻略成功`);
+    console.log(`${this.e.logFnc} 下载${name}攻略成功 - ${this.source[group - 1]}`);
 
     return true;
   }
