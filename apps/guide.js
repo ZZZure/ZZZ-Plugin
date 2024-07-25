@@ -135,20 +135,20 @@ export class Guide extends ZZZPlugin {
 
   /** 下载攻略图 */
   async getImg(name, group) {
-    let msyRes = [];
+    let mysRes = [];
     this.collection_id[group].forEach(id =>
-      msyRes.push(this.getData(this.url + id))
+      mysRes.push(this.getData(this.url + id))
     );
 
     try {
-      msyRes = await Promise.all(msyRes);
+      mysRes = await Promise.all(mysRes);
     } catch (error) {
       this.e.reply('暂无攻略数据，请稍后再试');
       console.log(`米游社接口报错：${error}}`);
       return false;
     }
 
-    let posts = lodash.flatten(lodash.map(msyRes, item => item.data.posts));
+    let posts = lodash.flatten(lodash.map(mysRes, item => item.data.posts));
     let url, created_at, updated_at;
     for (let val of posts) {
       if (val.post.subject.replace(/【[^】]*本[^】]*】/g, '').includes(name)) {
