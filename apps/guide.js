@@ -85,7 +85,7 @@ export class Guide extends ZZZPlugin {
       ,
       isUpdate,
       name,
-      group = '1', // setting.getConfig('mys')?.defaultSource
+      group = _.get(settings.getConfig('guide'), 'default_guide', 1).toString(),
     ] = this.e.msg.match(reg);
     group = +group;
     if (group > this.maxNum) {
@@ -145,7 +145,7 @@ export class Guide extends ZZZPlugin {
     }
 
     let posts = lodash.flatten(lodash.map(msyRes, item => item.data.posts));
-    let url;
+    let url, created_at, updated_at;
     for (let val of posts) {
       if (val.post.subject.replace(/【[^】]*本[^】]*】/g, '').includes(name)) {
         let max = 0;
@@ -158,6 +158,8 @@ export class Guide extends ZZZPlugin {
           }
         });
         url = val.image_list[max].url;
+        created_at = val.post.created_at;
+        updated_at = val.post.updated_at;
         break;
       }
     }
