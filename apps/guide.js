@@ -50,6 +50,8 @@ export class Guide extends ZZZPlugin {
       [2721968],
       [2724610],
       [2722266],
+      [2723586],
+      [2716049]
     ];
     this.source = [
       '新艾利都快讯',
@@ -57,6 +59,8 @@ export class Guide extends ZZZPlugin {
       '小橙子阿',
       '猫冬',
       '月光中心',
+      '苦雪的清心花凉糕Suki',
+      'HoYo青枫'
     ];
     // 最大攻略数量
     this.maxNum = this.source.length;
