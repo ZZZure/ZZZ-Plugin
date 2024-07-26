@@ -177,6 +177,29 @@
         <% } %>
 
     </div>
+	{{if damagelist}}
+    <div class="title">
+      <% include(sys.specialTitle, {en: 'DAMAGE' , cn: '伤害统计' }) %>
+    </div>
+    <table class="damagelist">
+      <thead>
+        <tr>
+          <th>类型</th>
+          <th>暴击伤害</th>
+          <th>期望伤害</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{each damagelist damage}}
+        <tr>
+          <td>{{damage.title}}</td>
+          <td>{{damage.value.cd.toFixed(0)}}</td>
+          <td>{{damage.value.qw.toFixed(0)}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    {{/if}}
   </div>
 </div>
 {{/block}}

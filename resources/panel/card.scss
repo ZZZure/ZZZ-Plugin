@@ -475,3 +475,15 @@
   position: relative;
   z-index: 5;
 }
+.damagelist {
+  th {
+	text-align: center;
+	padding: 0.3em 0.3em;
+	width:33%;
+  }
+  td {
+	text-align: center;
+	padding: 0.3em 0.3em;
+	width:33%;
+  }
+}
