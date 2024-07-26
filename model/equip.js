@@ -145,6 +145,16 @@ export class Equip {
     this.equipment_type = equipment_type;
   }
 
+  /**
+   * @param {number} id
+   * @returns {EquipProperty}
+   */
+  get_property(id) {
+    const result =
+      this.properties.find(item => item.property_id === id)?.base || '0';
+    return Number(result);
+  }
+
   async get_assets() {
     const result = await getSuitImage(this.id);
     this.suit_icon = result;

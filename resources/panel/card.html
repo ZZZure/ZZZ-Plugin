@@ -177,7 +177,7 @@
         <% } %>
 
     </div>
-	{{if damagelist}}
+    {{if charData.damages && charData.damages.length}}
     <div class="title damage-title">
       <% include(sys.specialTitle, {en: 'DAMAGE' , cn: '伤害统计' }) %>
     </div>
@@ -190,7 +190,7 @@
         </tr>
       </thead>
       <tbody>
-        {{each damagelist damage}}
+        {{each charData.damages damage}}
         <tr>
           <td>{{damage.title}}</td>
           <td>{{damage.value.cd.toFixed(0)}}</td>

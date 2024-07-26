@@ -2,7 +2,6 @@ import { ZZZPlugin } from '../lib/plugin.js';
 import render from '../lib/render.js';
 import { rulePrefix } from '../lib/common.js';
 import { getPanelList, refreshPanel, getPanel } from '../lib/avatar.js';
-import { getDamage } from '../model/damage/base.js';
 import settings from '../lib/settings.js';
 import _ from 'lodash';
 import { getMapData } from '../utils/file.js';
@@ -92,12 +91,6 @@ export class Panel extends ZZZPlugin {
       await this.reply(`未找到角色${name}的面板信息，请先刷新面板`);
       return;
     }
-	let damagelist = [];
-	if (skilldict[data.id]){
-	  damagelist = await getDamage(data);
-	}else{
-	  damagelist = 0
-	}
     const timer = setTimeout(() => {
       if (this?.reply) {
         this.reply('查询成功，正在下载图片资源，请稍候。');
@@ -108,7 +101,6 @@ export class Panel extends ZZZPlugin {
     const finalData = {
       uid: uid,
       charData: data,
-	  damagelist: damagelist,
     };
     await render(this.e, 'panel/card.html', finalData);
   }
