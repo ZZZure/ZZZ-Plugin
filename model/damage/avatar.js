@@ -89,7 +89,7 @@ export const Avatar = async (data, base_detail, bonus_detail) => {
 		let skill_multiplier6 = await getskilllevelnum(data.id, data.skills, 'R', 'R')
 		let damagelist6 = await calculate_damage(base_detail, bonus_detail, "R", "R", "Ice", skill_multiplier6, data.level)
 		let damage6 = {
-			title: '连携技：雪崩',
+			title: '终结技：永冬狂宴',
 			value: damagelist6
 		}
 		damagelist.push(damage6)
