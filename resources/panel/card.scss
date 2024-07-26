@@ -291,22 +291,26 @@
 
               .level {
                 $label-width: 0.2em;
-                -webkit-clip-path: polygon($label-width 0%,
-                    calc(100% - $label-width) 0%,
-                    100% $label-width,
-                    100% calc(100% - $label-width),
-                    calc(100% - $label-width) 100%,
-                    $label-width 100%,
-                    0% calc(100% - $label-width),
-                    0% $label-width );
-                clip-path: polygon($label-width 0%,
-                    calc(100% - $label-width) 0%,
-                    100% $label-width,
-                    100% calc(100% - $label-width),
-                    calc(100% - $label-width) 100%,
-                    $label-width 100%,
-                    0% calc(100% - $label-width),
-                    0% $label-width );
+                -webkit-clip-path: polygon(
+                  $label-width 0%,
+                  calc(100% - $label-width) 0%,
+                  100% $label-width,
+                  100% calc(100% - $label-width),
+                  calc(100% - $label-width) 100%,
+                  $label-width 100%,
+                  0% calc(100% - $label-width),
+                  0% $label-width
+                );
+                clip-path: polygon(
+                  $label-width 0%,
+                  calc(100% - $label-width) 0%,
+                  100% $label-width,
+                  100% calc(100% - $label-width),
+                  calc(100% - $label-width) 100%,
+                  $label-width 100%,
+                  0% calc(100% - $label-width),
+                  0% $label-width
+                );
                 padding: 0 0.4em;
                 font-size: 0.9em;
                 display: flex;
@@ -530,41 +534,57 @@
       }
     }
   }
+
+  .damage-title {
+    padding-top: 1.2em;
+  }
+
+  .damagelist {
+    margin: 0 2em;
+    margin-top: 1em;
+    text-align: center;
+    display: grid;
+    backdrop-filter: blur(0.2em);
+    border-radius: 0.5em;
+    overflow: hidden;
+    box-shadow: 0 0 3em rgba(0, 0, 0, 0.6);
+    border: 0.1em solid rgba(255, 255, 255, 0.2);
+
+    .dmg-tr {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      border-bottom: 0.1em solid rgba(255, 255, 255, 0.2);
+
+      &:first-child {
+        border-top: 0.2em solid rgba(255, 255, 255, 0.2);
+        border-bottom: 0.2em solid rgba(255, 255, 255, 0.2);
+        font-size: 1.1em;
+        background: rgba(0, 0, 0, 0.2);
+        text-shadow: 0 0 0.2em rgba(0, 0, 0, 0.6);
+        .dmg-td {
+          text-align: center !important;
+          background: none !important;
+        }
+      }
+    }
+
+    .dmg-td {
+      padding: 0.5em 0.5em;
+      font-size: 0.9em;
+      border-right: 0.1em solid rgba(255, 255, 255, 0.2);
+      &:first-child {
+        text-align: left;
+        background: rgba(0, 0, 0, 0.2);
+      }
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
 }
 
 .copyright {
   margin-top: -3.3em;
   position: relative;
   z-index: 5;
-}
-
-.damage-title {
-  padding-top: 1.2em;
-}
-
-.damagelist {
-  margin-left: 2em;
-
-  th {
-    text-align: center;
-    padding: 0.3em 0.3em;
-    width: 9em;
-
-    &:first-child {
-      text-align: left;
-      padding-left: 4em;
-      width: 14em;
-    }
-  }
-
-  td {
-    text-align: center;
-    padding: 0.3em 0.3em;
-    width: 9em;
-
-    &:first-child {
-      width: 14em;
-      text-align: left;
-    }
-  }
 }
