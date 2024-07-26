@@ -181,7 +181,7 @@
     <div class="title damage-title">
       <% include(sys.specialTitle, {en: 'DAMAGE' , cn: '伤害统计' }) %>
     </div>
-    <table class="damagelist">
+    <div class="damagelist">
       <div class="dmg-tr titlebar">
         <div class="dmg-td">类型</div>
         <div class="dmg-td">暴击伤害</div>
@@ -194,7 +194,7 @@
         <div class="dmg-td">{{damage.value.qw.toFixed(0)}}</div>
       </div>
       {{/each}}
-    </table>
+    </div>
     {{/if}}
   </div>
 </div>
