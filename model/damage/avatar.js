@@ -18,8 +18,10 @@ export const Avatar = async (data, base_detail, bonus_detail) => {
 			bonus_detail['CriticalChanceBase'] = CriticalChanceBase + 0.12;
 		}
 		if (data.rank >= 2){
-			let EUP_DmgAdd = await get_let_value(bonus_detail, 'EUP_DmgAdd');
-			bonus_detail['EUP_DmgAdd'] = EUP_DmgAdd + 0.6;
+			let ES_CriticalDamageBase = await get_let_value(bonus_detail, 'ES_CriticalDamageBase');
+			bonus_detail['ES_CriticalDamageBase'] = ES_CriticalDamageBase + 0.6;
+			let EH_CriticalDamageBase = await get_let_value(bonus_detail, 'EH_CriticalDamageBase');
+			bonus_detail['EH_CriticalDamageBase'] = EH_CriticalDamageBase + 0.6;
 		}
 		if (data.rank >= 6){
 			let PenRatio = await get_let_value(bonus_detail, 'PenRatioBase');
