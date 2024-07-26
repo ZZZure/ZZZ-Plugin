@@ -95,6 +95,13 @@ export const get_injury_area = async (merged_attr, skill_type, add_skill_type, a
 				injury_area = injury_area + merged_attr[attr]
 			}
 		}
+		if (attr.search('AddedRatio') != -1) {
+			let attr_name = attr.split('AddedRatio')[0]
+			if ([avatar_element, 'AllDamage'].includes(attr_name)) {
+				logger.debug(attr + '对' + attr_name + '有' + merged_attr[attr] + '增伤')
+				injury_area = injury_area + merged_attr[attr]
+			}
+      }
 	}
 	return injury_area
 }
