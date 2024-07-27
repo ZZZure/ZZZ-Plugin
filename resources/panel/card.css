@@ -626,7 +626,7 @@
 }
 .card .damagelist .dmg-tr {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1.5fr 1fr 1fr;
   border-bottom: 0.1em solid rgba(255, 255, 255, 0.2);
 }
 .card .damagelist .dmg-tr:first-child {
@@ -635,6 +635,7 @@
   font-size: 1.1em;
   background: rgba(0, 0, 0, 0.2);
   text-shadow: 0 0 0.2em rgba(0, 0, 0, 0.6);
+  color: rgb(206, 190, 149);
 }
 .card .damagelist .dmg-tr:first-child .dmg-td {
   text-align: center !important;
@@ -648,6 +649,7 @@
 .card .damagelist .dmg-td:first-child {
   text-align: left;
   background: rgba(0, 0, 0, 0.2);
+  color: rgb(206, 190, 149);
 }
 .card .damagelist .dmg-td:last-child {
   border-right: none;

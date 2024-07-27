@@ -552,7 +552,7 @@
 
     .dmg-tr {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1.5fr 1fr 1fr;
       border-bottom: 0.1em solid rgba(255, 255, 255, 0.2);
 
       &:first-child {
@@ -561,6 +561,7 @@
         font-size: 1.1em;
         background: rgba(0, 0, 0, 0.2);
         text-shadow: 0 0 0.2em rgba(0, 0, 0, 0.6);
+        color: rgb(206, 190, 149);
         .dmg-td {
           text-align: center !important;
           background: none !important;
@@ -575,6 +576,7 @@
       &:first-child {
         text-align: left;
         background: rgba(0, 0, 0, 0.2);
+        color: rgb(206, 190, 149);
       }
       &:last-child {
         border-right: none;

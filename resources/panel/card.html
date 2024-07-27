@@ -182,14 +182,14 @@
       <% include(sys.specialTitle, {en: 'DAMAGE' , cn: '伤害统计' }) %>
     </div>
     <div class="damagelist">
-      <div class="dmg-tr titlebar">
+      <div class="dmg-tr titlebar no-zzz-font">
         <div class="dmg-td">类型</div>
         <div class="dmg-td">暴击伤害</div>
         <div class="dmg-td">期望伤害</div>
       </div>
       {{each charData.damages damage}}
       <div class="dmg-tr">
-        <div class="dmg-td">{{damage.title}}</div>
+        <div class="dmg-td no-zzz-font">{{damage.title}}</div>
         <div class="dmg-td">{{damage.value.cd.toFixed(0)}}</div>
         <div class="dmg-td">{{damage.value.qw.toFixed(0)}}</div>
       </div>
