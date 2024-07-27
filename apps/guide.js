@@ -126,7 +126,9 @@ export class Guide extends ZZZPlugin {
       for (let i = 1; i <= this.maxNum; i++) {
         const guidePath = await this.getGuidePath(i, name, !!isUpdate);
         // msg.push(segment.image(`file://${guidePath}`));
-        msg.push(segment.image(guidePath));
+        if (guidePath) {
+          msg.push(segment.image(guidePath));
+        }
       }
       if (msg.length) {
         await this.reply(await common.makeForwardMsg(this.e, [msg]));
