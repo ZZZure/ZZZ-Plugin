@@ -179,47 +179,54 @@
           {{each equip.properties prop}}
           <div class="properties">
             <div class="prop-icon {{prop.classname}}"></div>
-            <div class="label yellow">{{prop.property_name}}</div>
-            {{if prop.count}}
-            <div class="count">
-              <% for(let i=1 ; i <=prop.count ; i++) { %>
-                <span></span>
-                <% } %>
-            </div>
-            {{/if}}
-            <div class="value">{{prop.base}}</div>
-          </div>
-          {{/each}}
-        </div>
-      </div>
-      {{/each}}
-      <% for(let i=charData.equip.length; i < 6 ; i++) { %>
-        <div class="box empty">
-          <div class="icon">
-          </div>
-        </div>
-        <% } %>
+            {{if prop.score !== false}}
+            <div class="label yellow hit{{prop.base_score * 100}}">
+              {{else}}
+                <div class="label yellow">
+                  {{/if}}
 
-    </div>
-    {{if charData?.damages && charData?.damages?.length}}
-    <div class="title damage-title">
-      <% include(sys.specialTitle, {en: 'DAMAGE' , cn: '伤害统计' }) %>
-    </div>
-    <div class="damagelist">
-      <div class="dmg-tr titlebar no-zzz-font">
-        <div class="dmg-td">类型</div>
-        <div class="dmg-td">暴击伤害</div>
-        <div class="dmg-td">期望伤害</div>
+                  {{prop.property_name}}
+                </div>
+                {{if prop.count}}
+                <div class="count">
+                  <% for(let i=1 ; i <=prop.count ; i++) { %>
+                    <span></span>
+                    <% } %>
+                </div>
+                {{/if}}
+                <div class="value">{{prop.base}}</div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+        {{/each}}
+        <% for(let i=charData.equip.length; i < 6 ; i++) { %>
+          <div class="box empty">
+            <div class="icon">
+            </div>
+          </div>
+          <% } %>
+
       </div>
-      {{each charData.damages damage}}
-      <div class="dmg-tr">
-        <div class="dmg-td no-zzz-font">{{damage.title}}</div>
-        <div class="dmg-td">{{damage.value.cd.toFixed(0)}}</div>
-        <div class="dmg-td">{{damage.value.qw.toFixed(0)}}</div>
+      {{if charData?.damages && charData?.damages?.length}}
+      <div class="title damage-title">
+        <% include(sys.specialTitle, {en: 'DAMAGE' , cn: '伤害统计' }) %>
       </div>
-      {{/each}}
+      <div class="damagelist">
+        <div class="dmg-tr titlebar no-zzz-font">
+          <div class="dmg-td">类型</div>
+          <div class="dmg-td">暴击伤害</div>
+          <div class="dmg-td">期望伤害</div>
+        </div>
+        {{each charData.damages damage}}
+        <div class="dmg-tr">
+          <div class="dmg-td no-zzz-font">{{damage.title}}</div>
+          <div class="dmg-td">{{damage.value.cd.toFixed(0)}}</div>
+          <div class="dmg-td">{{damage.value.qw.toFixed(0)}}</div>
+        </div>
+        {{/each}}
+      </div>
+      {{/if}}
     </div>
-    {{/if}}
   </div>
-</div>
-{{/block}}
+  {{/block}}
