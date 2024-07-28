@@ -6,7 +6,9 @@ import { Property } from './property.js';
 import { Skill } from './skill.js';
 import { relice_ability } from './damage/relice.js';
 import { weapon_ability } from './damage/weapon.js';
-import { avatar_ability } from './damage/avatar.js';
+import { avatar_ability, has_calculation } from './damage/avatar.js';
+import { hasScoreData } from '../lib/score.js';
+
 import _ from 'lodash';
 import fs from 'fs';
 import path from 'path';
@@ -253,6 +255,9 @@ export class ZZZAvatarInfo {
     this.element_str = element.IDToElement(element_type);
     /** @type {boolean} */
     this.isNew = isNew;
+    for (const equip of this.equip) {
+      equip.get_score(this.id);
+    }
   }
 
   getProperty(name) {
@@ -364,6 +369,9 @@ export class ZZZAvatarInfo {
    * value: {name: string, value: number}[]
    * }[]} */
   get damages() {
+    if (!has_calculation(this.id)) {
+      return [];
+    }
     /** 处理基础数据 */
     let base_detail = this.damage_basic_properties.base_detail;
     let bonus_detail = this.damage_basic_properties.bonus_detail;
@@ -390,6 +398,44 @@ export class ZZZAvatarInfo {
     /** 处理角色加成 */
     const damagelist = avatar_ability(this, base_detail, bonus_detail);
     return damagelist;
+  }
+
+  /** @type {number|boolean} */
+  get equip_score() {
+    if (hasScoreData(this.id)) {
+      let score = 0;
+      for (const equip of this.equip) {
+        score += equip.score;
+      }
+      return score;
+    }
+    return false;
+  }
+
+  /** @type {'C'|'B'|'A'|'S'|'SS'|'SSS'|'ACE'|false} */
+  get equip_comment() {
+    if (this.equip_score <= 130) {
+      return 'C';
+    }
+    if (this.equip_score <= 150) {
+      return 'B';
+    }
+    if (this.equip_score <= 170) {
+      return 'A';
+    }
+    if (this.equip_score <= 190) {
+      return 'S';
+    }
+    if (this.equip_score <= 210) {
+      return 'SS';
+    }
+    if (this.equip_score <= 240) {
+      return 'SSS';
+    }
+    if (this.equip_score > 240) {
+      return 'ACE';
+    }
+    return false;
   }
 
   async get_basic_assets() {

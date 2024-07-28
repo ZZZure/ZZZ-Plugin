@@ -437,13 +437,95 @@
   position: relative;
   z-index: 5;
 }
+.card .c .comment,
+.card .C .comment {
+  background: linear-gradient(0deg, rgba(39, 211, 30, 0.3), rgb(39, 211, 30));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.card .b .comment,
+.card .B .comment {
+  background: linear-gradient(0deg, rgba(94, 189, 249, 0.3), rgb(94, 189, 249));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.card .a .comment,
+.card .A .comment {
+  background: linear-gradient(0deg, rgba(210, 86, 255, 0.3), rgb(210, 86, 255));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.card .s .comment,
+.card .S .comment {
+  background: linear-gradient(0deg, rgba(255, 218, 190, 0.3), rgb(255, 218, 190));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.card .ss .comment,
+.card .SS .comment {
+  background: linear-gradient(0deg, rgba(255, 225, 116, 0.4), rgb(255, 225, 116));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.card .sss .comment,
+.card .SSS .comment {
+  background: linear-gradient(0deg, rgba(255, 163, 59, 0.4), rgb(255, 163, 59));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.card .ace .comment,
+.card .ACE .comment {
+  background: linear-gradient(0deg, rgba(255, 59, 59, 0.4), rgb(255, 59, 59));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.card .equip-score {
+  display: flex;
+  justify-content: center;
+  font-size: 1.2em;
+  align-items: center;
+  gap: 0.2em;
+}
+.card .equip-score .comment-box {
+  font-size: 1.2em;
+  width: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: rgba(32, 32, 32, 0.4);
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.4);
+  border: 0.2em solid rgb(216, 216, 216);
+  position: relative;
+  z-index: 1;
+}
+.card .equip-score .value {
+  border: 0.1em solid rgb(155, 155, 155);
+  border-left: none;
+  padding: 0.1em 1em 0.1em 1em;
+  margin-left: -0.6em;
+  border-radius: 0 1em 1em 0;
+}
+.card .equip-score .value .subt {
+  font-size: 0.8em;
+}
 .card .equip-list {
+  width: 100%;
   display: grid;
   gap: 1em;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
   padding: 0 1.8em;
   align-items: stretch;
   margin-top: 1em;
+  overflow: hidden;
 }
 .card .equip-list .box {
   border-image-source: url("./images/equip_bg.png");
@@ -569,8 +651,23 @@
   white-space: nowrap;
   text-align: center;
 }
+.card .equip-list .box .score {
+  display: flex;
+  justify-content: center;
+  gap: 0.2em;
+  font-size: 0.9em;
+  align-items: flex-end;
+}
+.card .equip-list .box .score .value {
+  font-size: 0.9em;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgb(255, 255, 255));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 .card .equip-list .box .property-list {
   padding: 0 0.5em;
+  overflow: hidden;
 }
 .card .equip-list .box .property-list .properties {
   display: flex;
@@ -586,6 +683,21 @@
   flex-grow: 0;
   flex-shrink: 0;
 }
+.card .equip-list .box .property-list .properties .count {
+  display: flex;
+  align-items: center;
+  gap: 0.1em;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+.card .equip-list .box .property-list .properties .count span {
+  width: 0.3em;
+  aspect-ratio: 1;
+  border-right: 0.1em solid rgb(255, 255, 255);
+  border-top: 0.1em solid rgb(255, 255, 255);
+  rotate: 45deg;
+  margin-left: -0.15em;
+}
 .card .equip-list .box .property-list .properties .label {
   flex-grow: 1;
   flex-shrink: 1;
@@ -594,10 +706,25 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  opacity: 1;
+}
+.card .equip-list .box .property-list .properties .label.hit0 {
+  opacity: 0.6;
+}
+.card .equip-list .box .property-list .properties .label.hit50 {
+  opacity: 0.8;
+}
+.card .equip-list .box .property-list .properties .label.hit75 {
+  opacity: 1;
+}
+.card .equip-list .box .property-list .properties .label.hit100 {
+  opacity: 1;
+  color: rgb(249, 189, 64);
 }
 .card .equip-list .box .property-list .properties .value {
   color: rgb(249, 189, 64);
   font-size: 0.7em;
+  margin-left: auto;
 }
 .card .equip-list .box .property-list .properties.main {
   background-color: rgb(65, 147, 237);
@@ -605,9 +732,17 @@
 .card .equip-list .box .property-list .properties.main .prop-icon {
   width: 1.2em;
   margin-bottom: 0.2em;
+  filter: drop-shadow(0 0 0.4em rgba(0, 0, 0, 0.3));
+}
+.card .equip-list .box .property-list .properties.main .label {
+  color: rgb(255, 255, 255);
+  text-shadow: 0 0 0.4em rgba(0, 0, 0, 0.3);
+  font-size: 0.8em;
+  opacity: 1;
 }
 .card .equip-list .box .property-list .properties.main .value {
   color: rgb(255, 255, 255);
+  text-shadow: 0 0 0.4em rgba(0, 0, 0, 0.3);
   font-size: 1em;
 }
 .card .damage-title {

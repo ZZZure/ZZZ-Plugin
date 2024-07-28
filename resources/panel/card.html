@@ -138,6 +138,17 @@
     <div class="title">
       <% include(sys.specialTitle, {en: 'METAL' , cn: '驱动盘信息' }) %>
     </div>
+    {{if charData.equip_score !== false}}
+    <div class="equip-score {{charData.equip_comment}}">
+      <div class="comment-box">
+        <div class="comment">{{charData.equip_comment}}</div>
+      </div>
+      <div class="value">
+        <span>{{charData.equip_score}}</span>
+        <span class="subt">分</span>
+      </div>
+    </div>
+    {{/if}}
     <div class="equip-list">
       {{each charData.equip equip}}
       <div class="box">
@@ -149,6 +160,12 @@
           <div class="rarity-icon {{equip.rarity}}"></div>
         </div>
         <div class="name">{{equip.name}}</div>
+        {{if equip.score !== false}}
+        <div class="score {{equip.comment}}">
+          <div class="comment">{{equip.comment}}</div>
+          <div class="value">{{equip.score}}</div>
+        </div>
+        {{/if}}
         <div class="property-list">
 
           {{each equip.main_properties prop}}
@@ -163,6 +180,13 @@
           <div class="properties">
             <div class="prop-icon {{prop.classname}}"></div>
             <div class="label yellow">{{prop.property_name}}</div>
+            {{if prop.count}}
+            <div class="count">
+              <% for(let i=1 ; i <=prop.count ; i++) { %>
+                <span></span>
+                <% } %>
+            </div>
+            {{/if}}
             <div class="value">{{prop.base}}</div>
           </div>
           {{/each}}
@@ -177,7 +201,7 @@
         <% } %>
 
     </div>
-    {{if charData.damages && charData.damages.length}}
+    {{if charData?.damages && charData?.damages?.length}}
     <div class="title damage-title">
       <% include(sys.specialTitle, {en: 'DAMAGE' , cn: '伤害统计' }) %>
     </div>

@@ -1,5 +1,10 @@
 import { property } from '../lib/convert.js';
 import { getSuitImage, getWeaponImage } from '../lib/download.js';
+import {
+  getEquipPropertyBaseScore,
+  getEquipPropertyEnhanceCount,
+  getEquipPropertyScore,
+} from '../lib/score.js';
 
 /**
  * @class
@@ -29,6 +34,24 @@ export class EquipProperty {
     this.base = base;
 
     this.classname = property.idToClassName(property_id);
+  }
+
+  /**
+   * 获取属性分数
+   * @param {string} charID
+   * @returns {number}
+   */
+  get_score(charID) {
+    /** @type {number} */
+    this.score = getEquipPropertyScore(charID, this.property_id, this.base);
+    /** @type {number} */
+    this.base_score = getEquipPropertyBaseScore(charID, this.property_id);
+    return this.score;
+  }
+
+  /** @type {number} */
+  get count() {
+    return getEquipPropertyEnhanceCount(this.property_id, this.base);
   }
 }
 
@@ -60,6 +83,25 @@ export class EquipMainProperty {
     this.base = base;
 
     this.classname = property.idToClassName(property_id);
+    this.score = 0;
+  }
+
+  /**
+   * 获取属性分数
+   * @param {string} charID
+   * @returns {number}
+   */
+  get_score(charID) {
+    /** @type {number} */
+    const _score = getEquipPropertyBaseScore(
+      charID,
+      this.property_id,
+      this.base
+    );
+    if (_score > 0) {
+      this.score = 1;
+    }
+    return this.score;
   }
 }
 
@@ -120,6 +162,8 @@ export class Equip {
     this.equip_suit;
     /** @type {number} */
     this.equipment_type;
+    /** @type {boolean|number} */
+    this.score = false;
 
     const {
       id,
@@ -158,6 +202,56 @@ export class Equip {
   async get_assets() {
     const result = await getSuitImage(this.id);
     this.suit_icon = result;
+  }
+
+  /**
+   * 获取装备属性分数
+   * @param {string} charID
+   * @returns {number}
+   */
+  get_score(charID) {
+    this.score = this.properties.reduce(
+      (acc, item) => acc + item.get_score(charID),
+      0
+    );
+    const additional = this.main_properties.reduce(
+      (acc, item) => acc + item.get_score(charID),
+      0
+    );
+    if (this.equipment_type === 4) {
+      this.score += 4.8 * additional;
+    } else if (this.equipment_type === 5) {
+      this.score += 9.6 * additional;
+    } else if (this.equipment_type === 6) {
+      this.score += 4.8 * additional;
+    }
+    return this.score;
+  }
+
+  /** @type {'C'|'B'|'A'|'S'|'SS'|'SSS'|'ACE'|false} */
+  get comment() {
+    if (this.score <= 8) {
+      return 'C';
+    }
+    if (this.score <= 13) {
+      return 'B';
+    }
+    if (this.score <= 18) {
+      return 'A';
+    }
+    if (this.score <= 23) {
+      return 'S';
+    }
+    if (this.score <= 28) {
+      return 'SS';
+    }
+    if (this.score <= 33) {
+      return 'SSS';
+    }
+    if (this.score > 33) {
+      return 'ACE';
+    }
+    return false;
   }
 }
 
