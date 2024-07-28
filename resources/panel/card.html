@@ -144,7 +144,7 @@
         <div class="comment">{{charData.equip_comment}}</div>
       </div>
       <div class="value">
-        <span>{{charData.equip_score}}</span>
+        <span>{{charData.equip_score.toFixed(2)}}</span>
         <span class="subt">分</span>
       </div>
     </div>
@@ -163,7 +163,7 @@
         {{if equip.score !== false}}
         <div class="score {{equip.comment}}">
           <div class="comment">{{equip.comment}}</div>
-          <div class="value">{{equip.score}}</div>
+          <div class="value">{{equip.score.toFixed(2)}}</div>
         </div>
         {{/if}}
         <div class="property-list">
@@ -171,7 +171,7 @@
           {{each equip.main_properties prop}}
           <div class="properties main">
             <div class="prop-icon {{prop.classname}}"></div>
-            <div class="label yellow">{{prop.property_name}}</div>
+            <div class="label yellow">{{prop.short_name}}</div>
             <div class="value">{{prop.base}}</div>
           </div>
           {{/each}}

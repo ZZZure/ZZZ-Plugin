@@ -400,14 +400,14 @@ export class ZZZAvatarInfo {
     return damagelist;
   }
 
-  /** @type {string|boolean} */
+  /** @type {number|boolean} */
   get equip_score() {
     if (hasScoreData(this.id)) {
       let score = 0;
       for (const equip of this.equip) {
         score += equip.score;
       }
-      return score.toFixed(2);
+      return score;
     }
     return false;
   }

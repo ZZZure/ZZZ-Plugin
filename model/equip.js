@@ -103,6 +103,17 @@ export class EquipMainProperty {
     }
     return this.score;
   }
+
+  /** @type {string} */
+  get short_name() {
+    if (this.property_name.includes('属性伤害加成')) {
+      return this.property_name.replace('属性伤害加成', '伤加成');
+    }
+    if (this.property_name === '能量自动回复') {
+      return '能量回复';
+    }
+    return this.property_name;
+  }
 }
 
 /**
