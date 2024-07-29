@@ -414,13 +414,13 @@ export class ZZZAvatarInfo {
 
   /** @type {'C'|'B'|'A'|'S'|'SS'|'SSS'|'ACE'|false} */
   get equip_comment() {
-    if (this.equip_score < 90) {
+    if (this.equip_score < 50) {
       return 'C';
     }
-    if (this.equip_score <= 120) {
+    if (this.equip_score <= 100) {
       return 'B';
     }
-    if (this.equip_score <= 150) {
+    if (this.equip_score <= 140) {
       return 'A';
     }
     if (this.equip_score <= 180) {

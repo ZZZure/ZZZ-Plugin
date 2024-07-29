@@ -141,36 +141,44 @@ export class Help extends ZZZPlugin {
   }
   async help() {
     if (this.e?.isMaster) {
-      helpData.push({
-        title: '管理功能',
-        icon: 'dungeon',
-        items: [
-          {
-            title: '更新',
-            desc: '更新绝区零插件',
-            needCK: false,
-            needSK: false,
-            commands: ['[插件][强制]更新'],
-          },
-          {
-            title: '下载资源',
-            desc: '提前下载插件所需资源，查询时无需再次下载',
-            needCK: false,
-            needSK: false,
-            commands: ['下载全部/所有资源'],
-          },
-          {
-            title: '删除资源',
-            desc: '删除已经下载的资源，查询时需要再次下载（用于删除错误下载缓存）',
-            needCK: false,
-            needSK: false,
-            commands: ['删除全部/所有资源'],
-          },
-        ],
+      const _helpData = [
+        ...helpData,
+        {
+          title: '管理功能',
+          icon: 'dungeon',
+          items: [
+            {
+              title: '更新',
+              desc: '更新绝区零插件',
+              needCK: false,
+              needSK: false,
+              commands: ['[插件][强制]更新'],
+            },
+            {
+              title: '下载资源',
+              desc: '提前下载插件所需资源，查询时无需再次下载',
+              needCK: false,
+              needSK: false,
+              commands: ['下载全部/所有资源'],
+            },
+            {
+              title: '删除资源',
+              desc: '删除已经下载的资源，查询时需要再次下载（用于删除错误下载缓存）',
+              needCK: false,
+              needSK: false,
+              commands: ['删除全部/所有资源'],
+            },
+          ],
+        },
+      ];
+      await render(this.e, 'help/index.html', {
+        helpData: _helpData,
       });
+      return false;
     }
     await render(this.e, 'help/index.html', {
       helpData,
     });
+    return false;
   }
 }
