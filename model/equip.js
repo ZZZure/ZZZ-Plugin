@@ -247,25 +247,25 @@ export class Equip {
 
   /** @type {'C'|'B'|'A'|'S'|'SS'|'SSS'|'ACE'|false} */
   get comment() {
-    if (this.score < 8) {
+    if (this.score < 10) {
       return 'C';
     }
-    if (this.score <= 13) {
+    if (this.score <= 15) {
       return 'B';
     }
-    if (this.score <= 18) {
+    if (this.score <= 20) {
       return 'A';
     }
-    if (this.score <= 23) {
+    if (this.score <= 25) {
       return 'S';
     }
-    if (this.score <= 28) {
+    if (this.score <= 30) {
       return 'SS';
     }
-    if (this.score <= 33) {
+    if (this.score <= 35) {
       return 'SSS';
     }
-    if (this.score > 33) {
+    if (this.score > 35) {
       return 'ACE';
     }
     return false;

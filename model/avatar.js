@@ -414,25 +414,25 @@ export class ZZZAvatarInfo {
 
   /** @type {'C'|'B'|'A'|'S'|'SS'|'SSS'|'ACE'|false} */
   get equip_comment() {
-    if (this.equip_score < 50) {
+    if (this.equip_score < 45) {
       return 'C';
     }
-    if (this.equip_score <= 100) {
+    if (this.equip_score <= 80) {
       return 'B';
     }
-    if (this.equip_score <= 140) {
+    if (this.equip_score <= 115) {
       return 'A';
     }
-    if (this.equip_score <= 180) {
+    if (this.equip_score <= 150) {
       return 'S';
     }
-    if (this.equip_score <= 210) {
+    if (this.equip_score <= 185) {
       return 'SS';
     }
-    if (this.equip_score <= 240) {
+    if (this.equip_score <= 220) {
       return 'SSS';
     }
-    if (this.equip_score > 240) {
+    if (this.equip_score > 220) {
       return 'ACE';
     }
     return false;
