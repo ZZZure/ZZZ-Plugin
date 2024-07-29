@@ -225,20 +225,22 @@ export class Equip {
    * @returns {number}
    */
   get_score(charID) {
-    this.score = this.properties.reduce(
-      (acc, item) => acc + item.get_score(charID),
-      0
-    );
-    const additional = this.main_properties.reduce(
-      (acc, item) => acc + item.get_score(charID),
-      0
-    );
-    if (this.equipment_type === 4) {
-      this.score += 4.8 * additional;
-    } else if (this.equipment_type === 5) {
-      this.score += 9.6 * additional;
-    } else if (this.equipment_type === 6) {
-      this.score += 4.8 * additional;
+    if (hasScoreData(charID)) {
+      this.score = this.properties.reduce(
+        (acc, item) => acc + item.get_score(charID),
+        0
+      );
+      const additional = this.main_properties.reduce(
+        (acc, item) => acc + item.get_score(charID),
+        0
+      );
+      if (this.equipment_type === 4) {
+        this.score += 4.8 * additional;
+      } else if (this.equipment_type === 5) {
+        this.score += 9.6 * additional;
+      } else if (this.equipment_type === 6) {
+        this.score += 4.8 * additional;
+      }
     }
     return this.score;
   }
