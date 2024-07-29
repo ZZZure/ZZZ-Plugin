@@ -250,22 +250,22 @@ export class Equip {
     if (this.score < 8) {
       return 'C';
     }
-    if (this.score >= 8) {
+    if (this.score <= 13) {
       return 'B';
     }
-    if (this.score >= 13) {
+    if (this.score <= 18) {
       return 'A';
     }
-    if (this.score >= 18) {
+    if (this.score <= 23) {
       return 'S';
     }
-    if (this.score >= 23) {
+    if (this.score <= 28) {
       return 'SS';
     }
-    if (this.score >= 28) {
+    if (this.score <= 33) {
       return 'SSS';
     }
-    if (this.score >= 33) {
+    if (this.score > 33) {
       return 'ACE';
     }
     return false;

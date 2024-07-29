@@ -417,19 +417,19 @@ export class ZZZAvatarInfo {
     if (this.equip_score < 90) {
       return 'C';
     }
-    if (this.equip_score >= 90) {
+    if (this.equip_score <= 120) {
       return 'B';
     }
-    if (this.equip_score >= 120) {
+    if (this.equip_score <= 150) {
       return 'A';
     }
-    if (this.equip_score >= 150) {
+    if (this.equip_score <= 180) {
       return 'S';
     }
-    if (this.equip_score >= 180) {
+    if (this.equip_score <= 210) {
       return 'SS';
     }
-    if (this.equip_score >= 210) {
+    if (this.equip_score <= 240) {
       return 'SSS';
     }
     if (this.equip_score > 240) {
