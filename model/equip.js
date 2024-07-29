@@ -4,6 +4,7 @@ import {
   getEquipPropertyBaseScore,
   getEquipPropertyEnhanceCount,
   getEquipPropertyScore,
+  hasScoreData,
 } from '../lib/score.js';
 
 /**
@@ -32,6 +33,8 @@ export class EquipProperty {
     this.property_name = property_name;
     this.property_id = property_id;
     this.base = base;
+    /** @type {number | false} */
+    this.score = false;
 
     this.classname = property.idToClassName(property_id);
   }
@@ -42,10 +45,11 @@ export class EquipProperty {
    * @returns {number}
    */
   get_score(charID) {
-    /** @type {number} */
-    this.score = getEquipPropertyScore(charID, this.property_id, this.base);
-    /** @type {number} */
-    this.base_score = getEquipPropertyBaseScore(charID, this.property_id);
+    if (hasScoreData(charID)) {
+      this.score = getEquipPropertyScore(charID, this.property_id, this.base);
+      /** @type {number} */
+      this.base_score = getEquipPropertyBaseScore(charID, this.property_id);
+    }
     return this.score;
   }
 
@@ -241,25 +245,25 @@ export class Equip {
 
   /** @type {'C'|'B'|'A'|'S'|'SS'|'SSS'|'ACE'|false} */
   get comment() {
-    if (this.score <= 8) {
+    if (this.score < 8) {
       return 'C';
     }
-    if (this.score <= 13) {
+    if (this.score >= 8) {
       return 'B';
     }
-    if (this.score <= 18) {
+    if (this.score >= 13) {
       return 'A';
     }
-    if (this.score <= 23) {
+    if (this.score >= 18) {
       return 'S';
     }
-    if (this.score <= 28) {
+    if (this.score >= 23) {
       return 'SS';
     }
-    if (this.score <= 33) {
+    if (this.score >= 28) {
       return 'SSS';
     }
-    if (this.score > 33) {
+    if (this.score >= 33) {
       return 'ACE';
     }
     return false;
