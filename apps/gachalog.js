@@ -4,11 +4,13 @@ import { rulePrefix } from '../lib/common.js';
 import { getAuthKey } from '../lib/authkey.js';
 import settings from '../lib/settings.js';
 import _ from 'lodash';
-import common from '../../../lib/common/common.js'
+import common from '../../../lib/common/common.js';
 import {
   anaylizeGachaLog,
   updateGachaLog,
   getZZZGachaLink,
+  gacha_type_meta_data,
+  getZZZGachaLogByAuthkey,
 } from '../lib/gacha.js';
 import { getQueryVariable } from '../utils/network.js';
 
@@ -78,7 +80,7 @@ export class GachaLog extends ZZZPlugin {
       return false;
     }
     this.finish('gachaLog');
-    this.getLog(key);
+    this.getLogWithOutUID(key);
   }
   async refreshGachaLog() {
     const uid = await this.getUID();
@@ -109,14 +111,53 @@ export class GachaLog extends ZZZPlugin {
     }
     this.reply('抽卡记录获取中请稍等...可能需要一段时间，请耐心等待');
     const { data, count } = await updateGachaLog(key, uid);
-    let msg = [] 
-    msg.push(`抽卡记录更新成功，共${Object.keys(data).length}个卡池`)
+    let msg = [];
+    msg.push(`抽卡记录更新成功，共${Object.keys(data).length}个卡池`);
     for (const name in data) {
-      msg.push(`${name}新增${count[name] || 0}条记录，一共${
-        data[name].length
-      }条记录`);
+      msg.push(
+        `${name}新增${count[name] || 0}条记录，一共${data[name].length}条记录`
+      );
     }
-    await this.reply(await common.makeForwardMsg(this.e,msg,'抽卡记录更新成功'));
+    await this.reply(
+      await common.makeForwardMsg(this.e, msg, '抽卡记录更新成功')
+    );
+    return false;
+  }
+  async getLogWithOutUID(key) {
+    /** @type {string} */
+    let uid;
+    queryLabel: for (const name in gacha_type_meta_data) {
+      for (const type of gacha_type_meta_data[name]) {
+        const log = await getZZZGachaLogByAuthkey(
+          key,
+          type,
+          type[0],
+          1,
+          '0',
+          '1'
+        );
+        if (log && log.list && log.list.length > 0) {
+          uid = log.list[0].uid;
+          break queryLabel;
+        }
+      }
+    }
+    if (!uid) {
+      await this.reply('未查询到uid，请检查链接是否正确');
+      return false;
+    }
+    this.reply('抽卡记录获取中请稍等...可能需要一段时间，请耐心等待');
+    const { data, count } = await updateGachaLog(key, uid);
+    let msg = [];
+    msg.push(`抽卡记录更新成功，共${Object.keys(data).length}个卡池`);
+    for (const name in data) {
+      msg.push(
+        `${name}新增${count[name] || 0}条记录，一共${data[name].length}条记录`
+      );
+    }
+    await this.reply(
+      await common.makeForwardMsg(this.e, msg, '抽卡记录更新成功')
+    );
     return false;
   }
 
@@ -140,7 +181,7 @@ export class GachaLog extends ZZZPlugin {
     await render(this.e, 'gachalog/index.html', result);
   }
   async getGachaLink() {
-    if (!this.e.isPrivate||this.e.isGroup) {
+    if (!this.e.isPrivate || this.e.isGroup) {
       await this.reply('请私聊获取抽卡链接', false, { at: true });
       return false;
     }
