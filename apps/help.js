@@ -36,7 +36,7 @@ const helpData = [
       },
       {
         title: '便签',
-        desc: '查看便签',
+        desc: '查看体力、刮刮卡、营业、每日任务完成情况等信息',
         needCK: true,
         needSK: false,
         commands: ['note', '便签', '便笺', '体力', '每日'],
@@ -49,21 +49,21 @@ const helpData = [
     items: [
       {
         title: '刷新抽卡记录',
-        desc: '刷新抽卡记录',
+        desc: '刷新抽卡记录，如果数据过多，可能需要等待很长一段时间，请等待回复后再%查看抽卡记录',
         needCK: true,
         needSK: true,
         commands: ['刷新/更新抽卡链接', '刷新/更新抽卡记录'],
       },
       {
         title: '获取抽卡记录链接',
-        desc: '获取抽卡记录链接',
+        desc: '获取抽卡记录链接，获取链接后可以用于小程序等第三方工具查看抽卡记录',
         needCK: true,
         needSK: true,
         commands: ['获取抽卡链接'],
       },
       {
         title: '查看抽卡记录',
-        desc: '查看抽卡记录',
+        desc: '查看抽卡记录，需要手动%刷新抽卡记录，否则读取的是缓存数据',
         needCK: false,
         needSK: false,
         commands: ['抽卡分析', '抽卡记录'],
@@ -90,7 +90,7 @@ const helpData = [
       },
       {
         title: '查看角色面板',
-        desc: '查看角色面板',
+        desc: '查看角色详细面板信息',
         needCK: false,
         needSK: false,
         commands: ['角色名+面板'],
@@ -116,10 +116,17 @@ const helpData = [
     items: [
       {
         title: '查看角色攻略',
-        desc: '查看角色攻略',
+        desc: '查看角色攻略，后面可以加0~7查看不同来源的攻略，其中0或者all为攻略合集',
         needCK: false,
         needSK: false,
-        commands: ['角色名+攻略[+来源]'],
+        commands: ['角色名+攻略[+0~7]'],
+      },
+      {
+        title: '更新角色攻略',
+        desc: '当需要更新某个角色的攻略，或者某个角色攻略出现错误对不上时，可以使用此命令更新攻略',
+        needCK: false,
+        needSK: false,
+        commands: ['更新+角色名+攻略[+0~7]'],
       },
     ],
   },
@@ -167,6 +174,20 @@ export class Help extends ZZZPlugin {
               needCK: false,
               needSK: false,
               commands: ['删除全部/所有资源'],
+            },
+            {
+              title: '设置默认攻略',
+              desc: '设置查询的默认攻略来源，数字0~7对应不同的攻略来源，其中0或者all为攻略合集',
+              needCK: false,
+              needSK: false,
+              commands: ['设置默认攻略+0~7'],
+            },
+            {
+              title: '设置所有攻略显示个数',
+              desc: '当查询攻略为0或者all时，设置发送的攻略个数，最大为7',
+              needCK: false,
+              needSK: false,
+              commands: ['设置所有攻略显示个数+1~7'],
             },
           ],
         },

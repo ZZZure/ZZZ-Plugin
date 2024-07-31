@@ -73,15 +73,6 @@ export class Guide extends ZZZPlugin {
     );
   }
 
-  // async init() {
-  //   for (let group = 1; group <= this.maxNum; group++) {
-  //     let guideFolder = this.getGuideFolder(group);
-  //     if (!fs.existsSync(guideFolder)) {
-  //       fs.mkdirSync(guideFolder, { recursive: true });
-  //     }
-  //   }
-  // }
-
   getGuideFolder(groupIndex) {
     let guideFolder = path.join(ZZZ_GUIDES_PATH, this.source[groupIndex - 1]);
     return guideFolder;
@@ -129,7 +120,7 @@ export class Guide extends ZZZPlugin {
         if (guidePath) {
           msg.push(segment.image(guidePath));
         } else {
-          msg.push(`暂无${name}攻略 (${this.source[i - 1]})`)
+          msg.push(`暂无${name}攻略 (${this.source[i - 1]})`);
         }
       }
       if (msg.length) {
@@ -233,6 +224,10 @@ export class Guide extends ZZZPlugin {
 
   /** %设置默认攻略1 */
   async SetDefaultGuide() {
+    if (!this.e.isMaster) {
+      this.reply('仅限主人设置');
+      return false;
+    }
     let match = /设置默认攻略(\d+|all)$/g.exec(this.e.msg);
     let guide_id = match[1];
     if (guide_id == 'all') {
@@ -257,6 +252,10 @@ export class Guide extends ZZZPlugin {
 
   /** %设置所有攻略显示个数3 */
   async SetMaxForwardGuide() {
+    if (!this.e.isMaster) {
+      this.reply('仅限主人设置');
+      return false;
+    }
     let match = /设置所有攻略显示个数(\d+)$/g.exec(this.e.msg);
     let max_forward_guide = Number(match[1]);
     this.setSingleConfig('max_forward_guides', max_forward_guide);
