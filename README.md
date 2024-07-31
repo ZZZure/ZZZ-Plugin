@@ -29,7 +29,7 @@ git clone --depth=1 https://github.com/ZZZure/ZZZ-Plugin.git ./plugins/ZZZ-Plugi
 
 以下所有功能前缀为：`#zzz`、`%`、`#ZZZ`、`#绝区零` 任选其一
 
-![功能图片](https://s2.loli.net/2024/07/22/bJwasnB3XZASvP6.jpg)
+![功能图片](https://s2.loli.net/2024/07/31/BJrDm6OLh2AIj1N.jpg)
 
 ## 攻略、图鉴
 
