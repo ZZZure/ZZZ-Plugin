@@ -210,7 +210,6 @@ export class ZZZAvatarInfo {
       ranks,
       isNew,
     } = data;
-    logger.debug('ZZZAvatarInfo', data);
     /** @type {number} */
     this.id = id;
     /** @type {number} */
@@ -436,6 +435,36 @@ export class ZZZAvatarInfo {
       return 'ACE';
     }
     return false;
+  }
+
+  /** @type {number} 练度分数 */
+  get proficiency_score() {
+    let base_score = 3;
+    if (this.rarity === 'S') {
+      base_score = 5;
+    } else if (this.rarity === 'A') {
+      base_score = 4;
+    }
+    let score = 0;
+    if (this.equip_score !== false) {
+      score += this.equip_score * 2;
+    }
+    for (const skill of this.skills) {
+      score += skill.level * base_score;
+    }
+    score += this.level * 2;
+    score += this.rank * base_score * 2;
+    if (this.weapon) {
+      let weapon_base_score = 3;
+      if (this.weapon.rarity === 'S') {
+        weapon_base_score = 5;
+      } else if (this.weapon.rarity === 'A') {
+        weapon_base_score = 4;
+      }
+      score += this.weapon.level * 2;
+      score += this.weapon.star * 2 * weapon_base_score;
+    }
+    return score;
   }
 
   async get_basic_assets() {
