@@ -106,7 +106,7 @@ export class Guide extends ZZZPlugin {
       group = _.get(settings.getConfig('guide'), 'default_guide', 1).toString(),
     ] = this.e.msg.match(reg);
     // all -> 0
-    if (group == 'all') {
+    if (group === 'all') {
       group = '0';
     }
     group = Number(group);
@@ -128,15 +128,23 @@ export class Guide extends ZZZPlugin {
         // msg.push(segment.image(`file://${guidePath}`));
         if (guidePath) {
           msg.push(segment.image(guidePath));
+        } else {
+          msg.push(`暂无${name}攻略 (${this.source[i - 1]})`)
         }
       }
       if (msg.length) {
-        await this.reply(await common.makeForwardMsg(this.e, [msg]));
+        await this.reply(await common.makeForwardMsg(this.e, msg));
       }
       return false;
     }
 
     const guidePath = await this.getGuidePath(group, name, !!isUpdate);
+    if (!guidePath) {
+      this.e.reply(
+        `暂无${name}攻略 (${this.source[group - 1]})\n请尝试其他的攻略来源查询`
+      );
+      return false;
+    }
     await this.e.reply(segment.image(guidePath));
     return false;
   }
@@ -182,9 +190,6 @@ export class Guide extends ZZZPlugin {
       }
     }
     if (!url) {
-      this.e.reply(
-        `暂无${name}攻略 (${this.source[group - 1]})\n请尝试其他的攻略来源查询`
-      );
       return false;
     }
     logger.debug(
