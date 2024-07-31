@@ -1,5 +1,9 @@
 import { element, property } from '../lib/convert.js';
-import { getRoleImage, getSquareAvatar } from '../lib/download.js';
+import {
+  getRoleImage,
+  getSmallSquareAvatar,
+  getSquareAvatar,
+} from '../lib/download.js';
 import { imageResourcesPath } from '../lib/path.js';
 import { Equip, Weapon } from './equip.js';
 import { Property } from './property.js';
@@ -210,41 +214,41 @@ export class ZZZAvatarInfo {
       ranks,
       isNew,
     } = data;
-    /** @type {number} */
+    /** @type {number} 角色ID */
     this.id = id;
-    /** @type {number} */
+    /** @type {number} 角色等级 */
     this.level = level;
-    /** @type {string} */
+    /** @type {string} 角色名称 */
     this.name_mi18n = name_mi18n;
-    /** @type {string} */
+    /** @type {string} 角色全名 */
     this.full_name_mi18n = full_name_mi18n;
-    /** @type {number} */
+    /** @type {number} 元素种类 */
     this.element_type = element_type;
     /** @type {string} */
     this.camp_name_mi18n = camp_name_mi18n;
     /** @type {number} */
     this.avatar_profession = avatar_profession;
-    /** @type {string} */
+    /** @type {string} 稀有度 */
     this.rarity = rarity;
     /** @type {string} */
     this.group_icon_path = group_icon_path;
     /** @type {string} */
     this.hollow_icon_path = hollow_icon_path;
-    /** @type {Equip[]} */
+    /** @type {Equip[]} 驱动盘 */
     this.equip =
       (equip &&
         (Array.isArray(equip)
           ? equip.map(equip => new Equip(equip))
           : new Equip(equip))) ||
       [];
-    /** @type {Weapon} */
+    /** @type {Weapon} 武器 */
     this.weapon = weapon ? new Weapon(weapon) : null;
-    /** @type {Property[]} */
+    /** @type {Property[]} 属性 */
     this.properties =
       properties && properties.map(property => new Property(property));
-    /** @type {Skill[]} */
+    /** @type {Skill[]} 技能 */
     this.skills = skills && skills.map(skill => new Skill(skill));
-    /** @type {number} */
+    /** @type {number} 影 */
     this.rank = rank;
     /** @type {Rank[]} */
     this.ranks = ranks && ranks.map(rank => new Rank(rank));
@@ -254,6 +258,8 @@ export class ZZZAvatarInfo {
     this.element_str = element.IDToElement(element_type);
     /** @type {boolean} */
     this.isNew = isNew;
+    /** @type {number}  等级级别（取十位数字）*/
+    this.level_rank = Math.floor(this.level / 10);
     for (const equip of this.equip) {
       equip.get_score(this.id);
     }
@@ -467,12 +473,31 @@ export class ZZZAvatarInfo {
     return score;
   }
 
+  /**
+   * 获取基础资源
+   * @returns {Promise<void>}
+   */
   async get_basic_assets() {
     const result = await getSquareAvatar(this.id);
     /** @type {string} */
     this.square_icon = result;
   }
 
+  /**
+   * 获取基础小资源
+   * @returns {Promise<void>}
+   */
+  async get_small_basic_assets() {
+    const result = await getSmallSquareAvatar(this.id);
+    /** @type {string} */
+    this.small_square_icon = result;
+    await this?.weapon?.get_assets?.();
+  }
+
+  /**
+   * 获取详细资源
+   * @returns {Promise<void>}
+   */
   async get_detail_assets() {
     const custom_panel_images = path.join(
       imageResourcesPath,
@@ -501,6 +526,8 @@ export class ZZZAvatarInfo {
 
   async get_assets() {
     await this.get_basic_assets();
+    await this.get_detail_assets();
+    await this.get_small_basic_assets();
   }
 }
 

@@ -222,10 +222,12 @@
   .bg-content {
     position: absolute;
     bottom: -0.1em;
-    left: 50%;
-    transform: translate(-50%, 0) skewX(-8deg);
+    left: 0;
+    transform: skewX(-8deg);
     color: rgba(255, 255, 255, 0.1);
     font-size: 2.7em;
+    width: 100%;
+    text-align: center;
   }
   .content {
     flex-grow: 1;

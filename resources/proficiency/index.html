@@ -1,0 +1,91 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" href="{{@sys.currentPath}}/index.css">
+{{/block}}
+
+{{block 'main'}}
+{{include sys.playerInfo}}
+<div class="general-info">
+  <div class="item">
+    <div class="value">{{general.SCount}}/{{general.total}}</div>
+    <div class="label">S级代理人</div>
+  </div>
+  <div class="item">
+    <div class="value">{{general.SWeaponRate.toFixed(1)}}%</div>
+    <div class="label">S级音擎率</div>
+  </div>
+  <div class="item">
+    <div class="value">{{general.highRank}}/{{general.total}}</div>
+    <div class="label">高影代理人</div>
+  </div>
+  <div class="item">
+    <div class="value">{{general.SSSCount}}</div>
+    <div class="label">SSS+驱动盘</div>
+  </div>
+</div>
+<% include(sys.specialTitle, {en: 'Avatar List' , cn: '练度统计' }) %>
+  <div class="list">
+    {{each list item}}
+    <div class="item skew {{item.rarity}}">
+      <div class="content">
+        <div class="tag skew ranks r{{item.rank}}">
+          <div class="content">{{item.rank}}影</div>
+        </div>
+        <div class="tag skew level r{{item.level_rank}}">
+          <div class="content">Lv{{item.level}}</div>
+        </div>
+        <div class="property ice"></div>
+        <div class="avatar skew">
+          <div class="content">
+            <img src="{{item.small_square_icon}}" alt="">
+          </div>
+        </div>
+        <div class="skills">
+          <div class="skill">{{item.skills[0].level}}</div>
+          <div class="skill">{{item.skills[2].level}}</div>
+          <div class="skill">{{item.skills[5].level}}</div>
+          <div class="skill">{{item.skills[1].level}}</div>
+          <div class="skill">{{item.skills[3].level}}</div>
+          <div class="skill">{{item.skills[4].level}}</div>
+        </div>
+        <div class="weapon skew">
+          <div class="content">
+            {{if item.weapon}}
+            <img src="{{item.weapon.square_icon}}" alt="">
+            {{/if}}
+          </div>
+        </div>
+        <div class="weapon_info">
+          {{if item.weapon}}
+          <div class="base">
+            <div class="rarity-icon {{item.weapon.rarity}}"></div>
+            <div class="name">{{item.weapon.name}}</div>
+          </div>
+          <div class="tags">
+            <div class="tag skew r{{item.weapon.star}}">
+              <div class="content">{{item.weapon.star}}精</div>
+            </div>
+            <div class="tag skew r{{item.weapon.level_rank}}">
+              <div class="content">Lv{{item.weapon.level}}</div>
+            </div>
+          </div>
+          {{else}}
+            <div class="empty">
+              未装配
+            </div>
+            {{/if}}
+        </div>
+        <div class="equip skew">
+          <div class="content {{item.equip_comment}}">
+            <div>驱动盘</div>
+            {{if item.equip_comment}}
+            <div class="comment">{{item.equip_comment}}</div>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  {{/block}}

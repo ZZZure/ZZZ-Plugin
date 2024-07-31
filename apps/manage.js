@@ -142,7 +142,7 @@ export class Panel extends ZZZPlugin {
     if (!this.e.isMaster) return false;
     await this.reply('【注意】正在删除所有资源图片，后续使用需要重新下载！');
     if (fs.existsSync(imageResourcesPath)) {
-      fs.rmdirSync(imageResourcesPath, { recursive: true });
+      fs.rmSync(imageResourcesPath, { recursive: true });
     }
     await this.reply('资源图片已删除！');
   }

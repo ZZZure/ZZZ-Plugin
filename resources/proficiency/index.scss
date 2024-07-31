@@ -1,0 +1,344 @@
+.user-info {
+  margin: 0 2em;
+  font-size: 0.9em;
+}
+.general-info {
+  border-image: url('./images/BgFrame.png');
+  border-image-slice: 105 82.5 162.5 82.5 fill;
+  border-image-width: 3em 1em 1em 1em;
+  border-image-outset: 0em 0em 0em 0em;
+  border-image-repeat: stretch;
+  overflow: hidden;
+  padding: 4.2em 1em 1em 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-around;
+  margin: 0 2em;
+  .item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    .value {
+      background-color: rgb(214, 188, 62);
+      color: rgb(0, 0, 0);
+      padding: 0.1em 0.5em;
+      border-radius: 0.3em;
+      font-size: 1.2em;
+    }
+  }
+}
+.special-title {
+  margin: 1em auto;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding: 0 2em;
+  margin-bottom: 1.5em;
+  .skew {
+    transform: skewX(-25deg);
+    .content {
+      transform: skewX(25deg);
+    }
+  }
+  .item {
+    border-width: 0.1em;
+    border-style: solid;
+    margin: 0 0.5em;
+    border-radius: 0.5em;
+    overflow: hidden;
+    &.s,
+    &.S {
+      border-color: rgb(233, 190, 79);
+    }
+    &.a,
+    &.A {
+      border-color: rgb(164, 41, 210);
+    }
+    .content {
+      display: flex;
+      position: relative;
+      .tag {
+        position: absolute;
+        z-index: 1;
+        background-color: rgb(107, 107, 107);
+        font-size: 0.6em;
+        padding: 0.1em 1em;
+        border-radius: 0.5em;
+        white-space: nowrap;
+      }
+      .ranks {
+        top: 0;
+        left: 0.4em;
+      }
+      .level {
+        bottom: 0;
+        left: 8em;
+      }
+      .property {
+        width: 0.8em;
+        position: absolute;
+        z-index: 1;
+        left: 6.9em;
+        top: 0.1em;
+      }
+      .avatar {
+        border-left: 0.1em solid;
+        border-right: 0.1em solid;
+        overflow: hidden;
+        margin-left: 1.2em;
+        .content {
+          width: 4.9em;
+          height: 2em;
+          img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+      }
+      .skills {
+        margin-left: 1.5em;
+        width: 10em;
+        height: 1.9em;
+        background: url('./images/skill_bg.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        display: flex;
+        align-items: flex-end;
+        padding-bottom: 0.1em;
+        padding-left: 0.05em;
+        .skill {
+          width: 1.42em;
+          aspect-ratio: 1;
+          margin-right: 1.1em;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 0.6em;
+        }
+      }
+      .weapon {
+        border-left: 0.1em solid;
+        border-right: 0.1em solid;
+        overflow: hidden;
+        margin-left: -0.5em;
+        .content {
+          width: 4.5em;
+          height: 2em;
+          img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+          }
+        }
+      }
+      .weapon_info {
+        font-size: 0.6em;
+        margin-left: 0.5em;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 6.5em;
+        flex-grow: 0;
+        flex-shrink: 0;
+        .empty {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: rgb(218, 218, 218);
+          height: 100%;
+        }
+        .base {
+          display: flex;
+          gap: 0.1em;
+          margin-top: 0.1em;
+          .rarity-icon {
+            width: 1.5em;
+          }
+          .name {
+            flex-grow: 1;
+            flex-shrink: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+        .tags {
+          display: flex;
+          gap: 0.05em;
+          font-size: 1.7em;
+          margin-left: -1.1em;
+          .tag {
+            position: relative;
+          }
+        }
+      }
+      .equip {
+        border-left: 0.1em solid;
+        overflow: hidden;
+        flex-grow: 1;
+        margin-left: 0.5em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .content {
+          display: flex;
+          flex-direction: column;
+          font-size: 0.6em;
+          justify-content: center;
+          align-items: center;
+          text-wrap: nowrap;
+          white-space: nowrap;
+          .comment {
+            font-size: 1.2em;
+          }
+          &.c,
+          &.C {
+            .comment {
+              background: linear-gradient(
+                0deg,
+                rgba(39, 211, 30, 0.3),
+                rgba(39, 211, 30, 1)
+              );
+              -webkit-background-clip: text;
+              background-clip: text;
+              color: transparent;
+            }
+          }
+          &.b,
+          &.B {
+            .comment {
+              background: linear-gradient(
+                0deg,
+                rgba(94, 189, 249, 0.3),
+                rgba(94, 189, 249, 1)
+              );
+              -webkit-background-clip: text;
+              background-clip: text;
+              color: transparent;
+            }
+          }
+          &.a,
+          &.A {
+            .comment {
+              background: linear-gradient(
+                0deg,
+                rgba(210, 86, 255, 0.3),
+                rgb(210, 86, 255)
+              );
+              -webkit-background-clip: text;
+              background-clip: text;
+              color: transparent;
+            }
+          }
+          &.s,
+          &.S {
+            .comment {
+              background: linear-gradient(
+                0deg,
+                rgba(255, 218, 190, 0.3),
+                rgba(255, 218, 190, 1)
+              );
+              -webkit-background-clip: text;
+              background-clip: text;
+              color: transparent;
+            }
+          }
+          &.ss,
+          &.SS {
+            .comment {
+              background: linear-gradient(
+                0deg,
+                rgba(255, 225, 116, 0.4),
+                rgba(255, 225, 116, 1)
+              );
+              -webkit-background-clip: text;
+              background-clip: text;
+              color: transparent;
+            }
+          }
+          &.sss,
+          &.SSS {
+            .comment {
+              background: linear-gradient(
+                0deg,
+                rgba(255, 163, 59, 0.4),
+                rgba(255, 163, 59, 1)
+              );
+              -webkit-background-clip: text;
+              background-clip: text;
+              color: transparent;
+            }
+          }
+          &.ace,
+          &.ACE {
+            .comment {
+              background: linear-gradient(
+                0deg,
+                rgba(255, 59, 59, 0.4),
+                rgb(255, 59, 59)
+              );
+              -webkit-background-clip: text;
+              background-clip: text;
+              color: transparent;
+            }
+          }
+        }
+      }
+      .r0 {
+        background: rgb(102, 102, 102);
+      }
+      .r1 {
+        background: rgb(58, 116, 43);
+      }
+      .r2 {
+        background: rgb(61, 132, 214);
+      }
+      .r3 {
+        background: rgb(223, 118, 118);
+      }
+      .r4 {
+        background: rgb(51, 54, 161);
+      }
+      .r5 {
+        background: rgb(102, 127, 19);
+      }
+      .r6 {
+        background: rgb(218, 48, 32);
+      }
+      .r7 {
+        background: rgb(187, 96, 10);
+      }
+      .r8 {
+        background: rgb(2, 88, 122);
+      }
+      .r9 {
+        background: rgb(186, 10, 10);
+      }
+    }
+    &.s,
+    &.S {
+      .avatar,
+      .weapon,
+      .equip {
+        border-color: rgb(233, 190, 79);
+      }
+    }
+    &.a,
+    &.A {
+      .avatar,
+      .weapon,
+      .equip {
+        border-color: rgb(164, 41, 210);
+      }
+    }
+  }
+}

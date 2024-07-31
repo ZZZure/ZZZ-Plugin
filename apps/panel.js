@@ -4,8 +4,6 @@ import { rulePrefix } from '../lib/common.js';
 import { getPanelList, refreshPanel, getPanel } from '../lib/avatar.js';
 import settings from '../lib/settings.js';
 import _ from 'lodash';
-import { getMapData } from '../utils/file.js';
-const skilldict = getMapData('SkillData');
 
 export class Panel extends ZZZPlugin {
   constructor() {
@@ -68,6 +66,10 @@ export class Panel extends ZZZPlugin {
     const uid = await this.getUID();
     if (!uid) return false;
     const result = getPanelList(uid);
+    if (!result) {
+      await this.reply('未找到面板数据，请先%刷新面板');
+      return false;
+    }
     await this.getPlayerInfo();
     const timer = setTimeout(() => {
       if (this?.reply) {
@@ -112,20 +114,45 @@ export class Panel extends ZZZPlugin {
     const uid = await this.getUID();
     if (!uid) return false;
     const result = getPanelList(uid);
-
+    if (!result) {
+      await this.reply('未找到面板数据，请先%刷新面板');
+      return false;
+    }
+    await this.getPlayerInfo();
     result.sort((a, b) => {
       return b.proficiency_score - a.proficiency_score;
     });
-
-    result.forEach(item => {
-      logger.debug(item.name_mi18n, item.proficiency_score);
-    });
-
+    const WeaponCount = result.filter(item => item?.weapon).length,
+      SWeaponCount = result.filter(
+        item => item?.weapon && item.weapon.rarity === 'S'
+      ).length;
+    const general = {
+      total: result.length,
+      SCount: result.filter(item => item.rarity === 'S').length,
+      SWeaponRate: (SWeaponCount / WeaponCount) * 100,
+      SSSCount: result.reduce((acc, item) => {
+        if (item.equip) {
+          acc += item.equip.filter(
+            equip => equip.comment === 'SSS' || equip.comment === 'ACE'
+          ).length;
+        }
+        return acc;
+      }, 0),
+      highRank: result.filter(item => item.rank > 4).length,
+    };
+    const timer = setTimeout(() => {
+      if (this?.reply) {
+        this.reply('查询成功，正在下载图片资源，请稍候。');
+      }
+    }, 3000);
+    for (const item of result) {
+      await item.get_small_basic_assets();
+    }
+    clearTimeout(timer);
     const finalData = {
-      count: result?.length || 0,
+      general,
       list: result,
     };
-
-    // await render(this.e, 'panel/proficiency.html', finalData);
+    await render(this.e, 'proficiency/index.html', finalData);
   }
 }

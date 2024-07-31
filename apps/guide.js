@@ -95,13 +95,13 @@ export class Guide extends ZZZPlugin {
     group = Number(group);
     if (group > this.maxNum) {
       await this.reply(`超过攻略数量（${this.maxNum}）`);
-      return;
+      return false;
     }
     const name = atlasToName(atlas);
 
     if (!name) {
       await this.reply('该角色不存在');
-      return;
+      return false;
     }
 
     if (group === 0) {

@@ -342,6 +342,8 @@ export class Weapon {
     this.talent_title = talent_title;
     this.talent_content = talent_content;
     this.profession = profession;
+    /** @type {number} 等级级别（取十位数字） */
+    this.level_rank = Math.floor(level / 10);
   }
 
   async get_assets() {
