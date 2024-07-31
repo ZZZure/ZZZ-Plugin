@@ -118,7 +118,7 @@ export class Panel extends ZZZPlugin {
     });
 
     result.forEach(item => {
-      logger.debug(item.proficiency_score, item);
+      logger.debug(item.name_mi18n, item.proficiency_score);
     });
 
     const finalData = {

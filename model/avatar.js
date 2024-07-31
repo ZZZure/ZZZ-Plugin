@@ -210,7 +210,6 @@ export class ZZZAvatarInfo {
       ranks,
       isNew,
     } = data;
-    logger.debug('ZZZAvatarInfo', data);
     /** @type {number} */
     this.id = id;
     /** @type {number} */
