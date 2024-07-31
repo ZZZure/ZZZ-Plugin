@@ -95,6 +95,13 @@ const helpData = [
         needSK: false,
         commands: ['角色名+面板'],
       },
+      {
+        title: '练度统计',
+        desc: '查看角色练度统计（如果更新需要先%刷新面板）',
+        needCK: false,
+        needSK: false,
+        commands: ['练度', '练度统计'],
+      },
     ],
   },
   {
