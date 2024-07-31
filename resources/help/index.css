@@ -45,7 +45,7 @@
   display: grid;
   gap: 0.5em;
   grid-template-columns: repeat(3, 1fr);
-  align-items: flex-start;
+  align-items: stretch;
 }
 .card .part .list .item {
   width: 100%;
@@ -95,7 +95,6 @@
   font-size: 0.9em;
 }
 .card .part .list .item .commands .command {
-  height: 1.6em;
   line-height: 1.6em;
   padding: 0em 0.5em;
   border-radius: 0.5em 0.2em 0.5em 0.2em;
