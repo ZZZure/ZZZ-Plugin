@@ -26,14 +26,6 @@ export class Guide extends ZZZPlugin {
           fnc: 'GuideHelp',
         },
         {
-          reg: `^${rulePrefix}设置默认攻略(\\d+|all)$`,
-          fnc: 'SetDefaultGuide',
-        },
-        {
-          reg: `^${rulePrefix}设置所有攻略显示个数(\\d+)$`,
-          fnc: 'SetMaxForwardGuide',
-        },
-        {
           reg: `${rulePrefix}(更新)?\\S+攻略(\\d+|all)?$`,
           fnc: 'Guide',
         },
@@ -220,45 +212,5 @@ export class Guide extends ZZZPlugin {
       '攻略来源:',
     ].concat(this.source.map((element, index) => `${index + 1}: ${element}`));
     await this.e.reply(reply_msg.join('\n'));
-  }
-
-  /** %设置默认攻略1 */
-  async SetDefaultGuide() {
-    if (!this.e.isMaster) {
-      this.reply('仅限主人设置');
-      return false;
-    }
-    let match = /设置默认攻略(\d+|all)$/g.exec(this.e.msg);
-    let guide_id = match[1];
-    if (guide_id == 'all') {
-      guide_id = 0;
-    }
-    guide_id = Number(guide_id);
-    if (guide_id > this.maxNum) {
-      let reply_msg = [
-        '绝区零默认攻略设置方式为:',
-        '%设置默认攻略[0123...]',
-        `请增加数字0-${this.maxNum}其中一个，或者增加 all 以显示所有攻略`,
-        '攻略来源请输入 %攻略帮助 查看',
-      ];
-      await this.e.reply(reply_msg.join('\n'));
-      return;
-    }
-    settings.setSingleConfig('guide', 'default_guide', guide_id);
-
-    let source_name = guide_id == 0 ? 'all' : this.source[guide_id - 1];
-    await this.e.reply(`绝区零默认攻略已设置为: ${guide_id} (${source_name})`);
-  }
-
-  /** %设置所有攻略显示个数3 */
-  async SetMaxForwardGuide() {
-    if (!this.e.isMaster) {
-      this.reply('仅限主人设置');
-      return false;
-    }
-    let match = /设置所有攻略显示个数(\d+)$/g.exec(this.e.msg);
-    let max_forward_guide = Number(match[1]);
-    this.setSingleConfig('max_forward_guides', max_forward_guide);
-    await this.e.reply(`绝区零所有攻略显示个数已设置为: ${max_forward_guide}`);
   }
 }
