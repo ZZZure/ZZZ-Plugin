@@ -19,6 +19,10 @@ export class Panel extends ZZZPlugin {
           reg: `${rulePrefix}(.*)面板(.*)$`,
           fnc: 'handleRule',
         },
+        {
+          reg: `${rulePrefix}练度(统计)?$`,
+          fnc: 'proficiency',
+        },
       ],
     });
   }
@@ -103,5 +107,25 @@ export class Panel extends ZZZPlugin {
       charData: data,
     };
     await render(this.e, 'panel/card.html', finalData);
+  }
+  async proficiency() {
+    const uid = await this.getUID();
+    if (!uid) return false;
+    const result = getPanelList(uid);
+
+    result.sort((a, b) => {
+      return b.proficiency_score - a.proficiency_score;
+    });
+
+    result.forEach(item => {
+      logger.debug(item.proficiency_score, item);
+    });
+
+    const finalData = {
+      count: result?.length || 0,
+      list: result,
+    };
+
+    // await render(this.e, 'panel/proficiency.html', finalData);
   }
 }

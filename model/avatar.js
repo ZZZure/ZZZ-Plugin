@@ -438,6 +438,29 @@ export class ZZZAvatarInfo {
     return false;
   }
 
+  /** @type {number} 练度分数 */
+  get proficiency_score() {
+    let score = 0;
+    if (this.rarity === 'S') {
+      score += 30;
+    } else {
+      score += 10;
+    }
+    if (this.equip_score !== false) {
+      score += this.equip_score * 3;
+    }
+    for (const skill of this.skills) {
+      score += skill.level * 5;
+    }
+    score += this.level * 2;
+    score += this.rank * 10;
+    if (this.weapon) {
+      score += this.weapon.level * 2;
+      score += this.weapon.star * 10;
+    }
+    return score;
+  }
+
   async get_basic_assets() {
     const result = await getSquareAvatar(this.id);
     /** @type {string} */
