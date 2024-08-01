@@ -52,6 +52,14 @@ export class Panel extends ZZZPlugin {
           reg: `${rulePrefix}(上传|添加)(\\S+)(角色|面板)图$`,
           fnc: 'uploadCharacterImg',
         },
+        {
+          reg: `${rulePrefix}(获取|查看)(\\S+)(角色|面板)图(\\d+)?$`,
+          fnc: 'getCharacterImages',
+        },
+        {
+          reg: `${rulePrefix}删除(\\S+)(角色|面板)图(.+)$`,
+          fnc: 'deleteCharacterImg',
+        },
       ],
     });
 
@@ -65,5 +73,7 @@ export class Panel extends ZZZPlugin {
     this.addAlias = manage.alias.addAlias;
     this.deleteAlias = manage.alias.deleteAlias;
     this.uploadCharacterImg = manage.panel.uploadCharacterImg;
+    this.getCharacterImages = manage.panel.getCharacterImages;
+    this.deleteCharacterImg = manage.panel.deleteCharacterImg;
   }
 }

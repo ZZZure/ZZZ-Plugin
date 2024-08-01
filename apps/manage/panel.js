@@ -1,6 +1,8 @@
 import { char } from '../../lib/convert.js';
 import { downloadFile } from '../../lib/download.js';
 import { imageResourcesPath } from '../../lib/path.js';
+import common from '../../../../lib/common/common.js';
+import fs from 'fs';
 import path from 'path';
 export async function uploadCharacterImg() {
   if (!this.e.isMaster) {
@@ -93,5 +95,101 @@ export async function uploadCharacterImg() {
     }
   }
   this.reply(`成功上传${success}张图片，失败${failed}张图片。`);
+  return false;
+}
+
+export async function getCharacterImages() {
+  const reg = /(获取|查看)(.+)(角色|面板)图(\d+)?$/;
+  const match = this.e.msg.match(reg);
+  if (!match) {
+    return false;
+  }
+  const charName = match[2].trim();
+  const name = char.aliasToName(charName);
+  let page = match[4];
+  if (!name) {
+    this.reply('未找到对应角色');
+    return false;
+  }
+  const pageSize = 5;
+  const resourcesImagesPath = imageResourcesPath;
+  const panelImagesPath = path.join(resourcesImagesPath, `panel/${name}`);
+  const files = fs.readdirSync(panelImagesPath);
+  const images = [];
+  for (const file of files) {
+    images.push(path.join(panelImagesPath, file));
+  }
+  page = Number(page);
+  if (!page || page < 1) {
+    page = 1;
+  }
+  const start = (page - 1) * pageSize;
+  const end = page * pageSize;
+  if (start >= images.length) {
+    this.reply('哪有这么多图片');
+    return false;
+  }
+  const imagePaths = images.slice(start, end);
+  const imageMsg = imagePaths.map(imagePath => {
+    const id = String(images.findIndex(value => value === imagePath) + 1);
+    const msg = [`ID：${id}`, segment.image(imagePath)];
+    return msg;
+  });
+  imageMsg.unshift(
+    `当前页数：${page}，总页数：${Math.ceil(
+      images.length / pageSize
+    )}，查询指定页数请在指令后面加上页码。`
+  );
+  imageMsg.push(
+    '删除或者添加后会重新排序ID，此时若想删除，请重新获取图片列表，否则可能会删除错误的图片。'
+  );
+  if (imageMsg.length)
+    await this.reply(await common.makeForwardMsg(this.e, imageMsg));
+
+  return false;
+}
+
+export async function deleteCharacterImg() {
+  if (!this.e.isMaster) {
+    this.reply('只有主人才能删除');
+    return false;
+  }
+  const reg = /(删除)(.+)(角色|面板)图(.+)$/;
+  const match = this.e.msg.match(reg);
+  if (!match) {
+    return false;
+  }
+  const charName = match[2].trim();
+  const name = char.aliasToName(charName);
+  if (!name) {
+    this.reply('未找到对应角色');
+    return false;
+  }
+  const ids = match[4].split(/[,，、\s]+/);
+  const resourcesImagesPath = imageResourcesPath;
+  const panelImagesPath = path.join(resourcesImagesPath, `panel/${name}`);
+  const files = fs.readdirSync(panelImagesPath);
+  const images = [];
+  for (const file of files) {
+    images.push(path.join(panelImagesPath, file));
+  }
+  const success = [];
+  const failed = [];
+  for (const id of ids) {
+    const index = Number(id) - 1;
+    if (index < 0 || index >= images.length) {
+      failed.push(id);
+      continue;
+    }
+    const imagePath = images[index];
+    fs.unlinkSync(imagePath);
+    success.push(id);
+  }
+  const msgs = [
+    `成功删除ID为${success.join(',')}的图片`,
+    failed ? `删除失败ID为${failed.join(',')}` : '无失败ID',
+    '删除后会重新排序ID，若想要再次删除，请重新获取图片列表，否则可能会删除错误的图片。',
+  ];
+  this.reply(common.makeForwardMsg(this.e, msgs));
   return false;
 }
