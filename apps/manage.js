@@ -8,6 +8,7 @@ import settings from '../lib/settings.js';
 import fs from 'fs';
 import {
   getRoleImage,
+  getSmallSquareAvatar,
   getSquareAvatar,
   getSuitImage,
   getWeaponImage,
@@ -52,6 +53,11 @@ export class Panel extends ZZZPlugin {
         failed: 0,
         total: charIDs.length,
       },
+      charSmallSquare: {
+        success: 0,
+        failed: 0,
+        total: charIDs.length,
+      },
       charSquare: {
         success: 0,
         failed: 0,
@@ -78,6 +84,13 @@ export class Panel extends ZZZPlugin {
       } catch (error) {
         logger.error('getSquareAvatar', id, error);
         result.charSquare.failed++;
+      }
+      try {
+        await getSmallSquareAvatar(id);
+        result.charSmallSquare.success++;
+      } catch (error) {
+        logger.error('getSmallSquareAvatar', id, error);
+        result.charSmallSquare.failed++;
       }
       try {
         await getRoleImage(id);

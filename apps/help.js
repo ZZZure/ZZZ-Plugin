@@ -115,6 +115,19 @@ const helpData = [
         needSK: false,
         commands: ['式舆防卫战', '防卫战', '式舆', '深渊', '防卫'],
       },
+      {
+        title: '查看上期式舆防卫战',
+        desc: '查看上期式舆防卫战(深渊)信息',
+        needCK: false,
+        needSK: false,
+        commands: [
+          '上期式舆防卫战',
+          '上期防卫战',
+          '上期式舆',
+          '上期深渊',
+          '上期防卫',
+        ],
+      },
     ],
   },
   {
