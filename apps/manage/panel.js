@@ -4,7 +4,7 @@ import { imageResourcesPath } from '../../lib/path.js';
 import path from 'path';
 export async function uploadCharacterImg() {
   if (!this.e.isMaster) {
-    this.reply('只有主人才能添加...');
+    this.reply('只有主人才能添加');
     return false;
   }
   const reg = /(上传|添加)(.+)(角色|面板)图$/;
@@ -14,6 +14,10 @@ export async function uploadCharacterImg() {
   }
   const charName = match[2].trim();
   const name = char.aliasToName(charName);
+  if (!name) {
+    this.reply('未找到对应角色');
+    return false;
+  }
   const images = [];
   // 下面方法来源于miao-plugin/apps/character/ImgUpload.js
   for (const val of this.e.message) {
@@ -63,7 +67,6 @@ export async function uploadCharacterImg() {
       }
     }
   }
-  logger.debug('images', images);
   if (images.length <= 0) {
     this.reply(
       '消息中未找到图片，请将要发送的图片与消息一同发送或引用要添加的图像。'
@@ -77,12 +80,9 @@ export async function uploadCharacterImg() {
   for (const image of images) {
     let fileName = new Date().getTime().toString();
     let fileType = 'png';
-    if (val.file) {
-      fileName = val.file.substring(0, val.file.lastIndexOf('.'));
-      fileType = val.file.substring(val.file.lastIndexOf('.') + 1);
-    }
-    if (response.headers.get('content-type') === 'image/gif') {
-      fileType = 'gif';
+    if (image.file) {
+      fileName = image.file.substring(0, image.file.lastIndexOf('.'));
+      fileType = image.file.substring(image.file.lastIndexOf('.') + 1);
     }
     const filePath = path.join(panelImagesPath, `${fileName}.${fileType}`);
     const result = await downloadFile(image.url, filePath);
