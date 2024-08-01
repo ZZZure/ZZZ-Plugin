@@ -153,8 +153,8 @@ export class Guide extends ZZZPlugin {
           }
         });
         url = val.image_list[max].url;
-        created_at = val.post.created_at;
-        updated_at = val.post.updated_at;
+        // created_at = val.post.created_at;
+        // updated_at = val.post.updated_at;
         break;
       }
     }
