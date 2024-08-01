@@ -14,7 +14,7 @@ export class Abyss extends ZZZPlugin {
       priority: _.get(settings.getConfig('priority'), 'abyss', 70),
       rule: [
         {
-          reg: `${rulePrefix}(式舆防卫战|式舆|深渊|防卫战|防卫)$`,
+          reg: `${rulePrefix}(上期|往期)?(式舆防卫战|式舆|深渊|防卫战|防卫)$`,
           fnc: 'abyss',
         },
       ],
@@ -24,7 +24,8 @@ export class Abyss extends ZZZPlugin {
     const { api, deviceFp } = await this.getAPI();
     if (!api) return false;
     await this.getPlayerInfo();
-    const abyssData = await api.getFinalData(this.e, 'zzzChallenge', {
+    const method = this.e.msg.match(`(上期|往期)`) ? 'zzzChallenge' : 'zzzChallengePeriod';
+    const abyssData = await api.getFinalData(this.e, method, {
       deviceFp,
     });
     if (!abyssData?.has_data) {
