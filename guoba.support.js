@@ -46,17 +46,17 @@ export function supportGuoba() {
         },
         {
           field: 'config.query.others',
-          label: '允许查询他人信息',
+          label: '查询他人信息',
           bottomHelpMessage: '是否允许查询他人信息',
           component: 'Switch',
         },
         {
           component: 'Divider',
-          label: '抽卡设置',
+          label: '抽卡分析设置',
         },
         {
           field: 'gacha.interval',
-          label: '冷却时间（单位：秒）',
+          label: '冷却时间',
           bottomHelpMessage:
             '设置刷新抽卡记录的冷却时间，单位为秒，取值范围为0～1000',
           component: 'InputNumber',
@@ -73,7 +73,7 @@ export function supportGuoba() {
         },
         {
           field: 'panel.interval',
-          label: '冷却时间（单位：秒）',
+          label: '冷却时间',
           bottomHelpMessage:
             '设置刷新面板的冷却时间，单位为秒，取值范围为0～1000',
           component: 'InputNumber',
@@ -82,6 +82,65 @@ export function supportGuoba() {
             min: 0,
             max: 1000,
             placeholder: '请输入数字',
+          },
+        },
+        {
+          component: 'Divider',
+          label: '攻略设置',
+        },
+        {
+          field: 'guide.default_guide',
+          label: '默认攻略',
+          bottomHelpMessage: '设置默认攻略，攻略合集即为多个攻略的合集',
+          component: 'Select',
+          required: true,
+          componentProps: {
+            options: [
+              {
+                value: 0,
+                label: '攻略合集',
+              },
+              {
+                value: 1,
+                label: '新艾利都快讯',
+              },
+              {
+                value: 2,
+                label: '清茶沐沐Kiyotya',
+              },
+              {
+                value: 3,
+                label: '小橙子阿',
+              },
+              {
+                value: 4,
+                label: '猫冬',
+              },
+              {
+                value: 5,
+                label: '月光中心',
+              },
+              {
+                value: 6,
+                label: '苦雪的清心花凉糕Suki',
+              },
+              {
+                value: 7,
+                label: 'HoYo青枫',
+              },
+            ],
+          },
+        },
+        {
+          field: 'guide.max_forward_guides',
+          label: '合集最大数量',
+          bottomHelpMessage: '当查询攻略合集时，返回攻略的最大数量',
+          component: 'InputNumber',
+          required: true,
+          componentProps: {
+            min: 1,
+            max: 7,
+            placeholder: '请输入数字1～7',
           },
         },
         {

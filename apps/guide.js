@@ -5,11 +5,11 @@ import lodash from 'lodash';
 import common from '../../../lib/common/common.js';
 import { ZZZPlugin } from '../lib/plugin.js';
 import { rulePrefix } from '../lib/common.js';
-import { atlasToName } from '../lib/convert/char.js';
 import { imageResourcesPath } from '../lib/path.js';
 import _ from 'lodash';
 import settings from '../lib/settings.js';
 import { downloadFile } from '../lib/download.js';
+import { char } from '../lib/convert.js';
 
 const ZZZ_GUIDES_PATH = path.join(imageResourcesPath, 'guides');
 
@@ -85,7 +85,7 @@ export class Guide extends ZZZPlugin {
       ,
       ,
       isUpdate,
-      atlas,
+      alias,
       group = _.get(settings.getConfig('guide'), 'default_guide', 1).toString(),
     ] = this.e.msg.match(reg);
     // all -> 0
@@ -97,7 +97,7 @@ export class Guide extends ZZZPlugin {
       await this.reply(`超过攻略数量（${this.maxNum}）`);
       return false;
     }
-    const name = atlasToName(atlas);
+    const name = char.aliasToName(alias);
 
     if (!name) {
       await this.reply('该角色不存在');

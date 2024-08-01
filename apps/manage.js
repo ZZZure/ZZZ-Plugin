@@ -1,6 +1,5 @@
 import { ZZZPlugin } from '../lib/plugin.js';
 import { rulePrefix } from '../lib/common.js';
-import { getAllCharactersID } from '../lib/convert/char.js';
 import { getAllEquipID } from '../lib/convert/equip.js';
 import { getAllWeaponID } from '../lib/convert/weapon.js';
 import { imageResourcesPath } from '../lib/path.js';
@@ -14,6 +13,7 @@ import {
   getWeaponImage,
 } from '../lib/download.js';
 import _ from 'lodash';
+import { char } from '../lib/convert.js';
 
 export class Panel extends ZZZPlugin {
   constructor() {
@@ -39,12 +39,32 @@ export class Panel extends ZZZPlugin {
           reg: `^${rulePrefix}设置所有攻略显示个数(\\d+)$`,
           fnc: 'setMaxForwardGuide',
         },
+        {
+          reg: `^${rulePrefix}设置渲染精度(\\d+)$`,
+          fnc: 'setRenderPrecision',
+        },
+        {
+          reg: `^${rulePrefix}刷新抽卡间隔(\\d+)$`,
+          fnc: 'setRefreshGachaInterval',
+        },
+        {
+          reg: `^${rulePrefix}刷新面板间隔(\\d+)$`,
+          fnc: 'setRefreshPanelInterval',
+        },
+        {
+          reg: `^${rulePrefix}添加(\\S+)别名(\\S+)$`,
+          fnc: 'addAlias',
+        },
+        {
+          reg: `^${rulePrefix}删除别名(\\S+)$`,
+          fnc: 'deleteAlias',
+        },
       ],
     });
   }
   async downloadAll() {
     if (!this.e.isMaster) return false;
-    const charIDs = getAllCharactersID();
+    const charIDs = char.getAllCharactersID();
     const equipSprites = getAllEquipID();
     const weaponSprites = getAllWeaponID();
     const result = {
@@ -166,14 +186,14 @@ export class Panel extends ZZZPlugin {
       this.reply('仅限主人设置');
       return false;
     }
-    let match = /设置默认攻略(\d+|all)$/g.exec(this.e.msg);
+    const match = /设置默认攻略(\d+|all)$/g.exec(this.e.msg);
     let guide_id = match[1];
     if (guide_id == 'all') {
       guide_id = 0;
     }
     guide_id = Number(guide_id);
     if (guide_id > this.maxNum) {
-      let reply_msg = [
+      const reply_msg = [
         '绝区零默认攻略设置方式为:',
         '%设置默认攻略[0123...]',
         `请增加数字0-${this.maxNum}其中一个，或者增加 all 以显示所有攻略`,
@@ -184,7 +204,7 @@ export class Panel extends ZZZPlugin {
     }
     settings.setSingleConfig('guide', 'default_guide', guide_id);
 
-    let source_name = guide_id == 0 ? 'all' : this.source[guide_id - 1];
+    const source_name = guide_id == 0 ? 'all' : this.source[guide_id - 1];
     await this.e.reply(`绝区零默认攻略已设置为: ${guide_id} (${source_name})`);
   }
 
@@ -194,9 +214,113 @@ export class Panel extends ZZZPlugin {
       this.reply('仅限主人设置');
       return false;
     }
-    let match = /设置所有攻略显示个数(\d+)$/g.exec(this.e.msg);
-    let max_forward_guide = Number(match[1]);
-    this.setSingleConfig('max_forward_guides', max_forward_guide);
+    const match = /设置所有攻略显示个数(\d+)$/g.exec(this.e.msg);
+    const max_forward_guide = Number(match[1]);
+    settings.setSingleConfig('guide', 'max_forward_guides', max_forward_guide);
     await this.e.reply(`绝区零所有攻略显示个数已设置为: ${max_forward_guide}`);
+  }
+
+  /** 设置渲染精度 */
+  async setRenderPrecision() {
+    if (!this.e.isMaster) {
+      this.reply('仅限主人设置');
+      return false;
+    }
+    const match = /渲染精度(\d+)$/g.exec(this.e.msg);
+    const render_precision = Number(match[1]);
+    if (render_precision < 50) {
+      await this.e.reply('渲染精度不能小于50');
+      return false;
+    }
+    if (render_precision > 200) {
+      await this.e.reply('渲染精度不能大于200');
+      return false;
+    }
+    settings.setSingleConfig('config', 'render', {
+      scale: render_precision,
+    });
+    await this.e.reply(`绝区零渲染精度已设置为: ${render_precision}`);
+  }
+
+  /** 设置刷新抽卡间隔 */
+  async setRefreshGachaInterval() {
+    if (!this.e.isMaster) {
+      this.reply('仅限主人设置');
+      return false;
+    }
+    const match = /刷新抽卡间隔(\d+)$/g.exec(this.e.msg);
+    const refresh_gacha_interval = Number(match[1]);
+    if (refresh_gacha_interval < 0) {
+      await this.e.reply('刷新抽卡间隔不能小于0秒');
+      return false;
+    }
+    if (refresh_gacha_interval > 1000) {
+      await this.e.reply('刷新抽卡间隔不能大于1000秒');
+      return false;
+    }
+    settings.setSingleConfig('gacha', 'interval', refresh_gacha_interval);
+    await this.e.reply(`绝区零刷新抽卡间隔已设置为: ${refresh_gacha_interval}`);
+  }
+
+  /** 设置刷新面板间隔 */
+  async setRefreshPanelInterval() {
+    if (!this.e.isMaster) {
+      this.reply('仅限主人设置');
+      return false;
+    }
+    const match = /刷新面板间隔(\d+)$/g.exec(this.e.msg);
+    const refresh_panel_interval = Number(match[1]);
+    if (refresh_panel_interval < 0) {
+      await this.e.reply('刷新面板间隔不能小于0秒');
+      return false;
+    }
+    if (refresh_panel_interval > 1000) {
+      await this.e.reply('刷新面板间隔不能大于1000秒');
+      return false;
+    }
+    settings.setSingleConfig('panel', 'interval', refresh_panel_interval);
+    await this.e.reply(`绝区零刷新面板间隔已设置为: ${refresh_panel_interval}`);
+  }
+
+  async addAlias() {
+    if (!this.e.isMaster) {
+      this.reply('仅限主人设置');
+      return false;
+    }
+    const match = /添加(\S+)别名(\S+)$/g.exec(this.e.msg);
+    const key = match[1];
+    const value = match[2];
+    const oriName = char.aliasToName(key);
+    const isExist = char.aliasToName(value);
+    if (!oriName) {
+      await this.e.reply(`未找到 ${value} 的对应角色`);
+      return;
+    }
+    if (isExist) {
+      await this.e.reply(`别名 ${value} 已存在`);
+      return;
+    }
+    settings.addArrayleConfig('alias', oriName, value);
+    await this.e.reply(`角色 ${key} 别名 ${value} 成功`);
+  }
+
+  async deleteAlias() {
+    if (!this.e.isMaster) {
+      this.reply('仅限主人设置');
+      return false;
+    }
+    const match = /删除别名(\S+)$/g.exec(this.e.msg);
+    const key = match[1];
+    const oriName = char.aliasToName(key);
+    if (!oriName) {
+      await this.e.reply(`未找到 ${key} 的对应角色`);
+      return;
+    }
+    if (key === oriName) {
+      await this.e.reply(`别名 ${key} 为角色本名，无法删除`);
+      return;
+    }
+    settings.removeArrayleConfig('alias', oriName, key);
+    await this.e.reply(`角色 ${key} 别名删除成功`);
   }
 }
