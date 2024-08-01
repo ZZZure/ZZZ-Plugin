@@ -21,6 +21,10 @@ export class Panel extends ZZZPlugin {
           reg: `${rulePrefix}练度(统计)?$`,
           fnc: 'proficiency',
         },
+        {
+          reg: `${rulePrefix}原图$`,
+          fnc: 'getCharOriImage',
+        },
       ],
     });
   }
@@ -111,7 +115,18 @@ export class Panel extends ZZZPlugin {
       uid: uid,
       charData: data,
     };
-    await render(this.e, 'panel/card.html', finalData);
+
+    const res = await this.reply(
+      render(this.e, 'panel/card.html', finalData, {
+        retType: 'base64',
+      })
+    );
+    if (res?.message_id)
+      await redis.set(`ZZZ:PANEL:IMAGE:${res.message_id}`, data.role_icon, {
+        EX: 3600 * 3,
+      });
+
+    return false;
   }
   async proficiency() {
     const uid = await this.getUID();
@@ -157,5 +172,34 @@ export class Panel extends ZZZPlugin {
       list: result,
     };
     await render(this.e, 'proficiency/index.html', finalData);
+  }
+  async getCharOriImage() {
+    let source;
+    if (this.e.getReply) {
+      source = await this.e.getReply();
+    } else if (this.e.source) {
+      if (this.e.group?.getChatHistory) {
+        // 支持at图片添加，以及支持后发送
+        source = (
+          await this.e.group.getChatHistory(this.e.source?.seq, 1)
+        ).pop();
+      } else if (this.e.friend?.getChatHistory) {
+        source = (
+          await this.e.friend.getChatHistory(this.e.source?.time + 1, 1)
+        ).pop();
+      }
+    }
+    const id = source?.message_id;
+    if (!id) {
+      await this.reply('未找到消息源，请引用要查看的图片');
+      return false;
+    }
+    const image = await redis.get(`ZZZ:PANEL:IMAGE:${id}`);
+    if (!image) {
+      await this.reply('未找到原图');
+      return false;
+    }
+    await this.reply(segment.image(image));
+    return false;
   }
 }
