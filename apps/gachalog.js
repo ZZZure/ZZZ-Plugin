@@ -172,7 +172,7 @@ export class GachaLog extends ZZZPlugin {
     );
     const data = await anaylizeGachaLog(uid);
     if (!data) {
-      await this.reply('未查询到抽卡记录，请先发送抽卡链接');
+      await this.reply('未查询到抽卡记录，请先发送抽卡链接或%更新抽卡记录');
       return false;
     }
     const result = {
