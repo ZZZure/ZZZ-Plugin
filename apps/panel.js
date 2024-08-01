@@ -30,9 +30,11 @@ export class Panel extends ZZZPlugin {
     const pre = this.e.msg.match(reg)[4].trim();
     const suf = this.e.msg.match(reg)[5].trim();
     if (['刷新', '更新'].includes(pre) || ['刷新', '更新'].includes(suf))
-      return this.refreshPanel();
-    if (!pre || suf === '列表') return this.getCharPanelList();
-    return this.getCharPanel();
+      return await this.refreshPanel();
+    if (!pre || suf === '列表') return await this.getCharPanelList();
+    const queryPanelReg = new RegExp(`${rulePrefix}(.*)面板$`);
+    if (queryPanelReg.test(this.e.msg)) return await this.getCharPanel();
+    return false;
   }
 
   async refreshPanel() {
@@ -90,8 +92,9 @@ export class Panel extends ZZZPlugin {
     const uid = await this.getUID();
     if (!uid) return false;
     const reg = new RegExp(`${rulePrefix}(.+)面板$`);
-    const name = this.e.msg.match(reg)[4];
-    if (['刷新', '更新'].includes(name)) return this.getCharPanelList();
+    const match = this.e.msg.match(reg);
+    if (!match) return false;
+    const name = match[4];
     const data = getPanel(uid, name);
     if (!data) {
       await this.reply(`未找到角色${name}的面板信息，请先刷新面板`);
