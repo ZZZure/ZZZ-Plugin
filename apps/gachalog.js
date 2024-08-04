@@ -60,22 +60,69 @@ export class GachaLog extends ZZZPlugin {
     await this.reply(reply_msg);
   }
   async startGachaLog() {
+    const allowGroup = _.get(settings.getConfig('gacha'), 'allow_group', false);
+    const whiteList = _.get(settings.getConfig('gacha'), 'white_list', []);
+    const blackList = _.get(settings.getConfig('gacha'), 'black_list', []);
     if (!this.e.isPrivate) {
-      await this.reply('请私聊发送抽卡链接', false, { at: true });
-      return false;
+      const currentGroup = this.e?.group_id;
+      if (!currentGroup) {
+        await this.reply('获取群聊ID失败，请尝试私聊发送抽卡链接', false, {
+          at: true,
+          recallMsg: 100,
+        });
+        return false;
+      }
+      if (!allowGroup) {
+        if (whiteList.length <= 0 || !whiteList?.includes(currentGroup)) {
+          await this.reply(
+            '当前群聊未开启链接刷新抽卡记录功能，请私聊发送',
+            false,
+            {
+              at: true,
+              recallMsg: 100,
+            }
+          );
+          return false;
+        }
+      } else {
+        if (blackList.length > 0 && blackList?.includes(currentGroup)) {
+          await this.reply(
+            '当前群聊未开启链接刷新抽卡记录功能，请私聊发送',
+            false,
+            {
+              at: true,
+              recallMsg: 100,
+            }
+          );
+          return false;
+        }
+      }
+      await this.reply(
+        '请注意，当前在群聊中发送抽卡链接，包含authkey，其他人获取authkey可能导致未知后果，请谨慎操作，请在机器人回复你获取链接成功后及时撤回抽卡链接消息。',
+        false,
+        { at: true, recallMsg: 100 }
+      );
     }
     this.setContext('gachaLog');
-    await this.reply('请发送抽卡链接', false, { at: true });
+    await this.reply(
+      '请发送抽卡链接，发送“取消”即可取消本次抽卡链接刷新',
+      false,
+      { at: true, recallMsg: 100 }
+    );
   }
   async gachaLog() {
-    if (!this.e.isPrivate) {
-      await this.reply('请私聊发送抽卡链接', false, { at: true });
+    const msg = this.e.msg.trim();
+    if (msg.includes('取消')) {
+      await this.reply('已取消', false, { at: true, recallMsg: 100 });
+      this.finish('gachaLog');
       return false;
     }
-    const msg = this.e.msg.trim();
     const key = getQueryVariable(msg, 'authkey');
     if (!key) {
-      await this.reply('抽卡链接格式错误，请重新发送');
+      await this.reply('抽卡链接格式错误，请重新发起%抽卡链接', false, {
+        at: true,
+        recallMsg: 100,
+      });
       this.finish('gachaLog');
       return false;
     }
@@ -124,6 +171,11 @@ export class GachaLog extends ZZZPlugin {
     return false;
   }
   async getLogWithOutUID(key) {
+    await this.reply(
+      '抽卡链接解析成功，正在查询抽卡记录，可能耗费一段时间，请勿重复发送',
+      false,
+      { at: true, recallMsg: 100 }
+    );
     /** @type {string} */
     let uid;
     queryLabel: for (const name in gacha_type_meta_data) {
@@ -143,10 +195,12 @@ export class GachaLog extends ZZZPlugin {
       }
     }
     if (!uid) {
-      await this.reply('未查询到uid，请检查链接是否正确');
+      await this.reply('未查询到uid，请检查链接是否正确', false, {
+        at: true,
+        recallMsg: 100,
+      });
       return false;
     }
-    this.reply('抽卡记录获取中请稍等...可能需要一段时间，请耐心等待');
     const { data, count } = await updateGachaLog(key, uid);
     let msg = [];
     msg.push(`抽卡记录更新成功，共${Object.keys(data).length}个卡池`);
@@ -167,12 +221,20 @@ export class GachaLog extends ZZZPlugin {
       return false;
     }
     await this.getPlayerInfo();
-    await this.reply(
-      '正在分析抽卡记录，首次下载图片资源可能耗费一些时间，请稍等'
-    );
+    await this.reply('正在分析抽卡记录，请稍等', false, {
+      at: true,
+      recallMsg: 100,
+    });
     const data = await anaylizeGachaLog(uid);
     if (!data) {
-      await this.reply('未查询到抽卡记录，请先发送抽卡链接或%更新抽卡记录');
+      await this.reply(
+        '未查询到抽卡记录，请先发送抽卡链接或%更新抽卡记录',
+        false,
+        {
+          at: true,
+          recallMsg: 100,
+        }
+      );
       return false;
     }
     const result = {

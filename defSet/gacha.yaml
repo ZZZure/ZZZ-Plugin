@@ -1,1 +1,7 @@
 interval: 60 # 刷新抽卡记录的时间间隔（单位：秒）
+allow_group: false # 是否允许群组使用刷新抽卡功能
+white_list: # 白名单群组
+  - 123456789
+black_list: # 黑名单群组
+  - 987654321
+# 如果 allow_group 为 false，则 white_list 会生效，否则 black_list 会生效

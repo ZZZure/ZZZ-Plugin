@@ -68,6 +68,49 @@ export function supportGuoba() {
           },
         },
         {
+          field: 'gacha.allow_group',
+          label: '群聊链接刷新',
+          bottomHelpMessage: '是否允许群聊通过发送链接刷新抽卡记录',
+          component: 'Switch',
+        },
+        {
+          field: 'gacha.white_list',
+          label: '白名单群聊',
+          bottomHelpMessage: '在关闭群聊链接刷新时，允许通过链接刷新的群聊',
+          component: 'Select',
+          componentProps: {
+            mode: 'multiple',
+            options: allGroup,
+          },
+        },
+        {
+          field: 'gacha.black_list',
+          label: '黑名单群聊',
+          bottomHelpMessage: '在开启群聊链接刷新时，禁止通过链接刷新的群聊',
+          component: 'Select',
+          componentProps: {
+            mode: 'multiple',
+            options: allGroup,
+          },
+        },
+        {
+          component: 'Divider',
+          label: '深渊设置',
+        },
+        {
+          field: 'abyss.interval',
+          label: '冷却时间',
+          bottomHelpMessage:
+            '设置刷新深渊信息的冷却时间，单位为秒，取值范围为0～1000',
+          component: 'InputNumber',
+          required: true,
+          componentProps: {
+            min: 0,
+            max: 1000,
+            placeholder: '请输入数字',
+          },
+        },
+        {
           component: 'Divider',
           label: '面板设置',
         },
