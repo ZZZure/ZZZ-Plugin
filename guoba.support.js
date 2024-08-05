@@ -93,23 +93,23 @@ export function supportGuoba() {
             options: allGroup,
           },
         },
-        {
-          component: 'Divider',
-          label: '深渊设置',
-        },
-        {
-          field: 'abyss.interval',
-          label: '冷却时间',
-          bottomHelpMessage:
-            '设置刷新深渊信息的冷却时间，单位为秒，取值范围为0～1000',
-          component: 'InputNumber',
-          required: true,
-          componentProps: {
-            min: 0,
-            max: 1000,
-            placeholder: '请输入数字',
-          },
-        },
+        // {
+        //   component: 'Divider',
+        //   label: '深渊设置',
+        // },
+        // {
+        //   field: 'abyss.interval',
+        //   label: '冷却时间',
+        //   bottomHelpMessage:
+        //     '设置刷新深渊信息的冷却时间，单位为秒，取值范围为0～1000',
+        //   component: 'InputNumber',
+        //   required: true,
+        //   componentProps: {
+        //     min: 0,
+        //     max: 1000,
+        //     placeholder: '请输入数字',
+        //   },
+        // },
         {
           component: 'Divider',
           label: '面板设置',
