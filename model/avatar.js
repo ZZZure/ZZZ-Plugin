@@ -397,7 +397,8 @@ export class ZZZAvatarInfo {
     logger.debug('bonus_detail', bonus_detail);
 
     /** 处理音频加成 */
-    bonus_detail = weapon_ability(this.weapon, base_detail, bonus_detail);
+    if (this.weapon)
+      bonus_detail = weapon_ability(this.weapon, base_detail, bonus_detail);
     logger.debug('bonus_detail', bonus_detail);
 
     /** 处理角色加成 */
