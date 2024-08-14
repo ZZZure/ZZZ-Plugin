@@ -6,6 +6,10 @@
 <h1 align = "center">ZZZ-Plugin</h1>
 <h4 align = "center">🚧Yunzai绝区零Bot插件 ｜ 交流群 973399270🚧</h4>
 
+> [!tip]
+> 说明
+> 插件依靠社区维护，发起者随缘更新，但是ZZZure组织成员会对PR进行合并，你可以在PR页面@协助者进行合并。
+
 # 安装
 
 进入Yunzai根目录运行以下命令进行安装：
