@@ -150,7 +150,8 @@
     </div>
     {{/if}}
     <div class="equip-list">
-      {{each charData.equip equip}}
+      {{each charData.equip_final equip}}
+      {{if equip}}
       <div class="box">
         <div class="icon">
           <img src="{{equip.suit_icon}}" alt="">
@@ -199,13 +200,14 @@
             {{/each}}
           </div>
         </div>
-        {{/each}}
-        <% for(let i=charData.equip.length; i < 6 ; i++) { %>
+        {{else}}
           <div class="box empty">
             <div class="icon">
             </div>
           </div>
-          <% } %>
+          {{/if}}
+
+          {{/each}}
 
       </div>
       {{if charData?.damages && charData?.damages?.length}}

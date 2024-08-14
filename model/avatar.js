@@ -474,6 +474,17 @@ export class ZZZAvatarInfo {
     return score;
   }
 
+  /** @type {Equip[]} equip_final */
+  get equip_final() {
+    const result = [];
+    this.equip.forEach(equip => {
+      if (equip.equipment_type) {
+        result[equip.equipment_type - 1] = equip;
+      }
+    });
+    return result;
+  }
+
   /**
    * 获取基础资源
    * @returns {Promise<void>}
