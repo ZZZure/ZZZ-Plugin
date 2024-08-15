@@ -1,63 +1,21 @@
 {
-  "1011": {
-    "sprite_id": "01",
-    "name": "安比",
-    "full_name": "安比·德玛拉",
-    "en_name": "Anby"
-  },
-  "1021": {
-    "sprite_id": "11",
-    "name": "猫又",
-    "full_name": "猫宫 又奈",
-    "en_name": "Nekomata"
-  },
-  "1031": {
-    "sprite_id": "12",
-    "name": "妮可",
-    "full_name": "妮可·德玛拉",
-    "en_name": "Nicole"
-  },
-  "1041": {
-    "sprite_id": "05",
-    "name": "「11号」",
-    "full_name": "「11号」",
-    "en_name": "Soldier 11"
-  },
   "1061": {
     "sprite_id": "09",
     "name": "可琳",
     "full_name": "可琳·威克斯",
     "en_name": "Corin"
   },
-  "1081": {
-    "sprite_id": "10",
-    "name": "比利",
-    "full_name": "比利·奇德",
-    "en_name": "Billy"
+  "1251": {
+    "sprite_id": "29",
+    "name": "青衣",
+    "full_name": "青衣",
+    "en_name": "QingYi"
   },
-  "1091": {
-    "sprite_id": "10",
-    "name": "雅",
-    "full_name": "星见 雅",
-    "en_name": "Miyabi"
-  },
-  "1101": {
-    "sprite_id": "14",
-    "name": "珂蕾妲",
-    "full_name": "珂蕾妲·贝洛伯格",
-    "en_name": "Koleda"
-  },
-  "1111": {
-    "sprite_id": "15",
-    "name": "安东",
-    "full_name": "安东·伊万诺夫",
-    "en_name": "Anton"
-  },
-  "1121": {
-    "sprite_id": "16",
-    "name": "本",
-    "full_name": "本·比格",
-    "en_name": "Ben"
+  "1261": {
+    "sprite_id": "24",
+    "name": "简",
+    "full_name": "简·杜",
+    "en_name": "Jane"
   },
   "1131": {
     "sprite_id": "17",
@@ -65,23 +23,17 @@
     "full_name": "苍角",
     "en_name": "Soukaku"
   },
-  "1141": {
-    "sprite_id": "18",
-    "name": "莱卡恩",
-    "full_name": "冯·莱卡恩",
-    "en_name": "Lycaon"
+  "1201": {
+    "sprite_id": "",
+    "name": "悠真",
+    "full_name": "悠真",
+    "en_name": "Harumasa"
   },
-  "1151": {
-    "sprite_id": "27",
-    "name": "露西",
-    "full_name": "露西亚娜·德·蒙特夫",
-    "en_name": "Lucy"
-  },
-  "1161": {
-    "sprite_id": "27",
-    "name": "莱特",
-    "full_name": "莱特",
-    "en_name": "Lighter"
+  "1081": {
+    "sprite_id": "10",
+    "name": "比利",
+    "full_name": "比利·奇德",
+    "en_name": "Billy"
   },
   "1181": {
     "sprite_id": "20",
@@ -89,29 +41,47 @@
     "full_name": "格莉丝·霍华德",
     "en_name": "Grace"
   },
-  "1191": {
-    "sprite_id": "21",
-    "name": "艾莲",
-    "full_name": "艾莲·乔",
-    "en_name": "Ellen"
+  "2011": {
+    "sprite_id": "",
+    "name": "哲",
+    "full_name": "哲",
+    "en_name": "Wise"
   },
-  "1201": {
-    "sprite_id": "21",
-    "name": "悠真",
-    "full_name": "浅羽 悠真",
-    "en_name": "Harumasa"
+  "1011": {
+    "sprite_id": "01",
+    "name": "安比",
+    "full_name": "安比·德玛拉",
+    "en_name": "Anby"
   },
-  "1211": {
-    "sprite_id": "22",
-    "name": "丽娜",
-    "full_name": "亚历山德丽娜·莎芭丝缇安",
-    "en_name": "Rina"
+  "1071": {
+    "sprite_id": "",
+    "name": "凯撒",
+    "full_name": "凯撒",
+    "en_name": "Caesar"
   },
-  "1221": {
-    "sprite_id": "22",
-    "name": "柳",
-    "full_name": "月城 柳",
-    "en_name": "Yanagi"
+  "2021": {
+    "sprite_id": "",
+    "name": "铃",
+    "full_name": "铃",
+    "en_name": "Belle"
+  },
+  "1031": {
+    "sprite_id": "12",
+    "name": "妮可",
+    "full_name": "妮可·德玛拉",
+    "en_name": "Nicole"
+  },
+  "1281": {
+    "sprite_id": "28",
+    "name": "派派",
+    "full_name": "派派",
+    "en_name": "Piper"
+  },
+  "1021": {
+    "sprite_id": "11",
+    "name": "猫又",
+    "full_name": "猫宫又奈",
+    "en_name": "Nekomata"
   },
   "1241": {
     "sprite_id": "23",
@@ -119,34 +89,82 @@
     "full_name": "朱鸢",
     "en_name": "Zhu Yuan"
   },
-  "1251": {
-    "sprite_id": "23",
-    "name": "青衣",
-    "full_name": "青衣",
-    "en_name": "QingYi"
+  "1141": {
+    "sprite_id": "18",
+    "name": "莱卡恩",
+    "full_name": "冯·莱卡恩",
+    "en_name": "Lycaon"
+  },
+  "1161": {
+    "sprite_id": "",
+    "name": "莱特",
+    "full_name": "莱特",
+    "en_name": "Lighter"
+  },
+  "1111": {
+    "sprite_id": "15",
+    "name": "安东",
+    "full_name": "安东·伊万诺夫",
+    "en_name": "Anton"
+  },
+  "1041": {
+    "sprite_id": "05",
+    "name": "「11号」",
+    "full_name": "「11号」",
+    "en_name": "Soldier 11"
+  },
+  "1091": {
+    "sprite_id": "",
+    "name": "雅",
+    "full_name": "雅",
+    "en_name": "Miyabi"
+  },
+  "1121": {
+    "sprite_id": "16",
+    "name": "本",
+    "full_name": "本·比格",
+    "en_name": "Ben"
+  },
+  "1211": {
+    "sprite_id": "22",
+    "name": "丽娜",
+    "full_name": "亚历山德丽娜·莎芭丝缇安",
+    "en_name": "Rina"
+  },
+  "1151": {
+    "sprite_id": "27",
+    "name": "露西",
+    "full_name": "露西",
+    "en_name": "Lucy"
+  },
+  "1101": {
+    "sprite_id": "14",
+    "name": "珂蕾妲",
+    "full_name": "珂蕾妲·贝洛伯格",
+    "en_name": "Koleda"
+  },
+  "1221": {
+    "sprite_id": "",
+    "name": "柳",
+    "full_name": "柳",
+    "en_name": "Yanagi"
   },
   "1271": {
-    "sprite_id": "23",
+    "sprite_id": "30",
     "name": "赛斯",
     "full_name": "赛斯·洛威尔",
     "en_name": "Seth"
   },
-  "1281": {
-    "sprite_id": "28",
-    "name": "派派",
-    "full_name": "派派·韦尔",
-    "en_name": "Piper"
+  "1171": {
+    "sprite_id": "",
+    "name": "柏妮思",
+    "full_name": "柏妮思",
+    "en_name": "Burnice"
   },
-  "2011": {
-    "sprite_id": "28",
-    "name": "哲",
-    "full_name": "哲",
-    "en_name": "Wise"
-  },
-  "2021": {
-    "sprite_id": "28",
-    "name": "铃",
-    "full_name": "铃",
-    "en_name": "Belle"
+  "1191": {
+    "sprite_id": "21",
+    "name": "艾莲",
+    "full_name": "艾莲·乔",
+    "en_name": "Ellen"
   }
 }

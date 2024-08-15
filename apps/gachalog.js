@@ -166,7 +166,7 @@ export class GachaLog extends ZZZPlugin {
       );
     }
     await this.reply(
-      await common.makeForwardMsg(this.e, msg, '抽卡记录更新成功')
+      await common.makeForwardMsg(this.e, msg.join('\n'), '抽卡记录更新成功')
     );
     return false;
   }
