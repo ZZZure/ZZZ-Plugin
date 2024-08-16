@@ -1,8 +1,7 @@
 import { ZZZPlugin } from '../lib/plugin.js';
-import render from '../lib/render.js';
 import { rulePrefix } from '../lib/common.js';
-import { getPanelList, refreshPanel, getPanel } from '../lib/avatar.js';
 import settings from '../lib/settings.js';
+import common from '../../../lib/common/common.js';
 import _ from 'lodash';
 
 export class Panel extends ZZZPlugin {
@@ -16,6 +15,10 @@ export class Panel extends ZZZPlugin {
         {
           reg: `${rulePrefix}绑定设备$`,
           fnc: 'bindDevice',
+        },
+        {
+          reg: `${rulePrefix}绑定设备帮助$`,
+          fnc: 'bindDeviceHelp',
         },
       ],
     });
@@ -82,5 +85,19 @@ export class Panel extends ZZZPlugin {
       this.finish('toBindDevice');
       return false;
     }
+  }
+  async bindDeviceHelp() {
+    const msgs = [
+        '绑定设备帮助',
+        'https://mirror.ghproxy.com/https://raw.githubusercontent.com/forchannot/get_device_info/main/app/build/outputs/apk/debug/app-debug.apk',
+        '1. 使用常用米游社手机下载以上APK，并安装',
+        '2. 打开后点击按钮复制',
+        '3. 给机器人发送"%绑定设备"指令',
+        '4. 机器人会提示发送设备信息',
+        '5. 粘贴设备信息发送',
+        '6. 提示绑定成功',
+      ],
+      msg = msgs.join('\n');
+    await this.reply(await common.makeForwardMsg(this.e, msg, '绑定设备帮助'));
   }
 }

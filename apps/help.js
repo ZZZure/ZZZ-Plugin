@@ -100,12 +100,7 @@ const helpData = [
         desc: '查看自定义角色面板图，在添加或者删除角色图后，会导致角色图的ID发生变化，此时需要重新获取图片列表来查看ID，否则可能会删除错误的图片',
         needCK: false,
         needSK: false,
-        commands: [
-          '查看+角色名+面板图[+页码]',
-          '查看+角色名+角色图[+页码]',
-          '获取+角色名+面板图[+页码]',
-          '获取+角色名+角色图[+页码]',
-        ],
+        commands: ['查看+角色名+面板图[+页码]', '查看+角色名+角色图[+页码]'],
       },
       {
         title: '获取角色面板图',
@@ -166,6 +161,26 @@ const helpData = [
         needCK: false,
         needSK: false,
         commands: ['更新+角色名+攻略[+0~7]'],
+      },
+    ],
+  },
+  {
+    title: '其他',
+    icon: 'fire',
+    items: [
+      {
+        title: '绑定设备',
+        desc: '用于解决10041报错等问题',
+        needCK: true,
+        needSK: false,
+        commands: ['绑定设备'],
+      },
+      {
+        title: '绑定设备帮助',
+        desc: '查看如何绑定设备',
+        needCK: true,
+        needSK: false,
+        commands: ['绑定设备帮助'],
       },
     ],
   },
