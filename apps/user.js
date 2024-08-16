@@ -33,8 +33,8 @@ export class Panel extends ZZZPlugin {
     );
   }
   async toBindDevice() {
-    const uid = await this.getUID();
-    if (!uid) {
+    const ltuid = await this.getLtuid();
+    if (!ltuid) {
       this.reply('未绑定UID');
       this.finish('toBindDevice');
       return false;
@@ -66,14 +66,14 @@ export class Panel extends ZZZPlugin {
         this.reply('设备信息格式错误', false, { at: true, recallMsg: 100 });
         return false;
       }
-      await redis.del(`ZZZ:DEVICE_FP:${uid}:FP`);
-      await redis.set(`ZZZ:DEVICE_FP:${uid}:BIND`, JSON.stringify(info));
+      await redis.del(`ZZZ:DEVICE_FP:${ltuid}:FP`);
+      await redis.set(`ZZZ:DEVICE_FP:${ltuid}:BIND`, JSON.stringify(info));
       const { deviceFp } = await this.getAPI();
       if (!deviceFp) {
         await this.reply('绑定设备失败');
         return false;
       }
-      logger.debug(`[UID:${uid}]绑定设备成功，deviceFp:${deviceFp}`);
+      logger.debug(`[LTUID:${ltuid}]绑定设备成功，deviceFp:${deviceFp}`);
       await this.reply('绑定设备成功', false, { at: true, recallMsg: 100 });
     } catch (error) {
       this.reply('设备信息格式错误', false, { at: true, recallMsg: 100 });
