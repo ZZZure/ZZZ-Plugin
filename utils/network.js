@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-export async function checkLatency(url, timeout = 5000) {
+export async function checkLatency(url, timeout = 10000) {
   const controller = new AbortController()
   const { signal } = controller
   const timeoutId = setTimeout(() => controller.abort(), timeout)
