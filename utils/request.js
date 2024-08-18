@@ -23,18 +23,24 @@ const _request = async (url, options) => {
  * @param {number} retry 重试次数
  * @returns {Promise<Response>}
  */
-const request = (url, options, retry = 0) => {
+const request = (url, options, retry = 0, timeout = 5000) => {
   let err;
+  const controller = new AbortController()
+  const { signal } = controller
+  const timeoutId = setTimeout(() => controller.abort(), timeout)
+
   const _fetch = async (url, options, retryCount = 0) => {
     if (retryCount > retry) {
       throw new Error('Retry limit reached', err);
     }
     try {
-      return await _request(url, options);
+      return await _request(url, { signal, ...options });
     } catch (error) {
-      logger.debug(`Fetch error: ${error.message}`);
+      logger.debug(error.name === 'AbortError' ? 'Request timed out' : `Fetch error: ${error.message}`);
       err = error;
       return await _fetch(url, options, retryCount + 1);
+    } finally {
+      clearTimeout(timeoutId)
     }
   };
   return _fetch(url, options);
@@ -49,8 +55,8 @@ const request = (url, options, retry = 0) => {
  */
 request.get = async (url, data, options) => {
   const params = new URLSearchParams(data);
-  const { retry, ...restOptions } = options;
-  return request(`${url}?${params}`, restOptions, retry);
+  const { retry, timeout, ...restOptions } = options;
+  return request(`${url}?${params}`, restOptions, retry, timeout);
 };
 
 /**
@@ -62,8 +68,8 @@ request.get = async (url, data, options) => {
  */
 request.post = async (url, data, options) => {
   const body = JSON.stringify(data);
-  const { retry, ...restOptions } = options;
-  return request(url, { ...restOptions, method: 'POST', body }, retry);
+  const { retry, timeout, ...restOptions } = options;
+  return request(url, { ...restOptions, method: 'POST', body }, retry, timeout);
 };
 
 export default request;
