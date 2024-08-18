@@ -1,6 +1,9 @@
 import fetch from 'node-fetch';
 
-export async function checkLatency(url, timeout = 10000) {
+//暂时先写死罢（
+const timeout = 5000
+
+export async function checkLatency(url) {
   const controller = new AbortController()
   const { signal } = controller
   const timeoutId = setTimeout(() => controller.abort(), timeout)
@@ -23,9 +26,9 @@ export async function checkLatency(url, timeout = 10000) {
 export async function findLowestLatencyUrl(urls) {
   const results = await Promise.allSettled(urls.map(checkLatency));
   const lowestLatencyResult = results.reduce((prev, curr) =>
-    prev.latency < curr.latency ? prev : curr
+    prev.value.latency < curr.value.latency ? prev : curr
   );
-  return lowestLatencyResult.url;
+  return lowestLatencyResult.value.url;
 }
 
 export function getQueryVariable(url, variable) {
