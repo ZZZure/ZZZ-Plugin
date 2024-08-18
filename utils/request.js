@@ -23,7 +23,7 @@ const _request = async (url, options) => {
  * @param {number} retry 重试次数
  * @returns {Promise<Response>}
  */
-const request = (url, options, retry = 0, timeout = 5000) => {
+const request = (url, options, retry = 0, timeout = 30000) => {
   let err;
   const controller = new AbortController()
   const { signal } = controller
