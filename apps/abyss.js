@@ -21,13 +21,12 @@ export class Abyss extends ZZZPlugin {
     });
   }
   async abyss() {
-    const { api, deviceFp } = await this.getAPI();
-    if (!api) return false;
+    const { api } = await this.getAPI();
     await this.getPlayerInfo();
-    const method = this.e.msg.match(`(上期|往期)`) ? 'zzzChallengePeriod' : 'zzzChallenge';
-    const abyssData = await api.getFinalData(this.e, method, {
-      deviceFp,
-    });
+    const method = this.e.msg.match(`(上期|往期)`)
+      ? 'zzzChallengePeriod'
+      : 'zzzChallenge';
+    const abyssData = await api.getFinalData(this.e, method);
     if (!abyssData?.has_data) {
       await this.reply('没有式舆防卫战数据');
       return false;
@@ -37,7 +36,7 @@ export class Abyss extends ZZZPlugin {
       if (this?.reply) {
         this.reply('查询成功，正在下载图片资源，请稍候。');
       }
-    }, 3000);
+    }, 5000);
     await abyss.get_assets();
     clearTimeout(timer);
     const finalData = {

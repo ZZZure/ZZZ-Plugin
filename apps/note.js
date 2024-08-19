@@ -21,12 +21,9 @@ export class Note extends ZZZPlugin {
     });
   }
   async note() {
-    const { api, deviceFp } = await this.getAPI();
-    if (!api) return false;
+    const { api } = await this.getAPI();
     await this.getPlayerInfo();
-    const noteResponse = await api.getFinalData(this.e, 'zzzNote', {
-      deviceFp,
-    });
+    const noteResponse = await api.getFinalData(this.e, 'zzzNote');
     if (!noteResponse) return false;
     const noteData = new ZZZNoteResp(noteResponse);
     const finalData = {

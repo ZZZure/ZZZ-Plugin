@@ -21,21 +21,16 @@ export class Card extends ZZZPlugin {
     });
   }
   async card() {
-    const { api, deviceFp } = await this.getAPI();
-    if (!api) return false;
+    const { api } = await this.getAPI();
     await this.getPlayerInfo();
-    const indexData = await api.getFinalData(this.e, 'zzzIndex', { deviceFp });
+    const indexData = await api.getFinalData(this.e, 'zzzIndex');
     if (!indexData) return false;
 
-    let zzzAvatarList = await api.getFinalData(this.e, 'zzzAvatarList', {
-      deviceFp,
-    });
+    let zzzAvatarList = await api.getFinalData(this.e, 'zzzAvatarList');
     if (!zzzAvatarList) return false;
     indexData.avatar_list = zzzAvatarList.avatar_list;
 
-    let zzzBuddyList = await api.getFinalData(this.e, 'zzzBuddyList', {
-      deviceFp,
-    });
+    let zzzBuddyList = await api.getFinalData(this.e, 'zzzBuddyList');
     if (!zzzBuddyList) return false;
     indexData.buddy_list = zzzBuddyList.list;
     const finalIndexData = new ZZZIndexResp(indexData);
@@ -45,7 +40,7 @@ export class Card extends ZZZPlugin {
       if (this?.reply) {
         this.reply('查询成功，正在下载图片资源，请稍候。');
       }
-    }, 3000);
+    }, 5000);
     await finalIndexData.get_assets();
     clearTimeout(timer);
     const data = {
