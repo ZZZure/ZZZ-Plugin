@@ -135,17 +135,17 @@ export class GachaLog extends ZZZPlugin {
     const lastQueryTime = await redis.get(`ZZZ:GACHA:${uid}:LASTTIME`);
     const gachaConfig = settings.getConfig('gacha');
     const coldTime = _.get(gachaConfig, 'interval', 300);
-    if (lastQueryTime && Date.now() - lastQueryTime < 1000 * coldTime) {
-      await this.reply(`${coldTime}秒内只能刷新一次，请稍后再试`);
-      return false;
-    }
-    await redis.set(`ZZZ:GACHA:${uid}:LASTTIME`, Date.now());
     try {
       const key = await getAuthKey(this.e, this.User, uid);
       if (!key) {
         await this.reply('authKey获取失败，请检查cookie是否过期');
         return false;
       }
+      if (lastQueryTime && Date.now() - lastQueryTime < 1000 * coldTime) {
+        await this.reply(`${coldTime}秒内只能刷新一次，请稍后再试`);
+        return false;
+      }
+      await redis.set(`ZZZ:GACHA:${uid}:LASTTIME`, Date.now());
       this.getLog(key);
     } catch (error) {
       await this.reply(error.message);
