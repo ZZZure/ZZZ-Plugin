@@ -89,7 +89,7 @@ export class Panel extends ZZZPlugin {
   async bindDeviceHelp() {
     const msgs = [
         '绑定设备帮助',
-        'https://mirror.ghproxy.com/https://raw.githubusercontent.com/forchannot/get_device_info/main/app/build/outputs/apk/debug/app-debug.apk',
+        settings.getConfig('config')?.url,
         '1. 使用常用米游社手机下载以上APK，并安装',
         '2. 打开后点击按钮复制',
         '3. 给机器人发送"%绑定设备"指令',
