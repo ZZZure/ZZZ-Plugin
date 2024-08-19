@@ -2,3 +2,6 @@ render:
   scale: 100 # 渲染精度
 query:
   others: true # 允许查询他人信息
+
+# 自定义绑定设备下载url
+url: https://ghproxy.mihomo.me/https://raw.githubusercontent.com/forchannot/get_device_info/main/app/build/outputs/apk/debug/app-debug.apk

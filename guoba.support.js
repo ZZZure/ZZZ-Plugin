@@ -45,6 +45,15 @@ export function supportGuoba() {
           },
         },
         {
+          field: 'config.url',
+          label: '绑定设备下载url',
+          bottomHelpMessage: '设置自定义的绑定绑定设备下载url',
+          component:'Input',
+          componentProps: {
+            placeholder: '请输入绑定设备apk下载url',
+          }
+        },
+        {
           field: 'config.query.others',
           label: '查询他人信息',
           bottomHelpMessage: '是否允许查询他人信息',
