@@ -170,7 +170,7 @@ const helpData = [
     items: [
       {
         title: '绑定设备',
-        desc: '用于解决10041报错等问题',
+        desc: '用于尝试解决10041报错等问题（无法100%解决），需要发送设备信息，具体方法请发送%绑定设备帮助查看',
         needCK: true,
         needSK: false,
         commands: ['绑定设备'],
@@ -178,9 +178,16 @@ const helpData = [
       {
         title: '绑定设备帮助',
         desc: '查看如何绑定设备',
-        needCK: true,
+        needCK: false,
         needSK: false,
         commands: ['绑定设备帮助'],
+      },
+      {
+        title: '解绑设备',
+        desc: '解除绑定设备',
+        needCK: false,
+        needSK: false,
+        commands: ['解绑设备'],
       },
     ],
   },
