@@ -34,7 +34,7 @@ export async function addAlias() {
 
 export async function deleteAlias() {
   if (!this.e.isMaster) {
-    this.reply('仅限主人设置');
+    this.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
     return false;
   }
   const match = /删除别名(\S+)$/g.exec(this.e.msg);
