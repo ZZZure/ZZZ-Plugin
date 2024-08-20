@@ -1,6 +1,7 @@
 import version from '../../lib/version.js';
 import { ZZZUpdate } from '../../lib/update.js';
 import { pluginName } from '../../lib/path.js';
+import settings from '../../lib/settings.js';
 
 export async function getChangeLog() {
   const versionData = version.changelogs;
@@ -48,4 +49,47 @@ export async function hasUpdate() {
     }
   }
   return true;
+}
+
+/** 开启/关闭自动更新推送 */
+export async function enableAutoUpdatePush() {
+  if (!this.e.isMaster) {
+    this.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
+    return false;
+  }
+  let enable = true;
+  if (this.e.msg.includes('关闭')) {
+    enable = false;
+  }
+  settings.setSingleConfig('config', 'update', { autoCheck: enable });
+  await this.reply(
+    `[${pluginName}]自动更新推送${enable ? '已开启' : '已关闭'}`,
+    false,
+    { at: true, recallMsg: 100 }
+  );
+}
+
+/** 设置自动更新时间 */
+export async function setCheckUpdateCron() {
+  if (!this.e.isMaster) {
+    this.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
+    return false;
+  }
+  const cron = this.e.msg.split('时间')[1];
+  if (!cron) {
+    await this.reply(
+      `[${pluginName}]设置自动更新频率失败，无cron表达式`,
+      false,
+      {
+        at: true,
+        recallMsg: 100,
+      }
+    );
+    return false;
+  }
+  settings.setSingleConfig('config', 'update', { cron });
+  await this.reply(`[${pluginName}]自动更新频率已设置为${cron}`, false, {
+    at: true,
+    recallMsg: 100,
+  });
 }

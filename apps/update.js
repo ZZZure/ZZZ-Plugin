@@ -73,6 +73,7 @@ export class update extends plugin {
       for (const master of masters) {
         if (master.toString().length > 11) continue;
         await Bot.pickFriend(master).sendMsg(msg);
+        break;
       }
     }
   }

@@ -331,6 +331,20 @@ export class Help extends ZZZPlugin {
               needSK: false,
               commands: ['设置默认设备'],
             },
+            {
+              title: '开启/关闭自动更新推送',
+              desc: '开启/关闭自动更新推送，自动更新仅推送给第一个主人',
+              needCK: false,
+              needSK: false,
+              commands: ['开启/关闭自动更新'],
+            },
+            {
+              title: '设置自动更新时间',
+              desc: '设置自动更新时间，cron表达式，如0 0/10 * * * ?',
+              needCK: false,
+              needSK: false,
+              commands: ['设置自动更新时间+cron表达式'],
+            },
           ],
         },
       ];

@@ -76,6 +76,14 @@ export class Panel extends ZZZPlugin {
           reg: `${rulePrefix}设置默认设备`,
           fnc: 'setDefaultDevice',
         },
+        {
+          reg: `${rulePrefix}(开启|关闭)自动更新$`,
+          fnc: 'enableAutoUpdatePush',
+        },
+        {
+          reg: `${rulePrefix}设置自动更新时间(.+)$`,
+          fnc: 'setCheckUpdateCron',
+        },
       ],
     });
 
@@ -94,6 +102,8 @@ export class Panel extends ZZZPlugin {
     this.getChangeLog = manage.version.getChangeLog;
     this.getCommitLog = manage.version.getCommitLog;
     this.hasUpdate = manage.version.hasUpdate;
+    this.enableAutoUpdatePush = manage.version.enableAutoUpdatePush;
+    this.setCheckUpdateCron = manage.version.setCheckUpdateCron;
     this.setDefaultDevice = manage.device.setDefaultDevice;
     this.toSetDefaultDevice = manage.device.toSetDefaultDevice;
   }
