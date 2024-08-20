@@ -5,6 +5,7 @@ import { ZZZUpdate } from '../lib/update.js';
 import config from '../../../lib/config/config.js';
 import { rulePrefix } from '../lib/common.js';
 
+const lastNotify = '';
 export class update extends plugin {
   constructor() {
     super({
@@ -46,6 +47,7 @@ export class update extends plugin {
     const up = new ZZZUpdate();
     const result = await up.hasUpdate();
     if (result.hasUpdate) {
+      if (result.logs[0].commit === lastNotify) return;
       const botInfo = { nickname: 'ZZZ-Plugin更新', user_id: Bot.uin };
       const msgs = [
         {
@@ -75,6 +77,7 @@ export class update extends plugin {
         await Bot.pickFriend(master).sendMsg(msg);
         break;
       }
+      lastNotify = result.logs[0].commit;
     }
   }
 }
