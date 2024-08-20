@@ -212,7 +212,7 @@ export function supportGuoba() {
         },
         {
           component: 'Divider',
-          label: '默认设备信息设置',
+          label: '默认设备信息设置（通过"%设置默认设备"进行设置，如果不知道这是什么请勿修改）',
         },
         {
           field: 'device.productName',
