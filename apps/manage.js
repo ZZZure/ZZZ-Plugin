@@ -72,6 +72,10 @@ export class Panel extends ZZZPlugin {
           reg: `^${rulePrefix}(插件)?检查更新$`,
           fnc: 'hasUpdate',
         },
+        {
+          reg: `${rulePrefix}设置默认设备`,
+          fnc: 'setDefaultDevice',
+        },
       ],
     });
 
@@ -90,5 +94,7 @@ export class Panel extends ZZZPlugin {
     this.getChangeLog = manage.version.getChangeLog;
     this.getCommitLog = manage.version.getCommitLog;
     this.hasUpdate = manage.version.hasUpdate;
+    this.setDefaultDevice = manage.device.setDefaultDevice;
+    this.toSetDefaultDevice = manage.device.toSetDefaultDevice;
   }
 }

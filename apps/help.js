@@ -325,6 +325,13 @@ export class Help extends ZZZPlugin {
               needSK: false,
               commands: ['删除+角色名+面板图', '删除+角色名+角色图'],
             },
+            {
+              title: '设置默认设备',
+              desc: '设置默认设备信息，当用户没有绑定设备时，会使用默认设备信息',
+              needCK: false,
+              needSK: false,
+              commands: ['设置默认设备'],
+            },
           ],
         },
       ];

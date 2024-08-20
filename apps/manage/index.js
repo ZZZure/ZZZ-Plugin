@@ -10,6 +10,8 @@ import * as panel from './panel.js';
 
 import * as version from './version.js';
 
+import * as device from './device.js';
+
 export default {
   assets,
   guides,
@@ -17,4 +19,5 @@ export default {
   alias,
   panel,
   version,
+  device,
 };
