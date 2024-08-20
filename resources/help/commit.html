@@ -1,0 +1,27 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" href="{{@sys.currentPath}}/commit.css">
+{{/block}}
+
+{{block 'main'}}
+<div class="card">
+  <% include(sys.specialTitle, {en: 'COMMIT' , cn: '更新日志' }) %>
+
+    <div class="list">
+      {{each commitData commit i}}
+      <div class="item {{commit.current ? 'current' : ''}} {{!commit.local ? 'newc' : ''}}">
+        <div class="version">
+          <div class="id no-zzz-font">{{commit.commit}}</div>
+          <div class="time">{{commit.date}}</div>
+        </div>
+        <div class="content no-zzz-font">
+          {{@commit.msg}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+
+
+</div>
+{{/block}}

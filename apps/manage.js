@@ -60,6 +60,18 @@ export class Panel extends ZZZPlugin {
           reg: `${rulePrefix}删除(\\S+)(角色|面板)图(.+)$`,
           fnc: 'deleteCharacterImg',
         },
+        {
+          reg: `${rulePrefix}(插件)?版本$`,
+          fnc: 'getChangeLog',
+        },
+        {
+          reg: `^${rulePrefix}(插件)?更新日志$`,
+          fnc: 'getCommitLog',
+        },
+        {
+          reg: `^${rulePrefix}(插件)?检查更新$`,
+          fnc: 'hasUpdate',
+        },
       ],
     });
 
@@ -75,5 +87,8 @@ export class Panel extends ZZZPlugin {
     this.uploadCharacterImg = manage.panel.uploadCharacterImg;
     this.getCharacterImages = manage.panel.getCharacterImages;
     this.deleteCharacterImg = manage.panel.deleteCharacterImg;
+    this.getChangeLog = manage.version.getChangeLog;
+    this.getCommitLog = manage.version.getCommitLog;
+    this.hasUpdate = manage.version.hasUpdate;
   }
 }

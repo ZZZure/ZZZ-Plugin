@@ -25,3 +25,23 @@ export const generateSeed = (length = 16) => {
   }
   return result;
 };
+
+/**
+ * 将 Markdown 日志行转换为 HTML
+ * @param {*} line
+ * @returns
+ */
+export const mdLogLineToHTML = function (line) {
+  // 去除行首空格和换行符
+  line = line.replace(/(^\s*\*|\r)/g, '');
+  // 替换行内代码块
+  line = line.replace(/\s*`([^`]+`)/g, '<span class="cmd">$1');
+  line = line.replace(/`\s*/g, '</span>');
+  // 替换行内加粗
+  line = line.replace(/\s*\*\*([^\*]+\*\*)/g, '<span class="strong">$1');
+  line = line.replace(/\*\*\s*/g, '</span>');
+  // 替换行内表示更新内容
+  line = line.replace(/ⁿᵉʷ/g, '<span class="new"></span>');
+  // 返回转换后的行内容（HTML）
+  return line.trim();
+};

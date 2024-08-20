@@ -1,0 +1,118 @@
+.special-title {
+  padding: 0;
+  font-size: 1.2em;
+}
+.card {
+  margin: 0 1em;
+  padding: 1em 0;
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    .item {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 0.5em 1em;
+      border-radius: 0.5em;
+      border: 0.1em solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(0.5em);
+      position: relative;
+      .version {
+        width: fit-content;
+        background: linear-gradient(90deg, #ffe6b4, #f2c94c);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 0 0.05em #f0d480);
+        position: relative;
+        margin-bottom: 0.5em;
+        font-size: 0.8em;
+        &::before {
+          content: '';
+          position: absolute;
+          width: 2em;
+          height: 0.2em;
+          bottom: 0;
+          left: 0;
+          background: linear-gradient(0deg, #f2c94c, #ffe6b4);
+          z-index: -1;
+          border-radius: 0.5em;
+        }
+      }
+      &:nth-child(1) {
+        background-color: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(1.5em);
+        &::after {
+          content: '当前版本';
+          font-size: 0.8em;
+          position: absolute;
+          right: 0.5em;
+          top: 0.5em;
+          color: #f2c94c;
+          opacity: 0.5;
+        }
+        .version {
+          background: linear-gradient(90deg, #f2784c, #ffbca4);
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          filter: drop-shadow(0 0 0.1em rgba(231, 241, 35, 0.3));
+          font-size: 1em;
+          &::before {
+            background: #f2784c;
+          }
+          &::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0.3em 0.3em 0 0.3em;
+            border-color: #f2784c transparent transparent transparent;
+            bottom: -0.3em;
+            left: 0.7em;
+          }
+        }
+      }
+      .content {
+        font-size: 0.8em;
+        margin: 0 1em;
+        ul {
+          padding-left: 1em;
+          li {
+            margin: 0.1em 0;
+          }
+        }
+      }
+      .cmd {
+        font-size: 0.8em;
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 0.2em 0.4em;
+        border-radius: 0.5em;
+        margin: 0em 0.3em;
+        border: 0.1em solid rgba(255, 255, 255, 0.1);
+        color: #cadc9e;
+      }
+      .strong {
+        color: #f2c94c;
+      }
+      .new {
+        position: relative;
+        &::before {
+          content: 'new';
+          font-size: 0.4em;
+          background: linear-gradient(90deg, #f2c94c, #ffe6b4);
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          filter: drop-shadow(0 0 0.05em #f0d480);
+          bottom: 1.8em;
+          left: 0em;
+          position: relative;
+          border: 0.1em solid #f2c94c;
+          padding: 0em 0.3em 0.2em 0.3em;
+          border-radius: 0.5em;
+        }
+      }
+    }
+  }
+}

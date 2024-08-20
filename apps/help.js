@@ -189,6 +189,27 @@ const helpData = [
         needSK: false,
         commands: ['解绑设备'],
       },
+      {
+        title: '更新日志',
+        desc: '查看插件的Commit日志',
+        needCK: false,
+        needSK: false,
+        commands: ['[插件]更新日志'],
+      },
+      {
+        title: '版本',
+        desc: '查看插件版本日志',
+        needCK: false,
+        needSK: false,
+        commands: ['[插件]版本'],
+      },
+      {
+        title: '检查更新',
+        desc: '检查插件是否更新',
+        needCK: false,
+        needSK: false,
+        commands: ['[插件]检查更新'],
+      },
     ],
   },
 ];

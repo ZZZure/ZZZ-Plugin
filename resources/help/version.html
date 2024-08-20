@@ -1,0 +1,28 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" href="{{@sys.currentPath}}/version.css">
+{{/block}}
+
+{{block 'main'}}
+<div class="card">
+  <% include(sys.specialTitle, {en: 'VERSION' , cn: '版本日志' }) %>
+    <div class="list">
+      {{each versionData version i}}
+      <div class="item">
+        <div class="version">ver {{version.version}}</div>
+        <div class="content no-zzz-font">
+          <ul>
+            {{each version.logs log1 j}}
+            <li>{{@log1.title}}</li>
+            {{each log1.logs log2 k}}
+            <li>{{@log2.title}}</li>
+            {{/each}}
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+</div>
+{{/block}}

@@ -108,7 +108,7 @@ export class Panel extends ZZZPlugin {
         '1. 使用抓包软件抓取米游社APP的请求',
         '2. 在请求头内找到【x-rpc-device_id】和【x-rpc-device_fp】',
         '3. 自行构造如下格式的信息：',
-        '    {device_id: "x-rpc-device_id的内容", device_fp: "x-rpc-device_fp的内容"}',
+        '    {"device_id": "x-rpc-device_id的内容", "device_fp": "x-rpc-device_fp的内容"}',
         '4. 给机器人发送"%绑定设备"指令',
         '5. 机器人会提示发送设备信息',
         '6. 粘贴自行构造的信息发送',
