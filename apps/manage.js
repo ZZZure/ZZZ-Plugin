@@ -77,11 +77,11 @@ export class Panel extends ZZZPlugin {
           fnc: 'setDefaultDevice',
         },
         {
-          reg: `${rulePrefix}(开启|关闭)自动更新$`,
+          reg: `${rulePrefix}(开启|关闭)更新推送$`,
           fnc: 'enableAutoUpdatePush',
         },
         {
-          reg: `${rulePrefix}设置自动更新时间(.+)$`,
+          reg: `${rulePrefix}设置检查更新时间(.+)$`,
           fnc: 'setCheckUpdateCron',
         },
       ],

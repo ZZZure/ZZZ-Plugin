@@ -5,7 +5,9 @@ import { ZZZUpdate } from '../lib/update.js';
 import config from '../../../lib/config/config.js';
 import { rulePrefix } from '../lib/common.js';
 
-const lastNotify = '';
+const updateInfo = {
+  lastCheckCommit: '',
+};
 export class update extends plugin {
   constructor() {
     super({
@@ -41,13 +43,13 @@ export class update extends plugin {
 
   async checkUpdateTask() {
     const updateConfig = _.get(settings.getConfig('config'), 'update', {});
-    const enable = _.get(updateConfig, 'autoCheck', true);
+    const enable = _.get(updateConfig, 'autoCheck', false);
     if (!enable) return;
     if (!ZZZUpdate) return false;
     const up = new ZZZUpdate();
     const result = await up.hasUpdate();
     if (result.hasUpdate) {
-      if (result.logs[0].commit === lastNotify) return;
+      if (result.logs[0].commit === updateInfo.lastCheckCommit) return;
       const botInfo = { nickname: 'ZZZ-Plugin更新', user_id: Bot.uin };
       const msgs = [
         {
@@ -77,7 +79,7 @@ export class update extends plugin {
         await Bot.pickFriend(master).sendMsg(msg);
         break;
       }
-      lastNotify = result.logs[0].commit;
+      updateInfo.lastCheckCommit = result.logs[0].commit;
     }
   }
 }
