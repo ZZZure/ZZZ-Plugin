@@ -201,7 +201,7 @@ export function supportGuoba() {
         },
         {
           field: 'device.productName',
-          label: 'productName',
+          label: 'productName(deviceProduct)',
           bottomHelpMessage: '设置默认设备productName字段',
           component:'Input',
           componentProps: {
@@ -210,7 +210,7 @@ export function supportGuoba() {
         },
         {
           field: 'device.productType',
-          label: 'productType',
+          label: 'productType(deviceName)',
           bottomHelpMessage: '设置默认设备productType字段',
           component:'Input',
           componentProps: {
@@ -219,7 +219,7 @@ export function supportGuoba() {
         },
         {
           field: 'device.modelName',
-          label: 'modelName',
+          label: 'modelName(deviceModel)',
           bottomHelpMessage: '设置默认设备modelName字段',
           component:'Input',
           componentProps: {
@@ -237,7 +237,7 @@ export function supportGuoba() {
         },
         {
           field: 'device.deviceInfo',
-          label: 'deviceInfo',
+          label: 'deviceInfo(deviceFingerprint)',
           bottomHelpMessage: '设置默认设备deviceInfo字段',
           component:'Input',
           componentProps: {
@@ -246,7 +246,7 @@ export function supportGuoba() {
         },
         {
           field: 'device.board',
-          label: 'board',
+          label: 'board(deviceBoard)',
           bottomHelpMessage: '设置默认设备board字段',
           component:'Input',
           componentProps: {
