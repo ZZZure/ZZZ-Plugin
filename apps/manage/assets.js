@@ -44,7 +44,9 @@ export async function downloadAll() {
     },
   };
   await this.reply(
-    '开始下载资源，注意，仅支持下载面板的角色图、武器图、套装图，以及角色卡片的角色头像图。暂不支持下载邦布头像。'
+    '开始下载资源，注意，仅支持下载面板的角色图、武器图、套装图，以及角色卡片的角色头像图。暂不支持下载邦布头像。',
+    false,
+    { at: true, recallMsg: 100 }
   );
   for (const id of charIDs) {
     try {
@@ -122,9 +124,13 @@ export async function downloadAll() {
 }
 export async function deleteAll() {
   if (!this.e.isMaster) return false;
-  await this.reply('【注意】正在删除所有资源图片，后续使用需要重新下载！');
+  await this.reply(
+    '【注意】正在删除所有资源图片，后续使用需要重新下载！',
+    false,
+    { at: true, recallMsg: 100 }
+  );
   if (fs.existsSync(imageResourcesPath)) {
     fs.rmSync(imageResourcesPath, { recursive: true });
   }
-  await this.reply('资源图片已删除！');
+  await this.reply('资源图片已删除！', false, { at: true, recallMsg: 100 });
 }

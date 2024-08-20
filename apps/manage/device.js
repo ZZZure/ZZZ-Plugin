@@ -1,6 +1,10 @@
 import settings from '../../lib/settings.js';
 
 export async function setDefaultDevice() {
+  if (!this.e.isMaster) {
+    this.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
+    return false;
+  }
   this.setContext('toSetDefaultDevice');
   await this.reply(
     `请发送默认设备信息，或者发送“取消”取消设置默认设备信息`,

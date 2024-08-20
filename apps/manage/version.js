@@ -23,7 +23,10 @@ export async function getCommitLog() {
         commitData,
       });
     } catch (error) {
-      this.reply(`[${pluginName}]获取更新日志失败\n${error.message}`);
+      this.reply(`[${pluginName}]获取更新日志失败\n${error.message}`, false, {
+        at: true,
+        recallMsg: 100,
+      });
     }
   }
   return true;

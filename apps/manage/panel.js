@@ -6,7 +6,7 @@ import fs from 'fs';
 import path from 'path';
 export async function uploadCharacterImg() {
   if (!this.e.isMaster) {
-    this.reply('只有主人才能添加');
+    this.reply('只有主人才能添加', false, { at: true, recallMsg: 100 });
     return false;
   }
   const reg = /(上传|添加)(.+)(角色|面板)图$/;
@@ -17,7 +17,7 @@ export async function uploadCharacterImg() {
   const charName = match[2].trim();
   const name = char.aliasToName(charName);
   if (!name) {
-    this.reply('未找到对应角色');
+    this.reply('未找到对应角色', false, { at: true, recallMsg: 100 });
     return false;
   }
   const images = [];
@@ -71,7 +71,9 @@ export async function uploadCharacterImg() {
   }
   if (images.length <= 0) {
     this.reply(
-      '消息中未找到图片，请将要发送的图片与消息一同发送或引用要添加的图像。'
+      '消息中未找到图片，请将要发送的图片与消息一同发送或引用要添加的图像。',
+      false,
+      { at: true, recallMsg: 100 }
     );
     return false;
   }
@@ -94,7 +96,10 @@ export async function uploadCharacterImg() {
       failed++;
     }
   }
-  this.reply(`成功上传${success}张图片，失败${failed}张图片。`);
+  this.reply(`成功上传${success}张图片，失败${failed}张图片。`, false, {
+    at: true,
+    recallMsg: 100,
+  });
   return false;
 }
 
@@ -108,7 +113,7 @@ export async function getCharacterImages() {
   const name = char.aliasToName(charName);
   let page = match[4];
   if (!name) {
-    this.reply('未找到对应角色');
+    this.reply('未找到对应角色', false, { at: true, recallMsg: 100 });
     return false;
   }
   const pageSize = 5;
@@ -126,7 +131,7 @@ export async function getCharacterImages() {
   const start = (page - 1) * pageSize;
   const end = page * pageSize;
   if (start >= images.length) {
-    this.reply('哪有这么多图片');
+    this.reply('哪有这么多图片', false, { at: true, recallMsg: 100 });
     return false;
   }
   const imagePaths = images.slice(start, end);
@@ -151,7 +156,7 @@ export async function getCharacterImages() {
 
 export async function deleteCharacterImg() {
   if (!this.e.isMaster) {
-    this.reply('只有主人才能删除');
+    this.reply('只有主人才能删除', false, { at: true, recallMsg: 100 });
     return false;
   }
   const reg = /(删除)(.+)(角色|面板)图(.+)$/;
@@ -162,7 +167,7 @@ export async function deleteCharacterImg() {
   const charName = match[2].trim();
   const name = char.aliasToName(charName);
   if (!name) {
-    this.reply('未找到对应角色');
+    this.reply('未找到对应角色', false, { at: true, recallMsg: 100 });
     return false;
   }
   const ids = match[4].split(/[,，、\s]+/);
