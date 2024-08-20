@@ -1,9 +1,8 @@
 import { ZZZPlugin } from '../lib/plugin.js';
-import render from '../lib/render.js';
-import { rulePrefix } from '../lib/common.js';
 import { ZZZIndexResp } from '../model/index.js';
 import settings from '../lib/settings.js';
 import _ from 'lodash';
+import { rulePrefix } from '../lib/common.js';
 
 export class Card extends ZZZPlugin {
   constructor() {
@@ -46,6 +45,6 @@ export class Card extends ZZZPlugin {
     const data = {
       card: finalIndexData,
     };
-    await render(this.e, 'card/index.html', data);
+    await this.render('card/index.html', data);
   }
 }

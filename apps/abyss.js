@@ -1,9 +1,8 @@
 import { ZZZPlugin } from '../lib/plugin.js';
-import render from '../lib/render.js';
-import { rulePrefix } from '../lib/common.js';
 import settings from '../lib/settings.js';
 import _ from 'lodash';
 import { ZZZChallenge } from '../model/abyss.js';
+import { rulePrefix } from '../lib/common.js';
 
 export class Abyss extends ZZZPlugin {
   constructor() {
@@ -42,6 +41,6 @@ export class Abyss extends ZZZPlugin {
     const finalData = {
       abyss,
     };
-    await render(this.e, 'abyss/index.html', finalData, this);
+    await this.render('abyss/index.html', finalData, this);
   }
 }

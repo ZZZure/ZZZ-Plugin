@@ -4,13 +4,13 @@ import fetch from 'node-fetch';
 import lodash from 'lodash';
 import common from '../../../lib/common/common.js';
 import { ZZZPlugin } from '../lib/plugin.js';
-import { rulePrefix } from '../lib/common.js';
 import { imageResourcesPath } from '../lib/path.js';
 import _ from 'lodash';
 import settings from '../lib/settings.js';
 import { downloadFile } from '../lib/download.js';
 import { char } from '../lib/convert.js';
 import guides from '../lib/guides.js';
+import { rulePrefix } from '../lib/common.js';
 
 const ZZZ_GUIDES_PATH = path.join(imageResourcesPath, 'guides');
 

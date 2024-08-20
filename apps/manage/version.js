@@ -1,11 +1,10 @@
 import version from '../../lib/version.js';
-import render from '../../lib/render.js';
 import { ZZZUpdate } from '../../lib/update.js';
 import { pluginName } from '../../lib/path.js';
 
 export async function getChangeLog() {
   const versionData = version.changelogs;
-  await render(this.e, 'help/version.html', {
+  await this.render('help/version.html', {
     versionData,
   });
   return false;
@@ -19,7 +18,7 @@ export async function getCommitLog() {
   if (updatePlugin.getPlugin(pluginName)) {
     try {
       const commitData = await updatePlugin.getZZZAllLog();
-      await render(this.e, 'help/commit.html', {
+      await this.render('help/commit.html', {
         commitData,
       });
     } catch (error) {
@@ -41,7 +40,7 @@ export async function hasUpdate() {
     const result = await updatePlugin.hasUpdate();
     if (result.hasUpdate) {
       await this.reply(`[${pluginName}]有${result.logs.length || 1}个更新`);
-      await render(this.e, 'help/commit.html', {
+      await this.render('help/commit.html', {
         commitData: result.logs,
       });
     } else {

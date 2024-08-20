@@ -1,9 +1,8 @@
 import { ZZZPlugin } from '../lib/plugin.js';
-import render from '../lib/render.js';
 import { ZZZNoteResp } from '../model/note.js';
-import { rulePrefix } from '../lib/common.js';
 import settings from '../lib/settings.js';
 import _ from 'lodash';
+import { rulePrefix } from '../lib/common.js';
 
 export class Note extends ZZZPlugin {
   constructor() {
@@ -29,6 +28,6 @@ export class Note extends ZZZPlugin {
     const finalData = {
       note: noteData,
     };
-    await render(this.e, 'note/index.html', finalData);
+    await this.render('note/index.html', finalData);
   }
 }

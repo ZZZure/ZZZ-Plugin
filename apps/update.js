@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import { rulePrefix } from '../lib/common.js';
 import { pluginName } from '../lib/path.js';
 import settings from '../lib/settings.js';
 import { ZZZUpdate } from '../lib/update.js';
 import config from '../../../lib/config/config.js';
+import { rulePrefix } from '../lib/common.js';
 
 export class update extends plugin {
   constructor() {

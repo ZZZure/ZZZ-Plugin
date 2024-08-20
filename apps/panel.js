@@ -1,9 +1,8 @@
 import { ZZZPlugin } from '../lib/plugin.js';
-import render from '../lib/render.js';
-import { rulePrefix } from '../lib/common.js';
 import { getPanelList, refreshPanel, getPanel } from '../lib/avatar.js';
 import settings from '../lib/settings.js';
 import _ from 'lodash';
+import { rulePrefix } from '../lib/common.js';
 
 export class Panel extends ZZZPlugin {
   constructor() {
@@ -64,7 +63,7 @@ export class Panel extends ZZZPlugin {
       newChar: newChar.length,
       list: result,
     };
-    await render(this.e, 'panel/refresh.html', finalData);
+    await this.render('panel/refresh.html', finalData);
   }
   async getCharPanelList() {
     const uid = await this.getUID();
@@ -87,7 +86,7 @@ export class Panel extends ZZZPlugin {
       count: result?.length || 0,
       list: result,
     };
-    await render(this.e, 'panel/list.html', finalData);
+    await this.render('panel/list.html', finalData);
   }
   async getCharPanel() {
     const uid = await this.getUID();
@@ -111,7 +110,7 @@ export class Panel extends ZZZPlugin {
       uid: uid,
       charData: data,
     };
-    const image = await render(this.e, 'panel/card.html', finalData, {
+    const image = await this.render('panel/card.html', finalData, {
       retType: 'base64',
     });
     const res = await this.reply(image);
@@ -164,7 +163,7 @@ export class Panel extends ZZZPlugin {
       general,
       list: result,
     };
-    await render(this.e, 'proficiency/index.html', finalData);
+    await this.render('proficiency/index.html', finalData);
   }
   async getCharOriImage() {
     let source;

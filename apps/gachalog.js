@@ -1,6 +1,4 @@
 import { ZZZPlugin } from '../lib/plugin.js';
-import render from '../lib/render.js';
-import { rulePrefix } from '../lib/common.js';
 import { getAuthKey } from '../lib/authkey.js';
 import settings from '../lib/settings.js';
 import _ from 'lodash';
@@ -13,6 +11,7 @@ import {
   getZZZGachaLogByAuthkey,
 } from '../lib/gacha.js';
 import { getQueryVariable } from '../utils/network.js';
+import { rulePrefix } from '../lib/common.js';
 
 export class GachaLog extends ZZZPlugin {
   constructor() {
@@ -240,7 +239,7 @@ export class GachaLog extends ZZZPlugin {
     const result = {
       data,
     };
-    await render(this.e, 'gachalog/index.html', result);
+    await this.render('gachalog/index.html', result);
   }
   async getGachaLink() {
     if (!this.e.isPrivate || this.e.isGroup) {

@@ -1,8 +1,8 @@
 import { ZZZPlugin } from '../lib/plugin.js';
-import { rulePrefix } from '../lib/common.js';
 import settings from '../lib/settings.js';
 import _ from 'lodash';
 import manage from './manage/index.js';
+import { rulePrefix } from '../lib/common.js';
 
 export class Panel extends ZZZPlugin {
   constructor() {

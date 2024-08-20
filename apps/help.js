@@ -1,6 +1,5 @@
-import { ZZZPlugin } from '../lib/plugin.js';
 import { rulePrefix } from '../lib/common.js';
-import render from '../lib/render.js';
+import { ZZZPlugin } from '../lib/plugin.js';
 import settings from '../lib/settings.js';
 import _ from 'lodash';
 /**
@@ -335,12 +334,12 @@ export class Help extends ZZZPlugin {
           ],
         },
       ];
-      await render(this.e, 'help/index.html', {
+      await this.render('help/index.html', {
         helpData: _helpData,
       });
       return false;
     }
-    await render(this.e, 'help/index.html', {
+    await this.render('help/index.html', {
       helpData,
     });
     return false;
