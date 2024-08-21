@@ -31,7 +31,7 @@ export class Panel extends ZZZPlugin {
     const uid = await this.getUID();
     this.setContext('toBindDevice');
     await this.reply(
-      `为UID ${uid}绑定设备，请发送设备信息，或者发送“取消”取消绑定`,
+      `为UID ${uid}绑定设备，请发送设备信息(建议私聊发送)，或者发送“取消”取消绑定`,
       false,
       { at: true, recallMsg: 100 }
     );
@@ -85,7 +85,7 @@ export class Panel extends ZZZPlugin {
         return false;
       }
       logger.debug(`[LTUID:${ltuid}]绑定设备成功，deviceFp:${deviceFp}`);
-      await this.reply('绑定设备成功', false, { at: true, recallMsg: 100 });
+      await this.reply(`绑定设备成功${this.e.isGroup ? '\n请撤回设备信息' : ''}`, false, { at: true, recallMsg: 100 });
     } catch (error) {
       this.reply('设备信息格式错误', false, { at: true, recallMsg: 100 });
       return false;
