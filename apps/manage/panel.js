@@ -1,5 +1,5 @@
 import { char } from '../../lib/convert.js';
-import { downloadFile } from '../../lib/download.js';
+import { downloadFile } from '../../lib/download/core.js';
 import { imageResourcesPath } from '../../lib/path.js';
 import common from '../../../../lib/common/common.js';
 import fs from 'fs';

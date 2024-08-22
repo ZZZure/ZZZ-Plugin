@@ -251,7 +251,7 @@ export class Help extends ZZZPlugin {
             },
             {
               title: '删除资源（需注意）',
-              desc: '请注意，此命令会删除自定义面板图，请确认做好备份后再执行！！！删除已经下载的资源，查询时需要再次下载（用于删除错误下载缓存）。',
+              desc: '删除已经下载的资源，查询时需要再次下载（用于删除错误下载缓存）。',
               needCK: false,
               needSK: false,
               commands: ['删除全部/所有资源'],

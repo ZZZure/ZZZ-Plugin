@@ -7,7 +7,7 @@ import { ZZZPlugin } from '../lib/plugin.js';
 import { imageResourcesPath } from '../lib/path.js';
 import _ from 'lodash';
 import settings from '../lib/settings.js';
-import { downloadFile } from '../lib/download.js';
+import { downloadFile } from '../lib/download/core.js';
 import { char } from '../lib/convert.js';
 import guides from '../lib/guides.js';
 import { rulePrefix } from '../lib/common.js';

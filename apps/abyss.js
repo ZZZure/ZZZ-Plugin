@@ -25,7 +25,10 @@ export class Abyss extends ZZZPlugin {
     const method = this.e.msg.match(`(上期|往期)`)
       ? 'zzzChallengePeriod'
       : 'zzzChallenge';
-    const abyssData = await api.getFinalData(this.e, method);
+    const abyssData = await api.getFinalData(method).catch(e => {
+      this.reply(e.message);
+      throw e;
+    });
     if (!abyssData?.has_data) {
       await this.reply('没有式舆防卫战数据');
       return false;

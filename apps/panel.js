@@ -53,7 +53,10 @@ export class Panel extends ZZZPlugin {
     await redis.set(`ZZZ:PANEL:${uid}:LASTTIME`, Date.now());
     await this.reply('正在刷新面板列表，请稍候...');
     await this.getPlayerInfo();
-    const result = await refreshPanel(this.e, api, uid);
+    const result = await refreshPanel(api, uid).catch(e => {
+      this.reply(e.message);
+      throw e;
+    });
     if (!result) {
       await this.reply('面板列表刷新失败，请稍后再试');
       return false;

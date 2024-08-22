@@ -3,13 +3,9 @@ import { getAuthKey } from '../lib/authkey.js';
 import settings from '../lib/settings.js';
 import _ from 'lodash';
 import common from '../../../lib/common/common.js';
-import {
-  anaylizeGachaLog,
-  updateGachaLog,
-  getZZZGachaLink,
-  gacha_type_meta_data,
-  getZZZGachaLogByAuthkey,
-} from '../lib/gacha.js';
+import { anaylizeGachaLog, updateGachaLog } from '../lib/gacha.js';
+import { getZZZGachaLink, getZZZGachaLogByAuthkey } from '../lib/gacha/core.js';
+import { gacha_type_meta_data } from '../lib/gacha/const.js';
 import { getQueryVariable } from '../utils/network.js';
 import { rulePrefix } from '../lib/common.js';
 
