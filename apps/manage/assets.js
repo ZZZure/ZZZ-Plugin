@@ -92,7 +92,7 @@ export async function downloadAll() {
   const messages = [
     '资源下载完成（成功的包含先前下载的图片）',
     `角色图需下载${charIDs.length}张，成功${result.char.success}张，失败${result.char.failed}张`,
-    `角色头像图需下载${charIDs.length}张，成功${esult.charSquare.success}张，失败${result.charSquare.failed}张`,
+    `角色头像图需下载${charIDs.length}张，成功${result.charSquare.success}张，失败${result.charSquare.failed}张`,
     `角色头像图(练度统计)需下载${charIDs.length}张，成功${result.charSmallSquare.success}张，失败${result.charSmallSquare.failed}张`,
     `驱动盘套装图需下载${equipSprites.length}张，成功${result.equip.success}张，失败${result.equip.failed}张`,
     `武器图需下载${weaponSprites.length}张，成功${result.weapon.success}张，失败${result.weapon.failed}张`,
