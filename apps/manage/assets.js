@@ -106,7 +106,9 @@ export async function deleteAll() {
     false,
     { at: true, recallMsg: 100 }
   );
-  for (const dir of LocalURI) {
+  // 将 localURI 值迭代删除
+  for (const dir of Object.values(LocalURI)) {
+    logger.debug(`删除文件夹：${dir}`);
     if (fs.existsSync(dir)) {
       fs.rmSync(dir, { recursive: true });
     }
