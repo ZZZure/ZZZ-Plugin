@@ -5,5 +5,9 @@ query:
 update:
   autoCheck: true # 自动检查更新
   cron: 0 0/10 * * * ? # 更新检查时间
+# 需要调用过🐎的接口code
+mysCode:
+  - 1034
+  - 10035
 # 自定义绑定设备下载url
 url: https://ghproxy.mihomo.me/https://raw.githubusercontent.com/forchannot/get_device_info/main/app/build/outputs/apk/debug/app-debug.apk

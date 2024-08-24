@@ -61,17 +61,34 @@ export function supportGuoba() {
         },
         {
           field: 'config.update.autoCheck',
-          label: '自动检查更新',
-          bottomHelpMessage: '是否开启自动检查更新（仅检查，不更新）',
+          label: '更新推送',
+          bottomHelpMessage: '是否开启自动检查更新推送（仅检查，不更新）',
           component: 'Switch',
         },
         {
           field: 'config.update.cron',
-          label: '自动检查更新时间',
-          bottomHelpMessage: '设置自动检查更新的时间，cron表达式',
+          label: '推送时间',
+          bottomHelpMessage: '设置自动检查更新推送的时间，cron表达式',
           component: 'Input',
           componentProps: {
             placeholder: '请输入cron表达式',
+          },
+        },
+        {
+          field: 'config.mysCode',
+          label: '过🐎',
+          bottomHelpMessage:
+            '设置米游社接口返回的错误码，遇到这些错误码会触发过🐎',
+          component: 'Select',
+          componentProps: {
+            mode: 'multiple',
+            options: [
+              { label: '1034', value: 1034 },
+              { label: '10035', value: 10035 },
+              { label: '10102', value: 10102 },
+              { label: '10041', value: 10041 },
+              { label: '5003', value: 5003 },
+            ],
           },
         },
         {
@@ -212,7 +229,8 @@ export function supportGuoba() {
         },
         {
           component: 'Divider',
-          label: '默认设备信息设置（通过"%设置默认设备"进行设置，如果不知道这是什么请勿修改）',
+          label:
+            '默认设备信息设置（通过"%设置默认设备"进行设置，如果不知道这是什么请勿修改）',
         },
         {
           field: 'device.productName',
