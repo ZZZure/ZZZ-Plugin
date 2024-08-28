@@ -29,6 +29,8 @@ export class Panel extends ZZZPlugin {
   }
   async bindDevice() {
     const uid = await this.getUID();
+    //先throw一步（
+    const ltuid = await this.getLtuid();
     this.setContext('toBindDevice');
     await this.reply(
       `为UID ${uid}绑定设备，请发送设备信息(建议私聊发送)，或者发送“取消”取消绑定`,
