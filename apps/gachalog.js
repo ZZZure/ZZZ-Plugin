@@ -55,6 +55,11 @@ export class GachaLog extends ZZZPlugin {
     await this.reply(reply_msg);
   }
   async startGachaLog() {
+    const uid = await this.getUID();
+    if (/^(1[0-9])[0-9]{8}/i.test(uid)) {
+      await this.reply('抽卡记录相应功能只支持国服');
+      return false;
+    }
     const allowGroup = _.get(settings.getConfig('gacha'), 'allow_group', false);
     const whiteList = _.get(settings.getConfig('gacha'), 'white_list', []);
     const blackList = _.get(settings.getConfig('gacha'), 'black_list', []);
@@ -126,6 +131,10 @@ export class GachaLog extends ZZZPlugin {
   }
   async refreshGachaLog() {
     const uid = await this.getUID();
+    if (/^(1[0-9])[0-9]{8}/i.test(uid)) {
+      await this.reply('抽卡记录相应功能只支持国服');
+      return false;
+    }
     if (!uid) return false;
     const lastQueryTime = await redis.get(`ZZZ:GACHA:${uid}:LASTTIME`);
     const gachaConfig = settings.getConfig('gacha');
@@ -212,6 +221,10 @@ export class GachaLog extends ZZZPlugin {
 
   async gachaLogAnalysis() {
     const uid = await this.getUID();
+    if (/^(1[0-9])[0-9]{8}/i.test(uid)) {
+      await this.reply('抽卡记录相应功能只支持国服');
+      return false;
+    }
     if (!uid) {
       return false;
     }
@@ -238,11 +251,15 @@ export class GachaLog extends ZZZPlugin {
     await this.render('gachalog/index.html', result);
   }
   async getGachaLink() {
+    const uid = await this.getUID();
+    if (/^(1[0-9])[0-9]{8}/i.test(uid)) {
+      await this.reply('抽卡记录相应功能只支持国服');
+      return false;
+    }
     if (!this.e.isPrivate || this.e.isGroup) {
       await this.reply('请私聊获取抽卡链接', false, { at: true });
       return false;
     }
-    const uid = await this.getUID();
     if (!uid) {
       return false;
     }
