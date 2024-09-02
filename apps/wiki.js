@@ -55,7 +55,7 @@ export class Abyss extends ZZZPlugin {
       ? levelsChar.split('.').map(x => {
           const _x = Number(x.trim());
           if (!_.isNaN(_x)) return _x;
-          if (_.isString(x)) return x.charCodeAt(0) - 64;
+          if (_.isString(x)) return x.toUpperCase().charCodeAt(0) - 64;
           return null;
         })
       : [];
