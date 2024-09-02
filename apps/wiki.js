@@ -51,6 +51,14 @@ export class Abyss extends ZZZPlugin {
     const charname = this.e.msg.match(reg)[4];
     if (!charname) return false;
     const levelsChar = this.e.msg.match(reg)[5];
+    const levels = !!levelsChar
+      ? levelsChar.split('.').map(x => {
+          const _x = Number(x.trim());
+          if (!_.isNaN(_x)) return _x;
+          if (_.isString(x)) return x.charCodeAt(0) - 64;
+          return null;
+        })
+      : [];
     const [
       BasicLevel = 12,
       DodgeLevel = 12,
@@ -58,12 +66,15 @@ export class Abyss extends ZZZPlugin {
       SpecialLevel = 12,
       ChainLevel = 12,
       CoreLevel = 6,
-    ] = levelsChar.split('.').map(x => {
-      const _x = Number(x.trim());
-      if (!_.isNaN(_x)) return _x;
-      if (_.isString(x)) return x.charCodeAt(0) - 64;
-      return null;
-    });
+    ] = levels;
+    logger.debug(
+      BasicLevel,
+      DodgeLevel,
+      AssistLevel,
+      SpecialLevel,
+      ChainLevel,
+      CoreLevel
+    );
     if (
       !isSkillLevelLegal('BasicLevel', BasicLevel) ||
       !isSkillLevelLegal('DodgeLevel', DodgeLevel) ||
