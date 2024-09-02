@@ -182,6 +182,46 @@
   }
 }
 
+.skill-icon {
+  aspect-ratio: 1;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  &.assist,
+  &.Switch,
+  &.switch {
+    background-image: url('../images/skills/assist.webp');
+  }
+  &.basic,
+  &.Normal,
+  &.normal {
+    background-image: url('../images/skills/basic.webp');
+  }
+  &.chain,
+  &.Ultimate,
+  &.UltimateReady,
+  &.ultimateready {
+    background-image: url('../images/skills/chain.webp');
+  }
+  &.core,
+  &.Core,
+  &.CoreSkill,
+  &.coreskill {
+    background-image: url('../images/skills/core.webp');
+  }
+  &.dodge,
+  &.Evade,
+  &.evade {
+    background-image: url('../images/skills/dodge.webp');
+  }
+  &.special,
+  &.Special,
+  &.SpecialReady,
+  &.specialready {
+    background-image: url('../images/skills/special.webp');
+  }
+}
+
 .special-title {
   width: 100%;
   background-size: contain;

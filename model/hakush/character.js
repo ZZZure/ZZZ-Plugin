@@ -1,3 +1,4 @@
+import { getSquareAvatar } from '../../lib/download.js';
 /**
  * @typedef {Object} StatsData
  * @property {number} Armor
@@ -141,7 +142,7 @@ class Level {
 /**
  * @typedef {Object} ExtraLevelData
  * @property {number} MaxLevel
- * @property {Object.<string, Object.<string, string|number|float>>} Extra
+ * @property {Record<string, Record<string, string|number|float>>} Extra
  */
 
 class ExtraLevel {
@@ -155,10 +156,59 @@ class ExtraLevel {
 }
 
 /**
+ * @typedef {Object} PartnerInfoData
+ * @property {string} Birthday
+ * @property {string} FullName
+ * @property {string} Gender
+ * @property {string} IconPath
+ * @property {string} ImpressionF
+ * @property {string} ImpressionM
+ * @property {string} Name
+ * @property {string} OutlookDesc
+ * @property {string} ProfileDesc
+ * @property {string} Race
+ * @property {string} RoleIcon
+ * @property {string} Stature
+ * @property {string[]} UnlockCondition
+ */
+
+class PartnerInfo {
+  /**
+   * @param {PartnerInfoData} data
+   */
+  constructor(data) {
+    this.Birthday = data.Birthday;
+    this.FullName = data.FullName;
+    this.Gender = data.Gender;
+    this.IconPath = data.IconPath;
+    this.ImpressionF = data.ImpressionF;
+    this.ImpressionM = data.ImpressionM;
+    this.Name = data.Name;
+    this.OutlookDesc = data.OutlookDesc;
+    this.ProfileDesc = data.ProfileDesc;
+    this.Race = data.Race;
+    this.RoleIcon = data.RoleIcon;
+    this.Stature = data.Stature;
+    this.UnlockCondition = data.UnlockCondition;
+  }
+}
+
+/**
  * @typedef {Object} SkillValueData
  * @property {number} Main
  * @property {number} Growth
  * @property {string} Format
+ * @property {number[]} AttackData
+ * @property {number} AttributeInfliction
+ * @property {number} FeverRecovery
+ * @property {number} FeverRecoveryGrowth
+ * @property {number} SpConsume
+ * @property {number} SpRecovery
+ * @property {number} SpRecoveryGrowth
+ * @property {number} StunRatio
+ * @property {number} StunRatioGrowth
+ * @property {number} DamagePercentage
+ * @property {number} DamagePercentageGrowth
  */
 
 class SkillValue {
@@ -169,6 +219,17 @@ class SkillValue {
     this.Main = data.Main;
     this.Growth = data.Growth;
     this.Format = data.Format;
+    this.AttackData = data.AttackData;
+    this.AttributeInfliction = data.AttributeInfliction;
+    this.DamagePercentage = data.DamagePercentage;
+    this.DamagePercentageGrowth = data.DamagePercentageGrowth;
+    this.FeverRecovery = data.FeverRecovery;
+    this.FeverRecoveryGrowth = data.FeverRecoveryGrowth;
+    this.SpConsume = data.SpConsume;
+    this.SpRecovery = data.SpRecovery;
+    this.SpRecoveryGrowth = data.SpRecoveryGrowth;
+    this.StunRatio = data.StunRatio;
+    this.StunRatioGrowth = data.StunRatioGrowth;
   }
 }
 
@@ -176,7 +237,7 @@ class SkillValue {
  * @typedef {Object} SkillParamData
  * @property {string} Name
  * @property {string} Desc
- * @property {Object.<string, SkillValueData>} Param
+ * @property {Record<string, SkillValueData>} Param
  */
 
 class SkillParam {
@@ -186,9 +247,11 @@ class SkillParam {
   constructor(data) {
     this.Name = data.Name;
     this.Desc = data.Desc;
-    this.Param = {};
-    for (const [key, value] of Object.entries(data.Param)) {
-      this.Param[key] = new SkillValue(value);
+    if (data.Param) {
+      this.Param = {};
+      for (const [key, value] of Object.entries(data.Param)) {
+        this.Param[key] = new SkillValue(value);
+      }
     }
   }
 }
@@ -206,13 +269,27 @@ class SkillDescription {
   constructor(data) {
     this.Name = data.Name;
     this.Desc = data.Desc;
+    /** @type {string} */
+    this.description =
+      '<div class="line">' +
+      this.Desc.replace(
+        /<IconMap:Icon_(\w+)>/g,
+        '<span class="skill-icon $1"></span>'
+      )
+        .replace(
+          /<color=#(\w+?)>(.+?)<\/color>/g,
+          '<span style="color:#$1"><strong>$2</strong></span>'
+        )
+        .split('\n')
+        .join('</div><div class="line">') +
+      '</div>';
   }
 }
 
 /**
  * @typedef {Object} SkillDescription2Data
  * @property {string} Name
- * @property {SkillParamData} Param
+ * @property {SkillParamData[]} Param
  */
 
 class SkillDescription2 {
@@ -221,14 +298,14 @@ class SkillDescription2 {
    */
   constructor(data) {
     this.Name = data.Name;
-    this.Param = new SkillParam(data.Param);
+    this.Param = data.Param.map(param => new SkillParam(param));
   }
 }
 
 /**
  * @typedef {Object} SkillDetailData
  * @property {(SkillDescriptionData|SkillDescription2Data)[]} Description
- * @property {Object.<string, Object.<string, number>>} Material
+ * @property {Recordstring, Record<string, number>>} Material
  */
 
 class SkillDetail {
@@ -241,15 +318,71 @@ class SkillDetail {
     );
     this.Material = data.Material;
   }
+
+  /**
+   * 获取技能详情数据
+   * @param {number} level
+   * @returns {Record<string, string|number>}
+   */
+  getDetailData(level = 12) {
+    this.level = level;
+    const rate = [];
+    for (const desc of this.Description) {
+      if (desc.Param) {
+        const itemData = {
+          rate: [],
+          details: [],
+        };
+        for (const param of desc.Param) {
+          if (!!param.Param) {
+            const value = Object.values(param.Param)[0];
+            let final = value.Main + value.Growth * (level - 1);
+            if (value.Format === '%') {
+              final = `${final / 100}%`;
+            }
+            itemData['rate'].push({
+              label: param.Name,
+              value: final,
+            });
+            itemData['details'].push({
+              A: (value.Main + value.Growth * (level - 1)) / 100,
+              B: (value.StunRatio + value.StunRatioGrowth * (level - 1)) / 100,
+              C:
+                (value.SpRecovery + value.SpRecoveryGrowth * (level - 1)) /
+                10000,
+              D:
+                (value.FeverRecovery +
+                  value.FeverRecoveryGrowth * (level - 1)) /
+                10000,
+              E: value.AttributeInfliction / 100,
+              F: 0,
+              G: 0,
+            });
+          } else {
+            itemData['rate'].push({
+              label: param.Name,
+              value: param.Desc,
+            });
+          }
+        }
+        rate.push({
+          name: desc.Name,
+          data: itemData,
+        });
+      }
+    }
+    this.rate = rate;
+    return rate;
+  }
 }
 
 /**
  * @typedef {Object} SkillData
- * @property {Object.<string, SkillDetailData>} Basic
- * @property {Object.<string, SkillDetailData>} Dodge
- * @property {Object.<string, SkillDetailData>} Special
- * @property {Object.<string, SkillDetailData>} Chain
- * @property {Object.<string, SkillDetailData>} Assist
+ * @property {SkillDetailData} Basic
+ * @property {SkillDetailData} Dodge
+ * @property {SkillDetailData} Special
+ * @property {SkillDetailData>} Chain
+ * @property {SkillDetailData>} Assist
  */
 
 class Skill {
@@ -257,27 +390,43 @@ class Skill {
    * @param {SkillData} data
    */
   constructor(data) {
-    this.Basic = {};
-    this.Dodge = {};
-    this.Special = {};
-    this.Chain = {};
-    this.Assist = {};
+    this.Basic = new SkillDetail(data.Basic);
+    this.Dodge = new SkillDetail(data.Dodge);
+    this.Special = new SkillDetail(data.Special);
+    this.Chain = new SkillDetail(data.Chain);
+    this.Assist = new SkillDetail(data.Assist);
+  }
 
-    for (const [key, value] of Object.entries(data.Basic)) {
-      this.Basic[key] = new SkillDetail(value);
-    }
-    for (const [key, value] of Object.entries(data.Dodge)) {
-      this.Dodge[key] = new SkillDetail(value);
-    }
-    for (const [key, value] of Object.entries(data.Special)) {
-      this.Special[key] = new SkillDetail(value);
-    }
-    for (const [key, value] of Object.entries(data.Chain)) {
-      this.Chain[key] = new SkillDetail(value);
-    }
-    for (const [key, value] of Object.entries(data.Assist)) {
-      this.Assist[key] = new SkillDetail(value);
-    }
+  /**
+   * 获取技能数据
+   * @param {string} skill
+   * @param {number} level
+   * @returns {Record<string, string|number>}
+   */
+  getSkillData(skill, level = 12) {
+    return this[skill].getDetailData(level);
+  }
+
+  /**
+   * 获取所有技能数据
+   * @param {Record<string, number>} levels
+   * @returns {Record<string, Record<'BasicLevel'|'DodgeLevel'|'AssistLevel'|'SpecialLevel'|'ChainLevel', number>>}
+   */
+  getAllSkillData(levels) {
+    const {
+      BasicLevel = 12,
+      DodgeLevel = 12,
+      AssistLevel = 12,
+      SpecialLevel = 12,
+      ChainLevel = 12,
+    } = levels;
+    return {
+      Basic: this.getSkillData('Basic', BasicLevel),
+      Dodge: this.getSkillData('Dodge', DodgeLevel),
+      Assist: this.getSkillData('Assist', AssistLevel),
+      Special: this.getSkillData('Special', SpecialLevel),
+      Chain: this.getSkillData('Chain', ChainLevel),
+    };
   }
 }
 
@@ -298,13 +447,31 @@ class PassiveLevel {
     this.Id = data.Id;
     this.Name = data.Name;
     this.Desc = data.Desc;
+
+    /** @type {string[]} */
+    this.description = data.Desc.map(
+      item =>
+        '<div class="line">' +
+        item
+          .replace(
+            /<IconMap:Icon_(\w+)>/g,
+            '<span class="skill-icon $1"></span>'
+          )
+          .replace(
+            /<color=#(\w+?)>(.+?)<\/color>/g,
+            '<span style="color:#$1"><strong>$2</strong></span>'
+          )
+          .split('\n')
+          .join('</div><div class="line">') +
+        '</div>'
+    );
   }
 }
 
 /**
  * @typedef {Object} PassiveData
- * @property {Object.<number, PassiveLevelData>} Level
- * @property {Object.<string, Object.<string, number>>} Materials
+ * @property {Record<number, PassiveLevelData>} Level
+ * @property {Record<string, Record<string, number>>} Materials
  */
 
 class Passive {
@@ -318,6 +485,13 @@ class Passive {
     for (const [key, value] of Object.entries(data.Level)) {
       this.Level[key] = new PassiveLevel(value);
     }
+  }
+
+  /** @type {PassiveLevel} */
+  getPassiveData(level = 1) {
+    this._level = level;
+    this.currentLevel = this.Level[level];
+    return this.currentLevel;
   }
 }
 
@@ -342,51 +516,27 @@ class TalentLevel {
 }
 
 /**
- * @typedef {Object} TalentData
- * @property {TalentLevelData} Heroism
- * @property {TalentLevelData} YouthfulArrogance
- * @property {TalentLevelData} Insensitive
- * @property {TalentLevelData} OriginalAspiration
- * @property {TalentLevelData} LongingDistance
- * @property {TalentLevelData} Idealism
- */
-
-class Talent {
-  /**
-   * @param {TalentData} data
-   */
-  constructor(data) {
-    this.Heroism = new TalentLevel(data.Heroism);
-    this.YouthfulArrogance = new TalentLevel(data.YouthfulArrogance);
-    this.Insensitive = new TalentLevel(data.Insensitive);
-    this.OriginalAspiration = new TalentLevel(data.OriginalAspiration);
-    this.LongingDistance = new TalentLevel(data.LongingDistance);
-    this.Idealism = new TalentLevel(data.Idealism);
-  }
-}
-
-/**
  * @typedef {Object} CharacterData
  * @property {number} Id
  * @property {string} Icon
  * @property {string} Name
  * @property {string} CodeName
  * @property {number} Rarity
- * @property {Object.<string, string>} WeaponType
- * @property {Object.<string, string>} ElementType
- * @property {Object.<string, string>} HitType
- * @property {Object.<string, string>} Camp
+ * @property {Record<string, string>} WeaponType
+ * @property {Record<string, string>} ElementType
+ * @property {Record<string, string>} HitType
+ * @property {Record<string, string>} Camp
  * @property {number} Gender
- * @property {Object} PartnerInfo
+ * @property {PartnerInfoData} PartnerInfo
  * @property {StatsData} Stats
- * @property {Object.<('1'|'2'|'3'|'4'|'5'|'6'), LevelData>} Level
- * @property {Object.<('1'|'2'|'3'|'4'|'5'|'6'), ExtraLevelData>} ExtraLevel
+ * @property {Record<('1'|'2'|'3'|'4'|'5'|'6'), LevelData>} Level
+ * @property {Record<('1'|'2'|'3'|'4'|'5'|'6'), ExtraLevelData>} ExtraLevel
  * @property {SkillData} Skill
  * @property {PassiveData} Passive
- * @property {TalentData} Talent
+ * @property {Record<('1'|'2'|'3'|'4'|'5'|'6'),TalentLevel>} Talent
  */
 
-class Character {
+export class Character {
   /**
    * @param {CharacterData} data
    */
@@ -401,10 +551,11 @@ class Character {
     this.HitType = data.HitType;
     this.Camp = data.Camp;
     this.Gender = data.Gender;
-    this.PartnerInfo = data.PartnerInfo;
+    this.PartnerInfo = new PartnerInfo(data.PartnerInfo);
     this.Stats = new Stats(data.Stats);
     this.Level = {};
     this.ExtraLevel = {};
+    this.Talent = {};
 
     for (const [key, value] of Object.entries(data.Level)) {
       this.Level[key] = new Level(value);
@@ -414,6 +565,14 @@ class Character {
     }
     this.Skill = new Skill(data.Skill);
     this.Passive = new Passive(data.Passive);
-    this.Talent = new Talent(data.Talent);
+
+    for (const [key, value] of Object.entries(data.Talent)) {
+      this.Talent[key] = new TalentLevel(value);
+    }
+  }
+
+  async get_assets() {
+    const result = await getSquareAvatar(this.Id);
+    this.square_icon = result;
   }
 }

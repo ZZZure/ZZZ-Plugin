@@ -165,6 +165,31 @@
   background-image: url("../images/prop/IconSupport.png");
 }
 
+.skill-icon {
+  aspect-ratio: 1;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.skill-icon.assist, .skill-icon.Switch, .skill-icon.switch {
+  background-image: url("../images/skills/assist.webp");
+}
+.skill-icon.basic, .skill-icon.Normal, .skill-icon.normal {
+  background-image: url("../images/skills/basic.webp");
+}
+.skill-icon.chain, .skill-icon.Ultimate, .skill-icon.UltimateReady, .skill-icon.ultimateready {
+  background-image: url("../images/skills/chain.webp");
+}
+.skill-icon.core, .skill-icon.Core, .skill-icon.CoreSkill, .skill-icon.coreskill {
+  background-image: url("../images/skills/core.webp");
+}
+.skill-icon.dodge, .skill-icon.Evade, .skill-icon.evade {
+  background-image: url("../images/skills/dodge.webp");
+}
+.skill-icon.special, .skill-icon.Special, .skill-icon.SpecialReady, .skill-icon.specialready {
+  background-image: url("../images/skills/special.webp");
+}
+
 .special-title {
   width: 100%;
   background-size: contain;

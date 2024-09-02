@@ -1,0 +1,112 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" href="{{@sys.currentPath}}/index.css">
+{{/block}}
+
+{{block 'main'}}
+<div class="char-info">
+  <div class="avatar">
+    <img src="{{charData.square_icon}}" alt="Avatar">
+  </div>
+  <div class="info">
+    <div class="name">
+      <div class="simple">{{charData.PartnerInfo.Name}}</div>
+      <div class="full">{{charData.PartnerInfo.FullName}}</div>
+    </div>
+    <div class="description no-zzz-font">
+      <div class="f">{{@charData.PartnerInfo.ImpressionF}}</div>
+      <div class="m">{{@charData.PartnerInfo.ImpressionM}}</div>
+    </div>
+  </div>
+</div>
+<div class="skills">
+  {{each displays display}}
+  <div class="skill">
+    <div class="description">
+      <div class="icon">
+        <div class="skill-icon {{display.icon}}"></div>
+      </div>
+      <div class="info">
+        <div class="name">{{display.name}}</div>
+        {{each charData.Skill[display.key].Description skill}}
+        {{if !!skill.description}}
+        <div class="item">
+          <div class="title">{{skill.Name}}</div>
+          <div class="content no-zzz-font">{{@skill.description}}</div>
+        </div>
+        {{/if}}
+        {{/each}}
+      </div>
+    </div>
+    <div class="detail">
+      <div class="title">详细属性<span class="level">Lv.{{charData.Skill[display.key].level}}</span></div>
+      {{if !!charData.Skill[display.key].rate}}
+      {{each charData.Skill[display.key].rate rate}}
+      <div class="item">
+        <div class="name">{{rate.name}}</div>
+        <div class="rate no-zzz-font">
+          {{each rate.data.rate rt}}
+          <div class="tb-tr">
+            <div class="tb-td">{{rt.label}}</div>
+            <div class="tb-td">{{rt.value}}</div>
+          </div>
+          {{/each}}
+        </div>
+
+        <div class="detail no-zzz-font">
+          <div class="tb-tr">
+            <div class="tb-td">#</div>
+            <div class="tb-td">A</div>
+            <div class="tb-td">B</div>
+            <div class="tb-td">C</div>
+            <div class="tb-td">D</div>
+            <div class="tb-td">E</div>
+            <div class="tb-td">F</div>
+            <div class="tb-td">G</div>
+          </div>
+          {{each rate.data.details detail i}}
+          <div class="tb-tr">
+            <div class="tb-td">{{i}}</div>
+            <div class="tb-td">{{detail.A}}</div>
+            <div class="tb-td">{{detail.B}}</div>
+            <div class="tb-td">{{detail.C}}</div>
+            <div class="tb-td">{{detail.D}}</div>
+            <div class="tb-td">{{detail.E}}</div>
+            <div class="tb-td">{{detail.F}}</div>
+            <div class="tb-td"></div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+      {{/each}}
+      {{/if}}
+    </div>
+  </div>
+  {{/each}}
+  {{if !!charData.Passive.currentLevel}}
+  <div class="skill">
+    <div class="description">
+      <div class="icon">
+        <div class="skill-icon core"></div>
+      </div>
+      <div class="info">
+        <div class="name">核心技</div>
+        <div class="detail">
+          <div class="title">详细属性<span class="level">Lv.{{charData.Passive._level}}</span></div>
+        </div>
+        {{if !!charData.Passive.currentLevel.description}}
+        {{each charData.Passive.currentLevel.description skill i}}
+        <div class="item">
+          <div class="title">{{charData.Passive.currentLevel.Name[i]}}</div>
+          <div class="content no-zzz-font">{{@skill}}</div>
+        </div>
+        {{/each}}
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  {{/if}}
+</div>
+<div style="text-align: center; font-size: 1em; color: #666; margin: 2em 0;">数据来源于Hakush</div>
+{{/block}}

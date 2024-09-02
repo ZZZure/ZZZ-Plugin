@@ -8,4 +8,4 @@ data/**/*.*
 !data/.gitkeep
 
 resources/images/**/*.*
-!resources/images/.gitkeep
+resources/data/**/*.*
