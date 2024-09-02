@@ -67,14 +67,6 @@ export class Abyss extends ZZZPlugin {
       ChainLevel = 12,
       CoreLevel = 6,
     ] = levels;
-    logger.debug(
-      BasicLevel,
-      DodgeLevel,
-      AssistLevel,
-      SpecialLevel,
-      ChainLevel,
-      CoreLevel
-    );
     if (
       !isSkillLevelLegal('BasicLevel', BasicLevel) ||
       !isSkillLevelLegal('DodgeLevel', DodgeLevel) ||

@@ -37,7 +37,7 @@
 .skills {
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
+  gap: 2em;
   margin: 0.5em;
   .skill {
     background-color: rgba(0, 0, 0, 0.3);
@@ -80,6 +80,7 @@
       }
     }
     .detail {
+      margin-bottom: 1em;
       .title {
         font-size: 1.1em;
         color: rgb(246, 202, 69);
@@ -95,17 +96,34 @@
         }
       }
       .item {
+        font-size: 0.9em;
+        .name {
+          margin-bottom: 0.3em;
+        }
         .rate {
           display: grid;
           text-align: center;
+          padding-left: 1em;
+          margin-bottom: 0.5em;
+          grid-template-columns: 1fr 1fr;
           .tb-tr {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            border-bottom: 0.1em solid rgba(255, 255, 255, 0.2);
-            &:first-child {
-              border-top: 0.1em solid rgba(255, 255, 255, 0.2);
+            grid-template-columns: 2fr 1fr;
+            border: 0.1em solid rgba(255, 255, 255, 0.2);
+            border-bottom: none;
+            &:last-child {
+              border-bottom: 0.1em solid rgba(255, 255, 255, 0.2);
             }
-            &:nth-child(odd) {
+            &:nth-last-child(2) {
+              border-bottom: 0.1em solid rgba(255, 255, 255, 0.2);
+            }
+            &:nth-child(even) {
+              border-right: none;
+            }
+            &:nth-child(3n + 3) {
+              background-color: rgba(255, 255, 255, 0.1);
+            }
+            &:nth-child(4n) {
               background-color: rgba(255, 255, 255, 0.1);
             }
           }
@@ -114,15 +132,13 @@
             padding: 0.2em 0.5em;
             font-size: 0.9em;
             border-right: 0.1em solid rgba(255, 255, 255, 0.2);
-            &:last-child {
-              border-right: none;
-            }
           }
         }
 
         .detail {
           display: grid;
           text-align: center;
+          padding-left: 1em;
           .tb-tr {
             display: grid;
             grid-template-columns: repeat(8, 1fr);
