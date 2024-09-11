@@ -23,7 +23,7 @@ git clone --depth=1 https://github.com/ZZZure/ZZZ-Plugin.git ./plugins/ZZZ-Plugi
 > [!tip]
 > 如果您的网络环境较差，建议使用代理加速
 > ```
-> git clone --depth=1 https://mirror.ghproxy.com/https://github.com/ZZZure/ZZZ-Plugin.git ./plugins/ZZZ-Plugin
+> git clone --depth=1 https://ghp.ci/https://github.com/ZZZure/ZZZ-Plugin.git ./plugins/ZZZ-Plugin
 > ```
 
 安装后重启Yunzai即可使用。
