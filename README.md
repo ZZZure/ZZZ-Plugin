@@ -17,14 +17,14 @@
 
 进入Yunzai根目录运行以下命令进行安装：
 
+使用github
 ```bash
 git clone --depth=1 https://github.com/ZZZure/ZZZ-Plugin.git ./plugins/ZZZ-Plugin
 ```
-> [!tip]
-> 如果您的网络环境较差，建议使用代理加速
-> ```
-> git clone --depth=1 https://ghp.ci/https://github.com/ZZZure/ZZZ-Plugin.git ./plugins/ZZZ-Plugin
-> ```
+使用gitee
+```bash
+git clone --depth=1 https://gitee.com/bietiaop/ZZZ-Plugin.git ./plugins/ZZZ-Plugin
+```
 
 安装后重启Yunzai即可使用。
 
