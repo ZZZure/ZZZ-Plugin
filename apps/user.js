@@ -72,7 +72,6 @@ export class Panel extends ZZZPlugin {
         !info?.deviceName ||
         !info?.deviceBoard ||
         !info?.deviceModel ||
-        !info?.oaid ||
         !info?.deviceFingerprint ||
         !info?.deviceProduct
       ) {

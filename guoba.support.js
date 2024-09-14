@@ -260,15 +260,6 @@ export function supportGuoba() {
           },
         },
         {
-          field: 'device.oaid',
-          label: 'oaid',
-          bottomHelpMessage: '设置默认设备oaid字段',
-          component: 'Input',
-          componentProps: {
-            placeholder: '请输入oaid',
-          },
-        },
-        {
           field: 'device.deviceInfo',
           label: 'deviceInfo(deviceFingerprint)',
           bottomHelpMessage: '设置默认设备deviceInfo字段',
