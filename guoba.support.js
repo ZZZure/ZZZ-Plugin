@@ -260,6 +260,15 @@ export function supportGuoba() {
           },
         },
         {
+          field: 'device.osVersion',
+          label: 'osVersion(androidVersion)',
+          bottomHelpMessage: '设置默认设备osVersion字段',
+          component: 'Input',
+          componentProps: {
+            placeholder: '请输入osVersion',
+          },
+        },
+        {
           field: 'device.deviceInfo',
           label: 'deviceInfo(deviceFingerprint)',
           bottomHelpMessage: '设置默认设备deviceInfo字段',
