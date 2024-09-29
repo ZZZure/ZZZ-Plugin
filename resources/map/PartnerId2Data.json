@@ -54,7 +54,7 @@
     "en_name": "Anby"
   },
   "1071": {
-    "sprite_id": "",
+    "sprite_id": "25",
     "name": "凯撒",
     "full_name": "凯撒",
     "en_name": "Caesar"
@@ -96,7 +96,7 @@
     "en_name": "Lycaon"
   },
   "1161": {
-    "sprite_id": "",
+    "sprite_id": "26",
     "name": "莱特",
     "full_name": "莱特",
     "en_name": "Lighter"
@@ -144,7 +144,7 @@
     "en_name": "Koleda"
   },
   "1221": {
-    "sprite_id": "",
+    "sprite_id": "31",
     "name": "柳",
     "full_name": "柳",
     "en_name": "Yanagi"
@@ -156,7 +156,7 @@
     "en_name": "Seth"
   },
   "1171": {
-    "sprite_id": "",
+    "sprite_id": "32",
     "name": "柏妮思",
     "full_name": "柏妮思",
     "en_name": "Burnice"
