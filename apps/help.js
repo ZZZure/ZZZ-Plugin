@@ -188,6 +188,13 @@ const helpData = [
     icon: 'fire',
     items: [
       {
+        title: '兑换码',
+        desc: '获取前瞻兑换码',
+        needCK: false,
+        needSK: false,
+        commands: ['code', '兑换码'],
+      },
+      {
         title: '绑定设备',
         desc: '用于尝试解决10041报错等问题（无法100%解决），需要发送设备信息，具体方法请发送%绑定设备帮助查看',
         needCK: true,
