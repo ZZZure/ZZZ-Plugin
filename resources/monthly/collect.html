@@ -1,0 +1,78 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" href="{{@sys.currentPath}}/collect.css">
+{{/block}}
+
+{{block 'main'}}
+<div class="lh">
+  {{range}}
+</div>
+<div class="box">
+  {{include sys.playerInfo}}
+  <div class="bangboo"></div>
+  <div class="content">
+    <div class="title with-icon">
+      收入一览
+    </div>
+    <div class="itembox">
+      <div class="item">
+        <div class="icon feilin"></div>
+        <div class="count">{{total.poly}}</div>
+      </div>
+      <div class="item">
+        <div class="icon tape"></div>
+        <div class="count">{{total.tape}}</div>
+      </div>
+      <div class="item">
+        <div class="icon boopon"></div>
+        <div class="count">{{total.boopon}}</div>
+      </div>
+    </div>
+    <div class="list">
+      <div class="title">每月细则</div>
+      {{each collect item}}
+      <div class="item">
+        <div class="month">{{item.query_full_date}}</div>
+        <div class="detail">
+          <div class="overview">
+            <div class="itembox">
+              <div class="item">
+                <div class="icon feilin"></div>
+                <div class="count">{{item.month_data.overview.poly}}</div>
+              </div>
+              <div class="item">
+                <div class="icon tape"></div>
+                <div class="count">{{item.month_data.overview.tape}}</div>
+              </div>
+              <div class="item">
+                <div class="icon boopon"></div>
+                <div class="count">{{item.month_data.overview.boopon}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="components">
+            {{each item.month_data.income_components item_comp}}
+            <div class="item">
+              <div class="name">{{item_comp.name}}</div>
+              <div class="value">
+                <div class="percent">{{item_comp.percent}}%</div>
+                <div class="count">{{item_comp.num}}</div>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
+<div class="tips">
+  <ul>
+    <li>最新数据统计存在2小时左右延迟，请绳匠知悉</li>
+    <li>菲林收入不含充值获得菲林底片所兑换的菲林数量</li>
+    <li>若先前没有查询过数据（或者被删除）并且米游社也无法查询，那么上面将没有对应日期的数据</li>
+  </ul>
+</div>
+{{/block}}

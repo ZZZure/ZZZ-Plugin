@@ -5,54 +5,52 @@
 {{/block}}
 
 {{block 'main'}}
-<div class="card">
-  <div class="lh">
-    {{monthly.query_month}}
-  </div>
-  <div class="box">
-    {{include sys.playerInfo}}
-    <div class="bangboo"></div>
-    <div class="content">
-      <div class="title with-icon">
-        收入一览
+<div class="lh">
+  {{monthly.query_month}}
+</div>
+<div class="box">
+  {{include sys.playerInfo}}
+  <div class="bangboo"></div>
+  <div class="content">
+    <div class="title with-icon">
+      收入一览
+    </div>
+    <div class="itembox">
+      <div class="item">
+        <div class="icon feilin"></div>
+        <div class="count">{{monthly.month_data.overview.poly}}</div>
       </div>
-      <div class="itembox">
-        <div class="item">
-          <div class="icon feilin"></div>
-          <div class="count">{{monthly.month_data.overview.poly}}</div>
-        </div>
-        <div class="item">
-          <div class="icon tape"></div>
-          <div class="count">{{monthly.month_data.overview.tape}}</div>
-        </div>
-        <div class="item">
-          <div class="icon boopon"></div>
-          <div class="count">{{monthly.month_data.overview.boopon}}</div>
-        </div>
+      <div class="item">
+        <div class="icon tape"></div>
+        <div class="count">{{monthly.month_data.overview.tape}}</div>
       </div>
-      <div class="list">
-        <div class="title">菲林收入组成</div>
-        {{each monthly.month_data.income_components item}}
-        <div class="item">
-          <div class="info-line">
-            <div class="name">{{item.name}}</div>
-            <div class="percent">{{item.percent}}%</div>
-            <div class="value">{{item.num}}</div>
-          </div>
-          <div class="progress">
-            <div class="bar" style="width: {{item.percent}}%;"></div>
-          </div>
-        </div>
-        {{/each}}
+      <div class="item">
+        <div class="icon boopon"></div>
+        <div class="count">{{monthly.month_data.overview.boopon}}</div>
       </div>
     </div>
+    <div class="list">
+      <div class="title">菲林收入组成</div>
+      {{each monthly.month_data.income_components item}}
+      <div class="item">
+        <div class="info-line">
+          <div class="name">{{item.name}}</div>
+          <div class="percent">{{item.percent}}%</div>
+          <div class="value">{{item.num}}</div>
+        </div>
+        <div class="progress">
+          <div class="bar" style="width: {{item.percent}}%;"></div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
   </div>
-  <div class="tips">
-    <ul>
-      <li>数据统计存在2小时左右延迟，请绳匠知悉</li>
-      <li>菲林收入不含充值获得菲林底片所兑换的菲林数量</li>
-    </ul>
-  </div>
+</div>
+<div class="tips">
+  <ul>
+    <li>数据统计存在2小时左右延迟，请绳匠知悉</li>
+    <li>菲林收入不含充值获得菲林底片所兑换的菲林数量</li>
+  </ul>
 </div>
 
 {{/block}}

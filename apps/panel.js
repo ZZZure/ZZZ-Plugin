@@ -1,5 +1,9 @@
 import { ZZZPlugin } from '../lib/plugin.js';
-import { getPanelList, refreshPanel, getPanel } from '../lib/avatar.js';
+import {
+  getPanelList,
+  refreshPanel as refreshPanelFunction,
+  getPanel,
+} from '../lib/avatar.js';
 import settings from '../lib/settings.js';
 import _ from 'lodash';
 import { rulePrefix } from '../lib/common.js';
@@ -53,7 +57,7 @@ export class Panel extends ZZZPlugin {
     await redis.set(`ZZZ:PANEL:${uid}:LASTTIME`, Date.now());
     await this.reply('正在刷新面板列表，请稍候...');
     await this.getPlayerInfo();
-    const result = await refreshPanel(api, uid).catch(e => {
+    const result = await refreshPanelFunction(api).catch(e => {
       this.reply(e.message);
       throw e;
     });

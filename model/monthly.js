@@ -155,4 +155,8 @@ export class Monthly {
     const month = +this.data_month.slice(-2);
     return `${month}月`;
   }
+
+  get query_full_date() {
+    return `${this.data_month.slice(0, 4)}年${this.query_month}`;
+  }
 }

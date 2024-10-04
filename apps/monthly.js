@@ -3,6 +3,7 @@ import { Monthly } from '../model/monthly.js';
 import settings from '../lib/settings.js';
 import _ from 'lodash';
 import { rulePrefix } from '../lib/common.js';
+import { getMonthly, getMonthlyCollect } from '../lib/monthly.js';
 
 export class Note extends ZZZPlugin {
   constructor() {
@@ -15,6 +16,10 @@ export class Note extends ZZZPlugin {
         {
           reg: `${rulePrefix}(monthly|菲林|邦布券|收入|月报)((\\d{4})年)?((\\d{1,2}|上)月)?$`,
           fnc: 'monthly',
+        },
+        {
+          reg: `${rulePrefix}(monthly|菲林|邦布券|收入|月报)统计$`,
+          fnc: 'monthlyCollect',
         },
       ],
     });
@@ -30,19 +35,15 @@ export class Note extends ZZZPlugin {
     }
     let year = match[3];
     let month = match[5];
-    logger.debug(this.getDateString(year, month));
     const { api } = await this.getAPI();
     await this.getPlayerInfo();
-    const monthlyResponse = await api
-      .getFinalData('zzzMonthly', {
-        query: {
-          month: this.getDateString(year, month),
-        },
-      })
-      .catch(e => {
-        this.reply(e.message);
-        throw e;
-      });
+    const monthlyResponse = await getMonthly(
+      api,
+      this.getDateString(year, month)
+    ).catch(e => {
+      this.reply(e.message);
+      throw e;
+    });
     if (!monthlyResponse) {
       await this.reply('获取月报数据失败，请检查日期是否正确');
       return false;
@@ -56,6 +57,49 @@ export class Note extends ZZZPlugin {
       monthly: monthlyData,
     };
     await this.render('monthly/index.html', finalData);
+  }
+
+  async monthlyCollect() {
+    const { api } = await this.getAPI();
+    await this.getPlayerInfo();
+    const collect = await getMonthlyCollect(api).catch(e => {
+      this.reply(e.message);
+      throw e;
+    });
+
+    if (!collect) {
+      await this.reply('获取月报数据失败');
+      return false;
+    }
+
+    const collectData = collect.map(item => new Monthly(item));
+
+    const start = collectData[collectData.length - 1]?.query_full_date;
+
+    const end = collectData[0]?.query_full_date;
+
+    const total = {
+      poly: collectData.reduce(
+        (acc, cur) => acc + cur.month_data.overview.poly,
+        0
+      ),
+      tape: collectData.reduce(
+        (acc, cur) => acc + cur.month_data.overview.tape,
+        0
+      ),
+      boopon: collectData.reduce(
+        (acc, cur) => acc + cur.month_data.overview.boopon,
+        0
+      ),
+    };
+
+    const finalData = {
+      collect: collectData,
+      range: `${start}～${end}`,
+      total,
+    };
+
+    await this.render('monthly/collect.html', finalData);
   }
 
   getDateString(year, month) {
