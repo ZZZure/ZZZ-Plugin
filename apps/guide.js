@@ -153,6 +153,7 @@ export class Guide extends ZZZPlugin {
           }
         });
         url = val.image_list[max].url;
+        url += '?x-oss-process=image/resize,s_1200/quality,q_90/auto-orient,0/interlace,1/format,jpg';
         // created_at = val.post.created_at;
         // updated_at = val.post.updated_at;
         break;
