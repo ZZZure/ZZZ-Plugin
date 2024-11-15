@@ -20,21 +20,26 @@ export class Note extends ZZZPlugin {
     });
   }
   async calendar() {
-    const activityList = await request.get(
-      'https://announcement-api.mihoyo.com/common/nap_cn/announcement/api/getAnnList?game=nap&game_biz=nap_cn&lang=zh-cn&bundle_id=nap_cn&channel_id=1&level=70&platform=pc&region=prod_gf_cn&uid=12345678'
-    );
+    const activityList = await request
+      .get(
+        'https://announcement-api.mihoyo.com/common/nap_cn/announcement/api/getAnnList?game=nap&game_biz=nap_cn&lang=zh-cn&bundle_id=nap_cn&channel_id=1&level=70&platform=pc&region=prod_gf_cn&uid=12345678'
+      )
+      .then(res => res.json());
     if (!activityList?.data) {
       await this.reply('获取活动列表失败');
       return false;
     }
     const t = activityList?.data?.t || new Date().getTime().toString();
-    const activityContent = await request.get(
-      `https://announcement-static.mihoyo.com/common/nap_cn/announcement/api/getAnnContent?game=nap&game_biz=nap_cn&lang=zh-cn&bundle_id=nap_cn&platform=pc&region=prod_gf_cn&t=${t}&level=70&channel_id=1`
-    );
+    const activityContent = await request
+      .get(
+        `https://announcement-static.mihoyo.com/common/nap_cn/announcement/api/getAnnContent?game=nap&game_biz=nap_cn&lang=zh-cn&bundle_id=nap_cn&platform=pc&region=prod_gf_cn&t=${t}&level=70&channel_id=1`
+      )
+      .then(res => res.json());
     const contentList = activityContent?.data?.list || [];
     const calendarContent = contentList.find(
       item => item.title.includes('日历') && item.subtitle.includes('活动日历')
     );
+
     const htmlContent = calendarContent?.content || '';
     if (!htmlContent) {
       await this.reply('未找到活动日历');
