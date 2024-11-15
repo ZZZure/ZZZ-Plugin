@@ -23,11 +23,11 @@ const _request = async (url, options) => {
  * @param {number} retry 重试次数
  * @returns {Promise<Response>}
  */
-const request = (url, options, retry = 0, timeout = 15000) => {
+const request = (url, options = {}, retry = 0, timeout = 15000) => {
   let err;
-  const controller = new AbortController()
-  const { signal } = controller
-  const timeoutId = setTimeout(() => controller.abort(), timeout)
+  const controller = new AbortController();
+  const { signal } = controller;
+  const timeoutId = setTimeout(() => controller.abort(), timeout);
 
   const _fetch = async (url, options, retryCount = 0) => {
     if (retryCount > retry) {
@@ -36,11 +36,15 @@ const request = (url, options, retry = 0, timeout = 15000) => {
     try {
       return await _request(url, { signal, ...options });
     } catch (error) {
-      logger.debug(error.name === 'AbortError' ? 'Request timed out' : `Fetch error: ${error.message}`);
+      logger.debug(
+        error.name === 'AbortError'
+          ? 'Request timed out'
+          : `Fetch error: ${error.message}`
+      );
       err = error;
       return await _fetch(url, options, retryCount + 1);
     } finally {
-      clearTimeout(timeoutId)
+      clearTimeout(timeoutId);
     }
   };
   return _fetch(url, options);
@@ -53,7 +57,7 @@ const request = (url, options, retry = 0, timeout = 15000) => {
  * @param {object} options 请求配置
  * @returns {Promise<Response>}
  */
-request.get = async (url, data, options) => {
+request.get = async (url, data, options = {}) => {
   const params = new URLSearchParams(data);
   const { retry, timeout, ...restOptions } = options;
   return request(`${url}?${params}`, restOptions, retry, timeout);
@@ -66,7 +70,7 @@ request.get = async (url, data, options) => {
  * @param {object} options 请求配置
  * @returns {Promise<Response>}
  */
-request.post = async (url, data, options) => {
+request.post = async (url, data, options = {}) => {
   const body = JSON.stringify(data);
   const { retry, timeout, ...restOptions } = options;
   return request(url, { ...restOptions, method: 'POST', body }, retry, timeout);
