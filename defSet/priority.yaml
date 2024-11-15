@@ -10,3 +10,4 @@ update: 70 # 更新
 user: 70 # 账号操作
 monthly: 70 # 菲林月历
 code: 70 # 兑换码
+calendar: 70 # 日历
