@@ -48,9 +48,12 @@
       <div class="value">
         <div class="val">{{item.score}}</div>
         <div class="stars">
-          <% for(let i=0 ; i < item.total_star ; i++) { %>
+          <% for(let i=0 ; i < item.star ; i++) { %>
             <div class="star"></div>
             <% } %>
+              <% for(let i=0 ; i < item.total_star - item.star ; i++) { %>
+                <div class="star inactive"></div>
+                <% } %>
         </div>
       </div>
       <div class="time">通关时刻：{{item.challenge_time.year}}.{{item.challenge_time.month}}.{{item.challenge_time.day}}

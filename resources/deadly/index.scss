@@ -6,6 +6,9 @@
     background-image: url('./images/star-icon-light.png');
     border-radius: 50%;
     background-size: contain;
+    &.inactive {
+      background-image: url('./images/star-icon-dark.png');
+    }
   }
   .overview {
     margin: 0.5em;
