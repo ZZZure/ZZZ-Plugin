@@ -144,20 +144,20 @@ const helpData = [
     ],
   },
   {
-    title: '式舆防卫战',
+    title: '战绩查询',
     icon: 'dungeon',
     items: [
       {
         title: '查看式舆防卫战',
         desc: '查看式舆防卫战(深渊)信息',
-        needCK: false,
+        needCK: true,
         needSK: false,
         commands: ['式舆防卫战', '防卫战', '式舆', '深渊', '防卫'],
       },
       {
         title: '查看上期式舆防卫战',
         desc: '查看上期式舆防卫战(深渊)信息',
-        needCK: false,
+        needCK: true,
         needSK: false,
         commands: [
           '上期式舆防卫战',
@@ -166,6 +166,20 @@ const helpData = [
           '上期深渊',
           '上期防卫',
         ],
+      },
+      {
+        title: '查看危局强袭战',
+        desc: '查看式危局强袭战信息',
+        needCK: true,
+        needSK: false,
+        commands: ['危局强袭战', '危局', '强袭', '强袭战'],
+      },
+      {
+        title: '查看上期危局强袭战',
+        desc: '查看上期危局强袭战信息',
+        needCK: true,
+        needSK: false,
+        commands: ['上期式舆防卫战', '上期危局', '上期强袭', '上期强袭战'],
       },
     ],
   },

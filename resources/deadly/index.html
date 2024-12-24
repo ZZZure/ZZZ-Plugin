@@ -1,0 +1,95 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" href="{{@sys.currentPath}}/index.css">
+{{/block}}
+
+{{block 'main'}}
+<div class="card">
+  <div class="overview">
+    <div class="u-info">
+      <div class="avatar">
+        <img src="{{deadly.avatar_icon}}" alt="avatar">
+      </div>
+      <div class="nick">{{deadly.nick_name}}</div>
+    </div>
+    <div class="content">
+      <div class="left">
+        <div class="value">{{deadly.total_score}}</div>
+        <div class="percent">{{deadly.rank_percent/100}}%</div>
+      </div>
+      <div class="right">
+        <div class="star">
+        </div>
+        <div class="value">x{{deadly.total_star}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="tips">
+    <p>统计周期 {{deadly.start_time.year}}.{{deadly.start_time.month}}.{{deadly.start_time.day}} -
+      {{deadly.end_time.year}}.{{deadly.end_time.month}}.{{deadly.end_time.day}}
+    </p>
+    <p>*总得分&排名和挑战详情并非同时刷新，挑战详情存在2小时左右延迟</p>
+  </div>
+  {{each deadly.list item i}}
+  <div class="item-card">
+    <div class="pop"><img src="{{item.buffer[0].icon}}" alt=""></div>
+    <div class="cover">
+      <div class="bg">
+        <img src="{{item.boss[0].bg_icon}}" alt="">
+      </div>
+      <div class="icon">
+        <img src="{{item.boss[0].race_icon}}" alt="">
+      </div>
+      <img src="{{item.boss[0].icon}}" alt="">
+    </div>
+    <div class="content">
+      <div class="name">{{item.boss[0].name}}</div>
+      <div class="value">
+        <div class="val">{{item.score}}</div>
+        <div class="stars">
+          <% for(let i=0 ; i < item.total_star ; i++) { %>
+            <div class="star"></div>
+            <% } %>
+        </div>
+      </div>
+      <div class="time">通关时刻：{{item.challenge_time.year}}.{{item.challenge_time.month}}.{{item.challenge_time.day}}
+        {{item.challenge_time.hour}}:{{item.challenge_time.minute}}:{{item.challenge_time.second}}
+      </div>
+      <div class="list">
+        <% for(let i=0 ; i < 3 ; i++) { %>
+          {{if item.avatar_list?.[i]}}
+          <div class="item char">
+            {{if item.avatar_list[i].rank}}
+            <div class="count">{{item.avatar_list[i].rank}}</div>
+            {{/if}}
+            <div class="rank_disp">
+              <div class="rank rank-icon {{item.avatar_list[i].rarity}}"></div>
+            </div>
+            <div class="image">
+              <img src="{{item.avatar_list[i].role_square_url}}" alt="">
+            </div>
+          </div>
+          {{else}}
+            <div class="item char"></div>
+            {{/if}}
+            <% } %>
+              {{if item.buddy}}
+              <div class="item bangboo">
+                <div class="rank_disp">
+                  <div class="rank rank-icon {{item.buddy.rarity}}"></div>
+                </div>
+                <div class="image">
+                  <img src="{{item.buddy.bangboo_rectangle_url}}" alt="">
+                </div>
+              </div>
+              {{else}}
+                <div class="item bangboo"></div>
+                {{/if}}
+      </div>
+    </div>
+  </div>
+  {{/each}}
+
+</div>
+{{/block}}
