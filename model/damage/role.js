@@ -12,11 +12,27 @@ export const calculate_damage = (
   const merged_attr = merge_attribute(base_detail, bonus_detail);
   logger.debug('merged_attr', merged_attr);
 
+  logger.debug(logger.green(skill_type + `（${add_skill_type}）伤害乘区计算：`));
   const attack = merged_attr.attack;
   logger.debug('攻击区', attack);
 
-  const defence_multiplier = get_defence_multiplier(merged_attr, level);
+  logger.debug('技能倍率', skill_multiplier);
+
+  const defence_multiplier = get_defence_multiplier(
+    merged_attr,
+    level,
+    skill_type,
+    add_skill_type,
+  );
   logger.debug('防御区', defence_multiplier);
+
+  const resistance_area = get_resistance_area(
+    merged_attr,
+    skill_type,
+    add_skill_type,
+    avatar_element
+  );
+  logger.debug('抗性区', resistance_area);
 
   const injury_area = get_injury_area(
     merged_attr,
@@ -57,25 +73,26 @@ export const calculate_damage = (
     attack *
     skill_multiplier *
     defence_multiplier *
+    resistance_area *
     injury_area *
     damage_ratio *
     critical_damage_base *
-    1.2 *
-    1.5;
+    1.0; // 失衡易伤不计
   const damage_qw =
     attack *
     skill_multiplier *
     defence_multiplier *
+    resistance_area *
     injury_area *
     damage_ratio *
     qiwang_damage *
-    1.2 *
-    1.5;
+    1.0;
 
   const damagelist = {
     cd: damage_cd,
     qw: damage_qw,
   };
+  logger.debug('最终伤害', damagelist);
   return damagelist;
 };
 
@@ -152,6 +169,27 @@ export const get_damage_ratio = (
   return damage_ratio + 1;
 };
 
+export const get_resistance_area = (
+  merged_attr,
+  skill_type,
+  add_skill_type,
+  avatar_element
+) => {
+  let resistance_area = 1.2
+  for (const attr in merged_attr) {
+    if (attr.search('_ResistancePenetration') != -1) {
+      const attr_name = attr.split('_ResistancePenetration')[0]
+      if (
+        [skill_type, add_skill_type, 'All', avatar_element].includes(attr_name)
+      ) {
+        logger.debug(attr + '对' + attr_name + '有' + merged_attr[attr] + '减抗')
+        resistance_area += merged_attr[attr]
+      }
+    }
+  }
+  return resistance_area
+}
+
 export const get_injury_area = (
   merged_attr,
   skill_type,
@@ -185,13 +223,32 @@ export const get_injury_area = (
   return injury_area;
 };
 
-export const get_defence_multiplier = (merged_attr, level) => {
+export const get_defence_multiplier = (
+  merged_attr,
+  level,
+  skill_type,
+  add_skill_type
+) => {
   /** 计算防御基础值 */
   const defadd = 0.155 * (level * level) + 3.12 * level + 46.95;
   /** 计算降防 */
   let ignore_defence = 1.0;
+  const merged_attrkey = Object.keys(merged_attr);
+  for (const attr of merged_attrkey) {
+    if (attr.search('_IgnoreDefence') != -1) {
+      const attr_name = attr.split('_IgnoreDefence')[0];
+      if (
+        [skill_type, add_skill_type, 'All'].includes(attr_name)
+      ) {
+        logger.debug(
+          attr + '对' + attr_name + '有' + merged_attr[attr] + '无视防御'
+        );
+        ignore_defence -= merged_attr[attr];
+      }
+    }
+  }
   if (merged_attr.ignore_defence) {
-    ignore_defence = 1 - merged_attr.ignore_defence;
+    ignore_defence -= merged_attr.ignore_defence;
   }
   /** 计算穿透率 */
   let penratio = 1.0;
@@ -212,7 +269,7 @@ export const merge_attribute = (base_detail, bonus_detail) => {
   for (const merged of bonus_detailkey) {
     if (
       merged.search('Attack') != -1 ||
-      merged.search('Defence') != -1 ||
+      (merged.search('Defence') != -1 && merged.search('IgnoreDefence') === -1) ||
       merged.search('HP') != -1
     ) {
       continue;

@@ -315,22 +315,23 @@ export class ZZZAvatarInfo {
    * set_detail: Record<string, number>;
    * }} */
   get damage_basic_properties() {
+    const basic_properties = this.basic_properties;
     const base_detail = {
-      hp: Number(this.basic_properties.hpmax.final),
-      attack: Number(this.basic_properties.attack.final),
-      defence: Number(this.basic_properties.def.final),
-      ImpactRatio: Number(this.basic_properties.breakstun.final),
+      hp: Number(basic_properties.hpmax.final),
+      attack: Number(basic_properties.attack.final),
+      defence: Number(basic_properties.def.final),
+      ImpactRatio: Number(basic_properties.breakstun.final),
       CriticalChanceBase:
-        Number(this.basic_properties.crit.final.replace('%', '')) / 100,
+        Number(basic_properties.crit.final.replace('%', '')) / 100,
       CriticalDamageBase:
-        Number(this.basic_properties.critdam.final.replace('%', '')) / 100,
+        Number(basic_properties.critdam.final.replace('%', '')) / 100,
       ElementAbnormalPower: Number(
-        this.basic_properties.elementabnormalpower.final
+        basic_properties.elementabnormalpower.final
       ),
-      ElementMystery: Number(this.basic_properties.elementmystery.final),
+      ElementMystery: Number(basic_properties.elementmystery.final),
       PenRatioBase:
-        Number(this.basic_properties.penratio.final.replace('%', '')) / 100,
-      SpGetRatio: Number(this.basic_properties.sprecover.final),
+        Number(basic_properties.penratio.final.replace('%', '')) / 100,
+      SpGetRatio: Number(basic_properties.sprecover.final),
     };
     /** 计算伤害加成与穿透值
      *	穿透值23203
@@ -378,9 +379,7 @@ export class ZZZAvatarInfo {
       return [];
     }
     /** 处理基础数据 */
-    let base_detail = this.damage_basic_properties.base_detail;
-    let bonus_detail = this.damage_basic_properties.bonus_detail;
-    let set_detail = this.damage_basic_properties.set_detail;
+    let { base_detail, bonus_detail, set_detail } = this.damage_basic_properties;
 
     /** 处理驱动盘套装加成 */
     let set_detailkeys = Object.keys(set_detail);
@@ -394,12 +393,12 @@ export class ZZZAvatarInfo {
           bonus_detail
         );
     }
-    logger.debug('bonus_detail', bonus_detail);
+    logger.debug('+套装bonus_detail', bonus_detail);
 
     /** 处理音频加成 */
     if (this.weapon)
       bonus_detail = weapon_ability(this.weapon, base_detail, bonus_detail);
-    logger.debug('bonus_detail', bonus_detail);
+    logger.debug('+音频bonus_detail', bonus_detail);
 
     /** 处理角色加成 */
     const damagelist = avatar_ability(this, base_detail, bonus_detail);
