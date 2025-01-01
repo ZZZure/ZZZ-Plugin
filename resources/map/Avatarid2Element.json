@@ -4,6 +4,7 @@
   "1031": "Ether",
   "1041": "Fire",
   "1061": "Physical",
+  "1071": "Physical",
   "1081": "Physical",
   "1091": "Ice",
   "1101": "Fire",
@@ -13,6 +14,7 @@
   "1141": "Ice",
   "1151": "Fire",
   "1161": "Electric",
+  "1171": "Fire",
   "1181": "Electric",
   "1191": "Ice",
   "1201": "Ether",
@@ -20,6 +22,7 @@
   "1221": "Ether",
   "1241": "Ether",
   "1251": "Electric",
+  "1261": "Physical",
   "1271": "Electric",
   "1281": "Physical"
 }

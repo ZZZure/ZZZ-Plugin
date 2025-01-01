@@ -9,3 +9,4 @@ data/**/*.*
 
 resources/images/**/*.*
 resources/data/**/*.*
+resources/map/*.js

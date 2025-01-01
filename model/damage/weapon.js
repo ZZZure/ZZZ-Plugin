@@ -13,6 +13,14 @@ const weapon_effect = getMapData('weapon_effect');
 export const weapon_ability = (equipment, base_detail, bonus_detail) => {
 	let equipid = equipment.id
 	switch (equipid) {
+		case 14109:{
+			let CriticalDamageBase = _.get(bonus_detail, 'CriticalDamageBase', 0);
+			bonus_detail['CriticalDamageBase'] = CriticalDamageBase + weapon_effect[equipment.id]['Param']['CriticalDamageBase'][equipment.star - 1];
+
+			let IceDmgAdd = _.get(bonus_detail, 'Ice_DmgAdd', 0);
+			bonus_detail['Ice_DmgAdd'] = IceDmgAdd + weapon_effect[equipment.id]['Param']['IceDmgAdd'][equipment.star - 1];
+			break;
+		}
 		case 14119:{
 			let IceDmgAdd = _.get(bonus_detail, 'Ice_DmgAdd', 0);
 			bonus_detail['Ice_DmgAdd'] = IceDmgAdd + weapon_effect[equipment.id]['Param']['IceDmgAdd'][equipment.star - 1];

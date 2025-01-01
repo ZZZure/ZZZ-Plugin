@@ -11,6 +11,16 @@ import { ZZZAvatarInfo } from '../avatar.js';
  */
 export const relice_ability = (set_id, set_num, base_detail, bonus_detail) => {
 	switch (set_id) {
+		case '32700':
+			if (set_num >= 4) {
+				let CriticalDamageBase = _.get(bonus_detail, 'CriticalDamageBase', 0);
+				bonus_detail['CriticalDamageBase'] = CriticalDamageBase + 0.3;
+				let CriticalChanceBase = _.get(bonus_detail, 'CriticalChanceBase', 0);
+				bonus_detail['CriticalChanceBase'] = CriticalChanceBase + 0.12;
+				logger.debug('32700,4,CriticalDamageBase');
+				logger.debug('32700,4,CriticalChanceBase');
+			}
+			break;
 		case '31100':
 			if (set_num >= 4) {
 				let R_DmgAdd = _.get(bonus_detail, 'R_DmgAdd', 0);

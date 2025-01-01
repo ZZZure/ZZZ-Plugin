@@ -210,7 +210,8 @@
           {{/each}}
 
       </div>
-      {{if charData?.damages && charData?.damages?.length}}
+      {{set damages = charData?.damages}}
+      {{if damages && damages?.length}}
       <div class="title damage-title">
         <% include(sys.specialTitle, {en: 'DAMAGE' , cn: '伤害统计' }) %>
       </div>
@@ -220,7 +221,7 @@
           <div class="dmg-td">暴击伤害</div>
           <div class="dmg-td">期望伤害</div>
         </div>
-        {{each charData.damages damage}}
+        {{each damages damage}}
         <div class="dmg-tr">
           <div class="dmg-td no-zzz-font">{{damage.title}}</div>
           <div class="dmg-td">{{damage.value.cd.toFixed(0)}}</div>
