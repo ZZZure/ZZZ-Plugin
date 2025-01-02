@@ -66,7 +66,7 @@ export const calculate_damage = (
   );
   logger.debug('暴击区', critical_chance_base);
 
-  const qiwang_damage = critical_chance_base * critical_damage_base;
+  const qiwang_damage = critical_chance_base * (critical_damage_base - 1) + 1;
   logger.debug('暴击期望', qiwang_damage);
 
   const damage_cd =
