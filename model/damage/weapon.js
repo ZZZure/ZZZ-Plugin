@@ -18,7 +18,7 @@ export const weapon_ability = (equipment, base_detail, bonus_detail) => {
 			bonus_detail['CriticalDamageBase'] = CriticalDamageBase + weapon_effect[equipment.id]['Param']['CriticalDamageBase'][equipment.star - 1];
 
 			let IceDmgAdd = _.get(bonus_detail, 'Ice_DmgAdd', 0);
-			bonus_detail['Ice_DmgAdd'] = IceDmgAdd + weapon_effect[equipment.id]['Param']['IceDmgAdd'][equipment.star - 1];
+			bonus_detail['Ice_DmgAdd'] = IceDmgAdd + weapon_effect[equipment.id]['Param']['IceDmgAdd'][equipment.star - 1] * 2;
 			break;
 		}
 		case 14119:{
