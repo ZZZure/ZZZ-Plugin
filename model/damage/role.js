@@ -13,26 +13,29 @@ export const calculate_damage = (
   logger.debug('merged_attr', merged_attr);
 
   logger.debug(logger.green(skill_type + `（${add_skill_type}）伤害乘区计算：`));
+  logger.debug('倍率', skill_multiplier);
+
   const attack = merged_attr.attack;
-  logger.debug('攻击区', attack);
+  logger.debug('攻击力', attack);
 
-  logger.debug('技能倍率', skill_multiplier);
-
-  const defence_multiplier = get_defence_multiplier(
-    merged_attr,
-    level,
-    skill_type,
-    add_skill_type,
-  );
-  logger.debug('防御区', defence_multiplier);
-
-  const resistance_area = get_resistance_area(
+  const critical_chance_base = get_critical_chance_base(
     merged_attr,
     skill_type,
     add_skill_type,
     avatar_element
   );
-  logger.debug('抗性区', resistance_area);
+  logger.debug('暴击率', critical_chance_base);
+
+  const critical_damage_base = get_critical_damage_base(
+    merged_attr,
+    skill_type,
+    add_skill_type,
+    avatar_element
+  );
+  logger.debug('暴击伤害', critical_damage_base);
+
+  const qiwang_damage = critical_chance_base * (critical_damage_base - 1) + 1;
+  logger.debug('暴击期望', qiwang_damage);
 
   const injury_area = get_injury_area(
     merged_attr,
@@ -50,24 +53,21 @@ export const calculate_damage = (
   );
   logger.debug('易伤区', damage_ratio);
 
-  const critical_damage_base = get_critical_damage_base(
+  const resistance_area = get_resistance_area(
     merged_attr,
     skill_type,
     add_skill_type,
     avatar_element
   );
-  logger.debug('爆伤区', critical_damage_base);
+  logger.debug('抗性区', resistance_area);
 
-  const critical_chance_base = get_critical_chance_base(
+  const defence_multiplier = get_defence_multiplier(
     merged_attr,
+    level,
     skill_type,
     add_skill_type,
-    avatar_element
   );
-  logger.debug('暴击区', critical_chance_base);
-
-  const qiwang_damage = critical_chance_base * (critical_damage_base - 1) + 1;
-  logger.debug('暴击期望', qiwang_damage);
+  logger.debug('防御区', defence_multiplier);
 
   const damage_cd =
     attack *

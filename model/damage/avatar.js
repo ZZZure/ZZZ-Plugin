@@ -409,8 +409,8 @@ export const avatar_ability = (data, base_detail, bonus_detail) => {
 			damagelist.push(damage3);
 
 			/** 计算连携技伤害 */
-			const skill_multiplier4 = getskilllevelnum(data.id, data.skills, 'L', 'L');
-			const damagelist4 = calculate_damage(base_detail, bonus_detail, 'L', 'L', 'Fire', skill_multiplier4, data.level);
+			const skill_multiplier4 = getskilllevelnum(data.id, data.skills, 'R', 'RL');
+			const damagelist4 = calculate_damage(base_detail, bonus_detail, 'RL', 'RL', 'Fire', skill_multiplier4, data.level);
 			const damage4 = {
 				title: '连携技：昂扬烈焰',
 				value: damagelist4,
@@ -492,8 +492,8 @@ export const avatar_ability = (data, base_detail, bonus_detail) => {
 			damagelist.push(damage3);
 
 			/** 计算连携技伤害 */
-			const skill_multiplier4 = getskilllevelnum(data.id, data.skills, 'L', 'L');
-			const damagelist4 = calculate_damage(base_detail, bonus_detail, 'L', 'L', 'Electric', skill_multiplier4, data.level);
+			const skill_multiplier4 = getskilllevelnum(data.id, data.skills, 'R', 'RL');
+			const damagelist4 = calculate_damage(base_detail, bonus_detail, 'RL', 'RL', 'Electric', skill_multiplier4, data.level);
 			const damage4 = {
 				title: '连携技：太平令',
 				value: damagelist4,
@@ -563,8 +563,8 @@ export const avatar_ability = (data, base_detail, bonus_detail) => {
 			damagelist.push(damage3);
 
 			/** 计算连携技伤害 */
-			const skill_multiplier4 = getskilllevelnum(data.id, data.skills, 'L', 'L');
-			const damagelist4 = calculate_damage(base_detail, bonus_detail, 'L', 'L', 'Physical', skill_multiplier4, data.level);
+			const skill_multiplier4 = getskilllevelnum(data.id, data.skills, 'R', 'RL');
+			const damagelist4 = calculate_damage(base_detail, bonus_detail, 'RL', 'RL', 'Physical', skill_multiplier4, data.level);
 			const damage4 = {
 				title: '连携技：刃爪挥击',
 				value: damagelist4,
@@ -641,8 +641,8 @@ export const avatar_ability = (data, base_detail, bonus_detail) => {
 			damagelist.push(damage3);
 
 			/** 计算连携技伤害 */
-			const skill_multiplier4 = getskilllevelnum(data.id, data.skills, 'L', 'L');
-			const damagelist4 = calculate_damage(base_detail, bonus_detail, 'L', 'L', 'Electric', skill_multiplier4, data.level);
+			const skill_multiplier4 = getskilllevelnum(data.id, data.skills, 'R', 'RL');
+			const damagelist4 = calculate_damage(base_detail, bonus_detail, 'RL', 'RL', 'Electric', skill_multiplier4, data.level);
 			const damage4 = {
 				title: '连携技：转转转！',
 				value: damagelist4,
