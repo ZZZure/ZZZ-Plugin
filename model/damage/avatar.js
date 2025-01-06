@@ -374,8 +374,6 @@ export const avatar_ability = (data, base_detail, bonus_detail) => {
 			const DMG_ADD = getskilllevelnum(data.id, data.skills, 'T', 'T');
 			let A_DmgAdd = _.get(bonus_detail, 'A_DmgAdd', 0);
 			bonus_detail['A_DmgAdd'] = A_DmgAdd + DMG_ADD;
-			let C_DmgAdd = _.get(bonus_detail, 'C_DmgAdd', 0);
-			bonus_detail['C_DmgAdd'] = C_DmgAdd + DMG_ADD;
 
 			let Fire_DmgAdd = _.get(bonus_detail, 'Fire_DmgAdd', 0);
 			bonus_detail['Fire_DmgAdd'] = Fire_DmgAdd + 0.1;
@@ -529,8 +527,8 @@ export const avatar_ability = (data, base_detail, bonus_detail) => {
 			/** 处理天赋加成 */
 			/** 获取天赋等级与加成倍率 */
 			const TF = getskilllevelnum(data.id, data.skills, 'T', 'T');
-			let DmgAdd = _.get(bonus_detail, 'DmgAdd', 0);
-			bonus_detail['DmgAdd'] = DmgAdd + TF;
+			let All_DmgAdd = _.get(bonus_detail, 'All_DmgAdd', 0);
+			bonus_detail['All_DmgAdd'] = All_DmgAdd + TF;
 			let E_DmgAdd = _.get(bonus_detail, 'E_DmgAdd', 0);
 			bonus_detail['E_DmgAdd'] = E_DmgAdd + 0.7;
 
@@ -607,8 +605,8 @@ export const avatar_ability = (data, base_detail, bonus_detail) => {
 
 			let E_DmgAdd = _.get(bonus_detail, 'E_DmgAdd', 0);
 			bonus_detail['E_DmgAdd'] = E_DmgAdd + TF;
-			let L_DmgAdd = _.get(bonus_detail, 'L_DmgAdd', 0);
-			bonus_detail['L_DmgAdd'] = L_DmgAdd + TF;
+			let RL_DmgAdd = _.get(bonus_detail, 'RL_DmgAdd', 0);
+			bonus_detail['RL_DmgAdd'] = RL_DmgAdd + TF;
 			let R_DmgAdd = _.get(bonus_detail, 'R_DmgAdd', 0);
 			bonus_detail['R_DmgAdd'] = R_DmgAdd + TF;
 
