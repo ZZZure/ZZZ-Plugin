@@ -1,7 +1,7 @@
 # 通过"%设置默认设备"进行设置，如果不知道这是什么请勿修改
-productName: J9110
-productType: J9110
-modelName: J9110
-osVersion: 11
-deviceInfo: Sony/J9110/J9110:11/55.2.A.4.332/055002A004033203408384484:user/release-keys
-board: msmnile
+productName: XQ-AT52
+productType: XQ-AT52
+modelName: XQ-AT52
+osVersion: 12
+deviceInfo: Sony/XQ-AT52/XQ-AT52:12/58.2.A.7.93/058002A007009304241360111:user/release-keys
+board: kona
