@@ -207,13 +207,18 @@ export const avatar_ability = (data, base_detail, bonus_detail) => {
 				bonus_detail['C_DmgAdd'] = C_DmgAdd + 0.5;
 			}
 			if (data.rank >= 4) {
-				let Ether_ResistancePenetration = _.get(
+				let A_ResistancePenetration = _.get(
 					bonus_detail,
-					'Ether_ResistancePenetration',
+					'A_ResistancePenetration',
 					0
 				);
-				bonus_detail['Ether_ResistancePenetration'] =
-					Ether_ResistancePenetration + 0.25;
+				bonus_detail['A_ResistancePenetration'] = A_ResistancePenetration + 0.25;
+				let C_ResistancePenetration = _.get(
+					bonus_detail,
+					'C_ResistancePenetration',
+					0
+				);
+				bonus_detail['C_ResistancePenetration'] = C_ResistancePenetration + 0.25;
 			}
 
 			/** 处理天赋加成 */
