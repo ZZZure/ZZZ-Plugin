@@ -157,9 +157,7 @@ export class GachaLog extends ZZZPlugin {
   }
   async getLog(key) {
     const uid = await this.getUID();
-    if (!uid) {
-      return false;
-    }
+    if (!uid) return false;
     this.reply('抽卡记录获取中请稍等...可能需要一段时间，请耐心等待');
     const { data, count } = await updateGachaLog(key, uid);
     let msg = [];
@@ -225,9 +223,7 @@ export class GachaLog extends ZZZPlugin {
       await this.reply('抽卡记录相应功能只支持国服');
       return false;
     }
-    if (!uid) {
-      return false;
-    }
+    if (!uid) return false;
     await this.getPlayerInfo();
     await this.reply('正在分析抽卡记录，请稍等', false, {
       at: true,
@@ -256,11 +252,9 @@ export class GachaLog extends ZZZPlugin {
       await this.reply('抽卡记录相应功能只支持国服');
       return false;
     }
+    if (!uid) return false;
     if (!this.e.isPrivate || this.e.isGroup) {
       await this.reply('请私聊获取抽卡链接', false, { at: true });
-      return false;
-    }
-    if (!uid) {
       return false;
     }
     const key = await getAuthKey(this.e, this.User, uid);
