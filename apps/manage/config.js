@@ -83,3 +83,29 @@ export async function setRefreshPanelInterval() {
     { at: true, recallMsg: 100 }
   );
 }
+
+/** 设置角色刷新间隔 */
+export async function setRefreshCharInterval() {
+  if (!this.e.isMaster) {
+    this.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
+    return false;
+  }
+  const match = /刷新角色间隔(\d+)$/g.exec(this.e.msg);
+  const refresh_char_interval = Number(match[1]);
+  if (refresh_char_interval < 0) {
+    await this.e.reply('刷新角色间隔不能小于0秒', false, {
+      at: true,
+      recallMsg: 100,
+    });
+    return false;
+  }
+  if (refresh_char_interval > 1000) {
+    await this.e.reply('刷新角色间隔不能大于1000秒', false, {
+      at: true,
+      recallMsg: 100,
+    });
+    return false;
+  }
+  settings.setSingleConfig('panel', 'roleInterval', refresh_char_interval);
+  await this.e.reply(`绝区零刷新角色间隔已设置为: ${refresh_char_interval}秒`);
+}

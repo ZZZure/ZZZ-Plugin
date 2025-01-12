@@ -41,6 +41,10 @@ export class Panel extends ZZZPlugin {
           fnc: 'setRefreshPanelInterval',
         },
         {
+          reg: `${rulePrefix}刷新角色间隔(\\d+)$`,
+          fnc: 'setRefreshCharInterval',
+        },
+        {
           reg: `${rulePrefix}添加(\\S+)别名(\\S+)$`,
           fnc: 'addAlias',
         },
@@ -94,6 +98,7 @@ export class Panel extends ZZZPlugin {
     this.setRenderPrecision = manage.config.setRenderPrecision;
     this.setRefreshGachaInterval = manage.config.setRefreshGachaInterval;
     this.setRefreshPanelInterval = manage.config.setRefreshPanelInterval;
+    this.setRefreshCharInterval = manage.config.setRefreshCharInterval;
     this.addAlias = manage.alias.addAlias;
     this.deleteAlias = manage.alias.deleteAlias;
     this.uploadCharacterImg = manage.panel.uploadCharacterImg;
