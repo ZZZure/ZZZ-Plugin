@@ -1,4 +1,4 @@
-import { element, property } from '../lib/convert.js';
+import { element } from '../lib/convert.js';
 import {
   getRoleImage,
   getSmallSquareAvatar,
@@ -8,9 +8,7 @@ import { imageResourcesPath } from '../lib/path.js';
 import { Equip, Weapon } from './equip.js';
 import { Property } from './property.js';
 import { Skill } from './skill.js';
-import { relice_ability } from './damage/relice.js';
-import { weapon_ability } from './damage/weapon.js';
-import { avatar_ability, has_calculation } from './damage/avatar.js';
+import { avatar_ability } from './damage/avatar.js';
 import { hasScoreData } from '../lib/score.js';
 
 import _ from 'lodash';
@@ -180,6 +178,7 @@ export class ZZZAvatarInfo {
    *  name_mi18n: string;
    *  full_name_mi18n: string;
    *  element_type: number;
+   *  sub_element_type: number;
    *  camp_name_mi18n: string;
    *  avatar_profession: number;
    *  rarity: string;
@@ -201,6 +200,7 @@ export class ZZZAvatarInfo {
       name_mi18n,
       full_name_mi18n,
       element_type,
+      sub_element_type,
       camp_name_mi18n,
       avatar_profession,
       rarity,
@@ -224,9 +224,11 @@ export class ZZZAvatarInfo {
     this.full_name_mi18n = full_name_mi18n;
     /** @type {number} 元素种类 */
     this.element_type = element_type;
+    /** @type {number} 子元素种类 */
+    this.sub_element_type = sub_element_type;
     /** @type {string} */
     this.camp_name_mi18n = camp_name_mi18n;
-    /** @type {number} */
+    /** @type {number} 职业 */
     this.avatar_profession = avatar_profession;
     /** @type {string} 稀有度 */
     this.rarity = rarity;
@@ -298,111 +300,59 @@ export class ZZZAvatarInfo {
     return data;
   }
 
-  /** @type {{
-   *  base_detail: {
-   *   hp: number;
-   *   attack: number;
-   *   defence: number;
-   *   ImpactRatio: number;
-   *   CriticalChanceBase: number;
-   *   CriticalDamageBase: number;
-   *   ElementAbnormalPower: number;
-   *   ElementMystery: number;
-   *   PenRatioBase: number;
-   *   SpGetRatio: number;
-   *  }
-   * bonus_detail: Record<string, number>;
-   * set_detail: Record<string, number>;
-   * }} */
-  get damage_basic_properties() {
-    const basic_properties = this.basic_properties;
-    const base_detail = {
-      hp: Number(basic_properties.hpmax.final),
-      attack: Number(basic_properties.attack.final),
-      defence: Number(basic_properties.def.final),
-      ImpactRatio: Number(basic_properties.breakstun.final),
-      CriticalChanceBase:
-        Number(basic_properties.crit.final.replace('%', '')) / 100,
-      CriticalDamageBase:
-        Number(basic_properties.critdam.final.replace('%', '')) / 100,
-      ElementAbnormalPower: Number(
-        basic_properties.elementabnormalpower.final
-      ),
-      ElementMystery: Number(basic_properties.elementmystery.final),
-      PenRatioBase:
-        Number(basic_properties.penratio.final.replace('%', '')) / 100,
-      SpGetRatio: Number(basic_properties.sprecover.final),
-    };
-    /** 计算伤害加成与穿透值
-     *	穿透值23203
-     *	伤害加成31503-31703
+  /** 基础属性 */
+  get base_properties() {
+    if (this._base_properties) return this._base_properties
+    const basic_properties = this.basic_properties
+    /**
+     * @param {keyof ZZZAvatarInfo['basic_properties']} name
      */
-    const bonus_detail = {};
-    /** 计算套装数量 */
-    const set_detail = {};
-    for (const equip_detail of this.equip) {
-      bonus_detail['PenDelta'] =
-        _.get(bonus_detail, 'PenDelta', 0) + equip_detail.get_property(23203);
-      if (equip_detail.equipment_type == 5) {
-        const propname = property.idToName(
-          equip_detail.main_properties[0].property_id
-        );
-        if (propname.includes('属性伤害提高')) {
-          const propenname = property.idToSignName(
-            equip_detail.main_properties[0].property_id
-          );
-          bonus_detail[propenname] =
-            _.get(bonus_detail, propenname, 0) +
-            Number(equip_detail.main_properties[0].base.replace('%', '')) / 100;
-        }
-      }
-      const suit_id = String(equip_detail.equip_suit.suit_id);
-      set_detail[suit_id] = _.get(set_detail, suit_id, 0) + 1;
+    const get = (name) => {
+      const data = basic_properties[name]
+      return Number(data.base || data.final)
     }
-    logger.debug('base_detail', base_detail);
-    logger.debug('bonus_detail', bonus_detail);
-    logger.debug('set_detail', set_detail);
-    const retuan_detail = {
-      base_detail: base_detail,
-      bonus_detail: bonus_detail,
-      set_detail: set_detail,
-    };
-    return retuan_detail;
+    return this._base_properties = {
+      HP: get('hpmax'),
+      ATK: get('attack'),
+      DEF: get('def'),
+      Impact: get('breakstun'),
+      AnomalyMastery: get('elementabnormalpower'),
+      AnomalyProficiency: get('elementmystery'),
+      EnergyRegen: get('sprecover')
+    }
   }
 
-  /** @type {{
-   * title: string;
-   * value: {name: string, value: number}[]
-   * }[]} */
+  /** 初始属性 */
+  get initial_properties() {
+    if (this._initial_properties) return this._initial_properties
+    const basic_properties = this.basic_properties
+    /**
+     * @param {keyof ZZZAvatarInfo['basic_properties']} name
+     */
+    const get = (name) => {
+      const data = basic_properties[name].final
+      return Number(data.includes('%') ? data.replace('%', '') / 100 : data)
+    }
+    return this._initial_properties = {
+      HP: get('hpmax'),
+      ATK: get('attack'),
+      DEF: get('def'),
+      Impact: get('breakstun'),
+      CRITRate: get('crit'),
+      CRITDMG: get('critdam'),
+      /** 异常掌控 */
+      AnomalyMastery: get('elementabnormalpower'),
+      /** 异常精通 */
+      AnomalyProficiency: get('elementmystery'),
+      Pen: this.equip.reduce((prev, curr) => prev + curr.get_property(23203), 0),
+      PenRatio: get('penratio'),
+      EnergyRegen: get('sprecover')
+    }
+  }
+
+  /** @type {import("./damage/Calculator.ts").damage} */
   get damages() {
-    if (!has_calculation(this.id)) {
-      return [];
-    }
-    /** 处理基础数据 */
-    let { base_detail, bonus_detail, set_detail } = this.damage_basic_properties;
-
-    /** 处理驱动盘套装加成 */
-    let set_detailkeys = Object.keys(set_detail);
-    for (const set_id of set_detailkeys) {
-      const set_num = set_detail[set_id];
-      if (set_num >= 2)
-        bonus_detail = relice_ability(
-          set_id,
-          set_num,
-          base_detail,
-          bonus_detail
-        );
-    }
-    logger.debug('+套装bonus_detail', bonus_detail);
-
-    /** 处理音频加成 */
-    if (this.weapon)
-      bonus_detail = weapon_ability(this.weapon, base_detail, bonus_detail);
-    logger.debug('+音频bonus_detail', bonus_detail);
-
-    /** 处理角色加成 */
-    const damagelist = avatar_ability(this, base_detail, bonus_detail);
-    return damagelist;
+    return avatar_ability(this);
   }
 
   /** @type {number|boolean} */

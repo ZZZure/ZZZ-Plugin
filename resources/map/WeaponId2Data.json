@@ -1,0 +1,338 @@
+{
+  "12001": {
+    "id": 12001,
+    "name": "「月相」-望",
+    "rarity": "B",
+    "profession": 1
+  },
+  "12002": {
+    "id": 12002,
+    "name": "「月相」-晦",
+    "rarity": "B",
+    "profession": 1
+  },
+  "12003": {
+    "id": 12003,
+    "name": "「月相」-朔",
+    "rarity": "B",
+    "profession": 1
+  },
+  "12004": {
+    "id": 12004,
+    "name": "「残响」-Ⅰ型",
+    "rarity": "B",
+    "profession": 4
+  },
+  "12005": {
+    "id": 12005,
+    "name": "「残响」-Ⅱ型",
+    "rarity": "B",
+    "profession": 4
+  },
+  "12006": {
+    "id": 12006,
+    "name": "「残响」-Ⅲ型",
+    "rarity": "B",
+    "profession": 4
+  },
+  "12007": {
+    "id": 12007,
+    "name": "「湍流」-铳型",
+    "rarity": "B",
+    "profession": 2
+  },
+  "12008": {
+    "id": 12008,
+    "name": "「湍流」-矢型",
+    "rarity": "B",
+    "profession": 2
+  },
+  "12009": {
+    "id": 12009,
+    "name": "「湍流」-斧型",
+    "rarity": "B",
+    "profession": 2
+  },
+  "12010": {
+    "id": 12010,
+    "name": "「电磁暴」-壹式",
+    "rarity": "B",
+    "profession": 3
+  },
+  "12011": {
+    "id": 12011,
+    "name": "「电磁暴」-贰式",
+    "rarity": "B",
+    "profession": 3
+  },
+  "12012": {
+    "id": 12012,
+    "name": "「电磁暴」-叁式",
+    "rarity": "B",
+    "profession": 3
+  },
+  "12013": {
+    "id": 12013,
+    "name": "「恒等式」-本格",
+    "rarity": "B",
+    "profession": 5
+  },
+  "12014": {
+    "id": 12014,
+    "name": "「恒等式」-变格",
+    "rarity": "B",
+    "profession": 5
+  },
+  "13001": {
+    "id": 13001,
+    "name": "街头巨星",
+    "rarity": "A",
+    "profession": 1
+  },
+  "13002": {
+    "id": 13002,
+    "name": "时光切片",
+    "rarity": "A",
+    "profession": 4
+  },
+  "13003": {
+    "id": 13003,
+    "name": "雨林饕客",
+    "rarity": "A",
+    "profession": 3
+  },
+  "13004": {
+    "id": 13004,
+    "name": "星徽引擎",
+    "rarity": "A",
+    "profession": 1
+  },
+  "13005": {
+    "id": 13005,
+    "name": "人为刀俎",
+    "rarity": "A",
+    "profession": 2
+  },
+  "13006": {
+    "id": 13006,
+    "name": "贵重骨核",
+    "rarity": "A",
+    "profession": 2
+  },
+  "13007": {
+    "id": 13007,
+    "name": "正版变身器",
+    "rarity": "A",
+    "profession": 5
+  },
+  "13008": {
+    "id": 13008,
+    "name": "双生泣星",
+    "rarity": "A",
+    "profession": 3
+  },
+  "13009": {
+    "id": 13009,
+    "name": "触电唇彩",
+    "rarity": "A",
+    "profession": 3
+  },
+  "13010": {
+    "id": 13010,
+    "name": "兔能环",
+    "rarity": "A",
+    "profession": 5
+  },
+  "13011": {
+    "id": 13011,
+    "name": "春日融融",
+    "rarity": "A",
+    "profession": 5
+  },
+  "13013": {
+    "id": 13013,
+    "name": "鎏金花信",
+    "rarity": "A",
+    "profession": 1
+  },
+  "13015": {
+    "id": 13015,
+    "name": "强音热望",
+    "rarity": "A",
+    "profession": 1
+  },
+  "13101": {
+    "id": 13101,
+    "name": "德玛拉电池Ⅱ型",
+    "rarity": "A",
+    "profession": 2
+  },
+  "13103": {
+    "id": 13103,
+    "name": "聚宝箱",
+    "rarity": "A",
+    "profession": 4
+  },
+  "13106": {
+    "id": 13106,
+    "name": "家政员",
+    "rarity": "A",
+    "profession": 1
+  },
+  "13108": {
+    "id": 13108,
+    "name": "仿制星徽引擎",
+    "rarity": "A",
+    "profession": 1
+  },
+  "13111": {
+    "id": 13111,
+    "name": "旋钻机-赤轴",
+    "rarity": "A",
+    "profession": 1
+  },
+  "13112": {
+    "id": 13112,
+    "name": "比格气缸",
+    "rarity": "A",
+    "profession": 5
+  },
+  "13113": {
+    "id": 13113,
+    "name": "含羞恶面",
+    "rarity": "A",
+    "profession": 4
+  },
+  "13115": {
+    "id": 13115,
+    "name": "好斗的阿炮",
+    "rarity": "A",
+    "profession": 4
+  },
+  "13127": {
+    "id": 13127,
+    "name": "维序者-特化型",
+    "rarity": "A",
+    "profession": 5
+  },
+  "13128": {
+    "id": 13128,
+    "name": "轰鸣座驾",
+    "rarity": "A",
+    "profession": 3
+  },
+  "14001": {
+    "id": 14001,
+    "name": "加农转子",
+    "rarity": "A",
+    "profession": 1
+  },
+  "14002": {
+    "id": 14002,
+    "name": "逍遥游球",
+    "rarity": "A",
+    "profession": 4
+  },
+  "14003": {
+    "id": 14003,
+    "name": "左轮转子",
+    "rarity": "A",
+    "profession": 2
+  },
+  "14102": {
+    "id": 14102,
+    "name": "钢铁肉垫",
+    "rarity": "S",
+    "profession": 1
+  },
+  "14104": {
+    "id": 14104,
+    "name": "硫磺石",
+    "rarity": "S",
+    "profession": 1
+  },
+  "14107": {
+    "id": 14107,
+    "name": "奔袭獠牙",
+    "rarity": "S",
+    "profession": 5
+  },
+  "14109": {
+    "id": 14109,
+    "name": "霰落星殿",
+    "rarity": "S",
+    "profession": 3
+  },
+  "14110": {
+    "id": 14110,
+    "name": "燃狱齿轮",
+    "rarity": "S",
+    "profession": 2
+  },
+  "14114": {
+    "id": 14114,
+    "name": "拘缚者",
+    "rarity": "S",
+    "profession": 2
+  },
+  "14116": {
+    "id": 14116,
+    "name": "焰心桂冠",
+    "rarity": "S",
+    "profession": 2
+  },
+  "14117": {
+    "id": 14117,
+    "name": "灼心摇壶",
+    "rarity": "S",
+    "profession": 3
+  },
+  "14118": {
+    "id": 14118,
+    "name": "嵌合编译器",
+    "rarity": "S",
+    "profession": 3
+  },
+  "14119": {
+    "id": 14119,
+    "name": "深海访客",
+    "rarity": "S",
+    "profession": 1
+  },
+  "14120": {
+    "id": 14120,
+    "name": "残心青囊",
+    "rarity": "S",
+    "profession": 1
+  },
+  "14121": {
+    "id": 14121,
+    "name": "啜泣摇篮",
+    "rarity": "S",
+    "profession": 4
+  },
+  "14122": {
+    "id": 14122,
+    "name": "时流贤者",
+    "rarity": "S",
+    "profession": 3
+  },
+  "14124": {
+    "id": 14124,
+    "name": "防暴者Ⅵ型",
+    "rarity": "S",
+    "profession": 1
+  },
+  "14125": {
+    "id": 14125,
+    "name": "玉壶青冰",
+    "rarity": "S",
+    "profession": 2
+  },
+  "14126": {
+    "id": 14126,
+    "name": "淬锋钳刺",
+    "rarity": "S",
+    "profession": 3
+  }
+}

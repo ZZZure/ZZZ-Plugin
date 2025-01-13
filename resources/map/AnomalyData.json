@@ -1,0 +1,98 @@
+[
+  {
+    "name": "强击",
+    "element": "Physical",
+    "element_type": 200,
+    "sub_element_type": 0,
+    "duration": 0,
+    "interval": 0,
+    "multiplier": 7.13
+  },
+  {
+    "name": "畏缩",
+    "element": "Physical",
+    "element_type": 200,
+    "sub_element_type": 0,
+    "duration": 10,
+    "interval": 1,
+    "multiplier": 0,
+    "discover": {
+      "multiplier": 0.075,
+      "fixed_multiplier": 4.5
+    }
+  },
+  {
+    "name": "灼烧",
+    "element": "Fire",
+    "element_type": 201,
+    "sub_element_type": 0,
+    "duration": 10,
+    "interval": 0.5,
+    "multiplier": 0.5,
+    "discover": {
+      "multiplier": 0.5,
+      "fixed_multiplier": 4.5
+    }
+  },
+  {
+    "name": "碎冰",
+    "element": "Ice",
+    "element_type": 202,
+    "sub_element_type": 0,
+    "duration": 0,
+    "interval": 0,
+    "multiplier": 5
+  },
+  {
+    "name": "霜寒",
+    "element": "Ice",
+    "element_type": 202,
+    "sub_element_type": 0,
+    "duration": 10,
+    "interval": 1,
+    "multiplier": 0,
+    "discover": {
+      "multiplier": 0.075,
+      "fixed_multiplier": 4.5
+    }
+  },
+  {
+    "name": "霜寒",
+    "element": "Ice",
+    "element_type": 202,
+    "sub_element_type": 1,
+    "duration": 20,
+    "interval": 1,
+    "multiplier": 0,
+    "discover": {
+      "multiplier": 0.75,
+      "fixed_multiplier": 6
+    }
+  },
+  {
+    "name": "感电",
+    "element": "Electric",
+    "element_type": 203,
+    "sub_element_type": 0,
+    "duration": 10,
+    "interval": 1,
+    "multiplier": 1.25,
+    "discover": {
+      "multiplier": 1.25,
+      "fixed_multiplier": 4.5
+    }
+  },
+  {
+    "name": "侵蚀",
+    "element": "Ether",
+    "element_type": 205,
+    "sub_element_type": 0,
+    "duration": 10,
+    "interval": 0.5,
+    "multiplier": 0.625,
+    "discover": {
+      "multiplier": 0.625,
+      "fixed_multiplier": 4.5
+    }
+  }
+]

@@ -39,56 +39,57 @@
         <div class="title">
           <% include(sys.specialTitle, {en: 'PROPERTY' , cn: '属性' , count: 6 }) %>
         </div>
+        {{set basic_properties = charData.basic_properties}}
         <div class="list">
           <div class="properties">
             <div class="prop-icon hpmax"></div>
             <div class="label yellow">生命值</div>
-            <div class="value">{{charData.basic_properties.hpmax.final}}</div>
+            <div class="value">{{basic_properties.hpmax.final}}</div>
           </div>
           <div class="properties">
             <div class="prop-icon attack"></div>
             <div class="label yellow">攻击力</div>
-            <div class="value">{{charData.basic_properties.attack.final}}</div>
+            <div class="value">{{basic_properties.attack.final}}</div>
           </div>
           <div class="properties">
             <div class="prop-icon def"></div>
             <div class="label yellow">防御力</div>
-            <div class="value">{{charData.basic_properties.def.final}}</div>
+            <div class="value">{{basic_properties.def.final}}</div>
           </div>
           <div class="properties">
             <div class="prop-icon breakstun"></div>
             <div class="label">冲击力</div>
-            <div class="value">{{charData.basic_properties.breakstun.final}}</div>
+            <div class="value">{{basic_properties.breakstun.final}}</div>
           </div>
           <div class="properties">
             <div class="prop-icon crit"></div>
             <div class="label blue">暴击率</div>
-            <div class="value">{{charData.basic_properties.crit.final}}</div>
+            <div class="value">{{basic_properties.crit.final}}</div>
           </div>
           <div class="properties">
             <div class="prop-icon critdam"></div>
             <div class="label blue">暴击伤害</div>
-            <div class="value">{{charData.basic_properties.critdam.final}}</div>
+            <div class="value">{{basic_properties.critdam.final}}</div>
           </div>
           <div class="properties">
             <div class="prop-icon elementabnormalpower"></div>
             <div class="label">异常掌控</div>
-            <div class="value">{{charData.basic_properties.elementabnormalpower.final}}</div>
+            <div class="value">{{basic_properties.elementabnormalpower.final}}</div>
           </div>
           <div class="properties">
             <div class="prop-icon elementmystery"></div>
             <div class="label">异常精通</div>
-            <div class="value">{{charData.basic_properties.elementmystery.final}}</div>
+            <div class="value">{{basic_properties.elementmystery.final}}</div>
           </div>
           <div class="properties">
             <div class="prop-icon penratio"></div>
             <div class="label">穿透率</div>
-            <div class="value">{{charData.basic_properties.penratio.final}}</div>
+            <div class="value">{{basic_properties.penratio.final}}</div>
           </div>
           <div class="properties">
             <div class="prop-icon sprecover"></div>
             <div class="label">能量恢复</div>
-            <div class="value">{{charData.basic_properties.sprecover.final}}</div>
+            <div class="value">{{basic_properties.sprecover.final}}</div>
           </div>
         </div>
       </div>
@@ -223,9 +224,9 @@
         </div>
         {{each damages damage}}
         <div class="dmg-tr">
-          <div class="dmg-td no-zzz-font">{{damage.title}}</div>
-          <div class="dmg-td">{{damage.value.cd.toFixed(0)}}</div>
-          <div class="dmg-td">{{damage.value.qw.toFixed(0)}}</div>
+          <div class="dmg-td no-zzz-font">{{damage.skill.name}}</div>
+          <div class="dmg-td">{{damage.result.critDMG.toFixed(0)}}</div>
+          <div class="dmg-td">{{damage.result.expectDMG.toFixed(0)}}</div>
         </div>
         {{/each}}
       </div>

@@ -206,7 +206,7 @@ export class Equip {
 
   /**
    * @param {number} id
-   * @returns {EquipProperty}
+   * @returns {number}
    */
   get_property(id) {
     const result =
