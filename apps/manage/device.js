@@ -41,8 +41,8 @@ export async function toSetDefaultDevice() {
       return false;
     }
     settings.setConfig('device', {
-      productName: info.deviceProduct,
-      productType: info.deviceName,
+      productName: info.deviceName,
+      productType: info.deviceProduct,
       modelName: info.deviceModel,
       osVersion: info.androidVersion,
       deviceInfo: info.deviceFingerprint,
