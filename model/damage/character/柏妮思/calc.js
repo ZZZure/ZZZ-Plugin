@@ -68,35 +68,28 @@ export const skills = [
     type: 'EQS',
     after: ({ damage }) => damage.x(0.5)
   },
+  {
+    name: '6影强化E双份额外余烬秒伤',
+    type: 'YY',
+    fixedMultiplier: 1.2,
+    check: ({ avatar }) => avatar.rank >= 6
+  },
+  {
+    name: '6影强化E双份额外灼烧',
+    type: 'Y灼烧',
+    check: ({ avatar }) => avatar.rank >= 6,
+    dmg: (calc) => {
+      const dmg = calc.calc_skill({
+        name: '灼烧每段',
+        element: 'Fire',
+        banCache: true,
+        type: '灼烧',
+        after: ({ damage }) => damage.x(18)
+      })
+      dmg.skill.name = '6影强化E双份额外灼烧'
+      return dmg
+    }
+  },
   { name: '连携技：燃油熔焰', type: 'RL' },
   { name: '终结技：纵享盛焰', type: 'RZ' }
 ]
-
-/**
- * @param {import('../../BuffManager.ts').BuffManager} buffM
- * @param {import('../../Calculator.ts').Calculator} calc
- * @param {import('../../../avatar.js').ZZZAvatarInfo} avatar
- */
-export function calc(buffM, calc, avatar) {
-  if (avatar.rank >= 6) {
-    calc.new({
-      name: '6影强化E双份额外余烬秒伤',
-      type: 'YY',
-      fixedMultiplier: 1.2
-    })
-    calc.new({
-      name: '6影强化E双份额外灼烧',
-      type: 'Y灼烧',
-      dmg: (calc) => {
-        const dmg = calc.calc_skill({
-          name: '灼烧每段',
-          element: 'Fire',
-          type: '灼烧',
-          after: ({ damage }) => damage.x(18)
-        })
-        dmg.skill.name = '6影强化E双份额外灼烧'
-        return dmg
-      }
-    })
-  }
-}

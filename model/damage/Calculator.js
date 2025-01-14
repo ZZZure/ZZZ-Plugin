@@ -56,6 +56,8 @@ export class Calculator {
         }
         if (!skill.banCache && this.damageCache[skill.type])
             return this.damageCache[skill.type];
+        if (skill.check && !skill.check({ avatar: this.avatar, buffM: this.buffM, calc: this }))
+            return;
         logger.debug(`${logger.green(skill.type)}${skill.name}伤害计算：`);
         if (skill.dmg) {
             const dmg = skill.dmg(this);
@@ -68,74 +70,63 @@ export class Calculator {
             element: skill.element,
             range: skill.redirect ? [skill.type, skill.redirect] : [skill.type]
         }, this);
+        const detail = {};
         if (skill.before)
-            skill.before({ skill, avatar: this.avatar, usefulBuffs, calc: this });
-        let Multiplier = 0;
+            skill.before({ avatar: this.avatar, calc: this, detail, skill, usefulBuffs, });
         const isAnomaly = typeof anomalyEnum[skill.type] === 'number';
-        if (skill.fixedMultiplier)
-            Multiplier = skill.fixedMultiplier;
-        else if (isAnomaly) {
-            Multiplier = (skill.type === '紊乱' ?
-                this.get_DiscoverMultiplier(skill) :
-                this.get_AnomalyMultiplier(skill, usefulBuffs, skill.name.includes('每') ? 1 : 0)) || 0;
+        if (!detail.BasicArea) {
+            if (!detail.Multiplier) {
+                if (skill.fixedMultiplier) {
+                    detail.Multiplier = skill.fixedMultiplier;
+                }
+                else if (isAnomaly) {
+                    detail.Multiplier = (skill.type === '紊乱' ?
+                        this.get_DiscoverMultiplier(skill) :
+                        this.get_AnomalyMultiplier(skill, usefulBuffs, skill.name.includes('每') ? 1 : 0)) || 0;
+                }
+                else {
+                    if (skill.skillMultiplier)
+                        detail.Multiplier = skill.skillMultiplier[this.get_SkillLevel(skill.type[0]) - 1];
+                    else
+                        detail.Multiplier = this.get_Multiplier(skill.type);
+                }
+                const ExtraMultiplier = this.get_ExtraMultiplier(skill, usefulBuffs);
+                detail.Multiplier += ExtraMultiplier;
+                if (!detail.Multiplier)
+                    return logger.warn('技能倍率缺失：', skill);
+                if (ExtraMultiplier)
+                    logger.debug(`最终倍率：${detail.Multiplier}`);
+            }
+            detail.ATK ??= this.get_ATK(skill, usefulBuffs);
         }
-        else {
-            if (skill.skillMultiplier)
-                Multiplier = skill.skillMultiplier[this.get_SkillLevel(skill.type[0]) - 1];
-            else
-                Multiplier = this.get_Multiplier(skill.type);
-        }
-        const ExtraMultiplier = this.get_ExtraMultiplier(skill, usefulBuffs);
-        Multiplier += ExtraMultiplier;
-        if (!Multiplier)
-            return logger.warn('技能倍率缺失：', skill);
-        if (ExtraMultiplier)
-            logger.debug(`最终倍率：${Multiplier}`);
-        const ATK = this.get_ATK(skill, usefulBuffs);
-        let CRITRate = 0, CRITDMG = 0, AnomalyCRITRate = 0, AnomalyCRITDMG = 0;
-        let AnomalyProficiencyArea = 0, AnomalyBoostArea = 0, LevelArea = 0;
-        let CriticalArea = 0;
+        detail.BasicArea ??= detail.ATK * detail.Multiplier;
+        logger.debug(`基础伤害区：${detail.BasicArea}`);
         if (isAnomaly) {
-            AnomalyProficiencyArea = this.get_AnomalyProficiencyArea(skill, usefulBuffs);
-            AnomalyBoostArea = this.get_AnomalyBoostArea(skill, usefulBuffs);
-            LevelArea = this.get_LevelArea();
-            AnomalyCRITRate = this.get_AnomalyCRITRate(skill, usefulBuffs);
-            AnomalyCRITDMG = this.get_AnomalyCRITDMG(skill, usefulBuffs);
-            CriticalArea = 1 + AnomalyCRITRate * (AnomalyCRITDMG - 1);
+            detail.AnomalyProficiencyArea ??= this.get_AnomalyProficiencyArea(skill, usefulBuffs);
+            detail.AnomalyBoostArea ??= this.get_AnomalyBoostArea(skill, usefulBuffs);
+            detail.LevelArea ??= this.get_LevelArea();
+            detail.AnomalyCRITRate ??= this.get_AnomalyCRITRate(skill, usefulBuffs);
+            detail.AnomalyCRITDMG ??= this.get_AnomalyCRITDMG(skill, usefulBuffs);
+            detail.CriticalArea ??= 1 + detail.AnomalyCRITRate * (detail.AnomalyCRITDMG - 1);
         }
         else {
-            CRITRate = this.get_CRITRate(skill, usefulBuffs);
-            CRITDMG = this.get_CRITDMG(skill, usefulBuffs);
-            CriticalArea = 1 + CRITRate * (CRITDMG - 1);
+            detail.CRITRate ??= this.get_CRITRate(skill, usefulBuffs);
+            detail.CRITDMG ??= this.get_CRITDMG(skill, usefulBuffs);
+            detail.CriticalArea ??= 1 + detail.CRITRate * (detail.CRITDMG - 1);
         }
-        logger.debug(`暴击期望：${CriticalArea}`);
-        const BoostArea = this.get_BoostArea(skill, usefulBuffs);
-        const VulnerabilityArea = this.get_VulnerabilityArea(skill, usefulBuffs);
-        const ResistanceArea = this.get_ResistanceArea(skill, usefulBuffs);
-        const DefenceArea = this.get_DefenceArea(skill, usefulBuffs);
+        logger.debug(`暴击期望：${detail.CriticalArea}`);
+        detail.BoostArea ??= this.get_BoostArea(skill, usefulBuffs);
+        detail.VulnerabilityArea ??= this.get_VulnerabilityArea(skill, usefulBuffs);
+        detail.ResistanceArea ??= this.get_ResistanceArea(skill, usefulBuffs);
+        detail.DefenceArea ??= this.get_DefenceArea(skill, usefulBuffs);
+        const { BasicArea, CRITDMG, CriticalArea, BoostArea, VulnerabilityArea, ResistanceArea, DefenceArea, AnomalyProficiencyArea, LevelArea, AnomalyBoostArea, AnomalyCRITRate, AnomalyCRITDMG } = detail;
         const result = isAnomaly ?
             {
-                critDMG: AnomalyCRITRate ? ATK * Multiplier * AnomalyCRITDMG * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea * AnomalyProficiencyArea * LevelArea * AnomalyBoostArea : 0,
-                expectDMG: ATK * Multiplier * CriticalArea * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea * AnomalyProficiencyArea * LevelArea * AnomalyBoostArea
+                critDMG: AnomalyCRITRate ? BasicArea * AnomalyCRITDMG * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea * AnomalyProficiencyArea * LevelArea * AnomalyBoostArea : 0,
+                expectDMG: BasicArea * CriticalArea * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea * AnomalyProficiencyArea * LevelArea * AnomalyBoostArea
             } : {
-            critDMG: ATK * Multiplier * CRITDMG * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea,
-            expectDMG: ATK * Multiplier * CriticalArea * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea
-        };
-        const detail = {
-            Multiplier,
-            ATK,
-            CRITRate,
-            CRITDMG,
-            CriticalArea,
-            BoostArea,
-            VulnerabilityArea,
-            ResistanceArea,
-            DefenceArea,
-            AnomalyCRITRate,
-            AnomalyCRITDMG,
-            AnomalyProficiencyArea,
-            AnomalyBoostArea,
-            LevelArea
+            critDMG: BasicArea * CRITDMG * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea,
+            expectDMG: BasicArea * CriticalArea * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea
         };
         const damage = { skill, detail, result };
         if (skill.after) {
@@ -199,17 +190,17 @@ export class Calculator {
      */
     get_Multiplier(type) {
         const skillLevel = this.get_SkillLevel(type[0]);
-        logger.debug(`等级：${skillLevel}`);
+        logger.debug(`${type[0]}等级：${skillLevel}`);
         const Multiplier = charData[this.avatar.id].skill[type]?.[skillLevel - 1];
-        logger.debug(`倍率：${Multiplier}`);
+        logger.debug(`技能倍率：${Multiplier}`);
         return Multiplier;
     }
-    get_AnomalyData(skill) {
+    get_AnomalyData(type) {
         let a = AnomalyData.filter(({ element_type }) => element_type === this.avatar.element_type);
-        if (skill.type === '紊乱')
+        if (type === '紊乱')
             a = a.filter(({ discover }) => discover);
         else
-            a = a.filter(({ name, multiplier }) => name === skill.type && multiplier);
+            a = a.filter(({ name, multiplier }) => name === type && multiplier);
         if (a.length === 1)
             return a[0];
         a = a.filter(({ sub_element_type }) => sub_element_type === this.avatar.sub_element_type);
@@ -217,7 +208,7 @@ export class Calculator {
     }
     /** 获取属性异常倍率 */
     get_AnomalyMultiplier(skill, usefulBuffs, times = 0) {
-        const anomalyData = this.get_AnomalyData(skill);
+        const anomalyData = this.get_AnomalyData(skill.type);
         if (!anomalyData)
             return;
         let Multiplier = anomalyData.multiplier;
@@ -231,7 +222,7 @@ export class Calculator {
     }
     /** 获取紊乱倍率 */
     get_DiscoverMultiplier(skill) {
-        const anomalyData = this.get_AnomalyData(skill);
+        const anomalyData = this.get_AnomalyData(skill.type);
         if (!anomalyData)
             return;
         const AnomalyDuration = this.get_AnomalyDuration({
