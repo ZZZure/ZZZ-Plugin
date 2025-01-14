@@ -1,15 +1,15 @@
 /** @type {import('../../BuffManager.ts').BuffManager['buffs']} */
 export const buffs = [
   {
-    name: '6影',
-    type: '无视抗性',
-    value: 0.15
-  },
-  {
     name: '2影',
     type: '增伤',
     value: 0.5,
     range: ['CCQ']
+  },
+  {
+    name: '6影',
+    type: '无视抗性',
+    value: 0.15
   },
   {
     name: '核心被动：破晓',
@@ -33,6 +33,7 @@ export const buffs = [
 
 /** @type {import('../../Calculator.ts').Calculator['skills']} */
 export const skills = [
+  { name: '感电每次', type: '感电' },
   { name: '普攻：穿云五段', type: 'AP5' },
   { name: '普攻：落羽', type: 'AX' },
   { name: '冲刺攻击：飞弦·斩', type: 'CCQ3' },

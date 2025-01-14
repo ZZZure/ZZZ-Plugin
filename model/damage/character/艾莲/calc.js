@@ -1,6 +1,18 @@
 /** @type {import('../../BuffManager.ts').BuffManager['buffs']} */
 export const buffs = [
   {
+    name: '1影',
+    type: '暴击率',
+    value: 0.2 * 6
+  },
+  {
+    name: '2影',
+    type: '暴击伤害',
+    value: 0.6,
+    range: ['EQ']
+  },
+
+  {
     name: '6影',
     type: '穿透率',
     value: 0.2
@@ -10,17 +22,6 @@ export const buffs = [
     type: '增伤',
     value: 2.5,
     range: ['CCXX']
-  },
-  {
-    name: '2影',
-    type: '暴击伤害',
-    value: 0.6,
-    range: ['EQ']
-  },
-  {
-    name: '1影',
-    type: '暴击率',
-    value: 0.2 * 6
   },
   {
     name: '核心被动：凌牙厉齿',

@@ -1,7 +1,6 @@
 import type { skill } from './Calculator.js'
 import type { ZZZAvatarInfo } from '../avatar.js'
 import { aliasToID } from '../../lib/convert/char.js'
-import config from '../../../../lib/config/config.js'
 import { buff, BuffManager } from './BuffManager.js'
 import { pluginPath } from '../../lib/path.js'
 import { elementEnum } from './BuffManager.js'
@@ -46,7 +45,14 @@ const calcFnc: {
 }
 
 async function init() {
-	const isWatch = config.bot.log_level === 'debug' // debug模式下监听文件变化
+	// debug模式下监听文件变化
+	const isWatch = await (async () => {
+		try {
+			return (await import('../../../../lib/config/config.js')).default.bot.log_level === 'debug'
+		} catch {
+			return false
+		}
+	})()
 	await Promise.all(fs.readdirSync(path.join(damagePath, 'character')).filter(v => v !== '模板').map(v => importChar(v, isWatch)))
 	for (const type of ['weapon', 'set']) {
 		await Promise.all(
@@ -76,11 +82,13 @@ async function importChar(charName: string, isWatch = false) {
 	const calcFile = fs.existsSync(path.join(dir, 'calc_user.js')) ? 'calc_user.js' : 'calc.js'
 	const dataPath = path.join(dir, (fs.existsSync(path.join(dir, 'data_user.json')) ? 'data_user.json' : 'data.json'))
 	try {
+		const calcFilePath = path.join(dir, calcFile)
 		if (isWatch) {
-			watchFile(path.join(dir, calcFile), () => importChar(charName))
+			watchFile(calcFilePath, () => importChar(charName))
 			watchFile(dataPath, () => charData[id] = JSON.parse(fs.readFileSync(dataPath, 'utf8')))
 		}
 		charData[id] = JSON.parse(fs.readFileSync(dataPath, 'utf8'))
+		if (!fs.existsSync(calcFilePath)) return
 		const m = await import(`./character/${charName}/${calcFile}?${Date.now()}`)
 		if (!m.calc && (!m.buffs || !m.skills)) throw new Error('伤害计算文件格式错误')
 		calcFnc.character[id] = m

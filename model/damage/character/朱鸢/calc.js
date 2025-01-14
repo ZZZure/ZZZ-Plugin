@@ -1,16 +1,16 @@
 /** @type {import('../../BuffManager.ts').BuffManager['buffs']} */
 export const buffs = [
   {
-    name: '4影',
-    type: '无视抗性',
-    value: 0.25,
-    range: ['AQ', 'CCQ']
-  },
-  {
     name: '2影',
     type: '增伤',
     value: 0.1 * 5,
     element: 'Ether',
+    range: ['AQ', 'CCQ']
+  },
+  {
+    name: '4影',
+    type: '无视抗性',
+    value: 0.25,
     range: ['AQ', 'CCQ']
   },
   {
@@ -28,6 +28,7 @@ export const buffs = [
 
 /** @type {import('../../Calculator.ts').Calculator['skills']} */
 export const skills = [
+  { name: '侵蚀每次', type: '侵蚀' },
   { name: '普攻三段（以太）', type: 'AQY3' },
   { name: '冲刺攻击：火力压制', type: 'CCQ' },
   {

@@ -54,27 +54,30 @@ export class Calculator {
                 return;
             return this.calc_skill(MySkill);
         }
-        if (this.damageCache[skill.type])
+        if (!skill.banCache && this.damageCache[skill.type])
             return this.damageCache[skill.type];
-        logger.debug(`${logger.green(skill.type)}伤害计算：`);
+        logger.debug(`${logger.green(skill.type)}${skill.name}伤害计算：`);
+        if (skill.dmg) {
+            const dmg = skill.dmg(this);
+            logger.debug('自定义计算最终伤害：', dmg.result);
+            return dmg;
+        }
         this.cache = {};
-        if (skill.dmg)
-            return skill.dmg(this);
         /** 缩小筛选范围 */
         const usefulBuffs = this.buffM.filter({
             element: skill.element,
-            range: [skill.type]
+            range: skill.redirect ? [skill.type, skill.redirect] : [skill.type]
         }, this);
         if (skill.before)
-            skill.before({ avatar: this.avatar, usefulBuffs, calc: this });
+            skill.before({ skill, avatar: this.avatar, usefulBuffs, calc: this });
         let Multiplier = 0;
         const isAnomaly = typeof anomalyEnum[skill.type] === 'number';
         if (skill.fixedMultiplier)
             Multiplier = skill.fixedMultiplier;
         else if (isAnomaly) {
             Multiplier = (skill.type === '紊乱' ?
-                this.get_DiscoverMultiplier(skill, usefulBuffs) :
-                this.get_AnomalyMultiplier(skill, usefulBuffs)) || 0;
+                this.get_DiscoverMultiplier(skill) :
+                this.get_AnomalyMultiplier(skill, usefulBuffs, skill.name.includes('每') ? 1 : 0)) || 0;
         }
         else {
             if (skill.skillMultiplier)
@@ -82,8 +85,12 @@ export class Calculator {
             else
                 Multiplier = this.get_Multiplier(skill.type);
         }
+        const ExtraMultiplier = this.get_ExtraMultiplier(skill, usefulBuffs);
+        Multiplier += ExtraMultiplier;
         if (!Multiplier)
             return logger.warn('技能倍率缺失：', skill);
+        if (ExtraMultiplier)
+            logger.debug(`最终倍率：${Multiplier}`);
         const ATK = this.get_ATK(skill, usefulBuffs);
         let CRITRate = 0, CRITDMG = 0, AnomalyCRITRate = 0, AnomalyCRITDMG = 0;
         let AnomalyProficiencyArea = 0, AnomalyBoostArea = 0, LevelArea = 0;
@@ -111,9 +118,9 @@ export class Calculator {
                 critDMG: AnomalyCRITRate ? ATK * Multiplier * AnomalyCRITDMG * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea * AnomalyProficiencyArea * LevelArea * AnomalyBoostArea : 0,
                 expectDMG: ATK * Multiplier * CriticalArea * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea * AnomalyProficiencyArea * LevelArea * AnomalyBoostArea
             } : {
-                critDMG: ATK * Multiplier * CRITDMG * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea,
-                expectDMG: ATK * Multiplier * CriticalArea * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea
-            };
+            critDMG: ATK * Multiplier * CRITDMG * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea,
+            expectDMG: ATK * Multiplier * CriticalArea * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea
+        };
         const detail = {
             Multiplier,
             ATK,
@@ -139,14 +146,31 @@ export class Calculator {
                 damage.result.expectDMG += d.result.expectDMG;
                 damage.result.critDMG += d.result.critDMG;
             };
+            damage.fnc = (fnc) => {
+                damage.result.critDMG = fnc(damage.result.critDMG);
+                damage.result.expectDMG = fnc(damage.result.expectDMG);
+            };
+            damage.x = (n) => {
+                logger.debug('伤害系数：' + n);
+                damage.fnc(v => v * n);
+            };
             skill.after({ avatar: this.avatar, damage, calc: this, usefulBuffs });
         }
         logger.debug('最终伤害：', result);
-        this.damageCache[skill.type] = damage;
+        if (!skill.banCache)
+            this.damageCache[skill.type] = damage;
         return damage;
     }
     calc() {
-        return this.skills.map(skill => this.calc_skill(skill)).filter(v => v && !v.skill?.isHide);
+        return this.skills.map(skill => {
+            try {
+                return this.calc_skill(skill);
+            }
+            catch (e) {
+                logger.error('伤害计算错误：', e);
+                return;
+            }
+        }).filter(v => v && !v.skill?.isHide);
     }
     default(param, value) {
         if (typeof param === 'object') {
@@ -192,25 +216,29 @@ export class Calculator {
         return a[0];
     }
     /** 获取属性异常倍率 */
-    get_AnomalyMultiplier(skill, usefulBuffs, anomalyData) {
-        anomalyData ||= this.get_AnomalyData(skill);
+    get_AnomalyMultiplier(skill, usefulBuffs, times = 0) {
+        const anomalyData = this.get_AnomalyData(skill);
         if (!anomalyData)
             return;
         let Multiplier = anomalyData.multiplier;
         if (anomalyData.duration && anomalyData.interval) {
             const AnomalyDuration = this.get_AnomalyDuration(skill, usefulBuffs, anomalyData.duration);
-            const times = Math.floor((AnomalyDuration * 10) / (anomalyData.interval * 10));
+            times ||= Math.floor((AnomalyDuration * 10) / (anomalyData.interval * 10));
             Multiplier = anomalyData.multiplier * times;
         }
         logger.debug(`倍率：${Multiplier}`);
         return Multiplier;
     }
     /** 获取紊乱倍率 */
-    get_DiscoverMultiplier(skill, usefulBuffs, anomalyData) {
-        anomalyData ||= this.get_AnomalyData(skill);
+    get_DiscoverMultiplier(skill) {
+        const anomalyData = this.get_AnomalyData(skill);
         if (!anomalyData)
             return;
-        const AnomalyDuration = this.get_AnomalyDuration(skill, usefulBuffs, anomalyData.duration);
+        const AnomalyDuration = this.get_AnomalyDuration({
+            ...skill,
+            name: anomalyData.name,
+            type: anomalyData.name
+        }, this.buffM.buffs, anomalyData.duration);
         const times = Math.floor((AnomalyDuration * 10) / (anomalyData.interval * 10));
         const discover = anomalyData.discover;
         const Multiplier = discover.fixed_multiplier + times * discover.multiplier;
@@ -241,7 +269,7 @@ export class Calculator {
     get(type, initial, skill, usefulBuffs = this.buffM.buffs, isRatio = false) {
         return this.cache[type] ??= this.buffM._filter(usefulBuffs, {
             element: skill?.element,
-            range: [skill?.type],
+            range: skill?.redirect ? [skill.type, skill.redirect] : [skill?.type],
             type
         }, this).reduce((previousValue, buff) => {
             const { value } = buff;
@@ -264,6 +292,12 @@ export class Calculator {
         ATK = Math.max(0, Math.min(ATK, 10000));
         logger.debug(`攻击力：${ATK}`);
         return ATK;
+    }
+    /** 额外倍率 */
+    get_ExtraMultiplier(skill, usefulBuffs) {
+        const ExtraMultiplier = this.get('倍率', 0, skill, usefulBuffs);
+        ExtraMultiplier && logger.debug(`额外倍率：${ExtraMultiplier}`);
+        return ExtraMultiplier;
     }
     /** 暴击率 */
     get_CRITRate(skill, usefulBuffs) {

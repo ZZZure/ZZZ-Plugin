@@ -1,15 +1,15 @@
 /** @type {import('../../BuffManager.ts').BuffManager['buffs']} */
 export const buffs = [
   {
+    name: '4影',
+    type: '暴击率',
+    value: 0.1
+  },
+  {
     name: '6影',
     type: '增伤',
     value: 0.04 * 6,
     range: ['AQ', 'CFQ']
-  },
-  {
-    name: '4影',
-    type: '暴击率',
-    value: 0.1
   },
   {
     name: '核心被动：兄弟齐心',
@@ -27,6 +27,7 @@ export const buffs = [
 
 /** @type {import('../../Calculator.ts').Calculator['skills']} */
 export const skills = [
+  { name: '感电每次', type: '感电' },
   { name: '普攻二段（爆发）', type: 'AQ2' },
   { name: '闪避反击：过载钻击（爆发）', type: 'CFQ' },
   { name: '特殊技：爆发钻击（爆发）', type: 'EPQ' },

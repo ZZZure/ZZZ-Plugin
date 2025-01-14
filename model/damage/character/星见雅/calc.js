@@ -9,18 +9,10 @@
 //   /** 注册buff */
 //   // 影画加成
 //   buffM.new({
-//     name: '6影',
-//     type: '增伤',
-//     isForever: true,
-//     value: 0.30,
+//     name: '1影',
+//     type: '无视防御',
+//     value: 0.36,
 //     range: ['AX']
-//   })
-//   buffM.new({
-//     name: '4影',
-//     type: '增伤',
-//     isForever: true,
-//     value: 0.30,
-//     range: ['TP']
 //   })
 //   buffM.new({
 //     name: '2影',
@@ -36,9 +28,17 @@
 //     value: 0.15
 //   })
 //   buffM.new({
-//     name: '1影',
-//     type: '无视防御',
-//     value: 0.36,
+//     name: '4影',
+//     type: '增伤',
+//     isForever: true,
+//     value: 0.30,
+//     range: ['TP']
+//   })
+//   buffM.new({
+//     name: '6影',
+//     type: '增伤',
+//     isForever: true,
+//     value: 0.30,
 //     range: ['AX']
 //   })
 //   // 额外能力加成
@@ -93,18 +93,10 @@
 /** @type {import('../../BuffManager.ts').BuffManager['buffs']} */
 export const buffs = [
   {
-    name: '6影',
-    type: '增伤',
-    isForever: true,
-    value: 0.30,
+    name: '1影',
+    type: '无视防御',
+    value: 0.36,
     range: ['AX']
-  },
-  {
-    name: '4影',
-    type: '增伤',
-    isForever: true,
-    value: 0.30,
-    range: ['TP']
   },
   {
     name: '2影',
@@ -120,9 +112,17 @@ export const buffs = [
     range: ['AP', 'CF']
   },
   {
-    name: '1影',
-    type: '无视防御',
-    value: 0.36,
+    name: '4影',
+    type: '增伤',
+    isForever: true,
+    value: 0.30,
+    range: ['TP']
+  },
+  {
+    name: '6影',
+    type: '增伤',
+    isForever: true,
+    value: 0.30,
     range: ['AX']
   },
   {

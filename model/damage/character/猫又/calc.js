@@ -1,9 +1,10 @@
 /** @type {import('../../BuffManager.ts').BuffManager['buffs']} */
 export const buffs = [
   {
-    name: '6影',
-    type: '暴击伤害',
-    value: 0.18 * 3
+    name: '1影',
+    type: '无视抗性',
+    value: 0.16,
+    element: 'Physical'
   },
   {
     name: '4影',
@@ -11,10 +12,9 @@ export const buffs = [
     value: 0.07 * 2
   },
   {
-    name: '1影',
-    type: '无视抗性',
-    value: 0.16,
-    element: 'Physical'
+    name: '6影',
+    type: '暴击伤害',
+    value: 0.18 * 3
   },
   {
     name: '核心被动：猫步诡影',

@@ -7,13 +7,7 @@ export function calc(buffM, calc, avatar) {
   /** 注册buff */
   // 影画加成
   buffM.new({
-    name: '6影',
-    type: ,
-    value: 0,
-    range: ['']
-  })
-  buffM.new({
-    name: '4影',
+    name: '1影',
     type: ,
     value: 0,
     range: ['']
@@ -25,7 +19,13 @@ export function calc(buffM, calc, avatar) {
     range: ['']
   })
   buffM.new({
-    name: '1影',
+    name: '4影',
+    type: ,
+    value: 0,
+    range: ['']
+  })
+  buffM.new({
+    name: '6影',
     type: ,
     value: 0,
     range: ['']
@@ -65,13 +65,7 @@ export function calc(buffM, calc, avatar) {
 /** @type {import('../../BuffManager.ts').BuffManager['buffs']} */
 export const buffs = [
   {
-    name: '6影',
-    type: ,
-    value: 0,
-    range: ['']
-  },
-  {
-    name: '4影',
+    name: '1影',
     type: ,
     value: 0,
     range: ['']
@@ -83,7 +77,13 @@ export const buffs = [
     range: ['']
   },
   {
-    name: '1影',
+    name: '4影',
+    type: ,
+    value: 0,
+    range: ['']
+  },
+  {
+    name: '6影',
     type: ,
     value: 0,
     range: ['']

@@ -31,7 +31,7 @@ export type buffSource = 'Weapon' | 'Set' | 'Rank' | 'Talent' | 'Addition' | 'Sk
 
 export enum buffTypeEnum {
   // 通用乘区
-  攻击力, 增伤, 易伤, 无视抗性, 无视防御, 穿透值, 穿透率,
+  攻击力, 倍率, 增伤, 易伤, 无视抗性, 无视防御, 穿透值, 穿透率,
   // 直伤乘区
   暴击率, 暴击伤害,
   // 异常乘区
@@ -172,8 +172,8 @@ export class BuffManager {
               if (!buffRange || !param.range) continue // 对任意类型生效
               param.range = param.range.filter(r => typeof r === 'string')
               if (!param.range.length) continue
-              // buff作用范围向后覆盖
-              else if (!param.range.every(ST => buffRange.some(BT => ST.startsWith(BT)))) return false
+              // buff作用范围向后覆盖，满足伤害类型range中任意一个即可
+              else if (!param.range.some(ST => buffRange.some(BT => ST.startsWith(BT)))) return false
               else continue
             } else if (key === 'element') {
               if (!buff.element || !param.element) continue // 对任意属性生效
@@ -235,6 +235,7 @@ export class BuffManager {
   filter<T extends keyof buff>(type: T, value: buff[T]): buff[]
   /**
    * 根据多个指定属性筛选 **启用状态** 的buff
+   * - 对伤害类型range数组的筛选，只要其中有一个符合即认为满足
    */
   filter(obj: { [key in Exclude<keyof buff, 'status' | 'check' | 'element'>]?: buff[key] } & { element: element }, calc?: Calculator): buff[]
   /**

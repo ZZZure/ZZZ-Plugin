@@ -22,26 +22,27 @@ export var buffTypeEnum;
 (function (buffTypeEnum) {
     // 通用乘区
     buffTypeEnum[buffTypeEnum["\u653B\u51FB\u529B"] = 0] = "\u653B\u51FB\u529B";
-    buffTypeEnum[buffTypeEnum["\u589E\u4F24"] = 1] = "\u589E\u4F24";
-    buffTypeEnum[buffTypeEnum["\u6613\u4F24"] = 2] = "\u6613\u4F24";
-    buffTypeEnum[buffTypeEnum["\u65E0\u89C6\u6297\u6027"] = 3] = "\u65E0\u89C6\u6297\u6027";
-    buffTypeEnum[buffTypeEnum["\u65E0\u89C6\u9632\u5FA1"] = 4] = "\u65E0\u89C6\u9632\u5FA1";
-    buffTypeEnum[buffTypeEnum["\u7A7F\u900F\u503C"] = 5] = "\u7A7F\u900F\u503C";
-    buffTypeEnum[buffTypeEnum["\u7A7F\u900F\u7387"] = 6] = "\u7A7F\u900F\u7387";
+    buffTypeEnum[buffTypeEnum["\u500D\u7387"] = 1] = "\u500D\u7387";
+    buffTypeEnum[buffTypeEnum["\u589E\u4F24"] = 2] = "\u589E\u4F24";
+    buffTypeEnum[buffTypeEnum["\u6613\u4F24"] = 3] = "\u6613\u4F24";
+    buffTypeEnum[buffTypeEnum["\u65E0\u89C6\u6297\u6027"] = 4] = "\u65E0\u89C6\u6297\u6027";
+    buffTypeEnum[buffTypeEnum["\u65E0\u89C6\u9632\u5FA1"] = 5] = "\u65E0\u89C6\u9632\u5FA1";
+    buffTypeEnum[buffTypeEnum["\u7A7F\u900F\u503C"] = 6] = "\u7A7F\u900F\u503C";
+    buffTypeEnum[buffTypeEnum["\u7A7F\u900F\u7387"] = 7] = "\u7A7F\u900F\u7387";
     // 直伤乘区
-    buffTypeEnum[buffTypeEnum["\u66B4\u51FB\u7387"] = 7] = "\u66B4\u51FB\u7387";
-    buffTypeEnum[buffTypeEnum["\u66B4\u51FB\u4F24\u5BB3"] = 8] = "\u66B4\u51FB\u4F24\u5BB3";
+    buffTypeEnum[buffTypeEnum["\u66B4\u51FB\u7387"] = 8] = "\u66B4\u51FB\u7387";
+    buffTypeEnum[buffTypeEnum["\u66B4\u51FB\u4F24\u5BB3"] = 9] = "\u66B4\u51FB\u4F24\u5BB3";
     // 异常乘区
-    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u7CBE\u901A"] = 9] = "\u5F02\u5E38\u7CBE\u901A";
-    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u589E\u4F24"] = 10] = "\u5F02\u5E38\u589E\u4F24";
-    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u66B4\u51FB\u7387"] = 11] = "\u5F02\u5E38\u66B4\u51FB\u7387";
-    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u66B4\u51FB\u4F24\u5BB3"] = 12] = "\u5F02\u5E38\u66B4\u51FB\u4F24\u5BB3";
-    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u6301\u7EED\u65F6\u95F4"] = 13] = "\u5F02\u5E38\u6301\u7EED\u65F6\u95F4";
+    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u7CBE\u901A"] = 10] = "\u5F02\u5E38\u7CBE\u901A";
+    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u589E\u4F24"] = 11] = "\u5F02\u5E38\u589E\u4F24";
+    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u66B4\u51FB\u7387"] = 12] = "\u5F02\u5E38\u66B4\u51FB\u7387";
+    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u66B4\u51FB\u4F24\u5BB3"] = 13] = "\u5F02\u5E38\u66B4\u51FB\u4F24\u5BB3";
+    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u6301\u7EED\u65F6\u95F4"] = 14] = "\u5F02\u5E38\u6301\u7EED\u65F6\u95F4";
     // 其他属性，一般不直接影响伤害，但可能用于buff是否生效判断/转模
-    buffTypeEnum[buffTypeEnum["\u751F\u547D\u503C"] = 14] = "\u751F\u547D\u503C";
-    buffTypeEnum[buffTypeEnum["\u9632\u5FA1\u529B"] = 15] = "\u9632\u5FA1\u529B";
-    buffTypeEnum[buffTypeEnum["\u51B2\u51FB\u529B"] = 16] = "\u51B2\u51FB\u529B";
-    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u638C\u63A7"] = 17] = "\u5F02\u5E38\u638C\u63A7";
+    buffTypeEnum[buffTypeEnum["\u751F\u547D\u503C"] = 15] = "\u751F\u547D\u503C";
+    buffTypeEnum[buffTypeEnum["\u9632\u5FA1\u529B"] = 16] = "\u9632\u5FA1\u529B";
+    buffTypeEnum[buffTypeEnum["\u51B2\u51FB\u529B"] = 17] = "\u51B2\u51FB\u529B";
+    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u638C\u63A7"] = 18] = "\u5F02\u5E38\u638C\u63A7";
 })(buffTypeEnum || (buffTypeEnum = {}));
 let depth = 0, weakMapCheck = new WeakMap();
 /**
@@ -116,8 +117,8 @@ export class BuffManager {
                             param.range = param.range.filter(r => typeof r === 'string');
                             if (!param.range.length)
                                 continue;
-                            // buff作用范围向后覆盖
-                            else if (!param.range.every(ST => buffRange.some(BT => ST.startsWith(BT))))
+                            // buff作用范围向后覆盖，满足伤害类型range中任意一个即可
+                            else if (!param.range.some(ST => buffRange.some(BT => ST.startsWith(BT))))
                                 return false;
                             else
                                 continue;
