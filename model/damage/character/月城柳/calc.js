@@ -77,14 +77,14 @@ export const skills = [
     name: '强化E极性紊乱',
     type: '紊乱',
     banCache: true,
-    before: ({ calc, detail }) => {
+    before: ({ calc, areas }) => {
       const skill = { type: '紊乱' }
       const DiscoverMultiplier = calc.get_DiscoverMultiplier(skill)
       const n = calc.get('倍率', 0.15, { type: '强化E极性紊乱' })
       const ATK = calc.get_ATK(skill)
       const AnomalyProficiency = calc.get_AnomalyProficiency(skill)
-      const skillMultiplier = calc.get_Multiplier('E极性紊乱')
-      detail.BasicArea = DiscoverMultiplier * ATK * n + AnomalyProficiency * skillMultiplier
+      const skillMultiplier = calc.get_SkillMultiplier('E极性紊乱')
+      areas.BasicArea = DiscoverMultiplier * ATK * n + AnomalyProficiency * skillMultiplier
     }
   },
   { name: '连携技：星月相随', type: 'RL' },
@@ -93,14 +93,14 @@ export const skills = [
     name: '终结技极性紊乱',
     type: '紊乱',
     banCache: true,
-    before: ({ calc, detail }) => {
+    before: ({ calc, areas }) => {
       const skill = { type: '紊乱' }
       const DiscoverMultiplier = calc.get_DiscoverMultiplier(skill)
       const n = calc.get('倍率', 0.15, { type: '终结技极性紊乱' })
       const ATK = calc.get_ATK(skill)
       const AnomalyProficiency = calc.get_AnomalyProficiency(skill)
-      const skillMultiplier = calc.get_Multiplier('R极性紊乱')
-      detail.BasicArea = DiscoverMultiplier * ATK * n + AnomalyProficiency * skillMultiplier
+      const skillMultiplier = calc.get_SkillMultiplier('R极性紊乱')
+      areas.BasicArea = DiscoverMultiplier * ATK * n + AnomalyProficiency * skillMultiplier
     }
   }
 ]

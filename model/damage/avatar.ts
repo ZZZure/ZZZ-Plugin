@@ -163,7 +163,7 @@ export function set_buff(equip: ZZZAvatarInfo['equip'], buffM: BuffManager) {
 				})
 			}
 		}
-		const suit_name = String(equip_detail.equip_suit.name)
+		const suit_name = equip_detail.equip_suit.name
 		setCount[suit_name] = (setCount[suit_name] || 0) + 1
 	}
 	buffM.setCount = setCount

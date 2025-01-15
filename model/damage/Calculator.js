@@ -9,7 +9,7 @@ export class Calculator {
     avatar;
     skills = [];
     cache = {};
-    damageCache = {};
+    props = {};
     defaultSkill = {};
     enemy;
     constructor(buffM) {
@@ -54,8 +54,8 @@ export class Calculator {
                 return;
             return this.calc_skill(MySkill);
         }
-        if (!skill.banCache && this.damageCache[skill.type])
-            return this.damageCache[skill.type];
+        if (!skill.banCache && this.cache[skill.type])
+            return this.cache[skill.type];
         if (skill.check && !skill.check({ avatar: this.avatar, buffM: this.buffM, calc: this }))
             return;
         logger.debug(`${logger.green(skill.type)}${skill.name}伤害计算：`);
@@ -64,71 +64,74 @@ export class Calculator {
             logger.debug('自定义计算最终伤害：', dmg.result);
             return dmg;
         }
-        this.cache = {};
+        const props = this.props = skill.props || {};
         /** 缩小筛选范围 */
         const usefulBuffs = this.buffM.filter({
             element: skill.element,
             range: skill.redirect ? [skill.type, skill.redirect] : [skill.type]
         }, this);
-        const detail = {};
+        const areas = {};
         if (skill.before)
-            skill.before({ avatar: this.avatar, calc: this, detail, skill, usefulBuffs, });
+            skill.before({ avatar: this.avatar, calc: this, usefulBuffs, skill, props, areas });
         const isAnomaly = typeof anomalyEnum[skill.type] === 'number';
-        if (!detail.BasicArea) {
-            if (!detail.Multiplier) {
+        if (!areas.BasicArea) {
+            let Multiplier = props.倍率;
+            if (!Multiplier) {
                 if (skill.fixedMultiplier) {
-                    detail.Multiplier = skill.fixedMultiplier;
+                    Multiplier = skill.fixedMultiplier;
                 }
                 else if (isAnomaly) {
-                    detail.Multiplier = (skill.type === '紊乱' ?
+                    Multiplier = (skill.type === '紊乱' ?
                         this.get_DiscoverMultiplier(skill) :
                         this.get_AnomalyMultiplier(skill, usefulBuffs, skill.name.includes('每') ? 1 : 0)) || 0;
                 }
                 else {
                     if (skill.skillMultiplier)
-                        detail.Multiplier = skill.skillMultiplier[this.get_SkillLevel(skill.type[0]) - 1];
+                        Multiplier = skill.skillMultiplier[this.get_SkillLevel(skill.type[0]) - 1];
                     else
-                        detail.Multiplier = this.get_Multiplier(skill.type);
+                        Multiplier = this.get_SkillMultiplier(skill.type);
                 }
                 const ExtraMultiplier = this.get_ExtraMultiplier(skill, usefulBuffs);
-                detail.Multiplier += ExtraMultiplier;
-                if (!detail.Multiplier)
+                Multiplier += ExtraMultiplier;
+                if (!Multiplier)
                     return logger.warn('技能倍率缺失：', skill);
                 if (ExtraMultiplier)
-                    logger.debug(`最终倍率：${detail.Multiplier}`);
+                    logger.debug(`最终倍率：${Multiplier}`);
             }
-            detail.ATK ??= this.get_ATK(skill, usefulBuffs);
+            props.倍率 = Multiplier;
+            this.get_ATK(skill, usefulBuffs);
+            areas.BasicArea = props.攻击力 * props.倍率;
         }
-        detail.BasicArea ??= detail.ATK * detail.Multiplier;
-        logger.debug(`基础伤害区：${detail.BasicArea}`);
+        logger.debug(`基础伤害区：${areas.BasicArea}`);
         if (isAnomaly) {
-            detail.AnomalyProficiencyArea ??= this.get_AnomalyProficiencyArea(skill, usefulBuffs);
-            detail.AnomalyBoostArea ??= this.get_AnomalyBoostArea(skill, usefulBuffs);
-            detail.LevelArea ??= this.get_LevelArea();
-            detail.AnomalyCRITRate ??= this.get_AnomalyCRITRate(skill, usefulBuffs);
-            detail.AnomalyCRITDMG ??= this.get_AnomalyCRITDMG(skill, usefulBuffs);
-            detail.CriticalArea ??= 1 + detail.AnomalyCRITRate * (detail.AnomalyCRITDMG - 1);
+            areas.AnomalyProficiencyArea ??= this.get_AnomalyProficiencyArea(skill, usefulBuffs);
+            areas.AnomalyBoostArea ??= this.get_AnomalyBoostArea(skill, usefulBuffs);
+            areas.LevelArea ??= this.get_LevelArea();
+            this.get_AnomalyCRITRate(skill, usefulBuffs);
+            this.get_AnomalyCRITDMG(skill, usefulBuffs);
+            areas.CriticalArea ??= 1 + props.异常暴击率 * (props.异常暴击伤害 - 1);
         }
         else {
-            detail.CRITRate ??= this.get_CRITRate(skill, usefulBuffs);
-            detail.CRITDMG ??= this.get_CRITDMG(skill, usefulBuffs);
-            detail.CriticalArea ??= 1 + detail.CRITRate * (detail.CRITDMG - 1);
+            this.get_CRITRate(skill, usefulBuffs);
+            this.get_CRITDMG(skill, usefulBuffs);
+            areas.CriticalArea ??= 1 + props.暴击率 * (props.暴击伤害 - 1);
         }
-        logger.debug(`暴击期望：${detail.CriticalArea}`);
-        detail.BoostArea ??= this.get_BoostArea(skill, usefulBuffs);
-        detail.VulnerabilityArea ??= this.get_VulnerabilityArea(skill, usefulBuffs);
-        detail.ResistanceArea ??= this.get_ResistanceArea(skill, usefulBuffs);
-        detail.DefenceArea ??= this.get_DefenceArea(skill, usefulBuffs);
-        const { BasicArea, CRITDMG, CriticalArea, BoostArea, VulnerabilityArea, ResistanceArea, DefenceArea, AnomalyProficiencyArea, LevelArea, AnomalyBoostArea, AnomalyCRITRate, AnomalyCRITDMG } = detail;
+        logger.debug(`暴击期望：${areas.CriticalArea}`);
+        areas.BoostArea ??= this.get_BoostArea(skill, usefulBuffs);
+        areas.VulnerabilityArea ??= this.get_VulnerabilityArea(skill, usefulBuffs);
+        areas.ResistanceArea ??= this.get_ResistanceArea(skill, usefulBuffs);
+        areas.DefenceArea ??= this.get_DefenceArea(skill, usefulBuffs);
+        const { BasicArea, CriticalArea, BoostArea, VulnerabilityArea, ResistanceArea, DefenceArea, AnomalyProficiencyArea, LevelArea, AnomalyBoostArea } = areas;
+        const { 暴击伤害, 异常暴击伤害 } = props;
         const result = isAnomaly ?
             {
-                critDMG: AnomalyCRITRate ? BasicArea * AnomalyCRITDMG * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea * AnomalyProficiencyArea * LevelArea * AnomalyBoostArea : 0,
+                critDMG: (CriticalArea !== 1) ? BasicArea * 异常暴击伤害 * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea * AnomalyProficiencyArea * LevelArea * AnomalyBoostArea : 0,
                 expectDMG: BasicArea * CriticalArea * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea * AnomalyProficiencyArea * LevelArea * AnomalyBoostArea
             } : {
-            critDMG: BasicArea * CRITDMG * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea,
+            critDMG: BasicArea * 暴击伤害 * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea,
             expectDMG: BasicArea * CriticalArea * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea
         };
-        const damage = { skill, detail, result };
+        const damage = { skill, props, areas, result };
         if (skill.after) {
             damage.add = (d) => {
                 if (typeof d === 'string')
@@ -145,11 +148,12 @@ export class Calculator {
                 logger.debug('伤害系数：' + n);
                 damage.fnc(v => v * n);
             };
-            skill.after({ avatar: this.avatar, damage, calc: this, usefulBuffs });
+            skill.after({ avatar: this.avatar, calc: this, usefulBuffs, skill, damage });
         }
         logger.debug('最终伤害：', result);
         if (!skill.banCache)
-            this.damageCache[skill.type] = damage;
+            this.cache[skill.type] = damage;
+        // console.log(damage)
         return damage;
     }
     calc() {
@@ -188,10 +192,10 @@ export class Calculator {
      * 获取技能倍率
      * @param type 参见技能命名标准
      */
-    get_Multiplier(type) {
-        const skillLevel = this.get_SkillLevel(type[0]);
-        logger.debug(`${type[0]}等级：${skillLevel}`);
-        const Multiplier = charData[this.avatar.id].skill[type]?.[skillLevel - 1];
+    get_SkillMultiplier(type) {
+        const SkillLevel = this.get_SkillLevel(type[0]);
+        logger.debug(`${type[0]}等级：${SkillLevel}`);
+        const Multiplier = charData[this.avatar.id].skill[type]?.[SkillLevel - 1];
         logger.debug(`技能倍率：${Multiplier}`);
         return Multiplier;
     }
@@ -258,7 +262,7 @@ export class Calculator {
      * @param isRatio 是否支持buff.value为数值类型且<1时按初始数值百分比提高处理
      */
     get(type, initial, skill, usefulBuffs = this.buffM.buffs, isRatio = false) {
-        return this.cache[type] ??= this.buffM._filter(usefulBuffs, {
+        return this.props[type] ??= this.buffM._filter(usefulBuffs, {
             element: skill?.element,
             range: skill?.redirect ? [skill.type, skill.redirect] : [skill?.type],
             type
@@ -322,18 +326,24 @@ export class Calculator {
         logger.debug(`抗性区：${ResistanceArea}`);
         return ResistanceArea;
     }
+    /** 无视防御 */
+    get_IgnoreDEF(skill, usefulBuffs) {
+        const IgnoreDEF = this.get('无视防御', 0, skill, usefulBuffs);
+        IgnoreDEF && logger.debug(`无视防御：${IgnoreDEF}`);
+        return IgnoreDEF;
+    }
     /** 穿透值 */
     get_Pen(skill, usefulBuffs) {
         let Pen = this.get('穿透值', this.initial_properties.Pen, skill, usefulBuffs);
         Pen = Math.max(0, Math.min(Pen, 1000));
-        logger.debug(`穿透值：${Pen}`);
+        Pen && logger.debug(`穿透值：${Pen}`);
         return Pen;
     }
     /** 穿透率 */
     get_PenRatio(skill, usefulBuffs) {
         let PenRatio = this.get('穿透率', this.initial_properties.PenRatio, skill, usefulBuffs);
         PenRatio = Math.max(0, Math.min(PenRatio, 2));
-        logger.debug(`穿透率：${PenRatio}`);
+        PenRatio && logger.debug(`穿透率：${PenRatio}`);
         return PenRatio;
     }
     /** 防御区 */
@@ -343,11 +353,11 @@ export class Calculator {
         const base = get_base(this.avatar.level);
         /** 基础防御 */
         const DEF = this.enemy.basicDEF / 50 * get_base(this.enemy.level);
-        const ignore_defence = this.get('无视防御', 0, skill, usefulBuffs);
+        const IgnoreDEF = this.get_IgnoreDEF(skill, usefulBuffs);
         const Pen = this.get_Pen(skill, usefulBuffs);
         const PenRatio = this.get_PenRatio(skill, usefulBuffs);
         /** 防御 */
-        const defence = DEF * (1 - ignore_defence);
+        const defence = DEF * (1 - IgnoreDEF);
         /** 有效防御 */
         const effective_defence = Math.max(0, defence * (1 - PenRatio) - Pen);
         const DefenceArea = base / (effective_defence + base);
@@ -377,21 +387,21 @@ export class Calculator {
     /** 异常增伤区 */
     get_AnomalyBoostArea(skill, usefulBuffs) {
         const AnomalyBoostArea = this.get('异常增伤', 1, skill, usefulBuffs);
-        logger.debug(`异常增伤区：${AnomalyBoostArea}`);
+        AnomalyBoostArea && logger.debug(`异常增伤区：${AnomalyBoostArea}`);
         return AnomalyBoostArea;
     }
     /** 异常暴击率 */
     get_AnomalyCRITRate(skill, usefulBuffs) {
         let AnomalyCRITRate = this.get('异常暴击率', 0, skill, usefulBuffs);
         AnomalyCRITRate = Math.max(0, Math.min(AnomalyCRITRate, 1));
-        logger.debug(`异常暴击率：${AnomalyCRITRate}`);
+        AnomalyCRITRate && logger.debug(`异常暴击率：${AnomalyCRITRate}`);
         return AnomalyCRITRate;
     }
     /** 异常暴击伤害 */
     get_AnomalyCRITDMG(skill, usefulBuffs) {
         let AnomalyCRITDMG = this.get('异常暴击伤害', 1, skill, usefulBuffs);
         AnomalyCRITDMG = Math.max(0, Math.min(AnomalyCRITDMG, 5));
-        logger.debug(`异常暴击伤害：${AnomalyCRITDMG}`);
+        AnomalyCRITDMG && logger.debug(`异常暴击伤害：${AnomalyCRITDMG}`);
         return AnomalyCRITDMG;
     }
     /** 异常持续时间 */
