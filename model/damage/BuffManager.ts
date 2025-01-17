@@ -223,13 +223,6 @@ export class BuffManager {
   }
 
   /**
-   * 遍历buff列表
-   */
-  forEach(fnc: (buff: buff, index: number) => void) {
-    return this.buffs.forEach(fnc)
-  }
-
-  /**
    * 根据单个指定属性筛选buff，不作进一步判断
    */
   filter<T extends keyof buff>(type: T, value: buff[T]): buff[]
@@ -251,6 +244,16 @@ export class BuffManager {
   ) {
     // @ts-ignore
     return this._filter(this.buffs, param, valueOcalc)
+  }
+
+  /** 遍历buff列表 */
+  forEach(fnc: (buff: buff, index: number) => void) {
+    return this.buffs.forEach(fnc)
+  }
+
+  /** 查找指定buff */
+  find<T extends keyof buff>(type: T, value: buff[T]) {
+    return this.buffs.find(buff => buff[type] === value)
   }
 
   operator<T extends keyof buff>(type: T, value: buff[T], fnc: (buff: buff) => void) {

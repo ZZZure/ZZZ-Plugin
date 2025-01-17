@@ -51,7 +51,7 @@ export const skills = [
   },
   {
     name: '6影小猪空中落地爆炸',
-    type: 'Y',
+    type: 'Y6',
     check: ({ avatar }) => avatar.rank >= 6,
     fixedMultiplier: 3,
     props: {

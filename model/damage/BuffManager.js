@@ -181,15 +181,17 @@ export class BuffManager {
         }
         return buffs;
     }
-    /**
-     * 遍历buff列表
-     */
-    forEach(fnc) {
-        return this.buffs.forEach(fnc);
-    }
     filter(param, valueOcalc) {
         // @ts-ignore
         return this._filter(this.buffs, param, valueOcalc);
+    }
+    /** 遍历buff列表 */
+    forEach(fnc) {
+        return this.buffs.forEach(fnc);
+    }
+    /** 查找指定buff */
+    find(type, value) {
+        return this.buffs.find(buff => buff[type] === value);
     }
     operator(type, value, fnc) {
         this.forEach(buff => {

@@ -4,7 +4,7 @@ export const buffs = [
     name: '1影',
     type: '倍率',
     value: 1,
-    range: ['TY', 'YY']
+    range: ['TY', 'Y6Y']
   },
   {
     name: '2影',
@@ -22,14 +22,14 @@ export const buffs = [
     type: '无视抗性',
     value: 0.25,
     element: 'Fire',
-    range: ['TY', 'YY', '灼烧']
+    range: ['TY', 'Y6Y', '灼烧']
   },
   {
     name: '核心被动：燃油特调',
     type: '增伤',
     value: ({ calc }) => Math.min(30, Math.floor(calc.get_AnomalyProficiency() / 10)) * 0.01,
     isForever: true,
-    range: ['TY', 'YY']
+    range: ['TY', 'Y6Y']
   },
   {
     name: '额外能力：星火燎原',
@@ -70,13 +70,13 @@ export const skills = [
   },
   {
     name: '6影强化E双份额外余烬秒伤',
-    type: 'YY',
+    type: 'Y6Y',
     fixedMultiplier: 1.2,
     check: ({ avatar }) => avatar.rank >= 6
   },
   {
     name: '6影强化E双份额外灼烧',
-    type: 'Y灼烧',
+    type: 'Y6灼烧',
     check: ({ avatar }) => avatar.rank >= 6,
     dmg: (calc) => {
       const dmg = calc.calc_skill({
