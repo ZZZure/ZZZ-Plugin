@@ -236,12 +236,12 @@ export class Calculator {
       areas.AnomalyProficiencyArea ??= this.get_AnomalyProficiencyArea(skill, usefulBuffs)
       areas.AnomalyBoostArea ??= this.get_AnomalyBoostArea(skill, usefulBuffs)
       areas.LevelArea ??= this.get_LevelArea()
-      this.get_AnomalyCRITRate(skill, usefulBuffs)
-      this.get_AnomalyCRITDMG(skill, usefulBuffs)
+      props.异常暴击率 = this.get_AnomalyCRITRate(skill, usefulBuffs)
+      props.异常暴击伤害 = this.get_AnomalyCRITDMG(skill, usefulBuffs)
       areas.CriticalArea ??= 1 + props.异常暴击率! * (props.异常暴击伤害! - 1)
     } else {
-      this.get_CRITRate(skill, usefulBuffs)
-      this.get_CRITDMG(skill, usefulBuffs)
+      props.暴击率 = this.get_CRITRate(skill, usefulBuffs)
+      props.暴击伤害 = this.get_CRITDMG(skill, usefulBuffs)
       areas.CriticalArea ??= 1 + props.暴击率! * (props.暴击伤害! - 1)
     }
     logger.debug(`暴击期望：${areas.CriticalArea}`)
@@ -373,7 +373,7 @@ export class Calculator {
     const times = Math.floor((AnomalyDuration * 10) / (anomalyData.interval * 10))
     const discover = anomalyData.discover!
     const Multiplier = discover.fixed_multiplier + times * discover.multiplier
-    logger.debug(`${anomalyData.name}紊乱 倍率：${Multiplier}`)
+    logger.debug(`${anomalyData.name}紊乱倍率：${Multiplier}`)
     return Multiplier
   }
 

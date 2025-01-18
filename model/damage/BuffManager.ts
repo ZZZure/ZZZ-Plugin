@@ -9,7 +9,10 @@ export enum elementEnum {
 }
 
 export enum anomalyEnum {
-  强击, 灼烧, 碎冰, 感电, 侵蚀, 紊乱
+  // 伤害异常
+  强击, 灼烧, 碎冰, 感电, 侵蚀, 紊乱,
+  // 状态异常（异常持续时间buff应作用于对应的状态异常）
+  畏缩, 霜寒
 }
 
 /** 属性类型 */

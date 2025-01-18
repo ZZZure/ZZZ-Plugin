@@ -11,12 +11,16 @@ export var elementEnum;
 })(elementEnum || (elementEnum = {}));
 export var anomalyEnum;
 (function (anomalyEnum) {
+    // 伤害异常
     anomalyEnum[anomalyEnum["\u5F3A\u51FB"] = 0] = "\u5F3A\u51FB";
     anomalyEnum[anomalyEnum["\u707C\u70E7"] = 1] = "\u707C\u70E7";
     anomalyEnum[anomalyEnum["\u788E\u51B0"] = 2] = "\u788E\u51B0";
     anomalyEnum[anomalyEnum["\u611F\u7535"] = 3] = "\u611F\u7535";
     anomalyEnum[anomalyEnum["\u4FB5\u8680"] = 4] = "\u4FB5\u8680";
     anomalyEnum[anomalyEnum["\u7D0A\u4E71"] = 5] = "\u7D0A\u4E71";
+    // 状态异常（异常持续时间buff应作用于对应的状态异常）
+    anomalyEnum[anomalyEnum["\u754F\u7F29"] = 6] = "\u754F\u7F29";
+    anomalyEnum[anomalyEnum["\u971C\u5BD2"] = 7] = "\u971C\u5BD2";
 })(anomalyEnum || (anomalyEnum = {}));
 export var buffTypeEnum;
 (function (buffTypeEnum) {
