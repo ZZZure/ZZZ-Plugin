@@ -3,7 +3,7 @@ export const buffs = [
   {
     name: '1影',
     type: '暴击率',
-    value: 0.2 * 6
+    value: 0.02 * 6
   },
   {
     name: '2影',
