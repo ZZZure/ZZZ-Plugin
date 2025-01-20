@@ -114,15 +114,26 @@ export class BuffManager {
                     if (buff.status === false)
                         return false;
                     for (const key in param) {
+                        if (key === 'redirect')
+                            continue;
                         if (key === 'range') {
                             const buffRange = buff.range;
-                            if (!buffRange || !param.range)
+                            const skillRange = param.range?.filter(r => typeof r === 'string');
+                            if (!buffRange || !skillRange)
                                 continue; // 对任意类型生效
-                            param.range = param.range.filter(r => typeof r === 'string');
-                            if (!param.range.length)
+                            if (!skillRange.length)
                                 continue;
-                            // buff作用范围向后覆盖，满足伤害类型range中任意一个即可
-                            else if (!param.range.some(ST => buffRange.some(BT => ST.startsWith(BT))))
+                            // buff作用范围向后覆盖
+                            // 存在重定向时，range须全匹配，redirect向后覆盖
+                            else if (param.redirect) {
+                                if (skillRange.some(ST => buffRange.some(BT => BT === ST)))
+                                    continue;
+                                if (buffRange.some(BT => param.redirect.startsWith(BT)))
+                                    continue;
+                                return false;
+                            }
+                            // 不存在重定向时，range向后覆盖
+                            else if (!skillRange.some(ST => buffRange.some(BT => ST.startsWith(BT))))
                                 return false;
                             else
                                 continue;

@@ -1,5 +1,5 @@
 import type { ZZZAvatarInfo } from '../avatar.js'
-import type { Calculator } from './Calculator.ts'
+import type { Calculator, skill } from './Calculator.ts'
 import { weaponIDToProfession } from '../../lib/convert/weapon.js'
 import _ from 'lodash'
 
@@ -63,7 +63,7 @@ export interface buff {
    * - 一般情况下此值即为提高值
    * - 当buff增益类型为**攻击力/冲击力/异常精通/异常掌控/防御力/生命值**时，若此值 **<1**，则将此值理解为**初始属性**的**百分比提高**
    * @array
-   * 根据buff.source自动选择对应等级/星级的值，支持：
+   * 根据buff.source自动选择对应等级/星级的值（同上支持百分比提高），支持的source：
    * - Weapon：武器星级（进阶）
    * - Talent/Addition：天赋（核心技）等级
    * @function
@@ -152,13 +152,13 @@ export class BuffManager {
   }
 
   _filter<T extends keyof buff>(buffs: buff[], type: T, value: buff[T]): buff[]
-  _filter(buffs: buff[], obj: { [key in Exclude<keyof buff, 'status' | 'check' | 'element'>]?: buff[key] } & { element: element }, calc?: Calculator): buff[]
+  _filter(buffs: buff[], obj: { [key in Exclude<keyof buff, 'status' | 'check' | 'element'>]?: buff[key] } & { element: element, redirect?: skill['type'] }, calc?: Calculator): buff[]
   _filter(buffs: buff[], fnc: (buff: buff, index: number) => boolean): buff[]
   _filter<T extends keyof buff>(
     buffs: buff[],
     param:
       | T
-      | ({ [key in Exclude<keyof buff, 'status' | 'check' | 'element'>]?: buff[key] } & { element: element })
+      | ({ [key in Exclude<keyof buff, 'status' | 'check' | 'element'>]?: buff[key] } & { element: element, redirect?: skill['type'] })
       | ((buff: buff, index: number) => boolean),
     valueOcalc?: buff[T] | Calculator
   ) {
@@ -170,13 +170,21 @@ export class BuffManager {
         buffs = buffs.filter(buff => {
           if (buff.status === false) return false
           for (const key in param) {
+            if (key === 'redirect') continue
             if (key === 'range') {
               const buffRange = buff.range
-              if (!buffRange || !param.range) continue // 对任意类型生效
-              param.range = param.range.filter(r => typeof r === 'string')
-              if (!param.range.length) continue
-              // buff作用范围向后覆盖，满足伤害类型range中任意一个即可
-              else if (!param.range.some(ST => buffRange.some(BT => ST.startsWith(BT)))) return false
+              const skillRange = param.range?.filter(r => typeof r === 'string')
+              if (!buffRange || !skillRange) continue // 对任意类型生效
+              if (!skillRange.length) continue
+              // buff作用范围向后覆盖
+              // 存在重定向时，range须全匹配，redirect向后覆盖
+              else if (param.redirect) {
+                if (skillRange.some(ST => buffRange.some(BT => BT === ST))) continue
+                if (buffRange.some(BT => param.redirect!.startsWith(BT))) continue
+                return false
+              }
+              // 不存在重定向时，range向后覆盖
+              else if (!skillRange.some(ST => buffRange.some(BT => ST.startsWith(BT)))) return false
               else continue
             } else if (key === 'element') {
               if (!buff.element || !param.element) continue // 对任意属性生效
@@ -232,8 +240,10 @@ export class BuffManager {
   /**
    * 根据多个指定属性筛选 **启用状态** 的buff
    * - 对伤害类型range数组的筛选，只要其中有一个符合即认为满足
+   * - 存在重定向时，range须全匹配，redirect向后覆盖
+   * - 不存在重定向时，range向后覆盖
    */
-  filter(obj: { [key in Exclude<keyof buff, 'status' | 'check' | 'element'>]?: buff[key] } & { element: element }, calc?: Calculator): buff[]
+  filter(obj: { [key in Exclude<keyof buff, 'status' | 'check' | 'element'>]?: buff[key] } & { element: element, redirect?: skill['type'] }, calc?: Calculator): buff[]
   /**
    * 根据指定函数筛选buff
    */
@@ -241,7 +251,7 @@ export class BuffManager {
   filter<T extends keyof buff>(
     param:
       | T
-      | ({ [key in Exclude<keyof buff, 'status' | 'check' | 'element'>]?: buff[key] } & { element: element })
+      | ({ [key in Exclude<keyof buff, 'status' | 'check' | 'element'>]?: buff[key] } & { element: element, redirect?: skill['type'] })
       | ((buff: buff, index: number) => boolean),
     valueOcalc?: buff[T] | Calculator
   ) {

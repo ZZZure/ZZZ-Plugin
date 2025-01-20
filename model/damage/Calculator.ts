@@ -22,8 +22,9 @@ export interface skill {
   /**
    * 重定向技能伤害类型
    * 
-   * 当出现“X"造成的伤害被视为“Y”伤害时，可使用该参数指定Y的类型
-   * 参考技能类型命名标准
+   * 当出现“X"(造成的伤害)被视为“Y”(伤害)时，可使用该参数指定Y的类型。
+   * - 存在重定向时，range须全匹配，redirect向后覆盖
+   * - 不存在重定向时，range向后覆盖
    */
   redirect?: string
   /** 角色面板伤害统计中是否隐藏显示 */
@@ -202,7 +203,8 @@ export class Calculator {
     /** 缩小筛选范围 */
     const usefulBuffs = this.buffM.filter({
       element: skill.element,
-      range: skill.redirect ? [skill.type, skill.redirect] : [skill.type]
+      range: [skill.type],
+      redirect: skill.redirect
     }, this)
     const areas = {} as damage['areas']
     if (skill.before) skill.before({ avatar: this.avatar, calc: this, usefulBuffs, skill, props, areas })
@@ -294,7 +296,7 @@ export class Calculator {
         logger.error('伤害计算错误：', e)
         return
       }
-    }).filter(v => v && !v.skill?.isHide)
+    }).filter(v => v && v.result?.expectDMG && !v.skill?.isHide)
   }
 
   /**
@@ -401,7 +403,8 @@ export class Calculator {
   get(type: buff['type'], initial: number, skill: skill, usefulBuffs: buff[] = this.buffM.buffs, isRatio = false): number {
     return this.props![type] ??= this.buffM._filter(usefulBuffs, {
       element: skill?.element,
-      range: skill?.redirect ? [skill.type, skill.redirect] : [skill?.type],
+      range: [skill?.type],
+      redirect: skill?.redirect,
       type
     }, this).reduce((previousValue, buff) => {
       const { value } = buff

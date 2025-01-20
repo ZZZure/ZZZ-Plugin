@@ -68,7 +68,8 @@ export class Calculator {
         /** 缩小筛选范围 */
         const usefulBuffs = this.buffM.filter({
             element: skill.element,
-            range: skill.redirect ? [skill.type, skill.redirect] : [skill.type]
+            range: [skill.type],
+            redirect: skill.redirect
         }, this);
         const areas = {};
         if (skill.before)
@@ -165,7 +166,7 @@ export class Calculator {
                 logger.error('伤害计算错误：', e);
                 return;
             }
-        }).filter(v => v && !v.skill?.isHide);
+        }).filter(v => v && v.result?.expectDMG && !v.skill?.isHide);
     }
     default(param, value) {
         if (typeof param === 'object') {
@@ -264,7 +265,8 @@ export class Calculator {
     get(type, initial, skill, usefulBuffs = this.buffM.buffs, isRatio = false) {
         return this.props[type] ??= this.buffM._filter(usefulBuffs, {
             element: skill?.element,
-            range: skill?.redirect ? [skill.type, skill.redirect] : [skill?.type],
+            range: [skill?.type],
+            redirect: skill?.redirect,
             type
         }, this).reduce((previousValue, buff) => {
             const { value } = buff;
