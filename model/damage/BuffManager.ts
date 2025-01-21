@@ -138,12 +138,12 @@ export class BuffManager {
       return logger.warn('无效buff：', buff)
     // 武器buff职业检查
     if (buff.source === 'Weapon') {
-      if (typeof buff.check === 'function') {
-        const oriCheck = buff.check
-        buff.check = ({ avatar, buffM, calc }) => avatar.avatar_profession === weaponIDToProfession(avatar.weapon.id) && oriCheck({ avatar, buffM, calc })
-      } else {
-        buff.check = ({ avatar }) => avatar.avatar_profession === weaponIDToProfession(avatar.weapon.id)
+      const professionCheck = (avatar: ZZZAvatarInfo) => {
+        const weapon_profession = weaponIDToProfession(avatar.weapon.id)
+        return !weapon_profession || avatar.avatar_profession === weapon_profession
       }
+      const oriCheck = typeof buff.check === 'function' && buff.check
+      buff.check = ({ avatar, buffM, calc }) => professionCheck(avatar) && (!oriCheck || oriCheck({ avatar, buffM, calc }))
     } else if (buff.source === 'Rank') {
       buff.check ??= +buff.name.match(/\d/)!?.[0]
     }
