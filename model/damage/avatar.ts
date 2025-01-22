@@ -133,37 +133,38 @@ export function avatar_ability(avatar: ZZZAvatarInfo) {
 }
 
 /** 武器加成 */
-export function weapon_buff(equipment: ZZZAvatarInfo['weapon'], buffM: BuffManager) {
-	const name = equipment.name
+export function weapon_buff(weapon: ZZZAvatarInfo['weapon'], buffM: BuffManager) {
+	const name = weapon?.name
+	if (!name) return
 	logger.debug('武器：' + name)
 	const m = calcFnc.weapon[name]
 	if (!m) return
 	buffM.default({ name, source: 'Weapon' })
 	if (m.buffs) buffM.new(m.buffs)
-	if (m.calc) m.calc(buffM, equipment.star)
+	if (m.calc) m.calc(buffM, weapon.star)
 	buffM.default({})
 }
 
 /** 套装加成 */
-export function set_buff(equip: ZZZAvatarInfo['equip'], buffM: BuffManager) {
+export function set_buff(equips: ZZZAvatarInfo['equip'], buffM: BuffManager) {
 	buffM.default({ name: '', source: 'Set' })
 	const setCount: { [name: string]: number } = {}
-	for (const equip_detail of equip) {
-		if (equip_detail.equipment_type == 5) {
+	for (const equip of equips) {
+		if (equip.equipment_type == 5) {
 			// 属伤加成
-			const index = [31503, 31603, 31703, 31803, 31903].indexOf(equip_detail.main_properties[0].property_id)
+			const index = [31503, 31603, 31703, 31803, 31903].indexOf(equip.main_properties[0].property_id)
 			if (index > -1 && elementEnum[index]) {
 				// @ts-ignore
 				buffM.new({
 					name: '驱动盘5号位',
 					type: '增伤',
-					value: Number(equip_detail.main_properties[0].base.replace('%', '')) / 100,
+					value: Number(equip.main_properties[0].base.replace('%', '')) / 100,
 					isForever: true,
 					element: elementEnum[index]
 				})
 			}
 		}
-		const suit_name = equip_detail.equip_suit.name
+		const suit_name = equip.equip_suit.name
 		setCount[suit_name] = (setCount[suit_name] || 0) + 1
 	}
 	buffM.setCount = setCount

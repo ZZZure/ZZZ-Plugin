@@ -106,8 +106,10 @@ export function avatar_ability(avatar) {
     return calc.calc();
 }
 /** 武器加成 */
-export function weapon_buff(equipment, buffM) {
-    const name = equipment.name;
+export function weapon_buff(weapon, buffM) {
+    const name = weapon?.name;
+    if (!name)
+        return;
     logger.debug('武器：' + name);
     const m = calcFnc.weapon[name];
     if (!m)
@@ -116,29 +118,29 @@ export function weapon_buff(equipment, buffM) {
     if (m.buffs)
         buffM.new(m.buffs);
     if (m.calc)
-        m.calc(buffM, equipment.star);
+        m.calc(buffM, weapon.star);
     buffM.default({});
 }
 /** 套装加成 */
-export function set_buff(equip, buffM) {
+export function set_buff(equips, buffM) {
     buffM.default({ name: '', source: 'Set' });
     const setCount = {};
-    for (const equip_detail of equip) {
-        if (equip_detail.equipment_type == 5) {
+    for (const equip of equips) {
+        if (equip.equipment_type == 5) {
             // 属伤加成
-            const index = [31503, 31603, 31703, 31803, 31903].indexOf(equip_detail.main_properties[0].property_id);
+            const index = [31503, 31603, 31703, 31803, 31903].indexOf(equip.main_properties[0].property_id);
             if (index > -1 && elementEnum[index]) {
                 // @ts-ignore
                 buffM.new({
                     name: '驱动盘5号位',
                     type: '增伤',
-                    value: Number(equip_detail.main_properties[0].base.replace('%', '')) / 100,
+                    value: Number(equip.main_properties[0].base.replace('%', '')) / 100,
                     isForever: true,
                     element: elementEnum[index]
                 });
             }
         }
-        const suit_name = equip_detail.equip_suit.name;
+        const suit_name = equip.equip_suit.name;
         setCount[suit_name] = (setCount[suit_name] || 0) + 1;
     }
     buffM.setCount = setCount;

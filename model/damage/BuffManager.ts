@@ -1,6 +1,5 @@
 import type { ZZZAvatarInfo } from '../avatar.js'
 import type { Calculator, skill } from './Calculator.ts'
-import { weaponIDToProfession } from '../../lib/convert/weapon.js'
 import _ from 'lodash'
 
 export enum elementEnum {
@@ -139,8 +138,9 @@ export class BuffManager {
     // 武器buff职业检查
     if (buff.source === 'Weapon') {
       const professionCheck = (avatar: ZZZAvatarInfo) => {
-        const weapon_profession = weaponIDToProfession(avatar.weapon.id)
-        return !weapon_profession || avatar.avatar_profession === weapon_profession
+        const weapon_profession = avatar.weapon?.profession
+        if (!weapon_profession) return true
+        return avatar.avatar_profession === weapon_profession
       }
       const oriCheck = typeof buff.check === 'function' && buff.check
       buff.check = ({ avatar, buffM, calc }) => professionCheck(avatar) && (!oriCheck || oriCheck({ avatar, buffM, calc }))
