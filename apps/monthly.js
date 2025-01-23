@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { rulePrefix } from '../lib/common.js';
 import { getMonthly, getMonthlyCollect } from '../lib/monthly.js';
 
-export class Note extends ZZZPlugin {
+export class monthly extends ZZZPlugin {
   constructor() {
     super({
       name: '[ZZZ-Plugin]Monthly',

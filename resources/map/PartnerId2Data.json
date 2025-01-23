@@ -42,9 +42,9 @@
     "en_name": "Grace"
   },
   "1321": {
-    "sprite_id": "",
+    "sprite_id": "37",
     "name": "伊芙琳",
-    "full_name": "伊芙琳",
+    "full_name": "伊芙琳 · 舒瓦利耶",
     "en_name": "Evelyn"
   },
   "2011": {
@@ -104,7 +104,7 @@
   "1161": {
     "sprite_id": "26",
     "name": "莱特",
-    "full_name": "...",
+    "full_name": "莱特",
     "en_name": "Lighter"
   },
   "1111": {
@@ -138,10 +138,10 @@
     "en_name": "Rina"
   },
   "1311": {
-    "sprite_id": "",
+    "sprite_id": "36",
     "name": "耀嘉音",
     "full_name": "耀嘉音",
-    "en_name": "Avatar_Female_Size03_Astra_En"
+    "en_name": "Astra"
   },
   "1151": {
     "sprite_id": "27",
@@ -158,7 +158,7 @@
   "1221": {
     "sprite_id": "31",
     "name": "柳",
-    "full_name": "...",
+    "full_name": "月城柳",
     "en_name": "Yanagi"
   },
   "1271": {

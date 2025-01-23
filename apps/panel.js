@@ -121,7 +121,7 @@ export class Panel extends ZZZPlugin {
       retType: 'base64',
     });
     const res = await this.reply(image);
-    if (res?.message_id)
+    if (res?.message_id && data.role_icon)
       await redis.set(`ZZZ:PANEL:IMAGE:${res.message_id}`, data.role_icon, {
         EX: 3600 * 3,
       });

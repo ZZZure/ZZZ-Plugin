@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { rulePrefix } from '../lib/common.js';
 import { getCodeMsg } from '../lib/code.js';
 
-export class Note extends ZZZPlugin {
+export class Code extends ZZZPlugin {
   constructor() {
     super({
       name: '[ZZZ-Plugin]Code',

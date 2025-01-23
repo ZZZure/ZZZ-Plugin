@@ -31,7 +31,7 @@ const displays = [
   },
 ];
 
-export class Abyss extends ZZZPlugin {
+export class Wiki extends ZZZPlugin {
   constructor() {
     super({
       name: '[ZZZ-Plugin]wiki',

@@ -4,7 +4,7 @@ import common from '../../../lib/common/common.js';
 import _ from 'lodash';
 import { rulePrefix } from '../lib/common.js';
 
-export class Panel extends ZZZPlugin {
+export class User extends ZZZPlugin {
   constructor() {
     super({
       name: '[ZZZ-Plugin]User',

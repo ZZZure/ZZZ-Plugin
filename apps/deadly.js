@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { Deadly } from '../model/deadly.js';
 import { rulePrefix } from '../lib/common.js';
 
-export class Abyss extends ZZZPlugin {
+export class deadly extends ZZZPlugin {
   constructor() {
     super({
       name: '[ZZZ-Plugin]deadly',

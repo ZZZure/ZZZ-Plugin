@@ -4,7 +4,7 @@ import _ from 'lodash';
 import manage from './manage/index.js';
 import { rulePrefix } from '../lib/common.js';
 
-export class Panel extends ZZZPlugin {
+export class Manage extends ZZZPlugin {
   constructor() {
     super({
       name: '[ZZZ-Plugin]Manage',

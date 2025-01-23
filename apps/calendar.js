@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { rulePrefix } from '../lib/common.js';
 import request from '../utils/request.js';
 
-export class Note extends ZZZPlugin {
+export class Calendar extends ZZZPlugin {
   constructor() {
     super({
       name: '[ZZZ-Plugin]Calendar',
