@@ -24,13 +24,11 @@ export const skills = [
   {
     name: '强化特殊技：沸腾熔炉',
     type: 'EQP',
-    after: ({ avatar, damage }) => {
+    after: ({ damage }) => {
       damage.add('EQP0')
-      if (avatar.rank >= 6) {
-        damage.add('Y6')
-      }
+      damage.add('Y6')
     }
   },
-  { name: '连携技：天崩-地裂', type: 'RL', after: ({ avatar, damage }) => avatar.rank >= 6 && damage.add('Y6') },
-  { name: '终结技：锤进地心', type: 'RZP', after: ({ avatar, damage }) => avatar.rank >= 6 && damage.add('Y6') }
+  { name: '连携技：天崩-地裂', type: 'RL', after: ({ damage }) => damage.add('Y6') },
+  { name: '终结技：锤进地心', type: 'RZP', after: ({ damage }) => damage.add('Y6') }
 ]

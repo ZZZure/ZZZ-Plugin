@@ -35,9 +35,9 @@ export const skills = [
   {
     name: '蓄力普攻：雷霆击-感电',
     type: 'AX',
-    after: ({ avatar, damage }) => {
+    after: ({ damage }) => {
       damage.add('AX0')
-      if (avatar.rank >= 6) damage.add('Y6')
+      damage.add('Y6')
     }
   },
   { name: '闪避反击：以退为进', type: 'CF' },

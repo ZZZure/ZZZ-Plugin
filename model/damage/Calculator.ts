@@ -268,6 +268,7 @@ export class Calculator {
     if (skill.after) {
       damage.add = (d) => {
         if (typeof d === 'string') d = this.calc_skill(d)
+        if (!d) return
         logger.debug('追加伤害：' + d.skill.name, d.result)
         damage.result.expectDMG += d.result.expectDMG
         damage.result.critDMG += d.result.critDMG

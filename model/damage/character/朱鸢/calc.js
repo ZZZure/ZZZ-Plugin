@@ -32,19 +32,16 @@ export const skills = [
   { name: '普攻三段（以太）', type: 'AQY3' },
   { name: '冲刺攻击：火力压制', type: 'CCQ' },
   {
+    name: '6影以太鹿弹',
+    type: 'EQ2',
+    fixedMultiplier: 2.2 * 4,
+    isHide: true,
+    check: ({ avatar }) => avatar.rank >= 6
+  },
+  {
     name: '强化特殊技：全弹连射',
     type: 'EQ',
-    after: ({ damage, calc }) => {
-      if (calc.avatar.rank >= 6) {
-        const EQ2 = calc.calc_skill({
-          name: '6影以太鹿弹',
-          type: 'EQ2',
-          fixedMultiplier: 2.2 * 4,
-          element: 'Ether'
-        })
-        damage.add(EQ2)
-      }
-    }
+    after: ({ damage }) => damage.add('EQ2')
   },
   { name: '连携技：歼灭模式', type: 'RL' },
   { name: '终结技：歼灭模式MAX', type: 'RZ' }
