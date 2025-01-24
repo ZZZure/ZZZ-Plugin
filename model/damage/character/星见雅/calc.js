@@ -82,7 +82,7 @@
 //     type: 'AX3',
 //     after: ({ avatar, damage }) => avatar.rank >= 6 && damage.add('AX2')
 //   })
-//   calc.new({ name: '强化特殊技：飞雪', type: 'EQ' })
+//   calc.new({ name: '强化特殊技：飞雪', type: 'EQ1' })
 //   calc.new({ name: '强化特殊技：飞雪（二段）', type: 'EQ2' })
 //   calc.new({ name: '连携技：春临', type: 'RL' })
 //   calc.new({ name: '终结技：名残雪', type: 'RZ' })
@@ -166,7 +166,7 @@ export const skills = [
     type: 'AX3',
     after: ({ avatar, damage }) => avatar.rank >= 6 && damage.add('AX2')
   },
-  { name: '强化特殊技：飞雪', type: 'EQ' },
+  { name: '强化特殊技：飞雪', type: 'EQ1' },
   { name: '强化特殊技：飞雪（二段）', type: 'EQ2' },
   { name: '连携技：春临', type: 'RL' },
   { name: '终结技：名残雪', type: 'RZ' }

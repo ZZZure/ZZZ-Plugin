@@ -129,9 +129,9 @@ export class Calculator {
                 critDMG: (CriticalArea !== 1) ? BasicArea * 异常暴击伤害 * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea * AnomalyProficiencyArea * LevelArea * AnomalyBoostArea : 0,
                 expectDMG: BasicArea * CriticalArea * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea * AnomalyProficiencyArea * LevelArea * AnomalyBoostArea
             } : {
-            critDMG: BasicArea * 暴击伤害 * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea,
-            expectDMG: BasicArea * CriticalArea * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea
-        };
+                critDMG: BasicArea * 暴击伤害 * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea,
+                expectDMG: BasicArea * CriticalArea * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea
+            };
         const damage = { skill, props, areas, result };
         if (skill.after) {
             damage.add = (d) => {
@@ -276,7 +276,7 @@ export class Calculator {
             }
             else {
                 add = this.calc_value(value, buff);
-                if (add < 1 && isRatio && Array.isArray(value))
+                if (add < 1 && isRatio && (typeof value === 'string' || Array.isArray(value)))
                     add *= initial;
             }
             logger.debug(`\tBuff：${buff.name}对${buff.range || '全类型'}增加${add}${buff.element || ''}${type}`);

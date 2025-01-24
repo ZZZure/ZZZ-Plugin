@@ -296,7 +296,6 @@ export class ZZZAvatarInfo {
       penratio: this.getProperty('穿透率'),
       sprecover: this.getProperty('能量自动回复'),
     };
-    logger.debug('basic_properties', data);
     return data;
   }
 

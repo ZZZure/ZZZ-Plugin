@@ -413,7 +413,7 @@ export class Calculator {
         add = value * initial
       } else {
         add = this.calc_value(value, buff)
-        if (add < 1 && isRatio && Array.isArray(value))
+        if (add < 1 && isRatio && (typeof value === 'string' || Array.isArray(value)))
           add *= initial
       }
       logger.debug(`\tBuff：${buff.name}对${buff.range || '全类型'}增加${add}${buff.element || ''}${type}`)
