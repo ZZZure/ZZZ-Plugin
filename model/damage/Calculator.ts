@@ -129,6 +129,8 @@ export class Calculator {
   readonly skills: skill[] = []
   private cache: { [type: string]: damage } = {}
   private props: damage['props'] = {}
+  /** 当前正在计算的技能 */
+  skill: skill
   defaultSkill: { [key in keyof skill]?: skill[key] } = {}
   enemy: enemy
 
@@ -191,6 +193,7 @@ export class Calculator {
       if (!MySkill) return
       return this.calc_skill(MySkill)
     }
+    this.skill = skill
     if (!skill.banCache && this.cache[skill.type]) return this.cache[skill.type]
     if (skill.check && !skill.check({ avatar: this.avatar, buffM: this.buffM, calc: this })) return
     logger.debug(`${logger.green(skill.type)}${skill.name}伤害计算：`)

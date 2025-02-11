@@ -10,6 +10,8 @@ export class Calculator {
     skills = [];
     cache = {};
     props = {};
+    /** 当前正在计算的技能 */
+    skill;
     defaultSkill = {};
     enemy;
     constructor(buffM) {
@@ -54,6 +56,7 @@ export class Calculator {
                 return;
             return this.calc_skill(MySkill);
         }
+        this.skill = skill;
         if (!skill.banCache && this.cache[skill.type])
             return this.cache[skill.type];
         if (skill.check && !skill.check({ avatar: this.avatar, buffM: this.buffM, calc: this }))
@@ -129,9 +132,9 @@ export class Calculator {
                 critDMG: (CriticalArea !== 1) ? BasicArea * 异常暴击伤害 * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea * AnomalyProficiencyArea * LevelArea * AnomalyBoostArea : 0,
                 expectDMG: BasicArea * CriticalArea * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea * AnomalyProficiencyArea * LevelArea * AnomalyBoostArea
             } : {
-                critDMG: BasicArea * 暴击伤害 * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea,
-                expectDMG: BasicArea * CriticalArea * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea
-            };
+            critDMG: BasicArea * 暴击伤害 * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea,
+            expectDMG: BasicArea * CriticalArea * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea
+        };
         const damage = { skill, props, areas, result };
         if (skill.after) {
             damage.add = (d) => {
