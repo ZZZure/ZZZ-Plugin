@@ -113,32 +113,47 @@ export class BuffManager {
                 buffs = buffs.filter(buff => {
                     if (buff.status === false)
                         return false;
-                    for (const key in param) {
-                        if (key === 'redirect')
-                            continue;
-                        if (key === 'range') {
+                    const judge = (() => {
+                        // 未传入calc时不判断range、include、exclude
+                        if (typeof valueOcalc !== 'object' || Array.isArray(valueOcalc))
+                            return true;
+                        // buff指定排除该技能
+                        if (buff.exclude && buff.exclude.includes(valueOcalc.skill.type))
+                            return false;
+                        // 11 10 01
+                        if (buff.range || buff.include) {
+                            // 11 01 存在include且满足时则直接返回true
+                            if (buff.include && buff.include.includes(valueOcalc.skill.type))
+                                return true;
+                            // 01 没有range则代表只有include，直接返回false
+                            if (!buff.range)
+                                return false;
+                            // 11 10 直接返回range的结果即可
                             const buffRange = buff.range;
                             const skillRange = param.range?.filter(r => typeof r === 'string');
-                            if (!buffRange || !skillRange)
-                                continue; // 对任意类型生效
-                            if (!skillRange.length)
-                                continue;
+                            if (!skillRange?.length)
+                                return true; // 对任意类型生效
                             // buff作用范围向后覆盖
                             // 存在重定向时，range须全匹配，redirect向后覆盖
                             else if (param.redirect) {
                                 if (skillRange.some(ST => buffRange.some(BT => BT === ST)))
-                                    continue;
+                                    return true;
                                 if (buffRange.some(BT => param.redirect.startsWith(BT)))
-                                    continue;
+                                    return true;
                                 return false;
                             }
                             // 不存在重定向时，range向后覆盖
-                            else if (!skillRange.some(ST => buffRange.some(BT => ST.startsWith(BT))))
-                                return false;
-                            else
-                                continue;
+                            return skillRange.some(ST => buffRange.some(BT => ST.startsWith(BT)));
                         }
-                        else if (key === 'element') {
+                        // 00
+                        return true;
+                    })();
+                    if (!judge)
+                        return false;
+                    for (const key in param) {
+                        if (key === 'redirect' || key === 'range')
+                            continue;
+                        if (key === 'element') {
                             if (!buff.element || !param.element)
                                 continue; // 对任意属性生效
                             if (Array.isArray(buff.element)) {

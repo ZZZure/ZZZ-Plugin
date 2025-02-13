@@ -75,8 +75,26 @@ export interface buff {
     buffM: BuffManager
     calc: Calculator
   }) => number) | string | number[]
-  /** Buff增益技能类型范围，无则对全部生效；参考技能类型命名标准 */
+  /**
+   * Buff增益技能类型**生效范围**；参考技能类型命名标准
+   * - 当技能参数不存在**redirect**时，**range**作用范围向后覆盖
+   * - 当技能参数存在**redirect**时，**range**须全匹配，**redirect**向后覆盖
+   */
   range?: string[] | anomaly[]
+  /** 
+   * Buff增益技能类型**生效技能**
+   * - 不同于**range**，仅全匹配时该值生效，不会向后覆盖
+   * - 无**range**且无**include**则该buff对全部技能生效
+   * - **range**与**include**符合其一则认为buff生效
+   * - 当技能参数存在**redirect**时，**range**与**include**的区别在于**include**不会尝试匹配**redirect**
+   */
+  include?: string[]
+  /** 
+   * Buff增益技能类型**排除技能**
+   * - 与**include**相同，仅全匹配时该值生效，不会向后覆盖
+   * - 优先级高于**range**与**include**
+   */
+  exclude?: string[]
   /** Buff增益属性类型，无则对全部生效 */
   element?: element | element[]
   /** 
@@ -152,13 +170,13 @@ export class BuffManager {
   }
 
   _filter<T extends keyof buff>(buffs: buff[], type: T, value: buff[T]): buff[]
-  _filter(buffs: buff[], obj: { [key in Exclude<keyof buff, 'status' | 'check' | 'element'>]?: buff[key] } & { element: element, redirect?: skill['type'] }, calc?: Calculator): buff[]
+  _filter(buffs: buff[], obj: { [key in Exclude<keyof buff, 'status' | 'check' | 'element' | 'include' | 'exclude'>]?: buff[key] } & { element: element, redirect?: skill['type'] }, calc?: Calculator): buff[]
   _filter(buffs: buff[], fnc: (buff: buff, index: number) => boolean): buff[]
   _filter<T extends keyof buff>(
     buffs: buff[],
     param:
       | T
-      | ({ [key in Exclude<keyof buff, 'status' | 'check' | 'element'>]?: buff[key] } & { element: element, redirect?: skill['type'] })
+      | ({ [key in Exclude<keyof buff, 'status' | 'check' | 'element' | 'include' | 'exclude'>]?: buff[key] } & { element: element, redirect?: skill['type'] })
       | ((buff: buff, index: number) => boolean),
     valueOcalc?: buff[T] | Calculator
   ) {
@@ -169,24 +187,38 @@ export class BuffManager {
       } else if (typeof param === 'object') {
         buffs = buffs.filter(buff => {
           if (buff.status === false) return false
-          for (const key in param) {
-            if (key === 'redirect') continue
-            if (key === 'range') {
+          const judge = (() => {
+            // 未传入calc时不判断range、include、exclude
+            if (typeof valueOcalc !== 'object' || Array.isArray(valueOcalc)) return true
+            // buff指定排除该技能
+            if (buff.exclude && buff.exclude.includes(valueOcalc.skill.type)) return false
+            // 11 10 01
+            if (buff.range || buff.include) {
+              // 11 01 存在include且满足时则直接返回true
+              if (buff.include && buff.include.includes(valueOcalc.skill.type)) return true
+              // 01 没有range则代表只有include，直接返回false
+              if (!buff.range) return false
+              // 11 10 直接返回range的结果即可
               const buffRange = buff.range
               const skillRange = param.range?.filter(r => typeof r === 'string')
-              if (!buffRange || !skillRange) continue // 对任意类型生效
-              if (!skillRange.length) continue
+              if (!skillRange?.length) return true // 对任意类型生效
               // buff作用范围向后覆盖
               // 存在重定向时，range须全匹配，redirect向后覆盖
               else if (param.redirect) {
-                if (skillRange.some(ST => buffRange.some(BT => BT === ST))) continue
-                if (buffRange.some(BT => param.redirect!.startsWith(BT))) continue
+                if (skillRange.some(ST => buffRange.some(BT => BT === ST))) return true
+                if (buffRange.some(BT => param.redirect!.startsWith(BT))) return true
                 return false
               }
               // 不存在重定向时，range向后覆盖
-              else if (!skillRange.some(ST => buffRange.some(BT => ST.startsWith(BT)))) return false
-              else continue
-            } else if (key === 'element') {
+              return skillRange.some(ST => buffRange.some(BT => ST.startsWith(BT)))
+            }
+            // 00
+            return true
+          })()
+          if (!judge) return false
+          for (const key in param) {
+            if (key === 'redirect' || key === 'range') continue
+            if (key === 'element') {
               if (!buff.element || !param.element) continue // 对任意属性生效
               if (Array.isArray(buff.element)) {
                 if (buff.element.includes(param.element)) continue
@@ -243,7 +275,7 @@ export class BuffManager {
    * - 存在重定向时，range须全匹配，redirect向后覆盖
    * - 不存在重定向时，range向后覆盖
    */
-  filter(obj: { [key in Exclude<keyof buff, 'status' | 'check' | 'element'>]?: buff[key] } & { element: element, redirect?: skill['type'] }, calc?: Calculator): buff[]
+  filter(obj: { [key in Exclude<keyof buff, 'status' | 'check' | 'element' | 'include' | 'exclude'>]?: buff[key] } & { element: element, redirect?: skill['type'] }, calc?: Calculator): buff[]
   /**
    * 根据指定函数筛选buff
    */
@@ -251,7 +283,7 @@ export class BuffManager {
   filter<T extends keyof buff>(
     param:
       | T
-      | ({ [key in Exclude<keyof buff, 'status' | 'check' | 'element'>]?: buff[key] } & { element: element, redirect?: skill['type'] })
+      | ({ [key in Exclude<keyof buff, 'status' | 'check' | 'element' | 'include' | 'exclude'>]?: buff[key] } & { element: element, redirect?: skill['type'] })
       | ((buff: buff, index: number) => boolean),
     valueOcalc?: buff[T] | Calculator
   ) {

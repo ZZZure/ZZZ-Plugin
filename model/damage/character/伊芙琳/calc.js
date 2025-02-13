@@ -25,21 +25,16 @@ export const buffs = [
     name: '额外能力：潜袭支点',
     type: '增伤',
     value: 0.3,
-    range: ['RL', 'RZ']
+    range: ['RL', 'RZ'],
+    exclude: ['Y6']
   },
   {
     name: '额外能力：潜袭支点',
     type: '倍率',
     check: ({ calc }) => calc.get_CRITRate() >= 0.8,
-    value: ({ calc }) => calc.skill.name !== '连携技：月辉丝·绊' ? 0 : calc.get_SkillMultiplier('RL') * 0.25,
-    range: ['RL']
-  },
-  {
-    name: '额外能力：潜袭支点',
-    type: '倍率',
-    check: ({ calc }) => calc.get_CRITRate() >= 0.8,
-    value: ({ calc }) => calc.get_SkillMultiplier('RZ') * 0.25,
-    range: ['RZ']
+    value: ({ calc }) => calc.get_SkillMultiplier(calc.skill.type) * 0.25,
+    range: ['RL', 'RZ'],
+    exclude: ['Y6']
   }
 ]
 
