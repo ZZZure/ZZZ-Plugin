@@ -247,7 +247,7 @@ export function supportGuoba() {
         },
         {
           field: 'device.productName',
-          label: 'productName(deviceName)',
+          label: 'productName(deviceProduct)',
           bottomHelpMessage: '设置默认设备productName字段',
           component: 'Input',
           componentProps: {
@@ -256,7 +256,7 @@ export function supportGuoba() {
         },
         {
           field: 'device.productType',
-          label: 'productType(deviceProduct)',
+          label: 'productType(deviceName)',
           bottomHelpMessage: '设置默认设备productType字段',
           component: 'Input',
           componentProps: {

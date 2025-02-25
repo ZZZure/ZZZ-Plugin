@@ -1,7 +1,7 @@
 # 通过"%设置默认设备"进行设置，如果不知道这是什么请勿修改
-productName: XQ-AT52
-productType: XQ-AT52
-modelName: XQ-AT52
-osVersion: 12
-deviceInfo: Sony/XQ-AT52/XQ-AT52:12/58.2.A.7.93/058002A007009304241360111:user/release-keys
-board: kona
+productName: XQ-BC52_EEA
+productType: XQ-BC52
+modelName: XQ-BC52
+osVersion: 13
+deviceInfo: Sony/XQ-BC52_EEA/XQ-BC52:13/61.2.A.0.472A/061002A0000472A0046651803:user/release-keys
+board: lahaina
