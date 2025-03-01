@@ -2,7 +2,9 @@ import { ZZZPlugin } from '../lib/plugin.js';
 import {
   getPanelList,
   refreshPanel as refreshPanelFunction,
-  getPanel,
+  getPanelOrigin,
+  updatePanelData,
+  formatPanelData,
 } from '../lib/avatar.js';
 import settings from '../lib/settings.js';
 import _ from 'lodash';
@@ -29,6 +31,7 @@ export class Panel extends ZZZPlugin {
           fnc: 'getCharOriImage',
         },
       ],
+      handler: [{ key: 'zzz.tool.panel', fn: 'getCharPanelTool' }],
     });
   }
   async handleRule() {
@@ -101,32 +104,74 @@ export class Panel extends ZZZPlugin {
     const match = this.e.msg.match(reg);
     if (!match) return false;
     const name = match[4];
-    const data = getPanel(uid, name);
+    const data = getPanelOrigin(uid, name);
     if (!data) {
       await this.reply(`未找到角色${name}的面板信息，请先刷新面板`);
       return;
+    }
+    let handler = this.e.runtime?.handler || {};
+    if (handler.has('zzz.tool.panel')) {
+      await handler.call('zzz.tool.panel', this.e, {
+        uid,
+        data: data,
+        needSave: false,
+      });
+    }
+    return false;
+  }
+
+  async getCharPanelTool(e, _data = {}) {
+    if (e) this.e = e;
+    const {
+      uid = undefined,
+      data = undefined,
+      needSave = true,
+      reply = true,
+    } = _data;
+    if (!uid) {
+      await this.reply('UID为空');
+      throw new Error('UID为空');
+    }
+    if (!data) {
+      await this.reply('数据为空');
+      throw new Error('数据为空');
+    }
+    if (needSave) {
+      updatePanelData(uid, [data]);
     }
     const timer = setTimeout(() => {
       if (this?.reply) {
         this.reply('查询成功，正在下载图片资源，请稍候。');
       }
     }, 5000);
-    await data.get_detail_assets();
+    const parsedData = formatPanelData(data);
+    await parsedData.get_detail_assets();
     clearTimeout(timer);
     const finalData = {
-      uid: uid,
-      charData: data,
+      uid,
+      charData: parsedData,
     };
     const image = await this.render('panel/card.html', finalData, {
       retType: 'base64',
     });
-    const res = await this.reply(image);
-    if (res?.message_id && data.role_icon)
-      await redis.set(`ZZZ:PANEL:IMAGE:${res.message_id}`, data.role_icon, {
-        EX: 3600 * 3,
-      });
 
-    return false;
+    if (reply) {
+      const res = await this.reply(image);
+      if (res?.message_id && parsedData.role_icon)
+        await redis.set(
+          `ZZZ:PANEL:IMAGE:${res.message_id}`,
+          parsedData.role_icon,
+          {
+            EX: 3600 * 3,
+          }
+        );
+      return {
+        message: res,
+        image,
+      };
+    }
+
+    return image;
   }
   async proficiency() {
     const uid = await this.getUID();
