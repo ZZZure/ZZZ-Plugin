@@ -5,6 +5,7 @@ import {
   getPanelOrigin,
   updatePanelData,
   formatPanelData,
+  getPanelListOrigin,
 } from '../lib/avatar.js';
 import settings from '../lib/settings.js';
 import _ from 'lodash';
@@ -32,6 +33,7 @@ export class Panel extends ZZZPlugin {
         },
       ],
       handler: [{ key: 'zzz.tool.panel', fn: 'getCharPanelTool' }],
+      handler: [{ key: 'zzz.tool.panelList', fn: 'getCharPanelListTool' }],
     });
   }
   async handleRule() {
@@ -98,6 +100,19 @@ export class Panel extends ZZZPlugin {
     };
     await this.render('panel/list.html', finalData);
   }
+
+  async getCharPanelListTool(uid, origin = false) {
+    if (!uid) {
+      return false;
+    }
+    if (origin) {
+      const result = getPanelListOrigin(uid);
+      return result;
+    }
+    const result = getPanelList(uid);
+    return result;
+  }
+
   async getCharPanel() {
     const uid = await this.getUID();
     const reg = new RegExp(`${rulePrefix}(.+)面板$`);
@@ -122,6 +137,8 @@ export class Panel extends ZZZPlugin {
 
   async getCharPanelTool(e, _data = {}) {
     if (e) this.e = e;
+    if (e?.reply) this.reply = e.reply;
+
     const {
       uid = undefined,
       data = undefined,
@@ -130,11 +147,11 @@ export class Panel extends ZZZPlugin {
     } = _data;
     if (!uid) {
       await this.reply('UID为空');
-      throw new Error('UID为空');
+      return false;
     }
     if (!data) {
       await this.reply('数据为空');
-      throw new Error('数据为空');
+      return false;
     }
     if (needSave) {
       updatePanelData(uid, [data]);
