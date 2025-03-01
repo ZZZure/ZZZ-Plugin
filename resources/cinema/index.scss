@@ -1,0 +1,95 @@
+.char-info {
+  display: flex;
+  align-items: flex-start;
+  padding: 1em;
+  gap: 1em;
+  .avatar {
+    width: 5em;
+    aspect-ratio: 1;
+    flex-grow: 0;
+    flex-shrink: 0;
+    background-color: white;
+    border-radius: 50%;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    .name {
+      display: flex;
+      align-items: flex-end;
+      gap: 0.5em;
+      .simple {
+        font-size: 1.5em;
+      }
+    }
+    .description {
+      font-size: 0.8em;
+    }
+  }
+}
+
+.cinema {
+  padding: 1em;
+
+  .header {
+    margin-bottom: 1rem;
+  }
+
+  .title {
+    color: white;
+    font-size: 2rem;
+    margin: 0;
+  }
+
+  .subtitle {
+    color: #6666ff;
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  .content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .section {
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-content {
+    font-size: 1.3rem;
+    line-height: 1.5;
+  }
+
+  .highlight {
+    color: #ffd700;
+  }
+
+  .skill-tag {
+    display: inline-block;
+    margin-right: 0.5rem;
+  }
+
+  .image-container {
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .character-image {
+    max-width: 100%;
+    border-radius: 0.5rem;
+  }
+}

@@ -43,10 +43,15 @@ export class Wiki extends ZZZPlugin {
           reg: `${rulePrefix}(.*)天赋(.*)$`,
           fnc: 'skills',
         },
+        {
+          reg: `${rulePrefix}(.*)(意象影画|意象|影画|命座)$`,
+          fnc: 'cinema',
+        },
       ],
     });
   }
   async skills() {
+    logger.debug('skills');
     const reg = new RegExp(`${rulePrefix}(.*)天赋(.*)$`);
     const charname = this.e.msg.match(reg)[4];
     if (!charname) return false;
@@ -93,5 +98,21 @@ export class Wiki extends ZZZPlugin {
       displays,
     };
     await this.render('skills/index.html', finalData);
+  }
+  async cinema() {
+    const reg = new RegExp(`${rulePrefix}(.*)(意象影画|意象|影画|命座)$`);
+    const charname = this.e.msg.match(reg)[4];
+    if (!charname) return false;
+    const charData = await getHakushCharacterData(charname);
+    const cinemaData = charData?.Talent;
+    if (!cinemaData) {
+      await this.reply(`未找到${charname}的数据`);
+      return false;
+    }
+    await charData.get_assets();
+    const finalData = {
+      charData,
+    };
+    await this.render('cinema/index.html', finalData);
   }
 }

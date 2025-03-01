@@ -208,6 +208,13 @@ const helpData = [
         needSK: false,
         commands: ['角色名+天赋[+等级]'],
       },
+      {
+        title: '角色意象影画图鉴',
+        desc: '查看角色命座图鉴',
+        needCK: false,
+        needSK: false,
+        commands: ['角色名+命座', '角色名+意象', '角色名+影画'],
+      },
     ],
   },
   {

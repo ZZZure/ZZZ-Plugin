@@ -1,0 +1,86 @@
+.char-info {
+  display: flex;
+  align-items: flex-start;
+  padding: 1em;
+  gap: 1em;
+}
+.char-info .avatar {
+  width: 5em;
+  aspect-ratio: 1;
+  flex-grow: 0;
+  flex-shrink: 0;
+  background-color: white;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.char-info .avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.char-info .info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+.char-info .info .name {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5em;
+}
+.char-info .info .name .simple {
+  font-size: 1.5em;
+}
+.char-info .info .description {
+  font-size: 0.8em;
+}
+
+.cinema {
+  padding: 1em;
+}
+.cinema .header {
+  margin-bottom: 1rem;
+}
+.cinema .title {
+  color: white;
+  font-size: 2rem;
+  margin: 0;
+}
+.cinema .subtitle {
+  color: #6666ff;
+  font-size: 1.5rem;
+  margin: 0;
+}
+.cinema .content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.cinema .section {
+  margin-bottom: 1rem;
+}
+.cinema .section-title {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.cinema .section-content {
+  font-size: 1.3rem;
+  line-height: 1.5;
+}
+.cinema .highlight {
+  color: #ffd700;
+}
+.cinema .skill-tag {
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+.cinema .image-container {
+  text-align: center;
+  margin-top: 1rem;
+}
+.cinema .character-image {
+  max-width: 100%;
+  border-radius: 0.5rem;
+}
+
+/*# sourceMappingURL=index.css.map */

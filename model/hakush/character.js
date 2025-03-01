@@ -1,4 +1,4 @@
-import { getSquareAvatar } from '../../lib/download.js';
+import { getHakushUI, getSquareAvatar } from '../../lib/download.js';
 /**
  * @typedef {Object} StatsData
  * @property {number} Armor
@@ -512,6 +512,38 @@ class TalentLevel {
     this.Name = data.Name;
     this.Desc = data.Desc;
     this.Desc2 = data.Desc2;
+
+    /** @type {string} */
+    this.description = this.Desc
+      ? '<div class="line">' +
+        this.Desc.replace(
+          /<IconMap:Icon_(\w+)>/g,
+          '<span class="skill-icon $1"></span>'
+        )
+          .replace(
+            /<color=#(\w+?)>(.+?)<\/color>/g,
+            '<span style="color:#$1"><strong>$2</strong></span>'
+          )
+          .split('\n')
+          .join('</div><div class="line">') +
+        '</div>'
+      : '';
+
+    /** @type {string} */
+    this.description2 = this.Desc2
+      ? '<div class="line">' +
+        this.Desc2.replace(
+          /<IconMap:Icon_(\w+)>/g,
+          '<span class="skill-icon $1"></span>'
+        )
+          .replace(
+            /<color=#(\w+?)>(.+?)<\/color>/g,
+            '<span style="color:#$1"><strong>$2</strong></span>'
+          )
+          .split('\n')
+          .join('</div><div class="line">') +
+        '</div>'
+      : '';
   }
 }
 
@@ -555,7 +587,7 @@ export class Character {
     this.Stats = new Stats(data.Stats);
     this.Level = {};
     this.ExtraLevel = {};
-    this.Talent = {};
+    this.Talent = [];
 
     for (const [key, value] of Object.entries(data.Level)) {
       this.Level[key] = new Level(value);
@@ -566,13 +598,19 @@ export class Character {
     this.Skill = new Skill(data.Skill);
     this.Passive = new Passive(data.Passive);
 
-    for (const [key, value] of Object.entries(data.Talent)) {
-      this.Talent[key] = new TalentLevel(value);
+    for (const [_, value] of Object.entries(data.Talent)) {
+      this.Talent.push(new TalentLevel(value));
     }
   }
 
   async get_assets() {
     const result = await getSquareAvatar(this.Id);
     this.square_icon = result;
+    await this.get_cinema_assets();
+  }
+
+  async get_cinema_assets() {
+    const result = await getHakushUI(`Mindscape_${this.Id}_3.webp`);
+    this.cinema_image = result;
   }
 }

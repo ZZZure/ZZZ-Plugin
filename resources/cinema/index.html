@@ -1,0 +1,43 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" href="{{@sys.currentPath}}/index.css">
+{{/block}}
+
+{{block 'main'}}
+<div class="char-info">
+  <div class="avatar">
+    <img src="{{charData.square_icon}}" alt="Avatar">
+  </div>
+  <div class="info">
+    <div class="name">
+      <div class="simple">{{charData.PartnerInfo.Name}}</div>
+      <div class="full">{{charData.PartnerInfo.FullName}}</div>
+    </div>
+    <div class="description no-zzz-font">
+      <div class="f">{{@charData.PartnerInfo.ImpressionF}}</div>
+      <div class="m">{{@charData.PartnerInfo.ImpressionM}}</div>
+    </div>
+  </div>
+</div>
+<div class="cinema">
+  <div class="header">
+    <h1 class="title">意象影画</h1>
+    <h2 class="subtitle">CINEMA</h2>
+  </div>
+
+  <div class="content">
+    {{each charData.Talent talent}}
+    <div class="section">
+      <h3 class="section-title">{{talent.Level}}. {{talent.Name}}</h3>
+      <div class="section-content no-zzz-font">
+        {{@talent.description}}
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  <div class="image-container">
+    <img src="{{charData.cinema_image}}" alt="角色插图" class="character-image">
+  </div>
+  <div style="text-align: center; font-size: 1em; color: #666; margin: 2em 0;">数据来源于Hakush</div>
+  {{/block}}
