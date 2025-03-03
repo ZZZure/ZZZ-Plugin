@@ -32,8 +32,10 @@ export class Panel extends ZZZPlugin {
           fnc: 'getCharOriImage',
         },
       ],
-      handler: [{ key: 'zzz.tool.panel', fn: 'getCharPanelTool' }],
-      handler: [{ key: 'zzz.tool.panelList', fn: 'getCharPanelListTool' }],
+      handler: [
+        { key: 'zzz.tool.panel', fn: 'getCharPanelTool' },
+        { key: 'zzz.tool.panelList', fn: 'getCharPanelListTool' },
+      ],
     });
   }
   async handleRule() {
@@ -124,7 +126,8 @@ export class Panel extends ZZZPlugin {
       await this.reply(`未找到角色${name}的面板信息，请先刷新面板`);
       return;
     }
-    let handler = this.e.runtime?.handler || {};
+    let handler = this.e.runtime.handler || {};
+
     if (handler.has('zzz.tool.panel')) {
       await handler.call('zzz.tool.panel', this.e, {
         uid,
