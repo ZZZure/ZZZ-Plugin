@@ -29,6 +29,12 @@
     "full_name": "浅羽悠真",
     "en_name": "Harumasa"
   },
+  "1331": {
+    "sprite_id": "41",
+    "name": "薇薇安",
+    "full_name": "薇薇安",
+    "en_name": "Vivian"
+  },
   "1081": {
     "sprite_id": "10",
     "name": "比利",
@@ -125,6 +131,12 @@
     "full_name": "星见雅",
     "en_name": "Miyabi"
   },
+  "1361": {
+    "sprite_id": "39",
+    "name": "「扳机」",
+    "full_name": "...",
+    "en_name": "Trigger"
+  },
   "1121": {
     "sprite_id": "16",
     "name": "本",
@@ -136,6 +148,18 @@
     "name": "丽娜",
     "full_name": "亚历山德丽娜·莎芭丝缇安",
     "en_name": "Rina"
+  },
+  "1291": {
+    "sprite_id": "42",
+    "name": "雨果",
+    "full_name": "雨果",
+    "en_name": "Hugo"
+  },
+  "1351": {
+    "sprite_id": "38",
+    "name": "波可娜",
+    "full_name": "...",
+    "en_name": "Pulchra"
   },
   "1311": {
     "sprite_id": "36",
@@ -172,6 +196,12 @@
     "name": "柏妮思",
     "full_name": "柏妮思·怀特",
     "en_name": "Burnice"
+  },
+  "1381": {
+    "sprite_id": "40",
+    "name": "零号·安比",
+    "full_name": "零号·安比",
+    "en_name": "Soldier 0 - Anby"
   },
   "1191": {
     "sprite_id": "21",
