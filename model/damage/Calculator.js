@@ -46,6 +46,10 @@ export class Calculator {
             skill.element = elementType2element(this.avatar.element_type);
         if (!skill.name || !skill.type)
             return logger.warn('无效skill：', skill);
+        if (skill.check && +skill.check) {
+            const num = skill.check;
+            skill.check = ({ avatar }) => avatar.rank >= num;
+        }
         this.skills.push(skill);
         return this.skills;
     }
@@ -249,7 +253,14 @@ export class Calculator {
     calc_value(value, buff) {
         switch (typeof value) {
             case 'number': return value;
-            case 'function': return +value({ avatar: this.avatar, buffM: this.buffM, calc: this }) || 0;
+            case 'function': {
+                if (buff)
+                    buff.status = false;
+                const v = +value({ avatar: this.avatar, buffM: this.buffM, calc: this }) || 0;
+                if (buff)
+                    buff.status = true;
+                return v;
+            }
             case 'string': return charData[this.avatar.id].buff?.[value]?.[this.get_SkillLevel(value[0]) - 1] || 0;
             case 'object': {
                 if (!Array.isArray(value) || !buff)

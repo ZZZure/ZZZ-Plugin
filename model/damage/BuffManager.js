@@ -72,8 +72,13 @@ export class BuffManager {
         buff = _.merge({
             status: true,
             isForever: false,
+            is: {},
             ...this.defaultBuff
         }, buff);
+        if (buff.isForever)
+            buff.is.forever = true;
+        if (buff.range && !Array.isArray(buff.range))
+            buff.range = [buff.range];
         if (!buff.source) {
             if (buff.name.includes('核心') || buff.name.includes('天赋'))
                 buff.source = 'Talent';

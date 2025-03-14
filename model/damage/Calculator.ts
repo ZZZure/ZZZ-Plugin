@@ -128,7 +128,7 @@ export class Calculator {
   readonly avatar: ZZZAvatarInfo
   readonly skills: skill[] = []
   private cache: { [type: string]: damage } = {}
-  private props: damage['props'] = {}
+  private props: Exclude<damage['props'], undefined> = {}
   /** 当前正在计算的技能 */
   skill: skill
   defaultSkill: { [key in keyof skill]?: skill[key] } = {}
@@ -173,6 +173,10 @@ export class Calculator {
     }, skill)
     if (!skill.element) skill.element = elementType2element(this.avatar.element_type)
     if (!skill.name || !skill.type) return logger.warn('无效skill：', skill)
+    if (skill.check && +skill.check) {
+      const num = skill.check as unknown as number
+      skill.check = ({ avatar }) => avatar.rank >= num
+    }
     this.skills.push(skill)
     return this.skills
   }
@@ -300,7 +304,7 @@ export class Calculator {
         logger.error('伤害计算错误：', e)
         return
       }
-    }).filter(v => v && v.result?.expectDMG && !v.skill?.isHide)
+    }).filter(v => v && v.result?.expectDMG && !v.skill?.isHide) as damage[]
   }
 
   /**
@@ -386,7 +390,12 @@ export class Calculator {
   calc_value(value: buff['value'], buff?: buff) {
     switch (typeof value) {
       case 'number': return value
-      case 'function': return +value({ avatar: this.avatar, buffM: this.buffM, calc: this }) || 0
+      case 'function': {
+        if (buff) buff.status = false
+        const v = +value({ avatar: this.avatar, buffM: this.buffM, calc: this }) || 0
+        if (buff) buff.status = true
+        return v
+      }
       case 'string': return charData[this.avatar.id].buff?.[value]?.[this.get_SkillLevel(value[0]) - 1] || 0
       case 'object': {
         if (!Array.isArray(value) || !buff) return 0
@@ -405,7 +414,7 @@ export class Calculator {
    * @param isRatio 是否支持buff.value为数值类型且<1时按初始数值百分比提高处理
    */
   get(type: buff['type'], initial: number, skill: skill, usefulBuffs: buff[] = this.buffM.buffs, isRatio = false): number {
-    return this.props![type] ??= this.buffM._filter(usefulBuffs, {
+    return this.props[type] ??= this.buffM._filter(usefulBuffs, {
       element: skill?.element,
       range: [skill?.type],
       redirect: skill?.redirect,
