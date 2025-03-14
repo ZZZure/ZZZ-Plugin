@@ -8,7 +8,7 @@ import {
   getPanelListOrigin,
 } from '../lib/avatar.js';
 import settings from '../lib/settings.js';
-import _ from 'lodash';
+import _, { compact } from 'lodash';
 import { rulePrefix } from '../lib/common.js';
 
 export class Panel extends ZZZPlugin {
@@ -147,6 +147,7 @@ export class Panel extends ZZZPlugin {
       data = undefined,
       needSave = true,
       reply = true,
+      needImg = true
     } = _data;
     if (!uid) {
       await this.reply('UID为空');
@@ -160,8 +161,11 @@ export class Panel extends ZZZPlugin {
       updatePanelData(uid, [data]);
     }
     const timer = setTimeout(() => {
-      if (this?.reply) {
-        this.reply('查询成功，正在下载图片资源，请稍候。');
+      const msg = '查询成功，正在下载图片资源，请稍候。'
+      if (this?.reply && needImg) {
+        this.reply(msg);
+      } else {
+        logger.mark(msg)
       }
     }, 5000);
     const parsedData = formatPanelData(data);
@@ -171,9 +175,9 @@ export class Panel extends ZZZPlugin {
       uid,
       charData: parsedData,
     };
-    const image = await this.render('panel/card.html', finalData, {
+    const image = needImg ? await this.render('panel/card.html', finalData, {
       retType: 'base64',
-    });
+    }) : needImg;
 
     if (reply) {
       const res = await this.reply(image);
