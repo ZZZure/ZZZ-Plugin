@@ -147,6 +147,7 @@ export class Panel extends ZZZPlugin {
       data = undefined,
       needSave = true,
       reply = true,
+      needImg = true
     } = _data;
     if (!uid) {
       await this.reply('UID为空');
@@ -171,9 +172,9 @@ export class Panel extends ZZZPlugin {
       uid,
       charData: parsedData,
     };
-    const image = await this.render('panel/card.html', finalData, {
+    const image = needImg ? await this.render('panel/card.html', finalData, {
       retType: 'base64',
-    });
+    }) : needImg;
 
     if (reply) {
       const res = await this.reply(image);
