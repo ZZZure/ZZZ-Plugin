@@ -20,7 +20,7 @@ export class Panel extends ZZZPlugin {
       priority: _.get(settings.getConfig('priority'), 'panel', 70),
       rule: [
         {
-          reg: `${rulePrefix}(.*)面板(刷新|更新|列表)$`,
+          reg: `${rulePrefix}(.*)面板(刷新|更新|列表)?$`,
           fnc: 'handleRule',
         },
         {
