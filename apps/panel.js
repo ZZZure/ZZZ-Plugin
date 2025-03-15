@@ -41,8 +41,8 @@ export class Panel extends ZZZPlugin {
   async handleRule() {
     if (!this.e.msg) return;
     const reg = new RegExp(`${rulePrefix}(.*)面板(刷新|更新|列表)?$`);
-    const pre = this.e.msg.match(reg)[4].trim();
-    const suf = this.e.msg.match(reg)[5].trim();
+    const pre = this.e.msg.match(reg)[4]?.trim();
+    const suf = this.e.msg.match(reg)[5]?.trim();
     if (['刷新', '更新'].includes(pre) || ['刷新', '更新'].includes(suf))
       return await this.refreshPanel();
     if (!pre || suf === '列表') return await this.getCharPanelList();
