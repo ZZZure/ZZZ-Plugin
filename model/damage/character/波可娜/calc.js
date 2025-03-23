@@ -39,12 +39,12 @@ export const skills = [
   {
     name: '特殊技：噬爪·噩梦袭影',
     type: 'EPLP',
-    redirect: '追加攻击'
+    redirect: ['EPLP', '追加攻击']
   },
   {
     name: '噬爪·噩梦袭影终结一击',
     type: 'EPLZ',
-    redirect: '追加攻击'
+    redirect: ['EPLZ', '追加攻击']
   },
   { name: '强化特殊技：噬爪·瞬步', type: 'EQ' },
   { name: '连携技：嗨，想不到吧', type: 'RL' },

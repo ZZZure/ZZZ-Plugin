@@ -25,8 +25,10 @@ export interface skill {
    * 当出现“X"(造成的伤害)被视为“Y”(伤害)时，可使用该参数指定Y的类型。
    * - 存在重定向时，range须全匹配，redirect向后覆盖
    * - 不存在重定向时，range向后覆盖
+   * 
+   * 当为数组类型时（多类型共存），满足数组内其一类型即可，判断规则同上
    */
-  redirect?: string
+  redirect?: string | string[]
   /** 角色面板伤害统计中是否隐藏显示 */
   isHide?: boolean
   /** 禁用伤害计算cache */
@@ -411,7 +413,7 @@ export class Calculator {
 
   /**
    * 获取局内属性原始值
-   * @param isRatio 是否支持buff.value为数值类型且<1时按初始数值百分比提高处理
+   * @param isRatio 是否支持buff.value为数值/字符串/数组类型且<1时按初始数值百分比提高处理
    */
   get(type: buff['type'], initial: number, skill: skill, usefulBuffs: buff[] = this.buffM.buffs, isRatio = false): number {
     return this.props[type] ??= this.buffM._filter(usefulBuffs, {

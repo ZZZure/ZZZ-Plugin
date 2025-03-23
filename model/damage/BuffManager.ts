@@ -185,13 +185,13 @@ export class BuffManager {
   }
 
   _filter<T extends filterable>(buffs: buff[], type: T, value: buff[T]): buff[]
-  _filter(buffs: buff[], obj: Partial<Pick<buff, filterable>> & { element: element, redirect?: skill['type'] }, calc?: Calculator): buff[]
+  _filter(buffs: buff[], obj: Partial<Pick<buff, filterable>> & { element: element, redirect?: skill['redirect'] }, calc?: Calculator): buff[]
   _filter(buffs: buff[], fnc: (buff: buff, index: number) => boolean): buff[]
   _filter<T extends filterable>(
     buffs: buff[],
     param:
       | T
-      | (Partial<Pick<buff, filterable>> & { element: element, redirect?: skill['type'] })
+      | (Partial<Pick<buff, filterable>> & { element: element, redirect?: skill['redirect'] })
       | ((buff: buff, index: number) => boolean),
     valueOcalc?: buff[T] | Calculator
   ) {
@@ -221,7 +221,8 @@ export class BuffManager {
               // 存在重定向时，range须全匹配，redirect向后覆盖
               else if (param.redirect) {
                 if (skillRange.some(ST => buffRange.some(BT => BT === ST))) return true
-                if (buffRange.some(BT => param.redirect!.startsWith(BT))) return true
+                const redirect = Array.isArray(param.redirect) ? param.redirect : [param.redirect]
+                if (buffRange.some(BT => redirect.some(RT => RT.startsWith(BT)))) return true
                 return false
               }
               // 不存在重定向时，range向后覆盖
@@ -290,7 +291,7 @@ export class BuffManager {
    * - 存在重定向时，range须全匹配，redirect向后覆盖
    * - 不存在重定向时，range向后覆盖
    */
-  filter(obj: Partial<Pick<buff, filterable>> & { element: element, redirect?: skill['type'] }, calc?: Calculator): buff[]
+  filter(obj: Partial<Pick<buff, filterable>> & { element: element, redirect?: skill['redirect'] }, calc?: Calculator): buff[]
   /**
    * 根据指定函数筛选buff
    */
@@ -298,7 +299,7 @@ export class BuffManager {
   filter<T extends filterable>(
     param:
       | T
-      | (Partial<Pick<buff, filterable>> & { element: element, redirect?: skill['type'] })
+      | (Partial<Pick<buff, filterable>> & { element: element, redirect?: skill['redirect'] })
       | ((buff: buff, index: number) => boolean),
     valueOcalc?: buff[T] | Calculator
   ) {

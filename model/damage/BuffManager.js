@@ -143,7 +143,8 @@ export class BuffManager {
                             else if (param.redirect) {
                                 if (skillRange.some(ST => buffRange.some(BT => BT === ST)))
                                     return true;
-                                if (buffRange.some(BT => param.redirect.startsWith(BT)))
+                                const redirect = Array.isArray(param.redirect) ? param.redirect : [param.redirect];
+                                if (buffRange.some(BT => redirect.some(RT => RT.startsWith(BT))))
                                     return true;
                                 return false;
                             }

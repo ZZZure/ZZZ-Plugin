@@ -48,13 +48,13 @@ export const skills = [
   {
     name: '特殊技：苍光',
     type: 'EPC',
-    redirect: '追加攻击',
+    redirect: ['EPC', '追加攻击'],
     after: ({ damage }) => damage.add('EPC0')
   },
   {
     name: '特殊技：雷殛',
     type: 'EPL',
-    redirect: '追加攻击'
+    redirect: ['EPL', '追加攻击']
   },
   { name: '强化特殊技：极雷断空', type: 'EQ' },
   { name: '连携技：疾跃落雷', type: 'RL' },

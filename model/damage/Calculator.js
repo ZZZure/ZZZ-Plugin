@@ -276,7 +276,7 @@ export class Calculator {
     }
     /**
      * 获取局内属性原始值
-     * @param isRatio 是否支持buff.value为数值类型且<1时按初始数值百分比提高处理
+     * @param isRatio 是否支持buff.value为数值/字符串/数组类型且<1时按初始数值百分比提高处理
      */
     get(type, initial, skill, usefulBuffs = this.buffM.buffs, isRatio = false) {
         return this.props[type] ??= this.buffM._filter(usefulBuffs, {
