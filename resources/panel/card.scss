@@ -675,11 +675,15 @@
             &.hit0 {
               opacity: 0.6;
             }
-            &.hit50 {
+            &.hit25 {
               opacity: 0.8;
+            }
+            &.hit50 {
+              opacity: 1;
             }
             &.hit75 {
               opacity: 1;
+              color: rgb(238, 207, 139);
             }
             &.hit100 {
               opacity: 1;

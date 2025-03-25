@@ -1,11 +1,11 @@
 import { property } from '../lib/convert.js';
 import { getSuitImage, getWeaponImage } from '../lib/download.js';
 import {
-  getEquipPropertyBaseScore,
-  getEquipPropertyEnhanceCount,
-  getEquipPropertyScore,
+  scoreData,
   hasScoreData,
+  getEquipPropertyEnhanceCount
 } from '../lib/score.js';
+import Score from './damage/Score.js';
 
 /**
  * @class
@@ -33,24 +33,8 @@ export class EquipProperty {
     this.property_name = property_name;
     this.property_id = property_id;
     this.base = base;
-    /** @type {number | false} */
-    this.score = false;
-
+    this.base_score = 0
     this.classname = property.idToClassName(property_id);
-  }
-
-  /**
-   * 获取属性分数
-   * @param {string} charID
-   * @returns {number}
-   */
-  get_score(charID) {
-    if (hasScoreData(charID)) {
-      this.score = getEquipPropertyScore(charID, this.property_id, this.base);
-      /** @type {number} */
-      this.base_score = getEquipPropertyBaseScore(charID, this.property_id);
-    }
-    return this.score;
   }
 
   /** @type {number} */
@@ -87,25 +71,6 @@ export class EquipMainProperty {
     this.base = base;
 
     this.classname = property.idToClassName(property_id);
-    this.score = 0;
-  }
-
-  /**
-   * 获取属性分数
-   * @param {string} charID
-   * @returns {number}
-   */
-  get_score(charID) {
-    /** @type {number} */
-    const _score = getEquipPropertyBaseScore(
-      charID,
-      this.property_id,
-      this.base
-    );
-    if (_score > 0) {
-      this.score = 1;
-    }
-    return this.score;
   }
 
   /** @type {string} */
@@ -167,7 +132,7 @@ export class Equip {
     this.name;
     /** @type {string} */
     this.icon;
-    /** @type {string} */
+    /** @type {'S'|'A'|'B'} */
     this.rarity;
     /** @type {EquipProperty[]} */
     this.properties;
@@ -226,46 +191,33 @@ export class Equip {
    */
   get_score(charID) {
     if (hasScoreData(charID)) {
-      this.score = this.properties.reduce(
-        (acc, item) => acc + item.get_score(charID),
-        0
-      );
-      const additional = this.main_properties.reduce(
-        (acc, item) => acc + item.get_score(charID),
-        0
-      );
-      if (this.equipment_type === 4) {
-        this.score += 4.8 * additional;
-      } else if (this.equipment_type === 5) {
-        this.score += 9.6 * additional;
-      } else if (this.equipment_type === 6) {
-        this.score += 4.8 * additional;
-      }
+      this.properties.forEach(item => item.base_score = scoreData[charID][item.property_id] || 0);
+      this.score = Score.main(charID, this);
     }
     return this.score;
   }
 
   /** @type {'C'|'B'|'A'|'S'|'SS'|'SSS'|'ACE'|false} */
   get comment() {
-    if (this.score < 10) {
+    if (this.score <= 12) {
       return 'C';
     }
-    if (this.score <= 15) {
+    if (this.score < 20) {
       return 'B';
     }
-    if (this.score <= 20) {
+    if (this.score < 28) {
       return 'A';
     }
-    if (this.score <= 25) {
+    if (this.score < 32) {
       return 'S';
     }
-    if (this.score <= 30) {
+    if (this.score < 36) {
       return 'SS';
     }
-    if (this.score <= 35) {
+    if (this.score < 40) {
       return 'SSS';
     }
-    if (this.score > 35) {
+    if (this.score >= 40) {
       return 'ACE';
     }
     return false;

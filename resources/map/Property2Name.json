@@ -10,7 +10,7 @@
   "21103": ["CRITDMG", "暴击伤害"],
   "23103": ["PenRatio", "穿透率"],
   "23203": ["Pen", "穿透值"],
-  "30502": ["EnergyRegen", "能量恢复"],
+  "30502": ["EnergyRegen", "能量回复"],
   "31203": ["AnomalyProficiency", "异常精通"],
   "31403": ["AnomalyMastery", "异常掌控"],
   "31503": ["PhysicalDMGBonus", "物理属性伤害提高"],

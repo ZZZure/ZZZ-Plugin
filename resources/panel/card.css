@@ -711,11 +711,15 @@
 .card .equip-list .box .property-list .properties .label.hit0 {
   opacity: 0.6;
 }
-.card .equip-list .box .property-list .properties .label.hit50 {
+.card .equip-list .box .property-list .properties .label.hit25 {
   opacity: 0.8;
+}
+.card .equip-list .box .property-list .properties .label.hit50 {
+  opacity: 1;
 }
 .card .equip-list .box .property-list .properties .label.hit75 {
   opacity: 1;
+  color: rgb(238, 207, 139);
 }
 .card .equip-list .box .property-list .properties .label.hit100 {
   opacity: 1;

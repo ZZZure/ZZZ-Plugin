@@ -14,7 +14,6 @@ const calcFnc = {
     set: {}
 };
 async function init() {
-    // debug模式下监听文件变化
     const isWatch = await (async () => {
         try {
             return (await import('../../../../lib/config/config.js')).default.bot.log_level === 'debug';
@@ -86,7 +85,6 @@ async function importFile(type, name, isWatch = false) {
     }
 }
 await init();
-/** 角色计算 */
 export function avatar_ability(avatar) {
     const m = calcFnc.character[avatar.id];
     if (!m)
@@ -105,7 +103,6 @@ export function avatar_ability(avatar) {
     logger.debug(`Buff*${buffM.buffs.length}：`, buffM.buffs);
     return calc.calc();
 }
-/** 武器加成 */
 export function weapon_buff(weapon, buffM) {
     const name = weapon?.name;
     if (!name)
@@ -121,16 +118,13 @@ export function weapon_buff(weapon, buffM) {
         m.calc(buffM, weapon.star);
     buffM.default({});
 }
-/** 套装加成 */
 export function set_buff(equips, buffM) {
     buffM.default({ name: '', source: 'Set' });
     const setCount = {};
     for (const equip of equips) {
         if (equip.equipment_type == 5) {
-            // 属伤加成
             const index = [31503, 31603, 31703, 31803, 31903].indexOf(equip.main_properties[0].property_id);
             if (index > -1 && elementEnum[index]) {
-                // @ts-ignore
                 buffM.new({
                     name: '驱动盘5号位',
                     type: '增伤',

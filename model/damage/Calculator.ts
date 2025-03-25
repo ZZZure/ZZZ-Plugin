@@ -28,7 +28,7 @@ export interface skill {
    * 
    * 当为数组类型时（多类型共存），满足数组内其一类型即可，判断规则同上
    */
-  redirect?: string | string[]
+  redirect?: string | string[] | anomaly[] | "追加攻击"[]
   /** 角色面板伤害统计中是否隐藏显示 */
   isHide?: boolean
   /** 禁用伤害计算cache */
