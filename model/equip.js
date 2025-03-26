@@ -1,10 +1,6 @@
 import { property } from '../lib/convert.js';
 import { getSuitImage, getWeaponImage } from '../lib/download.js';
-import {
-  scoreData,
-  hasScoreData,
-  getEquipPropertyEnhanceCount
-} from '../lib/score.js';
+import { getEquipPropertyEnhanceCount } from '../lib/score.js';
 import Score from './damage/Score.js';
 
 /**
@@ -186,14 +182,13 @@ export class Equip {
 
   /**
    * 获取装备属性分数
-   * @param {string} charID
+   * @param {{[propID: string]: number}} weight 权重
    * @returns {number}
    */
-  get_score(charID) {
-    if (hasScoreData(charID)) {
-      this.properties.forEach(item => item.base_score = scoreData[charID][item.property_id] || 0);
-      this.score = Score.main(charID, this);
-    }
+  get_score(weight) {
+    if (!weight) return this.score;
+    this.properties.forEach(item => item.base_score = weight[item.property_id] || 0);
+    this.score = Score.main(this, weight);
     return this.score;
   }
 

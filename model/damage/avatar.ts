@@ -12,15 +12,19 @@ import fs from 'fs'
 const damagePath = path.join(pluginPath, 'model', 'damage')
 
 export const charData: {
-	[id: number]: {
+	[id: string]: {
 		skill: { [skillName: string]: number[] }
 		buff: { [buffName: string]: number[] }
 	}
-} = {}
+} = Object.create(null)
+
+export const scoreFnc: {
+	[charID: string]: (charData: ZZZAvatarInfo) => [string, { [propID: string]: number }] | undefined
+} = Object.create(null)
 
 const calcFnc: {
 	character: {
-		[id: number]: {
+		[charID: string]: {
 			calc?: (buffM: BuffManager, calc: Calculator, avatar: ZZZAvatarInfo) => void
 			buffs: buff[]
 			skills: skill[]
@@ -39,9 +43,9 @@ const calcFnc: {
 		}
 	}
 } = {
-	character: {},
-	weapon: {},
-	set: {}
+	character: Object.create(null),
+	weapon: Object.create(null),
+	set: Object.create(null)
 }
 
 async function init() {
@@ -54,10 +58,10 @@ async function init() {
 		}
 	})()
 	await Promise.all(fs.readdirSync(path.join(damagePath, 'character')).filter(v => v !== '模板').map(v => importChar(v, isWatch)))
-	for (const type of ['weapon', 'set']) {
+	for (const type of ['weapon', 'set'] as const) {
 		await Promise.all(
 			fs.readdirSync(path.join(damagePath, type)).filter(v => v !== '模板.js' && !v.endsWith('_user.js') && v.endsWith('.js'))
-				.map(v => importFile(type as 'weapon' | 'set', v.replace('.js', ''), isWatch))
+				.map(v => importFile(type, v.replace('.js', ''), isWatch))
 		)
 	}
 }
@@ -66,7 +70,7 @@ function watchFile(path: string, fnc: () => void) {
 	if (!fs.existsSync(path)) return
 	const watcher = chokidar.watch(path, {
 		awaitWriteFinish: {
-			stabilityThreshold: 50
+			stabilityThreshold: 251
 		}
 	})
 	watcher.on('change', (path) => {
@@ -79,21 +83,38 @@ async function importChar(charName: string, isWatch = false) {
 	const id = aliasToID(charName)
 	if (!id) return logger.warn(`未找到角色${charName}的ID`)
 	const dir = path.join(damagePath, 'character', charName)
-	const calcFile = fs.existsSync(path.join(dir, 'calc_user.js')) ? 'calc_user.js' : 'calc.js'
-	const dataPath = path.join(dir, (fs.existsSync(path.join(dir, 'data_user.json')) ? 'data_user.json' : 'data.json'))
+	const getFileName = (name: string, ext: '.js' | '.json') =>
+		fs.existsSync(path.join(dir, `${name}_user${ext}`)) ? `${name}_user${ext}` : `${name}${ext}`
+	const dataPath = path.join(dir, getFileName('data', '.json'))
+	const calcFile = getFileName('calc', '.js')
+	const scoreFile = getFileName('score', '.js')
 	try {
+		const loadCharData = () => charData[id] = JSON.parse(fs.readFileSync(dataPath, 'utf8'))
 		const calcFilePath = path.join(dir, calcFile)
-		if (isWatch) {
-			watchFile(calcFilePath, () => importChar(charName))
-			watchFile(dataPath, () => charData[id] = JSON.parse(fs.readFileSync(dataPath, 'utf8')))
+		const loadCalcJS = async () => {
+			if (!fs.existsSync(calcFilePath)) return
+			const m = await import(`./character/${charName}/${calcFile}?${Date.now()}`)
+			if (!m.calc && (!m.buffs || !m.skills)) throw new Error('伤害计算文件格式错误：' + charName)
+			calcFnc.character[id] = m
 		}
-		charData[id] = JSON.parse(fs.readFileSync(dataPath, 'utf8'))
-		if (!fs.existsSync(calcFilePath)) return
-		const m = await import(`./character/${charName}/${calcFile}?${Date.now()}`)
-		if (!m.calc && (!m.buffs || !m.skills)) throw new Error('伤害计算文件格式错误')
-		calcFnc.character[id] = m
+		const scoreFilePath = path.join(dir, scoreFile)
+		const loadScoreJS = async () => {
+			if (!fs.existsSync(scoreFilePath)) return
+			const m = await import(`./character/${charName}/${scoreFile}?${Date.now()}`)
+			const fnc = m.default
+			if (!fnc || typeof fnc !== 'function') throw new Error('评分权重文件格式错误：' + charName)
+			scoreFnc[id] = fnc
+		}
+		if (isWatch) {
+			watchFile(dataPath, loadCharData)
+			watchFile(calcFilePath, loadCalcJS)
+			watchFile(scoreFilePath, loadScoreJS)
+		}
+		loadCharData()
+		await loadCalcJS()
+		await loadScoreJS()
 	} catch (e) {
-		logger.error(`导入角色${charName}伤害计算错误:`, e)
+		logger.error(`导入角色${charName}计算文件错误:`, e)
 	}
 }
 

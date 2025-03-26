@@ -4,12 +4,12 @@ import {
   getSmallSquareAvatar,
   getSquareAvatar,
 } from '../lib/download.js';
+import { formatScoreWeight, scoreWeight } from '../lib/score.js';
+import { avatar_ability, scoreFnc } from './damage/avatar.js';
 import { imageResourcesPath } from '../lib/path.js';
 import { Equip, Weapon } from './equip.js';
 import { Property } from './property.js';
 import { Skill } from './skill.js';
-import { avatar_ability } from './damage/avatar.js';
-import { hasScoreData, scoreData } from '../lib/score.js';
 
 import _ from 'lodash';
 import fs from 'fs';
@@ -262,8 +262,9 @@ export class ZZZAvatarInfo {
     this.isNew = isNew;
     /** @type {number}  等级级别（取十位数字）*/
     this.level_rank = Math.floor(this.level / 10);
+    this.scoreWeight = formatScoreWeight(scoreFnc[this.id] && scoreFnc[this.id](this)?.[1]) || scoreWeight[this.id];
     for (const equip of this.equip) {
-      equip.get_score(this.id);
+      equip.get_score(this.scoreWeight);
     }
   }
 
@@ -356,7 +357,7 @@ export class ZZZAvatarInfo {
 
   /** @type {number|boolean} */
   get equip_score() {
-    if (hasScoreData(this.id)) {
+    if (this.scoreWeight) {
       let score = 0;
       for (const equip of this.equip) {
         score += equip.score;
@@ -435,7 +436,7 @@ export class ZZZAvatarInfo {
 
   /** 面板属性label效果 */
   get_label(propID) {
-    const base = scoreData[this.id][propID];
+    const base = this.scoreWeight[propID];
     if (!base) return '';
     return base === 1 ? 'yellow' :
       base >= 0.75 ? 'blue' :
