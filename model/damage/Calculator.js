@@ -8,10 +8,10 @@ export class Calculator {
     buffM;
     avatar;
     skills = [];
-    cache = {};
-    props = {};
+    cache = Object.create(null);
+    props = Object.create(null);
     skill;
-    defaultSkill = {};
+    defaultSkill = Object.create(null);
     enemy;
     constructor(buffM) {
         this.buffM = buffM;
@@ -38,16 +38,17 @@ export class Calculator {
             skill.forEach(s => this.new(s));
             return this.skills;
         }
+        const oriSkill = skill;
         skill = _.merge({
             ...this.defaultSkill
         }, skill);
         if (!skill.element)
-            skill.element = elementType2element(this.avatar.element_type);
+            skill.element = oriSkill.element = elementType2element(this.avatar.element_type);
         if (!skill.name || !skill.type)
             return logger.warn('无效skill：', skill);
         if (skill.check && +skill.check) {
             const num = skill.check;
-            skill.check = ({ avatar }) => avatar.rank >= num;
+            skill.check = oriSkill.check = ({ avatar }) => avatar.rank >= num;
         }
         this.skills.push(skill);
         return this.skills;
@@ -70,13 +71,13 @@ export class Calculator {
             logger.debug('自定义计算最终伤害：', dmg.result);
             return dmg;
         }
-        const props = this.props = skill.props || {};
+        const props = this.props = skill.props || Object.create(null);
         const usefulBuffs = this.buffM.filter({
             element: skill.element,
             range: [skill.type],
             redirect: skill.redirect
         }, this);
-        const areas = {};
+        const areas = Object.create(null);
         if (skill.before)
             skill.before({ avatar: this.avatar, calc: this, usefulBuffs, skill, props, areas });
         const isAnomaly = typeof anomalyEnum[skill.type] === 'number';

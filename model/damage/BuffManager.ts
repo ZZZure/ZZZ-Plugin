@@ -131,16 +131,16 @@ export class BuffManager {
   readonly avatar: ZZZAvatarInfo
   readonly buffs: buff[] = []
   /** 套装计数 */
-  setCount: { [name: string]: number } = {}
-  defaultBuff: { [key in keyof buff]?: buff[key] } = {}
+  setCount: { [name: string]: number } = Object.create(null)
+  defaultBuff: { [key in keyof buff]?: buff[key] } = Object.create(null)
 
   constructor(avatar: ZZZAvatarInfo) {
     this.avatar = avatar
   }
 
-  /** 注册buff */
+  /** 注册并格式化buff */
   new(buff: buff): buff[]
-  /** 注册buffs */
+  /** 注册并格式化buffs */
   new(buffs: buff[]): buff[]
   new(buff: buff | buff[]) {
     if (Array.isArray(buff)) {
@@ -150,21 +150,22 @@ export class BuffManager {
     // 简化参数
     if (!buff.name && (buff.source || this.defaultBuff.source) === 'Set' && this.defaultBuff.name && typeof buff.check === 'number')
       buff.name = this.defaultBuff.name + buff.check
+    const oriBuff = buff
     buff = _.merge({
       status: true,
       isForever: false,
-      is: {},
+      is: Object.create(null),
       ...this.defaultBuff
     }, buff)
     if (buff.isForever)
       buff.is.forever = true
     if (buff.range && !Array.isArray(buff.range))
-      buff.range = [buff.range]
+      buff.range = oriBuff.range = [buff.range]
     if (!buff.source) {
-      if (buff.name.includes('核心') || buff.name.includes('天赋')) buff.source = 'Talent'
-      else if (buff.name.includes('额外能力')) buff.source = 'Addition'
-      else if (buff.name.includes('影')) buff.source = 'Rank'
-      else if (buff.name.includes('技')) buff.source = 'Skill'
+      if (buff.name.includes('核心') || buff.name.includes('天赋')) buff.source = oriBuff.source = 'Talent'
+      else if (buff.name.includes('额外能力')) buff.source = oriBuff.source = 'Addition'
+      else if (buff.name.includes('影')) buff.source = oriBuff.source = 'Rank'
+      else if (buff.name.includes('技')) buff.source = oriBuff.source = 'Skill'
     }
     if (!buff.name || !buff.value || !buff.source || !buffTypeEnum[buffTypeEnum[buff.type]])
       return logger.warn('无效buff：', buff)
@@ -177,8 +178,9 @@ export class BuffManager {
       }
       const oriCheck = typeof buff.check === 'function' && buff.check
       buff.check = ({ avatar, buffM, calc }) => professionCheck(avatar) && (!oriCheck || oriCheck({ avatar, buffM, calc }))
+      // 影画buff影画数检查
     } else if (buff.source === 'Rank') {
-      buff.check ??= +buff.name.match(/\d/)!?.[0]
+      buff.check ??= oriBuff.check = +buff.name.match(/\d/)!?.[0]
     }
     this.buffs.push(buff)
     return this.buffs

@@ -44,8 +44,8 @@ let depth = 0, weakMapCheck = new WeakMap();
 export class BuffManager {
     avatar;
     buffs = [];
-    setCount = {};
-    defaultBuff = {};
+    setCount = Object.create(null);
+    defaultBuff = Object.create(null);
     constructor(avatar) {
         this.avatar = avatar;
     }
@@ -56,25 +56,26 @@ export class BuffManager {
         }
         if (!buff.name && (buff.source || this.defaultBuff.source) === 'Set' && this.defaultBuff.name && typeof buff.check === 'number')
             buff.name = this.defaultBuff.name + buff.check;
+        const oriBuff = buff;
         buff = _.merge({
             status: true,
             isForever: false,
-            is: {},
+            is: Object.create(null),
             ...this.defaultBuff
         }, buff);
         if (buff.isForever)
             buff.is.forever = true;
         if (buff.range && !Array.isArray(buff.range))
-            buff.range = [buff.range];
+            buff.range = oriBuff.range = [buff.range];
         if (!buff.source) {
             if (buff.name.includes('核心') || buff.name.includes('天赋'))
-                buff.source = 'Talent';
+                buff.source = oriBuff.source = 'Talent';
             else if (buff.name.includes('额外能力'))
-                buff.source = 'Addition';
+                buff.source = oriBuff.source = 'Addition';
             else if (buff.name.includes('影'))
-                buff.source = 'Rank';
+                buff.source = oriBuff.source = 'Rank';
             else if (buff.name.includes('技'))
-                buff.source = 'Skill';
+                buff.source = oriBuff.source = 'Skill';
         }
         if (!buff.name || !buff.value || !buff.source || !buffTypeEnum[buffTypeEnum[buff.type]])
             return logger.warn('无效buff：', buff);
@@ -89,7 +90,7 @@ export class BuffManager {
             buff.check = ({ avatar, buffM, calc }) => professionCheck(avatar) && (!oriCheck || oriCheck({ avatar, buffM, calc }));
         }
         else if (buff.source === 'Rank') {
-            buff.check ??= +buff.name.match(/\d/)?.[0];
+            buff.check ??= oriBuff.check = +buff.name.match(/\d/)?.[0];
         }
         this.buffs.push(buff);
         return this.buffs;

@@ -129,11 +129,11 @@ export class Calculator {
   readonly buffM: BuffManager
   readonly avatar: ZZZAvatarInfo
   readonly skills: skill[] = []
-  private cache: { [type: string]: damage } = {}
-  private props: Exclude<damage['props'], undefined> = {}
+  private cache: { [type: string]: damage } = Object.create(null)
+  private props: Exclude<damage['props'], undefined> = Object.create(null)
   /** 当前正在计算的技能 */
   skill: skill
-  defaultSkill: { [key in keyof skill]?: skill[key] } = {}
+  defaultSkill: { [key in keyof skill]?: skill[key] } = Object.create(null)
   enemy: enemy
 
   constructor(buffM: BuffManager) {
@@ -161,23 +161,24 @@ export class Calculator {
     }
   }
 
-  /** 注册skill */
+  /** 注册并格式化skill */
   new(skill: skill): skill[]
-  /** 注册skills */
+  /** 注册并格式化skills */
   new(skills: skill[]): skill[]
   new(skill: skill | skill[]) {
     if (Array.isArray(skill)) {
       skill.forEach(s => this.new(s))
       return this.skills
     }
+    const oriSkill = skill
     skill = _.merge({
       ...this.defaultSkill
     }, skill)
-    if (!skill.element) skill.element = elementType2element(this.avatar.element_type)
+    if (!skill.element) skill.element = oriSkill.element = elementType2element(this.avatar.element_type)
     if (!skill.name || !skill.type) return logger.warn('无效skill：', skill)
     if (skill.check && +skill.check) {
       const num = skill.check as unknown as number
-      skill.check = ({ avatar }) => avatar.rank >= num
+      skill.check = oriSkill.check = ({ avatar }) => avatar.rank >= num
     }
     this.skills.push(skill)
     return this.skills
@@ -208,14 +209,14 @@ export class Calculator {
       logger.debug('自定义计算最终伤害：', dmg.result)
       return dmg
     }
-    const props = this.props = skill.props || {}
+    const props = this.props = skill.props || Object.create(null)
     /** 缩小筛选范围 */
     const usefulBuffs = this.buffM.filter({
       element: skill.element,
       range: [skill.type],
       redirect: skill.redirect
     }, this)
-    const areas = {} as damage['areas']
+    const areas = Object.create(null) as damage['areas']
     if (skill.before) skill.before({ avatar: this.avatar, calc: this, usefulBuffs, skill, props, areas })
     const isAnomaly = typeof anomalyEnum[skill.type as anomaly] === 'number'
     if (!areas.BasicArea) {

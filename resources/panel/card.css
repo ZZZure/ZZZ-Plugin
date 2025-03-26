@@ -328,6 +328,9 @@
 .card .basic .info .property_info .list .properties .label.blue {
   color: rgb(65, 147, 237);
 }
+.card .basic .info .property_info .list .properties .label.white {
+  color: rgb(233, 233, 233);
+}
 .card .basic .info .property_info .list .properties .value {
   flex-grow: 0;
   flex-shrink: 0;

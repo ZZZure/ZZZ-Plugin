@@ -9,7 +9,7 @@ import { Equip, Weapon } from './equip.js';
 import { Property } from './property.js';
 import { Skill } from './skill.js';
 import { avatar_ability } from './damage/avatar.js';
-import { hasScoreData } from '../lib/score.js';
+import { hasScoreData, scoreData } from '../lib/score.js';
 
 import _ from 'lodash';
 import fs from 'fs';
@@ -431,6 +431,15 @@ export class ZZZAvatarInfo {
       }
     });
     return result;
+  }
+
+  /** 面板属性label效果 */
+  get_label(propID) {
+    const base = scoreData[this.id][propID];
+    if (!base) return '';
+    return base === 1 ? 'yellow' :
+      base >= 0.75 ? 'blue' :
+        base >= 0.5 ? 'white' : '';
   }
 
   /**
