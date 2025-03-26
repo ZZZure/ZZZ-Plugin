@@ -64,7 +64,7 @@ export default class Score {
         const rarity_multiplier = this.get_rarity_multiplier();
         const actual_count = this.get_actual_count();
         if (actual_count === 0 && this.partition <= 3) {
-            return 12 * this.get_level_multiplier();
+            return 12 * this.get_level_multiplier() * rarity_multiplier;
         }
         const max_count = this.get_max_count();
         if (max_count === 0)
