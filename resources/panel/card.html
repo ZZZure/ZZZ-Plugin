@@ -140,13 +140,27 @@
       <% include(sys.specialTitle, {en: 'METAL' , cn: '驱动盘信息' }) %>
     </div>
     {{if charData.equip_score !== false}}
-    <div class="equip-score {{charData.equip_comment}}">
-      <div class="comment-box">
-        <div class="comment">{{charData.equip_comment}}</div>
+    <div class="equip-stats">
+      <div class="equip-score {{charData.equip_comment}}">
+        <div class="comment-box">
+          <div class="comment">{{charData.equip_comment}}</div>
+        </div>
+        <div class="value">
+          <span>{{charData.equip_score.toFixed(2)}}</span>
+          <span class="subt">分</span>
+        </div>
       </div>
-      <div class="value">
-        <span>{{charData.equip_score.toFixed(2)}}</span>
-        <span class="subt">分</span>
+      <div class="property-stats">
+        {{set stats = charData.propertyStats.slice(0, 9)}}
+        {{each stats item}}
+        <div class="stat-item {{item.weight == 1 ? 'great' : (item.weight >= 0.75 ? 'good' : (item.weight > 0 ? 'useful' : 'useless'))}}">
+          <span class="title"><span class="count">{{item.count}}</span> {{item.name}}</span>
+          <span class="value">+{{item.value}}</span>
+        </div>
+        {{/each}}
+        <% for (let i = 0; i < 9-stats.length; i++) { %>
+          <div class="stat-item"></div>
+        <% } %>
       </div>
     </div>
     {{/if}}

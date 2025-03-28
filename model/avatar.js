@@ -4,16 +4,16 @@ import {
   getSmallSquareAvatar,
   getSquareAvatar,
 } from '../lib/download.js';
-import { formatScoreWeight, scoreWeight } from '../lib/score.js';
+import { baseValueData, formatScoreWeight, scoreWeight } from '../lib/score.js';
 import { avatar_ability, scoreFnc } from './damage/avatar.js';
+import { idToShortName } from '../lib/convert/property.js';
 import { imageResourcesPath } from '../lib/path.js';
 import { Equip, Weapon } from './equip.js';
 import { Property } from './property.js';
 import { Skill } from './skill.js';
-
+import path from 'path';
 import _ from 'lodash';
 import fs from 'fs';
-import path from 'path';
 
 /**
  * @class
@@ -357,6 +357,7 @@ export class ZZZAvatarInfo {
 
   /** @type {number|boolean} */
   get equip_score() {
+    if (!this.equip?.length) return false;
     if (this.scoreWeight) {
       let score = 0;
       for (const equip of this.equip) {
@@ -432,6 +433,35 @@ export class ZZZAvatarInfo {
       }
     });
     return result;
+  }
+
+  /** 词条统计 */
+  get propertyStats() {
+    /** @type {{ [propID: string]: { id: number, name: string, weight: number, value: string, count: number } }} */
+    const stats = {}
+    for (const equip of this.equip) {
+      for (const property of equip.properties) {
+        const propID = property.property_id
+        stats[propID] ??= {
+          id: propID,
+          name: idToShortName(propID),
+          weight: this.scoreWeight[propID] || 0,
+          value: '0',
+          count: 0
+        }
+        stats[propID].count += property.count + 1
+      }
+    }
+    const statsArr = Object.values(stats)
+    statsArr.forEach(stat => {
+      if (baseValueData[stat.id]) {
+        stat.value = (baseValueData[stat.id] * stat.count).toFixed(1)
+        if ([11102, 12102, 13102, 20103, 21103].includes(stat.id)) {
+          stat.value = `${stat.value}%`
+        }
+      }
+    })
+    return _.orderBy(statsArr, ['count', 'weight'], ['desc', 'desc'])
   }
 
   /** 面板属性label效果 */

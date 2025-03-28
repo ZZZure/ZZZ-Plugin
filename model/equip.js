@@ -31,12 +31,10 @@ export class EquipProperty {
     this.base = base;
     this.base_score = 0
     this.classname = property.idToClassName(property_id);
+    /** 词条强化次数 */
+    this.count = getEquipPropertyEnhanceCount(property_id, base);
   }
 
-  /** @type {number} */
-  get count() {
-    return getEquipPropertyEnhanceCount(this.property_id, this.base);
-  }
 }
 
 /**

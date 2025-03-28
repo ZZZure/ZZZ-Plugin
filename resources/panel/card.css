@@ -489,14 +489,22 @@
   background-clip: text;
   color: transparent;
 }
-.card .equip-score {
+.card .equip-stats {
+  display: flex;
+  padding: 0 1.8em;
+  height: 6em;
+}
+.card .equip-stats .equip-score {
+  border: #707070 solid;
+  border-width: 0.2em 0 0.2em 0.2em;
+  border-radius: 0.6em 0 0 0.6em;
   display: flex;
   justify-content: center;
-  font-size: 1.2em;
+  font-size: 1em;
   align-items: center;
-  gap: 0.2em;
+  width: 30%;
 }
-.card .equip-score .comment-box {
+.card .equip-stats .equip-score .comment-box {
   font-size: 1.2em;
   width: 2em;
   display: flex;
@@ -510,15 +518,74 @@
   position: relative;
   z-index: 1;
 }
-.card .equip-score .value {
+.card .equip-stats .equip-score .value {
   border: 0.1em solid rgb(155, 155, 155);
   border-left: none;
   padding: 0.1em 1em 0.1em 1em;
   margin-left: -0.6em;
   border-radius: 0 1em 1em 0;
 }
-.card .equip-score .value .subt {
+.card .equip-stats .equip-score .value .subt {
   font-size: 0.8em;
+}
+.card .equip-stats .property-stats {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  font-size: 0.8em;
+  align-items: center;
+  border: #707070 solid;
+  border-width: 0.2em;
+  border-radius: 0 0.6em 0.6em 0;
+  overflow: hidden;
+}
+.card .equip-stats .property-stats .stat-item {
+  width: 33.33%;
+  height: 33.33%;
+  padding: 0 0.2em;
+  position: relative;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  color: #eee;
+  border: #707070 0.1em solid;
+}
+.card .equip-stats .property-stats .stat-item:nth-child(7) {
+  border-radius: 0 0.4em 0 0;
+}
+.card .equip-stats .property-stats .stat-item:nth-child(9) {
+  border-radius: 0 0 0.4em 0;
+}
+.card .equip-stats .property-stats .stat-item.great {
+  color: rgb(249, 189, 64);
+}
+.card .equip-stats .property-stats .stat-item.good {
+  color: rgb(238, 207, 139);
+}
+.card .equip-stats .property-stats .stat-item.useless {
+  color: #999999;
+}
+.card .equip-stats .property-stats .stat-item span.title {
+  padding-left: 0.1em;
+  text-align: left;
+  width: 48%;
+}
+.card .equip-stats .property-stats .stat-item span.title span.count {
+  display: inline-block;
+  text-align: center;
+  background-color: black;
+  width: 1.6em;
+  height: 1.6em;
+  border: #696969 0.15em solid;
+  border-radius: 0.4em;
+}
+.card .equip-stats .property-stats .stat-item span.value {
+  padding-right: 0.2em;
+  width: 52%;
+  overflow: hidden;
+  text-align: right;
 }
 .card .equip-list {
   width: 100%;
