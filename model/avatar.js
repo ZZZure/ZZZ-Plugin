@@ -436,7 +436,7 @@ export class ZZZAvatarInfo {
 
   /** 面板属性label效果 */
   get_label(propID) {
-    const base = this.scoreWeight[propID];
+    const base = this.scoreWeight?.[propID];
     if (!base) return '';
     return base === 1 ? 'yellow' :
       base >= 0.75 ? 'blue' :
