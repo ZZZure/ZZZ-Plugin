@@ -141,26 +141,37 @@
     </div>
     {{if charData.equip_score !== false}}
     <div class="equip-stats">
-      <div class="equip-score {{charData.equip_comment}}">
-        <div class="comment-box">
-          <div class="comment">{{charData.equip_comment}}</div>
+      <div class="box1">
+        <div class="equip-score {{charData.equip_comment}}">
+          <div class="comment-box">
+            <div class="comment">{{charData.equip_comment}}</div>
+          </div>
+          <div class="value">
+            <span>{{charData.equip_score.toFixed(2)}}</span>
+            <span class="subt">分</span>
+          </div>
         </div>
-        <div class="value">
-          <span>{{charData.equip_score.toFixed(2)}}</span>
-          <span class="subt">分</span>
-        </div>
+        <div class="weight-rule">规则：{{charData.weightRule || '默认'}}</div>
       </div>
-      <div class="property-stats">
-        {{set stats = charData.propertyStats.slice(0, 9)}}
-        {{each stats item}}
-        <div class="stat-item {{item.weight == 1 ? 'great' : (item.weight >= 0.75 ? 'good' : (item.weight > 0 ? 'useful' : 'useless'))}}">
-          <span class="title"><span class="count">{{item.count}}</span> {{item.name}}</span>
-          <span class="value">+{{item.value}}</span>
+      <div class="box2">
+        <div class="property-stats">
+          {{set stats = charData.propertyStats.slice(0, 9)}}
+          {{each stats item}}
+          <div class="stat-item {{item.weight == 1 ? 'great' : (item.weight >= 0.75 ? 'good' : (item.weight > 0 ? 'useful' : 'useless'))}}">
+            <span class="title"><span class="count">{{item.count}}</span> {{item.name}}</span>
+            <span class="value">+{{item.value}}</span>
+          </div>
+          {{/each}}
+          <% for (let i = 0; i < 9-stats.length; i++) { %>
+            <div class="stat-item"></div>
+          <% } %>
         </div>
-        {{/each}}
-        <% for (let i = 0; i < 9-stats.length; i++) { %>
-          <div class="stat-item"></div>
-        <% } %>
+        <div class="useful-stats">有益词条数：{{
+            stats.reduce((acc, stat) => stat.weight ? acc + stat.count : acc, 0)
+          }} 有效词条数：{{
+            (stats.reduce((acc, stat) => acc + stat.count * stat.weight, 0)).toFixed(2)
+          }}
+        </div>
       </div>
     </div>
     {{/if}}

@@ -262,7 +262,9 @@ export class ZZZAvatarInfo {
     this.isNew = isNew;
     /** @type {number}  等级级别（取十位数字）*/
     this.level_rank = Math.floor(this.level / 10);
-    this.scoreWeight = formatScoreWeight(scoreFnc[this.id] && scoreFnc[this.id](this)?.[1]) || scoreWeight[this.id];
+    const weight = scoreFnc[this.id] && scoreFnc[this.id](this);
+    this.weightRule = weight?.[0] || '默认';
+    this.scoreWeight = formatScoreWeight(weight?.[1]) || scoreWeight[this.id];
     for (const equip of this.equip) {
       equip.get_score(this.scoreWeight);
     }

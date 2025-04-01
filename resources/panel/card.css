@@ -492,19 +492,23 @@
 .card .equip-stats {
   display: flex;
   padding: 0 1.8em;
-  height: 6em;
+  height: 7.5em;
 }
-.card .equip-stats .equip-score {
+.card .equip-stats .box1 {
+  width: 30%;
   border: #707070 solid;
   border-width: 0.2em 0 0.2em 0.2em;
   border-radius: 0.6em 0 0 0.6em;
+}
+.card .equip-stats .box1 .equip-score {
+  height: 80%;
+  border: #707070 solid;
+  border-width: 0 0 0.1em 0;
   display: flex;
   justify-content: center;
-  font-size: 1em;
   align-items: center;
-  width: 30%;
 }
-.card .equip-stats .equip-score .comment-box {
+.card .equip-stats .box1 .equip-score .comment-box {
   font-size: 1.2em;
   width: 2em;
   display: flex;
@@ -518,30 +522,43 @@
   position: relative;
   z-index: 1;
 }
-.card .equip-stats .equip-score .value {
+.card .equip-stats .box1 .equip-score .value {
   border: 0.1em solid rgb(155, 155, 155);
   border-left: none;
   padding: 0.1em 1em 0.1em 1em;
   margin-left: -0.6em;
   border-radius: 0 1em 1em 0;
 }
-.card .equip-stats .equip-score .value .subt {
+.card .equip-stats .box1 .equip-score .value .subt {
   font-size: 0.8em;
 }
-.card .equip-stats .property-stats {
+.card .equip-stats .box1 .weight-rule {
+  height: 20%;
+  font-size: 0.8em;
+  color: #aaa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.card .equip-stats .box2 {
   width: 70%;
-  height: 100%;
+  border: #707070 solid;
+  border-width: 0.2em;
+  border-radius: 0 0.6em 0.6em 0;
+}
+.card .equip-stats .box2 .property-stats {
+  height: 80%;
+  border: #707070 solid;
+  border-width: 0 0 0.125em 0;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   font-size: 0.8em;
   align-items: center;
-  border: #707070 solid;
-  border-width: 0.2em;
-  border-radius: 0 0.6em 0.6em 0;
   overflow: hidden;
 }
-.card .equip-stats .property-stats .stat-item {
+.card .equip-stats .box2 .property-stats .stat-item {
   width: 33.33%;
   height: 33.33%;
   padding: 0 0.2em;
@@ -552,27 +569,28 @@
   color: #eee;
   border: #707070 0.1em solid;
 }
-.card .equip-stats .property-stats .stat-item:nth-child(7) {
+.card .equip-stats .box2 .property-stats .stat-item:nth-child(7) {
   border-radius: 0 0.4em 0 0;
 }
-.card .equip-stats .property-stats .stat-item:nth-child(9) {
-  border-radius: 0 0 0.4em 0;
+.card .equip-stats .box2 .property-stats .stat-item:nth-child(3n) {
+  border: #707070 solid;
+  border-width: 0.1em 0.1em 0 0.1em;
 }
-.card .equip-stats .property-stats .stat-item.great {
+.card .equip-stats .box2 .property-stats .stat-item.great {
   color: rgb(249, 189, 64);
 }
-.card .equip-stats .property-stats .stat-item.good {
+.card .equip-stats .box2 .property-stats .stat-item.good {
   color: rgb(238, 207, 139);
 }
-.card .equip-stats .property-stats .stat-item.useless {
+.card .equip-stats .box2 .property-stats .stat-item.useless {
   color: #999999;
 }
-.card .equip-stats .property-stats .stat-item span.title {
+.card .equip-stats .box2 .property-stats .stat-item span.title {
   padding-left: 0.1em;
   text-align: left;
   width: 48%;
 }
-.card .equip-stats .property-stats .stat-item span.title span.count {
+.card .equip-stats .box2 .property-stats .stat-item span.title span.count {
   display: inline-block;
   text-align: center;
   background-color: black;
@@ -581,11 +599,22 @@
   border: #696969 0.15em solid;
   border-radius: 0.4em;
 }
-.card .equip-stats .property-stats .stat-item span.value {
+.card .equip-stats .box2 .property-stats .stat-item span.value {
   padding-right: 0.2em;
   width: 52%;
   overflow: hidden;
   text-align: right;
+}
+.card .equip-stats .box2 .useful-stats {
+  height: 20%;
+  font-size: 0.8em;
+  color: #aaa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border: #707070 solid;
+  border-width: 0 0.1em 0 0.1em;
 }
 .card .equip-list {
   width: 100%;
