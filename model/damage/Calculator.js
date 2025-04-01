@@ -9,9 +9,9 @@ export class Calculator {
     avatar;
     skills = [];
     cache = Object.create(null);
-    props = Object.create(null);
+    props = {};
     skill;
-    defaultSkill = Object.create(null);
+    defaultSkill = {};
     enemy;
     constructor(buffM) {
         this.buffM = buffM;
@@ -71,13 +71,13 @@ export class Calculator {
             logger.debug('自定义计算最终伤害：', dmg.result);
             return dmg;
         }
-        const props = this.props = skill.props || Object.create(null);
+        const props = this.props = skill.props || {};
         const usefulBuffs = this.buffM.filter({
             element: skill.element,
             range: [skill.type],
             redirect: skill.redirect
         }, this);
-        const areas = Object.create(null);
+        const areas = {};
         if (skill.before)
             skill.before({ avatar: this.avatar, calc: this, usefulBuffs, skill, props, areas });
         const isAnomaly = typeof anomalyEnum[skill.type] === 'number';
@@ -145,7 +145,7 @@ export class Calculator {
                     d = this.calc_skill(d);
                 if (!d)
                     return;
-                logger.debug('追加伤害：' + d.skill.name, d.result);
+                logger.debug('增加伤害：' + d.skill.name, d.result);
                 damage.result.expectDMG += d.result.expectDMG;
                 damage.result.critDMG += d.result.critDMG;
             };

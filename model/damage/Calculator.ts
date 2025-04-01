@@ -130,10 +130,10 @@ export class Calculator {
   readonly avatar: ZZZAvatarInfo
   readonly skills: skill[] = []
   private cache: { [type: string]: damage } = Object.create(null)
-  private props: Exclude<damage['props'], undefined> = Object.create(null)
+  private props: Exclude<damage['props'], undefined> = {}
   /** 当前正在计算的技能 */
   skill: skill
-  defaultSkill: { [key in keyof skill]?: skill[key] } = Object.create(null)
+  defaultSkill: { [key in keyof skill]?: skill[key] } = {}
   enemy: enemy
 
   constructor(buffM: BuffManager) {
@@ -209,14 +209,14 @@ export class Calculator {
       logger.debug('自定义计算最终伤害：', dmg.result)
       return dmg
     }
-    const props = this.props = skill.props || Object.create(null)
+    const props = this.props = skill.props || {}
     /** 缩小筛选范围 */
     const usefulBuffs = this.buffM.filter({
       element: skill.element,
       range: [skill.type],
       redirect: skill.redirect
     }, this)
-    const areas = Object.create(null) as damage['areas']
+    const areas = {} as damage['areas']
     if (skill.before) skill.before({ avatar: this.avatar, calc: this, usefulBuffs, skill, props, areas })
     const isAnomaly = typeof anomalyEnum[skill.type as anomaly] === 'number'
     if (!areas.BasicArea) {
@@ -279,7 +279,7 @@ export class Calculator {
       damage.add = (d) => {
         if (typeof d === 'string') d = this.calc_skill(d)
         if (!d) return
-        logger.debug('追加伤害：' + d.skill.name, d.result)
+        logger.debug('增加伤害：' + d.skill.name, d.result)
         damage.result.expectDMG += d.result.expectDMG
         damage.result.critDMG += d.result.critDMG
       }

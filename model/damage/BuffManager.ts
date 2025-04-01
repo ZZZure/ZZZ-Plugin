@@ -116,7 +116,7 @@ export interface buff {
     forever?: boolean
     /** 是否团队增益 @default false */
     team?: boolean
-    /** buff为团队增益时，同类效果是否可叠加 @default false */
+    /** 为团队增益时，同名效果是否可叠加 @default false */
     stack?: boolean
   }
 }
@@ -131,8 +131,8 @@ export class BuffManager {
   readonly avatar: ZZZAvatarInfo
   readonly buffs: buff[] = []
   /** 套装计数 */
-  setCount: { [name: string]: number } = Object.create(null)
-  defaultBuff: { [key in keyof buff]?: buff[key] } = Object.create(null)
+  setCount: { [name: string]: number } = {}
+  defaultBuff: { [key in keyof buff]?: buff[key] } = {}
 
   constructor(avatar: ZZZAvatarInfo) {
     this.avatar = avatar
@@ -154,7 +154,7 @@ export class BuffManager {
     buff = _.merge({
       status: true,
       isForever: false,
-      is: Object.create(null),
+      is: {},
       ...this.defaultBuff
     }, buff)
     if (buff.isForever)
