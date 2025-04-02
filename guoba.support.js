@@ -46,7 +46,7 @@ export function supportGuoba() {
             min: 50,
             max: 200,
             placeholder: '请输入数字',
-            addonAfter: '%'
+            addonAfter: '%',
           },
         },
         {
@@ -111,7 +111,7 @@ export function supportGuoba() {
             min: 0,
             max: 1000,
             placeholder: '请输入数字',
-            addonAfter: 's'
+            addonAfter: 's',
           },
         },
         {
@@ -173,7 +173,7 @@ export function supportGuoba() {
             min: 0,
             max: 1000,
             placeholder: '请输入数字',
-            addonAfter: 's'
+            addonAfter: 's',
           },
         },
         {
@@ -187,7 +187,7 @@ export function supportGuoba() {
             min: 0,
             max: 1000,
             placeholder: '请输入数字',
-            addonAfter: 's'
+            addonAfter: 's',
           },
         },
         {
@@ -247,7 +247,7 @@ export function supportGuoba() {
             min: 1,
             max: 7,
             placeholder: '请输入数字1～7',
-            addonAfter: '张'
+            addonAfter: '张',
           },
         },
         {
@@ -257,7 +257,7 @@ export function supportGuoba() {
         {
           component: 'Divider',
           label:
-            '默认设备信息设置（通过'%设置默认设备'进行设置，如果不知道这是什么请勿修改）',
+            '默认设备信息设置（通过"%设置默认设备"进行设置，如果不知道这是什么请勿修改）',
         },
         {
           field: 'device.productName',
