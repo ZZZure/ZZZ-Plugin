@@ -1,5 +1,6 @@
 render:
   scale: 100 # 渲染精度
+useEnka: true # 使用enka接口查询
 query:
   others: true # 允许查询他人信息
 update:
