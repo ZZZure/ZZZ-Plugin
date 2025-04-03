@@ -10,6 +10,8 @@ import {
 import settings from '../lib/settings.js';
 import _ from 'lodash';
 import { rulePrefix } from '../lib/common.js';
+import { getZzzEnkaData } from '../lib/ekapi/query.js'
+import { _enka_data_to_mys_data } from '../lib/ekapi/enka_to_mys.js'
 
 export class Panel extends ZZZPlugin {
   constructor() {
@@ -51,56 +53,102 @@ export class Panel extends ZZZPlugin {
     return false;
   }
 
-  async refreshPanel() {
+    async refreshPanel() {
     const uid = await this.getUID();
-    const lastQueryTime = await redis.get(`ZZZ:PANEL:${uid}:LASTTIME`);
-    const panelSettings = settings.getConfig('panel');
-    const coldTime = _.get(panelSettings, 'interval', 300);
-    if (lastQueryTime && Date.now() - lastQueryTime < 1000 * coldTime) {
-      await this.reply(`${coldTime}秒内只能刷新一次，请稍后再试`);
-      return false;
-    }
-    const { api } = await this.getAPI();
-    await redis.set(`ZZZ:PANEL:${uid}:LASTTIME`, Date.now());
-    await this.reply('正在刷新面板列表，请稍候...');
-    await this.getPlayerInfo();
-    const result = await refreshPanelFunction(api).catch(e => {
-      this.reply(e.message);
-      throw e;
-    });
-    if (!result) {
-      await this.reply('面板列表刷新失败，请稍后再试');
-      return false;
-    }
-    const newChar = result.filter(item => item.isNew);
-    const finalData = {
-      newChar: newChar.length,
-      list: result,
-    };
-    await this.render('panel/refresh.html', finalData);
-  }
-  async getCharPanelList() {
-    const uid = await this.getUID();
-    const result = getPanelList(uid);
-    if (!result) {
-      await this.reply('未找到面板数据，请先%刷新面板');
-      return false;
-    }
-    await this.getPlayerInfo();
-    const timer = setTimeout(() => {
-      if (this?.reply) {
-        this.reply('查询成功，正在下载图片资源，请稍候。');
+    let playerInfo = null;
+    try {
+      playerInfo = await this.getPlayerInfo();
+      if (!playerInfo) playerInfo = this.e.player;
+      if (!playerInfo) {
+          playerInfo = { uid: uid, nickname: `用户${uid}`, level: '??', region_name: '未知服务器' };
       }
-    }, 5000);
-    for (const item of result) {
-      await item.get_basic_assets();
+    } catch (playerInfoError) {
+        playerInfo = { uid: uid, nickname: `用户${uid}`, level: '??', region_name: '错误', error: playerInfoError.message };
     }
-    clearTimeout(timer);
+
+    this.result = null;
+    const useEnka = _.get(settings.getConfig('config'), 'useEnka', true); // 读取配置，Enka 优先
+    logger.mark(`[panel.js] useEnka 设置值: ${useEnka}`);
+
+    if (useEnka) {
+      logger.mark('[panel.js] 进入 Enka 逻辑块');
+      try {
+        const enkaData = await getZzzEnkaData(uid);
+        if (!enkaData || enkaData === -1 || !enkaData.PlayerInfo) { throw new Error('获取或验证 Enka 数据失败'); }
+        this.result = await _enka_data_to_mys_data(enkaData);
+      } catch (enkaError) {
+         logger.error('处理 Enka 逻辑时出错:', enkaError);
+         await this.reply(`处理Enka数据时出错: ${enkaError.message}`);
+         return false;
+      }
+    } else {
+      try {
+          const { api } = await this.getAPI(); // MYS 需要 api 对象
+          // MYS 逻辑需要冷却判断
+          const lastQueryTime = await redis.get(`ZZZ:PANEL:${uid}:LASTTIME`);
+          const panelSettings = settings.getConfig('panel');
+          const coldTime = _.get(panelSettings, 'interval', 300);
+          if (lastQueryTime && Date.now() - lastQueryTime < 1000 * coldTime) {
+              await this.reply(`${coldTime}秒内只能刷新一次，请稍后再试`);
+              return false;
+          }
+          await redis.set(`ZZZ:PANEL:${uid}:LASTTIME`, Date.now());
+          await this.reply('正在刷新面板列表 (MYS API)，请稍候...');
+
+          const mysResult = await refreshPanelFunction(api); // 调用 MYS 刷新函数
+          if (!mysResult) { throw new Error('MYS API 返回空结果'); }
+          this.result = mysResult; // <<< MYS 结果赋给 this.result
+          logger.mark('[panel.js] MYS API refreshPanelFunction 调用完成.');
+      } catch (mysError) {
+          logger.error('[panel.js] MYS API 刷新出错:', mysError);
+          this.reply(`MYS API 刷新出错: ${mysError.message}`);
+          return false;
+      }
+    }
+
+    if (this.result && Array.isArray(this.result)) { // 确保有有效数据 (非 null, 是数组)
+      // 并且至少包含一个角色数据才存，避免存空数组？(可选)
+      if (this.result.length > 0) {
+          try {
+
+            await updatePanelData(uid, this.result);
+
+          } catch (cacheError) {
+            logger.error('出错:', cacheError);
+            // 记录错误，但可能继续
+          }
+      } else {
+          logger.warn('[panel.js] 获取到的角色列表为空数组，不执行缓存更新。');
+          // 如果是 Enka 路径且展示柜为空，这是正常情况
+      }
+    } else {
+      logger.warn('[panel.js] 没有有效的角色列表数据 (this.result)，跳过缓存更新。');
+      // 如果之前的步骤没有 return false，这里可能需要提示用户
+      if (!useEnka) { // MYS 失败的情况
+          await this.reply('未能获取或处理有效的面板列表数据。');
+          return false; // 如果 MYS 失败且结果无效，应该退出
+      }
+      // 如果是 Enka 路径且结果无效/非数组，也提示并退出
+      await this.reply('处理后的面板数据格式无效。');
+      return false;
+    }
+    const currentResult = this.result || [];
+    const newCharCount = (currentResult.length > 0 && currentResult[0]?.isNew !== undefined)
+                         ? currentResult.filter(item => item && item.isNew).length
+                         : 0;
     const finalData = {
-      count: result?.length || 0,
-      list: result,
+      newChar: newCharCount,
+      list: currentResult,
+      player: playerInfo,
+      uid: uid
     };
-    await this.render('panel/list.html', finalData);
+
+    try {
+        await this.render('panel/refresh.html', finalData);
+    } catch (renderError) {
+        logger.error('[panel.js] 渲染 refresh.html 模板失败:', renderError);
+        await this.reply(`生成刷新结果图片时出错: ${renderError.message}`);
+    }
   }
 
   async getCharPanelListTool(uid, origin = false) {

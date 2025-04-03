@@ -105,6 +105,25 @@ async function importFile(type, name, isWatch = false) {
 }
 await init();
 export function avatar_ability(avatar) {
+     // --- 添加调试日志 ---
+    console.log(`\n===== Entering avatar_ability for ${avatar?.name_mi18n} (ID: ${avatar?.id}) =====`);
+    try {
+        console.log('--- Incoming Properties ---');
+        console.log(JSON.stringify(avatar?.properties, null, 2));
+        console.log('--- Incoming Weapon ---');
+        console.log(JSON.stringify(avatar?.weapon, null, 2));
+        console.log('--- Incoming Equip (Set Names & Main Stats) ---');
+        avatar?.equip?.forEach(e => console.log(`Pos ${e.pos}: ${e.set?.name}, Main: ${e.main_properties?.[0]?.property_name}=${e.main_properties?.[0]?.final}`));
+        console.log('--- Incoming Skills (Name & Level) ---');
+        avatar?.skills?.forEach(s => console.log(`Skill ID/Type ${s.id || s.skill_type}: ${s.name} Lv.${s.level}`));
+        console.log('--- Incoming Ranks (Unlocked) ---');
+        avatar?.ranks?.forEach(r => console.log(`Rank ${r.pos}: ${r.is_unlocked}`));
+        console.log('--------------------------------');
+    } catch (logError) {
+        console.error("Error printing debug info in avatar_ability:", logError);
+    }
+    // --- 调试日志结束 ---
+
     const m = calcFnc.character[avatar.id];
     if (!m)
         return [];
