@@ -28,6 +28,10 @@ export function supportGuoba() {
       // 配置项 schemas
       schemas: [
         {
+          component: 'SOFT_GROUP_BEGIN',
+          label: '通用设置',
+        },
+        {
           component: 'Divider',
           label: '通用设置',
         },
@@ -42,6 +46,7 @@ export function supportGuoba() {
             min: 50,
             max: 200,
             placeholder: '请输入数字',
+            addonAfter: '%',
           },
         },
         {
@@ -69,9 +74,9 @@ export function supportGuoba() {
           field: 'config.update.cron',
           label: '推送时间',
           bottomHelpMessage: '设置自动检查更新推送的时间，cron表达式',
-          component: 'Input',
+          component: 'EasyCron',
           componentProps: {
-            placeholder: '请输入cron表达式',
+            placeholder: '请输入或选择cron表达式',
           },
         },
         {
@@ -106,6 +111,7 @@ export function supportGuoba() {
             min: 0,
             max: 1000,
             placeholder: '请输入数字',
+            addonAfter: 's',
           },
         },
         {
@@ -149,6 +155,7 @@ export function supportGuoba() {
         //     min: 0,
         //     max: 1000,
         //     placeholder: '请输入数字',
+        //     addonAfter: 's'
         //   },
         // },
         {
@@ -166,6 +173,7 @@ export function supportGuoba() {
             min: 0,
             max: 1000,
             placeholder: '请输入数字',
+            addonAfter: 's',
           },
         },
         {
@@ -179,6 +187,7 @@ export function supportGuoba() {
             min: 0,
             max: 1000,
             placeholder: '请输入数字',
+            addonAfter: 's',
           },
         },
         {
@@ -238,7 +247,12 @@ export function supportGuoba() {
             min: 1,
             max: 7,
             placeholder: '请输入数字1～7',
+            addonAfter: '张',
           },
+        },
+        {
+          component: 'SOFT_GROUP_BEGIN',
+          label: '其他设置',
         },
         {
           component: 'Divider',
