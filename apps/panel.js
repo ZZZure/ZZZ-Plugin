@@ -55,6 +55,7 @@ export class Panel extends ZZZPlugin {
 
     async refreshPanel() {
     const uid = await this.getUID();
+    this.uid = uid
     let playerInfo = null;
     try {
       playerInfo = await this.getPlayerInfo();
@@ -69,7 +70,8 @@ export class Panel extends ZZZPlugin {
     this.result = null;
     const useEnka = _.get(settings.getConfig('panel'), 'useEnka', true);
     logger.debug(`[panel.js] useEnka 设置值: ${useEnka}`);
-    if (!useEnka || this.e.runtime.hasCk) {
+    if (!useEnka && this.e.runtime.hasCk) {
+      console.log('this.e.runtime.hasCk',this.e.runtime.hasCk)
       try {
           const { api } = await this.getAPI(); // MYS 需要 api 对象
           // MYS 逻辑需要冷却判断
@@ -89,12 +91,11 @@ export class Panel extends ZZZPlugin {
           logger.mark('[panel.js] MYS API refreshPanelFunction 调用完成.');
       } catch (mysError) {
           logger.error(' MYS API 刷新出错:', mysError);
-          this.reply(`MYS API 刷新出错: ${mysError.message}`);
-          return await this.refreshByEnka();
+           await this.refreshByEnka();
       }
 
     } else {
-      return await this.refreshByEnka();
+       await this.refreshByEnka();
     }
 
     if (this.result && Array.isArray(this.result)) { // 确保有有效数据 (非 null, 是数组)
@@ -146,7 +147,7 @@ export class Panel extends ZZZPlugin {
     //enka兜底 todo:数据转换修正..
       logger.debug('[panel.js] 进入 Enka 逻辑块');
       try {
-        const enkaData = await getZzzEnkaData(uid);
+        const enkaData = await getZzzEnkaData(this.uid);
         if (!enkaData || enkaData === -1 || !enkaData.PlayerInfo) { throw new Error('获取或验证 Enka 数据失败'); }
         this.result = await _enka_data_to_mys_data(enkaData);
         return this.result;
