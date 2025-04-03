@@ -67,21 +67,9 @@ export class Panel extends ZZZPlugin {
     }
 
     this.result = null;
-    const useEnka = _.get(settings.getConfig('panel'), 'useEnka', true); // 读取配置，Enka 优先
-    logger.mark(`[panel.js] useEnka 设置值: ${useEnka}`);
-
-    if (useEnka) {
-      logger.mark('[panel.js] 进入 Enka 逻辑块');
-      try {
-        const enkaData = await getZzzEnkaData(uid);
-        if (!enkaData || enkaData === -1 || !enkaData.PlayerInfo) { throw new Error('获取或验证 Enka 数据失败'); }
-        this.result = await _enka_data_to_mys_data(enkaData);
-      } catch (enkaError) {
-         logger.error('处理 Enka 逻辑时出错:', enkaError);
-         await this.reply(`处理Enka数据时出错: ${enkaError.message}`);
-         return false;
-      }
-    } else {
+    const useEnka = _.get(settings.getConfig('panel'), 'useEnka', true);
+    logger.debug(`[panel.js] useEnka 设置值: ${useEnka}`);
+    if (!useEnka || this.e.runtime.hasCk) {
       try {
           const { api } = await this.getAPI(); // MYS 需要 api 对象
           // MYS 逻辑需要冷却判断
@@ -100,10 +88,24 @@ export class Panel extends ZZZPlugin {
           this.result = mysResult; // <<< MYS 结果赋给 this.result
           logger.mark('[panel.js] MYS API refreshPanelFunction 调用完成.');
       } catch (mysError) {
-          logger.error('[panel.js] MYS API 刷新出错:', mysError);
+          logger.error(' MYS API 刷新出错:', mysError);
           this.reply(`MYS API 刷新出错: ${mysError.message}`);
           return false;
       }
+
+    } else {
+      //enka兜底 todo:数据转换修正..
+      logger.debug('[panel.js] 进入 Enka 逻辑块');
+      try {
+        const enkaData = await getZzzEnkaData(uid);
+        if (!enkaData || enkaData === -1 || !enkaData.PlayerInfo) { throw new Error('获取或验证 Enka 数据失败'); }
+        this.result = await _enka_data_to_mys_data(enkaData);
+      } catch (enkaError) {
+         logger.error('处理 Enka 逻辑时出错:', enkaError);
+         await this.reply(`处理Enka数据时出错: ${enkaError.message}`);
+         return false;
+      }
+
     }
 
     if (this.result && Array.isArray(this.result)) { // 确保有有效数据 (非 null, 是数组)
@@ -118,11 +120,11 @@ export class Panel extends ZZZPlugin {
             // 记录错误，但可能继续
           }
       } else {
-          logger.warn('[panel.js] 获取到的角色列表为空数组，不执行缓存更新。');
+          logger.debug('[panel.js] 获取到的角色列表为空数组，不执行缓存更新。');
           // 如果是 Enka 路径且展示柜为空，这是正常情况
       }
     } else {
-      logger.warn('[panel.js] 没有有效的角色列表数据 (this.result)，跳过缓存更新。');
+      logger.debug('[panel.js] 没有有效的角色列表数据 (this.result)，跳过缓存更新。');
       // 如果之前的步骤没有 return false，这里可能需要提示用户
       if (!useEnka) { // MYS 失败的情况
           await this.reply('未能获取或处理有效的面板列表数据。');

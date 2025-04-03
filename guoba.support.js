@@ -64,6 +64,12 @@ export function supportGuoba() {
           bottomHelpMessage: '是否允许查询他人信息',
           component: 'Switch',
         },
+          {
+          field: 'config.useEnka',
+          label: '优先使用enka查询面板',
+          bottomHelpMessage: '是否使用enka查询面板(实验性功能，可能导致数据异常)',
+          component: 'Switch',
+        },
         {
           field: 'config.update.autoCheck',
           label: '更新推送',
