@@ -90,22 +90,11 @@ export class Panel extends ZZZPlugin {
       } catch (mysError) {
           logger.error(' MYS API 刷新出错:', mysError);
           this.reply(`MYS API 刷新出错: ${mysError.message}`);
-          return false;
+          return await this.refreshByEnka();
       }
 
     } else {
-      //enka兜底 todo:数据转换修正..
-      logger.debug('[panel.js] 进入 Enka 逻辑块');
-      try {
-        const enkaData = await getZzzEnkaData(uid);
-        if (!enkaData || enkaData === -1 || !enkaData.PlayerInfo) { throw new Error('获取或验证 Enka 数据失败'); }
-        this.result = await _enka_data_to_mys_data(enkaData);
-      } catch (enkaError) {
-         logger.error('处理 Enka 逻辑时出错:', enkaError);
-         await this.reply(`处理Enka数据时出错: ${enkaError.message}`);
-         return false;
-      }
-
+      return await this.refreshByEnka();
     }
 
     if (this.result && Array.isArray(this.result)) { // 确保有有效数据 (非 null, 是数组)
@@ -153,6 +142,20 @@ export class Panel extends ZZZPlugin {
     }
   }
 
+  async refreshByEnka(){
+    //enka兜底 todo:数据转换修正..
+      logger.debug('[panel.js] 进入 Enka 逻辑块');
+      try {
+        const enkaData = await getZzzEnkaData(uid);
+        if (!enkaData || enkaData === -1 || !enkaData.PlayerInfo) { throw new Error('获取或验证 Enka 数据失败'); }
+        this.result = await _enka_data_to_mys_data(enkaData);
+        return this.result;
+      } catch (enkaError) {
+         logger.error('处理 Enka 逻辑时出错:', enkaError);
+         await this.reply(`处理Enka数据时出错: ${enkaError.message}`);
+         return false;
+      }
+  }
   async getCharPanelListTool(uid, origin = false) {
     if (!uid) {
       return false;
