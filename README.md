@@ -1,10 +1,9 @@
-# ZZZ-Plugin
 
 <p align="center">
   <a href="https://github.com/ZZZure/ZZZ-Plugin"><img src="https://s2.loli.net/2024/04/19/hOEDmsoUFy6nH5d.jpg" width="480" height="270" alt="ZZZ-Plugin"></a>
 </p>
 <h1 align = "center">ZZZ-Plugin</h1>
-<h4 align = "center">🚧Yunzai绝区零Bot插件 ｜ 交流群 973399270🚧</h4>
+<h4 align = "center">🚧Yunzai绝区零Bot插件 ｜ 交流群 <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=z35HAPxRH9EZGRcLOmGJ-DeDAGBq1Q1t&authKey=QLFsLG25pPYbhrh3Tpkk8qrbhMryIY9Zb39EeXI2c%2BMxsx2UtQLLYTX%2BS1nyrdGY&noverify=0&group_code=973399270">973399270</a>🚧</h4>
 
 > [!tip]
 > 说明
