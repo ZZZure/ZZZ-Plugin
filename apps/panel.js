@@ -67,7 +67,7 @@ export class Panel extends ZZZPlugin {
     }
 
     this.result = null;
-    const useEnka = _.get(settings.getConfig('config'), 'useEnka', true); // 读取配置，Enka 优先
+    const useEnka = _.get(settings.getConfig('panel'), 'useEnka', true); // 读取配置，Enka 优先
     logger.mark(`[panel.js] useEnka 设置值: ${useEnka}`);
 
     if (useEnka) {
