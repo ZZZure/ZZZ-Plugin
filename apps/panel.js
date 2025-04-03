@@ -22,7 +22,7 @@ export class Panel extends ZZZPlugin {
       priority: _.get(settings.getConfig('priority'), 'panel', 70),
       rule: [
         {
-          reg: `${rulePrefix}(.*)面板(刷新|更新|列表)?$`,
+          reg: `${rulePrefix}(.*)面板(米游社更新|刷新|更新|列表)?$`,
           fnc: 'handleRule',
         },
         {
@@ -45,15 +45,17 @@ export class Panel extends ZZZPlugin {
     const reg = new RegExp(`${rulePrefix}(.*)面板(刷新|更新|列表)?$`);
     const pre = this.e.msg.match(reg)[4]?.trim();
     const suf = this.e.msg.match(reg)[5]?.trim();
-    if (['刷新', '更新'].includes(pre) || ['刷新', '更新'].includes(suf))
-      return await this.refreshPanel();
+    if (['刷新', '更新', '米游社更新'].includes(pre) || ['刷新', '更新', '米游社更新'].includes(suf)) {
+      const enkaSet = (pre === '米游社更新' || suf === '米游社更新') ? 'false' : 'true';
+      return await this.refreshPanel(enkaSet);
+    }
     if (!pre || suf === '列表') return await this.getCharPanelList();
     const queryPanelReg = new RegExp(`${rulePrefix}(.*)面板$`);
     if (queryPanelReg.test(this.e.msg)) return await this.getCharPanel();
     return false;
   }
 
-    async refreshPanel() {
+  async refreshPanel(enkaSet) {
     const uid = await this.getUID();
     let playerInfo = null;
     try {
@@ -67,13 +69,10 @@ export class Panel extends ZZZPlugin {
     }
 
     this.result = null;
-    const useEnka = _.get(settings.getConfig('panel'), 'useEnka', true); // 读取配置，Enka 优先
-    logger.mark(`[panel.js] useEnka 设置值: ${useEnka}`);
-
-    if (useEnka) {
+    if (enkaSet === 'true') {
       logger.mark('[panel.js] 进入 Enka 逻辑块');
       try {
-        const enkaData = await getZzzEnkaData(uid);
+        const enkaData = await getZzzEnkaData(uid, enkaSet);
         if (!enkaData || enkaData === -1 || !enkaData.PlayerInfo) { throw new Error('获取或验证 Enka 数据失败'); }
         this.result = await _enka_data_to_mys_data(enkaData);
       } catch (enkaError) {
@@ -110,9 +109,7 @@ export class Panel extends ZZZPlugin {
       // 并且至少包含一个角色数据才存，避免存空数组？(可选)
       if (this.result.length > 0) {
           try {
-
             await updatePanelData(uid, this.result);
-
           } catch (cacheError) {
             logger.error('出错:', cacheError);
             // 记录错误，但可能继续

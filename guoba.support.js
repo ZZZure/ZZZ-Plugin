@@ -163,12 +163,6 @@ export function supportGuoba() {
           label: '面板设置',
         },
         {
-          field: 'panel.useEnka',
-          label: 'enka查询',
-          bottomHelpMessage: '是否使用enka接口查询',
-          component: 'Switch',
-        },
-        {
           field: 'panel.interval',
           label: '冷却时间',
           bottomHelpMessage:
