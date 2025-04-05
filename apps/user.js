@@ -107,6 +107,7 @@ export class User extends ZZZPlugin {
     await redis.del(`ZZZ:DEVICE_FP:${ltuid}:FP`);
     await redis.del(`ZZZ:DEVICE_FP:${ltuid}:BIND`);
     await redis.del(`ZZZ:DEVICE_FP:${ltuid}:ID`);
+    await redis.del(`ZZZ:DEVICE_FP:${uid}:FP`);
     await this.reply('解绑设备成功', false, { at: true, recallMsg: 100 });
   }
   async bindDeviceHelp() {
