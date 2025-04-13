@@ -242,7 +242,7 @@
   background-clip: text;
   color: transparent;
 }
-.list .item .content .equip .content.ace .comment, .list .item .content .equip .content.ACE .comment {
+.list .item .content .equip .content.ace .comment, .list .item .content .equip .content.ACE .comment, .list .item .content .equip .content.max .comment, .list .item .content .equip .content.MAX .comment {
   background: linear-gradient(0deg, rgba(255, 59, 59, 0.4), rgb(255, 59, 59));
   -webkit-background-clip: text;
   background-clip: text;

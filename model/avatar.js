@@ -370,7 +370,7 @@ export class ZZZAvatarInfo {
     return false;
   }
 
-  /** @type {'C'|'B'|'A'|'S'|'SS'|'SSS'|'ACE'|false} */
+  /** @type {'C'|'B'|'A'|'S'|'SS'|'SSS'|'ACE'|'MAX'|false} */
   get equip_comment() {
     if (this.equip_score < 80) {
       return 'C';
@@ -390,8 +390,11 @@ export class ZZZAvatarInfo {
     if (this.equip_score < 220) {
       return 'SSS';
     }
-    if (this.equip_score >= 220) {
+    if (this.equip_score < 280) {
       return 'ACE';
+    }
+    if (this.equip_score >= 280) {
+      return 'MAX';
     }
     return false;
   }

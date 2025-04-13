@@ -279,7 +279,9 @@
             }
           }
           &.ace,
-          &.ACE {
+          &.ACE,
+          &.max,
+          &.MAX {
             .comment {
               background: linear-gradient(
                 0deg,

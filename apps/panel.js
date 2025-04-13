@@ -219,7 +219,7 @@ export class Panel extends ZZZPlugin {
       SSSCount: result.reduce((acc, item) => {
         if (item.equip) {
           acc += item.equip.filter(
-            equip => equip.comment === 'SSS' || equip.comment === 'ACE'
+            equip => ['SSS', 'ACE', 'MAX'].includes(equip.comment)
           ).length;
         }
         return acc;

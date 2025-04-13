@@ -483,7 +483,9 @@
   color: transparent;
 }
 .card .ace .comment,
-.card .ACE .comment {
+.card .ACE .comment,
+.card .max .comment,
+.card .MAX .comment {
   background: linear-gradient(0deg, rgba(255, 59, 59, 0.4), rgb(255, 59, 59));
   -webkit-background-clip: text;
   background-clip: text;
@@ -510,24 +512,24 @@
 }
 .card .equip-stats .box1 .equip-score .comment-box {
   font-size: 1.2em;
-  width: 2em;
+  width: 2.8em;
   display: flex;
   justify-content: center;
   align-items: center;
   aspect-ratio: 1;
-  border-radius: 50%;
+  border-radius: 25%;
   background-color: rgba(32, 32, 32, 0.4);
   box-shadow: 0 0 1em rgba(0, 0, 0, 0.4);
-  border: 0.2em solid rgb(216, 216, 216);
+  border: 0.2em solid rgb(116, 116, 116);
   position: relative;
   z-index: 1;
 }
 .card .equip-stats .box1 .equip-score .value {
   border: 0.1em solid rgb(155, 155, 155);
   border-left: none;
-  padding: 0.1em 1em 0.1em 1em;
-  margin-left: -0.6em;
-  border-radius: 0 1em 1em 0;
+  padding: 0.1em 0.3em;
+  margin-left: -0.1em;
+  border-radius: 0 0.4em 0.4em 0;
 }
 .card .equip-stats .box1 .equip-score .value .subt {
   font-size: 0.8em;

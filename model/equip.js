@@ -190,7 +190,7 @@ export class Equip {
     return this.score;
   }
 
-  /** @type {'C'|'B'|'A'|'S'|'SS'|'SSS'|'ACE'|false} */
+  /** @type {'C'|'B'|'A'|'S'|'SS'|'SSS'|'ACE'|'MAX'|false} */
   get comment() {
     if (this.score <= 12) {
       return 'C';
@@ -210,8 +210,11 @@ export class Equip {
     if (this.score < 40) {
       return 'SSS';
     }
-    if (this.score >= 40) {
+    if (this.score < 48) {
       return 'ACE';
+    }
+    if (this.score >= 48) {
+      return 'MAX';
     }
     return false;
   }
