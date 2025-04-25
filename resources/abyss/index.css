@@ -119,14 +119,15 @@
   margin-bottom: 0.5em;
 }
 .card .item-card .team .info .label {
-  margin-right: auto;
   padding: 0 0.5em;
 }
-.card .item-card .team .info .time {
-  background-color: rgba(23, 135, 255, 0.2);
+.card .item-card .team .info .spent, .card .item-card .team .info .time {
+  color: #ddd;
+  font-size: 0.8em;
   padding: 0 0.2em;
-  font-size: 0.7em;
-  color: rgba(255, 255, 255, 0.8);
+}
+.card .item-card .team .info .spent {
+  margin-right: auto;
 }
 .card .item-card .team .info .advantage {
   display: flex;

@@ -176,6 +176,8 @@ export class ChallengeNode {
     /** @type {MonsterInfo} */
     this.monster_info =
       data?.monster_info && new MonsterInfo(data.monster_info);
+    /** @type {number} */
+    this.battle_time = data.battle_time;
   }
 
   async get_assets() {
@@ -191,6 +193,12 @@ export class ChallengeNode {
     return this.element_type_list.map(type => {
       return element.IDToElement(type);
     });
+  }
+
+  get formattedTime() {
+    const seconds = this.battle_time % 60;
+    const minutes = Math.floor(this.battle_time / 60);
+    return `${minutes ? minutes + '分' : ''}${seconds + '秒'}`;
   }
 }
 

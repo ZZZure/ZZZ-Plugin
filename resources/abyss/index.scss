@@ -118,14 +118,15 @@
         align-items: center;
         margin-bottom: 0.5em;
         .label {
-          margin-right: auto;
           padding: 0 0.5em;
         }
-        .time {
-          background-color: rgba(23, 135, 255, 0.2);
+        .spent, .time {
+          color: #ddd;
+          font-size: 0.8em;
           padding: 0 0.2em;
-          font-size: 0.7em;
-          color: rgba(255, 255, 255, 0.8);
+        }
+        .spent {
+          margin-right: auto;
         }
         .advantage {
           display: flex;
