@@ -61,14 +61,16 @@
         <div class="list">
           <% for(let i=0 ; i < 3 ; i++) { %>
             {{if floor.node_1.avatars?.[i]}}
-            <div class="item char rank{{floor.node_1.avatars[i].rarity}}">
-              <div class="rank rank-icon {{floor.node_1.avatars[i].rarity}}"></div>
-              <div class="property {{floor.node_1.avatars[i].element}}"></div>
+            {{set char = floor.node_1.avatars[i]}}
+            <div class="item char rank{{char.rarity}}">
+              <div class="rank rank-icon {{char.rarity}}"></div>
+              <div class="property {{char.element}}"></div>
               <div class="image">
-                <img src="{{floor.node_1.avatars[i].square_icon}}" alt="">
+                <img src="{{char.square_icon}}" alt="">
               </div>
               <div class="c-info">
-                <div class="level">等级{{floor.node_1.avatars[i].level}}</div>
+                <div class="ranks r{{char.rank}}">{{char.rank}}影</div>
+                <div class="level">等级{{char.level}}</div>
               </div>
             </div>
             {{else}}
@@ -106,14 +108,16 @@
         <div class="list">
           <% for(let i=0 ; i < 3 ; i++) { %>
             {{if floor.node_2.avatars?.[i]}}
-            <div class="item char rank{{floor.node_2.avatars[i].rarity}}">
-              <div class="rank rank-icon {{floor.node_2.avatars[i].rarity}}"></div>
-              <div class="property {{floor.node_2.avatars[i].element}}"></div>
+            {{set char = floor.node_2.avatars[i]}}
+            <div class="item char rank{{char.rarity}}">
+              <div class="rank rank-icon {{char.rarity}}"></div>
+              <div class="property {{char.element}}"></div>
               <div class="image">
-                <img src="{{floor.node_2.avatars[i].square_icon}}" alt="">
+                <img src="{{char.square_icon}}" alt="">
               </div>
               <div class="c-info">
-                <div class="level">等级{{floor.node_2.avatars[i].level}}</div>
+                <div class="ranks r{{char.rank}}">{{char.rank}}影</div>
+                <div class="level">等级{{char.level}}</div>
               </div>
             </div>
             {{else}}

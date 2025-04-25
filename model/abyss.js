@@ -101,6 +101,7 @@ export class ChallengeAvatar {
     this.level = data.level;
     this.rarity = data.rarity;
     this.element_type = data.element_type;
+    this.rank = data.rank;
   }
 
   async get_assets() {

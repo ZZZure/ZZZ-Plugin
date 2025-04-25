@@ -208,6 +208,28 @@
   display: flex;
   text-align: center;
 }
+.card .item-card .team .list .item .c-info .ranks {
+  background: rgb(117, 117, 117);
+  padding: 0 0.2em;
+}
+.card .item-card .team .list .item .c-info .ranks.r1 {
+  background: rgb(58, 116, 43);
+}
+.card .item-card .team .list .item .c-info .ranks.r2 {
+  background: rgb(61, 132, 214);
+}
+.card .item-card .team .list .item .c-info .ranks.r3 {
+  background: rgb(223, 118, 118);
+}
+.card .item-card .team .list .item .c-info .ranks.r4 {
+  background: rgb(51, 54, 161);
+}
+.card .item-card .team .list .item .c-info .ranks.r5 {
+  background: rgb(102, 127, 19);
+}
+.card .item-card .team .list .item .c-info .ranks.r6 {
+  background: rgb(218, 48, 32);
+}
 .card .item-card .team .list .item .c-info .level {
   flex-grow: 1;
   flex-shrink: 1;

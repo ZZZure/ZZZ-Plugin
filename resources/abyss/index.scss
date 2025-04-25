@@ -209,6 +209,28 @@
             color: white;
             display: flex;
             text-align: center;
+            .ranks {
+              background: rgb(117, 117, 117);
+              padding: 0 0.2em;
+              &.r1 {
+                background: rgb(58, 116, 43);
+              }
+              &.r2 {
+                background: rgb(61, 132, 214);
+              }
+              &.r3 {
+                background: rgb(223, 118, 118);
+              }
+              &.r4 {
+                background: rgb(51, 54, 161);
+              }
+              &.r5 {
+                background: rgb(102, 127, 19);
+              }
+              &.r6 {
+                background: rgb(218, 48, 32);
+              }
+            }
             .level {
               flex-grow: 1;
               flex-shrink: 1;
