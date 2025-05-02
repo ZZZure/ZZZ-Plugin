@@ -80,6 +80,7 @@
 //   calc.new({
 //     name: '蓄力攻击：三段蓄',
 //     type: 'AX3',
+//     isMain: true,
 //     after: ({ avatar, damage }) => avatar.rank >= 6 && damage.add('AX2')
 //   })
 //   calc.new({ name: '强化特殊技：飞雪', type: 'EQ1' })
@@ -164,6 +165,7 @@ export const skills = [
   {
     name: '蓄力攻击：三段蓄',
     type: 'AX3',
+    isMain: true,
     after: ({ avatar, damage }) => avatar.rank >= 6 && damage.add('AX2')
   },
   { name: '强化特殊技：飞雪', type: 'EQ1' },

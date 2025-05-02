@@ -62,7 +62,7 @@ export const skills = [
   },
   { name: '闪避反击：獠牙折转！', type: 'CF' },
   { name: '强化特殊技：全垒打短按', type: 'EQP' },
-  { name: '强化特殊技：全垒打长按', type: 'EQX' },
+  { name: '强化特殊技：全垒打长按', isMain: true, type: 'EQX' },
   {
     name: '连携技：大满贯！',
     type: 'RL',

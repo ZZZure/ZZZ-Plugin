@@ -31,7 +31,7 @@ const helpData = [
         desc: '查看玩家的角色和邦布列表',
         needCK: true,
         needSK: false,
-        commands: ['card', '卡片', '个人信息'],
+        commands: ['card', '卡片', '角色','个人信息'],
       },
       {
         title: '便签',

@@ -32,7 +32,7 @@ export const buffs = [
 /** @type {import('../../Calculator.ts').Calculator['skills']} */
 export const skills = [
   { name: '强击', type: '强击' },
-  { name: '普攻：猫猫爪刺四段', type: 'AP4' },
+  { name: '普攻：猫猫爪刺四段', isMain: true, type: 'AP4' },
   { name: '闪避反击：虚影双刺', type: 'CF' },
   { name: '强化特殊技：超~凶奇袭！', type: 'EQ' },
   { name: '连携技：刃爪挥击', type: 'RL' },

@@ -16,7 +16,7 @@ export const buffs = [
 
 /** @type {import('../../Calculator.ts').Calculator['skills']} */
 export const skills = [
-  { name: '强击', type: '强击' },
+  { name: '强击', isMain: true, type: '强击' },
   { name: '普攻：准备发车四段', type: 'AP4' },
   { name: '闪避反击：动力漂移', type: 'CF' },
   { name: '强化特殊技：引擎转(每圈)', type: 'EQZ' },

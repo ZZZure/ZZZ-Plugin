@@ -39,6 +39,7 @@ export const skills = [
   {
     name: '特殊技：噬爪·噩梦袭影',
     type: 'EPLP',
+    isMain: true,
     redirect: ['EPLP', '追加攻击']
   },
   {

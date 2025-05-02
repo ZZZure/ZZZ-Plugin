@@ -49,6 +49,7 @@ export const skills = [
     name: '特殊技：苍光',
     type: 'EPC',
     redirect: ['EPC', '追加攻击'],
+    isMain: true,
     after: ({ damage }) => damage.add('EPC0')
   },
   {

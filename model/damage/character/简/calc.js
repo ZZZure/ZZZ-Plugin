@@ -70,7 +70,7 @@ export const buffs = [
 
 /** @type {import('../../Calculator.ts').Calculator['skills']} */
 export const skills = [
-  { name: '强击', type: '强击' },
+  { name: '强击', isMain: true, type: '强击' },
   { name: '紊乱', type: '紊乱' },
   { name: '普攻：跳步刃舞六段(狂热)', type: 'AP6' },
   { name: '普攻：萨霍夫跳0', type: 'AX0', isHide: true },

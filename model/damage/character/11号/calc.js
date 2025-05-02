@@ -30,7 +30,11 @@ export const buffs = [
 /** @type {import('../../Calculator.ts').Calculator['skills']} */
 export const skills = [
   { name: '灼烧', type: '灼烧' },
-  { name: '普攻：火力镇压四段', type: 'AQ4' },
+  {
+    name: '普攻：火力镇压四段',
+    isMain: true,
+    type: 'AQ4'
+  },
   { name: '闪避反击：逆火', type: 'CF' },
   { name: '强化特殊技：盛燃烈火', type: 'EQ' },
   { name: '连携技：昂扬烈焰', type: 'RL' },

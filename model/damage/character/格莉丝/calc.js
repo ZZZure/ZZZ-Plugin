@@ -16,7 +16,7 @@ export const buffs = [
 /** @type {import('../../Calculator.ts').Calculator['skills']} */
 export const skills = [
   { name: '感电每次', type: '感电' },
-  { name: '紊乱', type: '紊乱' },
+  { name: '紊乱', isMain: true, type: '紊乱' },
   { name: '闪避反击：违章处罚', type: 'CF' },
   {
     name: '强化特殊技：超规工程清障',

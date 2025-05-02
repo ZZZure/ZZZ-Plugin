@@ -104,10 +104,10 @@ async function importFile(type, name, isWatch = false) {
     }
 }
 await init();
-export function avatar_ability(avatar) {
+export function avatar_calc(avatar) {
     const m = calcFnc.character[avatar.id];
     if (!m)
-        return [];
+        return;
     const buffM = new BuffManager(avatar);
     const calc = new Calculator(buffM);
     logger.debug('initial_properties', avatar.initial_properties);
@@ -120,7 +120,7 @@ export function avatar_ability(avatar) {
     if (m.calc)
         m.calc(buffM, calc, avatar);
     logger.debug(`Buff*${buffM.buffs.length}：`, buffM.buffs);
-    return calc.calc();
+    return calc;
 }
 export function weapon_buff(weapon, buffM) {
     const name = weapon?.name;

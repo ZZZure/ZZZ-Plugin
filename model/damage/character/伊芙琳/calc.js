@@ -54,7 +54,7 @@ export const skills = [
     type: 'EQ',
     after: ({ damage }) => damage.add('EQ0')
   },
-  { name: '连携技：月辉丝·绊', type: 'RL' },
+  { name: '连携技：月辉丝·绊', isMain: true, type: 'RL' },
   { name: '终结技：月辉丝·弦音', type: 'RZ' },
   {
     name: '6影月辉丝·弦',

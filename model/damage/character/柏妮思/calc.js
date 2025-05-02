@@ -27,7 +27,7 @@ export const buffs = [
   {
     name: '核心被动：燃油特调',
     type: '增伤',
-    value: ({ calc }) => Math.min(30, Math.floor(calc.get_AnomalyProficiency() / 10)) * 0.01,
+    value: ({ calc }) => Math.min(30, calc.get_AnomalyProficiency() / 10) * 0.01,
     isForever: true,
     range: ['TY', 'Y6Y']
   },
@@ -46,6 +46,7 @@ export const skills = [
   {
     name: '核心被动：余烬',
     type: 'TY',
+    isMain: true,
     redirect: 'L'
   },
   // { name: '普攻：炽焰直调式五段', type: 'AP5' },

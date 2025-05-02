@@ -137,10 +137,10 @@ async function importFile(type: 'weapon' | 'set', name: string, isWatch = false)
 
 await init()
 
-/** 角色计算 */
-export function avatar_ability(avatar: ZZZAvatarInfo) {
+/** 角色计算实例 */
+export function avatar_calc(avatar: ZZZAvatarInfo) {
 	const m = calcFnc.character[avatar.id]
-	if (!m) return []
+	if (!m) return
 	const buffM = new BuffManager(avatar)
 	const calc = new Calculator(buffM)
 	logger.debug('initial_properties', avatar.initial_properties)
@@ -150,7 +150,7 @@ export function avatar_ability(avatar: ZZZAvatarInfo) {
 	if (m.skills) calc.new(m.skills)
 	if (m.calc) m.calc(buffM, calc, avatar)
 	logger.debug(`Buff*${buffM.buffs.length}：`, buffM.buffs)
-	return calc.calc()
+	return calc
 }
 
 /** 武器加成 */

@@ -160,7 +160,7 @@
               opacity: 0.4;
             }
 
-            @for $i from 1 through 7 {
+            @for $i from 1 through 6 {
               span:nth-child(#{$i}) {
                 background-image: url('./images/ranks/#{$i}.png');
               }
@@ -843,7 +843,7 @@
   }
 
   .damagelist {
-    margin: 0 2em;
+    margin: 0 1.2em;
     margin-top: 1em;
     text-align: center;
     display: grid;
@@ -855,12 +855,10 @@
 
     .dmg-tr {
       display: grid;
-      grid-template-columns: 1.5fr 1fr 1fr;
+      grid-template-columns: 0.25fr 1.6fr 1fr 1fr;
       border-bottom: 0.1em solid rgba(255, 255, 255, 0.2);
 
       &:first-child {
-        border-top: 0.2em solid rgba(255, 255, 255, 0.2);
-        border-bottom: 0.2em solid rgba(255, 255, 255, 0.2);
         font-size: 1.1em;
         background: rgba(0, 0, 0, 0.2);
         text-shadow: 0 0 0.2em rgba(0, 0, 0, 0.6);
@@ -870,14 +868,32 @@
           background: none !important;
         }
       }
+
+      &:nth-child(even) {
+        background-color: rgba(255, 255, 255, 0.12);
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    .info-tr {
+      font-size: 0.8em !important;
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      padding: 0.3em !important;
+      color: #bbb !important;
+      span {
+        color: #fff !important;
+      }
     }
 
     .dmg-td {
       padding: 0.5em 0.5em;
       font-size: 0.9em;
       border-right: 0.1em solid rgba(255, 255, 255, 0.2);
-      &:first-child {
-        text-align: left;
+      &:nth-child(2) {
         background: rgba(0, 0, 0, 0.2);
         color: rgb(206, 190, 149);
       }

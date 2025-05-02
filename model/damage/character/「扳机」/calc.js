@@ -37,6 +37,7 @@ export const skills = [
     name: '普攻：协奏狙杀·冥狱',
     type: 'AXQ',
     redirect: ['AXQ', '追加攻击'],
+    isMain: true,
     after: ({ damage }) => damage.add('AXQ0')
   },
   { name: '闪避反击：极魂罚', type: 'CF' },

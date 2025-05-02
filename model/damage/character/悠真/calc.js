@@ -36,7 +36,7 @@ export const skills = [
   { name: '感电每次', type: '感电' },
   { name: '普攻：穿云五段', type: 'AP5' },
   { name: '普攻：落羽', type: 'AX' },
-  { name: '冲刺攻击：飞弦·斩', type: 'CCQ3' },
+  { name: '冲刺攻击：飞弦·斩', isMain: true, type: 'CCQ3' },
   { name: '强化特殊技：地网', type: 'EQ' },
   { name: '连携技：会·离', type: 'RL' },
   { name: '终结技：残心', type: 'RZ' }

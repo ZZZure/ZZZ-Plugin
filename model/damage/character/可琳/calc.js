@@ -35,7 +35,12 @@ export const skills = [
     isHide: true,
     after: ({ damage }) => damage.x(2)
   },
-  { name: '强化特殊技：小心裙角', type: 'EQ', after: ({ damage }) => damage.add('EQ0') },
+  {
+    name: '强化特殊技：小心裙角',
+    type: 'EQ',
+    isMain: true,
+    after: ({ damage }) => damage.add('EQ0')
+  },
   { name: '连携技：抱歉…', type: 'RL' },
   { name: '终结技：非、非常抱歉！', type: 'RZ' }
 ]

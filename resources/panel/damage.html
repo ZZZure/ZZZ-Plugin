@@ -1,11 +1,11 @@
 {{extend defaultLayout}}
 
 {{block 'css'}}
-<link rel="stylesheet" href="{{@sys.currentPath}}/card.css">
+<link rel="stylesheet" href="{{@sys.currentPath}}/damage.css">
 {{/block}}
 
 {{block 'main'}}
-<div class="card">
+<div class="damage">
   <div class="uid">UID {{uid}}</div>
   <div class="basic">
     <div class="char">
@@ -135,133 +135,123 @@
       </div>
     </div>
   </div>
-  <div class="other">
+  <div class="damage-data">
     <div class="title">
-      <% include(sys.specialTitle, {en: 'METAL' , cn: '驱动盘信息' }) %>
+      <% include(sys.specialTitle, {en: 'DAMAGE' , cn: '伤害统计' }) %>
     </div>
-    {{if charData.equip_score !== false}}
-    <div class="equip-stats">
-      <div class="box1">
-        <div class="equip-score {{charData.equip_comment}}">
-          <div class="comment-box">
-            <div class="comment">{{charData.equip_comment}}</div>
-          </div>
-          <div class="value">
-            <span>{{charData.equip_score.toFixed(2)}}</span>
-            <span class="subt">分</span>
-          </div>
-        </div>
-        <div class="weight-rule">规则：{{charData.weightRule || '默认'}}</div>
+    <div class="data-list damage-list">
+      <div class="tr dmg-tr titlebar no-zzz-font">
+        <div class="td dmg-td">%</div>
+        <div class="td dmg-td">技能类型</div>
+        <div class="td dmg-td">暴击伤害</div>
+        <div class="td dmg-td">期望伤害</div>
       </div>
-      <div class="box2">
-        <div class="property-stats">
-          {{set stats = charData.propertyStats.slice(0, 9)}}
-          {{each stats item}}
-          <div class="stat-item {{item.weight == 1 ? 'great' : (item.weight >= 0.75 ? 'good' : (item.weight > 0 ? 'useful' : 'useless'))}}">
-            <span class="title"><span class="count">{{item.count}}</span> {{item.name}}</span>
-            <span class="value">+{{item.value}}</span>
-          </div>
-          {{/each}}
-          <% for (let i = 0; i < 9-stats.length; i++) { %>
-            <div class="stat-item"></div>
-          <% } %>
+      {{each damages d,index}}
+      {{if index == skill.index}}
+      <div class="tr dmg-tr current">
+      {{else}}
+      <div class="tr dmg-tr">
+      {{/if}}
+        <div class="td dmg-td">{{index+1}}</div>
+        <div class="td dmg-td no-zzz-font">{{d.skill.name}}</div>
+        <div class="td dmg-td">{{d.result.critDMG.toFixed(0)}}</div>
+        <div class="td dmg-td">{{d.result.expectDMG.toFixed(0)}}</div>
+      </div>
+      {{/each}}
+      <div class="tr dmg-tr info-tr no-zzz-font">
+        <div>伤害计算默认取有弱点、角色等级、1级基础防御力为50的敌方数据，且不考虑失衡易伤区</div>
+        <div>当前指令：<span>{{command}}</span></div>
+        <div>下列计算以 <span>{{damage.skill.name}}</span> 为计算目标</div>
+        <div>可通过 <span>%{{charData.name_mi18n}}伤害123</span> 切换需要查看的伤害计算</div>
+      </div>
+    </div>
+    <div class="title">
+      <% include(sys.specialTitle, {en: 'AREA' , cn: '乘区数据' }) %>
+    </div>
+    <div class="data-list area-list">
+      {{set areas = damage.areas}}
+      <div class="tr area-tr titlebar no-zzz-font">
+        <div class="td area-td">基础区</div>
+        <div class="td area-td">暴击区</div>
+        <div class="td area-td">增伤区</div>
+        <div class="td area-td">易伤区</div>
+        <div class="td area-td">抗性区</div>
+        <div class="td area-td">防御区</div>
+      </div>
+      <div class="tr area-tr titlebar">
+        <div class="td area-td">{{(areas.BasicArea || 1).toFixed(0)}}</div>
+        <div class="td area-td">{{(areas.CriticalArea || 1).toFixed(2)}}</div>
+        <div class="td area-td">{{(areas.BoostArea || 1).toFixed(2)}}</div>
+        <div class="td area-td">{{(areas.VulnerabilityArea || 1).toFixed(2)}}</div>
+        <div class="td area-td">{{(areas.ResistanceArea || 1).toFixed(2)}}</div>
+        <div class="td area-td">{{(areas.DefenceArea || 1).toFixed(4)}}</div>
+      </div>
+      {{if areas.AnomalyProficiencyArea}}
+      <div class="tr area-tr anomaly titlebar no-zzz-font">
+        <div class="td area-td">异常精通区</div>
+        <div class="td area-td">异常增伤区</div>
+        <div class="td area-td">等级区</div>
+      </div>
+      <div class="tr area-tr anomaly titlebar">
+        <div class="td area-td">{{(areas.AnomalyProficiencyArea || 1).toFixed(2)}}</div>
+        <div class="td area-td">{{(areas.AnomalyBoostArea || 1).toFixed(2)}}</div>
+        <div class="td area-td">{{(areas.LevelArea || 1).toFixed(2)}}</div>
+      </div>
+      {{/if}}
+      <div class="tr area-tr info-tr no-zzz-font">
+        <div>注：一个技能可能分为多个出伤部分分别计算累加，此时该数据仅为一部分的乘区，下同</div>
+      </div>
+    </div>
+    <div class="title">
+      <% include(sys.specialTitle, {en: 'BUFF' , cn: 'Buff统计' }) %>
+    </div>
+    <div class="data-list buff-list">
+      <div class="tr buff-tr titlebar no-zzz-font">
+        <div class="td buff-td">%</div>
+        <div class="td buff-td">名称</div>
+        <div class="td buff-td">增益类型</div>
+        <div class="td buff-td">增益值</div>
+      </div>
+      {{each damage.usefulBuffs buff,index}}
+      <div class="tr buff-tr titlebar">
+        <div class="td buff-td">{{index+1}}</div>
+        <div class="td buff-td no-zzz-font">{{buff.name}}</div>
+        <div class="td buff-td no-zzz-font">{{buff.type}}</div>
+        <div class="td buff-td">{{buff.value % 1 == 0 ? buff.value < 2 ? buff.value.toFixed(2) : buff.value : buff.value.toFixed(2)}}</div>
+      </div>
+      {{/each}}
+    </div>
+    {{if differences.length > 1}}
+    <div class="title">
+      <% include(sys.specialTitle, {en: 'STAT' , cn: '词条差异计算' }) %>
+    </div>
+    <div class="data-list difference-list">  
+      <div class="tr difference-tr d{{differences.length}}">
+        <div class="td difference-td no-zzz-font">词条变化</div>
+        {{each differences[0] d}}
+        <div class="td difference-td no-zzz-font">
+          {{d.add.shortName}}
+          <span>+{{d.add.valueBase}}</span>
         </div>
-        <div class="useful-stats">有益词条数：{{
-            stats.reduce((acc, stat) => stat.weight ? acc + stat.count : acc, 0)
-          }} 有效词条数：{{
-            (stats.reduce((acc, stat) => acc + stat.count * stat.weight, 0)).toFixed(2)
-          }}
+        {{/each}}
+      </div>
+      {{each differences diff}}
+      <div class="tr difference-tr d{{differences.length}}">
+        <div class="td difference-td no-zzz-font">
+          {{diff[0].del.shortName}}
+          <span>-{{diff[0].del.valueBase}}</span>
         </div>
+        {{each diff d}}
+        <div class="td difference-td no-zzz-font {{d.difference > 0 ? 'positive' : d.difference < 0 ? 'negative' : 'zero'}}">{{d.difference > 0 ? '+' + d.difference.toFixed(0) : d.difference.toFixed(0)}}</div>
+        {{/each}}
+      </div>
+      {{/each}}
+      <div class="tr difference-tr info-tr no-zzz-font">
+        <div>反映在上述buff作用下置换<span>单位词条</span>后的<span>{{skill.name}}</span>期望伤害变化</div>
+        <div><span>横轴</span>表示<span>增加</span>的单位词条，<span>纵轴</span>表示<span>减少</span>的单位词条，对应坐标即为<span>期望伤害变化</span></div>
       </div>
     </div>
     {{/if}}
-    <div class="equip-list">
-      {{each charData.equip_final equip}}
-      {{if equip}}
-      <div class="box">
-        <div class="icon">
-          <img src="{{equip.suit_icon}}" alt="">
-        </div>
-        <div class="info">
-          <div class="level">等级{{equip.level}}</div>
-          <div class="rarity-icon {{equip.rarity}}"></div>
-        </div>
-        <div class="name">{{equip.name}}</div>
-        {{if equip.score !== false}}
-        <div class="score {{equip.comment}}">
-          <div class="comment">{{equip.comment}}</div>
-          <div class="value">{{equip.score.toFixed(2)}}</div>
-        </div>
-        {{/if}}
-        <div class="property-list">
-
-          {{each equip.main_properties prop}}
-          <div class="properties main">
-            <div class="prop-icon {{prop.classname}}"></div>
-            <div class="label yellow">{{prop.short_name}}</div>
-            <div class="value">{{prop.base}}</div>
-          </div>
-          {{/each}}
-
-          {{each equip.properties prop}}
-          <div class="properties">
-            <div class="prop-icon {{prop.classname}}"></div>
-            {{if prop.score !== false}}
-            <div class="label yellow hit{{prop.base_score * 100}}">
-              {{else}}
-                <div class="label yellow">
-                  {{/if}}
-
-                  {{prop.property_name}}
-                </div>
-                {{if prop.count}}
-                <div class="count">
-                  <% for(let i=1 ; i <=prop.count ; i++) { %>
-                    <span></span>
-                    <% } %>
-                </div>
-                {{/if}}
-                <div class="value">{{prop.base}}</div>
-            </div>
-            {{/each}}
-          </div>
-        </div>
-        {{else}}
-          <div class="box empty">
-            <div class="icon">
-            </div>
-          </div>
-          {{/if}}
-
-          {{/each}}
-
-      </div>
-      {{set damages = charData?.damages}}
-      {{if damages && damages?.length}}
-      <div class="title damage-title">
-        <% include(sys.specialTitle, {en: 'DAMAGE' , cn: '伤害统计' }) %>
-      </div>
-      <div class="damagelist">
-        <div class="dmg-tr titlebar no-zzz-font">
-          <div class="td dmg-td">%</div>
-          <div class="dmg-td">技能类型</div>
-          <div class="dmg-td">暴击伤害</div>
-          <div class="dmg-td">期望伤害</div>
-        </div>
-        {{each damages damage,index}}
-        <div class="dmg-tr">
-          <div class="dmg-td">{{index+1}}</div>
-          <div class="dmg-td no-zzz-font">{{damage.skill.name}}</div>
-          <div class="dmg-td">{{damage.result.critDMG.toFixed(0)}}</div>
-          <div class="dmg-td">{{damage.result.expectDMG.toFixed(0)}}</div>
-        </div>
-        {{/each}}
-        <div class="tr dmg-tr info-tr no-zzz-font">
-          <div>伤害计算默认取有弱点、角色等级、1级基础防御力为50的敌方数据，且不考虑失衡易伤区</div>
-          <div>可通过<span>%{{charData.name_mi18n}}伤害+序号</span>查看指定技能伤害详情 如<span>%{{charData.name_mi18n}}伤害1</span></div>
-        </div>
-      </div>
-      {{/if}}
-    </div>
   </div>
-  {{/block}}
+</div>
+{{/block}}

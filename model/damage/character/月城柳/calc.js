@@ -76,6 +76,7 @@ export const skills = [
   {
     name: '强化E极性紊乱',
     type: '紊乱',
+    isMain: true,
     banCache: true,
     before: ({ calc, areas }) => {
       const skill = { type: '紊乱' }

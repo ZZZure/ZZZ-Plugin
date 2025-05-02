@@ -41,15 +41,18 @@ export const buffs = [
     element: ['Fire', 'Ice'],
     value: ({ calc }) => {
       const Impact = calc.get_Impact()
-      const step = 0.0125 + Math.max(0, Math.floor((Impact - 170) / 10) * 25 / 10000)
+      const step = 0.0125 + Math.max(0, (Impact - 170) / 10 * 25 / 10000)
       return Math.min(0.75, step * 20)
+    },
+    is: {
+      team: true
     }
   }
 ]
 
 /** @type {import('../../Calculator.ts').Calculator['skills']} */
 export const skills = [
-  { name: '普攻：强力终结一击', type: 'AQ5Q' },
+  { name: '普攻：强力终结一击', isMain: true, type: 'AQ5Q' },
   { name: '闪避反击：烈闪', type: 'CF' },
   { name: '快速支援：烈闪-守', type: 'LK' },
   { name: '强化E：V式日轮升拳-全冲程', type: 'EQ1' },

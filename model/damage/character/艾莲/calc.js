@@ -11,7 +11,6 @@ export const buffs = [
     value: 0.6,
     range: ['EQ']
   },
-
   {
     name: '6影',
     type: '穿透率',
@@ -40,7 +39,11 @@ export const buffs = [
 /** @type {import('../../Calculator.ts').Calculator['skills']} */
 export const skills = [
   { name: '碎冰', type: '碎冰' },
-  { name: '普攻：急冻修剪法三段', type: 'AQ3' },
+  {
+    name: '普攻：急冻修剪法三段',
+    isMain: true,
+    type: 'AQ3'
+  },
   { name: '闪避反击：暗礁', type: 'CF' },
   { name: '冲刺攻击：寒潮', type: 'CCP' },
   {

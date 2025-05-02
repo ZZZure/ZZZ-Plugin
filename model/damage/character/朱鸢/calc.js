@@ -41,6 +41,7 @@ export const skills = [
   {
     name: '强化特殊技：全弹连射',
     type: 'EQ',
+    isMain: true,
     after: ({ damage }) => damage.add('EQ2')
   },
   { name: '连携技：歼灭模式', type: 'RL' },

@@ -56,7 +56,7 @@ export const skills = [
   },
   { name: '普攻：间奏/终曲每[震音]', type: 'AQ', before },
   { name: '特殊技：《风铃与旧约》', type: 'EP', before },
-  { name: '和弦追加[震音]', type: 'EQZ', before },
+  { name: '和弦追加[震音]', isMain: true, type: 'EQZ', before },
   { name: '天赋追加[震音]', type: 'EZ', before },
   {
     name: '追加[音簇]*3',
