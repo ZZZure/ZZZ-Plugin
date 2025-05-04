@@ -453,6 +453,10 @@
   padding: 0.5em 0.5em;
   font-size: 0.9em;
   border-right: 0.1em solid rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .damage .data-list .td:last-child {
   border-right: none;
@@ -525,10 +529,7 @@
   grid-template-columns: repeat(10, 1fr);
 }
 .damage .difference-list .difference-td {
-  display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 .damage .difference-list .difference-td span {
   font-size: 0.8em;

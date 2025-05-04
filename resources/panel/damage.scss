@@ -423,6 +423,10 @@
       padding: 0.5em 0.5em;
       font-size: 0.9em;
       border-right: 0.1em solid rgba(255, 255, 255, 0.3);
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       &:last-child {
         border-right: none;
       }
@@ -509,11 +513,8 @@
     }
 
     .difference-td {
-      display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      
+
       span {
         font-size: 0.8em;
         color: #bbb;

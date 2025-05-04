@@ -202,6 +202,7 @@
         <div>注：一个技能可能分为多个出伤部分分别计算累加，此时该数据仅为一部分的乘区，下同</div>
       </div>
     </div>
+    {{if damage.usefulBuffs.length}}
     <div class="title">
       <% include(sys.specialTitle, {en: 'BUFF' , cn: 'Buff统计' }) %>
     </div>
@@ -221,22 +222,23 @@
       </div>
       {{/each}}
     </div>
-    {{if differences.length > 1}}
+    {{/if}}
+    {{if sub_differences.length > 1}}
     <div class="title">
-      <% include(sys.specialTitle, {en: 'STAT' , cn: '词条差异计算' }) %>
+      <% include(sys.specialTitle, {en: 'SUBSTAT' , cn: '副词条差异计算' }) %>
     </div>
     <div class="data-list difference-list">  
-      <div class="tr difference-tr d{{differences.length}}">
+      <div class="tr difference-tr d{{sub_differences[0].length}}">
         <div class="td difference-td no-zzz-font">词条变化</div>
-        {{each differences[0] d}}
+        {{each sub_differences[0] d}}
         <div class="td difference-td no-zzz-font">
           {{d.add.shortName}}
           <span>+{{d.add.valueBase}}</span>
         </div>
         {{/each}}
       </div>
-      {{each differences diff}}
-      <div class="tr difference-tr d{{differences.length}}">
+      {{each sub_differences diff}}
+      <div class="tr difference-tr d{{sub_differences[0].length}}">
         <div class="td difference-td no-zzz-font">
           {{diff[0].del.shortName}}
           <span>-{{diff[0].del.valueBase}}</span>
@@ -247,8 +249,39 @@
       </div>
       {{/each}}
       <div class="tr difference-tr info-tr no-zzz-font">
-        <div>反映在上述buff作用下置换<span>单位词条</span>后的<span>{{skill.name}}</span>期望伤害变化</div>
-        <div><span>横轴</span>表示<span>增加</span>的单位词条，<span>纵轴</span>表示<span>减少</span>的单位词条，对应坐标即为<span>期望伤害变化</span></div>
+        <div>反映在上述buff作用下置换<span>单位副词条</span>后的<span>{{skill.name}}</span>期望伤害变化</div>
+        <div><span>横轴</span>表示<span>增加</span>的词条，<span>纵轴</span>表示<span>减少</span>的词条，对应坐标即为<span>期望伤害变化</span>，下同</div>
+      </div>
+    </div>
+    {{/if}}
+    {{if main_differences.length > 1}}
+    <div class="title">
+      <% include(sys.specialTitle, {en: 'MAINSTAT' , cn: '主词条差异计算' }) %>
+    </div>
+    <div class="data-list difference-list">  
+      <div class="tr difference-tr d{{main_differences[0].length}}">
+        <div class="td difference-td no-zzz-font">词条变化</div>
+        {{each main_differences[0] d}}
+        <div class="td difference-td no-zzz-font">
+          {{d.add.shortName}}
+          <span>+{{d.add.valueBase}}</span>
+        </div>
+        {{/each}}
+      </div>
+      {{each main_differences diff}}
+      <div class="tr difference-tr d{{main_differences[0].length}}">
+        <div class="td difference-td no-zzz-font">
+          {{diff[0].del.shortName}}
+          <span>-{{diff[0].del.valueBase}}</span>
+        </div>
+        {{each diff d}}
+        <div class="td difference-td no-zzz-font {{d.difference > 0 ? 'positive' : d.difference < 0 ? 'negative' : 'zero'}}">{{d.difference > 0 ? '+' + d.difference.toFixed(0) : d.difference.toFixed(0)}}</div>
+        {{/each}}
+      </div>
+      {{/each}}
+      <div class="tr difference-tr info-tr no-zzz-font">
+        <div>反映在上述buff作用下置换<span>单位主词条</span>后的<span>{{skill.name}}</span>期望伤害变化</div>
+        <div>量化<span>不同主词条组合</span>对伤害的影响，但并非每个组合都可实现，仅供参考</div>
       </div>
     </div>
     {{/if}}

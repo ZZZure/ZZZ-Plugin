@@ -42,13 +42,14 @@ export class Damage extends ZZZPlugin {
       skillIndex = damages.length - 1
     else if (skillIndex < 0)
       skillIndex = 0
-    const differences = calc.calc_differences(damages[skillIndex]?.skill)
+    const sub_differences = calc.calc_sub_differences(damages[skillIndex]?.skill)
     if (skillIndex === '') {
-      const _s_ = differences[0]?.[0].damage.skill
+      const _s_ = sub_differences[0]?.[0].damage.skill
       skillIndex = ((_s_ && damages.findIndex(({ skill }) => skill.name === _s_.name && skill.type === _s_.type) + 1) || damages.length) - 1
     }
     const damage = damages[skillIndex]
     const skill = damage.skill
+    const main_differences = calc.calc_main_differences(skill)
     await parsedData.get_detail_assets()
     const finalData = {
       uid,
@@ -56,7 +57,8 @@ export class Damage extends ZZZPlugin {
       command: `%${parsedData.name_mi18n}伤害${skillIndex + 1}`,
       damage,
       damages,
-      differences,
+      sub_differences,
+      main_differences,
       skill: {
         ...skill,
         index: skillIndex
