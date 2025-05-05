@@ -289,7 +289,38 @@ export class Help extends ZZZPlugin {
     });
   }
   async help() {
+    let buts = [
+    [
+      { text: '卡片', callback: `%card` },
+      { text: '体力', callback: `%体力` },
+      { text: '面板', callback: `%更新面板` },
+      { text: '练度', callback: `%练度统计` }
+    ],
+    [
+      { text: '抽卡', callback: `%抽卡记录` },
+      { text: '月报', callback: `%月报` },
+      { text: '深渊', callback: `%深渊` },
+      { text: '强袭', callback: `%强袭` }
+    ],
+    [
+      { text: '刷新', callback: `%刷新面板` },
+      { text: '更新抽卡', callback: `%更新抽卡记录` },
+      { text: '电量', callback: `%电量` },
+      { text: '兑换码', callback: `%兑换码` }
+    ],
+    [
+      { text: '绑UID', input: `%绑定uid` },
+      { text: '扫码', callback: `#扫码登录` },
+      { text: '绑定设备', callback: '%绑定设备' }
+    ],[
+        {text: '项目地址',link:'https://github.com/ZZZure/ZZZeroUID'}
+      ]
+  ];
     if (this.e?.isMaster) {
+      buts.push([
+        { text: '插件更新', callback: `%插件更新` },
+        { text: '下载资源', callback: `%下载全部资源` }
+     ]);
       const _helpData = [
         ...helpData,
         {
@@ -409,14 +440,17 @@ export class Help extends ZZZPlugin {
           ],
         },
       ];
-      await this.render('help/index.html', {
-        helpData: _helpData,
-      });
+
+
+      await this.e.reply([await this.render('help/index.html', {helpData: _helpData, },{retType:'base64'}),segment.button(...buts)]);
       return false;
     }
-    await this.render('help/index.html', {
-      helpData,
-    });
-    return false;
+
+      await this.e.reply([await this.render('help/index.html', {helpData },{retType:'base64'})
+,segment.button(...buts)]);
+      return false;
+
+
   }
+
 }
