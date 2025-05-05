@@ -89,7 +89,7 @@ export class Panel extends ZZZPlugin {
       list: result,
     };
     const role_list = result.map(item => item.name_mi18n);
-    global.zzzRoleList = roleList;
+    global.zzzRoleList = role_list;
     let buttons = [[]];
 const nonChineseOrDigitRegex = /[^\u4E00-\u9FFF0-9]/g;
 
