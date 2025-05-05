@@ -44,8 +44,13 @@ export default class Button {
     if (global.zzzCurrentCharName) {
       charName = global.zzzCurrentCharName;
     } else {
+      const match = e.match || e.msg.match(/^(%|＃|#)(.+?)面板$/);
+      const parsedName = match?.[2]?.trim();
+      if (parsedName && !['更新', '刷新', '列表'].includes(parsedName)) {
+        charName = parsedName;
         return null;
       }
+    }
 
 
     const buttonRows = [
