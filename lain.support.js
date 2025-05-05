@@ -55,7 +55,7 @@ export default class Button {
         { label: `练度统计`, callback: `%练度统计` },
         { label: `${charName}图鉴`, callback: `%${charName}图鉴` },
       ],
-      [{ label: `签到`, callback: `%签到` }, { label: `伤害`, callback: `%${charName}伤害` },{ label: `电量`, callback: `%体力` }]
+      [{ label: `体力`, callback: `%电量` }, { label: `伤害`, callback: `%${charName}伤害` },{ label: `电量`, callback: `%体力` }]
     ];
 
     return Bot.Button(buttonRows);
