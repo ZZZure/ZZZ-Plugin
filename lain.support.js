@@ -48,7 +48,6 @@ export default class Button {
       const parsedName = match?.[2]?.trim();
       if (parsedName && !['更新', '刷新', '列表'].includes(parsedName)) {
         charName = parsedName;
-        return null;
       }
     }
 
