@@ -4,7 +4,7 @@ export default class Button {
     this.plugin = {
       name: 'zzz-plugin-support-global',
       dsc: 'zzz-plugin button support (uses global vars)',
-      priority: 50, // 确保在 Panel(70) 之后运行
+      priority: 50,
       rule: [
         { reg: '#绝区零更新面板|#绝区零面板更新|#绝区零刷新面板|#绝区零面板刷新$', fnc: 'profile1' },
         { reg:  '#绝区零(.*)面板(.*)$', fnc: 'handleRule' },
@@ -13,6 +13,7 @@ export default class Button {
   }
 
   profile1(e) {
+
     const roleList = global.zzzRoleList || [];
     const ifNewChar = global.ifNewChar || false;
 
@@ -45,7 +46,7 @@ export default class Button {
     } else {
         return null;
       }
-    }
+
 
     const buttonRows = [
       [{ label: `更新面板`, callback: `%更新面板` }],
@@ -54,7 +55,7 @@ export default class Button {
         { label: `练度统计`, callback: `%练度统计` },
         { label: `${charName}图鉴`, callback: `%${charName}图鉴` },
       ],
-      [{ label: `签到`, callback: `%签到` }, { label: `伤害`, callback: `%${charName}伤害` } { label: `电量`, callback: `%体力` }] // 可以合并常用的
+      [{ label: `签到`, callback: `%签到` }, { label: `伤害`, callback: `%${charName}伤害` },{ label: `电量`, callback: `%体力` }]
     ];
 
     return Bot.Button(buttonRows);
