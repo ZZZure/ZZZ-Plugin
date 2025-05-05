@@ -2,9 +2,9 @@
 export default class Button {
   constructor() {
     this.plugin = {
-      name: 'zzz-plugin-support-global',
-      dsc: 'zzz-plugin button support (uses global vars)',
-      priority: 50,
+      name: 'zzz-plugin-Miao-support-Button',
+      dsc: 'zzz-plugin button support (考古版本)',
+      priority: -429,
       rule: [
         { reg: '#绝区零更新面板|#绝区零面板更新|#绝区零刷新面板|#绝区零面板刷新$', fnc: 'profile1' },
         { reg:  '#绝区零(.*)面板(.*)$', fnc: 'handleRule' },
