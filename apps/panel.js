@@ -83,7 +83,7 @@ export class Panel extends ZZZPlugin {
       return false;
     }
     const newChar = result.filter(item => item.isNew);
-    global.ifNewChar = newChar.length > 0;
+    global.ifNewChar = (newChar.length > 0);
     const finalData = {
       newChar: newChar.length,
       list: result,
