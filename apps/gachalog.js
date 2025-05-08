@@ -26,11 +26,11 @@ export class GachaLog extends ZZZPlugin {
           fnc: 'startGachaLog',
         },
         {
-          reg: `${rulePrefix}(刷新|更新)抽卡(链接|记录)$`,
+          reg: `${rulePrefix}(刷新|更新)抽卡(链接|记录)?$`,
           fnc: 'refreshGachaLog',
         },
         {
-          reg: `^${rulePrefix}抽卡(分析|记录)$`,
+          reg: `^${rulePrefix}抽卡(分析|记录|统计)$`,
           fnc: 'gachaLogAnalysis',
         },
         {
