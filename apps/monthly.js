@@ -35,10 +35,11 @@ export class monthly extends ZZZPlugin {
     }
     let year = match[3];
     let month = match[5];
-    const { api } = await this.getAPI();
+    const { api, deviceFp } = await this.getAPI();
     await this.getPlayerInfo();
     const monthlyResponse = await getMonthly(
       api,
+      deviceFp,
       this.getDateString(year, month)
     ).catch(e => {
       this.reply(e.message);
@@ -60,9 +61,12 @@ export class monthly extends ZZZPlugin {
   }
 
   async monthlyCollect() {
-    const { api } = await this.getAPI();
+    const { api, deviceFp } = await this.getAPI();
     await this.getPlayerInfo();
-    const collect = await getMonthlyCollect(api).catch(e => {
+    const collect = await getMonthlyCollect(
+      api,
+      deviceFp,
+    ).catch(e => {
       this.reply(e.message);
       throw e;
     });

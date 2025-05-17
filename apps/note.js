@@ -20,9 +20,11 @@ export class Note extends ZZZPlugin {
     });
   }
   async note() {
-    const { api } = await this.getAPI();
+    const { api, deviceFp } = await this.getAPI();
     await this.getPlayerInfo();
-    const noteResponse = await api.getFinalData('zzzNote').catch(e => {
+    const noteResponse = await api.getFinalData('zzzNote', {
+      deviceFp,
+    }).catch(e => {
       this.reply(e.message);
       throw e;
     });

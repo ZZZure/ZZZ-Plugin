@@ -60,11 +60,11 @@ export class Panel extends ZZZPlugin {
       await this.reply(`${coldTime}秒内只能刷新一次，请稍后再试`);
       return false;
     }
-    const { api } = await this.getAPI();
+    const { api, deviceFp } = await this.getAPI();
     await redis.set(`ZZZ:PANEL:${uid}:LASTTIME`, Date.now());
     await this.reply('正在刷新面板列表，请稍候...');
     await this.getPlayerInfo();
-    const result = await refreshPanelFunction(api).catch(e => {
+    const result = await refreshPanelFunction(api, deviceFp).catch(e => {
       this.reply(e.message);
       throw e;
     });

@@ -20,12 +20,14 @@ export class Abyss extends ZZZPlugin {
     });
   }
   async abyss() {
-    const { api } = await this.getAPI();
+    const { api, deviceFp } = await this.getAPI();
     await this.getPlayerInfo();
     const method = this.e.msg.match(`(上期|往期)`)
       ? 'zzzChallengePeriod'
       : 'zzzChallenge';
-    const abyssData = await api.getFinalData(method).catch(e => {
+    const abyssData = await api.getFinalData(method, {
+      deviceFp,
+    }).catch(e => {
       this.reply(e.message);
       throw e;
     });

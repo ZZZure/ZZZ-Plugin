@@ -20,12 +20,14 @@ export class deadly extends ZZZPlugin {
     });
   }
   async deadly() {
-    const { api } = await this.getAPI();
+    const { api, deviceFp } = await this.getAPI();
     await this.getPlayerInfo();
     const method = this.e.msg.match(`(上期|往期)`)
       ? 'zzzDeadlyPeriod'
       : 'zzzDeadly';
-    const deadlyData = await api.getFinalData(method).catch(e => {
+    const deadlyData = await api.getFinalData(method, {
+      deviceFp,
+    }).catch(e => {
       this.reply(e.message);
       throw e;
     });
