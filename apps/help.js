@@ -31,7 +31,7 @@ const helpData = [
         desc: '查看玩家的角色和邦布列表',
         needCK: true,
         needSK: false,
-        commands: ['card', '卡片', '角色','个人信息'],
+        commands: ['card', '卡片', '角色', '个人信息'],
       },
       {
         title: '便签',
@@ -77,7 +77,7 @@ const helpData = [
         desc: '刷新抽卡记录，如果数据过多，可能需要等待很长一段时间，请等待回复后再%查看抽卡记录',
         needCK: true,
         needSK: true,
-        commands: ['刷新/更新抽卡链接', '刷新/更新抽卡记录'],
+        commands: ['刷新/更新抽卡', '刷新/更新抽卡链接', '刷新/更新抽卡记录'],
       },
       {
         title: '获取抽卡记录链接',
@@ -91,7 +91,7 @@ const helpData = [
         desc: '查看抽卡记录，需要手动%刷新抽卡记录，否则读取的是缓存数据',
         needCK: false,
         needSK: false,
-        commands: ['抽卡分析', '抽卡记录'],
+        commands: ['抽卡分析', '抽卡记录', '抽卡统计'],
       },
     ],
   },
