@@ -144,7 +144,7 @@ export const buffs = [
     name: '终结技',
     type: '增伤',
     element: 'Ice',
-    range: ['RZ'],
+    // range: ['RZ'],
     value: 0.3
   }
 ]
