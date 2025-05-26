@@ -84,6 +84,8 @@ export class Wiki extends ZZZPlugin {
       return false;
     }
     const charData = await getHakushCharacterData(charname);
+    if (!charData)
+      return this.reply(`暂无${charname}角色数据`);
     charData.Skill.getAllSkillData({
       BasicLevel,
       DodgeLevel,

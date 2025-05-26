@@ -208,5 +208,23 @@
     "name": "艾莲",
     "full_name": "艾莲·乔",
     "en_name": "Ellen"
+  },
+  "1371": {
+    "sprite_id": "",
+    "name": "仪玄",
+    "full_name": "仪玄",
+    "en_name": "Yixuan"
+  },
+  "1391": {
+    "sprite_id": "",
+    "name": "橘福福",
+    "full_name": "橘福福",
+    "en_name": "Ju Fufu"
+  },
+  "1421": {
+    "sprite_id": "",
+    "name": "潘引壶",
+    "full_name": "潘引壶",
+    "en_name": "Pan Yinhu"
   }
 }
