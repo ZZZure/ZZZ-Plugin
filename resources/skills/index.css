@@ -76,6 +76,9 @@
   margin-bottom: -0.2em;
   display: inline-block;
 }
+.skills .skill .description .info .item .content strong {
+  font-weight: normal;
+}
 .skills .skill .detail {
   margin-bottom: 1em;
 }
