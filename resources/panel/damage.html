@@ -140,21 +140,19 @@
       <% include(sys.specialTitle, {en: 'DAMAGE' , cn: '伤害统计' }) %>
     </div>
     <div class="data-list damage-list">
-      <div class="tr dmg-tr titlebar no-zzz-font">
+      <div class="tr dmg-tr column4 titlebar no-zzz-font">
         <div class="td dmg-td">%</div>
         <div class="td dmg-td">技能类型</div>
         <div class="td dmg-td">暴击伤害</div>
         <div class="td dmg-td">期望伤害</div>
       </div>
       {{each damages d,index}}
-      {{if index == skill.index}}
-      <div class="tr dmg-tr current">
-      {{else}}
-      <div class="tr dmg-tr">
-      {{/if}}
+      <div class="tr dmg-tr {{d.result.critDMG !== 0 ? 'column4' : 'column3'}} {{index == skill.index ? 'current' : ''}}">
         <div class="td dmg-td">{{index+1}}</div>
         <div class="td dmg-td no-zzz-font">{{d.skill.name}}</div>
+        {{if d.result.critDMG !== 0}}
         <div class="td dmg-td">{{d.result.critDMG.toFixed(0)}}</div>
+        {{/if}}
         <div class="td dmg-td">{{d.result.expectDMG.toFixed(0)}}</div>
       </div>
       {{/each}}

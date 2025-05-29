@@ -471,8 +471,11 @@
 .damage .data-list .info-tr span {
   color: #fff !important;
 }
-.damage .damage-list .dmg-tr {
-  grid-template-columns: 0.25fr 1.6fr 1fr 1fr;
+.damage .damage-list .column3 {
+  grid-template-columns: 0.28fr 2fr 2fr;
+}
+.damage .damage-list .column4 {
+  grid-template-columns: 0.28fr 2fr 1fr 1fr;
 }
 .damage .damage-list .dmg-tr.current {
   background: rgb(120, 104, 73);

@@ -853,11 +853,18 @@
     box-shadow: 0 0 3em rgba(0, 0, 0, 0.6);
     border: 0.1em solid rgba(255, 255, 255, 0.2);
 
+    .column3 {
+      grid-template-columns: 0.28fr 2fr 2fr;
+    }
+
+    .column4 {
+      grid-template-columns: 0.28fr 2fr 1fr 1fr;
+    }
+
     .dmg-tr {
       display: grid;
-      grid-template-columns: 0.25fr 1.6fr 1fr 1fr;
       border-bottom: 0.1em solid rgba(255, 255, 255, 0.2);
-
+  
       &:first-child {
         font-size: 1.1em;
         background: rgba(0, 0, 0, 0.2);
@@ -893,6 +900,7 @@
       padding: 0.5em 0.5em;
       font-size: 0.9em;
       border-right: 0.1em solid rgba(255, 255, 255, 0.2);
+      overflow: hidden;
       &:nth-child(2) {
         background: rgba(0, 0, 0, 0.2);
         color: rgb(206, 190, 149);

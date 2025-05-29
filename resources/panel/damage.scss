@@ -447,8 +447,16 @@
 
   /* 伤害统计 */
   .damage-list {
+
+    .column3 {
+      grid-template-columns: 0.28fr 2fr 2fr;
+    }
+
+    .column4 {
+      grid-template-columns: 0.28fr 2fr 1fr 1fr;
+    }
+
     .dmg-tr {
-      grid-template-columns: 0.25fr 1.6fr 1fr 1fr;
 
       &.current {
         background: rgb(120, 104, 73);

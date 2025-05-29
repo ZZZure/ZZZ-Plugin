@@ -242,17 +242,19 @@
         <% include(sys.specialTitle, {en: 'DAMAGE' , cn: '伤害统计' }) %>
       </div>
       <div class="damagelist">
-        <div class="dmg-tr titlebar no-zzz-font">
+        <div class="dmg-tr column4 titlebar no-zzz-font">
           <div class="td dmg-td">%</div>
           <div class="dmg-td">技能类型</div>
           <div class="dmg-td">暴击伤害</div>
           <div class="dmg-td">期望伤害</div>
         </div>
         {{each damages damage,index}}
-        <div class="dmg-tr">
+        <div class="dmg-tr {{damage.result.critDMG !== 0 ? 'column4' : 'column3'}}">
           <div class="dmg-td">{{index+1}}</div>
           <div class="dmg-td no-zzz-font">{{damage.skill.name}}</div>
+          {{if damage.result.critDMG !== 0}}
           <div class="dmg-td">{{damage.result.critDMG.toFixed(0)}}</div>
+          {{/if}}
           <div class="dmg-td">{{damage.result.expectDMG.toFixed(0)}}</div>
         </div>
         {{/each}}
