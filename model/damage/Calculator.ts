@@ -385,7 +385,7 @@ export class Calculator {
     }
     const base: { [type: string]: number } = {}
     types.forEach(t => base[t] = t.includes('百分比') ? this.avatar.base_properties[prop.nameZHToNameEN(t.replace('百分比', '')) as keyof ZZZAvatarInfo['base_properties']] * subBaseValueData[t][0] : subBaseValueData[t][0])
-    logger.debug(logger.red('词条变化值：'), base)
+    logger.debug('词条变化值：', base)
     const buffs = types.map(t => ({
       name: t,
       shortName: prop.nameToShortName3(t),
@@ -456,7 +456,12 @@ export class Calculator {
       return acc
     }, ['空白对照'])
     // @ts-expect-error 只保留装备的主词条del
-    return this.calc_differences(buffs, skill).filter(v => equips.includes(v[0].del.name!.replace('百分比', '')))
+    const main_differences = this.calc_differences(buffs, skill)
+    return main_differences.filter(v => {
+      const name1 = v[0].del.name!.replace('百分比', '')
+      const name2 = name1.replace('属性', '')
+      return equips.some(e => e === name1 || e === name2)
+    })
   }
 
   /* 计算已注册技能差异 */
