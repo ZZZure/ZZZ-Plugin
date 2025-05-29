@@ -132,7 +132,7 @@ export class BuffManager {
   readonly buffs: buff[] = []
   /** 套装计数 */
   setCount: { [name: string]: number } = {}
-  defaultBuff: { [key in keyof buff]?: buff[key] } = {}
+  defaultBuff: Partial<buff> = {}
 
   constructor(avatar: ZZZAvatarInfo) {
     this.avatar = avatar
@@ -319,39 +319,46 @@ export class BuffManager {
     return this.buffs.find(buff => buff[type] === value)
   }
 
-  operator<T extends keyof buff>(type: T, value: buff[T], fnc: (buff: buff) => void) {
-    this.forEach(buff => {
-      if (buff[type] === value) {
-        fnc(buff)
-      }
-    })
+  operator(buff: Partial<buff>, fnc: (buff: buff) => void): void
+  operator<T extends keyof buff>(key: T, value: buff[T], fnc: (buff: buff) => void): void
+  operator<T extends keyof buff>(key: T | Partial<buff>, value: buff[T] | ((buff: buff) => void), fnc?: (buff: buff) => void) {
+    const isMatch = typeof key === 'object' ?
+      (targetBuff: buff) => Object.entries(key).every(([k, v]) => targetBuff[k as keyof buff] === v) :
+      (targetBuff: buff) => targetBuff[key] === value
+    this.forEach(buff => isMatch(buff) && (fnc || value as (buff: buff) => void)(buff))
   }
 
-  /** 
-   * 关闭符合条件的所有buff
-   */
-  close<T extends keyof buff>(type: T, value: buff[T]) {
-    this.operator(type, value, buff => buff.status = false)
+  /** 关闭符合条件的所有buff */
+  close(buff: Partial<buff>): void
+  close<T extends keyof buff>(key: T, value: buff[T]): void
+  close<T extends keyof buff>(key: T | Partial<buff>, value?: buff[T] | Partial<buff>) {
+    if (typeof key === 'object')
+      this.operator(key, buff => buff.status = false)
+    else
+      this.operator(key, value as buff[T], buff => buff.status = false)
   }
 
-  /**
-   * 开启符合条件的所有buff
-   */
-  open<T extends keyof buff>(type: T, value: buff[T]) {
-    this.operator(type, value, buff => buff.status = true)
+  /** 开启符合条件的所有buff */
+  open(buff: Partial<buff>): void
+  open<T extends keyof buff>(key: T, value: buff[T]): void
+  open<T extends keyof buff>(key: T, value?: buff[T]) {
+    if (typeof key === 'object')
+      this.operator(key, buff => buff.status = true)
+    else
+      this.operator(key, value as buff[T], buff => buff.status = true)
   }
 
   /**
    * 设置后续新增buff参数的默认值
    * @param obj 直接覆盖默认值
    */
-  default(obj: { [key in keyof buff]?: buff[key] }): void
+  default(obj: Partial<buff>): void
   /**
    * 设置后续新增buff参数的默认值
    * @param value 为undefined时删除默认值
    */
-  default<T extends keyof buff>(type: T, value?: buff[T]): void
-  default<T extends keyof buff>(param: T | { [key in keyof buff]?: buff[key] }, value?: buff[T]): void {
+  default<T extends keyof buff>(key: T, value?: buff[T]): void
+  default<T extends keyof buff>(param: T | Partial<buff>, value?: buff[T]): void {
     if (typeof param === 'object') {
       this.defaultBuff = param
     } else {

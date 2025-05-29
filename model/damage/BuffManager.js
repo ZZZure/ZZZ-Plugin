@@ -200,18 +200,23 @@ export class BuffManager {
     find(type, value) {
         return this.buffs.find(buff => buff[type] === value);
     }
-    operator(type, value, fnc) {
-        this.forEach(buff => {
-            if (buff[type] === value) {
-                fnc(buff);
-            }
-        });
+    operator(key, value, fnc) {
+        const isMatch = typeof key === 'object' ?
+            (targetBuff) => Object.entries(key).every(([k, v]) => targetBuff[k] === v) :
+            (targetBuff) => targetBuff[key] === value;
+        this.forEach(buff => isMatch(buff) && (fnc || value)(buff));
     }
-    close(type, value) {
-        this.operator(type, value, buff => buff.status = false);
+    close(key, value) {
+        if (typeof key === 'object')
+            this.operator(key, buff => buff.status = false);
+        else
+            this.operator(key, value, buff => buff.status = false);
     }
-    open(type, value) {
-        this.operator(type, value, buff => buff.status = true);
+    open(key, value) {
+        if (typeof key === 'object')
+            this.operator(key, buff => buff.status = true);
+        else
+            this.operator(key, value, buff => buff.status = true);
     }
     default(param, value) {
         if (typeof param === 'object') {

@@ -264,7 +264,7 @@ export class ZZZAvatarInfo {
     this.level_rank = Math.floor(this.level / 10);
     const weight = scoreFnc[this.id] && scoreFnc[this.id](this);
     this.weightRule = weight?.[0] || '默认';
-    this.scoreWeight = formatScoreWeight(weight?.[1]) || scoreWeight[this.id];
+    this.scoreWeight = Object.assign(formatScoreWeight(weight?.[1]) || {}, scoreWeight[this.id]);
     for (const equip of this.equip) {
       equip.get_score(this.scoreWeight);
     }
