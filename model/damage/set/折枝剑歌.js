@@ -12,7 +12,6 @@
 //         name: name + '4',
 //         type: '暴击伤害',
 //         value: 0.3,
-//         isForever: true,
 //         check: ({ buffM, calc }) => calc.get_AnomalyMastery() >= 115
 //       })
 //       buffM.new({
@@ -31,7 +30,6 @@ export const buffs = [
     name: '折枝剑歌4',
     type: '暴击伤害',
     value: 0.3,
-    isForever: true,
     check: ({ buffM, calc }) => buffM.setCount.折枝剑歌 >= 4 && calc.get_AnomalyMastery() >= 115
   },
   {

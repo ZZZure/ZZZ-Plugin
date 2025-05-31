@@ -14,8 +14,7 @@ export const buffs = [
     name: '6影',
     type: '暴击伤害',
     value: 1,
-    range: ['AQ'],
-    isForever: true
+    range: ['AQ']
   },
   {
     name: '6影',
@@ -25,7 +24,6 @@ export const buffs = [
   {
     name: '额外能力：阳关三叠',
     type: '攻击力',
-    isForever: true,
     value: ({ calc }) => Math.max(0, Math.min((calc.get_Impact() - 120) * 6, 600))
   },
   {
@@ -36,7 +34,7 @@ export const buffs = [
   },
   {
     name: '闪络',
-    source: 'Skill',
+    source: '技能',
     type: '增伤',
     value: 0.01 * 25,
     range: ['AQ']

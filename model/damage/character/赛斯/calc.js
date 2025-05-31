@@ -4,7 +4,6 @@ export const buffs = [
     name: '6影',
     type: '暴击伤害',
     value: 0.6,
-    isForever: true,
     range: ['Y6']
   },
   {

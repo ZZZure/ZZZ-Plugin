@@ -7,8 +7,7 @@
 // export function calc(buffM, star) {
 //   buffM.new({
 //     type: '暴击伤害',
-//     value: [0.5, 0.57, 0.65, 0.72, 0.8][star - 1],
-//     isForever: true
+//     value: [0.5, 0.57, 0.65, 0.72, 0.8][star - 1]
 //   })
 //   buffM.new({
 //     type: '增伤',
@@ -23,8 +22,7 @@
 export const buffs = [
   {
     type: '暴击伤害',
-    value: [0.5, 0.57, 0.65, 0.72, 0.8],
-    isForever: true
+    value: [0.5, 0.57, 0.65, 0.72, 0.8]
   },
   {
     type: '增伤',

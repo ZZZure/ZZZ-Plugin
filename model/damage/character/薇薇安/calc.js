@@ -29,8 +29,7 @@ export const buffs = [
     name: '6影',
     type: '增伤',
     value: 0.4,
-    element: 'Ether',
-    isForever: true
+    element: 'Ether'
   },
   {
     name: '额外能力：预言之泪',

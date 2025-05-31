@@ -20,16 +20,8 @@ export type element = keyof typeof elementEnum
 /** 异常类型 */
 export type anomaly = keyof typeof anomalyEnum
 
-/**
- * Buff来源
- * @Weapon 武器
- * @Set 套装
- * @Rank 影画
- * @Talent 核心被动
- * @Addition 额外能力
- * @Skill 技能
- */
-export type buffSource = 'Weapon' | 'Set' | 'Rank' | 'Talent' | 'Addition' | 'Skill'
+/** Buff来源 */
+export type buffSource = '音擎' | '套装' | '技能' | '影画' | '核心被动' | '额外能力'
 
 export enum buffTypeEnum {
   // 通用乘区
@@ -48,8 +40,6 @@ export type buffType = keyof typeof buffTypeEnum
 export interface buff {
   /** Buff状态，true生效，false无效 */
   status: boolean
-  /** Buff是否常驻 */
-  isForever?: boolean
   /** Buff名称 */
   name: string
   /** Buff来源 */
@@ -57,34 +47,35 @@ export interface buff {
   /** Buff增益的类型 */
   type: buffType
   /**
-   * Buff增益数值，可为数值、数组、函数、字符串
+   * Buff增益数值，可为数值、字符串、数组、函数
    * @number
    * - 一般情况下此值即为提高值
    * - 当buff增益类型为**攻击力/冲击力/异常精通/异常掌控/防御力/生命值**时，若此值 **<1**，则将此值理解为**初始属性**的**百分比提高**
-   * @array
-   * 根据buff.source自动选择对应等级/星级的值（同上支持百分比提高），支持的source：
-   * - Weapon：武器星级（进阶）
-   * - Talent/Addition：天赋（核心技）等级
-   * @function
-   * 函数返回值则为提高值
    * @string
    * 角色自身的buff提高值可能随技能/天赋等级提高而提高，此时可以于data.json的"buff"中添加对应的倍率信息（同上支持百分比提高），此时value即为键名，其首字母必须为对应技能的基类（参考技能类型命名标准）
+   * @array
+   * 根据buff.source自动选择对应等级/星级的值（同上支持百分比提高），支持的source：
+   * - 音擎：音擎进阶星级
+   * - 核心被动、额外能力：核心技等级
+   * @function
+   * 函数返回值即为提高值
    */
-  value: number | (({ avatar, buffM, calc }: {
+  value: number | string | number[] | (({ avatar, buffM, calc }: {
     avatar: ZZZAvatarInfo
     buffM: BuffManager
     calc: Calculator
-  }) => number) | string | number[]
+  }) => number)
   /**
    * Buff增益技能类型**生效范围**；参考技能类型命名标准
    * - 当技能参数不存在**redirect**时，**range**作用范围向后覆盖
    * - 当技能参数存在**redirect**时，**range**须全匹配，**redirect**向后覆盖
+   * - 若需全匹配的精细操作，可使用**include**与**exclude**参数
    */
   range?: string[] | anomaly[] | "追加攻击"[]
   /** 
    * Buff增益技能类型**生效技能**
    * - 不同于**range**，仅全匹配时该值生效，不会向后覆盖
-   * - 无**range**且无**include**则该buff对全部技能生效
+   * - 无**range**且无**include**则该buff对**exclude**以外的全部技能生效
    * - **range**与**include**符合其一则认为buff生效
    * - 当技能参数存在**redirect**时，**range**与**include**的区别在于**include**不会尝试匹配**redirect**
    */
@@ -100,7 +91,7 @@ export interface buff {
   /** 
    * 检查buff是否生效
    * @function
-   * 一般情况。武器会自动添加职业检查
+   * 音擎会自动添加职业检查
    * @number
    * - buff.source为Set时，判断套装数量>=该值
    * - buff.source为Rank时，判断影画数量>=该值
@@ -112,8 +103,6 @@ export interface buff {
   }) => boolean) | number
   /** Buff描述符 */
   is: {
-    /** 是否常驻 @default false*/
-    forever?: boolean
     /** 是否团队增益 @default false */
     team?: boolean
     /** 为团队增益时，同名效果是否可叠加 @default false */
@@ -148,29 +137,26 @@ export class BuffManager {
       return this.buffs
     }
     // 简化参数
-    if (!buff.name && (buff.source || this.defaultBuff.source) === 'Set' && this.defaultBuff.name && typeof buff.check === 'number')
+    if (!buff.name && (buff.source || this.defaultBuff.source) === '套装' && this.defaultBuff.name && typeof buff.check === 'number')
       buff.name = this.defaultBuff.name + buff.check
     const oriBuff = buff
     buff = _.merge({
       status: true,
-      isForever: false,
       is: {},
       ...this.defaultBuff
     }, buff)
-    if (buff.isForever)
-      buff.is.forever = true
     if (buff.range && !Array.isArray(buff.range))
       buff.range = oriBuff.range = [buff.range]
     if (!buff.source) {
-      if (buff.name.includes('核心') || buff.name.includes('天赋')) buff.source = oriBuff.source = 'Talent'
-      else if (buff.name.includes('额外能力')) buff.source = oriBuff.source = 'Addition'
-      else if (buff.name.includes('影')) buff.source = oriBuff.source = 'Rank'
-      else if (buff.name.includes('技')) buff.source = oriBuff.source = 'Skill'
+      if (buff.name.includes('核心') || buff.name.includes('天赋')) buff.source = oriBuff.source = '核心被动'
+      else if (buff.name.includes('额外能力')) buff.source = oriBuff.source = '额外能力'
+      else if (buff.name.includes('影')) buff.source = oriBuff.source = '影画'
+      else if (buff.name.includes('技')) buff.source = oriBuff.source = '技能'
     }
     if (!buff.name || !buff.value || !buff.source || !buffTypeEnum[buffTypeEnum[buff.type]])
       return logger.warn('无效buff：', buff)
-    // 武器buff职业检查
-    if (buff.source === 'Weapon') {
+    // 音擎buff职业检查
+    if (buff.source === '音擎') {
       const professionCheck = (avatar: ZZZAvatarInfo) => {
         const weapon_profession = avatar.weapon?.profession
         if (!weapon_profession) return true
@@ -179,7 +165,7 @@ export class BuffManager {
       const oriCheck = typeof buff.check === 'function' && buff.check
       buff.check = ({ avatar, buffM, calc }) => professionCheck(avatar) && (!oriCheck || oriCheck({ avatar, buffM, calc }))
       // 影画buff影画数检查
-    } else if (buff.source === 'Rank') {
+    } else if (buff.source === '影画') {
       buff.check ??= oriBuff.check = +buff.name.match(/\d/)!?.[0]
     }
     this.buffs.push(buff)
@@ -248,8 +234,8 @@ export class BuffManager {
           }
           if (buff.check) {
             if (typeof buff.check === 'number') {
-              if (buff.source === 'Set' && (this.setCount[buff.name.replace(/\d$/, '')] < buff.check)) return false
-              else if (buff.source === 'Rank' && (this.avatar.rank < buff.check)) return false
+              if (buff.source === '套装' && (this.setCount[buff.name.replace(/\d$/, '')] < buff.check)) return false
+              else if (buff.source === '影画' && (this.avatar.rank < buff.check)) return false
             } else if (valueOcalc) {
               if (weakMapCheck.has(buff)) {
                 // console.log(`depth：${depth} ${buff.name}：${weakMapCheck.get(buff)}`)

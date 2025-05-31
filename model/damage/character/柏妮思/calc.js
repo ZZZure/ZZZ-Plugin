@@ -28,7 +28,6 @@ export const buffs = [
     name: '核心被动：燃油特调',
     type: '增伤',
     value: ({ calc }) => Math.min(30, calc.get_AnomalyProficiency() / 10) * 0.01,
-    isForever: true,
     range: ['TY', 'Y6Y']
   },
   {

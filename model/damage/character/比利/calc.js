@@ -4,7 +4,6 @@ export const buffs = [
     name: '2影',
     type: '增伤',
     value: 0.25,
-    isForever: true,
     range: ['CF']
   },
   {

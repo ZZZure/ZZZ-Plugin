@@ -2,8 +2,7 @@
 export const buffs = [
   {
     type: '生命值',
-    value: [0.08, 0.092, 0.104, 0.116, 0.128],
-    isForever: true
+    value: [0.08, 0.092, 0.104, 0.116, 0.128]
   },
   {
     type: '攻击力',

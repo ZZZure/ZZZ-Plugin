@@ -130,7 +130,7 @@ export function weapon_buff(weapon, buffM) {
     const m = calcFnc.weapon[name];
     if (!m)
         return;
-    buffM.default({ name, source: 'Weapon' });
+    buffM.default({ name, source: '音擎' });
     if (m.buffs)
         buffM.new(m.buffs);
     if (m.calc)
@@ -138,7 +138,7 @@ export function weapon_buff(weapon, buffM) {
     buffM.default({});
 }
 export function set_buff(equips, buffM) {
-    buffM.default({ name: '', source: 'Set' });
+    buffM.default({ name: '', source: '套装' });
     const setCount = {};
     for (const equip of equips) {
         if (equip.equipment_type == 5) {
@@ -148,7 +148,6 @@ export function set_buff(equips, buffM) {
                     name: '驱动盘5号位',
                     type: '增伤',
                     value: Number(equip.main_properties[0].base.replace('%', '')) / 100,
-                    isForever: true,
                     element: elementEnum[index]
                 });
             }

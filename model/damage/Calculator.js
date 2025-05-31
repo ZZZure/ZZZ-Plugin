@@ -38,7 +38,7 @@ export class Calculator {
     buffM;
     avatar;
     skills = [];
-    usefulBuffs = [];
+    usefulBuffResults = new Map();
     cache = Object.create(null);
     props = {};
     skill;
@@ -173,8 +173,8 @@ export class Calculator {
             critDMG: BasicArea * 暴击伤害 * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea,
             expectDMG: BasicArea * CriticalArea * BoostArea * VulnerabilityArea * ResistanceArea * DefenceArea
         };
-        const damage = { skill, usefulBuffs: _.sortBy(this.usefulBuffs, ['type', 'value']).reverse(), props, areas, result };
-        this.usefulBuffs = [];
+        const damage = { skill, usefulBuffs: _.sortBy(Array.from(this.usefulBuffResults.values()), ['type', 'value']).reverse(), props, areas, result };
+        this.usefulBuffResults.clear();
         if (skill.after) {
             damage.add = (d) => {
                 if (typeof d === 'string')
@@ -266,14 +266,19 @@ export class Calculator {
         const base = {};
         types.forEach(t => base[t] = (t.includes('百分比') || ['异常掌控', '冲击力', '能量自动回复'].includes(t)) ? this.avatar.base_properties[prop.nameZHToNameEN(t.replace('百分比', ''))] * mainBaseValueData[t][0] : mainBaseValueData[t][0]);
         logger.debug(logger.red('词条变化值：'), base);
-        const buffs = types.map(t => ({
-            name: t,
-            shortName: prop.nameToShortName3(t),
-            type: (t.includes('属性伤害加成') ? '增伤' : t.replace('百分比', '')),
-            value: base[t],
-            element: t.includes('属性伤害加成') ? prop.nameZHToNameEN(t).replace('DMGBonus', '') : undefined,
-            valueBase: mainBaseValueData[t][1]
-        }));
+        const buffs = types.map(t => {
+            const data = {
+                name: t,
+                shortName: prop.nameToShortName3(t),
+                type: (t.includes('属性伤害加成') ? '增伤' : t.replace('百分比', '')),
+                value: base[t],
+                element: (t.includes('属性伤害加成') ? prop.nameZHToNameEN(t).replace('DMGBonus', '') : ''),
+                valueBase: mainBaseValueData[t][1]
+            };
+            if (!data.element)
+                delete data.element;
+            return data;
+        });
         buffs.push({
             name: '空白对照',
             shortName: '对照组',
@@ -392,12 +397,11 @@ export class Calculator {
         const anomalyData = this.get_AnomalyData(skill?.type.slice(0, 2));
         if (!anomalyData)
             return;
-        let Multiplier = anomalyData.multiplier;
-        if (times !== 1 && anomalyData.duration && anomalyData.interval) {
+        if (!times && anomalyData.duration && anomalyData.interval) {
             const AnomalyDuration = this.get_AnomalyDuration(skill, usefulBuffs, anomalyData.duration);
-            times ||= Math.floor((AnomalyDuration * 10) / (anomalyData.interval * 10));
-            Multiplier = anomalyData.multiplier * times;
+            times = Math.floor((AnomalyDuration * 10) / (anomalyData.interval * 10));
         }
+        const Multiplier = anomalyData.multiplier * (times || 1);
         logger.debug(`倍率：${Multiplier}`);
         return Multiplier;
     }
@@ -432,9 +436,9 @@ export class Calculator {
                 if (!Array.isArray(value) || !buff)
                     return 0;
                 switch (buff.source) {
-                    case 'Weapon': return value[this.avatar.weapon.star - 1] || 0;
-                    case 'Talent':
-                    case 'Addition': return value[this.get_SkillLevel('T') - 1] || 0;
+                    case '音擎': return value[this.avatar.weapon.star - 1] || 0;
+                    case '核心被动':
+                    case '额外能力': return value[this.get_SkillLevel('T') - 1] || 0;
                 }
             }
             default: return 0;
@@ -448,18 +452,12 @@ export class Calculator {
             type
         }, this).reduce((previousValue, buff) => {
             const { value } = buff;
-            let add = 0;
-            if (isRatio && typeof value === 'number' && Math.abs(value) < 1) {
-                add = value * initial;
-            }
-            else {
-                add = this.calc_value(value, buff);
-                if (Math.abs(add) < 1 && isRatio && (typeof value === 'string' || Array.isArray(value)))
-                    add *= initial;
-            }
-            if (!this.usefulBuffs.find(b => b.name === buff.name && b.type === buff.type && add === buff.value))
-                this.usefulBuffs.push({ ...buff, value: add });
-            logger.debug(`\tBuff：${buff.name}对${buff.range || '全类型'}增加${add}${buff.element || ''}${type}`);
+            let add = this.calc_value(value, buff);
+            if (isRatio && Math.abs(add) < 1 && (typeof value === 'number' || typeof value === 'string' || Array.isArray(value)))
+                add *= initial;
+            if (!this.usefulBuffResults.has(buff))
+                this.usefulBuffResults.set(buff, { ...buff, value: add });
+            logger.debug(`\tBuff：${buff.name}对${(buff.include ? (buff.range ? [buff.range, buff.include] : buff.include) : buff.range) || '全类型'}增加${add}${buff.element || ''}${type}`);
             return previousValue + add;
         }, initial);
     }

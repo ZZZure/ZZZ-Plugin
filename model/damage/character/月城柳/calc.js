@@ -9,7 +9,6 @@ export const buffs = [
     name: '2影',
     type: '倍率',
     value: 0.05,
-    isForever: true,
     range: ['强化E极性紊乱']
   },
   {

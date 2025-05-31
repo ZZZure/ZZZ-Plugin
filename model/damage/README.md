@@ -24,7 +24,7 @@
 
 > 将崽底层日志模式切换为**debug**模式，可在控制台查看评分计算详细过程；且会自动监听现有评分计算文件实时热更新。可按需开启
 
-在函数体中，可根据玩家角色数据**动态选用**不同的权重方案
+在函数体中，可根据玩家角色数据**动态选用**不同的权重方案。参考[薇薇安评分规则](./character/薇薇安/score.js)
 
 - 函数参数：[ZZZAvatarInfo](../avatar.js#L173)（角色数据）
 
@@ -72,7 +72,7 @@
 
 ### 认识buff
 
-每个buff由各项[buff参数](./BuffManager.ts#L48)组成，重要参数：
+每个buff由各项[buff参数](./BuffManager.ts#L40)组成，重要参数：
 
 ```js
 {
@@ -83,20 +83,20 @@
   /** Buff增益的类型 */
   type: buffType
   /**
-   * Buff增益数值，可为数值、数组、函数、字符串
+   * Buff增益数值，可为数值、字符串、数组、函数
    * @number
    * - 一般情况下此值即为提高值
    * - 当buff增益类型为攻击力/冲击力/异常精通/异常掌控/防御力/生命值时，若此值<1，则将此值理解为初始属性的百分比提高
-   * @array
-   * 根据buff.source自动选择对应等级/星级的值（同上支持百分比提高），支持的source：
-   * - Weapon：武器星级（进阶）
-   * - Talent/Addition：天赋（核心技）等级
-   * @function
-   * 函数返回值则为提高值
    * @string
    * 角色自身的buff提高值可能随技能/天赋等级提高而提高，此时可以于data.json的"buff"中添加对应的倍率信息（同上支持百分比提高），此时value即为键名，其首字母必须为对应技能的基类（参考技能类型命名标准）
+   * @array
+   * 根据buff.source自动选择对应等级/星级的值（同上支持百分比提高），支持的source：
+   * - 音擎：音擎星级（进阶）
+   * - 核心被动、额外能力：核心技等级
+   * @function
+   * 函数返回值即为提高值
    */
-  value: number | number[] | Function | string
+  value: number | string | number[] | Function
   /**
    * Buff增益技能类型生效范围；参考技能类型命名标准
    * - 当技能参数不存在redirect时，range作用范围向后覆盖
@@ -112,9 +112,9 @@
 
 - **name**：Buff名称。可重复
 
-- **source**：Buff来源。用于管理buff、简化参数、判断生效条件等。查看[buff来源](./BuffManager.ts#L32)
+- **source**：Buff来源。用于管理buff、简化参数、判断生效条件等。查看[buff来源](./BuffManager.ts#L24)
 
-- **type**：Buff增益的类型。查看[增益类型](./BuffManager.ts#L34)
+- **type**：Buff增益的类型。查看[增益类型](./BuffManager.ts#L26)
 
 - **value**：Buff增益值。具体解释如上述
 
@@ -122,7 +122,7 @@
 
 - **element**：Buff增益属性类型，可为字符串或字符串数组。该参数用于鉴别不同buff的生效属性（比如只对冰属性伤害生效）。查看[属性类型](./BuffManager.ts#L5)
 
-- buff存在更多的参数用于处理各种情况，详见[buff参数](./BuffManager.ts#L48)
+- buff存在更多的参数用于处理各种情况，详见[buff参数](./BuffManager.ts#L40)
 
 ### 注册buff
 

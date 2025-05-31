@@ -4,8 +4,7 @@ export const buffs = [
     type: '增伤',
     value: 0.15,
     check: 2,
-    range: ['CC', '追加攻击'],
-    isForever: true
+    range: ['CC', '追加攻击']
   },
   {
     type: '攻击力',

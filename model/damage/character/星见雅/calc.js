@@ -17,27 +17,23 @@
 //   buffM.new({
 //     name: '2影',
 //     type: '增伤',
-//     isForever: true,
 //     value: 0.30,
 //     range: ['AP', 'CF']
 //   })
 //   buffM.new({
 //     name: '2影',
 //     type: '暴击率',
-//     isForever: true,
 //     value: 0.15
 //   })
 //   buffM.new({
 //     name: '4影',
 //     type: '增伤',
-//     isForever: true,
 //     value: 0.30,
 //     range: ['TP']
 //   })
 //   buffM.new({
 //     name: '6影',
 //     type: '增伤',
-//     isForever: true,
 //     value: 0.30,
 //     range: ['AX']
 //   })
@@ -45,14 +41,12 @@
 //   buffM.new({
 //     name: '额外能力：同沐霜雪',
 //     type: '增伤',
-//     isForever: true,
 //     value: 0.6,
 //     range: ['AX']
 //   })
 //   buffM.new({
 //     name: '额外能力：同沐霜雪',
 //     type: '无视抗性',
-//     isForever: true,
 //     value: 0.3,
 //     range: ['AX']
 //   })
@@ -102,41 +96,35 @@ export const buffs = [
   {
     name: '2影',
     type: '暴击率',
-    isForever: true,
     value: 0.15
   },
   {
     name: '2影',
     type: '增伤',
-    isForever: true,
     value: 0.30,
     range: ['AP', 'CF']
   },
   {
     name: '4影',
     type: '增伤',
-    isForever: true,
     value: 0.30,
     range: ['TP']
   },
   {
     name: '6影',
     type: '增伤',
-    isForever: true,
     value: 0.30,
     range: ['AX']
   },
   {
     name: '额外能力：同沐霜雪',
     type: '增伤',
-    isForever: true,
     value: 0.6,
     range: ['AX']
   },
   {
     name: '额外能力：同沐霜雪',
     type: '无视抗性',
-    isForever: true,
     value: 0.3,
     range: ['AX']
   },

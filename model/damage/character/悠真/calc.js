@@ -15,7 +15,6 @@ export const buffs = [
     name: '核心被动：破晓',
     type: '暴击率',
     value: 'T1',
-    isForever: true,
     range: ['CCQ']
   },
   {

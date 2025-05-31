@@ -14,14 +14,12 @@ export const buffs = [
     name: '6影',
     type: '暴击率',
     value: 1,
-    isForever: true,
     range: ['EQQ', 'LT']
   },
   {
     name: '6影',
     type: '增伤',
     value: 1,
-    isForever: true,
     range: ['EQQ', 'LT']
   },
   {

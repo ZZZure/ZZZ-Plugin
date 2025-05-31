@@ -10,7 +10,6 @@ export const buffs = [
     name: '1影',
     type: '增伤',
     value: 0.3,
-    isForever: true,
     range: ['AQ5Q']
   },
   {

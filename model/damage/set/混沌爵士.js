@@ -3,7 +3,6 @@ export const buffs = [
   {
     type: '增伤',
     value: 0.15,
-    isForever: true,
     element: ['Electric', 'Fire'],
     check: 4
   },

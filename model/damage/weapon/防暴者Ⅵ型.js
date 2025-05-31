@@ -2,8 +2,7 @@
 export const buffs = [
   {
     type: '暴击率',
-    value: [0.15, 0.188, 0.226, 0.264, 0.3],
-    isForever: true
+    value: [0.15, 0.188, 0.226, 0.264, 0.3]
   },
   {
     type: '增伤',

@@ -208,6 +208,7 @@
       <div class="tr buff-tr titlebar no-zzz-font">
         <div class="td buff-td">%</div>
         <div class="td buff-td">名称</div>
+        <div class="td buff-td">来源</div>
         <div class="td buff-td">增益类型</div>
         <div class="td buff-td">增益值</div>
       </div>
@@ -215,6 +216,7 @@
       <div class="tr buff-tr titlebar">
         <div class="td buff-td">{{index+1}}</div>
         <div class="td buff-td no-zzz-font">{{buff.name}}</div>
+        <div class="td buff-td no-zzz-font">{{buff.source}}</div>
         <div class="td buff-td no-zzz-font">{{buff.type}}</div>
         <div class="td buff-td">{{buff.value % 1 == 0 ? buff.value < 2 ? buff.value.toFixed(2) : buff.value : buff.value.toFixed(2)}}</div>
       </div>

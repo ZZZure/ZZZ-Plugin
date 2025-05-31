@@ -2,8 +2,7 @@
 export const buffs = [
   {
     type: '攻击力',
-    value: [0.12, 0.15, 0.18, 0.21, 0.24],
-    isForever: true
+    value: [0.12, 0.15, 0.18, 0.21, 0.24]
   },
   {
     type: '异常精通',

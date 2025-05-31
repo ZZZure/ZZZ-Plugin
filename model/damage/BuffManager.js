@@ -54,32 +54,29 @@ export class BuffManager {
             buff.forEach(b => this.new(b));
             return this.buffs;
         }
-        if (!buff.name && (buff.source || this.defaultBuff.source) === 'Set' && this.defaultBuff.name && typeof buff.check === 'number')
+        if (!buff.name && (buff.source || this.defaultBuff.source) === '套装' && this.defaultBuff.name && typeof buff.check === 'number')
             buff.name = this.defaultBuff.name + buff.check;
         const oriBuff = buff;
         buff = _.merge({
             status: true,
-            isForever: false,
             is: {},
             ...this.defaultBuff
         }, buff);
-        if (buff.isForever)
-            buff.is.forever = true;
         if (buff.range && !Array.isArray(buff.range))
             buff.range = oriBuff.range = [buff.range];
         if (!buff.source) {
             if (buff.name.includes('核心') || buff.name.includes('天赋'))
-                buff.source = oriBuff.source = 'Talent';
+                buff.source = oriBuff.source = '核心被动';
             else if (buff.name.includes('额外能力'))
-                buff.source = oriBuff.source = 'Addition';
+                buff.source = oriBuff.source = '额外能力';
             else if (buff.name.includes('影'))
-                buff.source = oriBuff.source = 'Rank';
+                buff.source = oriBuff.source = '影画';
             else if (buff.name.includes('技'))
-                buff.source = oriBuff.source = 'Skill';
+                buff.source = oriBuff.source = '技能';
         }
         if (!buff.name || !buff.value || !buff.source || !buffTypeEnum[buffTypeEnum[buff.type]])
             return logger.warn('无效buff：', buff);
-        if (buff.source === 'Weapon') {
+        if (buff.source === '音擎') {
             const professionCheck = (avatar) => {
                 const weapon_profession = avatar.weapon?.profession;
                 if (!weapon_profession)
@@ -89,7 +86,7 @@ export class BuffManager {
             const oriCheck = typeof buff.check === 'function' && buff.check;
             buff.check = ({ avatar, buffM, calc }) => professionCheck(avatar) && (!oriCheck || oriCheck({ avatar, buffM, calc }));
         }
-        else if (buff.source === 'Rank') {
+        else if (buff.source === '影画') {
             buff.check ??= oriBuff.check = +buff.name.match(/\d/)?.[0];
         }
         this.buffs.push(buff);
@@ -150,9 +147,9 @@ export class BuffManager {
                     }
                     if (buff.check) {
                         if (typeof buff.check === 'number') {
-                            if (buff.source === 'Set' && (this.setCount[buff.name.replace(/\d$/, '')] < buff.check))
+                            if (buff.source === '套装' && (this.setCount[buff.name.replace(/\d$/, '')] < buff.check))
                                 return false;
-                            else if (buff.source === 'Rank' && (this.avatar.rank < buff.check))
+                            else if (buff.source === '影画' && (this.avatar.rank < buff.check))
                                 return false;
                         }
                         else if (valueOcalc) {

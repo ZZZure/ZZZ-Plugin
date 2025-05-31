@@ -501,7 +501,7 @@
   grid-template-columns: 1fr 1fr 1fr;
 }
 .damage .buff-list .buff-tr {
-  grid-template-columns: 0.7fr 5fr 3fr 2fr;
+  grid-template-columns: 0.7fr 5fr 1.8fr 2.5fr 1.8fr;
 }
 .damage .buff-list .buff-td:nth-child(2) {
   background: rgba(0, 0, 0, 0.2);
