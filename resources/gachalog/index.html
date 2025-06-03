@@ -28,6 +28,12 @@
           <div class="value">{{item.totalCount}}</div>
           <div class="label">抽卡总数</div>
         </div>
+        {{if (item.name === '音擎频段' || item.name === '独家频段')}}
+          <div class="item">
+          <div class="value">{{item.noWai}}</div>
+          <div class="label">不歪率</div>
+        </div>
+        {{/if}}
       </div>
     </div>
     <div class="comment e{{item.emoji}}">
