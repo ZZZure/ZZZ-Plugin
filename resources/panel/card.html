@@ -81,7 +81,21 @@
             <div class="label {{charData.get_label(31203)}}">异常精通</div>
             <div class="value">{{basic_properties.elementmystery.final}}</div>
           </div>
+          {{if charData.avatar_profession === 6}}
           <div class="properties">
+            <!-- 图标待补 -->
+            <div class="prop-icon penratio"></div>
+            <div class="label yellow">贯穿力</div>
+            <div class="value">{{basic_properties.sheerforce.final}}</div>
+          </div>
+          <div class="properties">
+            <div class="prop-icon sprecover"></div>
+            <div class="label yellow">闪能累积</div>
+            <div class="value">{{basic_properties.adrenalineaccumulate.final}}</div>
+          </div>
+        </div>
+        {{else}}
+        <div class="properties">
             <div class="prop-icon penratio"></div>
             <div class="label {{charData.get_label(23103)}}">穿透率</div>
             <div class="value">{{basic_properties.penratio.final}}</div>
@@ -92,6 +106,7 @@
             <div class="value">{{basic_properties.sprecover.final}}</div>
           </div>
         </div>
+        {{/if}}
       </div>
       <div class="weapon_info">
         {{if charData.weapon}}

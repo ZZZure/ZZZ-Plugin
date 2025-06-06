@@ -296,8 +296,10 @@ export class ZZZAvatarInfo {
       critdam: this.getProperty('暴击伤害'),
       elementabnormalpower: this.getProperty('异常掌控'),
       elementmystery: this.getProperty('异常精通'),
+      sheerforce: this.getProperty('贯穿力'),
       penratio: this.getProperty('穿透率'),
       sprecover: this.getProperty('能量自动回复'),
+      adrenalineaccumulate: this.getProperty('闪能自动累积'),
     };
     return data;
   }
