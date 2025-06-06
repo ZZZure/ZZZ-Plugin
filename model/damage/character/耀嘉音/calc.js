@@ -6,11 +6,6 @@ export const buffs = [
     value: 0.06 * 3
   },
   {
-    name: '2影',
-    type: '攻击力',
-    value: ({ avatar }) => Math.min(400, avatar.initial_properties.ATK * 0.19)
-  },
-  {
     name: '6影',
     type: '暴击率',
     value: 0.8,
@@ -19,7 +14,12 @@ export const buffs = [
   {
     name: '核心被动：《如歌的行板》',
     type: '攻击力',
-    value: ({ avatar, calc }) => Math.min(1200, avatar.initial_properties.ATK * calc.calc_value('T')),
+    value: ({ avatar, calc }) => {
+      const isTwo = avatar.rank >= 2 // 2影额外提升
+      const max = isTwo ? 1600 : 1200
+      const multiplier = calc.calc_value('T') + (isTwo ? 0.19 : 0)
+      return Math.min(max, avatar.initial_properties.ATK * multiplier)
+    },
   },
   {
     name: '技能：咏叹华彩',
