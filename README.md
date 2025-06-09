@@ -38,7 +38,12 @@ git clone --depth=1 https://gitee.com/bietiaop/ZZZ-Plugin.git ./plugins/ZZZ-Plug
 
 以下所有功能前缀为：`#zzz`、`%`、`#ZZZ`、`#绝区零` 任选其一
 
-![帮助图片](https://s2.loli.net/2024/08/23/apNDFBj8Gt7LIxy.png)
+<details>
+<summary>点击展开帮助图</summary>
+<p align="center">
+  <img width="800" src="https://s2.loli.net/2025/06/03/8jfKHbOkMXgxVu7.jpg" title="帮助图片">
+</p>
+</details>
 
 ## 攻略、图鉴
 
@@ -80,6 +85,8 @@ git clone --depth=1 https://gitee.com/bietiaop/ZZZ-Plugin.git ./plugins/ZZZ-Plug
 如果认为以上两种方法麻烦，你可以自己尝试探索出其他未发现的方法。
 
 绑定设备**无法100%解决**账号异常问题。
+
+若更新面板遇见账号异常问题，可尝试 **%更新展柜面板**，这将调用[Enka](https://enka.network/?zzz)接口更新游戏内展示的角色的数据。如若通过此方法更新的角色数据与实际不一致，请[提出issue](https://github.com/ZZZure/ZZZ-Plugin/issues/new)
 
 ## 角色图缺失
 

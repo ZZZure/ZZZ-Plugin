@@ -101,10 +101,10 @@ const helpData = [
     items: [
       {
         title: '刷新角色面板',
-        desc: '刷新角色面板',
+        desc: '%更新展柜面板 通过Enka接口获取游戏内展柜角色，无需CK',
         needCK: true,
         needSK: false,
-        commands: ['刷新面板', '更新面板', '面板刷新', '面板更新'],
+        commands: ['刷新面板', '更新面板', '刷新/更新展柜面板'],
       },
       {
         title: '查看角色面板列表',
@@ -115,10 +115,10 @@ const helpData = [
       },
       {
         title: '查看角色面板',
-        desc: '查看角色详细面板信息',
+        desc: '查看角色详细面板/技能伤害信息',
         needCK: false,
         needSK: false,
-        commands: ['角色名+面板'],
+        commands: ['角色名+面板', '角色名+伤害'],
       },
       {
         title: '查看角色面板图',
