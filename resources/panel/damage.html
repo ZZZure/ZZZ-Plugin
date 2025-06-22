@@ -157,7 +157,7 @@
       </div>
       {{/each}}
       <div class="tr dmg-tr info-tr no-zzz-font">
-        <div>伤害计算默认取有弱点、敌人等级1级、基础防御力为50的敌方数据，且不考虑失衡易伤区</div>
+        <div>伤害计算取<span>有弱点、敌人等级{{charData.level}}、每级基础防御力为50</span>的敌方数据，且<span>不考虑失衡易伤区</span></div>
         <div>当前指令：<span>{{command}}</span></div>
         <div>下列计算以 <span>{{damage.skill.name}}</span> 为计算目标</div>
         <div>可通过 <span>%{{charData.name_mi18n}}伤害123</span> 切换需要查看的伤害计算</div>
