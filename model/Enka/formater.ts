@@ -1,4 +1,4 @@
-import type { Mys, Enka, Map } from './interface.js'
+import type { Mys, Enka, Map } from './interface.ts'
 import { getMapData } from '../../utils/file.js'
 
 type FilterValueType<T, U> = {
@@ -149,7 +149,7 @@ export class Equip {
         S: 0.2,
         A: 0.25,
         B: 0.3
-      })[this.info.rarity as 'S' | 'A' | 'B']) : p.PropertyLevel)
+      })[this.info.rarity]!) : p.PropertyLevel)
       property.base = get_base(propId, value)
       property.level = p.PropertyLevel
       property.valid = false
@@ -320,7 +320,7 @@ export class Property {
     //   }
     // })
     const base = {} as Record<IdsString, number>
-    const ids = Object.keys(id2en).map(Number) as (Ids)[]
+    const ids = Object.keys(id2en).map(Number) as Ids[]
     ids.forEach((id) => {
       const prop = id2en[id]
       if (Object.prototype.hasOwnProperty.call(this.data, prop)) {
@@ -587,8 +587,8 @@ const special: Record<number, {
       delete properties[231], delete properties[232]
       delete properties[305]
       const sheerForce =
-        Math.trunc(0.1 * properties[111].final) +
-        Math.trunc(0.3 * properties[121].final)
+        Math.trunc(properties[111].final * 1 / 10) +
+        Math.trunc(properties[121].final * 3 / 10)
       properties[19] = {
         property_name: '贯穿力',
         property_id: 19,

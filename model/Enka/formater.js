@@ -503,8 +503,8 @@ const special = {
         initial_after_format: (properties) => {
             delete properties[231], delete properties[232];
             delete properties[305];
-            const sheerForce = Math.trunc(0.1 * properties[111].final) +
-                Math.trunc(0.3 * properties[121].final);
+            const sheerForce = Math.trunc(properties[111].final * 1 / 10) +
+                Math.trunc(properties[121].final * 3 / 10);
             properties[19] = {
                 property_name: '贯穿力',
                 property_id: 19,
