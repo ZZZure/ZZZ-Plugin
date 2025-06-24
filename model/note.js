@@ -101,8 +101,8 @@ export class ZZZNoteResp {
 
   get sign_label() {
     if (this.card_sign?.includes('Done')) {
-      return '已抽奖';
+      return '已完成';
     }
-    return '未抽奖';
+    return '未完成';
   }
 }
