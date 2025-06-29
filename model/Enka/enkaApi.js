@@ -1,7 +1,10 @@
 import { Enka2Mys } from './formater.js'
 import request from '../../utils/request.js'
+import settings from '../../lib/settings.js'
+import _ from 'lodash'
 
-const EnkaApi = 'https://enka.network/api/zzz/uid/'
+const config = settings.getConfig('config')
+const EnkaApi = _.get(config, 'enkaApi') ?? 'https://enka.network/api/zzz/uid/'
 
 export function parsePlayerInfo(SocialDetail = {}) {
   const ProfileDetail = SocialDetail.ProfileDetail || {}
