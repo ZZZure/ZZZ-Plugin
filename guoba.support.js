@@ -54,6 +54,15 @@ export function supportGuoba() {
           },
         },
         {
+          field: 'config.enkaApi',
+          label: '自定义enkaApi地址',
+          bottomHelpMessage: '设置自定义的enkaApi地址',
+          component: 'Input',
+          componentProps: {
+            placeholder: '请输入enkaApi地址',
+          },
+        },
+        {
           field: 'config.query.others',
           label: '查询他人信息',
           bottomHelpMessage: '是否允许查询他人信息',

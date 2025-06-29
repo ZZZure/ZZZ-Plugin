@@ -11,3 +11,5 @@ mysCode:
   - 10035
 # 自定义绑定设备下载url
 url: https://ghproxy.mihomo.me/https://raw.githubusercontent.com/forchannot/get_device_info/main/app/build/outputs/apk/debug/app-debug.apk
+# 自定义enkaApi地址
+enkaApi: 

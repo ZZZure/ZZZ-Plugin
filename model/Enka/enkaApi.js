@@ -1,7 +1,10 @@
 import { Enka2Mys } from './formater.js'
-import fetch from 'node-fetch'
+import request from '../../utils/request.js'
+import settings from '../../lib/settings.js'
+import _ from 'lodash'
 
-const EnkaApi = 'https://enka.network/api/zzz/uid/'
+const config = settings.getConfig('config')
+const EnkaApi = _.get(config, 'enkaApi') ?? 'https://enka.network/api/zzz/uid/'
 
 export function parsePlayerInfo(SocialDetail = {}) {
   const ProfileDetail = SocialDetail.ProfileDetail || {}
@@ -23,7 +26,7 @@ export function parsePlayerInfo(SocialDetail = {}) {
  * @param {string|number} uid 
  */
 export async function refreshPanelFromEnka(uid) {
-  const res = await fetch(`${EnkaApi}${uid}`, {
+  const res = await request(`${EnkaApi}${uid}`, {
     method: 'GET',
     headers: {
       'User-Agent': 'ZZZ-Plugin/UCPr',
@@ -47,18 +50,3 @@ export async function refreshPanelFromEnka(uid) {
     panelList: Enka2Mys(panelList)
   }
 }
-
-// import fs from 'fs'
-// const uid = 11070609
-// const res = await fetch(`${EnkaApi}${uid}`, {
-//   method: 'GET',
-//   headers: {
-//     'User-Agent': 'ZZZ-Plugin/UCPr',
-//   }
-// })
-// if (!res.ok) {
-//   console.log(`Enka更新面板失败：${res.status} ${res.statusText}`)
-// }
-// const data = await res.json()
-// console.log(data)
-// fs.writeFileSync('enkaPanel1.json', JSON.stringify(data, null, 2))
