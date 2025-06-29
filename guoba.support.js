@@ -35,7 +35,7 @@ export function supportGuoba() {
           field: 'config.render.scale',
           label: '渲染精度',
           bottomHelpMessage:
-            '设置插件的渲染精度，可选值50~200，建议100。设置高精度会提高图片的精细度，但因图片较大可能会影响渲染与发送速度',
+            '设置插件的渲染精度，可选值50~200，建议100。设置高精度会提高图片的精细度，但因图片较大可能会影响渲染与发送速度，官方QQBot建议不要超过85，否则可能会因为文件过大发送失败',
           component: 'InputNumber',
           required: true,
           componentProps: {
