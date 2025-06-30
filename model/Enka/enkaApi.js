@@ -1,10 +1,10 @@
 import { Enka2Mys } from './formater.js'
-import request from '../../utils/request.js'
+import fetch from 'node-fetch'
 import settings from '../../lib/settings.js'
 import _ from 'lodash'
 
 const config = settings.getConfig('config')
-const EnkaApi = _.get(config, 'enkaApi') ?? 'https://enka.network/api/zzz/uid/'
+const EnkaApi = _.get(config, 'enkaApi') || 'https://enka.network/api/zzz/uid/'
 
 export function parsePlayerInfo(SocialDetail = {}) {
   const ProfileDetail = SocialDetail.ProfileDetail || {}
@@ -23,10 +23,10 @@ export function parsePlayerInfo(SocialDetail = {}) {
 
 /**
  * Enka更新面板
- * @param {string|number} uid 
+ * @param {string|number} uid
  */
 export async function refreshPanelFromEnka(uid) {
-  const res = await request(`${EnkaApi}${uid}`, {
+  const res = await fetch(`${EnkaApi}${uid}`, {
     method: 'GET',
     headers: {
       'User-Agent': 'ZZZ-Plugin/UCPr',
