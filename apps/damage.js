@@ -30,8 +30,10 @@ export class Damage extends ZZZPlugin {
     if (!match) return false
     const name = match[4]
     const data = getPanelOrigin(uid, name)
-    if (!data) {
-      return this.reply(`未找到角色${name}的面板信息，请先刷新面板`)
+    if (data === false) {
+      return this.reply(`角色${name}不存在，请确保角色名称/别称存在`)
+    } else if (data === null) {
+      return this.reply(`暂无角色${name}面板数据，请先%更新面板`)
     }
     const parsedData = formatPanelData(data)
     const calc = avatar_calc(parsedData)

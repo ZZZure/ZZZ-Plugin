@@ -67,15 +67,20 @@ export class Panel extends ZZZPlugin {
     let result
     if (isEnka) {
       const data = await refreshPanelFromEnka(uid)
-      await redis.set(`ZZZ:PANEL:${uid}:LASTTIME`, Date.now());
+        .catch(err => err)
+      if (data instanceof Error) {
+        logger.warn(`Enka服务调用失败：`, data)
+        return this.reply(`Enka服务调用失败：${data.message}`)
+      }
+      await redis.set(`ZZZ:PANEL:${uid}:LASTTIME`, Date.now())
       if (typeof data === 'object') {
         const { playerInfo, panelList } = data
         if (!panelList.length) {
-          return this.reply('面板列表为空，请确保已在游戏中展示了对应角色');
+          return this.reply('面板列表为空，请确保已于游戏中展示角色')
         }
         result = await mergePanel(uid, panelList)
         await this.getPlayerInfo(playerInfo)
-      } else if (typeof data === 'number'){ 
+      } else if (typeof data === 'number') {
         return this.reply(`Enka服务调用失败，状态码：${data}${data === 424 ? '\n版本更新后，须等待一段时间才可正常使用enka服务' : ''}`);
       }
     } else {
@@ -144,9 +149,10 @@ export class Panel extends ZZZPlugin {
     if (!match) return false;
     const name = match[4];
     const data = getPanelOrigin(uid, name);
-    if (!data) {
-      await this.reply(`未找到角色${name}的面板信息，请确保角色名称/别称存在且已更新面板`);
-      return;
+    if (data === false) {
+      return this.reply(`角色${name}不存在，请确保角色名称/别称存在`);
+    } else if (data === null) {
+      return this.reply(`暂无角色${name}面板数据，请先%更新面板`);
     }
     let handler = this.e.runtime.handler || {};
 

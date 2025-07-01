@@ -60,10 +60,23 @@ export async function refreshPanelFromEnka(uid) {
     logger.warn('Enka更新面板失败：获取面板数据失败')
     return res.status
   }
-  if (!panelList.length)
-    console.log('面板列表为空')
   return {
     playerInfo: parsePlayerInfo(data.PlayerInfo.SocialDetail),
     panelList: Enka2Mys(panelList)
   }
 }
+
+// import fs from 'fs'
+// const uid = 11070609
+// const res = await fetch(`${EnkaApi}${uid}`, {
+//   method: 'GET',
+//   headers: {
+//     'User-Agent': 'ZZZ-Plugin/UCPr',
+//   }
+// })
+// if (!res.ok) {
+//   console.log(`Enka更新面板失败：${res.status} ${res.statusText}`)
+// }
+// const data = await res.json()
+// console.log(data)
+// fs.writeFileSync('enkaPanel1.json', JSON.stringify(data, null, 2))
