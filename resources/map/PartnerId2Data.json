@@ -5046,7 +5046,7 @@
   "1291": {
     "sprite_id": "42",
     "name": "雨果",
-    "full_name": "雨果",
+    "full_name": "雨果·维拉德",
     "en_name": "Hugo",
     "WeaponType": "1",
     "ElementType": "202",
@@ -5076,7 +5076,7 @@
         "LevelMin": 0,
         "Materials": {
           "10": 24000,
-          "100214": 4
+          "100211": 4
         }
       },
       "2": {
@@ -5087,7 +5087,7 @@
         "LevelMin": 10,
         "Materials": {
           "10": 56000,
-          "100224": 12
+          "100221": 12
         }
       },
       "3": {
@@ -5098,7 +5098,7 @@
         "LevelMin": 20,
         "Materials": {
           "10": 120000,
-          "100224": 20
+          "100221": 20
         }
       },
       "4": {
@@ -5109,7 +5109,7 @@
         "LevelMin": 30,
         "Materials": {
           "10": 200000,
-          "100234": 10
+          "100231": 10
         }
       },
       "5": {
@@ -5120,7 +5120,7 @@
         "LevelMin": 40,
         "Materials": {
           "10": 400000,
-          "100234": 20
+          "100231": 20
         }
       },
       "6": {
@@ -5658,7 +5658,7 @@
         "LevelMin": 0,
         "Materials": {
           "10": 24000,
-          "100211": 4
+          "100213": 4
         }
       },
       "2": {
@@ -5669,7 +5669,7 @@
         "LevelMin": 10,
         "Materials": {
           "10": 56000,
-          "100221": 12
+          "100223": 12
         }
       },
       "3": {
@@ -5680,7 +5680,7 @@
         "LevelMin": 20,
         "Materials": {
           "10": 120000,
-          "100221": 20
+          "100223": 20
         }
       },
       "4": {
@@ -5691,7 +5691,7 @@
         "LevelMin": 30,
         "Materials": {
           "10": 200000,
-          "100231": 10
+          "100233": 10
         }
       },
       "5": {
@@ -5702,7 +5702,7 @@
         "LevelMin": 40,
         "Materials": {
           "10": 400000,
-          "100231": 20
+          "100233": 20
         }
       },
       "6": {
@@ -6784,6 +6784,392 @@
             "Name": "暴击率",
             "Format": "{0:0.#%}",
             "Value": 1440
+          }
+        }
+      }
+    }
+  },
+  "1401": {
+    "sprite_id": "",
+    "name": "爱丽丝",
+    "en_name": "Alice",
+    "WeaponType": "3",
+    "ElementType": "200",
+    "Camp": "怪啖屋",
+    "HitType": "斩击",
+    "Rarity": "S",
+    "Attack": 127,
+    "AttackGrowth": 76728,
+    "BreakStun": 86,
+    "Defence": 49,
+    "DefenceGrowth": 66203,
+    "HpMax": 617,
+    "HpGrowth": 837238,
+    "Crit": 500,
+    "CritDamage": 5000,
+    "ElementAbnormalPower": 106,
+    "ElementMystery": 118,
+    "PenDelta": 0,
+    "PenRate": 0,
+    "SpRecover": 120,
+    "Level": {
+      "1": {
+        "HpMax": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "LevelMax": 10,
+        "LevelMin": 0,
+        "Materials": {
+          "10": 24000,
+          "100213": 4
+        }
+      },
+      "2": {
+        "HpMax": 423,
+        "Attack": 45,
+        "Defence": 33,
+        "LevelMax": 20,
+        "LevelMin": 10,
+        "Materials": {
+          "10": 56000,
+          "100223": 12
+        }
+      },
+      "3": {
+        "HpMax": 847,
+        "Attack": 90,
+        "Defence": 67,
+        "LevelMax": 30,
+        "LevelMin": 20,
+        "Materials": {
+          "10": 120000,
+          "100223": 20
+        }
+      },
+      "4": {
+        "HpMax": 1270,
+        "Attack": 136,
+        "Defence": 100,
+        "LevelMax": 40,
+        "LevelMin": 30,
+        "Materials": {
+          "10": 200000,
+          "100233": 10
+        }
+      },
+      "5": {
+        "HpMax": 1694,
+        "Attack": 181,
+        "Defence": 134,
+        "LevelMax": 50,
+        "LevelMin": 40,
+        "Materials": {
+          "10": 400000,
+          "100233": 20
+        }
+      },
+      "6": {
+        "HpMax": 2117,
+        "Attack": 226,
+        "Defence": 167,
+        "LevelMax": 60,
+        "LevelMin": 50,
+        "Materials": {}
+      }
+    },
+    "ExtraLevel": {
+      "1": {
+        "MaxLevel": 15,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 0
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 12
+          }
+        }
+      },
+      "2": {
+        "MaxLevel": 25,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 12
+          }
+        }
+      },
+      "3": {
+        "MaxLevel": 35,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 24
+          }
+        }
+      },
+      "4": {
+        "MaxLevel": 45,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 24
+          }
+        }
+      },
+      "5": {
+        "MaxLevel": 55,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 36
+          }
+        }
+      },
+      "6": {
+        "MaxLevel": 60,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 75
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 36
+          }
+        }
+      }
+    }
+  },
+  "1411": {
+    "sprite_id": "",
+    "name": "柚叶",
+    "en_name": "Yuzuha",
+    "WeaponType": "4",
+    "ElementType": "200",
+    "Camp": "怪啖屋",
+    "HitType": "打击",
+    "Rarity": "S",
+    "Attack": 109,
+    "AttackGrowth": 64272,
+    "BreakStun": 86,
+    "Defence": 49,
+    "DefenceGrowth": 66882,
+    "HpMax": 710,
+    "HpGrowth": 963300,
+    "Crit": 500,
+    "CritDamage": 5000,
+    "ElementAbnormalPower": 88,
+    "ElementMystery": 93,
+    "PenDelta": 0,
+    "PenRate": 0,
+    "SpRecover": 120,
+    "Level": {
+      "1": {
+        "HpMax": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "LevelMax": 10,
+        "LevelMin": 0,
+        "Materials": {
+          "10": 24000,
+          "100214": 4
+        }
+      },
+      "2": {
+        "HpMax": 487,
+        "Attack": 39,
+        "Defence": 34,
+        "LevelMax": 20,
+        "LevelMin": 10,
+        "Materials": {
+          "10": 56000,
+          "100224": 12
+        }
+      },
+      "3": {
+        "HpMax": 974,
+        "Attack": 78,
+        "Defence": 68,
+        "LevelMax": 30,
+        "LevelMin": 20,
+        "Materials": {
+          "10": 120000,
+          "100224": 20
+        }
+      },
+      "4": {
+        "HpMax": 1461,
+        "Attack": 117,
+        "Defence": 101,
+        "LevelMax": 40,
+        "LevelMin": 30,
+        "Materials": {
+          "10": 200000,
+          "100234": 10
+        }
+      },
+      "5": {
+        "HpMax": 1949,
+        "Attack": 156,
+        "Defence": 135,
+        "LevelMax": 50,
+        "LevelMin": 40,
+        "Materials": {
+          "10": 400000,
+          "100234": 20
+        }
+      },
+      "6": {
+        "HpMax": 2436,
+        "Attack": 195,
+        "Defence": 169,
+        "LevelMax": 60,
+        "LevelMin": 50,
+        "Materials": {}
+      }
+    },
+    "ExtraLevel": {
+      "1": {
+        "MaxLevel": 15,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 0
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 12
+          }
+        }
+      },
+      "2": {
+        "MaxLevel": 25,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 12
+          }
+        }
+      },
+      "3": {
+        "MaxLevel": 35,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 24
+          }
+        }
+      },
+      "4": {
+        "MaxLevel": 45,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 24
+          }
+        }
+      },
+      "5": {
+        "MaxLevel": 55,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 36
+          }
+        }
+      },
+      "6": {
+        "MaxLevel": 60,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 75
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 36
           }
         }
       }
