@@ -66,6 +66,7 @@ export class Panel extends ZZZPlugin {
     const isEnka = this.e.msg.includes('展柜') || !(await getCk(this.e))
     let result
     if (isEnka) {
+      await this.reply('正在更新面板列表，请稍候...');
       const data = await refreshPanelFromEnka(uid)
         .catch(err => err)
       if (data instanceof Error) {
@@ -85,7 +86,7 @@ export class Panel extends ZZZPlugin {
       }
     } else {
       const { api, deviceFp } = await this.getAPI();
-      await this.reply('正在更新面板列表，请稍候...');
+      await this.reply('正在更新面板列表，请稍候...\n账号异常时，可尝试%更新展柜面板（所更新角色数据与实际不一致时，请提issue）');
       await this.getPlayerInfo();
       await redis.set(`ZZZ:PANEL:${uid}:LASTTIME`, Date.now());
       result = await refreshPanelFunction(api, deviceFp).catch(e => {
@@ -94,7 +95,7 @@ export class Panel extends ZZZPlugin {
       });
     }
     if (!result) {
-      await this.reply('面板列表更新失败，请稍后再试\n账号异常时，可尝试%更新展柜面板（所更新角色数据与实际不一致时，请提issue）');
+      await this.reply('面板列表更新失败，请稍后再试');
       return false;
     }
     const newChar = result.filter(item => item.isNew);
