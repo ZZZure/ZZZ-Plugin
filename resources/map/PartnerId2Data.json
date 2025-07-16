@@ -6790,8 +6790,9 @@
     }
   },
   "1401": {
-    "sprite_id": "",
+    "sprite_id": "46",
     "name": "爱丽丝",
+    "full_name": "爱丽丝·泰姆菲尔德",
     "en_name": "Alice",
     "WeaponType": "3",
     "ElementType": "200",
@@ -6983,8 +6984,9 @@
     }
   },
   "1411": {
-    "sprite_id": "",
+    "sprite_id": "47",
     "name": "柚叶",
+    "full_name": "浮波柚叶",
     "en_name": "Yuzuha",
     "WeaponType": "4",
     "ElementType": "200",

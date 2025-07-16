@@ -26883,9 +26883,9 @@
     "Id": 14140,
     "CodeName": "Weapon_S_1401",
     "Name": "十方锻星",
-    "Desc": "...",
+    "Desc": "繁星洒落在绝对秩序的罗网中，一如它们数年前映入少女澄澈的双眼。洋溢而出的自信，高雅，坚定，勇气与爱，此刻都锻作傲然的剑，紧紧握在她的掌间。\n\n「我想3D打印一个360度全方位无死角对称的模型…只要输入这样的指令就可以了吧？」——爱丽丝，在音擎烧出黑烟停止运作的前一分钟的发言",
     "Desc2": "装备后可提升[异常]代理人的战斗能力",
-    "Desc3": "...",
+    "Desc3": "繁星化剑，她将勇气与爱紧紧握在掌间。",
     "Rarity": "S",
     "Icon": "Assets/NapResources/UI/Sprite/A1DynamicLoad/ItemIconWeapon/UnPacker/Weapon_S_1401.png",
     "WeaponType": {
@@ -27242,23 +27242,23 @@
     "Talents": {
       "1": {
         "Name": "予你星屑",
-        "Desc": "装备者的<color=#FFFFFF>[异常掌控]</color>提升<color=#2BAD00>60</color>点；触发<color=#F0D12B>[强击]</color>时，装备者造成的<color=#F0D12B>物理伤害</color>提升<color=#2BAD00>20</color>%，持续20秒，最多叠加2层，重复触发时刷新持续时间，装备者进入接战状态时，立即获得2层效果。"
+        "Desc": "装备者的<color=#FFFFFF>[异常掌控]</color>提升<color=#2BAD00>60</color>点；触发<color=#F0D12B>[强击]</color>时，装备者造成的<color=#F0D12B>物理伤害</color>提升<color=#2BAD00>20%</color>，持续20秒，最多叠加2层，重复触发时刷新持续时间，装备者进入接战状态时，立即获得2层效果。"
       },
       "2": {
         "Name": "予你星屑",
-        "Desc": "装备者的<color=#FFFFFF>[异常掌控]</color>提升<color=#2BAD00>69</color>点；触发<color=#F0D12B>[强击]</color>时，装备者造成的<color=#F0D12B>物理伤害</color>提升<color=#2BAD00>23</color>%，持续20秒，最多叠加2层，重复触发时刷新持续时间，装备者进入接战状态时，立即获得2层效果。"
+        "Desc": "装备者的<color=#FFFFFF>[异常掌控]</color>提升<color=#2BAD00>69</color>点；触发<color=#F0D12B>[强击]</color>时，装备者造成的<color=#F0D12B>物理伤害</color>提升<color=#2BAD00>23%</color>，持续20秒，最多叠加2层，重复触发时刷新持续时间，装备者进入接战状态时，立即获得2层效果。"
       },
       "3": {
         "Name": "予你星屑",
-        "Desc": "装备者的<color=#FFFFFF>[异常掌控]</color>提升<color=#2BAD00>78</color>点；触发<color=#F0D12B>[强击]</color>时，装备者造成的<color=#F0D12B>物理伤害</color>提升<color=#2BAD00>26</color>%，持续20秒，最多叠加2层，重复触发时刷新持续时间，装备者进入接战状态时，立即获得2层效果。"
+        "Desc": "装备者的<color=#FFFFFF>[异常掌控]</color>提升<color=#2BAD00>78</color>点；触发<color=#F0D12B>[强击]</color>时，装备者造成的<color=#F0D12B>物理伤害</color>提升<color=#2BAD00>26%</color>，持续20秒，最多叠加2层，重复触发时刷新持续时间，装备者进入接战状态时，立即获得2层效果。"
       },
       "4": {
         "Name": "予你星屑",
-        "Desc": "装备者的<color=#FFFFFF>[异常掌控]</color>提升<color=#2BAD00>87</color>点；触发<color=#F0D12B>[强击]</color>时，装备者造成的<color=#F0D12B>物理伤害</color>提升<color=#2BAD00>29</color>%，持续20秒，最多叠加2层，重复触发时刷新持续时间，装备者进入接战状态时，立即获得2层效果。"
+        "Desc": "装备者的<color=#FFFFFF>[异常掌控]</color>提升<color=#2BAD00>87</color>点；触发<color=#F0D12B>[强击]</color>时，装备者造成的<color=#F0D12B>物理伤害</color>提升<color=#2BAD00>29%</color>，持续20秒，最多叠加2层，重复触发时刷新持续时间，装备者进入接战状态时，立即获得2层效果。"
       },
       "5": {
         "Name": "予你星屑",
-        "Desc": "装备者的<color=#FFFFFF>[异常掌控]</color>提升<color=#2BAD00>96</color>点；触发<color=#F0D12B>[强击]</color>时，装备者造成的<color=#F0D12B>物理伤害</color>提升<color=#2BAD00>32</color>%，持续20秒，最多叠加2层，重复触发时刷新持续时间，装备者进入接战状态时，立即获得2层效果。"
+        "Desc": "装备者的<color=#FFFFFF>[异常掌控]</color>提升<color=#2BAD00>96</color>点；触发<color=#F0D12B>[强击]</color>时，装备者造成的<color=#F0D12B>物理伤害</color>提升<color=#2BAD00>32%</color>，持续20秒，最多叠加2层，重复触发时刷新持续时间，装备者进入接战状态时，立即获得2层效果。"
       }
     },
     "Profession": 3
@@ -27267,9 +27267,9 @@
     "Id": 14141,
     "CodeName": "Weapon_S_1411",
     "Name": "狸法七变化",
-    "Desc": "...",
+    "Desc": "精巧的小型音擎，原本是第一次参加学校空洞实习时发的便宜货，但因为体积小巧便于携带，柚叶始终难以割舍。\n\n第一次改造，增大了音擎的输出功率；第二次改造，追加了两个以太异常特化组件；第三次改造，尝试修改了内部布线，但不慎引起短路，把裙子烧了个洞；第四次改造，真斗帮忙修好了短路弄坏的热传导组件，但请真斗吃饭花的钱，已经足够买3个新的热传导组件了；第五次改造，更换了新的共鸣腔；第六次改造，提升了对驱动盘高频信号的响应速度。\n\n很好，它终于是一件完美的、可以陪伴主人出生入死的神兵利器了！然而——\n\n「爸，你见我音擎没？」\n\n「系果边啊，我帮你改左个外壳啦，之前太核突！唔可以畀人话我个女冇眼光！」\n\n「爸！这可是音擎诶，你搞这么华丽，万一弄坏了多可惜啊！」\n\n「咁就咪搞啲会整坏音擎嘅危险嘢啦！」",
     "Desc2": "装备后可提升[支援]代理人的战斗能力",
-    "Desc3": "...",
+    "Desc3": "巧夺天工的造型，饱含制作者对美的追求。",
     "Rarity": "S",
     "Icon": "Assets/NapResources/UI/Sprite/A1DynamicLoad/ItemIconWeapon/UnPacker/Weapon_S_1411.png",
     "WeaponType": {
