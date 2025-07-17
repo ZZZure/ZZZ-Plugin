@@ -66,7 +66,6 @@ export class Panel extends ZZZPlugin {
     const isEnka = this.e.msg.includes('展柜') || !(await getCk(this.e))
     let result
     if (isEnka) {
-      await this.reply('正在更新面板列表，请稍候...');
       const data = await refreshPanelFromEnka(uid)
         .catch(err => err)
       if (data instanceof Error) {
@@ -82,22 +81,28 @@ export class Panel extends ZZZPlugin {
         result = await mergePanel(uid, panelList)
         await this.getPlayerInfo(playerInfo)
       } else if (typeof data === 'number') {
-        return this.reply(`Enka服务调用失败，状态码：${data}${data === 424 ? '\n版本更新后，须等待一段时间才可正常使用enka服务' : ''}`);
+        return this.reply(`Enka服务调用失败，状态码：${data}`)
       }
     } else {
-      const { api, deviceFp } = await this.getAPI();
-      await this.reply('正在更新面板列表，请稍候...\n账号异常时，可尝试%更新展柜面板（所更新角色数据与实际不一致时，请提issue）');
-      await this.getPlayerInfo();
-      await redis.set(`ZZZ:PANEL:${uid}:LASTTIME`, Date.now());
-      result = await refreshPanelFunction(api, deviceFp).catch(e => {
-        this.reply(e.message);
-        throw e;
-      });
+      const oriReply = this.reply.bind(this);
+      let errorMsg = '';
+      this.reply = (msg) => errorMsg += '\n' + msg;
+      try {
+        const { api, deviceFp } = await this.getAPI();
+        await oriReply('正在更新面板列表，请稍候...');
+        await this.getPlayerInfo();
+        await redis.set(`ZZZ:PANEL:${uid}:LASTTIME`, Date.now());
+        result = await refreshPanelFunction(api, deviceFp);
+      } catch (err) {
+        logger.error('面板列表更新失败：', err);
+        errorMsg = (err.message || '') + errorMsg;
+      }
+      this.reply = oriReply;
+      if (errorMsg && !result) {
+        return this.reply(`面板列表更新失败，请稍后再试或尝试%更新展柜面板：\n${errorMsg.trim()}`);
+      }
     }
-    if (!result) {
-      await this.reply('面板列表更新失败，请稍后再试');
-      return false;
-    }
+    if (!result) return false;
     const newChar = result.filter(item => item.isNew);
     const finalData = {
       newChar: newChar.length,

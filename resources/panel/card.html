@@ -222,7 +222,7 @@
           <div class="properties">
             <div class="prop-icon {{prop.classname}}"></div>
             {{if prop.score !== false}}
-            <div class="label yellow hit{{prop.base_score * 100}}">
+            <div class="label yellow hit{{prop.base_score * 100 - (prop.base_score * 100 % 25)}}">
               {{else}}
                 <div class="label yellow">
                   {{/if}}
