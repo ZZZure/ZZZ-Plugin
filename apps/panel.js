@@ -72,8 +72,8 @@ export class Panel extends ZZZPlugin {
         logger.warn(`Enka服务调用失败：`, data)
         return this.reply(`Enka服务调用失败：${data.message}`)
       }
-      await redis.set(`ZZZ:PANEL:${uid}:LASTTIME`, Date.now())
       if (typeof data === 'object') {
+        await redis.set(`ZZZ:PANEL:${uid}:LASTTIME`, Date.now())
         const { playerInfo, panelList } = data
         if (!panelList.length) {
           return this.reply('面板列表为空，请确保已于游戏中展示角色')
