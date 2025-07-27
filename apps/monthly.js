@@ -31,7 +31,6 @@ export class monthly extends ZZZPlugin {
     const match = this.e.msg.match(reg);
     if (!match) {
       await this.reply('参数错误，请检查输入');
-      return false;
     }
     let year = match[3];
     let month = match[5];
@@ -47,11 +46,9 @@ export class monthly extends ZZZPlugin {
     });
     if (!monthlyResponse) {
       await this.reply('获取月报数据失败，请检查日期是否正确');
-      return false;
     }
     if (!monthlyResponse?.month_data) {
       await this.reply('月报数据为空');
-      return false;
     }
     const monthlyData = new Monthly(monthlyResponse);
     const finalData = {
@@ -73,7 +70,6 @@ export class monthly extends ZZZPlugin {
 
     if (!collect) {
       await this.reply('获取月报数据失败');
-      return false;
     }
 
     const collectData = collect.map(item => new Monthly(item));

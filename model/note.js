@@ -31,7 +31,7 @@ export class VhsSale {
     if (this.sale_state.includes('Doing')) {
       return true;
     }
-    return false;
+    return null;
   }
   get state_label() {
     if (this.sale_state.includes('Doing')) {
@@ -96,7 +96,7 @@ export class ZZZNoteResp {
     if (this.card_sign?.includes('Done')) {
       return true;
     }
-    return false;
+    return null;
   }
 
   get sign_label() {

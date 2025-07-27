@@ -34,7 +34,7 @@ export class update extends plugin {
   }
 
   async update(e = this.e) {
-    if (!e.isMaster || !ZZZUpdate) return false;
+    if (!e.isMaster || !ZZZUpdate) return null;
     e.msg = `#${e.msg.includes('强制') ? '强制' : ''}更新${pluginName}`;
     const up = new ZZZUpdate(e);
     up.e = e;
@@ -45,7 +45,7 @@ export class update extends plugin {
     const updateConfig = _.get(settings.getConfig('config'), 'update', {});
     const enable = _.get(updateConfig, 'autoCheck', false);
     if (!enable) return;
-    if (!ZZZUpdate) return false;
+    if (!ZZZUpdate) return null;
     const up = new ZZZUpdate();
     const result = await up.hasUpdate();
     if (result.hasUpdate) {

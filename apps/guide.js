@@ -70,17 +70,14 @@ export class Guide extends ZZZPlugin {
     group = Number(group);
     if (group > guides.guideMaxNum) {
       await this.reply(`超过攻略数量（${guides.guideMaxNum}）`);
-      return false;
     }
     if (alias === '设置默认' || alias === '设置所有') {
-      return false;
     }
 
     const name = char.aliasToName(alias);
 
     if (!name) {
       await this.reply('该角色不存在');
-      return false;
     }
 
     if (group === 0) {
@@ -102,7 +99,6 @@ export class Guide extends ZZZPlugin {
       if (msg.length) {
         await this.reply(await common.makeForwardMsg(this.e, msg));
       }
-      return false;
     }
 
     const guidePath = await this.getGuidePath(group, name, !!isUpdate);
@@ -112,10 +108,8 @@ export class Guide extends ZZZPlugin {
           guides.guideSources[group - 1]
         })\n请尝试其他的攻略来源查询`
       );
-      return false;
     }
     await this.e.reply(segment.image(guidePath));
-    return false;
   }
 
   /** 下载攻略图 */
@@ -130,7 +124,6 @@ export class Guide extends ZZZPlugin {
     } catch (error) {
       this.e.reply('暂无攻略数据，请稍后再试');
       console.log(`米游社接口报错：${error}}`);
-      return false;
     }
 
     // 搜索时过滤特殊符号，譬如「11号」
@@ -160,7 +153,7 @@ export class Guide extends ZZZPlugin {
       }
     }
     if (!url) {
-      return false;
+      return null;
     }
     logger.debug(
       `${this.e.logFnc} 下载${name}攻略图 - ${guides.guideSources[group - 1]}`
@@ -181,7 +174,7 @@ export class Guide extends ZZZPlugin {
   async getData(url) {
     let response = await fetch(url, { method: 'get' });
     if (!response.ok) {
-      return false;
+      return null;
     }
     return await response.json();
   }

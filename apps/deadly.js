@@ -33,7 +33,6 @@ export class deadly extends ZZZPlugin {
     });
     if (!deadlyData?.has_data) {
       await this.reply('没有危局强袭战数据');
-      return false;
     }
     const deadly = new Deadly(deadlyData);
     const timer = setTimeout(() => {

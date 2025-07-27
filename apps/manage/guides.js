@@ -5,7 +5,6 @@ import settings from '../../lib/settings.js';
 export async function setDefaultGuide() {
   if (!this.e.isMaster) {
     this.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
-    return false;
   }
   const match = /设置默认攻略(\d+|all)$/g.exec(this.e.msg);
   let guide_id = match[1];
@@ -37,7 +36,6 @@ export async function setDefaultGuide() {
 export async function setMaxForwardGuide() {
   if (!this.e.isMaster) {
     this.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
-    return false;
   }
   const match = /设置所有攻略显示个数(\d+)$/g.exec(this.e.msg);
   const max_forward_guide = Number(match[1]);
@@ -46,14 +44,12 @@ export async function setMaxForwardGuide() {
       at: true,
       recallMsg: 100,
     });
-    return false;
   }
   if (max_forward_guide > guides.guideMaxNum) {
     await this.e.reply(`所有攻略显示个数不能大于${guides.guideMaxNum}`, false, {
       at: true,
       recallMsg: 100,
     });
-    return false;
   }
   settings.setSingleConfig('guide', 'max_forward_guides', max_forward_guide);
   await this.e.reply(

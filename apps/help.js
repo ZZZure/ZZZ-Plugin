@@ -412,11 +412,9 @@ export class Help extends ZZZPlugin {
       await this.render('help/index.html', {
         helpData: _helpData,
       });
-      return false;
     }
     await this.render('help/index.html', {
       helpData,
     });
-    return false;
   }
 }

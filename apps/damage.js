@@ -27,7 +27,7 @@ export class Damage extends ZZZPlugin {
     }
     const reg = new RegExp(`${rulePrefix}(.+)伤害(\\d*)$`)
     const match = this.e.msg.match(reg)
-    if (!match) return false
+    if (!match) return null
     const name = match[4]
     const data = getPanelOrigin(uid, name)
     if (data === false) {
