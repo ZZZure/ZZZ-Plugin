@@ -71,10 +71,6 @@ import { Buffer } from 'node:buffer';
  * @property {DeadlyList[]} list
  */
 
-
-// 1x1像素透明，用于填充无图情况
-const BLANK_IMAGE = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
-
 /**
  * @class Deadly.
  */
@@ -119,7 +115,7 @@ export class DeadlyList {
     this.score = data.score;
     this.boss = data.boss.map(b => new Bos(b));
     this.buffer = data.buffer.map(b => new DeadBuffer(b));
-    this.buddy = new Buddy(data.buddy);
+    this.buddy = data.buddy && new Buddy(data.buddy);
     this.total_star = data.total_star;
     this.challenge_time = new DeadlyTime(data.challenge_time);
     this.avatar_list = data.avatar_list.map(item => new AvatarList(item));
@@ -127,7 +123,7 @@ export class DeadlyList {
 
   async get_assets() {
     await Promise.all([
-      this.buddy.get_assets(),
+      this.buddy?.get_assets(),
       ...this.avatar_list.map(avatar => avatar.get_assets()),
       ...this.boss.map(boss => boss.get_assets()),
       ...this.buffer.map(buffer => buffer.get_assets()),
@@ -173,15 +169,6 @@ export class Buddy {
    * @param {Buddy} data
    */
   constructor(data) {
-    //无邦布信息的时候使用默认空值
-    if (!data) {
-      this.id = 0;
-      this.rarity = '';
-      this.level = 0;
-      //邦布使用透明图
-      this.bangboo_rectangle_url = BLANK_IMAGE;
-      return;
-    }
     this.id = data.id;
     this.rarity = data.rarity;
     this.level = data.level;
