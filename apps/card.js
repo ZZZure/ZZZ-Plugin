@@ -28,7 +28,7 @@ export class Card extends ZZZPlugin {
       this.reply(e.message);
       throw e;
     });
-    if (!indexData) return false;
+    if (!indexData) return null;
 
     let zzzAvatarList = await api.getFinalData('zzzAvatarList', {
       deviceFp,
@@ -36,7 +36,7 @@ export class Card extends ZZZPlugin {
       this.reply(e.message);
       throw e;
     });
-    if (!zzzAvatarList) return false;
+    if (!zzzAvatarList) return null;
     indexData.avatar_list = zzzAvatarList.avatar_list;
 
     let zzzBuddyList = await api.getFinalData('zzzBuddyList', {
@@ -45,7 +45,7 @@ export class Card extends ZZZPlugin {
       this.reply(e.message);
       throw e;
     });
-    if (!zzzBuddyList) return false;
+    if (!zzzBuddyList) return null;
     indexData.buddy_list = zzzBuddyList.list;
     const finalIndexData = new ZZZIndexResp(indexData);
     this.e.playerCard.player.region_name =

@@ -8,11 +8,10 @@ export async function getChangeLog() {
   await this.render('help/version.html', {
     versionData,
   });
-  return false;
 }
 
 export async function getCommitLog() {
-  if (!ZZZUpdate) return false;
+  if (!ZZZUpdate) return null;
   let updatePlugin = new ZZZUpdate();
   updatePlugin.e = this.e;
   updatePlugin.reply = this.reply;
@@ -33,7 +32,7 @@ export async function getCommitLog() {
 }
 
 export async function hasUpdate() {
-  if (!ZZZUpdate) return false;
+  if (!ZZZUpdate) return null;
   let updatePlugin = new ZZZUpdate();
   updatePlugin.e = this.e;
   updatePlugin.reply = this.reply;
@@ -55,7 +54,6 @@ export async function hasUpdate() {
 export async function enableAutoUpdatePush() {
   if (!this.e.isMaster) {
     this.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
-    return false;
   }
   let enable = true;
   if (this.e.msg.includes('关闭')) {
@@ -73,7 +71,6 @@ export async function enableAutoUpdatePush() {
 export async function setCheckUpdateCron() {
   if (!this.e.isMaster) {
     this.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
-    return false;
   }
   const cron = this.e.msg.split('时间')[1];
   if (!cron) {
@@ -85,7 +82,6 @@ export async function setCheckUpdateCron() {
         recallMsg: 100,
       }
     );
-    return false;
   }
   settings.setSingleConfig('config', 'update', { cron });
   await this.reply(`[${pluginName}]自动更新频率已设置为${cron}`, false, {

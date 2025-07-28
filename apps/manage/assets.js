@@ -15,7 +15,7 @@ import { getAllWeaponID } from '../../lib/convert/weapon.js';
 import * as LocalURI from '../../lib/download/const.js';
 
 export async function downloadAll() {
-  if (!this.e.isMaster) return false;
+  if (!this.e.isMaster) return null;
   const charIDs = char.getAllCharactersID();
   const equipSprites = getAllEquipID();
   const weaponSprites = getAllWeaponID();
@@ -146,7 +146,7 @@ export async function downloadAll() {
   await this.reply(messages.join('\n'));
 }
 export async function deleteAll() {
-  if (!this.e.isMaster) return false;
+  if (!this.e.isMaster) return null;
   await this.reply(
     '【注意】正在删除所有资源图片，后续使用需要重新下载！',
     false,
