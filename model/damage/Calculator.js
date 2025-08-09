@@ -99,7 +99,9 @@ export class Calculator {
         logger.debug(`${logger.green(skill.type)}${skill.name}伤害计算：`);
         if (skill.dmg) {
             const dmg = skill.dmg(this);
-            dmg.skill ||= skill;
+            if (!dmg.skill || dmg.skill.name !== skill.name) {
+                dmg.skill = skill;
+            }
             logger.debug('自定义计算最终伤害：', dmg.result);
             return dmg;
         }
@@ -183,7 +185,7 @@ export class Calculator {
                     return;
                 logger.debug('增加伤害：' + d.skill.name, d.result);
                 damage.result.expectDMG += d.result.expectDMG;
-                damage.result.critDMG += d.result.critDMG;
+                damage.result.critDMG += d.result.critDMG || d.result.expectDMG;
             };
             damage.fnc = (fnc) => {
                 damage.result.critDMG = fnc(damage.result.critDMG);
@@ -444,7 +446,7 @@ export class Calculator {
             default: return 0;
         }
     }
-    get(type, initial, skill, usefulBuffs = this.buffM.buffs, isRatio = false) {
+    get(type, initial, skill = this.skill, usefulBuffs = this.buffM.buffs, isRatio = false) {
         return this.props[type] ??= this.buffM._filter(usefulBuffs, {
             element: skill?.element,
             range: [skill?.type],

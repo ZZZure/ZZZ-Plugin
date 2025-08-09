@@ -254,7 +254,9 @@ export class Calculator {
     logger.debug(`${logger.green(skill.type)}${skill.name}伤害计算：`)
     if (skill.dmg) {
       const dmg = skill.dmg(this)
-      dmg.skill ||= skill
+      if (!dmg.skill || dmg.skill.name !== skill.name) {
+        dmg.skill = skill
+      }
       logger.debug('自定义计算最终伤害：', dmg.result)
       return dmg
     }
@@ -334,7 +336,7 @@ export class Calculator {
         if (!d) return
         logger.debug('增加伤害：' + d.skill.name, d.result)
         damage.result.expectDMG += d.result.expectDMG
-        damage.result.critDMG += d.result.critDMG
+        damage.result.critDMG += d.result.critDMG || d.result.expectDMG
       }
       damage.fnc = (fnc) => {
         damage.result.critDMG = fnc(damage.result.critDMG)
@@ -672,7 +674,7 @@ export class Calculator {
    * 获取局内属性原始值
    * @param isRatio 是否启用buff.value为数值/字符串/数组类型且计算结果值<1时按 **`初始数值`** 百分比提高处理
    */
-  get(type: buff['type'], initial: number, skill: skill, usefulBuffs: buff[] = this.buffM.buffs, isRatio = false): number {
+  get(type: buff['type'], initial: number, skill: skill = this.skill, usefulBuffs: buff[] = this.buffM.buffs, isRatio = false): number {
     return this.props[type] ??= this.buffM._filter(usefulBuffs, {
       element: skill?.element,
       range: [skill?.type],

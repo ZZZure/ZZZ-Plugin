@@ -2,7 +2,7 @@
 export const buffs = [
   {
     name: '1影',
-    type: '异常增伤', // 异常易伤？
+    type: '异常增伤',
     value: 0.16,
     is: {
       team: true
@@ -76,7 +76,6 @@ export const skills = [
         ...calc.skills.find(skill => skill.type === '侵蚀·异放'),
         after: ({ damage }) => damage.x(5)
       })
-      dmg.skill.name = '6影特殊异放·5护羽'
       return dmg
     }
   },

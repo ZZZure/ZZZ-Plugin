@@ -86,7 +86,6 @@ export const skills = [
         type: '灼烧',
         after: ({ damage }) => damage.x(18)
       })
-      dmg.skill.name = '6影强化E双份额外灼烧'
       return dmg
     }
   },
