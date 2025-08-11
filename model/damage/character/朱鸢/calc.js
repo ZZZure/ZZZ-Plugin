@@ -34,9 +34,9 @@ export const skills = [
   {
     name: '6影以太鹿弹',
     type: 'EQ2',
-    fixedMultiplier: 2.2 * 4,
+    multiplier: 2.2 * 4,
     isHide: true,
-    check: ({ avatar }) => avatar.rank >= 6
+    check: 6
   },
   {
     name: '强化特殊技：全弹连射',

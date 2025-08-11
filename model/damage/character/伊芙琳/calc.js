@@ -59,7 +59,7 @@ export const skills = [
     name: '6影月辉丝·弦',
     type: 'Y6',
     redirect: 'RL',
-    fixedMultiplier: 3.75,
-    check: ({ avatar }) => avatar.rank >= 6
+    multiplier: 3.75,
+    check: 6
   }
 ]

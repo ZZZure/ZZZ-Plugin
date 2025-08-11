@@ -61,7 +61,7 @@ export const skills = [
   {
     name: '6影[火焰冲击]',
     type: 'Y6',
-    check: ({ avatar }) => avatar.rank >= 6,
+    check: 6,
     before: ({ calc, props }) => {
       const Impact = calc.get_Impact()
       props.倍率 = 2.5 + Math.min(5, Math.max(0, Math.floor(Impact - 170) * 5 / 100))

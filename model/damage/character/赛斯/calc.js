@@ -20,8 +20,8 @@ export const skills = [
     name: '6影额外伤害',
     type: 'Y6',
     isHide: true,
-    check: ({ avatar }) => avatar.rank >= 6,
-    fixedMultiplier: 5,
+    check: 6,
+    multiplier: 5,
     props: {
       暴击率: 1
     }

@@ -47,7 +47,7 @@ export const skills = [
     name: '6影追加蓄力普攻三段',
     type: 'AP3',
     banCache: true,
-    check: ({ avatar }) => avatar.rank >= 6,
+    check: 6,
     before: ({ usefulBuffs }) => usefulBuffs.push({
       name: '6影',
       type: '暴击率',

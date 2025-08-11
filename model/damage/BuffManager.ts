@@ -67,14 +67,14 @@ export interface buff {
   }) => number)
   /**
    * Buff增益技能类型**生效范围**；参考技能类型命名标准
-   * - 当技能参数不存在**redirect**时，**range**作用范围向后覆盖
-   * - 当技能参数存在**redirect**时，**range**须全匹配，**redirect**向后覆盖
+   * - 当技能参数不存在**redirect**时，**range**作用范围向后覆盖生效
+   * - 当技能参数存在**redirect**时，**range**与**type**全匹配时生效，**redirect**向后覆盖生效
    * - 若需全匹配的精细操作，可使用**include**与**exclude**参数
    */
   range?: string[] | anomaly[] | "追加攻击"[]
   /** 
    * Buff增益技能类型**生效技能**
-   * - 不同于**range**，仅全匹配时该值生效，不会向后覆盖
+   * - 不同于**range**，仅全匹配时该值生效，不会向后覆盖生效
    * - 无**range**且无**include**则该buff对**exclude**以外的全部技能生效
    * - **range**与**include**符合其一则认为buff生效
    * - 当技能参数存在**redirect**时，**range**与**include**的区别在于**include**不会尝试匹配**redirect**
@@ -82,7 +82,7 @@ export interface buff {
   include?: string[]
   /** 
    * Buff增益技能类型**排除技能**
-   * - 与**include**相同，仅全匹配时该值生效，不会向后覆盖
+   * - 与**include**相同，仅全匹配时该值生效，不会向后覆盖生效
    * - 优先级高于**range**与**include**
    */
   exclude?: string[]
@@ -205,15 +205,15 @@ export class BuffManager {
               const buffRange = buff.range
               const skillRange = param.range?.filter(r => typeof r === 'string')
               if (!skillRange?.length) return true // 对任意类型生效
-              // buff作用范围向后覆盖
-              // 存在重定向时，range须全匹配，redirect向后覆盖
+              // buff作用范围向后覆盖生效
+              // 存在重定向时，range与type全匹配时生效，redirect向后覆盖生效
               else if (param.redirect) {
                 if (skillRange.some(ST => buffRange.some(BT => BT === ST))) return true
                 const redirect = Array.isArray(param.redirect) ? param.redirect : [param.redirect]
                 if (buffRange.some(BT => redirect.some(RT => RT.startsWith(BT)))) return true
                 return false
               }
-              // 不存在重定向时，range向后覆盖
+              // 不存在重定向时，range向后覆盖生效
               return skillRange.some(ST => buffRange.some(BT => ST.startsWith(BT)))
             }
             // 00
@@ -276,8 +276,8 @@ export class BuffManager {
   /**
    * 根据多个指定属性筛选 **启用状态** 的buff
    * - 对伤害类型range数组的筛选，只要其中有一个符合即认为满足
-   * - 存在重定向时，range须全匹配，redirect向后覆盖
-   * - 不存在重定向时，range向后覆盖
+   * - 不存在重定向时，range向后覆盖生效
+   * - 存在重定向时，range与type全匹配时生效，redirect向后覆盖生效
    */
   filter(obj: Partial<Pick<buff, filterable>> & { element: element, redirect?: skill['redirect'] }, calc?: Calculator): buff[]
   /**

@@ -114,12 +114,29 @@ export class Calculator {
         const areas = {};
         if (skill.before)
             skill.before({ avatar: this.avatar, calc: this, usefulBuffs, skill, props, areas });
+        logger.debug(`有效buff*${usefulBuffs.length}/${this.buffM.buffs.length}`);
         const isAnomaly = typeof anomalyEnum[skill.type.slice(0, 2)] === 'number';
         if (!areas.BasicArea) {
             let Multiplier = props.倍率;
             if (!Multiplier) {
-                if (skill.fixedMultiplier) {
-                    Multiplier = skill.fixedMultiplier;
+                if (skill.multiplier) {
+                    switch (typeof skill.multiplier) {
+                        case 'number':
+                            Multiplier = skill.multiplier;
+                            break;
+                        case 'string':
+                            Multiplier = this.get_SkillMultiplier(skill.multiplier);
+                            break;
+                        case 'object':
+                            Multiplier = skill.multiplier[this.get_SkillLevel(skill.type[0]) - 1];
+                            break;
+                        case 'function':
+                            Multiplier = skill.multiplier({ avatar: this.avatar, buffM: this.buffM, calc: this });
+                            break;
+                        default:
+                            Multiplier = this.get_SkillMultiplier(skill.type);
+                            logger.warn('无效的技能倍率：', skill);
+                    }
                 }
                 else if (isAnomaly) {
                     Multiplier = (skill.type.startsWith('紊乱') ?
@@ -127,10 +144,7 @@ export class Calculator {
                         this.get_AnomalyMultiplier(skill, usefulBuffs, skill.name.includes('每') ? 1 : 0)) || 0;
                 }
                 else {
-                    if (skill.skillMultiplier)
-                        Multiplier = skill.skillMultiplier[this.get_SkillLevel(skill.type[0]) - 1];
-                    else
-                        Multiplier = this.get_SkillMultiplier(skill.type);
+                    Multiplier = this.get_SkillMultiplier(skill.type);
                 }
                 const ExtraMultiplier = this.get_ExtraMultiplier(skill, usefulBuffs);
                 Multiplier += ExtraMultiplier;

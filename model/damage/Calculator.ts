@@ -14,23 +14,37 @@ export interface skill {
   type: string
   /** 属性类型，不指定时，默认取角色属性 */
   element: element
-  /** 技能倍率数组，于character/角色名/data.json中自动获取，该json中不存在相应数据时可填写该值，以填写值为准 */
-  skillMultiplier?: number[]
-  /** 指定常数倍率（可吃倍率增益） */
-  fixedMultiplier?: number
+  /** 
+   * 指定技能倍率（基础倍率，可吃倍率增益）
+   * @default number[] 默认于character/角色名/data.json中自动获取
+   * @number
+   * 此值即为倍率
+   * @string
+   * 技能类型（type）。等效于调用`calc.get_SkillMultiplier(skill.multiplier)`
+   * @array
+   * - 倍率值数组，根据技能等级获取值，索引为 **`技能等级-1`**
+   * - 默认于character/角色名/data.json中自动获取，显式指定时以此值为准
+   * @function
+   * 函数返回值即为倍率
+   */
+  multiplier?: number | string | number[] | (({ avatar, buffM, calc }: {
+    avatar: ZZZAvatarInfo
+    buffM: BuffManager
+    calc: Calculator
+  }) => number)
   /** 指定局内固定属性 */
   props?: { [key in buffType]?: number }
   /**
    * 重定向技能伤害类型
    * 
    * 当出现“X"(造成的伤害)被视为“Y”(伤害)时，可使用该参数指定Y的类型。
-   * - 存在重定向时，range须全匹配，redirect向后覆盖
-   * - 不存在重定向时，range向后覆盖
+   * - 不存在重定向时，range向后覆盖生效
+   * - 存在重定向时，range与type全匹配时生效，redirect向后覆盖生效
    * 
    * 当为数组类型时（多类型共存），满足数组内其一类型即可，判断规则同上
    */
   redirect?: string | string[] | anomaly[] | "追加攻击"[]
-  /** 是否为主要技能。`true`时%XX伤害 默认计算该技能 */
+  /** 是否为主要技能。`true`时%XX伤害 默认计算该技能且会作为角色伤害排名依据 */
   isMain?: boolean
   /** 角色面板伤害统计中是否隐藏显示 */
   isHide?: boolean
@@ -269,12 +283,29 @@ export class Calculator {
     }, this)
     const areas = {} as damage['areas']
     if (skill.before) skill.before({ avatar: this.avatar, calc: this, usefulBuffs, skill, props, areas })
+    logger.debug(`有效buff*${usefulBuffs.length}/${this.buffM.buffs.length}`)
     const isAnomaly = typeof anomalyEnum[skill.type.slice(0, 2) as anomaly] === 'number'
     if (!areas.BasicArea) {
       let Multiplier = props.倍率
       if (!Multiplier) {
-        if (skill.fixedMultiplier) {
-          Multiplier = skill.fixedMultiplier
+        if (skill.multiplier) { // 显式指定
+          switch (typeof skill.multiplier) {
+            case 'number':
+              Multiplier = skill.multiplier
+              break
+            case 'string':
+              Multiplier = this.get_SkillMultiplier(skill.multiplier)
+              break
+            case 'object':
+              Multiplier = skill.multiplier[this.get_SkillLevel(skill.type[0]) - 1]
+              break
+            case 'function':
+              Multiplier = skill.multiplier({ avatar: this.avatar, buffM: this.buffM, calc: this })
+              break
+            default:
+              Multiplier = this.get_SkillMultiplier(skill.type)
+              logger.warn('无效的技能倍率：', skill)
+          }
         } else if (isAnomaly) {
           Multiplier = (
             skill.type.startsWith('紊乱') ?
@@ -282,8 +313,7 @@ export class Calculator {
               this.get_AnomalyMultiplier(skill, usefulBuffs, skill.name.includes('每') ? 1 : 0)
           ) || 0
         } else {
-          if (skill.skillMultiplier) Multiplier = skill.skillMultiplier[this.get_SkillLevel(skill.type[0]) - 1]
-          else Multiplier = this.get_SkillMultiplier(skill.type)
+          Multiplier = this.get_SkillMultiplier(skill.type)
         }
         const ExtraMultiplier = this.get_ExtraMultiplier(skill, usefulBuffs)
         Multiplier += ExtraMultiplier

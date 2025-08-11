@@ -91,7 +91,7 @@ export const skills = [
   {
     name: '6影强击暴击额外攻击',
     type: 'Y6',
-    check: ({ avatar }) => avatar.rank >= 6,
+    check: 6,
     before: ({ calc, areas }) => {
       const AnomalyProficiency = calc.get_AnomalyProficiency()
       areas.BasicArea = AnomalyProficiency * 16

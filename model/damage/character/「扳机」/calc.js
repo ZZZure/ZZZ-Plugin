@@ -48,7 +48,7 @@ export const skills = [
     name: '6影破甲凶弹',
     type: 'Y6',
     check: 6,
-    fixedMultiplier: 12,
+    multiplier: 12,
     before: ({ usefulBuffs }) => usefulBuffs.push({
       name: '6影',
       type: '增伤',

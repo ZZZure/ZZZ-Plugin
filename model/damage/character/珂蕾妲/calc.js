@@ -17,8 +17,8 @@ export const skills = [
     name: '6影额外伤害',
     type: 'Y6',
     isHide: true,
-    fixedMultiplier: 3.6,
-    check: ({ avatar }) => avatar.rank >= 6
+    multiplier: 3.6,
+    check: 6
   },
   { name: '强化特殊技：沸腾熔炉0', type: 'EQP0', isHide: true },
   {

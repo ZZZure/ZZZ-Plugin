@@ -20,7 +20,7 @@ export const skills = [
   {
     name: '2影格挡反击额外伤害',
     type: 'Y2',
-    check: ({ avatar }) => avatar.rank >= 2,
+    check: 2,
     isHide: true,
     before: ({ areas, calc }) => {
       areas.BasicArea = 3 * calc.get_DEF()

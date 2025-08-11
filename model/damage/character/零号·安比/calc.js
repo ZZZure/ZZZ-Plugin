@@ -63,7 +63,7 @@ export const skills = [
     name: '6影电磁涡流',
     type: 'Y6',
     check: 6,
-    fixedMultiplier: 10,
+    multiplier: 10,
     redirect: '追加攻击'
   }
 ]

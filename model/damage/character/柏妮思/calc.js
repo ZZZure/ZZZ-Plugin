@@ -71,13 +71,13 @@ export const skills = [
   {
     name: '6影强化E双份额外余烬秒伤',
     type: 'Y6Y',
-    fixedMultiplier: 1.2,
-    check: ({ avatar }) => avatar.rank >= 6
+    multiplier: 1.2,
+    check: 6
   },
   {
     name: '6影强化E双份额外灼烧',
     type: 'Y6灼烧',
-    check: ({ avatar }) => avatar.rank >= 6,
+    check: 6,
     dmg: (calc) => {
       const dmg = calc.calc_skill({
         name: '灼烧每段',

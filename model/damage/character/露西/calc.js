@@ -52,8 +52,8 @@ export const skills = [
   {
     name: '6影小猪空中落地爆炸',
     type: 'Y6',
-    check: ({ avatar }) => avatar.rank >= 6,
-    fixedMultiplier: 3,
+    check: 6,
+    multiplier: 3,
     props: {
       穿透值: 0,
       穿透率: 0
