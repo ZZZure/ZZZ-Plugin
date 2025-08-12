@@ -26,8 +26,8 @@
     </div>
   </div>
   <div class="tips">
-    <p>统计周期 {{deadly.start_time.year}}.{{String(deadly.start_time.month).padStart(2,'0')}}.{{String(deadly.start_time.day).padStart(2,'0')}} -
-      {{deadly.end_time.year}}.{{String(deadly.end_time.month).padStart(2,'0')}}.{{String(deadly.end_time.day).padStart(2,'0')}}
+    <p>统计周期 {{deadly.start_time.year}}.{{deadly.start_time.month.toString().padStart(2,'0')}}.{{deadly.start_time.day.toString().padStart(2,'0')}} -
+      {{deadly.end_time.year}}.{{deadly.end_time.month.toString().padStart(2,'0')}}.{{deadly.end_time.day.toString().padStart(2,'0')}}
     </p>
     <p>*总得分&排名和挑战详情并非同时刷新，挑战详情存在2小时左右延迟</p>
   </div>
@@ -56,8 +56,8 @@
                 <% } %>
         </div>
       </div>
-      <div class="time">通关时刻：{{item.challenge_time.year}}.{{String(item.challenge_time.month).padStart(2,'0')}}.{{String(item.challenge_time.day).padStart(2,'0')}}
-        {{String(item.challenge_time.hour).padStart(2,'0')}}:{{String(item.challenge_time.minute).padStart(2,'0')}}:{{String(item.challenge_time.second).padStart(2,'0')}}
+      <div class="time">通关时刻：{{item.challenge_time.year}}.{{item.challenge_time.month.toString().padStart(2,'0')}}.{{item.challenge_time.day.toString().padStart(2,'0')}}
+        {{item.challenge_time.hour.toString().padStart(2,'0')}}:{{item.challenge_time.minute.toString().padStart(2,'0')}}:{{item.challenge_time.second.toString().padStart(2,'0')}}
       </div>
       <div class="list">
         <% for(let i=0 ; i < 3 ; i++) { %>
