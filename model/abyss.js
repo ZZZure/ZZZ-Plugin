@@ -355,16 +355,18 @@ export class ZZZChallenge {
   /** @type {string} */
   get begin_time() {
     const time = this.hadal_begin_time;
-    return `${time.year}.${String(time.month).padStart(2, '0')}.${String(
-      time.day
-    ).padStart(2, '0')}`;
+    return `${String(time.month).padStart(2, '0')}.${String(time.day).padStart(
+      2,
+      '0'
+    )}`;
   }
 
   /** @type {string} */
   get end_time() {
     const time = this.hadal_end_time;
-    return `${time.year}.${String(time.month).padStart(2, '0')}.${String(
-      time.day
-    ).padStart(2, '0')}`;
+    return `${String(time.month).padStart(2, '0')}.${String(time.day).padStart(
+      2,
+      '0'
+    )}`;
   }
 }
