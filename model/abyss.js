@@ -272,19 +272,12 @@ export class FloorDetail {
 
   /** @type {string} */
   get formattedTime() {
-    return (
-      this.floor_challenge_time.year +
-      '年' +
-      this.floor_challenge_time.month +
-      '月' +
-      this.floor_challenge_time.day +
-      '日 ' +
-      this.floor_challenge_time.hour.toString().padStart(2, '0') +
-      ':' +
-      this.floor_challenge_time.minute.toString().padStart(2, '0') +
-      ':' +
-      this.floor_challenge_time.second.toString().padStart(2, '0')
-    );
+    const time = this.floor_challenge_time;
+    return `${time.year}.${String(time.month).padStart(2, '0')}.${String(
+      time.day
+    ).padStart(2, '0')} ${String(time.hour).padStart(2, '0')}:${String(
+      time.minute
+    ).padStart(2, '0')}:${String(time.second).padStart(2, '0')}`;
   }
 }
 
@@ -361,20 +354,19 @@ export class ZZZChallenge {
 
   /** @type {string} */
   get begin_time() {
-    return new Date(Number(this._begin_time) * 1000).toLocaleDateString(
-      'en-US',
-      {
-        month: '2-digit',
-        day: '2-digit',
-      }
-    );
+    const time = this.hadal_begin_time;
+    return `${String(time.month).padStart(2, '0')}.${String(time.day).padStart(
+      2,
+      '0'
+    )}`;
   }
 
   /** @type {string} */
   get end_time() {
-    return new Date(Number(this._end_time) * 1000).toLocaleDateString('en-US', {
-      month: '2-digit',
-      day: '2-digit',
-    });
+    const time = this.hadal_end_time;
+    return `${String(time.month).padStart(2, '0')}.${String(time.day).padStart(
+      2,
+      '0'
+    )}`;
   }
 }
