@@ -1,9 +1,9 @@
-import { ZZZPlugin } from '../lib/plugin.js';
-import settings from '../lib/settings.js';
 import _ from 'lodash';
+import settings from '../lib/settings.js';
 import { rulePrefix } from '../lib/common.js';
-import { ZZZChallenge } from '../model/abyss.js';
 import { Deadly } from '../model/deadly.js';
+import { ZZZChallenge } from '../model/abyss.js';
+import { ZZZPlugin } from '../lib/plugin.js';
 
 const USER_CONFIGS_KEY = 'ZZZ:REMIND:USER_CONFIGS';
 
