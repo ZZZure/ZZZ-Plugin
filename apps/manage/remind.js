@@ -1,6 +1,6 @@
 import settings from '../../lib/settings.js';
 import { rulePrefix } from '../../lib/common.js';
-import ZZZPlugin from '../../lib/plugin.js';
+import { ZZZPlugin } from '../../lib/plugin.js';
 
 export class RemindManage extends ZZZPlugin {
   constructor() {
