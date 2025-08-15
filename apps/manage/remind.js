@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import settings from '../../lib/settings.js';
 import { rulePrefix } from '../../lib/common.js';
 import { ZZZPlugin } from '../../lib/plugin.js';
