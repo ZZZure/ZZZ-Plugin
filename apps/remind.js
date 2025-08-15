@@ -301,7 +301,8 @@ export class Remind extends ZZZPlugin {
     if (userConfig && userConfig.remindTime) {
       await this.reply(`当前提醒时间: ${userConfig.remindTime}`);
     } else {
-      const globalRemindTime = settings.getConfig('remind.globalRemindTime') || '每日20时';
+      const remindConfig = settings.getConfig('remind');
+      const globalRemindTime = remindConfig.globalRemindTime || '每日20时';
       await this.reply(`个人提醒时间未设置，默认使用全局时间: ${globalRemindTime}`);
     }
   }
