@@ -54,7 +54,7 @@ export class Wiki extends ZZZPlugin {
     logger.debug('skills');
     const reg = new RegExp(`${rulePrefix}(.*)天赋(.*)$`);
     const charname = this.e.msg.match(reg)[4];
-    if (!charname) return false;
+    if (!charname) return null;
     const levelsChar = this.e.msg.match(reg)[5];
     const levels = !!levelsChar
       ? levelsChar.split('.').map(x => {
@@ -81,7 +81,6 @@ export class Wiki extends ZZZPlugin {
       !isSkillLevelLegal('CoreLevel', CoreLevel)
     ) {
       await this.reply(`${charname}天赋等级参数不合法`);
-      return false;
     }
     const charData = await getHakushCharacterData(charname);
     if (!charData)
@@ -104,12 +103,11 @@ export class Wiki extends ZZZPlugin {
   async cinema() {
     const reg = new RegExp(`${rulePrefix}(.*)(意象影画|意象|影画|命座)$`);
     const charname = this.e.msg.match(reg)[4];
-    if (!charname) return false;
+    if (!charname) return null;
     const charData = await getHakushCharacterData(charname);
     const cinemaData = charData?.Talent;
     if (!cinemaData) {
       await this.reply(`未找到${charname}的数据`);
-      return false;
     }
     await charData.get_assets();
     const finalData = {

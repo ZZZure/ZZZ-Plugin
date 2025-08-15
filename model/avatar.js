@@ -362,7 +362,7 @@ export class ZZZAvatarInfo {
 
   /** @type {number|boolean} */
   get equip_score() {
-    if (!this.equip?.length) return false;
+    if (!this.equip?.length) return null;
     if (this.scoreWeight) {
       let score = 0;
       for (const equip of this.equip) {
@@ -370,7 +370,7 @@ export class ZZZAvatarInfo {
       }
       return score;
     }
-    return false;
+    return null;
   }
 
   /** @type {'C'|'B'|'A'|'S'|'SS'|'SSS'|'ACE'|'MAX'|false} */
@@ -399,7 +399,7 @@ export class ZZZAvatarInfo {
     if (this.equip_score >= 280) {
       return 'MAX';
     }
-    return false;
+    return null;
   }
 
   /** @type {number} 练度分数 */
