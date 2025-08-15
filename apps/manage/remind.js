@@ -12,6 +12,6 @@ export async function setGlobalRemind() {
 
   // 使用 setSingleConfig 更新特定字段
   settings.setSingleConfig('remind', 'globalRemindTime', remindTime);
-  
+
   await this.reply(`全局提醒时间已更新为: ${remindTime}。`);
 }
