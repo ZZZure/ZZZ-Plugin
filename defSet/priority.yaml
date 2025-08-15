@@ -6,6 +6,7 @@ help: 70 # 帮助
 manage: 70 # 管理
 note: 70 # 体力
 panel: 70 # 面板
+remind: 70 # 挑战提醒
 update: 70 # 更新
 user: 70 # 账号操作
 monthly: 70 # 菲林月历

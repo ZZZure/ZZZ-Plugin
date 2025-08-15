@@ -456,6 +456,18 @@ export function supportGuoba() {
           },
         },
         {
+          field: 'priority.remind',
+          label: '挑战提醒',
+          bottomHelpMessage: '设置挑战提醒指令优先级',
+          component: 'InputNumber',
+          required: true,
+          componentProps: {
+            min: -1000,
+            max: 1000,
+            placeholder: '请输入数字',
+          },
+        },
+        {
           field: 'priority.update',
           label: '更新插件',
           bottomHelpMessage: '设置更新插件指令优先级',
