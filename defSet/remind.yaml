@@ -1,0 +1,4 @@
+enable: true # 功能总开关
+cron: 0 30 20 * * ? * # 定时任务cron表达式，默认每天晚上8:30
+abyssCheckLevel: 7 # 式舆防卫战提醒检查的最高关卡（用户可自行设置，最高为7）
+deadlyStars: 6 # 危局强袭战星星阈值
