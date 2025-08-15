@@ -10,7 +10,8 @@ export async function setGlobalRemind() {
   if (!match) return;
   const remindTime = match[1];
 
-  // 将全局提醒时间写入yaml配置
-  settings.setConfig('remind.globalRemindTime', remindTime);
+  // 使用 setSingleConfig 更新特定字段
+  settings.setSingleConfig('remind', 'globalRemindTime', remindTime);
+  
   await this.reply(`全局提醒时间已更新为: ${remindTime}。`);
 }
