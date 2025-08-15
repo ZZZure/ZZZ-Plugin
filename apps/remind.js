@@ -162,28 +162,35 @@ export class Remind extends ZZZPlugin {
 
   async checkUser(userId, userConfig, showAll = false) {
     let messages = [];
-    try {
-      const user = this.e.bot.pickUser(userId);
-      const tempE = { ...this.e, user_id: userId, reply: (msg) => user.sendMsg(msg) };
 
-      const { api, deviceFp } = await this.getAPI(tempE);
-      await this.getPlayerInfo(tempE);
+    // 创建一个模拟的 e 对象，用于获取 API
+    const mockE = {
+      user_id: userId,
+      game: 'zzz',
+      reply: (msg) => logger.info(`[Remind Mock Reply] ${msg}`)
+    };
+
+    // 临时设置 this.e 用于调用父类方法
+    const originalE = this.e;
+    this.e = mockE;
+
+    try {
+      const { api, deviceFp } = await this.getAPI();
+      await this.getPlayerInfo(mockE);
 
       // 检查式舆防卫战
-     const abyssRawData = await api
-       .getFinalData('zzzChallenge', { deviceFp })
-       .catch(() => ({}));
-     if (!abyssRawData.has_data) {
-       messages.push(`式舆防卫战S评级: 0/7`);
-     } else {
-       const abyssData = new ZZZChallenge(abyssRawData);
-       const userThreshold = userConfig.abyssCheckLevel || 7;
-       if (showAll || !abyssData.areAllSUpTo(userThreshold)) {
-         const sCount = abyssData.getSRankCountUpTo(7);
-         const status = abyssData.areAllSUpTo(userThreshold) ? ' ✓' : '';
-         messages.push(`式舆防卫战S评级: ${sCount}/7${status}`);
-       }
-     }
+      const abyssRawData = await api.getFinalData('zzzChallenge', { deviceFp }).catch(() => ({}));
+      if (!abyssRawData.has_data) {
+        messages.push(`式舆防卫战S评级: 0/7`);
+      } else {
+        const abyssData = new ZZZChallenge(abyssRawData);
+        const userThreshold = userConfig.abyssCheckLevel || 7;
+        if (showAll || !abyssData.areAllSUpTo(userThreshold)) {
+          const sCount = abyssData.getSRankCountUpTo(7);
+          const status = abyssData.areAllSUpTo(userThreshold) ? ' ✓' : '';
+          messages.push(`式舆防卫战S评级: ${sCount}/7${status}`);
+        }
+      }
 
       // 检查危局强袭战
       const deadlyRawData = await api.getFinalData('zzzDeadly', { deviceFp }).catch(() => ({}));
@@ -199,6 +206,9 @@ export class Remind extends ZZZPlugin {
     } catch (error) {
       logger.error(`[ZZZ-Plugin] 为用户 ${userId} 执行检查失败: ${error}`);
       messages.push('查询失败，请稍后再试');
+    } finally {
+      // 恢复原来的 this.e
+      this.e = originalE;
     }
     return messages;
   }
@@ -218,7 +228,7 @@ export class Remind extends ZZZPlugin {
 
       const messages = await this.checkUser(userId, userConfig);
       if (messages.length > 0) {
-        const user = this.e.bot.pickUser(userId);
+        const user = Bot.pickUser(userId);
         await user.sendMsg(messages.join('\n'));
       }
     }
