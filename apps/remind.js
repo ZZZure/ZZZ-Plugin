@@ -13,7 +13,7 @@ export class Remind extends ZZZPlugin {
       name: '[ZZZ-Plugin]Remind',
       dsc: '式舆防卫战/危局强袭战未完成提醒',
       event: 'message',
-      priority: _.get(settings.getConfig('priority'), 'remind', 80),
+      priority: _.get(settings.getConfig('priority'), 'remind', 70),
       rule: [
         {
           reg: `${rulePrefix}开启挑战提醒$`,
