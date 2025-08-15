@@ -35,6 +35,18 @@ export class Remind extends ZZZPlugin {
           reg: `${rulePrefix}查询挑战状态$`,
           fnc: 'checkNow',
         },
+        {
+          reg: `${rulePrefix}设置个人提醒时间\\s*(每日\\d+时|每周.\\d+时)`,
+          fnc: 'setMyRemindTime',
+        },
+        {
+          reg: `${rulePrefix}个人提醒时间$`,
+          fnc: 'viewMyRemindTime',
+        },
+        {
+          reg: `${rulePrefix}取消个人提醒时间`,
+          fnc: 'deleteMyRemindTime',
+        },
       ],
     });
 
@@ -262,5 +274,46 @@ export class Remind extends ZZZPlugin {
       }
     }
     logger.info('[ZZZ-Plugin] 式舆防卫战/危局强袭战提醒任务执行完毕');
+  }
+
+  async setMyRemindTime() {
+    const match = this.e.msg.match(/设置个人提醒时间\s*(每日\d+时|每周.\d+时)/);
+    if (!match) return;
+    const remindTime = match[1];
+
+    let userConfig = await this.getUserConfig(this.e.user_id);
+    if (!userConfig) {
+      const defaultConfig = settings.getConfig('remind');
+      userConfig = {
+        enable: false,
+        abyssCheckLevel: defaultConfig.abyssCheckLevel,
+        deadlyStars: defaultConfig.deadlyStars,
+      };
+    }
+
+    userConfig.remindTime = remindTime;
+    await this.setUserConfig(this.e.user_id, userConfig);
+    await this.reply(`您的个人提醒时间已设置为: ${remindTime}`);
+  }
+
+  async viewMyRemindTime() {
+    const userConfig = await this.getUserConfig(this.e.user_id);
+    if (userConfig && userConfig.remindTime) {
+      await this.reply(`当前提醒时间: ${userConfig.remindTime}`);
+    } else {
+      const globalRemindTime = settings.getConfig('remind.globalRemindTime') || '每日20时';
+      await this.reply(`个人提醒时间未设置，默认使用全局时间: ${globalRemindTime}`);
+    }
+  }
+
+  async deleteMyRemindTime() {
+    let userConfig = await this.getUserConfig(this.e.user_id);
+    if (userConfig && userConfig.remindTime) {
+      delete userConfig.remindTime;
+      await this.setUserConfig(this.e.user_id, userConfig);
+      await this.reply('个人提醒时间已取消');
+    } else {
+      await this.reply('个人提醒时间尚未设置');
+    }
   }
 }
