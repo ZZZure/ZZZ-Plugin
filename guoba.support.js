@@ -205,22 +205,23 @@ export function supportGuoba() {
           component: 'Switch',
         },
         {
-          field: 'remind.cron',
-          label: '提醒时间',
-          bottomHelpMessage: '设置新用户订阅时的默认Cron表达式',
-          component: 'EasyCron',
+          field: 'remind.globalRemindTime',
+          label: '全局提醒时间',
+          bottomHelpMessage: '设置全局默认提醒时间，格式如"每日20时"或"每周一20时"',
+          component: 'Input',
           componentProps: {
-            placeholder: '请输入或选择cron表达式',
+            placeholder: '请输入提醒时间，如"每日20时"',
           },
         },
         {
-          field: 'remind.abyssSCount',
+          field: 'remind.abyssCheckLevel',
           label: '默认式舆S评级阈值',
           bottomHelpMessage: '新用户订阅时，S评级数量低于此值会收到提醒',
           component: 'InputNumber',
           componentProps: {
-            min: 0,
-            placeholder: '请输入数字',
+            min: 1,
+            max: 7,
+            placeholder: '请输入数字(1-7)',
           },
         },
         {

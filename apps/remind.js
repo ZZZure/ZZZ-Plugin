@@ -38,16 +38,14 @@ export class Remind extends ZZZPlugin {
       ],
     });
 
-    this.task = {
-      name: 'ZZZ-Plugin式舆防卫战/危局强袭战提醒任务',
-      cron: this.getCron(),
-      fnc: () => this.runTask(),
-    };
-  }
-
-  getCron() {
-    const remindConfig = settings.getConfig('remind');
-    return _.get(remindConfig, 'cron', '0 30 20 * * ? *');
+    const globalRemindConfig = settings.getConfig('remind');
+    if (globalRemindConfig.enable) {
+      this.task = {
+        name: 'ZZZ-Plugin式舆防卫战/危局强袭战提醒任务',
+        cron: '0 * * * *', // 每小时的第0分钟执行
+        fnc: () => this.runTask(),
+      };
+    }
   }
 
   async getUserConfig(userId) {
@@ -57,6 +55,31 @@ export class Remind extends ZZZPlugin {
 
   async setUserConfig(userId, config) {
     await redis.hSet(USER_CONFIGS_KEY, String(userId), JSON.stringify(config));
+  }
+
+  isTimeMatch(remindTime, date) {
+    if (!remindTime) return false;
+
+    const currentHour = date.getHours();
+    const currentDay = date.getDay(); // 0 = 周日, 1 = 周一, ..., 6 = 周六
+
+    if (remindTime.includes('每日')) {
+      const match = remindTime.match(/每日(\d+)时/);
+      if (match) {
+        const hour = parseInt(match, 10);
+        return currentHour === hour;
+      }
+    } else if (remindTime.includes('每周')) {
+      const dayMap = { '日': 0, '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6 };
+      const match = remindTime.match(/每周(.)(\d+)时/);
+      if (match) {
+        const dayChar = match;
+        const hour = parseInt(match, 10);
+        const day = dayMap[dayChar];
+        return currentDay === day && currentHour === hour;
+      }
+    }
+    return false;
   }
 
   async subscribe() {
@@ -101,28 +124,28 @@ export class Remind extends ZZZPlugin {
   }
 
   async setMyAbyssThreshold() {
-   const match = this.e.msg.match(/设置式舆阈值\s*(\d+)/);
-   if (!match) return;
-   const threshold = Number(match);
+    const match = this.e.msg.match(/设置式舆阈值\s*(\d+)/);
+    if (!match) return;
+    const threshold = Number(match);
 
-   if (threshold < 1 || threshold > 7) {
-     await this.reply('阈值必须在1到7之间');
-     return false;
-   }
+    if (threshold < 1 || threshold > 7) {
+      await this.reply('阈值必须在1到7之间');
+      return false;
+    }
 
-   let userConfig = await this.getUserConfig(this.e.user_id);
-   if (!userConfig) {
-     const defaultConfig = settings.getConfig('remind');
-     userConfig = {
-       enable: false,
-       abyssCheckLevel: defaultConfig.abyssCheckLevel,
-       deadlyStars: defaultConfig.deadlyStars,
-     };
-   }
+    let userConfig = await this.getUserConfig(this.e.user_id);
+    if (!userConfig) {
+      const defaultConfig = settings.getConfig('remind');
+      userConfig = {
+        enable: false,
+        abyssCheckLevel: defaultConfig.abyssCheckLevel,
+        deadlyStars: defaultConfig.deadlyStars,
+      };
+    }
 
-   userConfig.abyssCheckLevel = threshold;
-   await this.setUserConfig(this.e.user_id, userConfig);
-   await this.reply(`式舆防卫战提醒阈值已设为: 检查前 ${threshold} 层`);
+    userConfig.abyssCheckLevel = threshold;
+    await this.setUserConfig(this.e.user_id, userConfig);
+    await this.reply(`式舆防卫战提醒阈值已设为: 检查前 ${threshold} 层`);
   }
 
   async setMyDeadlyThreshold() {
@@ -221,15 +244,21 @@ export class Remind extends ZZZPlugin {
     logger.info('[ZZZ-Plugin] 开始执行式舆防卫战/危局强袭战提醒任务');
 
     const allUserConfigs = await redis.hGetAll(USER_CONFIGS_KEY);
+    const now = new Date();
+    const globalRemindTime = globalRemindConfig.globalRemindTime || '每日20时';
 
     for (const userId in allUserConfigs) {
       const userConfig = JSON.parse(allUserConfigs[userId]);
       if (!userConfig.enable) continue;
 
-      const messages = await this.checkUser(userId, userConfig);
-      if (messages.length > 0) {
-        const user = Bot.pickUser(userId);
-        await user.sendMsg(messages.join('\n'));
+      const remindTime = userConfig.remindTime || globalRemindTime;
+
+      if (this.isTimeMatch(remindTime, now)) {
+        const messages = await this.checkUser(userId, userConfig);
+        if (messages.length > 0) {
+          const user = Bot.pickUser(userId);
+          await user.sendMsg(messages.join('\n'));
+        }
       }
     }
     logger.info('[ZZZ-Plugin] 式舆防卫战/危局强袭战提醒任务执行完毕');
