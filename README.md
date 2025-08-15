@@ -12,8 +12,6 @@
 > 插件依靠社区维护，发起者随缘更新，但是ZZZure组织成员会对PR进行合并，你可以在PR页面@协助者进行合并。
 >
 > 在你使用之前请**务必**完整阅读 `README` 内容，如因无视 `README` 遇到的问题，在提问时难免遭受嘲笑。
->
-> **自定义词条权重**和**自定义伤害计算**请查看[此教程](./model/damage/README.md)
 
 # 安装
 
@@ -44,6 +42,10 @@ git clone --depth=1 https://gitee.com/bietiaop/ZZZ-Plugin.git ./plugins/ZZZ-Plug
   <img width="800" src="https://s2.loli.net/2025/06/03/8jfKHbOkMXgxVu7.jpg" title="帮助图片">
 </p>
 </details>
+
+## 自定义评分权重、伤害计算
+
+**自定义评分权重**和**自定义伤害计算**请查看[此教程](./model/damage/README.md)
 
 ## 攻略、图鉴
 
@@ -86,7 +88,11 @@ git clone --depth=1 https://gitee.com/bietiaop/ZZZ-Plugin.git ./plugins/ZZZ-Plug
 
 绑定设备**无法100%解决**账号异常问题。
 
-若更新面板遇见账号异常问题，可尝试 **%更新展柜面板**，这将调用[Enka](https://enka.network/?zzz)接口更新游戏内展示的角色的数据。如若通过此方法更新的角色数据与实际不一致，请[提出issue](https://github.com/ZZZure/ZZZ-Plugin/issues/new)
+## 更新展柜面板
+
+若通过默认的米游社更新面板遇见账号异常问题，可尝试 **%更新展柜面板**，这将调用[Enka](https://enka.network/?zzz)接口更新游戏内展示的角色的数据。如若通过此方法更新的角色数据与实际不一致，请[提出issue](https://github.com/ZZZure/ZZZ-Plugin/issues/new)
+
+该服务可能偶尔无法使用，如更新展柜面板一直请求失败，可通过锅巴修改`自定义enkaApi地址`项来自定义请求链接，请求和返回与Enka格式一致皆可
 
 ## 角色图缺失
 

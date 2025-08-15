@@ -187,7 +187,11 @@
         <div class="td area-td">增伤区</div>
         <div class="td area-td">易伤区</div>
         <div class="td area-td">抗性区</div>
+        {{if damage.skill.isSheerDMG}}
+        <div class="td area-td">贯穿增伤区</div>
+        {{else}}
         <div class="td area-td">防御区</div>
+        {{/if}}
       </div>
       <div class="tr area-tr titlebar">
         <div class="td area-td">{{(areas.BasicArea || 1).toFixed(0)}}</div>
@@ -195,9 +199,13 @@
         <div class="td area-td">{{(areas.BoostArea || 1).toFixed(2)}}</div>
         <div class="td area-td">{{(areas.VulnerabilityArea || 1).toFixed(2)}}</div>
         <div class="td area-td">{{(areas.ResistanceArea || 1).toFixed(2)}}</div>
+        {{if damage.skill.isSheerDMG}}
+        <div class="td area-td">{{(areas.SheerBoostArea || 1).toFixed(2)}}</div>
+        {{else}}
         <div class="td area-td">{{(areas.DefenceArea || 1).toFixed(4)}}</div>
+        {{/if}}
       </div>
-      {{if areas.AnomalyProficiencyArea}}
+      {{if damage.skill.isAnomalyDMG}}
       <div class="tr area-tr anomaly titlebar no-zzz-font">
         <div class="td area-td">异常精通区</div>
         <div class="td area-td">异常增伤区</div>
@@ -231,7 +239,7 @@
         <div class="td buff-td no-zzz-font">{{buff.name}}</div>
         <div class="td buff-td no-zzz-font">{{buff.source}}</div>
         <div class="td buff-td no-zzz-font">{{buff.type}}</div>
-        <div class="td buff-td">{{buff.value % 1 == 0 ? buff.value < 2 ? buff.value.toFixed(2) : buff.value : buff.value.toFixed(2)}}</div>
+        <div class="td buff-td">{{buff.value < 2 ? (buff.value.toFixed(2) * 100 + '%') : (buff.value % 1 === 0 ? buff.value : buff.value.toFixed(2))}}</div>
       </div>
       {{/each}}
     </div>

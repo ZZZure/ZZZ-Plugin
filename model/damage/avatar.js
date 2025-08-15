@@ -103,7 +103,7 @@ async function importFile(type, name, isWatch = false) {
         logger.error(`导入${type}/${name}.js错误：`, e);
     }
 }
-await init();
+init();
 export function avatar_calc(avatar) {
     const m = calcFnc.character[avatar.id];
     if (!m)

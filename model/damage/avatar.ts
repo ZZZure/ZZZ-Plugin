@@ -136,7 +136,7 @@ async function importFile(type: 'weapon' | 'set', name: string, isWatch = false)
 	}
 }
 
-await init()
+init()
 
 /** 角色计算实例 */
 export function avatar_calc(avatar: ZZZAvatarInfo) {

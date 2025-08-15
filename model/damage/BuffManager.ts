@@ -25,11 +25,13 @@ export type buffSource = '音擎' | '套装' | '技能' | '影画' | '核心被�
 
 export enum buffTypeEnum {
   // 通用乘区
-  攻击力, 倍率, 增伤, 易伤, 无视抗性, 无视防御, 穿透值, 穿透率,
+  攻击力, 倍率, 增伤, 易伤, 无视抗性, 无视防御, 穿透值, 穿透率, 失衡易伤,
   // 直伤乘区
   暴击率, 暴击伤害,
   // 异常乘区
   异常精通, 异常增伤, 异常暴击率, 异常暴击伤害, 异常持续时间,
+  // 贯穿乘区
+  贯穿力, 贯穿增伤,
   // 其他属性，一般不直接影响伤害，但可能用于buff是否生效判断/转模
   生命值, 防御力, 冲击力, 异常掌控
 }
@@ -52,7 +54,7 @@ export interface buff {
    * - 一般情况下此值即为提高值
    * - 当buff增益类型为**攻击力/冲击力/异常精通/异常掌控/防御力/生命值**时，若此值 **<1**，则将此值理解为**初始属性**的**百分比提高**
    * @string
-   * 角色自身的buff提高值可能随技能/天赋等级提高而提高，此时可以于data.json的"buff"中添加对应的倍率信息（同上支持百分比提高），此时value即为键名，其首字母必须为对应技能的基类（参考技能类型命名标准）
+   * 角色自身的buff提高值可能随技能/天赋等级提高而提高，此时可以于data.json的"buff"中添加倍率数组（同上支持百分比提高），此时value即为键名，其首字母必须为对应技能的基类（参考技能类型命名标准）
    * @array
    * 根据buff.source自动选择对应等级/星级的值（同上支持百分比提高），支持的source：
    * - 音擎：音擎进阶星级
@@ -74,7 +76,7 @@ export interface buff {
   range?: string[] | anomaly[] | "追加攻击"[]
   /** 
    * Buff增益技能类型**生效技能**
-   * - 不同于**range**，仅全匹配时该值生效，不会向后覆盖生效
+   * - 不同于**range**，仅全匹配type时该值生效，不会向后覆盖生效
    * - 无**range**且无**include**则该buff对**exclude**以外的全部技能生效
    * - **range**与**include**符合其一则认为buff生效
    * - 当技能参数存在**redirect**时，**range**与**include**的区别在于**include**不会尝试匹配**redirect**
@@ -82,7 +84,7 @@ export interface buff {
   include?: string[]
   /** 
    * Buff增益技能类型**排除技能**
-   * - 与**include**相同，仅全匹配时该值生效，不会向后覆盖生效
+   * - 与**include**相同，仅全匹配type时该值生效，不会向后覆盖生效
    * - 优先级高于**range**与**include**
    */
   exclude?: string[]
@@ -142,7 +144,7 @@ export class BuffManager {
     const oriBuff = buff
     buff = _.merge({
       status: true,
-      is: {},
+      // is: {},
       ...this.defaultBuff
     }, buff)
     if (buff.range && !Array.isArray(buff.range))

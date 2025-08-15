@@ -28,17 +28,20 @@ export var buffTypeEnum;
     buffTypeEnum[buffTypeEnum["\u65E0\u89C6\u9632\u5FA1"] = 5] = "\u65E0\u89C6\u9632\u5FA1";
     buffTypeEnum[buffTypeEnum["\u7A7F\u900F\u503C"] = 6] = "\u7A7F\u900F\u503C";
     buffTypeEnum[buffTypeEnum["\u7A7F\u900F\u7387"] = 7] = "\u7A7F\u900F\u7387";
-    buffTypeEnum[buffTypeEnum["\u66B4\u51FB\u7387"] = 8] = "\u66B4\u51FB\u7387";
-    buffTypeEnum[buffTypeEnum["\u66B4\u51FB\u4F24\u5BB3"] = 9] = "\u66B4\u51FB\u4F24\u5BB3";
-    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u7CBE\u901A"] = 10] = "\u5F02\u5E38\u7CBE\u901A";
-    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u589E\u4F24"] = 11] = "\u5F02\u5E38\u589E\u4F24";
-    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u66B4\u51FB\u7387"] = 12] = "\u5F02\u5E38\u66B4\u51FB\u7387";
-    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u66B4\u51FB\u4F24\u5BB3"] = 13] = "\u5F02\u5E38\u66B4\u51FB\u4F24\u5BB3";
-    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u6301\u7EED\u65F6\u95F4"] = 14] = "\u5F02\u5E38\u6301\u7EED\u65F6\u95F4";
-    buffTypeEnum[buffTypeEnum["\u751F\u547D\u503C"] = 15] = "\u751F\u547D\u503C";
-    buffTypeEnum[buffTypeEnum["\u9632\u5FA1\u529B"] = 16] = "\u9632\u5FA1\u529B";
-    buffTypeEnum[buffTypeEnum["\u51B2\u51FB\u529B"] = 17] = "\u51B2\u51FB\u529B";
-    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u638C\u63A7"] = 18] = "\u5F02\u5E38\u638C\u63A7";
+    buffTypeEnum[buffTypeEnum["\u5931\u8861\u6613\u4F24"] = 8] = "\u5931\u8861\u6613\u4F24";
+    buffTypeEnum[buffTypeEnum["\u66B4\u51FB\u7387"] = 9] = "\u66B4\u51FB\u7387";
+    buffTypeEnum[buffTypeEnum["\u66B4\u51FB\u4F24\u5BB3"] = 10] = "\u66B4\u51FB\u4F24\u5BB3";
+    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u7CBE\u901A"] = 11] = "\u5F02\u5E38\u7CBE\u901A";
+    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u589E\u4F24"] = 12] = "\u5F02\u5E38\u589E\u4F24";
+    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u66B4\u51FB\u7387"] = 13] = "\u5F02\u5E38\u66B4\u51FB\u7387";
+    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u66B4\u51FB\u4F24\u5BB3"] = 14] = "\u5F02\u5E38\u66B4\u51FB\u4F24\u5BB3";
+    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u6301\u7EED\u65F6\u95F4"] = 15] = "\u5F02\u5E38\u6301\u7EED\u65F6\u95F4";
+    buffTypeEnum[buffTypeEnum["\u8D2F\u7A7F\u529B"] = 16] = "\u8D2F\u7A7F\u529B";
+    buffTypeEnum[buffTypeEnum["\u8D2F\u7A7F\u589E\u4F24"] = 17] = "\u8D2F\u7A7F\u589E\u4F24";
+    buffTypeEnum[buffTypeEnum["\u751F\u547D\u503C"] = 18] = "\u751F\u547D\u503C";
+    buffTypeEnum[buffTypeEnum["\u9632\u5FA1\u529B"] = 19] = "\u9632\u5FA1\u529B";
+    buffTypeEnum[buffTypeEnum["\u51B2\u51FB\u529B"] = 20] = "\u51B2\u51FB\u529B";
+    buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u638C\u63A7"] = 21] = "\u5F02\u5E38\u638C\u63A7";
 })(buffTypeEnum || (buffTypeEnum = {}));
 let depth = 0, weakMapCheck = new WeakMap();
 export class BuffManager {
@@ -59,7 +62,6 @@ export class BuffManager {
         const oriBuff = buff;
         buff = _.merge({
             status: true,
-            is: {},
             ...this.defaultBuff
         }, buff);
         if (buff.range && !Array.isArray(buff.range))

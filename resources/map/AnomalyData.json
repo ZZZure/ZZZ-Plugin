@@ -94,5 +94,18 @@
       "multiplier": 0.625,
       "fixed_multiplier": 4.5
     }
+  },
+  {
+    "name": "侵蚀",
+    "element": "Ether",
+    "element_type": 205,
+    "sub_element_type": 2,
+    "duration": 10,
+    "interval": 0.5,
+    "multiplier": 0.625,
+    "discover": {
+      "multiplier": 0.625,
+      "fixed_multiplier": 4.5
+    }
   }
 ]

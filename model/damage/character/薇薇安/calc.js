@@ -73,7 +73,7 @@ export const skills = [
     banCache: true,
     dmg: (calc) => {
       const dmg = calc.calc_skill({
-        ...calc.skills.find(skill => skill.type === '侵蚀·异放'),
+        ...calc.find_skill('type', '侵蚀·异放'),
         after: ({ damage }) => damage.x(5)
       })
       return dmg

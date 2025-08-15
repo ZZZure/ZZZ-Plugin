@@ -22,8 +22,7 @@ export const buffs = [
   {
     name: '4影',
     type: '异常增伤',
-    value: 0.18,
-    exclude: ['紊乱']
+    value: 0.18
   },
   {
     name: '6影',

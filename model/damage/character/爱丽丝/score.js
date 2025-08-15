@@ -1,6 +1,7 @@
 /** @type {import('../../avatar.ts')['scoreFnc'][string]} */
 export default function (avatar) {
   const props = avatar.initial_properties
+  // (暴击率 * 2 + 爆伤 >= 200%) 且 (异常精通 < 300) 时转为直伤流规则
   if (props.CRITRate * 2 + props.CRITDMG >= 2 && props.AnomalyProficiency < 300) {
     return ['直伤流', {
       "生命值百分比": 0,

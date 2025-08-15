@@ -313,7 +313,7 @@ export class ZZZAvatarInfo {
      */
     const get = (name) => {
       const data = basic_properties[name]
-      return Number(data.base || data.final)
+      return Number(data?.base || data?.final || 0)
     }
     return this._base_properties = {
       HP: get('hpmax'),
@@ -334,6 +334,7 @@ export class ZZZAvatarInfo {
      * @param {keyof ZZZAvatarInfo['basic_properties']} name
      */
     const get = (name) => {
+      if (!basic_properties[name]) return 0
       const data = basic_properties[name].final
       return Number(data.includes('%') ? data.replace('%', '') / 100 : data)
     }
