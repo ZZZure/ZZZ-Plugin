@@ -126,7 +126,7 @@ export class Remind extends ZZZPlugin {
   async setMyAbyssThreshold() {
     const match = this.e.msg.match(/设置式舆阈值\s*(\d+)/);
     if (!match) return;
-    const threshold = Number(match);
+    const threshold = Number(match[1]);
 
     if (threshold < 1 || threshold > 7) {
       await this.reply('阈值必须在1到7之间');
@@ -151,7 +151,7 @@ export class Remind extends ZZZPlugin {
   async setMyDeadlyThreshold() {
     const match = this.e.msg.match(/设置危局阈值\s*(\d+)/);
     if (!match) return;
-    const threshold = Number(match);
+    const threshold = Number(match[1]);
 
     let userConfig = await this.getUserConfig(this.e.user_id);
     if (!userConfig) {
