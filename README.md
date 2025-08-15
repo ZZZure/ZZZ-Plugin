@@ -58,9 +58,9 @@ git clone --depth=1 https://gitee.com/bietiaop/ZZZ-Plugin.git ./plugins/ZZZ-Plug
 
 ## 自定义面板图
 
-将你下载的面板图放在`zzz插件目录/resources/images/panel/[角色名简称]/`文件夹下。若文件夹不存在请自行创建。
+将你下载的面板图放在`zzz插件目录/resources/images/panel/[角色名称]/`文件夹下。若文件夹不存在请自行创建。
 
-**角色名简称**请参考官方wiki中代理人名称：[米游社·绝区零 绳网情报站](https://baike.mihoyo.com/zzz/wiki/channel/map/2/43)
+**角色名称**可以是[米游社绳网情报站](https://baike.mihoyo.com/zzz/wiki/channel/map/2/43)中显示的代理人`简称`或`全称`，也可以是[插件数据PartnerId2Data](resources\map\PartnerId2Data.json)中的`name`或`full_name`。四个路径依序检测，取第一个存在的路径中的面板图
 
 若要查看或者批量删除自定义面板图，请发送指令 `%帮助` 进行查看如何使用相关指令。
 

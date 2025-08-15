@@ -1,4 +1,4 @@
-import { element } from '../lib/convert.js';
+import { char, element } from '../lib/convert.js';
 import {
   getRoleImage,
   getSmallSquareAvatar,
@@ -507,12 +507,15 @@ export class ZZZAvatarInfo {
    * @returns {Promise<void>}
    */
   async get_detail_assets() {
-    const custom_panel_images = path.join(
-      imageResourcesPath,
-      `panel/${this.name_mi18n}`
-    );
+    const paths = Array.from(new Set([
+      this.name_mi18n,
+      this.full_name_mi18n,
+      char.IDToCharName(this.id, false),
+      char.IDToCharName(this.id, true)
+    ].filter(Boolean))).map(p => path.join(imageResourcesPath, 'panel', p));
     let role_icon = '';
-    if (fs.existsSync(custom_panel_images)) {
+    const custom_panel_images = paths.find(p => fs.existsSync(p));
+    if (custom_panel_images) {
       const panel_images = fs
         .readdirSync(custom_panel_images)
         .map(file => path.join(custom_panel_images, file));
