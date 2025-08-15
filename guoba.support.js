@@ -196,6 +196,45 @@ export function supportGuoba() {
         },
         {
           component: 'SOFT_GROUP_BEGIN',
+          label: '提醒功能设置',
+        },
+        {
+          field: 'remind.enable',
+          label: '开启提醒功能',
+          bottomHelpMessage: '是否启用式舆防卫战/危局强袭战的定时提醒功能',
+          component: 'Switch',
+        },
+        {
+          field: 'remind.cron',
+          label: '提醒时间',
+          bottomHelpMessage: '设置新用户订阅时的默认Cron表达式',
+          component: 'EasyCron',
+          componentProps: {
+            placeholder: '请输入或选择cron表达式',
+          },
+        },
+        {
+          field: 'remind.abyssSCount',
+          label: '默认式舆S评级阈值',
+          bottomHelpMessage: '新用户订阅时，S评级数量低于此值会收到提醒',
+          component: 'InputNumber',
+          componentProps: {
+            min: 0,
+            placeholder: '请输入数字',
+          },
+        },
+        {
+          field: 'remind.deadlyStars',
+          label: '默认危局星星阈值',
+          bottomHelpMessage: '新用户订阅时，星星总数低于此值会收到提醒',
+          component: 'InputNumber',
+          componentProps: {
+            min: 0,
+            placeholder: '请输入数字',
+          },
+        },
+        {
+          component: 'SOFT_GROUP_BEGIN',
           label: '攻略设置',
         },
         {
