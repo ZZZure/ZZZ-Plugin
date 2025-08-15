@@ -1,7 +1,7 @@
 /** @type {import('../../avatar.ts')['scoreFnc'][string]} */
 export default function (avatar) {
   const props = avatar.initial_properties
-  if (props.CRITRate * 2 + props.CRITDMG >= 2 && props.AnomalyProficiency < 200) {
+  if (props.CRITRate * 2 + props.CRITDMG >= 2 && props.AnomalyProficiency < 300) {
     return ['直伤流', {
       "生命值百分比": 0,
       "攻击力百分比": 0.75,
