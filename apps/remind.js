@@ -54,7 +54,7 @@ export class Remind extends ZZZPlugin {
     if (globalRemindConfig.enable) {
       this.task = {
         name: 'ZZZ-Plugin式舆防卫战/危局强袭战提醒任务',
-        cron: '0 * * * *', // 每小时的第0分钟执行
+        cron: '0 * * * * ?', // 每小时的第0分钟执行
         fnc: () => this.runTask(),
       };
     }
