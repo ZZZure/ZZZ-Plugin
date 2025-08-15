@@ -13,7 +13,7 @@ export class RemindManage extends ZZZPlugin {
       priority: 40, // 管理插件优先级较高
       rule: [
         {
-          reg: `${rulePrefix}设置全局提醒\\s*(每日\\d+时|每周.\\d+时)`,
+          reg: `${rulePrefix}设置全局提醒时间\\s*(每日\\d+时|每周.\\d+时)`,
           fnc: 'setGlobalRemind',
           permission: 'master',
         },
@@ -45,7 +45,7 @@ export class RemindManage extends ZZZPlugin {
   async setGlobalRemind() {
     const match = this.e.msg.match(/(每日\d+时|每周.\d+时)/);
     if (!match) return;
-    const remindTime = match.trim();
+    const remindTime = match[1];
 
     // 将全局提醒时间写入yaml配置
     settings.setConfig('remind.globalRemindTime', remindTime);
@@ -55,7 +55,7 @@ export class RemindManage extends ZZZPlugin {
   async setMyRemindTime() {
     const match = this.e.msg.match(/(每日\d+时|每周.\d+时)/);
     if (!match) return;
-    const remindTime = match.trim();
+    const remindTime = match[1];
 
     let userConfig = await this.getUserConfig(this.e.user_id);
     if (!userConfig) {
