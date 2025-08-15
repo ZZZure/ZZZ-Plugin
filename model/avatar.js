@@ -257,7 +257,7 @@ export class ZZZAvatarInfo {
     /** @type {number} */
     this.ranks_num = this.ranks.filter(rank => rank.is_unlocked).length;
     /** @type {string} */
-    this.element_str = element.IDToElement(element_type);
+    this.element_str = element.IDToElement(element_type, sub_element_type);
     /** @type {boolean} */
     this.isNew = isNew;
     /** @type {number}  等级级别（取十位数字）*/

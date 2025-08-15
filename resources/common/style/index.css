@@ -81,6 +81,12 @@
 .property.dungeon {
   background-image: url("../images/IconDungeonBuffEther.png");
 }
+.property.frost {
+  background-image: url("../images/IconFrost.png");
+}
+.property.auricink {
+  background-image: url("../images/IconAuricInk.png");
+}
 
 .prop-icon {
   aspect-ratio: 1;
@@ -141,6 +147,9 @@
 }
 .prop-icon.thunder {
   background-image: url("../images/property/IconThunder.png");
+}
+.prop-icon.sheerforce {
+  background-image: url("../images/property/IconSheerForce.png");
 }
 
 .pro-icon {

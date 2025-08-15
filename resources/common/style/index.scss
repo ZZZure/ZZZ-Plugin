@@ -99,6 +99,12 @@
   &.dungeon {
     background-image: url('../images/IconDungeonBuffEther.png');
   }
+  &.frost {
+    background-image: url('../images/IconFrost.png');
+  }
+  &.auricink {
+    background-image: url('../images/IconAuricInk.png');
+  }
 }
 
 .prop-icon {
@@ -159,6 +165,9 @@
   }
   &.thunder {
     background-image: url('../images/property/IconThunder.png');
+  }
+  &.sheerforce {
+    background-image: url('../images/property/IconSheerForce.png');
   }
 }
 
