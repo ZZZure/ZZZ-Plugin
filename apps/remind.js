@@ -181,13 +181,17 @@ export class Remind extends ZZZPlugin {
   }
 
   async checkNow() {
-    const userConfig = await this.getUserConfig(this.e.user_id);
+    const uid = await this.getUID();
+    if (!uid) return false;
+
+    const targetUserId = this.e.user_id;
+    const userConfig = await this.getUserConfig(targetUserId);
     if (!userConfig) {
       await this.reply('尚未设置任何提醒，请先设置阈值');
       return false;
     }
     await this.reply('正在查询，请稍候...');
-    const messages = await this.checkUser(this.e.user_id, userConfig, true); // 主动查询，显示所有状态
+    const messages = await this.checkUser(targetUserId, userConfig, true); // 主动查询，显示所有状态
     if (messages.length > 0) {
       await this.reply(messages.join('\n'));
     } else {
@@ -195,28 +199,30 @@ export class Remind extends ZZZPlugin {
     }
   }
 
-  async checkUser(userId, userConfig, showAll = false) {
+  async checkUser(userId, userConfig, showAll = false, contextE = null) {
     let messages = [];
 
-    // 创建一个模拟的 e 对象，用于获取 API
-    const mockE = {
-      user_id: userId,
-      game: 'zzz',
-      reply: (msg) => logger.info(`[Remind Mock Reply] ${msg}`)
-    };
-
-    // 临时设置 this.e 用于调用父类方法
     const originalE = this.e;
-    this.e = mockE;
+    this.e = contextE || this.e;
 
+    let api, deviceFp;
     try {
-      const { api, deviceFp } = await this.getAPI();
-      await this.getPlayerInfo(mockE);
+      // 获取 API 和玩家信息
+      ({ api, deviceFp } = await this.getAPI());
+      await this.getPlayerInfo(this.e);
+    } catch (error) {
+      logger.error(`[ZZZ-Plugin] 为用户 ${userId} 获取API或玩家信息失败: ${error}`);
+      messages.push('查询失败，请稍后再试');
+      // 恢复原来的 this.e
+      this.e = originalE;
+      return messages;
+    }
 
-      // 检查式舆防卫战
-      const abyssRawData = await api.getFinalData('zzzChallenge', { deviceFp }).catch(() => ({}));
-      if (!abyssRawData.has_data) {
-        messages.push(`式舆防卫战S评级: 0/7`);
+    // 检查式舆防卫战
+    try {
+      const abyssRawData = await api.getFinalData('zzzChallenge', { deviceFp });
+      if (!abyssRawData || !abyssRawData.has_data) {
+        messages.push('式舆防卫战S评级: 0/7');
       } else {
         const abyssData = new ZZZChallenge(abyssRawData);
         const userThreshold = userConfig.abyssCheckLevel || 7;
@@ -226,11 +232,16 @@ export class Remind extends ZZZPlugin {
           messages.push(`式舆防卫战S评级: ${sCount}/7${status}`);
         }
       }
+    } catch (error) {
+      logger.error(`[ZZZ-Plugin] 为用户 ${userId} 检查式舆防卫战失败: ${error}`);
+      messages.push('式舆防卫战查询失败');
+    }
 
-      // 检查危局强袭战
-      const deadlyRawData = await api.getFinalData('zzzDeadly', { deviceFp }).catch(() => ({}));
-      if (!deadlyRawData.has_data) {
-        messages.push(`危局强袭战星星: 0/9`);
+    // 检查危局强袭战
+    try {
+      const deadlyRawData = await api.getFinalData('zzzDeadly', { deviceFp });
+      if (!deadlyRawData || !deadlyRawData.has_data) {
+        messages.push('危局强袭战星星: 0/9');
       } else {
         const deadlyData = new Deadly(deadlyRawData);
         if (showAll || deadlyData.total_star < userConfig.deadlyStars) {
@@ -239,12 +250,12 @@ export class Remind extends ZZZPlugin {
         }
       }
     } catch (error) {
-      logger.error(`[ZZZ-Plugin] 为用户 ${userId} 执行检查失败: ${error}`);
-      messages.push('查询失败，请稍后再试');
-    } finally {
-      // 恢复原来的 this.e
-      this.e = originalE;
+      logger.error(`[ZZZ-Plugin] 为用户 ${userId} 检查危局强袭战失败: ${error}`);
+      messages.push('危局强袭战查询失败');
     }
+
+    // 恢复原来的 this.e
+    this.e = originalE;
     return messages;
   }
 
@@ -266,7 +277,14 @@ export class Remind extends ZZZPlugin {
       const remindTime = userConfig.remindTime || globalRemindTime;
 
       if (this.isTimeMatch(remindTime, now)) {
-        const messages = await this.checkUser(userId, userConfig);
+        // 创建一个模拟的 e 对象，用于获取 API
+        const mockE = {
+          user_id: userId,
+          game: 'zzz',
+          reply: (msg) => logger.info(`[Remind Mock Reply] ${msg}`)
+        };
+
+        const messages = await this.checkUser(userId, userConfig, false, mockE);
         if (messages.length > 0) {
           const user = Bot.pickUser(userId);
           await user.sendMsg(messages.join('\n'));
