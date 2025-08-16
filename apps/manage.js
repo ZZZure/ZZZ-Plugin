@@ -88,11 +88,6 @@ export class Manage extends ZZZPlugin {
           reg: `${rulePrefix}设置检查更新时间(.+)$`,
           fnc: 'setCheckUpdateCron',
         },
-        {
-          reg: `${rulePrefix}设置全局提醒时间\\s*(每日\\d+时|每周.\\d+时)`,
-          fnc: 'setGlobalRemind',
-          permission: 'master',
-        },
       ],
     });
 
@@ -116,6 +111,5 @@ export class Manage extends ZZZPlugin {
     this.setCheckUpdateCron = manage.version.setCheckUpdateCron;
     this.setDefaultDevice = manage.device.setDefaultDevice;
     this.toSetDefaultDevice = manage.device.toSetDefaultDevice;
-    this.setGlobalRemind = manage.remind.setGlobalRemind;
   }
 }

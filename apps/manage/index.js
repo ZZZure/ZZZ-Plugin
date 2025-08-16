@@ -12,8 +12,6 @@ import * as version from './version.js';
 
 import * as device from './device.js';
 
-import * as remind from './remind.js';
-
 export default {
   assets,
   guides,
@@ -22,5 +20,4 @@ export default {
   panel,
   version,
   device,
-  remind,
 };

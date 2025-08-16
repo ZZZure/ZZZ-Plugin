@@ -209,6 +209,13 @@ const helpData = [
         commands: ['查询挑战状态'],
       },
       {
+        title: '查看提醒时间',
+        desc: '查看个人提醒时间或全局提醒时间',
+        needCK: true,
+        needSK: false,
+        commands: ['个人提醒时间', '全局提醒时间']
+      },
+      {
         title: '设置个人提醒时间',
         desc: '设置每日或每周的个人提醒时间，格式如“每日20时”或“每周六20时10分”，分钟需为整十数，可不加分钟。',
         needCK: true,
@@ -216,11 +223,11 @@ const helpData = [
         commands: ['设置个人提醒时间+时间'],
       },
       {
-        title: '查看/取消个人提醒时间',
-        desc: '查看当前个人提醒时间或取消已设置的个人提醒时间',
+        title: '取消个人提醒时间',
+        desc: '取消已设置的个人提醒时间',
         needCK: true,
         needSK: false,
-        commands: ['个人提醒时间', '取消个人提醒时间'],
+        commands: ['取消个人提醒时间'],
       },
       {
         title: '设置全局提醒时间',
