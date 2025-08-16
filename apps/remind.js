@@ -255,16 +255,17 @@ export class Remind extends ZZZPlugin {
       return messages;
     }
 
+    const defaultConfig = settings.getConfig('remind');
     // 检查式舆防卫战
     try {
       const abyssRawData = await api.getFinalData('zzzChallenge', { deviceFp });
       if (!abyssRawData || !abyssRawData.has_data) {
         messages.push('式舆防卫战S评级: 0/7');
       } else {
-        const userThreshold = userConfig.abyssCheckLevel || 7;
+        const abyssCheckLevel = userConfig.abyssCheckLevel ?? defaultConfig.abyssCheckLevel;
         const sCount = getSRankCountUpTo(abyssRawData.all_floor_detail, 7);
-        const status = sCount >= userThreshold ? ' ✓' : '';
-        if (showAll || sCount < userThreshold) {
+        const status = sCount >= abyssCheckLevel ? ' ✓' : '';
+        if (showAll || sCount < abyssCheckLevel) {
           messages.push(`式舆防卫战S评级: ${sCount}/7${status}`);
         }
       }
@@ -279,9 +280,10 @@ export class Remind extends ZZZPlugin {
       if (!deadlyRawData || !deadlyRawData.has_data) {
         messages.push('危局强袭战星星: 0/9');
       } else {
+        const deadlyStars = userConfig.deadlyStars ?? defaultConfig.deadlyStars;
         const totalStar = deadlyRawData.total_star || 0;
-        if (showAll || totalStar < userConfig.deadlyStars) {
-          const status = totalStar >= userConfig.deadlyStars ? ' ✓' : '';
+        const status = totalStar >= deadlyStars ? ' ✓' : '';
+        if (showAll || totalStar < deadlyStars) {
           messages.push(`危局强袭战星星: ${totalStar}/9${status}`);
         }
       }
