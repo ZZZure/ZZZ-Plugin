@@ -36,7 +36,7 @@ export class Remind extends ZZZPlugin {
           fnc: 'checkNow',
         },
         {
-          reg: `${rulePrefix}设置个人提醒时间\\s*(每日\\d+时|每周.\\d+时)`,
+          reg: `${rulePrefix}设置个人提醒时间\\s*(每日\\d+时(?:(\\d+)分)?|每周.\\d+时(?:(\\d+)分)?)`,
           fnc: 'setMyRemindTime',
         },
         {
@@ -54,7 +54,7 @@ export class Remind extends ZZZPlugin {
     if (globalRemindConfig.enable) {
       this.task = {
         name: 'ZZZ-Plugin式舆防卫战/危局强袭战提醒任务',
-        cron: '0 * * * * ?', // 每小时的第0分钟执行
+        cron: '0 0/10 * * * *',
         fnc: () => this.runTask(),
       };
     }
@@ -72,23 +72,26 @@ export class Remind extends ZZZPlugin {
   isTimeMatch(remindTime, date) {
     if (!remindTime) return false;
 
-    const currentHour = date.getHours();
     const currentDay = date.getDay(); // 0 = 周日, 1 = 周一, ..., 6 = 周六
+    const currentHour = date.getHours();
+    const currentMinute = date.getMinutes();
 
     if (remindTime.includes('每日')) {
-      const match = remindTime.match(/每日(\d+)时/);
+      const match = remindTime.match(/每日(\d+)时(?:(\d+)分)?/);
       if (match) {
-        const hour = parseInt(match[1], 10);
-        return currentHour === hour;
+        const hour = parseInt(match[1]);
+        const minute = match[2] ? parseInt(match[2]) : 0;
+        return currentHour === hour && currentMinute === minute;
       }
     } else if (remindTime.includes('每周')) {
-      const dayMap = { '日': 0, '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6 };
-      const match = remindTime.match(/每周(.)(\d+)时/);
+      const dayMap = { '日': 0, '天': 0, '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6 };
+      const match = remindTime.match(/每周(.)(\d+)时(?:(\d+)分)?/);
       if (match) {
         const dayChar = match[1];
-        const hour = parseInt(match[2], 10);
-        const day = dayMap[dayChar] || parseInt(dayChar, 10);
-        return currentDay === day && currentHour === hour;
+        const day = dayMap[dayChar];
+        const hour = parseInt(match[2]);
+        const minute = match[3] ? parseInt(match[3]) : 0;
+        return currentDay === day && currentHour === hour && currentMinute === minute;
       }
     }
     return false;
@@ -300,9 +303,16 @@ export class Remind extends ZZZPlugin {
   }
 
   async setMyRemindTime() {
-    const match = this.e.msg.match(/设置个人提醒时间\s*(每日\d+时|每周.\d+时)/);
+    const match = this.e.msg.match(/设置个人提醒时间\s*(每日\d+时(?:(\d+)分)?|每周.\d+时(?:(\d+)分)?)/);
     if (!match) return;
     const remindTime = match[1];
+    const minute = Number(match[2]) || Number(match[3]) || 0;
+
+    // 验证分钟格式
+    if (minute % 10 !== 0 || minute < 0 || minute >= 60) {
+      await this.reply('分钟必须为整十分钟');
+      return;
+    }
 
     let userConfig = await this.getUserConfig(this.e.user_id);
     if (!userConfig) {
