@@ -185,10 +185,15 @@ export class Remind extends ZZZPlugin {
     if (!uid) return false;
 
     const targetUserId = this.e.user_id;
-    const userConfig = await this.getUserConfig(targetUserId);
+    let userConfig = await this.getUserConfig(targetUserId);
     if (!userConfig) {
-      await this.reply('尚未设置任何提醒，请先设置阈值');
-      return false;
+      // 如果没有配置，使用默认配置
+      const defaultConfig = settings.getConfig('remind');
+      userConfig = {
+        enable: false, // 不开启提醒，仅用于查询
+        abyssCheckLevel: defaultConfig.abyssCheckLevel,
+        deadlyStars: defaultConfig.deadlyStars,
+      };
     }
     await this.reply('正在查询，请稍候...');
     const messages = await this.checkUser(targetUserId, userConfig, true); // 主动查询，显示所有状态
