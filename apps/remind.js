@@ -47,6 +47,14 @@ export class Remind extends ZZZPlugin {
           reg: `${rulePrefix}取消个人提醒时间`,
           fnc: 'deleteMyRemindTime',
         },
+        {
+          reg: `${rulePrefix}设置全局提醒时间\\s*(每日\\d+时(?:(\\d+)分)?|每周.\\d+时(?:(\\d+)分)?)`,
+          fnc: 'setGlobalRemindTime',
+        },
+        {
+          reg: `${rulePrefix}全局提醒时间$`,
+          fnc: 'viewGlobalRemindTime',
+        },
       ],
     });
 
@@ -348,5 +356,30 @@ export class Remind extends ZZZPlugin {
     } else {
       await this.reply('个人提醒时间尚未设置');
     }
+  }
+
+  async setGlobalRemindTime() {
+    if (!this.e.isMaster) {
+      this.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
+      return false;
+    }
+    const match = this.e.msg.match(/设置全局提醒时间\s*(每日\d+时(?:(\d+)分)?)|每周.\d+时(?:(\d+)分)?))/);
+    if (!match) return;
+    const globalRemindTime = match[1];
+    const minute = Number(match[2]) || Number(match[3]) || 0;
+
+    // 验证分钟格式
+    if (minute % 10 !== 0 || minute < 0 || minute >= 60) {
+      await this.reply('分钟必须为整十分钟');
+      return;
+    }
+
+    settings.setSingleConfig('remind', 'globalRemindTime', globalRemindTime);
+    await this.reply(`全局提醒时间已更新为: ${globalRemindTime}。`);
+  }
+
+  async viewGlobalRemindTime() {
+    const globalRemindTime = settings.getConfig('remind').globalRemindTime || '每日20时';
+    await this.reply(`当前全局提醒时间: ${globalRemindTime}`);
   }
 }
