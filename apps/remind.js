@@ -78,16 +78,16 @@ export class Remind extends ZZZPlugin {
     if (remindTime.includes('每日')) {
       const match = remindTime.match(/每日(\d+)时/);
       if (match) {
-        const hour = parseInt(match, 10);
+        const hour = parseInt(match[1], 10);
         return currentHour === hour;
       }
     } else if (remindTime.includes('每周')) {
       const dayMap = { '日': 0, '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6 };
       const match = remindTime.match(/每周(.)(\d+)时/);
       if (match) {
-        const dayChar = match;
-        const hour = parseInt(match, 10);
-        const day = dayMap[dayChar];
+        const dayChar = match[1];
+        const hour = parseInt(match[2], 10);
+        const day = dayMap[dayChar] || parseInt(dayChar, 10);
         return currentDay === day && currentHour === hour;
       }
     }
