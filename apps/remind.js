@@ -239,7 +239,7 @@ export class Remind extends ZZZPlugin {
       }
     } catch (error) {
       logger.error(`[ZZZ-Plugin] 为用户 ${userId} 检查式舆防卫战失败: ${error}`);
-      messages.push('式舆防卫战查询失败');
+      messages.push(`式舆防卫战查询失败: ${error}`);
     }
 
     // 检查危局强袭战
@@ -256,7 +256,7 @@ export class Remind extends ZZZPlugin {
       }
     } catch (error) {
       logger.error(`[ZZZ-Plugin] 为用户 ${userId} 检查危局强袭战失败: ${error}`);
-      messages.push('危局强袭战查询失败');
+      messages.push(`危局强袭战查询失败: ${error}`);
     }
 
     // 恢复原来的 this.e
