@@ -29,12 +29,13 @@ export class Remind extends ZZZPlugin {
       priority: _.get(settings.getConfig('priority'), 'remind', 70),
       rule: [
         {
-          reg: `${rulePrefix}开启挑战提醒$`,
-          fnc: 'subscribe',
+          reg: `${rulePrefix}(开启|关闭)挑战提醒$`,
+          fnc: 'setSubscribeEnable',
         },
         {
-          reg: `${rulePrefix}关闭挑战提醒$`,
-          fnc: 'unsubscribe',
+          reg: `${rulePrefix}(开启|关闭)全局挑战提醒$`,
+          fnc: 'setGlobalRemindEnable',
+          permission: 'master',
         },
         {
           reg: `${rulePrefix}设置式舆阈值\\s*(\\d+)`,
@@ -131,45 +132,39 @@ export class Remind extends ZZZPlugin {
     return false;
   }
 
-  async subscribe() {
+  async setSubscribeEnable() {
+    const enable = /开启挑战提醒$/.test(this.e.msg);
     const uid = await this.getUID();
-    if (!uid) {
+    if (enable && !uid) {
       await this.reply('未绑定UID，请先绑定');
       return false;
     }
-
     let userConfig = await this.getUserConfig(this.e.user_id);
-
-    if (userConfig && userConfig.enable) {
-      await this.reply('提醒已开启，请勿重复操作');
-      return false;
-    }
-
-    if (userConfig) {
-      userConfig.enable = true;
-    } else {
+    if (!userConfig) {
       const defaultConfig = settings.getConfig('remind');
       userConfig = {
-        enable: true,
+        enable: false,
         abyssCheckLevel: defaultConfig.abyssCheckLevel,
         deadlyStars: defaultConfig.deadlyStars,
       };
     }
-
-    await this.setUserConfig(this.e.user_id, userConfig);
-    await this.reply('提醒功能已开启');
-  }
-
-  async unsubscribe() {
-    let userConfig = await this.getUserConfig(this.e.user_id);
-    if (!userConfig || !userConfig.enable) {
-      await this.reply('提醒功能尚未开启');
+    if (userConfig.enable === enable) {
+      await this.reply(enable ? '提醒已开启，请勿重复操作' : '提醒功能尚未开启');
       return false;
     }
-
-    userConfig.enable = false;
+    userConfig.enable = enable;
     await this.setUserConfig(this.e.user_id, userConfig);
-    await this.reply('提醒功能已关闭');
+    await this.reply(`提醒功能已${enable ? '开启' : '关闭'}`);
+  }
+
+  async setGlobalRemindEnable() {
+    if (!this.e.isMaster) {
+      this.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
+      return false;
+    }
+    const enable = /开启全局挑战提醒$/.test(this.e.msg);
+    settings.setSingleConfig('remind', 'enable', enable);
+    await this.reply(`全局提醒功能已${enable ? '开启' : '关闭'}`);
   }
 
   async setMyAbyssThreshold() {
