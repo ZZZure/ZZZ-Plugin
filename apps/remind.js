@@ -91,6 +91,18 @@ export class Remind extends ZZZPlugin {
     await redis.hSet(USER_CONFIGS_KEY, String(userId), JSON.stringify(config));
   }
 
+  parseRemindTimeMessage(message) {
+    const pattern = /提醒时间\s*(每日\d+时(?:(\d+)分)?|每周.\d+时(?:(\d+)分)?)/;
+    const match = message.match(pattern);
+    if (!match) return { remindTime: null, error: '时间格式错误' };
+    const remindTime = match[1];
+    const minute = Number(match[2]) || Number(match[3]) || 0;
+    if (!(minute % 10 === 0 && minute >= 0 && minute < 60)) {
+      return { remindTime: null, error: '分钟必须为整十分钟' };
+    }
+    return { remindTime, error: null };
+  }
+
   isTimeMatch(remindTime, date) {
     if (!remindTime) return false;
 
@@ -323,16 +335,8 @@ export class Remind extends ZZZPlugin {
   }
 
   async setMyRemindTime() {
-    const match = this.e.msg.match(/设置个人提醒时间\s*(每日\d+时(?:(\d+)分)?|每周.\d+时(?:(\d+)分)?)/);
-    if (!match) return;
-    const remindTime = match[1];
-    const minute = Number(match[2]) || Number(match[3]) || 0;
-
-    // 验证分钟格式
-    if (minute % 10 !== 0 || minute < 0 || minute >= 60) {
-      await this.reply('分钟必须为整十分钟');
-      return;
-    }
+    const { remindTime, error } = this.parseRemindTimeMessage(this.e.msg);
+    if (!remindTime) return await this.reply(error);
 
     let userConfig = await this.getUserConfig(this.e.user_id);
     if (!userConfig) {
@@ -376,17 +380,9 @@ export class Remind extends ZZZPlugin {
       this.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
       return false;
     }
-    const match = this.e.msg.match(/设置全局提醒时间\s*(每日\d+时(?:(\d+)分)?|每周.\d+时(?:(\d+)分)?)/);
-    if (!match) return;
-    const globalRemindTime = match[1];
-    const minute = Number(match[2]) || Number(match[3]) || 0;
 
-    // 验证分钟格式
-    if (minute % 10 !== 0 || minute < 0 || minute >= 60) {
-      await this.reply('分钟必须为整十分钟');
-      return;
-    }
-
+    const { remindTime: globalRemindTime, error } = this.parseRemindTimeMessage(this.e.msg);
+    if (!globalRemindTime) return await this.reply(error);
     settings.setSingleConfig('remind', 'globalRemindTime', globalRemindTime);
     await this.reply(`全局提醒时间已更新为: ${globalRemindTime}。`);
   }
