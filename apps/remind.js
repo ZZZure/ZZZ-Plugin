@@ -50,6 +50,7 @@ export class Remind extends ZZZPlugin {
         {
           reg: `${rulePrefix}设置全局提醒时间\\s*(每日\\d+时(?:(\\d+)分)?|每周.\\d+时(?:(\\d+)分)?)`,
           fnc: 'setGlobalRemindTime',
+          permission: 'master',
         },
         {
           reg: `${rulePrefix}全局提醒时间$`,
@@ -363,7 +364,7 @@ export class Remind extends ZZZPlugin {
       this.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
       return false;
     }
-    const match = this.e.msg.match(/设置全局提醒时间\s*(每日\d+时(?:(\d+)分)?)|每周.\d+时(?:(\d+)分)?))/);
+    const match = this.e.msg.match(/设置全局提醒时间\s*(每日\d+时(?:(\d+)分)?|每周.\d+时(?:(\d+)分)?)/);
     if (!match) return;
     const globalRemindTime = match[1];
     const minute = Number(match[2]) || Number(match[3]) || 0;
