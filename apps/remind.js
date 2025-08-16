@@ -294,8 +294,7 @@ export class Remind extends ZZZPlugin {
 
         const messages = await this.checkUser(userId, userConfig, false, mockE);
         if (messages.length > 0) {
-          const user = Bot.pickUser(userId);
-          await user.sendMsg(messages.join('\n'));
+          await Bot.pickFriend(userId).sendMsg(messages.join('\n'));
         }
       }
     }
