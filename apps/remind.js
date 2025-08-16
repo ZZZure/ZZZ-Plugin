@@ -1,11 +1,24 @@
 import _ from 'lodash';
 import settings from '../lib/settings.js';
 import { rulePrefix } from '../lib/common.js';
-import { Deadly } from '../model/deadly.js';
-import { ZZZChallenge } from '../model/abyss.js';
 import { ZZZPlugin } from '../lib/plugin.js';
 
 const USER_CONFIGS_KEY = 'ZZZ:REMIND:USER_CONFIGS';
+
+// 计算到指定等级为止的S评级数量
+function getSRankCountUpTo(allFloorDetail, maxLevel) {
+  const sSet = new Set(
+    allFloorDetail.filter(f => f.rating === 'S').map(f => f.layer_index)
+  );
+  const minLevel = Math.min(...allFloorDetail.map(f => f.layer_index));
+  let sRankCount = 0;
+  for (let level = 1; level <= maxLevel; level++) {
+    if (sSet.has(level) || level < minLevel) {
+      sRankCount++;
+    }
+  }
+  return sRankCount;
+}
 
 export class Remind extends ZZZPlugin {
   constructor() {
@@ -241,11 +254,10 @@ export class Remind extends ZZZPlugin {
       if (!abyssRawData || !abyssRawData.has_data) {
         messages.push('式舆防卫战S评级: 0/7');
       } else {
-        const abyssData = new ZZZChallenge(abyssRawData);
         const userThreshold = userConfig.abyssCheckLevel || 7;
-        if (showAll || !abyssData.areAllSUpTo(userThreshold)) {
-          const sCount = abyssData.getSRankCountUpTo(7);
-          const status = abyssData.areAllSUpTo(userThreshold) ? ' ✓' : '';
+        const sCount = getSRankCountUpTo(abyssRawData.all_floor_detail, 7);
+        const status = sCount >= userThreshold ? ' ✓' : '';
+        if (showAll || sCount < userThreshold) {
           messages.push(`式舆防卫战S评级: ${sCount}/7${status}`);
         }
       }
@@ -260,10 +272,10 @@ export class Remind extends ZZZPlugin {
       if (!deadlyRawData || !deadlyRawData.has_data) {
         messages.push('危局强袭战星星: 0/9');
       } else {
-        const deadlyData = new Deadly(deadlyRawData);
-        if (showAll || deadlyData.total_star < userConfig.deadlyStars) {
-          const status = deadlyData.total_star >= userConfig.deadlyStars ? ' ✓' : '';
-          messages.push(`危局强袭战星星: ${deadlyData.total_star}/9${status}`);
+        const totalStar = deadlyRawData.total_star || 0;
+        if (showAll || totalStar < userConfig.deadlyStars) {
+          const status = totalStar >= userConfig.deadlyStars ? ' ✓' : '';
+          messages.push(`危局强袭战星星: ${totalStar}/9${status}`);
         }
       }
     } catch (error) {
