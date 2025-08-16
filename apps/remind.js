@@ -139,7 +139,7 @@ export class Remind extends ZZZPlugin {
   }
 
   async setMyAbyssThreshold() {
-    const match = this.e.msg.match(/设置式舆阈值\s*(\d+)/);
+    const match = this.e.msg.match(/设置(?:式舆防卫战|式舆|深渊|防卫战|防卫)阈值\s*(\d+)/);
     if (!match) return;
     const threshold = Number(match[1]);
 
@@ -164,7 +164,7 @@ export class Remind extends ZZZPlugin {
   }
 
   async setMyDeadlyThreshold() {
-    const match = this.e.msg.match(/设置危局阈值\s*(\d+)/);
+    const match = this.e.msg.match(/设置(?:危局强袭战|危局|强袭|强袭战)阈值\s*(\d+)/);
     if (!match) return;
     const threshold = Number(match[1]);
 

@@ -207,7 +207,7 @@ export function supportGuoba() {
         {
           field: 'remind.globalRemindTime',
           label: '全局提醒时间',
-          bottomHelpMessage: '设置全局默认提醒时间，格式如"每日20时"或"每周一20时"',
+          bottomHelpMessage: '设置全局默认提醒时间，格式如"每日20时"或"每周一20时40分"',
           component: 'Input',
           componentProps: {
             placeholder: '请输入提醒时间，如"每日20时"',
