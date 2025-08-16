@@ -369,42 +369,4 @@ export class ZZZChallenge {
       '0'
     )}`;
   }
-  getSRankCountUpTo(maxLevel) {
-    let s_rank_count = 0;
-    const min_level = Math.min(
-      ...this.all_floor_detail.map(f => f.layer_index)
-    );
-    for (let level = 1; level <= maxLevel; level++) {
-      const floor = this.all_floor_detail.find(f => f.layer_index === level);
-      if (floor) {
-        if (floor.rating === 'S') {
-          s_rank_count++;
-        }
-      } else {
-        if (level < min_level) {
-          s_rank_count++;
-        }
-      }
-    }
-    return s_rank_count;
-  }
-
-  areAllSUpTo(maxLevel) {
-    const min_level = Math.min(
-      ...this.all_floor_detail.map(f => f.layer_index)
-    );
-    for (let level = 1; level <= maxLevel; level++) {
-      const floor = this.all_floor_detail.find(f => f.layer_index === level);
-      if (floor) {
-        if (floor.rating !== 'S') {
-          return false;
-        }
-      } else {
-        if (level >= min_level) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
 }
