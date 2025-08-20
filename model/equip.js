@@ -216,7 +216,7 @@ export class Equip {
     if (this.score >= 48) {
       return 'MAX';
     }
-    return false;
+    return null;
   }
 }
 

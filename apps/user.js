@@ -31,7 +31,6 @@ export class User extends ZZZPlugin {
     const uid = await this.getUID();
     if (/^(1[0-9])[0-9]{8}/i.test(uid)) {
       await this.reply('国际服不需要绑定设备');
-      return false;
     }
     //先throw一步（
     this.setContext('toBindDevice');
@@ -46,30 +45,25 @@ export class User extends ZZZPlugin {
     if (!ltuid) {
       this.reply('未绑定UID');
       this.finish('toBindDevice');
-      return false;
     }
     const msg = this.e.msg.trim();
     if (!msg) {
       this.reply('请发送设备信息', false, { at: true, recallMsg: 100 });
-      return false;
     }
     if (msg.includes('取消')) {
       await this.reply('已取消', false, { at: true, recallMsg: 100 });
       this.finish('toBindDevice');
-      return false;
     }
     try {
       const info = JSON.parse(msg);
       if (!info) {
         this.reply('设备信息格式错误', false, { at: true, recallMsg: 100 });
-        return false;
       }
       if (!!info?.device_id && !!info.device_fp) {
         await redis.set(`ZZZ:DEVICE_FP:${ltuid}:FP`, info.device_fp);
         await redis.set(`ZZZ:DEVICE_FP:${ltuid}:ID`, info.device_id);
         await this.reply('绑定设备成功', false, { at: true, recallMsg: 100 });
         this.finish('toBindDevice');
-        return false;
       }
       if (
         !info?.deviceName ||
@@ -81,28 +75,24 @@ export class User extends ZZZPlugin {
         !info?.deviceProduct
       ) {
         this.reply('设备信息格式错误', false, { at: true, recallMsg: 100 });
-        return false;
       }
       await redis.del(`ZZZ:DEVICE_FP:${ltuid}:FP`);
       await redis.set(`ZZZ:DEVICE_FP:${ltuid}:BIND`, JSON.stringify(info));
       const { deviceFp } = await this.getAPI();
       if (!deviceFp) {
         await this.reply('绑定设备失败');
-        return false;
       }
       logger.debug(`[LTUID:${ltuid}]绑定设备成功，deviceFp:${deviceFp}`);
       await this.reply(`绑定设备成功${this.e.isGroup ? '\n请撤回设备信息' : ''}`, false, { at: true, recallMsg: 100 });
     } catch (error) {
       this.reply('设备信息格式错误', false, { at: true, recallMsg: 100 });
-      return false;
     } finally {
       this.finish('toBindDevice');
-      return false;
     }
   }
   async deleteBind() {
     const uid = await this.getUID();
-    if (/^(1[0-9])[0-9]{8}/i.test(uid)) return false;
+    if (/^(1[0-9])[0-9]{8}/i.test(uid)) return null;
     const ltuid = await this.getLtuid();
     await redis.del(`ZZZ:DEVICE_FP:${ltuid}:FP`);
     await redis.del(`ZZZ:DEVICE_FP:${ltuid}:BIND`);

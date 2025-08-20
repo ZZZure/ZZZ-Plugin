@@ -20,7 +20,7 @@ async function init() {
             return (await import('../../../../lib/config/config.js')).default.bot.log_level === 'debug';
         }
         catch {
-            return false;
+            return null;
         }
     })();
     await Promise.all(fs.readdirSync(path.join(damagePath, 'character')).filter(v => v !== '模板').map(v => importChar(v, isWatch)));

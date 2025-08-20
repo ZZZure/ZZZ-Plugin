@@ -28,7 +28,7 @@ export class Note extends ZZZPlugin {
       this.reply(e.message);
       throw e;
     });
-    if (!noteResponse) return false;
+    if (!noteResponse) return null;
     const noteData = new ZZZNoteResp(noteResponse);
     const finalData = {
       note: noteData,
