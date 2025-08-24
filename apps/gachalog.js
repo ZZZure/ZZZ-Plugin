@@ -55,11 +55,6 @@ export class GachaLog extends ZZZPlugin {
     await this.reply(reply_msg);
   }
   async startGachaLog() {
-    const uid = await this.getUID();
-    if (/^(1[0-9])[0-9]{8}/i.test(uid)) {
-      await this.reply('抽卡记录相应功能只支持国服');
-      return false;
-    }
     const allowGroup = _.get(settings.getConfig('gacha'), 'allow_group', false);
     const whiteList = _.get(settings.getConfig('gacha'), 'white_list', []);
     const blackList = _.get(settings.getConfig('gacha'), 'black_list', []);
@@ -118,7 +113,9 @@ export class GachaLog extends ZZZPlugin {
       return false;
     }
     const key = getQueryVariable(msg, 'authkey');
-    if (!key) {
+    const region = getQueryVariable(msg, 'region');
+    const game_biz = getQueryVariable(msg, 'game_biz');
+    if (!key && !region && !game_biz) {
       await this.reply('抽卡链接格式错误，请重新发起%抽卡链接', false, {
         at: true,
         recallMsg: 100,
@@ -127,12 +124,12 @@ export class GachaLog extends ZZZPlugin {
       return false;
     }
     this.finish('gachaLog');
-    this.getLogWithOutUID(key);
+    this.getLogWithOutUID(key, region, game_biz);
   }
   async refreshGachaLog() {
     const uid = await this.getUID();
     if (/^(1[0-9])[0-9]{8}/i.test(uid)) {
-      await this.reply('抽卡记录相应功能只支持国服');
+      await this.reply('国际服不支持此功能');
       return false;
     }
     if (!uid) return false;
@@ -172,7 +169,7 @@ export class GachaLog extends ZZZPlugin {
     );
     return false;
   }
-  async getLogWithOutUID(key) {
+  async getLogWithOutUID(key, region, game_biz) {
     await this.reply(
       '抽卡链接解析成功，正在查询抽卡记录，可能耗费一段时间，请勿重复发送',
       false,
@@ -188,7 +185,8 @@ export class GachaLog extends ZZZPlugin {
           type[0],
           1,
           '0',
-          '1'
+          region,
+          game_biz
         );
         if (log && log.list && log.list.length > 0) {
           uid = log.list[0].uid;
@@ -203,7 +201,7 @@ export class GachaLog extends ZZZPlugin {
       });
       return false;
     }
-    const { data, count } = await updateGachaLog(key, uid);
+    const { data, count } = await updateGachaLog(key, uid, region, game_biz);
     let msg = [];
     msg.push(`抽卡记录更新成功，共${Object.keys(data).length}个卡池`);
     for (const name in data) {
@@ -219,10 +217,6 @@ export class GachaLog extends ZZZPlugin {
 
   async gachaLogAnalysis() {
     const uid = await this.getUID();
-    if (/^(1[0-9])[0-9]{8}/i.test(uid)) {
-      await this.reply('抽卡记录相应功能只支持国服');
-      return false;
-    }
     if (!uid) return false;
     await this.getPlayerInfo();
     await this.reply('正在分析抽卡记录，请稍等', false, {
@@ -249,7 +243,7 @@ export class GachaLog extends ZZZPlugin {
   async getGachaLink() {
     const uid = await this.getUID();
     if (/^(1[0-9])[0-9]{8}/i.test(uid)) {
-      await this.reply('抽卡记录相应功能只支持国服');
+      await this.reply('国际服不支持此功能');
       return false;
     }
     if (!uid) return false;
