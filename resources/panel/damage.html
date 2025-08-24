@@ -239,7 +239,7 @@
         <div class="td buff-td no-zzz-font">{{buff.name}}</div>
         <div class="td buff-td no-zzz-font">{{buff.source}}</div>
         <div class="td buff-td no-zzz-font">{{buff.type}}</div>
-        <div class="td buff-td">{{buff.value < 2 ? (buff.value.toFixed(2) * 100 + '%') : (buff.value % 1 === 0 ? buff.value : buff.value.toFixed(2))}}</div>
+        <div class="td buff-td">{{buff.value < 2 ? ((buff.value * 100).toFixed(0) + '%') : (buff.value % 1 === 0 ? buff.value : buff.value.toFixed(2))}}</div>
       </div>
       {{/each}}
     </div>
