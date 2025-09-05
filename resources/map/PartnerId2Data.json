@@ -775,6 +775,200 @@
       }
     }
   },
+  "1051": {
+    "sprite_id": "",
+    "name": "伊德海莉",
+    "full_name": "",
+    "en_name": "(Test1)Yidhari",
+    "WeaponType": "6",
+    "ElementType": "202",
+    "Camp": "怪啖屋",
+    "HitType": "打击",
+    "Rarity": "S",
+    "Attack": 124,
+    "AttackGrowth": 74561,
+    "BreakStun": 95,
+    "Defence": 36,
+    "DefenceGrowth": 48889,
+    "HpMax": 683,
+    "HpGrowth": 927143,
+    "Crit": 500,
+    "CritDamage": 5000,
+    "ElementAbnormalPower": 87,
+    "ElementMystery": 90,
+    "PenDelta": 0,
+    "PenRate": 0,
+    "SpRecover": 0,
+    "Level": {
+      "1": {
+        "HpMax": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "LevelMax": 10,
+        "LevelMin": 0,
+        "Materials": {
+          "10": 24000,
+          "100216": 4
+        }
+      },
+      "2": {
+        "HpMax": 469,
+        "Attack": 44,
+        "Defence": 25,
+        "LevelMax": 20,
+        "LevelMin": 10,
+        "Materials": {
+          "10": 56000,
+          "100226": 12
+        }
+      },
+      "3": {
+        "HpMax": 938,
+        "Attack": 88,
+        "Defence": 49,
+        "LevelMax": 30,
+        "LevelMin": 20,
+        "Materials": {
+          "10": 120000,
+          "100226": 20
+        }
+      },
+      "4": {
+        "HpMax": 1407,
+        "Attack": 132,
+        "Defence": 74,
+        "LevelMax": 40,
+        "LevelMin": 30,
+        "Materials": {
+          "10": 200000,
+          "100236": 10
+        }
+      },
+      "5": {
+        "HpMax": 1875,
+        "Attack": 177,
+        "Defence": 99,
+        "LevelMax": 50,
+        "LevelMin": 40,
+        "Materials": {
+          "10": 400000,
+          "100236": 20
+        }
+      },
+      "6": {
+        "HpMax": 2344,
+        "Attack": 221,
+        "Defence": 124,
+        "LevelMax": 60,
+        "LevelMin": 50,
+        "Materials": {}
+      }
+    },
+    "ExtraLevel": {
+      "1": {
+        "MaxLevel": 15,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 0
+          },
+          "20101": {
+            "Prop": 20101,
+            "Name": "暴击率",
+            "Format": "{0:0.#%}",
+            "Value": 480
+          }
+        }
+      },
+      "2": {
+        "MaxLevel": 25,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "20101": {
+            "Prop": 20101,
+            "Name": "暴击率",
+            "Format": "{0:0.#%}",
+            "Value": 480
+          }
+        }
+      },
+      "3": {
+        "MaxLevel": 35,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "20101": {
+            "Prop": 20101,
+            "Name": "暴击率",
+            "Format": "{0:0.#%}",
+            "Value": 960
+          }
+        }
+      },
+      "4": {
+        "MaxLevel": 45,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "20101": {
+            "Prop": 20101,
+            "Name": "暴击率",
+            "Format": "{0:0.#%}",
+            "Value": 960
+          }
+        }
+      },
+      "5": {
+        "MaxLevel": 55,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "20101": {
+            "Prop": 20101,
+            "Name": "暴击率",
+            "Format": "{0:0.#%}",
+            "Value": 1440
+          }
+        }
+      },
+      "6": {
+        "MaxLevel": 60,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 75
+          },
+          "20101": {
+            "Prop": 20101,
+            "Name": "暴击率",
+            "Format": "{0:0.#%}",
+            "Value": 1440
+          }
+        }
+      }
+    }
+  },
   "1061": {
     "sprite_id": "09",
     "name": "可琳",
@@ -5238,9 +5432,9 @@
     }
   },
   "1301": {
-    "sprite_id": "",
+    "sprite_id": "49",
     "name": "奥菲丝&「鬼火」",
-    "full_name": "...",
+    "full_name": "奥菲丝·马格努森&「鬼火」",
     "en_name": "Orphie & Magus",
     "WeaponType": "1",
     "ElementType": "201",
@@ -7566,25 +7760,26 @@
     }
   },
   "1441": {
-    "sprite_id": "",
+    "sprite_id": "50",
     "name": "狛野真斗",
     "full_name": "",
     "en_name": "Avatar_Male_Size03_Norano_En",
     "WeaponType": "6",
     "ElementType": "201",
-    "Camp": "",
+    "Camp": "怪啖屋",
     "HitType": "斩击",
-    "Attack": 95,
-    "AttackGrowth": 54230,
-    "BreakStun": 118,
-    "Defence": 49,
-    "DefenceGrowth": 66882,
-    "HpMax": 603,
-    "HpGrowth": 818426,
+    "Rarity": "A",
+    "Attack": 109,
+    "AttackGrowth": 63934,
+    "BreakStun": 95,
+    "Defence": 36,
+    "DefenceGrowth": 48400,
+    "HpMax": 621,
+    "HpGrowth": 842857,
     "Crit": 500,
     "CritDamage": 5000,
-    "ElementAbnormalPower": 94,
-    "ElementMystery": 93,
+    "ElementAbnormalPower": 87,
+    "ElementMystery": 90,
     "PenDelta": 0,
     "PenRate": 0,
     "SpRecover": 0,
@@ -7597,66 +7792,363 @@
         "LevelMin": 0,
         "Materials": {
           "10": 24000,
-          "100212": 4
+          "100216": 4
         }
       },
       "2": {
-        "HpMax": 414,
-        "Attack": 34,
-        "Defence": 34,
+        "HpMax": 426,
+        "Attack": 39,
+        "Defence": 24,
         "LevelMax": 20,
         "LevelMin": 10,
         "Materials": {
           "10": 56000,
-          "100222": 12
+          "100226": 12
         }
       },
       "3": {
-        "HpMax": 828,
-        "Attack": 68,
-        "Defence": 68,
+        "HpMax": 852,
+        "Attack": 78,
+        "Defence": 49,
         "LevelMax": 30,
         "LevelMin": 20,
         "Materials": {
           "10": 120000,
-          "100222": 20
+          "100226": 20
         }
       },
       "4": {
-        "HpMax": 1242,
-        "Attack": 102,
-        "Defence": 101,
+        "HpMax": 1279,
+        "Attack": 116,
+        "Defence": 73,
         "LevelMax": 40,
         "LevelMin": 30,
         "Materials": {
           "10": 200000,
-          "100232": 10
+          "100236": 10
         }
       },
       "5": {
-        "HpMax": 1656,
-        "Attack": 135,
-        "Defence": 135,
+        "HpMax": 1705,
+        "Attack": 155,
+        "Defence": 98,
         "LevelMax": 50,
         "LevelMin": 40,
         "Materials": {
           "10": 400000,
-          "100232": 20
+          "100236": 20
         }
       },
       "6": {
-        "HpMax": 2069,
-        "Attack": 169,
-        "Defence": 169,
+        "HpMax": 2131,
+        "Attack": 194,
+        "Defence": 122,
         "LevelMax": 60,
         "LevelMin": 50,
         "Materials": {}
       }
     },
-    "ExtraLevel": {}
+    "ExtraLevel": {
+      "1": {
+        "MaxLevel": 15,
+        "Extra": {
+          "11102": {
+            "Prop": 11102,
+            "Name": "生命值",
+            "Format": "{0:0.#%}",
+            "Value": 600
+          },
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 0
+          }
+        }
+      },
+      "2": {
+        "MaxLevel": 25,
+        "Extra": {
+          "11102": {
+            "Prop": 11102,
+            "Name": "生命值",
+            "Format": "{0:0.#%}",
+            "Value": 600
+          },
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          }
+        }
+      },
+      "3": {
+        "MaxLevel": 35,
+        "Extra": {
+          "11102": {
+            "Prop": 11102,
+            "Name": "生命值",
+            "Format": "{0:0.#%}",
+            "Value": 1200
+          },
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          }
+        }
+      },
+      "4": {
+        "MaxLevel": 45,
+        "Extra": {
+          "11102": {
+            "Prop": 11102,
+            "Name": "生命值",
+            "Format": "{0:0.#%}",
+            "Value": 1200
+          },
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          }
+        }
+      },
+      "5": {
+        "MaxLevel": 55,
+        "Extra": {
+          "11102": {
+            "Prop": 11102,
+            "Name": "生命值",
+            "Format": "{0:0.#%}",
+            "Value": 1800
+          },
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          }
+        }
+      },
+      "6": {
+        "MaxLevel": 60,
+        "Extra": {
+          "11102": {
+            "Prop": 11102,
+            "Name": "生命值",
+            "Format": "{0:0.#%}",
+            "Value": 1800
+          },
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 75
+          }
+        }
+      }
+    }
+  },
+  "1451": {
+    "sprite_id": "",
+    "name": "(Test1)卢西娅",
+    "full_name": "",
+    "en_name": "Lucia",
+    "WeaponType": "4",
+    "ElementType": "205",
+    "Camp": "怪啖屋",
+    "HitType": "打击",
+    "Rarity": "S",
+    "Attack": 108,
+    "AttackGrowth": 63517,
+    "BreakStun": 83,
+    "Defence": 48,
+    "DefenceGrowth": 65524,
+    "HpMax": 681,
+    "HpGrowth": 924944,
+    "Crit": 500,
+    "CritDamage": 5000,
+    "ElementAbnormalPower": 96,
+    "ElementMystery": 95,
+    "PenDelta": 0,
+    "PenRate": 0,
+    "SpRecover": 120,
+    "Level": {
+      "1": {
+        "HpMax": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "LevelMax": 10,
+        "LevelMin": 0,
+        "Materials": {
+          "10": 24000,
+          "100214": 4
+        }
+      },
+      "2": {
+        "HpMax": 468,
+        "Attack": 39,
+        "Defence": 33,
+        "LevelMax": 20,
+        "LevelMin": 10,
+        "Materials": {
+          "10": 56000,
+          "100224": 12
+        }
+      },
+      "3": {
+        "HpMax": 936,
+        "Attack": 77,
+        "Defence": 66,
+        "LevelMax": 30,
+        "LevelMin": 20,
+        "Materials": {
+          "10": 120000,
+          "100224": 20
+        }
+      },
+      "4": {
+        "HpMax": 1403,
+        "Attack": 116,
+        "Defence": 99,
+        "LevelMax": 40,
+        "LevelMin": 30,
+        "Materials": {
+          "10": 200000,
+          "100234": 10
+        }
+      },
+      "5": {
+        "HpMax": 1871,
+        "Attack": 154,
+        "Defence": 133,
+        "LevelMax": 50,
+        "LevelMin": 40,
+        "Materials": {
+          "10": 400000,
+          "100234": 20
+        }
+      },
+      "6": {
+        "HpMax": 2339,
+        "Attack": 193,
+        "Defence": 166,
+        "LevelMax": 60,
+        "LevelMin": 50,
+        "Materials": {}
+      }
+    },
+    "ExtraLevel": {
+      "1": {
+        "MaxLevel": 15,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 0
+          },
+          "30501": {
+            "Prop": 30501,
+            "Name": "基础能量自动回复",
+            "Format": "{0:0.##}",
+            "Value": 12
+          }
+        }
+      },
+      "2": {
+        "MaxLevel": 25,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "30501": {
+            "Prop": 30501,
+            "Name": "基础能量自动回复",
+            "Format": "{0:0.##}",
+            "Value": 12
+          }
+        }
+      },
+      "3": {
+        "MaxLevel": 35,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "30501": {
+            "Prop": 30501,
+            "Name": "基础能量自动回复",
+            "Format": "{0:0.##}",
+            "Value": 24
+          }
+        }
+      },
+      "4": {
+        "MaxLevel": 45,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "30501": {
+            "Prop": 30501,
+            "Name": "基础能量自动回复",
+            "Format": "{0:0.##}",
+            "Value": 24
+          }
+        }
+      },
+      "5": {
+        "MaxLevel": 55,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "30501": {
+            "Prop": 30501,
+            "Name": "基础能量自动回复",
+            "Format": "{0:0.##}",
+            "Value": 36
+          }
+        }
+      },
+      "6": {
+        "MaxLevel": 60,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 75
+          },
+          "30501": {
+            "Prop": 30501,
+            "Name": "基础能量自动回复",
+            "Format": "{0:0.##}",
+            "Value": 36
+          }
+        }
+      }
+    }
   },
   "1461": {
-    "sprite_id": "",
+    "sprite_id": "48",
     "name": "「席德」",
     "full_name": "「席德」",
     "en_name": "Seed",
