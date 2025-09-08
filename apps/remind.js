@@ -33,17 +33,17 @@ export class Remind extends ZZZPlugin {
           fnc: 'setSubscribeEnable',
         },
         {
-          reg: `${rulePrefix}(开启|关闭)全局挑战提醒$`,
+          reg: `${rulePrefix}(开启|启用|关闭|禁用)全局挑战提醒$`,
           fnc: 'setGlobalRemindEnable',
           permission: 'master',
         },
         {
-          reg: `${rulePrefix}设置式舆阈值\\s*(\\d+)`,
-          fnc: 'setMyAbyssThreshold',
+          reg: `${rulePrefix}设置(全局)?式舆阈值\\s*(\\d+)`,
+          fnc: 'setAbyssThreshold',
         },
         {
-          reg: `${rulePrefix}设置危局阈值\\s*(\\d+)`,
-          fnc: 'setMyDeadlyThreshold',
+          reg: `${rulePrefix}设置(全局)?危局阈值\\s*(\\d+)`,
+          fnc: 'setDeadlyThreshold',
         },
         {
           reg: `${rulePrefix}查询挑战状态$`,
@@ -58,7 +58,7 @@ export class Remind extends ZZZPlugin {
           fnc: 'viewMyRemindTime',
         },
         {
-          reg: `${rulePrefix}取消个人提醒时间`,
+          reg: `${rulePrefix}(重置|删除|取消)个人提醒时间`,
           fnc: 'deleteMyRemindTime',
         },
         {
@@ -132,16 +132,28 @@ export class Remind extends ZZZPlugin {
     return false;
   }
 
+  checkEnableAndFriend() {
+    if (!settings.getConfig('remind').enable) {
+      this.reply('当前未启用防卫战/危局挑战提醒功能');
+      return false;
+    }
+    if (!(this.e.bot ?? Bot).fl.get(this.e.user_id)) {
+      this.reply('请添加好友后重试');
+      return false;
+    };
+    return true;
+  }
+
   async setSubscribeEnable() {
+    if (!this.checkEnableAndFriend()) return;
     const enable = /开启挑战提醒$/.test(this.e.msg);
     const uid = await this.getUID();
     if (enable && !uid) {
-      await this.reply('未绑定UID，请先绑定');
-      return false;
+      return this.reply('未绑定UID，请先绑定');
     }
     let userConfig = await this.getUserConfig(this.e.user_id);
+    const defaultConfig = settings.getConfig('remind');
     if (!userConfig) {
-      const defaultConfig = settings.getConfig('remind');
       userConfig = {
         enable: false,
         abyssCheckLevel: defaultConfig.abyssCheckLevel,
@@ -149,67 +161,89 @@ export class Remind extends ZZZPlugin {
       };
     }
     if (userConfig.enable === enable) {
-      await this.reply(enable ? '提醒已开启，请勿重复操作' : '提醒功能尚未开启');
-      return false;
+      return this.reply(enable ? '提醒已开启，请勿重复操作' : '提醒功能尚未开启');
     }
     userConfig.enable = enable;
     await this.setUserConfig(this.e.user_id, userConfig);
-    await this.reply(`提醒功能已${enable ? '开启' : '关闭'}`);
+    await this.reply(`提醒功能已${enable ? '开启' : '关闭'}${enable ? `，将在${userConfig.remindTime || defaultConfig.globalRemindTime}对防卫战<${userConfig.abyssCheckLevel}层或危局<${userConfig.deadlyStars}星进行提醒` : ''}`);
   }
 
   async setGlobalRemindEnable() {
     if (!this.e.isMaster) {
-      this.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
-      return false;
+      return this.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
     }
-    const enable = /开启全局挑战提醒$/.test(this.e.msg);
+    const enable = /(开启|启用)全局挑战提醒$/.test(this.e.msg);
+    if (settings.getConfig('remind').enable === enable) {
+      return this.reply(enable ? '全局防卫战/危局挑战提醒功能已启用，请勿重复操作' : '全局防卫战/危局挑战提醒功能已禁用，请勿重复操作');
+    }
     settings.setSingleConfig('remind', 'enable', enable);
-    await this.reply(`全局提醒功能已${enable ? '开启' : '关闭'}`);
+    await this.reply(`全局防卫战/危局挑战提醒功能已${enable ? '启用' : '禁用'}`);
   }
 
-  async setMyAbyssThreshold() {
-    const match = this.e.msg.match(/设置(?:式舆防卫战|式舆|深渊|防卫战|防卫)阈值\s*(\d+)/);
+  async setAbyssThreshold() {
+    const isGlobal = this.e.msg.includes('全局');
+    if (isGlobal && !this.e.isMaster) {
+      return this.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
+    }
+    if (!isGlobal && !this.checkEnableAndFriend()) return;
+    const match = this.e.msg.match(/设置(?:全局)?(?:式舆防卫战|式舆|深渊|防卫战|防卫)阈值\s*(\d+)/);
     if (!match) return;
     const threshold = Number(match[1]);
 
     if (threshold < 1 || threshold > 7) {
-      await this.reply('阈值必须在1到7之间');
-      return false;
+      return this.reply('防卫战阈值必须在1到7之间');
     }
+    
+    if (isGlobal) {
+      settings.setSingleConfig('remind', 'abyssCheckLevel', threshold);
+    } else {
+      let userConfig = await this.getUserConfig(this.e.user_id);
+      if (!userConfig) {
+        const defaultConfig = settings.getConfig('remind');
+        userConfig = {
+          enable: false,
+          abyssCheckLevel: defaultConfig.abyssCheckLevel,
+          deadlyStars: defaultConfig.deadlyStars,
+        };
+      }
+      userConfig.abyssCheckLevel = threshold;
+      await this.setUserConfig(this.e.user_id, userConfig);
+    };
 
-    let userConfig = await this.getUserConfig(this.e.user_id);
-    if (!userConfig) {
-      const defaultConfig = settings.getConfig('remind');
-      userConfig = {
-        enable: false,
-        abyssCheckLevel: defaultConfig.abyssCheckLevel,
-        deadlyStars: defaultConfig.deadlyStars,
-      };
-    }
-
-    userConfig.abyssCheckLevel = threshold;
-    await this.setUserConfig(this.e.user_id, userConfig);
-    await this.reply(`式舆防卫战提醒阈值已设为: 检查前 ${threshold} 层`);
+    await this.reply(`${isGlobal ? '全局默认' : ''}式舆防卫战阈值已设为: <${threshold}层时提醒`);
   }
 
-  async setMyDeadlyThreshold() {
-    const match = this.e.msg.match(/设置(?:危局强袭战|危局|强袭|强袭战)阈值\s*(\d+)/);
+  async setDeadlyThreshold() {
+    const isGlobal = this.e.msg.includes('全局');
+    if (isGlobal && !this.e.isMaster) {
+      return this.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
+    }
+    if (!isGlobal && !this.checkEnableAndFriend()) return;
+    const match = this.e.msg.match(/设置(?:全局)?(?:危局强袭战|危局|强袭|强袭战)阈值\s*(\d+)/);
     if (!match) return;
     const threshold = Number(match[1]);
 
-    let userConfig = await this.getUserConfig(this.e.user_id);
-    if (!userConfig) {
-      const defaultConfig = settings.getConfig('remind');
-      userConfig = {
-        enable: false,
-        abyssCheckLevel: defaultConfig.abyssCheckLevel,
-        deadlyStars: defaultConfig.deadlyStars,
-      };
+    if (threshold < 1 || threshold > 9) {
+      return this.reply('危局阈值必须在1到9之间');
     }
 
-    userConfig.deadlyStars = threshold;
-    await this.setUserConfig(this.e.user_id, userConfig);
-    await this.reply(`危局强袭战星星阈值已设为: ${threshold}`);
+    if (isGlobal) {
+      settings.setSingleConfig('remind', 'deadlyStars', threshold);
+    } else {
+      let userConfig = await this.getUserConfig(this.e.user_id);
+      if (!userConfig) {
+        const defaultConfig = settings.getConfig('remind');
+        userConfig = {
+          enable: false,
+          abyssCheckLevel: defaultConfig.abyssCheckLevel,
+          deadlyStars: defaultConfig.deadlyStars,
+        };
+      }
+
+      userConfig.deadlyStars = threshold;
+      await this.setUserConfig(this.e.user_id, userConfig);
+    }
+    await this.reply(`${isGlobal ? '全局默认' : ''}危局强袭战阈值已设为: <${threshold}星时提醒`);
   }
 
   async checkNow() {
@@ -311,6 +345,7 @@ export class Remind extends ZZZPlugin {
     for (const userId in allUserConfigs) {
       const userConfig = JSON.parse(allUserConfigs[userId]);
       if (!userConfig.enable) continue;
+      if (!Bot.fl.get(userId)) continue;
 
       const remindTime = userConfig.remindTime || globalRemindTime;
 
@@ -324,7 +359,9 @@ export class Remind extends ZZZPlugin {
 
         const messages = await this.checkUser(userId, userConfig, false, mockE);
         if (messages.length > 0) {
-          await Bot.pickFriend(userId).sendMsg(messages.join('\n'));
+          await Bot.pickFriend(userId).sendMsg('【式舆/危局挑战提醒】\n' + messages.join('\n')).catch(err => {
+            logger.error(`[ZZZ-Plugin] 式舆/危局挑战推送用户 ${userId} 失败`, err);
+          });
         }
       }
     }
@@ -332,6 +369,7 @@ export class Remind extends ZZZPlugin {
   }
 
   async setMyRemindTime() {
+    if (!this.checkEnableAndFriend()) return;
     const { remindTime, error } = this.parseRemindTimeMessage(this.e.msg);
     if (!remindTime) return await this.reply(error);
 
@@ -353,7 +391,7 @@ export class Remind extends ZZZPlugin {
   async viewMyRemindTime() {
     const userConfig = await this.getUserConfig(this.e.user_id);
     if (userConfig && userConfig.remindTime) {
-      await this.reply(`当前提醒时间: ${userConfig.remindTime}`);
+      await this.reply(`当前个人提醒时间: ${userConfig.remindTime}`);
     } else {
       const remindConfig = settings.getConfig('remind');
       const globalRemindTime = remindConfig.globalRemindTime || '每日20时';
@@ -362,11 +400,12 @@ export class Remind extends ZZZPlugin {
   }
 
   async deleteMyRemindTime() {
+    if (!this.checkEnableAndFriend()) return;
     let userConfig = await this.getUserConfig(this.e.user_id);
     if (userConfig && userConfig.remindTime) {
       delete userConfig.remindTime;
       await this.setUserConfig(this.e.user_id, userConfig);
-      await this.reply('个人提醒时间已取消');
+      await this.reply('个人提醒时间已重置为全局默认时间');
     } else {
       await this.reply('个人提醒时间尚未设置');
     }
@@ -374,14 +413,13 @@ export class Remind extends ZZZPlugin {
 
   async setGlobalRemindTime() {
     if (!this.e.isMaster) {
-      this.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
-      return false;
+      return this.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
     }
 
     const { remindTime: globalRemindTime, error } = this.parseRemindTimeMessage(this.e.msg);
     if (!globalRemindTime) return await this.reply(error);
     settings.setSingleConfig('remind', 'globalRemindTime', globalRemindTime);
-    await this.reply(`全局提醒时间已更新为: ${globalRemindTime}。`);
+    await this.reply(`全局提醒时间已更新为: ${globalRemindTime}`);
   }
 
   async viewGlobalRemindTime() {
