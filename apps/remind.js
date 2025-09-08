@@ -193,7 +193,7 @@ export class Remind extends ZZZPlugin {
     if (threshold < 1 || threshold > 7) {
       return this.reply('防卫战阈值必须在1到7之间');
     }
-    
+
     if (isGlobal) {
       settings.setSingleConfig('remind', 'abyssCheckLevel', threshold);
     } else {
