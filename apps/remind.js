@@ -342,9 +342,10 @@ export class Remind extends ZZZPlugin {
     const now = new Date();
     const globalRemindTime = globalRemindConfig.globalRemindTime || '每日20时';
 
-    for (const userId in allUserConfigs) {
-      const userConfig = JSON.parse(allUserConfigs[userId]);
+    for (const key in allUserConfigs) {
+      const userConfig = JSON.parse(allUserConfigs[key]);
       if (!userConfig.enable) continue;
+      const userId = +key;
       if (!Bot.fl.get(userId)) continue;
 
       const remindTime = userConfig.remindTime || globalRemindTime;
