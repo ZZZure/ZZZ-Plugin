@@ -15,7 +15,6 @@ enum Rarity {
 
 const WeaponId2Data = getMapData('WeaponId2Data') as Map.WeaponId2Data
 const PartnerId2Data = getMapData('PartnerId2Data') as Map.PartnerId2Data
-const EquipId2Data = getMapData('EquipId2Data') as Map.EquipId2Data
 const SuitData = getMapData('SuitData') as Map.SuitData
 
 const id2zh = {
@@ -80,14 +79,14 @@ export class Equip {
   readonly enkaEquip: Enka.Equip
   readonly Equipment: Enka.Equip['Equipment']
   readonly id: number
-  readonly data: Map.EquipId2Data[string]
+  readonly data: Map.SuitData[string]
   readonly info: FilterValueType<Mys.Equip, string | number | boolean>
   readonly equip: Mys.Equip
   constructor(enkaEquip: Enka.Equip) {
     this.enkaEquip = enkaEquip
     this.Equipment = this.enkaEquip.Equipment
     this.id = this.Equipment.Id
-    this.data = EquipId2Data[`${this.id.toString().slice(0, 3)}00`]
+    this.data = SuitData[`${this.id.toString().slice(0, 3)}00`]
     if (!this.data) {
       throw new Error(`驱动盘数据缺失: ${this.id}`)
     }
@@ -129,7 +128,7 @@ export class Equip {
     return {
       id: this.id,
       level: this.Equipment.Level,
-      name: `${this.data.equip_name}[${this.enkaEquip.Slot}]`,
+      name: `${this.data.name}[${this.enkaEquip.Slot}]`,
       icon: '',
       rarity: Rarity[+String(this.id)[3]] || 'S',
       equipment_type: this.enkaEquip.Slot,
@@ -163,7 +162,7 @@ export class Equip {
   equip_suit(): Mys.Equip['equip_suit'] {
     return {
       suit_id: +`${this.id.toString().slice(0, 3)}00`,
-      name: this.data.equip_name,
+      name: this.data.name,
       own: 0,
       desc1: this.data.desc1,
       desc2: this.data.desc2
@@ -540,7 +539,7 @@ export function Enka2Mys(enkaAvatars: Enka.Avatar | Enka.Avatar[], __isToFixed__
     try {
       const info = parseInfo(enkaAvatar)
       if (!info) {
-        throw new Error(`角色数据缺失: ${enkaAvatar.Id}`)
+        throw `角色数据缺失: ${enkaAvatar.Id}`
       }
       const avatar = info as Mys.Avatar
       avatar.ranks = []

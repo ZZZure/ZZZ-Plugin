@@ -7,7 +7,6 @@ var Rarity;
 })(Rarity || (Rarity = {}));
 const WeaponId2Data = getMapData('WeaponId2Data');
 const PartnerId2Data = getMapData('PartnerId2Data');
-const EquipId2Data = getMapData('EquipId2Data');
 const SuitData = getMapData('SuitData');
 const id2zh = {
     111: '生命值',
@@ -66,7 +65,7 @@ export class Equip {
         this.enkaEquip = enkaEquip;
         this.Equipment = this.enkaEquip.Equipment;
         this.id = this.Equipment.Id;
-        this.data = EquipId2Data[`${this.id.toString().slice(0, 3)}00`];
+        this.data = SuitData[`${this.id.toString().slice(0, 3)}00`];
         if (!this.data) {
             throw new Error(`驱动盘数据缺失: ${this.id}`);
         }
@@ -104,7 +103,7 @@ export class Equip {
         return {
             id: this.id,
             level: this.Equipment.Level,
-            name: `${this.data.equip_name}[${this.enkaEquip.Slot}]`,
+            name: `${this.data.name}[${this.enkaEquip.Slot}]`,
             icon: '',
             rarity: Rarity[+String(this.id)[3]] || 'S',
             equipment_type: this.enkaEquip.Slot,
@@ -136,7 +135,7 @@ export class Equip {
     equip_suit() {
         return {
             suit_id: +`${this.id.toString().slice(0, 3)}00`,
-            name: this.data.equip_name,
+            name: this.data.name,
             own: 0,
             desc1: this.data.desc1,
             desc2: this.data.desc2
@@ -469,7 +468,7 @@ export function Enka2Mys(enkaAvatars, __isToFixed__ = true) {
         try {
             const info = parseInfo(enkaAvatar);
             if (!info) {
-                throw new Error(`角色数据缺失: ${enkaAvatar.Id}`);
+                throw `角色数据缺失: ${enkaAvatar.Id}`;
             }
             const avatar = info;
             avatar.ranks = [];

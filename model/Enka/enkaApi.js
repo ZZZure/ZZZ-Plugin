@@ -1,11 +1,9 @@
 import { Enka2Mys } from './formater.js'
-import fetch from 'node-fetch'
 import settings from '../../lib/settings.js'
-import _ from 'lodash'
+import fetch from 'node-fetch'
 
 const config = settings.getConfig('config')
-const defConfig = settings.getdefSet('config')
-const EnkaApi = _.get(config, 'enkaApi') || _.get(defConfig, 'enkaApi')
+const EnkaApi = config.enkaApi
 
 export function getGameRoles(uid, region = false) {
   const _uid = String(uid)

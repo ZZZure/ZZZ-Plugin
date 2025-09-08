@@ -343,21 +343,12 @@ export namespace Map {
     }
   }
 
-  export interface EquipId2Data {
-    [id: string]: {
-      equip_id_list: number[]
-      sprite_file: string
-      equip_name: string
-      desc1: string
-      desc2: string
-    }
-  }
-
   export interface SuitData {
     [suit_id: string]: {
+      sprite_file: string
       name: string
+      desc1: string
       desc2: string
-      desc4: string
       properties: Mys.Property[]
     }
   }

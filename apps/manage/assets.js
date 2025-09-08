@@ -10,14 +10,14 @@ import {
   getHakushWeapon,
 } from '../../lib/download.js';
 import { char } from '../../lib/convert.js';
-import { getAllEquipID } from '../../lib/convert/equip.js';
+import { getAllSuitID } from '../../lib/convert/equip.js';
 import { getAllWeaponID } from '../../lib/convert/weapon.js';
 import * as LocalURI from '../../lib/download/const.js';
 
 export async function downloadAll() {
   if (!this.e.isMaster) return false;
   const charIDs = char.getAllCharactersID();
-  const equipSprites = getAllEquipID();
+  const equipSprites = getAllSuitID();
   const weaponSprites = getAllWeaponID();
   const result = {
     images: {
