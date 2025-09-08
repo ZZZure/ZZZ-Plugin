@@ -196,6 +196,46 @@ export function supportGuoba() {
         },
         {
           component: 'SOFT_GROUP_BEGIN',
+          label: '提醒功能设置',
+        },
+        {
+          field: 'remind.enable',
+          label: '开启提醒功能',
+          bottomHelpMessage: '是否启用式舆防卫战/危局强袭战的定时提醒功能',
+          component: 'Switch',
+        },
+        {
+          field: 'remind.globalRemindTime',
+          label: '全局提醒时间',
+          bottomHelpMessage: '设置全局默认提醒时间，格式如"每日20时"或"每周一20时40分"',
+          component: 'Input',
+          componentProps: {
+            placeholder: '每日20时',
+          },
+        },
+        {
+          field: 'remind.abyssCheckLevel',
+          label: '默认式舆S评级阈值',
+          bottomHelpMessage: '新用户订阅时，S评级数量低于此值会收到提醒',
+          component: 'InputNumber',
+          componentProps: {
+            min: 1,
+            max: 7,
+            placeholder: '请输入数字(1-7)',
+          },
+        },
+        {
+          field: 'remind.deadlyStars',
+          label: '默认危局星星阈值',
+          bottomHelpMessage: '新用户订阅时，星星总数低于此值会收到提醒',
+          component: 'InputNumber',
+          componentProps: {
+            min: 0,
+            placeholder: '请输入数字',
+          },
+        },
+        {
+          component: 'SOFT_GROUP_BEGIN',
           label: '攻略设置',
         },
         {
@@ -408,6 +448,18 @@ export function supportGuoba() {
           field: 'priority.panel',
           label: '面板查询',
           bottomHelpMessage: '设置面板查询指令优先级',
+          component: 'InputNumber',
+          required: true,
+          componentProps: {
+            min: -1000,
+            max: 1000,
+            placeholder: '请输入数字',
+          },
+        },
+        {
+          field: 'priority.remind',
+          label: '挑战提醒',
+          bottomHelpMessage: '设置挑战提醒指令优先级',
           component: 'InputNumber',
           required: true,
           componentProps: {

@@ -184,6 +184,75 @@ const helpData = [
     ],
   },
   {
+    title: '挑战提醒',
+    icon: 'dungeon',
+    items: [
+      {
+        title: '开关挑战提醒',
+        desc: '开启或关闭式舆防卫战/危局强袭战未完成提醒功能',
+        needCK: true,
+        needSK: false,
+        commands: ['开启挑战提醒', '关闭挑战提醒'],
+      },
+      {
+        title: '开关全局挑战提醒',
+        desc: '开启或关闭全局式舆防卫战/危局强袭战未完成提醒功能',
+        needCK: true,
+        needSK: false,
+        commands: ['开启全局挑战提醒', '关闭全局挑战提醒'],
+      },
+      {
+        title: '设置全局提醒时间',
+        desc: '设置全局提醒时间，所有未单独设置个人提醒时间的用户将使用此时间。格式同上，仅限主人可用。',
+        needCK: true,
+        needSK: false,
+        commands: ['设置全局提醒时间+时间'],
+      },
+      {
+        title: '设置全局提醒阈值',
+        desc: '设置全局默认防卫战检查层数阈值(1~7)，或全局默认危局强袭战星星阈值(1~9)',
+        needCK: true,
+        needSK: false,
+        commands: ['设置全局式舆阈值+数字', '设置全局危局阈值+数字'],
+      },
+      {
+        title: '设置提醒阈值',
+        desc: '设置防卫战检查层数阈值(1~7)，或危局强袭战星星阈值(1~9)。例如：设置危局阈值6',
+        needCK: true,
+        needSK: false,
+        commands: ['设置防卫战阈值+数字', '设置危局阈值+数字'],
+      },
+      {
+        title: '设置个人提醒时间',
+        desc: '设置每日或每周的个人提醒时间，格式如“每日20时”或“每周六20时10分”，分钟需为整十数，可不加分钟。',
+        needCK: true,
+        needSK: false,
+        commands: ['设置个人提醒时间+时间'],
+      },
+      {
+        title: '查看提醒时间',
+        desc: '查看个人或全局提醒时间',
+        needCK: true,
+        needSK: false,
+        commands: ['个人提醒时间', '全局提醒时间']
+      },
+      {
+        title: '重置个人提醒时间',
+        desc: '重置已设置的个人提醒时间为全局默认时间',
+        needCK: true,
+        needSK: false,
+        commands: ['重置个人提醒时间'],
+      },
+      {
+        title: '查询挑战状态',
+        desc: '主动查询当前式舆防卫战/危局强袭战完成情况',
+        needCK: true,
+        needSK: false,
+        commands: ['查询挑战状态'],
+      },
+    ],
+  },
+  {
     title: '角色攻略',
     icon: 'physdmg',
     items: [
