@@ -80,7 +80,6 @@ export class Wiki extends ZZZPlugin {
       !isSkillLevelLegal('ChainLevel', ChainLevel) ||
       !isSkillLevelLegal('CoreLevel', CoreLevel)
     ) {
-      await this.reply(`${charname}天赋等级参数不合法`);
       return false;
     }
     const charData = await getHakushCharacterData(charname);
@@ -108,8 +107,7 @@ export class Wiki extends ZZZPlugin {
     const charData = await getHakushCharacterData(charname);
     const cinemaData = charData?.Talent;
     if (!cinemaData) {
-      await this.reply(`未找到${charname}的数据`);
-      return false;
+      return this.reply(`未找到${charname}的数据`);
     }
     await charData.get_assets();
     const finalData = {

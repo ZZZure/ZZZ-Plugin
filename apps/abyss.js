@@ -32,8 +32,7 @@ export class Abyss extends ZZZPlugin {
       throw e;
     });
     if (!abyssData?.has_data) {
-      await this.reply('没有式舆防卫战数据');
-      return false;
+      return this.reply('没有式舆防卫战数据');
     }
     const abyss = new ZZZChallenge(abyssData);
     const timer = setTimeout(() => {

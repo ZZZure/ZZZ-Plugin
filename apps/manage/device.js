@@ -2,8 +2,7 @@ import settings from '../../lib/settings.js';
 
 export async function setDefaultDevice() {
   if (!this.e.isMaster) {
-    this.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
-    return false;
+    return this.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
   }
   this.setContext('toSetDefaultDevice');
   await this.reply(
@@ -15,19 +14,16 @@ export async function setDefaultDevice() {
 export async function toSetDefaultDevice() {
   const msg = this.e.msg.trim();
   if (!msg) {
-    this.reply('请发送设备信息', false, { at: true, recallMsg: 100 });
-    return false;
+    return this.reply('请发送设备信息', false, { at: true, recallMsg: 100 });
   }
   if (msg.includes('取消')) {
-    await this.reply('已取消', false, { at: true, recallMsg: 100 });
     this.finish('toSetDefaultDevice');
-    return false;
+    return this.reply('已取消', false, { at: true, recallMsg: 100 });
   }
   try {
     const info = JSON.parse(msg);
     if (!info) {
-      this.reply('设备信息格式错误', false, { at: true, recallMsg: 100 });
-      return false;
+      return this.reply('设备信息格式错误', false, { at: true, recallMsg: 100 });
     }
     if (
       !info?.deviceName ||
@@ -37,8 +33,7 @@ export async function toSetDefaultDevice() {
       !info?.deviceFingerprint ||
       !info?.deviceProduct
     ) {
-      this.reply('设备信息格式错误', false, { at: true, recallMsg: 100 });
-      return false;
+      return this.reply('设备信息格式错误', false, { at: true, recallMsg: 100 });
     }
     settings.setConfig('device', {
       productName: info.deviceProduct,

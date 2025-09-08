@@ -26,8 +26,7 @@ export class Calendar extends ZZZPlugin {
       )
       .then(res => res.json());
     if (!activityList?.data) {
-      await this.reply('获取活动列表失败');
-      return false;
+      return this.reply('获取活动列表失败');
     }
     const t = activityList?.data?.t || new Date().getTime().toString();
     const activityContent = await request
@@ -42,8 +41,7 @@ export class Calendar extends ZZZPlugin {
 
     const htmlContent = calendarContent?.content || '';
     if (!htmlContent) {
-      await this.reply('未找到活动日历');
-      return false;
+      return this.reply('未找到活动日历');
     }
     const imgReg = /<img.*?src="(.*?)".*?>/g;
     const imgSrc = imgReg.exec(htmlContent)?.[1];
@@ -52,6 +50,5 @@ export class Calendar extends ZZZPlugin {
     } else {
       await this.reply('未找到活动日历图片');
     }
-    return false;
   }
 }
