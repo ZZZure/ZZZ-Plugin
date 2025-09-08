@@ -4,12 +4,13 @@ import {
   getSmallSquareAvatar,
   getSquareAvatar,
 } from '../lib/download.js';
-import { baseValueData, formatScoreWeight, scoreWeight } from '../lib/score.js';
-import { avatar_calc, scoreFnc } from './damage/avatar.js';
 import { idToShortName2 } from '../lib/convert/property.js';
 import { imageResourcesPath } from '../lib/path.js';
+import { avatar_calc } from './damage/avatar.js';
+import { baseValueData } from '../lib/score.js';
 import { Equip, Weapon } from './equip.js';
 import { Property } from './property.js';
+import Score from './damage/Score.js'
 import { Skill } from './skill.js';
 import path from 'path';
 import _ from 'lodash';
@@ -262,9 +263,9 @@ export class ZZZAvatarInfo {
     this.isNew = isNew;
     /** @type {number}  等级级别（取十位数字）*/
     this.level_rank = Math.floor(this.level / 10);
-    const weight = scoreFnc[this.id] && scoreFnc[this.id](this);
-    this.weightRule = weight?.[0] || '默认';
-    this.scoreWeight = _.defaults(formatScoreWeight(weight?.[1]) || {}, scoreWeight[this.id]);
+    const weight = Score.getFinalWeight(this);
+    this.weightRule = weight[0];
+    this.scoreWeight = weight[1];
     for (const equip of this.equip) {
       equip.get_score(this.scoreWeight);
     }
