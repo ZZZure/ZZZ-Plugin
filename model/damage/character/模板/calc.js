@@ -114,8 +114,8 @@ export const buffs = [
 /** @type {import('../../Calculator.ts').Calculator['skills']} */
 export const skills = [
   { name: '普攻：', type: 'AP' },
-  { name: '冲刺攻击：', type: 'CC' },
   { name: '闪避反击：', type: 'CF' },
+  { name: '支援突击：', type: 'LT' },
   { name: '强化特殊技：', type: 'EQ' },
   { name: '连携技：', type: 'RL' },
   { name: '终结技：', type: 'RZ' },

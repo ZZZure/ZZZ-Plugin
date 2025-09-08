@@ -95,8 +95,8 @@ export interface buff {
    * @function
    * 音擎会自动添加职业检查
    * @number
-   * - buff.source为Set时，判断套装数量>=该值
-   * - buff.source为Rank时，判断影画数量>=该值
+   * - buff.source为**套装**时，判断套装数量>=该值
+   * - buff.source为**影画**时，判断影画数量>=该值
    */
   check?: (({ avatar, buffM, calc }: {
     avatar: ZZZAvatarInfo

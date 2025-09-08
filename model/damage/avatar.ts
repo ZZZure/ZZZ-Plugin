@@ -147,7 +147,10 @@ export function avatar_calc(avatar: ZZZAvatarInfo) {
 	logger.debug('initial_properties', avatar.initial_properties)
 	weapon_buff(avatar.weapon, buffM)
 	set_buff(avatar.equip, buffM)
-	if (m.buffs) buffM.new(m.buffs)
+	if (m.buffs) {
+		const vaildBuffs = m.buffs.filter(v => (v.source && v.source !== '影画') || typeof v.check !== 'number' || v.check <= avatar.rank)
+		buffM.new(vaildBuffs)
+	}
 	if (m.skills) calc.new(m.skills)
 	if (m.calc) m.calc(buffM, calc, avatar)
 	logger.debug(`Buff*${buffM.buffs.length}：`, buffM.buffs)
@@ -195,7 +198,10 @@ export function set_buff(equips: ZZZAvatarInfo['equip'], buffM: BuffManager) {
 		const m = calcFnc.set[name]
 		if (!m) continue
 		buffM.default('name', name)
-		if (m.buffs) buffM.new(m.buffs)
+		if (m.buffs) {
+			const vaildBuffs = m.buffs.filter(v => (v.source && v.source !== '套装') || typeof v.check !== 'number' || v.check <= count)
+			buffM.new(vaildBuffs)
+		}
 		if (m.calc) m.calc(buffM, count)
 	}
 	buffM.default({})
