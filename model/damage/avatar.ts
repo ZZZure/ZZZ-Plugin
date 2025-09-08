@@ -148,7 +148,10 @@ export function avatar_calc(avatar: ZZZAvatarInfo) {
 	weapon_buff(avatar.weapon, buffM)
 	set_buff(avatar.equip, buffM)
 	if (m.buffs) {
-		const vaildBuffs = m.buffs.filter(v => (v.source && v.source !== '影画') || typeof v.check !== 'number' || v.check <= avatar.rank)
+		// 预筛选影画buff
+		const vaildBuffs = m.buffs.filter(v => v.source ?
+			(v.source !== '影画' || typeof v.check !== 'number' || v.check <= avatar.rank) :
+			(!/^\d影/.test(v.name) || +v.name[0] <= avatar.rank))
 		buffM.new(vaildBuffs)
 	}
 	if (m.skills) calc.new(m.skills)
@@ -199,6 +202,7 @@ export function set_buff(equips: ZZZAvatarInfo['equip'], buffM: BuffManager) {
 		if (!m) continue
 		buffM.default('name', name)
 		if (m.buffs) {
+			// 预筛选套装buff
 			const vaildBuffs = m.buffs.filter(v => (v.source && v.source !== '套装') || typeof v.check !== 'number' || v.check <= count)
 			buffM.new(vaildBuffs)
 		}

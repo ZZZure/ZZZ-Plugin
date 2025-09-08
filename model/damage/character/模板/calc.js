@@ -55,10 +55,12 @@ export function calc(buffM, calc, avatar) {
     range: ['']
   })
   /** 注册技能 */
-  calc.new({ name: '普通攻击：', type: '' })
-  calc.new({ name: '强化特殊技：', type: '' })
-  calc.new({ name: '连携技：', type: '' })
-  calc.new({ name: '终结技：', type: '' })
+  calc.new({ name: '普攻：', type: 'AP' })
+  calc.new({ name: '闪避反击：', type: 'CF' })
+  calc.new({ name: '支援突击：', type: 'LT' })
+  calc.new({ name: '强E：', type: 'EQ' })
+  calc.new({ name: '连携技：', type: 'RL' })
+  calc.new({ name: '终结技：', type: 'RZ' })
   calc.new({ name: '', type: '' })
 }
 
@@ -116,7 +118,7 @@ export const skills = [
   { name: '普攻：', type: 'AP' },
   { name: '闪避反击：', type: 'CF' },
   { name: '支援突击：', type: 'LT' },
-  { name: '强化特殊技：', type: 'EQ' },
+  { name: '强E：', type: 'EQ' },
   { name: '连携技：', type: 'RL' },
   { name: '终结技：', type: 'RZ' },
   { name: '', type: '' },

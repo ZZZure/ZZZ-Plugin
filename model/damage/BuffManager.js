@@ -71,7 +71,7 @@ export class BuffManager {
                 buff.source = oriBuff.source = '核心被动';
             else if (buff.name.includes('额外能力'))
                 buff.source = oriBuff.source = '额外能力';
-            else if (buff.name.includes('影'))
+            else if (/^\d影/.test(buff.name))
                 buff.source = oriBuff.source = '影画';
             else if (buff.name.includes('技'))
                 buff.source = oriBuff.source = '技能';
@@ -88,8 +88,8 @@ export class BuffManager {
             const oriCheck = typeof buff.check === 'function' && buff.check;
             buff.check = ({ avatar, buffM, calc }) => professionCheck(avatar) && (!oriCheck || oriCheck({ avatar, buffM, calc }));
         }
-        else if (buff.source === '影画') {
-            buff.check ??= oriBuff.check = +buff.name.match(/\d/)?.[0];
+        else if (buff.source === '影画' && !buff.check) {
+            buff.check = oriBuff.check = +buff.name[0];
         }
         this.buffs.push(buff);
         return this.buffs;

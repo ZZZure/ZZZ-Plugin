@@ -451,7 +451,7 @@ export class Calculator {
     }
     const base: { [type: string]: number } = {}
     types.forEach(t => base[t] = t.includes('百分比') ? this.avatar.base_properties[prop.nameZHToNameEN(t.replace('百分比', '')) as keyof ZZZAvatarInfo['base_properties']] * subBaseValueData[t][0] : subBaseValueData[t][0])
-    logger.debug('词条变化值：', base)
+    logger.debug(logger.red('副词条差异计算变化值：'), base)
     const buffs: {
       name: subStatKeys
       shortName: string
@@ -502,7 +502,7 @@ export class Calculator {
     }
     const base: { [type: string]: number } = {}
     types.forEach(t => base[t] = (t.includes('百分比') || ['异常掌控', '冲击力', '能量自动回复'].includes(t)) ? this.avatar.base_properties[prop.nameZHToNameEN(t.replace('百分比', '')) as keyof ZZZAvatarInfo['base_properties']] * mainBaseValueData[t][0] : mainBaseValueData[t][0])
-    logger.debug(logger.red('词条变化值：'), base)
+    logger.debug(logger.red('主词条差异计算变化值：'), base)
     const buffs: {
       name: mainStatKeys
       shortName: string

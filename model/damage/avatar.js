@@ -114,7 +114,9 @@ export function avatar_calc(avatar) {
     weapon_buff(avatar.weapon, buffM);
     set_buff(avatar.equip, buffM);
     if (m.buffs) {
-        const vaildBuffs = m.buffs.filter(v => (v.source && v.source !== '影画') || typeof v.check !== 'number' || v.check <= avatar.rank);
+        const vaildBuffs = m.buffs.filter(v => v.source ?
+            (v.source !== '影画' || typeof v.check !== 'number' || v.check <= avatar.rank) :
+            (!/^\d影/.test(v.name) || +v.name[0] <= avatar.rank));
         buffM.new(vaildBuffs);
     }
     if (m.skills)
