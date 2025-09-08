@@ -336,9 +336,10 @@ export class Remind extends ZZZPlugin {
     if (!globalRemindConfig.enable) {
       return;
     }
-    logger.info('[ZZZ-Plugin] 开始执行式舆防卫战/危局强袭战提醒任务');
-
     const allUserConfigs = await redis.hGetAll(USER_CONFIGS_KEY);
+    if (Object.keys(allUserConfigs).length === 0) return;
+    logger.debug('[ZZZ-Plugin] 开始执行式舆防卫战/危局强袭战提醒任务');
+
     const now = new Date();
     const globalRemindTime = globalRemindConfig.globalRemindTime || '每日20时';
 
@@ -361,12 +362,12 @@ export class Remind extends ZZZPlugin {
         const messages = await this.checkUser(userId, userConfig, false, mockE);
         if (messages.length > 0) {
           await Bot.pickFriend(userId).sendMsg('【式舆/危局挑战提醒】\n' + messages.join('\n')).catch(err => {
-            logger.error(`[ZZZ-Plugin] 式舆/危局挑战推送用户 ${userId} 失败`, err);
+            logger.error(`[ZZZ-Plugin] 式舆/危局挑战提醒推送用户 ${userId} 失败`, err);
           });
         }
       }
     }
-    logger.info('[ZZZ-Plugin] 式舆防卫战/危局强袭战提醒任务执行完毕');
+    logger.debug('[ZZZ-Plugin] 式舆防卫战/危局强袭战提醒任务执行完毕');
   }
 
   async setMyRemindTime() {
