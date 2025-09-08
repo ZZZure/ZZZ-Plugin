@@ -75,6 +75,7 @@ export class update extends plugin {
       } catch (err) {}
       const masters = config.masterQQ;
       for (const master of masters) {
+        if (master.toString() == 'stdin') continue;
         if (master.toString().length > 11) continue;
         await Bot.pickFriend(master).sendMsg(msg);
         break;
