@@ -270,6 +270,17 @@ export class Remind extends ZZZPlugin {
     }
   }
 
+  getTimeRemaining({ year, month, day, hour, minute, second }) {
+    const targetDate = new Date(year, month - 1, day, hour, minute, second);
+    const now = new Date();
+    const timeDiff = targetDate - now;
+    if (timeDiff <= 0) return { days: 0, hours: 0 };
+    const totalHours = Math.floor(timeDiff / (1000 * 60 * 60));
+    const days = Math.floor(totalHours / 24);
+    const hours = totalHours % 24;
+    return { days, hours };
+  }
+
   async checkUser(userId, userConfig, showAll = false, contextE = null) {
     let messages = [];
 
@@ -293,6 +304,7 @@ export class Remind extends ZZZPlugin {
     // 检查式舆防卫战
     try {
       const abyssRawData = await api.getFinalData('zzzChallenge', { deviceFp });
+      const len = messages.length;
       if (!abyssRawData || !abyssRawData.has_data) {
         messages.push('式舆防卫战S评级: 0/7');
       } else {
@@ -303,6 +315,12 @@ export class Remind extends ZZZPlugin {
           messages.push(`式舆防卫战S评级: ${sCount}/7${status}`);
         }
       }
+      if (len !== messages.length && abyssRawData?.hadal_begin_time && abyssRawData?.hadal_end_time) {
+        const { hadal_begin_time, hadal_end_time } = abyssRawData;
+        const { days, hours } = this.getTimeRemaining(hadal_end_time);
+        messages.push(`统计周期：${hadal_begin_time.year}/${hadal_begin_time.month}/${hadal_begin_time.day} - ${hadal_end_time.year}/${hadal_end_time.month}/${hadal_end_time.day}`);
+        messages.push(`刷新剩余: ${days}天${hours}小时`);
+      }
     } catch (error) {
       logger.error(`[ZZZ-Plugin] 为用户 ${userId} 检查式舆防卫战失败: ${error}`);
       messages.push(`式舆防卫战查询失败: ${error}`);
@@ -311,15 +329,22 @@ export class Remind extends ZZZPlugin {
     // 检查危局强袭战
     try {
       const deadlyRawData = await api.getFinalData('zzzDeadly', { deviceFp });
+      const len = messages.length;
       if (!deadlyRawData || !deadlyRawData.has_data) {
-        messages.push('危局强袭战星星: 0/9');
+        messages.push('危局强袭战星数: 0/9');
       } else {
         const deadlyStars = userConfig.deadlyStars ?? defaultConfig.deadlyStars;
         const totalStar = deadlyRawData.total_star || 0;
         const status = totalStar >= deadlyStars ? ' ✓' : '';
         if (showAll || totalStar < deadlyStars) {
-          messages.push(`危局强袭战星星: ${totalStar}/9${status}`);
+          messages.push(`危局强袭战星数: ${totalStar}/9${status}`);
         }
+      }
+      if (len !== messages.length && deadlyRawData?.start_time && deadlyRawData?.end_time) {
+        const { start_time, end_time } = deadlyRawData;
+        const { days, hours } = this.getTimeRemaining(end_time);
+        messages.push(`统计周期：${start_time.year}/${start_time.month}/${start_time.day} - ${end_time.year}/${end_time.month}/${end_time.day}`);
+        messages.push(`刷新剩余: ${days}天${hours}小时`);
       }
     } catch (error) {
       logger.error(`[ZZZ-Plugin] 为用户 ${userId} 检查危局强袭战失败: ${error}`);
