@@ -776,10 +776,10 @@
     }
   },
   "1051": {
-    "sprite_id": "",
+    "sprite_id": "52",
     "name": "伊德海莉",
-    "full_name": "",
-    "en_name": "(Test1)Yidhari",
+    "full_name": "伊德海莉·墨菲",
+    "en_name": "Yidhari",
     "WeaponType": "6",
     "ElementType": "202",
     "Camp": "怪啖屋",
@@ -6016,7 +6016,7 @@
   "1331": {
     "sprite_id": "41",
     "name": "薇薇安",
-    "full_name": "薇薇安",
+    "full_name": "薇薇安·班希",
     "en_name": "Vivian",
     "WeaponType": "3",
     "ElementType": "205",
@@ -7760,10 +7760,10 @@
     }
   },
   "1441": {
-    "sprite_id": "50",
-    "name": "狛野真斗",
-    "full_name": "",
-    "en_name": "Avatar_Male_Size03_Norano_En",
+    "sprite_id": "51",
+    "name": "真斗",
+    "full_name": "狛野真斗",
+    "en_name": "Manato",
     "WeaponType": "6",
     "ElementType": "201",
     "Camp": "怪啖屋",
@@ -7954,20 +7954,20 @@
     }
   },
   "1451": {
-    "sprite_id": "",
-    "name": "(Test1)卢西娅",
-    "full_name": "",
+    "sprite_id": "50",
+    "name": "卢西娅",
+    "full_name": "卢西娅·艾洛温",
     "en_name": "Lucia",
     "WeaponType": "4",
     "ElementType": "205",
     "Camp": "怪啖屋",
     "HitType": "打击",
     "Rarity": "S",
-    "Attack": 108,
-    "AttackGrowth": 63517,
+    "Attack": 109,
+    "AttackGrowth": 64272,
     "BreakStun": 83,
     "Defence": 48,
-    "DefenceGrowth": 65524,
+    "DefenceGrowth": 64845,
     "HpMax": 681,
     "HpGrowth": 924944,
     "Crit": 500,
@@ -8002,7 +8002,7 @@
       },
       "3": {
         "HpMax": 936,
-        "Attack": 77,
+        "Attack": 78,
         "Defence": 66,
         "LevelMax": 30,
         "LevelMin": 20,
@@ -8013,8 +8013,8 @@
       },
       "4": {
         "HpMax": 1403,
-        "Attack": 116,
-        "Defence": 99,
+        "Attack": 117,
+        "Defence": 98,
         "LevelMax": 40,
         "LevelMin": 30,
         "Materials": {
@@ -8024,8 +8024,8 @@
       },
       "5": {
         "HpMax": 1871,
-        "Attack": 154,
-        "Defence": 133,
+        "Attack": 156,
+        "Defence": 131,
         "LevelMax": 50,
         "LevelMin": 40,
         "Materials": {
@@ -8035,8 +8035,8 @@
       },
       "6": {
         "HpMax": 2339,
-        "Attack": 193,
-        "Defence": 166,
+        "Attack": 195,
+        "Defence": 164,
         "LevelMax": 60,
         "LevelMin": 50,
         "Materials": {}
@@ -8155,7 +8155,7 @@
     "WeaponType": "1",
     "ElementType": "203",
     "Camp": "新艾利都防卫军",
-    "HitType": "穿透",
+    "HitType": "斩击",
     "Rarity": "S",
     "Attack": 134,
     "AttackGrowth": 81654,
@@ -8231,6 +8231,200 @@
         "HpMax": 2117,
         "Attack": 239,
         "Defence": 169,
+        "LevelMax": 60,
+        "LevelMin": 50,
+        "Materials": {}
+      }
+    },
+    "ExtraLevel": {
+      "1": {
+        "MaxLevel": 15,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 0
+          },
+          "21101": {
+            "Prop": 21101,
+            "Name": "暴击伤害",
+            "Format": "{0:0.#%}",
+            "Value": 960
+          }
+        }
+      },
+      "2": {
+        "MaxLevel": 25,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "21101": {
+            "Prop": 21101,
+            "Name": "暴击伤害",
+            "Format": "{0:0.#%}",
+            "Value": 960
+          }
+        }
+      },
+      "3": {
+        "MaxLevel": 35,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "21101": {
+            "Prop": 21101,
+            "Name": "暴击伤害",
+            "Format": "{0:0.#%}",
+            "Value": 1920
+          }
+        }
+      },
+      "4": {
+        "MaxLevel": 45,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "21101": {
+            "Prop": 21101,
+            "Name": "暴击伤害",
+            "Format": "{0:0.#%}",
+            "Value": 1920
+          }
+        }
+      },
+      "5": {
+        "MaxLevel": 55,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "21101": {
+            "Prop": 21101,
+            "Name": "暴击伤害",
+            "Format": "{0:0.#%}",
+            "Value": 2880
+          }
+        }
+      },
+      "6": {
+        "MaxLevel": 60,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 75
+          },
+          "21101": {
+            "Prop": 21101,
+            "Name": "暴击伤害",
+            "Format": "{0:0.#%}",
+            "Value": 2880
+          }
+        }
+      }
+    }
+  },
+  "1471": {
+    "sprite_id": "53",
+    "name": "(Test1)般岳",
+    "full_name": "",
+    "en_name": "BanYue",
+    "WeaponType": "6",
+    "ElementType": "201",
+    "Camp": "怪啖屋",
+    "HitType": "打击",
+    "Rarity": "S",
+    "Attack": 124,
+    "AttackGrowth": 74561,
+    "BreakStun": 95,
+    "Defence": 36,
+    "DefenceGrowth": 48644,
+    "HpMax": 683,
+    "HpGrowth": 927143,
+    "Crit": 500,
+    "CritDamage": 5000,
+    "ElementAbnormalPower": 90,
+    "ElementMystery": 89,
+    "PenDelta": 0,
+    "PenRate": 0,
+    "SpRecover": 0,
+    "Level": {
+      "1": {
+        "HpMax": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "LevelMax": 10,
+        "LevelMin": 0,
+        "Materials": {
+          "10": 24000,
+          "100216": 4
+        }
+      },
+      "2": {
+        "HpMax": 469,
+        "Attack": 44,
+        "Defence": 25,
+        "LevelMax": 20,
+        "LevelMin": 10,
+        "Materials": {
+          "10": 56000,
+          "100226": 12
+        }
+      },
+      "3": {
+        "HpMax": 938,
+        "Attack": 88,
+        "Defence": 49,
+        "LevelMax": 30,
+        "LevelMin": 20,
+        "Materials": {
+          "10": 120000,
+          "100226": 20
+        }
+      },
+      "4": {
+        "HpMax": 1407,
+        "Attack": 132,
+        "Defence": 74,
+        "LevelMax": 40,
+        "LevelMin": 30,
+        "Materials": {
+          "10": 200000,
+          "100236": 10
+        }
+      },
+      "5": {
+        "HpMax": 1875,
+        "Attack": 177,
+        "Defence": 98,
+        "LevelMax": 50,
+        "LevelMin": 40,
+        "Materials": {
+          "10": 400000,
+          "100236": 20
+        }
+      },
+      "6": {
+        "HpMax": 2344,
+        "Attack": 221,
+        "Defence": 123,
         "LevelMax": 60,
         "LevelMin": 50,
         "Materials": {}
