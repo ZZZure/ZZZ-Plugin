@@ -82,18 +82,18 @@ export async function setRefreshCharInterval() {
   }
   const match = /刷新角色间隔(\d+)$/g.exec(this.e.msg);
   const refresh_char_interval = Number(match[1]);
-  if (refresh_char_interval < 0) {
-    return this.e.reply('刷新角色间隔不能小于0秒', false, {
+  if (refresh_char_interval < 100) {
+    return this.e.reply('刷新角色间隔不能小于100毫秒', false, {
       at: true,
       recallMsg: 100,
     });
   }
-  if (refresh_char_interval > 1000) {
-    return this.e.reply('刷新角色间隔不能大于1000秒', false, {
+  if (refresh_char_interval > 10000) {
+    return this.e.reply('刷新角色间隔不能大于10000毫秒', false, {
       at: true,
       recallMsg: 100,
     });
   }
   settings.setSingleConfig('panel', 'roleInterval', refresh_char_interval);
-  await this.e.reply(`绝区零刷新角色间隔已设置为: ${refresh_char_interval}秒`);
+  await this.e.reply(`绝区零刷新角色间隔已设置为: ${refresh_char_interval}毫秒`);
 }

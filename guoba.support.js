@@ -184,14 +184,14 @@ export function supportGuoba() {
           field: 'panel.roleInterval',
           label: '冷却时间',
           bottomHelpMessage:
-            '设置刷新角色的冷却时间，单位为秒，取值范围为0～1000',
+            '设置刷新角色的冷却时间，单位为毫秒，取值范围为100～10000',
           component: 'InputNumber',
           required: true,
           componentProps: {
-            min: 0,
-            max: 1000,
+            min: 100,
+            max: 10000,
             placeholder: '请输入数字',
-            addonAfter: "s",
+            addonAfter: "ms",
           },
         },
         {
