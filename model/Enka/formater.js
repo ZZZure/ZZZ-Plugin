@@ -519,5 +519,19 @@ const special = {
                 final: 2
             };
         }
+    },
+    1441: {
+        id: 1441,
+        name: '狛野真斗',
+        initial_after_format: (properties) => {
+            special[1371].initial_after_format(properties, {});
+            properties[20] = {
+                property_name: '闪能自动累积',
+                property_id: 20,
+                base: 0,
+                add: 0,
+                final: 0
+            };
+        }
     }
 };

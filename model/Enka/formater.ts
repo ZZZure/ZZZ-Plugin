@@ -603,5 +603,20 @@ const special: Record<number, {
         final: 2
       }
     }
+  },
+  1441: {
+    id: 1441,
+    name: '狛野真斗',
+    initial_after_format: (properties) => {
+      // 贯穿力处理与仪玄相同
+      special[1371].initial_after_format!(properties, {} as any)
+      properties[20] = {
+        property_name: '闪能自动累积',
+        property_id: 20,
+        base: 0,
+        add: 0,
+        final: 0
+      }
+    }
   }
 }

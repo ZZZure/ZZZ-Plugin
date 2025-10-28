@@ -85,12 +85,12 @@
           <div class="properties">
             <div class="prop-icon sheerforce"></div>
             <div class="label yellow">贯穿力</div>
-            <div class="value">{{basic_properties.sheerforce.final}}</div>
+            <div class="value">{{basic_properties.sheerforce ? basic_properties.sheerforce.final : 0}}</div>
           </div>
           <div class="properties">
             <div class="prop-icon sprecover"></div>
             <div class="label white">闪能累积</div>
-            <div class="value">{{basic_properties.adrenalineaccumulate.final}}</div>
+            <div class="value">{{basic_properties.adrenalineaccumulate ? basic_properties.adrenalineaccumulate.final : 0}}</div>
           </div>
         </div>
         {{else}}

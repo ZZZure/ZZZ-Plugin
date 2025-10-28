@@ -495,7 +495,7 @@ export class Calculator {
     }
     get_ATK(skill, usefulBuffs) {
         let ATK = this.get('攻击力', this.initial_properties.ATK, skill, usefulBuffs, true);
-        ATK = min_max(0, 10000, ATK);
+        ATK = this.min_max(0, 10000, ATK);
         logger.debug(`攻击力：${ATK}`);
         return ATK;
     }
@@ -506,37 +506,37 @@ export class Calculator {
     }
     get_CRITRate(skill, usefulBuffs) {
         let CRITRate = this.get('暴击率', this.initial_properties.CRITRate, skill, usefulBuffs);
-        CRITRate = min_max(0, 1, CRITRate);
+        CRITRate = this.min_max(0, 1, CRITRate);
         logger.debug(`暴击率：${CRITRate}`);
         return CRITRate;
     }
     get_CRITDMG(skill, usefulBuffs) {
         let CRITDMG = this.get('暴击伤害', this.initial_properties.CRITDMG, skill, usefulBuffs);
-        CRITDMG = min_max(0, 5, CRITDMG);
+        CRITDMG = this.min_max(0, 5, CRITDMG);
         logger.debug(`暴击伤害：${CRITDMG}`);
         return CRITDMG;
     }
     get_BoostArea(skill, usefulBuffs) {
         let BoostArea = this.get('增伤', 1, skill, usefulBuffs);
-        BoostArea = min_max(0, 6, BoostArea);
+        BoostArea = this.min_max(0, 6, BoostArea);
         logger.debug(`增伤区：${BoostArea}`);
         return BoostArea;
     }
     get_VulnerabilityArea(skill, usefulBuffs) {
         let VulnerabilityArea = this.get('易伤', 1, skill, usefulBuffs);
-        VulnerabilityArea = min_max(0.2, 2, VulnerabilityArea);
+        VulnerabilityArea = this.min_max(0.2, 2, VulnerabilityArea);
         logger.debug(`易伤区：${VulnerabilityArea}`);
         return VulnerabilityArea;
     }
     get_StunVulnerabilityArea(skill, usefulBuffs) {
         let StunVulnerabilityArea = this.get('失衡易伤', 1, skill, usefulBuffs);
-        StunVulnerabilityArea = min_max(0.2, 5, StunVulnerabilityArea);
+        StunVulnerabilityArea = this.min_max(0.2, 5, StunVulnerabilityArea);
         StunVulnerabilityArea !== 1 && logger.debug(`失衡易伤区：${StunVulnerabilityArea}`);
         return StunVulnerabilityArea;
     }
     get_ResistanceArea(skill, usefulBuffs) {
         let ResistanceArea = this.get('无视抗性', 1 - this.enemy.resistance, skill, usefulBuffs);
-        ResistanceArea = min_max(0, 2, ResistanceArea);
+        ResistanceArea = this.min_max(0, 2, ResistanceArea);
         logger.debug(`抗性区：${ResistanceArea}`);
         return ResistanceArea;
     }
@@ -566,7 +566,7 @@ export class Calculator {
         const PenRatio = this.get_PenRatio(skill, usefulBuffs);
         const defence = DEF * (1 - IgnoreDEF);
         const effective_defence = Math.max(0, defence * (1 - PenRatio) - Pen);
-        const DefenceArea = min_max(0, 1, base / (effective_defence + base));
+        const DefenceArea = this.min_max(0, 1, base / (effective_defence + base));
         logger.debug(`防御区：${DefenceArea}`);
         return DefenceArea;
     }
@@ -582,31 +582,31 @@ export class Calculator {
     }
     get_AnomalyMastery(skill, usefulBuffs) {
         let AnomalyMastery = this.get('异常掌控', this.initial_properties.AnomalyMastery, skill, usefulBuffs, true);
-        AnomalyMastery = min_max(0, 1000, AnomalyMastery);
+        AnomalyMastery = this.min_max(0, 1000, AnomalyMastery);
         logger.debug(`异常掌控：${AnomalyMastery}`);
         return AnomalyMastery;
     }
     get_AnomalyProficiencyArea(skill, usefulBuffs) {
         const AnomalyProficiency = this.get_AnomalyProficiency(skill, usefulBuffs);
-        const AnomalyProficiencyArea = min_max(0, 10, AnomalyProficiency / 100);
+        const AnomalyProficiencyArea = this.min_max(0, 10, AnomalyProficiency / 100);
         logger.debug(`异常精通区：${AnomalyProficiencyArea}`);
         return AnomalyProficiencyArea;
     }
     get_AnomalyBoostArea(skill, usefulBuffs) {
         let AnomalyBoostArea = this.get('异常增伤', 1, skill, usefulBuffs);
-        AnomalyBoostArea = min_max(0, 3, AnomalyBoostArea);
+        AnomalyBoostArea = this.min_max(0, 3, AnomalyBoostArea);
         AnomalyBoostArea !== 1 && logger.debug(`异常增伤区：${AnomalyBoostArea}`);
         return AnomalyBoostArea;
     }
     get_AnomalyCRITRate(skill, usefulBuffs) {
         let AnomalyCRITRate = this.get('异常暴击率', 0, skill, usefulBuffs);
-        AnomalyCRITRate = min_max(0, 1, AnomalyCRITRate);
+        AnomalyCRITRate = this.min_max(0, 1, AnomalyCRITRate);
         AnomalyCRITRate && logger.debug(`异常暴击率：${AnomalyCRITRate}`);
         return AnomalyCRITRate;
     }
     get_AnomalyCRITDMG(skill, usefulBuffs) {
         let AnomalyCRITDMG = this.get('异常暴击伤害', 0, skill, usefulBuffs);
-        AnomalyCRITDMG = min_max(0, 5, AnomalyCRITDMG);
+        AnomalyCRITDMG = this.min_max(0, 5, AnomalyCRITDMG);
         AnomalyCRITDMG && logger.debug(`异常暴击伤害：${AnomalyCRITDMG}`);
         return AnomalyCRITDMG;
     }
@@ -617,36 +617,36 @@ export class Calculator {
     }
     get_HP(skill, usefulBuffs) {
         let HP = this.get('生命值', this.initial_properties.HP, skill, usefulBuffs, true);
-        HP = min_max(0, 100000, HP);
+        HP = this.min_max(0, 100000, HP);
         logger.debug(`生命值：${HP}`);
         return HP;
     }
     get_DEF(skill, usefulBuffs) {
         let DEF = this.get('防御力', this.initial_properties.DEF, skill, usefulBuffs, true);
-        DEF = min_max(0, 1000, DEF);
+        DEF = this.min_max(0, 1000, DEF);
         logger.debug(`防御力：${DEF}`);
         return DEF;
     }
     get_Impact(skill, usefulBuffs) {
         let Impact = this.get('冲击力', this.initial_properties.Impact, skill, usefulBuffs, true);
-        Impact = min_max(0, 1000, Impact);
+        Impact = this.min_max(0, 1000, Impact);
         logger.debug(`冲击力：${Impact}`);
         return Impact;
     }
     get_SheerForce(skill, usefulBuffs) {
         let SheerForce = Math.trunc(this.get_ATK(skill, usefulBuffs) * 0.3);
         SheerForce = this.get('贯穿力', SheerForce, skill, usefulBuffs, true);
-        SheerForce = min_max(0, 10000, SheerForce);
+        SheerForce = this.min_max(0, 10000, SheerForce);
         logger.debug(`贯穿力：${SheerForce}`);
         return SheerForce;
     }
     get_SheerBoostArea(skill, usefulBuffs) {
         let SheerBoostArea = this.get('贯穿增伤', 1, skill, usefulBuffs);
-        SheerBoostArea = min_max(0.2, 9, SheerBoostArea);
+        SheerBoostArea = this.min_max(0.2, 9, SheerBoostArea);
         SheerBoostArea !== 1 && logger.debug(`贯穿增伤区：${SheerBoostArea}`);
         return SheerBoostArea;
     }
-}
-function min_max(min, max, value) {
-    return Math.min(Math.max(value, min), max);
+    min_max(min, max, value) {
+        return Math.min(Math.max(value, min), max);
+    }
 }
