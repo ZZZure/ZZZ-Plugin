@@ -242,5 +242,29 @@
         "base": "20%"
       }
     ]
+  },
+  "33500": {
+    "sprite_file": "SuitWhiteWaterBallad",
+    "name": "沧浪行歌",
+    "desc1": "<color=#F0D12B>物理伤害</color>+10%。",
+    "desc2": "装备者处于任意<color=#FFFFFF>[以太帷幕]</color>中时，自身暴击率提高12%，离开<color=#FFFFFF>[以太帷幕]</color>后，该增益效果仍然保留，持续15秒；装备者为<color=#FFFFFF>[强攻]</color>角色时，开启<color=#FFFFFF>[以太帷幕]</color>或延长<color=#FFFFFF>[以太帷幕]</color>的持续时间会使自身暴击率额外提升12%，持续30秒，重复触发时刷新持续时间。",
+    "properties": [
+      {
+        "property_id": 31503,
+        "base": "10%"
+      }
+    ]
+  },
+  "33600": {
+    "sprite_file": "SuitShiningAria",
+    "name": "流光咏叹",
+    "desc1": "<color=#FE437E>以太伤害</color>+10%。",
+    "desc2": "装备者发动<color=#FFFFFF>[普通攻击]</color>命中敌人时，自身异常精通提升36点，持续8秒，重复触发时刷新持续时间；当场上有敌人进入失衡状态时，装备者造成的伤害提升25%，持续18秒，重复触发时刷新持续时间。",
+    "properties": [
+      {
+        "property_id": 31903,
+        "base": "10%"
+      }
+    ]
   }
 }
