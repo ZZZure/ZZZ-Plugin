@@ -410,6 +410,26 @@ export class Property {
                 property.final = property.base + property.add;
             }
         }
+        if (this.info.avatar_profession === 6) {
+            delete properties[231], delete properties[232];
+            delete properties[305];
+            const sheerForce = Math.trunc(properties[111].final * 1 / 10) +
+                Math.trunc(properties[121].final * 3 / 10);
+            properties[19] = {
+                property_name: '贯穿力',
+                property_id: 19,
+                base: 0,
+                add: sheerForce,
+                final: sheerForce
+            };
+            properties[20] = {
+                property_name: '闪能自动累积',
+                property_id: 20,
+                base: 2,
+                add: 0,
+                final: 2
+            };
+        }
         if (sp && sp.initial_after_format) {
             sp.initial_after_format(properties, this);
         }
@@ -496,35 +516,10 @@ const special = {
             properties[121].add += Math.trunc(value);
         }
     },
-    1371: {
-        id: 1371,
-        name: '仪玄',
-        initial_after_format: (properties) => {
-            delete properties[231], delete properties[232];
-            delete properties[305];
-            const sheerForce = Math.trunc(properties[111].final * 1 / 10) +
-                Math.trunc(properties[121].final * 3 / 10);
-            properties[19] = {
-                property_name: '贯穿力',
-                property_id: 19,
-                base: 0,
-                add: sheerForce,
-                final: sheerForce
-            };
-            properties[20] = {
-                property_name: '闪能自动累积',
-                property_id: 20,
-                base: 2,
-                add: 0,
-                final: 2
-            };
-        }
-    },
     1441: {
         id: 1441,
         name: '狛野真斗',
         initial_after_format: (properties) => {
-            special[1371].initial_after_format(properties, {});
             properties[20] = {
                 property_name: '闪能自动累积',
                 property_id: 20,
@@ -533,5 +528,5 @@ const special = {
                 final: 0
             };
         }
-    }
+    },
 };

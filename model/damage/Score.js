@@ -237,7 +237,7 @@ const predefinedWeights = {
             return true;
         },
         value: {
-            "生命值百分比": 0,
+            "生命值百分比": 0.5,
             "攻击力百分比": 0.25,
             "防御力百分比": 0,
             "冲击力": 0,
