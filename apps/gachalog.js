@@ -125,9 +125,9 @@ export class GachaLog extends ZZZPlugin {
     const uid = await this.getUID();
     if (!uid) return false;
     if (/^(1[0-9])[0-9]{8}/i.test(uid)) {
-      const { api } = await this.getAPI();
+      const { api, deviceFp } = await this.getAPI();
       this.reply('抽卡记录获取中请稍等...可能需要一段时间，请耐心等待');
-      const { data, count } = await updateGachaLog(api, uid);
+      const { data, count } = await updateGachaLog(api, uid, deviceFp);
       let msg = [];
       msg.push(`抽卡记录更新成功，共${Object.keys(data).length}个卡池`);
       for (const name in data) {
