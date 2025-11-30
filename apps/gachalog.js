@@ -124,7 +124,19 @@ export class GachaLog extends ZZZPlugin {
   async refreshGachaLog() {
     const uid = await this.getUID();
     if (/^(1[0-9])[0-9]{8}/i.test(uid)) {
-      return this.reply('国际服不支持此功能');
+      const { api } = await this.getAPI();
+      this.reply('抽卡记录获取中请稍等...可能需要一段时间，请耐心等待');
+      const { data, count } = await updateGachaLog(api, uid);
+      let msg = [];
+      msg.push(`抽卡记录更新成功，共${Object.keys(data).length}个卡池`);
+      for (const name in data) {
+        msg.push(
+          `${name}新增${count[name] || 0}条记录，一共${data[name].length}条记录`
+        );
+      }
+      return this.reply(
+        await common.makeForwardMsg(this.e, msg.join('\n'), '抽卡记录更新成功')
+      );
     }
     if (!uid) return false;
     const lastQueryTime = await redis.get(`ZZZ:GACHA:${uid}:LASTTIME`);
