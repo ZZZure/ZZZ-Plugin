@@ -123,6 +123,7 @@ export class GachaLog extends ZZZPlugin {
   }
   async refreshGachaLog() {
     const uid = await this.getUID();
+    if (!uid) return false;
     if (/^(1[0-9])[0-9]{8}/i.test(uid)) {
       const { api } = await this.getAPI();
       this.reply('抽卡记录获取中请稍等...可能需要一段时间，请耐心等待');
@@ -138,7 +139,6 @@ export class GachaLog extends ZZZPlugin {
         await common.makeForwardMsg(this.e, msg.join('\n'), '抽卡记录更新成功')
       );
     }
-    if (!uid) return false;
     const lastQueryTime = await redis.get(`ZZZ:GACHA:${uid}:LASTTIME`);
     const gachaConfig = settings.getConfig('gacha');
     const coldTime = _.get(gachaConfig, 'interval', 300);
