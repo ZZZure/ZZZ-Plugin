@@ -74,6 +74,10 @@ export class Rank extends ZZZPlugin {
       })
       .value();
     
+    if (scoredData.length === 0) {
+      return this.reply('没有式舆防卫战排名，请先 %显示深渊排名，并且用 %深渊 查询战绩');
+    }
+
     scoredData = _.sortBy(scoredData, 'score');  // 默认升序
     // 读取配置中的最大显示数量
     const maxDisplay = _.get(settings.getConfig('rank'), 'max_display', 15);
@@ -151,6 +155,10 @@ export class Rank extends ZZZPlugin {
       })
       .value();
     
+    if (scoredData.length === 0) {
+      return this.reply('没有危局强袭战排名，请先 %显示深渊排名，并且用 %危局 查询战绩');
+    }
+    
     scoredData = _.sortBy(scoredData, 'score').reverse();  // 降序排序，分数越高排名越前
     // 读取配置中的最大显示数量
     const maxDisplay = _.get(settings.getConfig('rank'), 'max_display', 15);
@@ -195,7 +203,7 @@ export class Rank extends ZZZPlugin {
     await redis.set(`ZZZ:RANK_PERMISSION:${uid}`, Number(isEnable))
     const enableString = isEnable ? '显示' : '隐藏';
     await this.e.reply(
-      `绝区零 UID：${uid}，深渊排名功能已设置为: ${enableString}`,
+      `绝区零 UID: ${uid}，深渊排名功能已设置为: ${enableString}`,
       false,
       { at: true, recallMsg: 100 }
     );

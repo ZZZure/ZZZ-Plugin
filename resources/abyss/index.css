@@ -332,5 +332,8 @@
   display: flex;
   text-align: center;
 }
+.card .item-card .notes {
+  margin: 0 2em;
+}
 
 /*# sourceMappingURL=index.css.map */

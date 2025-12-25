@@ -44,8 +44,9 @@ export class Abyss extends ZZZPlugin {
     }
     // 持久化到文件
     const uid = await this.getUID();
+    let userRankAllowed = 0;
     if (uid) {
-      const userRankAllowed = await isUserRankAllowed(uid);
+      userRankAllowed = await isUserRankAllowed(uid);
       if (userRankAllowed && this.isGroupRankAllowed()) {
         saveAbyssData(uid, {
           player: this.e.playerCard,
@@ -56,6 +57,7 @@ export class Abyss extends ZZZPlugin {
     const abyss = processAbyssData(data);
     const finalData = {
       abyss,
+      userRankAllowed
     };
     await this.render('abyss/index.html', finalData, this);
   }

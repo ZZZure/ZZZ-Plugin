@@ -39,8 +39,9 @@ export class deadly extends ZZZPlugin {
     }
     // 持久化到文件
     const uid = await this.getUID();
+    let userRankAllowed = 0;
     if (uid) {
-      const userRankAllowed = await isUserRankAllowed(uid);
+      userRankAllowed = await isUserRankAllowed(uid);
       if (userRankAllowed && this.isGroupRankAllowed()) {
         saveDeadlyData(uid, {
           player: this.e.playerCard,
@@ -58,6 +59,7 @@ export class deadly extends ZZZPlugin {
     clearTimeout(timer);
     const finalData = {
       deadly,
+      userRankAllowed,
     };
     logger.debug(JSON.stringify(finalData, null, 2));
     await this.render('deadly/index.html', finalData, this);

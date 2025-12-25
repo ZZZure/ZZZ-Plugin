@@ -95,12 +95,14 @@
   background-image: url("./images/PetSelectBG.png");
   background-size: 100% 100%;
   padding: 0.3em;
-  z-index: 2;
 }
 .card .item-card .pop img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+.card .item-card .pop {
+  z-index: 2;
 }
 .card .item-card .cover {
   position: relative;
@@ -296,6 +298,9 @@
   color: white;
   display: flex;
   text-align: center;
+}
+.card .item-card .notes {
+  margin: 0 2em;
 }
 
 /*# sourceMappingURL=index.css.map */
