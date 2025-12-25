@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { Deadly } from '../model/deadly.js';
 import { rulePrefix } from '../lib/common.js';
 import { saveDeadlyData } from '../lib/db.js';
-import { DEFAULT_RANK_ALLOWED, isGroupRankAllowed } from '../lib/rank.js';
+import { isUserRankAllowed, isGroupRankAllowed } from '../lib/rank.js';
 
 export class deadly extends ZZZPlugin {
   constructor() {
@@ -40,8 +40,8 @@ export class deadly extends ZZZPlugin {
     // 持久化到文件
     const uid = await this.getUID();
     if (uid) {
-      const rankPermission = (await redis.get(`ZZZ:RANK_PERMISSION:${uid}`)) ?? DEFAULT_RANK_ALLOWED;
-      if (rankPermission && this.isGroupRankAllowed()) {
+      const userRankAllowed = await isUserRankAllowed(uid);
+      if (userRankAllowed && this.isGroupRankAllowed()) {
         saveDeadlyData(uid, {
           player: this.e.playerCard,
           result: deadlyData

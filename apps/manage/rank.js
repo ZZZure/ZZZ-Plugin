@@ -1,4 +1,5 @@
 import settings from '../../lib/settings.js';
+import { removeAllAbyssData, removeAllDeadlyData } from '../../lib/db.js';
 
 export async function switchGroupRank() {
   if (!this.e.isMaster) {
@@ -26,4 +27,14 @@ export async function switchGroupRank() {
     false,
     { at: true, recallMsg: 100 }
   );
+}
+
+export async function resetGroupRank() {
+  if (this.e?.isMaster) {
+    removeAllAbyssData();
+    removeAllDeadlyData();
+    return this.reply('清除深渊排名成功！', false, { at: true, recallMsg: 100 });
+  } else {
+    return this.reply('仅限主人操作', false, { at: true, recallMsg: 100 });
+  }
 }

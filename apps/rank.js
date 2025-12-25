@@ -4,19 +4,19 @@ import _ from 'lodash';
 import { ZZZChallenge } from '../model/abyss.js';
 import { Deadly } from '../model/deadly.js';
 import { rulePrefix } from '../lib/common.js';
-import { getAllAbyssData, getAllDeadlyData, removeAbyssData, removeDeadlyData, removeAllAbyssData, removeAllDeadlyData } from '../lib/db.js';
-import { DEFAULT_RANK_ALLOWED, isGroupRankAllowed } from '../lib/rank.js'
+import { getAllAbyssData, getAllDeadlyData } from '../lib/db.js';
+import { isUserRankAllowed, isGroupRankAllowed } from '../lib/rank.js'
 
 export class Rank extends ZZZPlugin {
   constructor() {
     super({
       name: '[ZZZ-Plugin]rank',
-      dsc: 'zzz排名',
+      dsc: 'zzz群排名',
       event: 'message',
       priority: _.get(settings.getConfig('priority'), 'rank', 70),
       rule: [
         {
-          reg: `${rulePrefix}(式舆防卫战|式舆|深渊|防卫战|防卫)(上半|下半|1|2)?排名$`,
+          reg: `${rulePrefix}(式舆防卫战|式舆|深渊|防卫战|防卫)排名$`,
           fnc: 'abyssRank',
         },
         {
@@ -24,13 +24,9 @@ export class Rank extends ZZZPlugin {
           fnc: 'deadlyRank',
         },
         {
-          reg: `${rulePrefix}(显示|展示|开启|打开|on|启用|启动|隐藏|取消显示|关闭|关掉|off|禁用|停止)(式舆防卫战|式舆|深渊|防卫战|防卫|危局强袭战|危局|强袭|强袭战)排名$`,
+          reg: `${rulePrefix}(显示|展示|开启|打开|on|启用|启动|隐藏|取消显示|关闭|关掉|off|禁用|停止)(式舆防卫战|式舆|深渊|防卫战|防卫|危局强袭战|危局|强袭|强袭战)(群(内)?)?排名$`,
           fnc: 'switchRank',
         },
-        {
-          reg: `${rulePrefix}(重置|清空)(式舆防卫战|式舆|深渊|防卫战|防卫)排名$`,
-          fnc: 'resetRank',
-        }
       ],
     });
     this.isGroupRankAllowed = isGroupRankAllowed;
@@ -45,12 +41,17 @@ export class Rank extends ZZZPlugin {
     // 获取当前时间的 UNIX 时间戳（秒）
     const currentTimestamp = Math.floor(Date.now() / 1000);
 
-    let scoredData = _.chain(rawData)
-      .filter(async item => {
-        const gameUid = _.get(item, 'player.player.game_uid');
-        const rankPermission = (await redis.get(`ZZZ:RANK_PERMISSION:${gameUid}`)) ?? DEFAULT_RANK_ALLOWED;
-        return /^[0-9]{8}$/.test(gameUid) && rankPermission;
-      })
+    // 先处理异步筛选
+    const filteredByUser = [];
+    for (const item of rawData) {
+      const gameUid = _.get(item, 'player.player.game_uid');
+      const userRankAllowed = await isUserRankAllowed(gameUid);
+      if (/^[0-9]{8}$/.test(gameUid) && userRankAllowed) {
+        filteredByUser.push(item);
+      }
+    }
+    
+    let scoredData = _.chain(filteredByUser)
       .filter(item => {
         const beginTime = _.get(item, 'result.begin_time');
         const endTime = _.get(item, 'result.end_time');
@@ -104,12 +105,18 @@ export class Rank extends ZZZPlugin {
     // 获取当前时间的 UNIX 时间戳（秒）
     const currentTimestamp = Math.floor(Date.now() / 1000);
 
-    let scoredData = _.chain(rawData)
-      .filter(async item => {
-        const gameUid = _.get(item, 'player.player.game_uid');
-        const rankPermission = (await redis.get(`ZZZ:RANK_PERMISSION:${gameUid}`)) ?? DEFAULT_RANK_ALLOWED;
-        return /^[0-9]{8}$/.test(gameUid) && rankPermission;
-      })
+    // 先处理异步筛选
+    const filteredByUser = [];
+    for (const item of rawData) {
+      const gameUid = _.get(item, 'player.player.game_uid');
+      const userRankAllowed = await isUserRankAllowed(gameUid);
+      logger.mark(`userRankAllowed: ${userRankAllowed}`)
+      if (/^[0-9]{8}$/.test(gameUid) && userRankAllowed) {
+        filteredByUser.push(item);
+      }
+    }
+    
+    let scoredData = _.chain(filteredByUser)
       .filter(item => {
         // 危局强袭战的数据结构中时间字段是对象格式，需要转换为时间戳
         const startTime = new Date(
@@ -185,23 +192,15 @@ export class Rank extends ZZZPlugin {
       // 或者返回错误提示
       return this.reply('请输入"显示"或"隐藏"来设置是否显示个人的深渊排名', false, { at: true, recallMsg: 100 });
     }
-    await redis.set(`ZZZ:RANK_PERMISSION:${uid}`, isEnable)
+    await redis.set(`ZZZ:RANK_PERMISSION:${uid}`, Number(isEnable))
     const enableString = isEnable ? '显示' : '隐藏';
     await this.e.reply(
-      `绝区零个人深渊排名功能已设置为: ${enableString}`,
+      `绝区零 UID：${uid}，深渊排名功能已设置为: ${enableString}`,
       false,
       { at: true, recallMsg: 100 }
     );
     
   }
 
-  async resetRank() {
-    if (this.e?.isMaster) {
-      removeAllAbyssData();
-      removeAllDeadlyData();
-      return this.reply('清除深渊排名成功！', false, { at: true, recallMsg: 100 });
-    } else {
-      return this.reply('仅限主人操作', false, { at: true, recallMsg: 100 });
-    }
-  }
+  
 }

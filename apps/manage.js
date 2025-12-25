@@ -92,6 +92,10 @@ export class Manage extends ZZZPlugin {
           reg: `${rulePrefix}设置检查更新时间(.+)$`,
           fnc: 'setCheckUpdateCron',
         },
+        {
+          reg: `${rulePrefix}(重置|清空)(式舆防卫战|式舆|深渊|防卫战|防卫)排名$`,
+          fnc: 'resetGroupRank',
+        }
       ],
     });
 
@@ -116,5 +120,6 @@ export class Manage extends ZZZPlugin {
     this.setDefaultDevice = manage.device.setDefaultDevice;
     this.toSetDefaultDevice = manage.device.toSetDefaultDevice;
     this.switchGroupRank = manage.rank.switchGroupRank;
+    this.resetGroupRank = manage.rank.resetGroupRank;
   }
 }

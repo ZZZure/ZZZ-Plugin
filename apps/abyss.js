@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { ZZZChallenge } from '../model/abyss.js';
 import { rulePrefix } from '../lib/common.js';
 import { saveAbyssData } from '../lib/db.js';
-import { DEFAULT_RANK_ALLOWED, isGroupRankAllowed } from '../lib/rank.js';
+import { isUserRankAllowed, isGroupRankAllowed } from '../lib/rank.js';
 
 export class Abyss extends ZZZPlugin {
   constructor() {
@@ -45,8 +45,8 @@ export class Abyss extends ZZZPlugin {
     // 持久化到文件
     const uid = await this.getUID();
     if (uid) {
-      const rankPermission = (await redis.get(`ZZZ:RANK_PERMISSION:${uid}`)) ?? DEFAULT_RANK_ALLOWED;
-      if (rankPermission && this.isGroupRankAllowed()) {
+      const userRankAllowed = await isUserRankAllowed(uid);
+      if (userRankAllowed && this.isGroupRankAllowed()) {
         saveAbyssData(uid, {
           player: this.e.playerCard,
           result: abyssData
