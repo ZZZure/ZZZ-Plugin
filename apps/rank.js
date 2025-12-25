@@ -2,6 +2,7 @@ import { ZZZPlugin } from '../lib/plugin.js';
 import settings from '../lib/settings.js';
 import _ from 'lodash';
 import { ZZZChallenge } from '../model/abyss.js';
+import { Deadly } from '../model/deadly.js';
 import { rulePrefix } from '../lib/common.js';
 import { getAllAbyssData, getAllDeadlyData, removeAbyssData, removeDeadlyData, removeAllAbyssData, removeAllDeadlyData } from '../lib/db.js';
 import { DEFAULT_RANK_ALLOWED, isGroupRankAllowed } from '../lib/rank.js'
@@ -94,6 +95,74 @@ export class Rank extends ZZZPlugin {
   }
 
   async deadlyRank() {
+    if (!(this.isGroupRankAllowed())) {
+      await this.reply('当前群危局强袭战排名功能已关闭！')
+    }
+    // 加载所有 JSON
+    let rawData = getAllDeadlyData();
+    // 筛选
+    // 获取当前时间的 UNIX 时间戳（秒）
+    const currentTimestamp = Math.floor(Date.now() / 1000);
+
+    let scoredData = _.chain(rawData)
+      .filter(async item => {
+        const gameUid = _.get(item, 'player.player.game_uid');
+        const rankPermission = (await redis.get(`ZZZ:RANK_PERMISSION:${gameUid}`)) ?? DEFAULT_RANK_ALLOWED;
+        return /^[0-9]{8}$/.test(gameUid) && rankPermission;
+      })
+      .filter(item => {
+        // 危局强袭战的数据结构中时间字段是对象格式，需要转换为时间戳
+        const startTime = new Date(
+          item.result.start_time.year,
+          item.result.start_time.month - 1,
+          item.result.start_time.day,
+          item.result.start_time.hour,
+          item.result.start_time.minute,
+          item.result.start_time.second
+        ).getTime() / 1000;
+        const endTime = new Date(
+          item.result.end_time.year,
+          item.result.end_time.month - 1,
+          item.result.end_time.day,
+          item.result.end_time.hour,
+          item.result.end_time.minute,
+          item.result.end_time.second
+        ).getTime() / 1000;
+        return currentTimestamp >= startTime && currentTimestamp <= endTime;
+      })
+      .filter(item => _.get(item, 'result.has_data') === true)
+      .map(item => {
+        // 危局强袭战的排名依据是总分
+        const totalScore = _.get(item, 'result.total_score', 0);
+        const totalStar = _.get(item, 'result.total_star', 0);
+        
+        return {
+          ...item,
+          result: new Deadly(item.result),
+          score: 1000000 * totalStar + totalScore // (星级, 得分) 的字典序
+        };
+      })
+      .value();
+    
+    scoredData = _.sortBy(scoredData, 'score').reverse();  // 降序排序，分数越高排名越前
+    // 读取配置中的最大显示数量
+    const maxDisplay = _.get(settings.getConfig('rank'), 'max_display', 15);
+    // 取前maxDisplay个数据
+    scoredData = scoredData.slice(0, maxDisplay);
+    const timer = setTimeout(() => {
+      if (this?.reply) {
+        this.reply('查询成功，正在下载图片资源，请稍候。');
+      }
+    }, 5000);
+    await Promise.all(_.map(scoredData, async (item) => {
+        await item.result.get_assets();
+    }));
+    // 清除定时器
+    clearTimeout(timer);
+    const finalData = {
+      scoredData
+    }
+    await this.render('rank/deadly/index.html', finalData, this);
   }
 
   async switchRank() {

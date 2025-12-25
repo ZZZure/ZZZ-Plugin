@@ -1,96 +1,87 @@
 {{extend defaultLayout}}
 
 {{block 'css'}}
-<link rel="stylesheet" href="{{@sys.currentPath}}/index.css">
+<link rel="stylesheet" type="text/css" href="{{@sys.currentPath}}/index.css">
 {{/block}}
 
 {{block 'main'}}
 <div class="card">
-  <div class="overview">
-    <div class="u-info">
-      <div class="avatar">
-        <img src="{{deadly.avatar_icon}}" alt="avatar">
-      </div>
-      <div class="nick">{{deadly.nick_name}}</div>
-    </div>
-    <div class="content">
-      <div class="left">
-        <div class="value">{{deadly.total_score}}</div>
-        <div class="percent">{{deadly.rank_percent/100}}%</div>
-      </div>
-      <div class="right">
-        <div class="star">
+  <% include(sys.specialTitle, {en: 'DEADLY RANK' , cn: '危局强袭战排名' }) %>
+    {{each scoredData record i}}
+    <div class="record">
+      <div class="user-info">
+        <link rel="stylesheet" type="text/css" href="{{@sys.resourcesPath}}/common/layout/playerinfo.css" />
+        {{set avatar = record.player.avatar}}
+        {{set player = record.player.player}}
+        <div class="avatar">
+          <img src="{{avatar}}" alt="Avatar">
         </div>
-        <div class="value">x{{deadly.total_star}}</div>
-      </div>
-    </div>
-  </div>
-  <div class="tips">
-    <p>统计周期 {{deadly.start_time.year}}.{{deadly.start_time.month.toString().padStart(2,'0')}}.{{deadly.start_time.day.toString().padStart(2,'0')}} -
-      {{deadly.end_time.year}}.{{deadly.end_time.month.toString().padStart(2,'0')}}.{{deadly.end_time.day.toString().padStart(2,'0')}}
-    </p>
-    <p>*总得分&排名和挑战详情并非同时刷新，挑战详情存在2小时左右延迟</p>
-  </div>
-  {{each deadly.list item i}}
-  <div class="item-card">
-    <div class="pop"><img src="{{item.buffer[0].icon}}" alt=""></div>
-    <div class="cover">
-      <div class="bg">
-        <img src="{{item.boss[0].bg_icon}}" alt="">
-      </div>
-      <div class="icon">
-        <img src="{{item.boss[0].race_icon}}" alt="">
-      </div>
-      <img src="{{item.boss[0].icon}}" alt="">
-    </div>
-    <div class="content">
-      <div class="name">{{item.boss[0].name}}</div>
-      <div class="value">
-        <div class="val">{{item.score}}</div>
-        <div class="stars">
-          <% for(let i=0 ; i < item.star ; i++) { %>
-            <div class="star"></div>
-            <% } %>
-              <% for(let i=0 ; i < item.total_star - item.star ; i++) { %>
-                <div class="star inactive"></div>
-                <% } %>
-        </div>
-      </div>
-      <div class="time">通关时刻：{{item.challenge_time.year}}.{{item.challenge_time.month.toString().padStart(2,'0')}}.{{item.challenge_time.day.toString().padStart(2,'0')}}
-        {{item.challenge_time.hour.toString().padStart(2,'0')}}:{{item.challenge_time.minute.toString().padStart(2,'0')}}:{{item.challenge_time.second.toString().padStart(2,'0')}}
-      </div>
-      <div class="list">
-        <% for(let i=0 ; i < 3 ; i++) { %>
-          {{if item.avatar_list?.[i]}}
-          <div class="item char">
-            {{if item.avatar_list[i].rank}}
-            <div class="count">{{item.avatar_list[i].rank}}</div>
-            {{/if}}
-            <div class="rank_disp">
-              <div class="rank rank-icon {{item.avatar_list[i].rarity}}"></div>
+        <div class="info-bar">
+          <div class="info">
+            <div class="nickname">{{player.nickname}}</div>
+          </div>
+          <div class="info">
+            <div class="label level">Lv{{player.level}}</div>
+            <div class="label server">{{player.region_name}}</div>
+          </div>
+          <div class="uid">UID {{player.game_uid}}</div>
+          <div class="result">
+            <div class="value">
+              <div class="label">总得分</div>
+              <div class="value">{{record.result.total_score}}</div>
             </div>
-            <div class="image">
-              <img src="{{item.avatar_list[i].role_square_url}}" alt="">
+            <div class="rank">
+              <div class="label">星级</div>
+              <div class="value">{{record.result.total_star}}</div>
             </div>
           </div>
-          {{else}}
-            <div class="item char"></div>
-            {{/if}}
-            <% } %>
-              {{if item.buddy}}
-              <div class="item bangboo">
-                <div class="rank_disp">
-                  <div class="rank rank-icon {{item.buddy.rarity}}"></div>
-                </div>
+        </div>
+      </div>      
+      <div class="item-card">
+        {{each record.result.list team i}}
+        <div class="team">
+          <div class="info">
+            <div class="label">{{team.boss[0].name}}</div>
+            <div class="spent">得分：{{team.score}}</div>
+            <div class="star">{{team.star}}星</div>
+          </div>
+          <div class="list">
+            <% for(let j=0 ; j < 3 ; j++) { %>
+              {{if team.avatar_list?.[j]}}
+              {{set char = team.avatar_list[j]}}
+              <div class="item char rank{{char.rarity}}">
+                <div class="rank rank-icon {{char.rarity}}"></div>
                 <div class="image">
-                  <img src="{{item.buddy.bangboo_rectangle_url}}" alt="">
+                  <img src="{{char.role_square_url}}" alt="">
+                </div>
+                <div class="c-info">
+                  <div class="ranks r{{char.rank}}">{{char.rank}}影</div>
+                  <div class="level">等级{{char.level}}</div>
                 </div>
               </div>
+              {{else}}
+                <div class="item char rankb"></div>
               {{/if}}
+              <% } %>
+                {{if team.buddy}}
+                <div class="item bangboo rank{{team.buddy.rarity}}">
+                  <div class="rank rank-icon {{team.buddy.rarity}}"></div>
+                  <div class="image">
+                    <img src="{{team.buddy.bangboo_rectangle_url}}" alt="">
+                  </div>
+                  <div class="c-info">
+                    <div class="level">等级{{team.buddy.level}}</div>
+                  </div>
+                </div>
+                {{else}}
+                  <div class="item bangboo rankb"></div>
+                {{/if}}
+          </div>
+        </div>
+        {{/each}}
       </div>
     </div>
-  </div>
-  {{/each}}
-
+    {{/each}}
 </div>
+
 {{/block}}
