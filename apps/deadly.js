@@ -3,6 +3,8 @@ import settings from '../lib/settings.js';
 import _ from 'lodash';
 import { Deadly } from '../model/deadly.js';
 import { rulePrefix } from '../lib/common.js';
+import { saveDeadlyData } from '../lib/db.js';
+import { DEFAULT_RANK_ALLOWED, isGroupRankAllowed } from '../lib/rank.js';
 
 export class deadly extends ZZZPlugin {
   constructor() {
@@ -18,6 +20,7 @@ export class deadly extends ZZZPlugin {
         },
       ],
     });
+    this.isGroupRankAllowed = isGroupRankAllowed;
   }
   async deadly() {
     const { api, deviceFp } = await this.getAPI();
@@ -33,6 +36,17 @@ export class deadly extends ZZZPlugin {
     });
     if (!deadlyData?.has_data) {
       return this.reply('没有危局强袭战数据');
+    }
+    // 持久化到文件
+    const uid = await this.getUID();
+    if (uid) {
+      const rankPermission = (await redis.get(`ZZZ:RANK_PERMISSION:${uid}`)) ?? DEFAULT_RANK_ALLOWED;
+      if (rankPermission && this.isGroupRankAllowed()) {
+        saveDeadlyData(uid, {
+          player: this.e.playerCard,
+          result: deadlyData
+        });
+      }
     }
     const deadly = new Deadly(deadlyData);
     const timer = setTimeout(() => {

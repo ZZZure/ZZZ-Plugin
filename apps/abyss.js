@@ -1,6 +1,11 @@
 import { rulePrefix } from '../lib/common.js';
 import { ZZZPlugin } from '../lib/plugin.js';
 import settings from '../lib/settings.js';
+import _ from 'lodash';
+import { ZZZChallenge } from '../model/abyss.js';
+import { rulePrefix } from '../lib/common.js';
+import { saveAbyssData } from '../lib/db.js';
+import { DEFAULT_RANK_ALLOWED, isGroupRankAllowed } from '../lib/rank.js';
 
 export class Abyss extends ZZZPlugin {
   constructor() {
@@ -16,6 +21,7 @@ export class Abyss extends ZZZPlugin {
         },
       ],
     });
+    this.isGroupRankAllowed = isGroupRankAllowed;
   }
   async abyss() {
     const { api, deviceFp } = await this.getAPI();
@@ -35,6 +41,17 @@ export class Abyss extends ZZZPlugin {
     const data = abyssData?.hadal_info_v2;
     if (['fitfh', 'fourth', 'third', 'second', 'first'].every(layer => !data?.[`${layer}_layer_detail`])) {
       return this.reply('式舆防卫战数据为空');
+    }
+    // 持久化到文件
+    const uid = await this.getUID();
+    if (uid) {
+      const rankPermission = (await redis.get(`ZZZ:RANK_PERMISSION:${uid}`)) ?? DEFAULT_RANK_ALLOWED;
+      if (rankPermission && this.isGroupRankAllowed()) {
+        saveAbyssData(uid, {
+          player: this.e.playerCard,
+          result: abyssData
+        });
+      }
     }
     const abyss = processAbyssData(data);
     const finalData = {

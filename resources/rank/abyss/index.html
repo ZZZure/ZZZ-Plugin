@@ -1,0 +1,124 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{@sys.currentPath}}/index.css">
+{{/block}}
+
+{{block 'main'}}
+<div class="card">
+  <% include(sys.specialTitle, {en: 'ABYSS RANK' , cn: '式舆防卫战排名' }) %>
+    {{each scoredData record i}}
+    <div class="record">
+      {{set abyss = record.result.all_floor_detail[0]}}
+      <div class="user-info">
+        <link rel="stylesheet" type="text/css" href="{{@sys.resourcesPath}}/common/layout/playerinfo.css" />
+        {{set avatar = record.player.avatar}}
+        {{set player = record.player.player}}
+        <div class="avatar">
+          <img src="{{avatar}}" alt="Avatar">
+        </div>
+        <div class="info-bar">
+          <div class="info">
+            <div class="nickname">{{player.nickname}}</div>
+          </div>
+          <div class="info">
+            <div class="label level">Lv{{player.level}}</div>
+            <div class="label server">{{player.region_name}}</div>
+          </div>
+          <div class="uid">UID {{player.game_uid}}</div>
+          <div class="result">
+            <div class="value">
+              <div class="label">第{{abyss.layer_index}}防线</div>
+              <div class="value">{{abyss.formattedTotalBattleTime}}</div>
+            </div>
+            <div class="rank">
+              <div class="rank-icon {{abyss.rating}}"></div>
+            </div>
+          </div>
+        </div>
+      </div>      
+      <div class="item-card">
+        <div class="team">
+          <div class="info">
+            <div class="label">队伍1</div>
+            <div class="spent">耗时：{{abyss.node_1.formattedTime}}</div>
+          </div>
+          <div class="list">
+            <% for(let i=0 ; i < 3 ; i++) { %>
+              {{if abyss.node_1.avatars?.[i]}}
+              {{set char = abyss.node_1.avatars[i]}}
+              <div class="item char rank{{char.rarity}}">
+                <div class="rank rank-icon {{char.rarity}}"></div>
+                <div class="property {{char.element}}"></div>
+                <div class="image">
+                  <img src="{{char.square_icon}}" alt="">
+                </div>
+                <div class="c-info">
+                  <div class="ranks r{{char.rank}}">{{char.rank}}影</div>
+                  <div class="level">等级{{char.level}}</div>
+                </div>
+              </div>
+              {{else}}
+                <div class="item char rankb"></div>
+              {{/if}}
+              <% } %>
+                {{if abyss.node_1.buddy}}
+                <div class="item bangboo rank{{abyss.node_1.buddy.rarity}}">
+                  <div class="rank rank-icon {{abyss.node_1.buddy.rarity}}"></div>
+                  <div class="image">
+                    <img src="{{abyss.node_1.buddy.square_icon}}" alt="">
+                  </div>
+                  <div class="c-info">
+                    <div class="level">等级{{abyss.node_1.buddy.level}}</div>
+                  </div>
+                </div>
+                {{else}}
+                  <div class="item bangboo rankb"></div>
+                {{/if}}
+          </div>
+        </div>
+        <div class="team">
+          <div class="info">
+            <div class="label">队伍2</div>
+            <div class="spent">耗时：{{abyss.node_2.formattedTime}}</div>
+          </div>
+          <div class="list">
+            <% for(let i=0 ; i < 3 ; i++) { %>
+              {{if abyss.node_2.avatars?.[i]}}
+              {{set char = abyss.node_2.avatars[i]}}
+              <div class="item char rank{{char.rarity}}">
+                <div class="rank rank-icon {{char.rarity}}"></div>
+                <div class="property {{char.element}}"></div>
+                <div class="image">
+                  <img src="{{char.square_icon}}" alt="">
+                </div>
+                <div class="c-info">
+                  <div class="ranks r{{char.rank}}">{{char.rank}}影</div>
+                  <div class="level">等级{{char.level}}</div>
+                </div>
+              </div>
+              {{else}}
+                <div class="item char rankb"></div>
+              {{/if}}
+              <% } %>
+                {{if abyss.node_2.buddy}}
+                <div class="item bangboo rank{{abyss.node_2.buddy.rarity}}">
+                  <div class="rank rank-icon {{abyss.node_2.buddy.rarity}}"></div>
+                  <div class="image">
+                    <img src="{{abyss.node_2.buddy.square_icon}}" alt="">
+                  </div>
+                  <div class="c-info">
+                    <div class="level">等级{{abyss.node_2.buddy.level}}</div>
+                  </div>
+                </div>
+                {{else}}
+                  <div class="item bangboo rankb"></div>
+                {{/if}}
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+</div>
+
+{{/block}}

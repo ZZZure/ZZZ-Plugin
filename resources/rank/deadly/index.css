@@ -1,0 +1,301 @@
+.card {
+  margin: 0 1em;
+  padding-top: 1em;
+}
+.card .star {
+  background-color: rgba(0, 0, 0, 0.5);
+  background-image: url("./images/star-icon-light.png");
+  border-radius: 50%;
+  background-size: contain;
+}
+.card .star.inactive {
+  background-image: url("./images/star-icon-dark.png");
+}
+.card .overview {
+  margin: 0.5em;
+  margin-bottom: 1.5em;
+  background-image: url("./images/block-bg-m.png");
+  background-size: 100% 100%;
+  padding: 2.2em 2.2em 1.8em 2.2em;
+}
+.card .overview .u-info {
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
+  margin-bottom: 0.3em;
+}
+.card .overview .u-info .avatar {
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.card .overview .u-info .avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.card .overview .content {
+  display: flex;
+  justify-content: space-between;
+}
+.card .overview .content .left {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+.card .overview .content .left .value {
+  font-size: 1.7em;
+  background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.4) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.card .overview .content .left .percent {
+  background-color: #ec83de;
+  color: black;
+  padding: 0 1em 0 0.6em;
+  border-radius: 1em;
+}
+.card .overview .content .right {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+}
+.card .overview .content .right .star {
+  width: 1.5em;
+  height: 1.5em;
+}
+.card .tips {
+  font-size: 0.8em;
+  margin: 1em;
+  color: #979797;
+}
+.card .tips p {
+  margin-bottom: 0.5em;
+}
+.card .item-card {
+  border-image-source: url("./images/BgFrame01.png");
+  border-image-slice: 200 100 70 280 fill;
+  border-image-width: 2em 1em 0.7em 2.8em;
+  border-image-outset: 0em 0em 0em 0em;
+  border-image-repeat: stretch stretch;
+  padding: 1.5em 1.7em;
+  margin-bottom: 1em;
+  display: flex;
+  gap: 1.2em;
+  position: relative;
+}
+.card .item-card .pop {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2.5em;
+  height: 2.5em;
+  background-image: url("./images/PetSelectBG.png");
+  background-size: 100% 100%;
+  padding: 0.3em;
+  z-index: 2;
+}
+.card .item-card .pop img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.card .item-card .cover {
+  position: relative;
+  height: 11em;
+  border-radius: 0.6em;
+  overflow: hidden;
+  border: 0.1em solid #343434;
+  box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.3), 0.2em 0.2em 0 rgb(0, 0, 0);
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+.card .item-card .cover::before {
+  content: "";
+  position: absolute;
+  border-radius: 0.6em;
+  z-index: 2;
+  inset: 0;
+  border: 0.15em solid rgba(255, 255, 255, 0.3);
+}
+.card .item-card .cover .bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.card .item-card .cover .bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.card .item-card .cover .icon {
+  position: absolute;
+  bottom: 0.2em;
+  right: 0.2em;
+  width: 3em;
+  height: 3em;
+  z-index: 3;
+}
+.card .item-card .cover .icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.card .item-card .cover img {
+  height: 100%;
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+.card .item-card .content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  flex: 1;
+  margin-right: 0.3em;
+}
+.card .item-card .content .name {
+  background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.4) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.2em;
+}
+.card .item-card .content .value {
+  display: flex;
+  font-size: 1.6em;
+  gap: 0.2em;
+  align-items: center;
+}
+.card .item-card .content .value .val {
+  background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.4) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.card .item-card .content .value .stars {
+  display: flex;
+  margin-left: 0.2em;
+  align-items: center;
+}
+.card .item-card .content .value .stars .star {
+  width: 0.9em;
+  height: 0.9em;
+  margin-left: -0.25em;
+}
+.card .item-card .content .time {
+  margin-top: 0.3em;
+  margin-bottom: 0.6em;
+  font-size: 0.8em;
+  color: #979797;
+}
+.card .item-card .content .list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 0.7fr;
+  align-items: flex-end;
+  gap: 1em;
+  margin-top: auto;
+  margin-bottom: 0.2em;
+}
+.card .item-card .content .list .item {
+  width: 100%;
+  position: relative;
+  border-radius: 0.5em;
+  box-shadow: 0 0 0 0.12em black, 0 0 0 0.24em #333534;
+}
+.card .item-card .content .list .item > * {
+  position: inherit;
+  z-index: 1;
+}
+.card .item-card .content .list .item.bangboo {
+  font-size: 0.8em;
+}
+.card .item-card .content .list .item .count {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0.1em 0.3em;
+  font-size: 0.8em;
+  border-bottom-left-radius: 0.3em;
+  border-top-right-radius: 0.5em;
+}
+.card .item-card .content .list .item .rank_disp {
+  position: absolute;
+  top: 0em;
+  left: 0em;
+  background-color: rgb(0, 0, 0);
+  z-index: 2;
+  padding: 0.1em;
+  border-bottom-right-radius: 0.25em;
+  border-top-left-radius: 0.25em;
+}
+.card .item-card .content .list .item .rank_disp .rank {
+  width: 1em;
+  color: white;
+  position: relative;
+}
+.card .item-card .content .list .item .rank_disp .rank::before {
+  content: "";
+  position: absolute;
+  top: -0.1em;
+  right: -0.4em;
+  width: 0.3em;
+  height: 0.3em;
+  background: radial-gradient(circle at 100% 0, transparent 0.3em, rgb(0, 0, 0) 0.3em);
+  rotate: 90deg;
+}
+.card .item-card .content .list .item .rank_disp .rank::after {
+  content: "";
+  position: absolute;
+  bottom: -0.4em;
+  left: -0.1em;
+  width: 0.3em;
+  height: 0.3em;
+  background: radial-gradient(circle at 100% 0, transparent 0.3em, rgb(0, 0, 0) 0.3em);
+  rotate: 90deg;
+}
+.card .item-card .content .list .item .image {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 0.5em;
+  overflow: hidden;
+}
+.card .item-card .content .list .item .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+.card .item-card .content .list .item.bangboo .image {
+  position: relative;
+}
+.card .item-card .content .list .item.bangboo .image img {
+  width: 210%;
+  height: 200%;
+  position: absolute;
+  object-position: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-40%, -35%);
+}
+.card .item-card .content .list .item .c-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgb(0, 0, 0);
+  color: white;
+  display: flex;
+  text-align: center;
+}
+
+/*# sourceMappingURL=index.css.map */
