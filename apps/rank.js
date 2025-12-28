@@ -4,8 +4,8 @@ import _ from 'lodash';
 import { ZZZChallenge } from '../model/abyss.js';
 import { Deadly } from '../model/deadly.js';
 import { rulePrefix } from '../lib/common.js';
-import { getAllAbyssData, getAllDeadlyData } from '../lib/db.js';
-import { isUserRankAllowed, isGroupRankAllowed } from '../lib/rank.js'
+import { getAbyssDataInGroupRank, getDeadlyDataInGroupRank } from '../lib/db.js';
+import { isUserRankAllowed, isGroupRankAllowed, getUsersInGroupRank, setUserRankAllowed } from '../lib/rank.js'
 
 export class Rank extends ZZZPlugin {
   constructor() {
@@ -32,20 +32,25 @@ export class Rank extends ZZZPlugin {
     this.isGroupRankAllowed = isGroupRankAllowed;
   }
   async abyssRank() {
-    if (!(this.isGroupRankAllowed())) {
-      await this.reply('当前群深渊排名功能已关闭！')
+    if (!(this.e?.group_id)) {
+      return this.reply('请在群聊中使用该命令！');
     }
-    // 加载所有 JSON
-    let rawData = getAllAbyssData();
+
+    if (!(this.isGroupRankAllowed())) {
+      return this.reply('当前群深渊排名功能已关闭！')
+    }
+    // 先从当前群中筛选出已注册用户
+    const uidInGroupRank = await getUsersInGroupRank(this.e.group_id);
+    let rawData = getAbyssDataInGroupRank(uidInGroupRank);
     // 筛选
     // 获取当前时间的 UNIX 时间戳（秒）
-    const currentTimestamp = Math.floor(Date.now() / 1000);
+    const currentTimestamp = Math.floor(Date.now() / 1000);   
 
     // 先处理异步筛选
     const filteredByUser = [];
     for (const item of rawData) {
       const gameUid = _.get(item, 'player.player.game_uid');
-      const userRankAllowed = await isUserRankAllowed(gameUid);
+      const userRankAllowed = await isUserRankAllowed(gameUid, this.e.group_id);
       if (/^[0-9]{8}$/.test(gameUid) && userRankAllowed) {
         filteredByUser.push(item);
       }
@@ -100,11 +105,16 @@ export class Rank extends ZZZPlugin {
   }
 
   async deadlyRank() {
+    if (!(this.e?.group_id)) {
+      return this.reply('请在群聊中使用该命令！');
+    }
+
     if (!(this.isGroupRankAllowed())) {
       await this.reply('当前群危局强袭战排名功能已关闭！')
     }
-    // 加载所有 JSON
-    let rawData = getAllDeadlyData();
+    // 先从当前群中筛选出已注册用户
+    const uidInGroupRank = await getUsersInGroupRank(this.e.group_id);
+    let rawData = getDeadlyDataInGroupRank(uidInGroupRank);
     // 筛选
     // 获取当前时间的 UNIX 时间戳（秒）
     const currentTimestamp = Math.floor(Date.now() / 1000);
@@ -113,8 +123,7 @@ export class Rank extends ZZZPlugin {
     const filteredByUser = [];
     for (const item of rawData) {
       const gameUid = _.get(item, 'player.player.game_uid');
-      const userRankAllowed = await isUserRankAllowed(gameUid);
-      logger.mark(`userRankAllowed: ${userRankAllowed}`)
+      const userRankAllowed = await isUserRankAllowed(gameUid, this.e.group_id);
       if (/^[0-9]{8}$/.test(gameUid) && userRankAllowed) {
         filteredByUser.push(item);
       }
@@ -181,6 +190,10 @@ export class Rank extends ZZZPlugin {
   }
 
   async switchRank() {
+    if (!(this.e?.group_id)) {
+      return this.reply('请在群聊中使用该命令！');
+    }
+
     const uid = await this.getUID();
     if (!uid) {
       return this.reply('未绑定UID，请先绑定');
@@ -198,17 +211,14 @@ export class Rank extends ZZZPlugin {
     } else {
       // 如果都不匹配，默认使用显示/隐藏的逻辑（根据是否有"显示"）
       // 或者返回错误提示
-      return this.reply('请输入"显示"或"隐藏"来设置是否显示个人的深渊排名', false, { at: true, recallMsg: 100 });
+      return this.reply('请输入"显示"或"隐藏"来设置是否显示个人的深渊排名', false, { at: true });
     }
-    await redis.set(`ZZZ:RANK_PERMISSION:${uid}`, Number(isEnable))
+    await setUserRankAllowed(uid, this.e.group_id, isEnable);
     const enableString = isEnable ? '显示' : '隐藏';
     await this.e.reply(
       `绝区零 UID: ${uid}，深渊排名功能已设置为: ${enableString}`,
       false,
-      { at: true, recallMsg: 100 }
+      { at: true }
     );
-    
   }
-
-  
 }

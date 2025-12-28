@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { ZZZChallenge } from '../model/abyss.js';
 import { rulePrefix } from '../lib/common.js';
 import { saveAbyssData } from '../lib/db.js';
-import { isUserRankAllowed, isGroupRankAllowed } from '../lib/rank.js';
+import { isGroupRankAllowed, addUserToGroupRank } from '../lib/rank.js';
 
 export class Abyss extends ZZZPlugin {
   constructor() {
@@ -46,8 +46,13 @@ export class Abyss extends ZZZPlugin {
     const uid = await this.getUID();
     let userRankAllowed = 0;
     if (uid) {
-      userRankAllowed = await isUserRankAllowed(uid);
-      if (userRankAllowed && this.isGroupRankAllowed()) {
+      if (this.e?.group_id) {
+        // 无论如何在当前群里面都探测到了 uid
+        await addUserToGroupRank(uid, this.e.group_id);
+      }
+
+      // 存记录的时候先不管 userRankAllowed
+      if (this.isGroupRankAllowed()) {
         saveAbyssData(uid, {
           player: this.e.playerCard,
           result: abyssData
