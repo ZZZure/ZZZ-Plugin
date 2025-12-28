@@ -1,4 +1,4 @@
-/** @type {import('../../BuffManager.ts').BuffManager['buffs']} */
+/** @type {import('../../interface.ts').buff[]} */
 export const buffs = [
   {
     name: '1影',
@@ -59,7 +59,7 @@ export const buffs = [
   }
 ]
 
-/** @type {import('../../Calculator.ts').Calculator['skills']} */
+/** @type {import('../../interface.ts').skill[]} */
 export const skills = [
   { name: '感电每次', type: '感电' },
   { name: '紊乱', type: '紊乱' },

@@ -1,4 +1,4 @@
-/** @type {import('../BuffManager.ts').BuffManager['buffs']} */
+/** @type {import('../interface.ts').buff[]} */
 export const buffs = [
   {
     type: '贯穿力',

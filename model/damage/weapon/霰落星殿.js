@@ -1,7 +1,7 @@
 // 函数导出：
 
 /**
- * @param {import('../BuffManager.ts').BuffManager} buffM
+ * @param {import('../interface.ts').BuffManager} buffM
  * @param {number} star 进阶星数
  */
 // export function calc(buffM, star) {
@@ -18,7 +18,7 @@
 
 // 直接导出：
 
-/** @type {import('../BuffManager.ts').BuffManager['buffs']} */
+/** @type {import('../interface.ts').buff[]} */
 export const buffs = [
   {
     type: '暴击伤害',

@@ -22,6 +22,8 @@ export const scoreFnc: {
 	[charID: string]: (charData: ZZZAvatarInfo) => [string, { [propID: string]: number }] | undefined
 } = Object.create(null)
 
+export type scoreFunction = typeof scoreFnc[string]
+
 const calcFnc: {
 	character: {
 		[charID: string]: {

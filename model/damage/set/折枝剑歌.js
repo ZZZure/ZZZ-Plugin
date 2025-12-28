@@ -1,7 +1,7 @@
 // 函数导出：
 
 /**
- * @param {import('../BuffManager.ts').BuffManager} buffM
+ * @param {import('../interface.ts').BuffManager} buffM
  * @param {number} count 套装数量
  */
 // export function calc(buffM, count) {
@@ -24,7 +24,7 @@
 
 // 直接导出：
 
-/** @type {import('../BuffManager.ts').BuffManager['buffs']} */
+/** @type {import('../interface.ts').buff[]} */
 export const buffs = [
   {
     name: '折枝剑歌4',

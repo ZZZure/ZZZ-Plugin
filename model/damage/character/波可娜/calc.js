@@ -1,4 +1,4 @@
-/** @type {import('../../BuffManager.ts').BuffManager['buffs']} */
+/** @type {import('../../interface.ts').buff[]} */
 export const buffs = [
   {
     name: '1影',
@@ -31,7 +31,7 @@ export const buffs = [
   }
 ]
 
-/** @type {import('../../Calculator.ts').Calculator['skills']} */
+/** @type {import('../../interface.ts').skill[]} */
 export const skills = [
   { name: '普攻：捷击三段', type: 'AP3' },
   { name: '长按普攻：跃击', type: 'AX' },

@@ -1,9 +1,9 @@
 // 函数导出：
 
 /**
- * @param {import('../../BuffManager.ts').BuffManager} buffM
- * @param {import('../../Calculator.ts').Calculator} calc
- * @param {import('../../../avatar.js').ZZZAvatarInfo} avatar
+ * @param {import('../../interface.ts').BuffManager} buffM
+ * @param {import('../../interface.ts').Calculator} calc
+ * @param {import('../../interface.ts').ZZZAvatarInfo} avatar
  */
 // export function calc(buffM, calc, avatar) {
 //   /** 注册buff */
@@ -85,7 +85,7 @@
 
 // 直接导出：
 
-/** @type {import('../../BuffManager.ts').BuffManager['buffs']} */
+/** @type {import('../../interface.ts').buff[]} */
 export const buffs = [
   {
     name: '1影',
@@ -137,7 +137,7 @@ export const buffs = [
   }
 ]
 
-/** @type {import('../../Calculator.ts').Calculator['skills']} */
+/** @type {import('../../interface.ts').skill[]} */
 export const skills = [
   { name: '碎冰', type: '碎冰' },
   { name: '紊乱', type: '紊乱' },

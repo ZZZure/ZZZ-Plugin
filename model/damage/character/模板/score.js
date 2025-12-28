@@ -1,4 +1,4 @@
-/** @type {import('../../avatar.ts')['scoreFnc'][string]} */
+/** @type {import('../../interface.ts').scoreFunction} */
 export default function (avatar) {
   return ['评分规则名', {
     "生命值百分比": 0,
