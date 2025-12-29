@@ -70,9 +70,7 @@ async function importChar(charName, isWatch = false) {
                 calcFnc.character[id] = [{ ...m }];
             }
             const models = calcFnc.character[id];
-            if (!Array.isArray(models) ||
-                !models.length ||
-                !models.every(m => typeof m === 'object' && (m.calc || (m.buffs && m.skills)))) {
+            if (!models.every(m => typeof m === 'object' && (m.calc || (m.buffs && m.skills)))) {
                 delete calcFnc.character[id];
                 throw '伤害计算代码导出格式错误';
             }

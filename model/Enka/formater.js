@@ -472,6 +472,7 @@ export function parseInfo(enkaAvatar) {
     info.sub_element_type = ({
         1091: 1,
         1371: 2,
+        1431: 3,
     })[info.id] || 0;
     info.group_icon_path = '';
     info.hollow_icon_path = '';

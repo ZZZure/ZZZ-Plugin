@@ -22,6 +22,19 @@
     }
   },
   {
+    "name": "畏缩",
+    "element": "Physical",
+    "element_type": 200,
+    "sub_element_type": 3,
+    "duration": 10,
+    "interval": 1,
+    "multiplier": 0,
+    "discover": {
+      "multiplier": 0.075,
+      "fixed_multiplier": 4.5
+    }
+  },
+  {
     "name": "灼烧",
     "element": "Fire",
     "element_type": 201,

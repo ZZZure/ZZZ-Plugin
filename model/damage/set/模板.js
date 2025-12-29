@@ -27,16 +27,16 @@ export function calc(buffM, count) {
 /** @type {import('#interface').buff[]} */
 export const buffs = [
   {
+    check: 2,
     type: ,
     value: 0,
-    check: 2,
     element: ,
     range: ['']
   },
   {
+    check: 4,
     type: ,
     value: 0,
-    check: 4,
     element: ,
     range: ['']
   }
