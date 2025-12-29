@@ -341,6 +341,14 @@ export namespace Map {
           }
         }
       }
+      /** 皮肤数据 */
+      Skin: {
+        [skin_id: string]: {
+          Name: string
+          Desc: string
+          Image: string
+        }
+      }
     }
   }
 
