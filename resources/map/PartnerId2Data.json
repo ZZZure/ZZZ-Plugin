@@ -7956,7 +7956,7 @@
   "1431": {
     "sprite_id": "55",
     "name": "叶瞬光",
-    "full_name": "Partner_Name_1431",
+    "full_name": "叶瞬光",
     "en_name": "Ye Shunguang",
     "WeaponType": "1",
     "ElementType": "200",
@@ -7965,7 +7965,7 @@
     "Rarity": "S",
     "Attack": 135,
     "AttackGrowth": 82578,
-    "BreakStun": 93,
+    "BreakStun": 83,
     "Defence": 49,
     "DefenceGrowth": 66203,
     "HpMax": 617,

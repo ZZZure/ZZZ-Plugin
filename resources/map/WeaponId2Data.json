@@ -11906,14 +11906,14 @@
   "13019": {
     "Id": 13019,
     "CodeName": "Weapon_A_Common_19",
-    "Name": "Item_Weapon_A_Common_19_Name",
-    "Desc": "Item_Weapon_A_Common_19_Desc",
+    "Name": "青漪灵鼎",
+    "Desc": "...",
     "Desc2": "装备后可提升[命破]代理人的战斗能力",
-    "Desc3": "Item_Weapon_A_Common_19_ShortDesc",
+    "Desc3": "...",
     "Rarity": "A",
     "Icon": "Assets/NapResources/UI/Sprite/A1DynamicLoad/ItemIconWeapon/UnPacker/Weapon_A_Common_19.png",
     "WeaponType": {
-      "5": "防护"
+      "6": "命破"
     },
     "BaseProperty": {
       "Name": "基础攻击力",
@@ -12263,8 +12263,29 @@
       }
     },
     "Materials": "10:9600,101015:3|10:22400,101025:10|10:48000,101025:16|10:80000,101035:8|10:160000,101035:16",
-    "Talents": {},
-    "Profession": 5
+    "Talents": {
+      "1": {
+        "Name": "玄音唤灵",
+        "Desc": "装备者发动<color=#FFFFFF>[强化特殊技]</color> 时可获得1层增益效果，每层增益效果使装备者造成的伤害提升<color=#2BAD00>4%</color>，最多叠加3层，持续20秒，每0.5秒最多触发1次，重复触发时刷新持续时间；拥有3层增益效果时，装备者的暴击率提升<color=#2BAD00>6.5%</color>。"
+      },
+      "2": {
+        "Name": "玄音唤灵",
+        "Desc": "装备者发动<color=#FFFFFF>[强化特殊技]</color> 时可获得1层增益效果，每层增益效果使装备者造成的伤害提升<color=#2BAD00>4.6%</color>，最多叠加3层，持续20秒，每0.5秒最多触发1次，重复触发时刷新持续时间；拥有3层增益效果时，装备者的暴击率提升<color=#2BAD00>7.5%</color>。"
+      },
+      "3": {
+        "Name": "玄音唤灵",
+        "Desc": "装备者发动<color=#FFFFFF>[强化特殊技]</color> 时可获得1层增益效果，每层增益效果使装备者造成的伤害提升<color=#2BAD00>5.2%</color>，最多叠加3层，持续20秒，每0.5秒最多触发1次，重复触发时刷新持续时间；拥有3层增益效果时，装备者的暴击率提升<color=#2BAD00>8.5%</color>。"
+      },
+      "4": {
+        "Name": "玄音唤灵",
+        "Desc": "装备者发动<color=#FFFFFF>[强化特殊技]</color> 时可获得1层增益效果，每层增益效果使装备者造成的伤害提升<color=#2BAD00>5.8%</color>，最多叠加3层，持续20秒，每0.5秒最多触发1次，重复触发时刷新持续时间；拥有3层增益效果时，装备者的暴击率提升<color=#2BAD00>9.4%</color>。"
+      },
+      "5": {
+        "Name": "玄音唤灵",
+        "Desc": "装备者发动<color=#FFFFFF>[强化特殊技]</color> 时可获得1层增益效果，每层增益效果使装备者造成的伤害提升<color=#2BAD00>6.4%</color>，最多叠加3层，持续20秒，每0.5秒最多触发1次，重复触发时刷新持续时间；拥有3层增益效果时，装备者的暴击率提升<color=#2BAD00>10.4%</color>。"
+      }
+    },
+    "Profession": 6
   },
   "13101": {
     "Id": 13101,
@@ -26861,10 +26882,10 @@
   "14134": {
     "Id": 14134,
     "CodeName": "Weapon_S_1341",
-    "Name": "半糖冰雹",
-    "Desc": "(Test1)小照武器背景描述测试文本",
+    "Name": "半糖雪兔",
+    "Desc": "...",
     "Desc2": "装备后可提升[防护]代理人的战斗能力",
-    "Desc3": "(Test1)测试文本",
+    "Desc3": "...",
     "Rarity": "S",
     "Icon": "Assets/NapResources/UI/Sprite/A1DynamicLoad/ItemIconWeapon/UnPacker/Weapon_S_1341.png",
     "WeaponType": {
@@ -27220,24 +27241,24 @@
     "Materials": "10:12000,101014:4|10:28000,101024:12|10:60000,101024:20|10:100000,101034:10|10:200000,101034:20",
     "Talents": {
       "1": {
-        "Name": "(Test1)测试武器",
-        "Desc": "(Test1)装备者的能量自动回复提升<color=#2BAD00>0.46</color>点/秒；全队角色攻击力提升<color=#2BAD00>10%</color>，生命值上限提升<color=#2BAD00>10%</color>，该效果全队唯一；装备者开启或延长<color=#FFFFFF>[以太帷幕]</color>时，使全队的暴击伤害提升<color=#2BAD00>30%</color>，持续60秒，重复触发延长持续时间。"
+        "Name": "易碎之甜",
+        "Desc": "装备者的能量自动回复提升<color=#2BAD00>0.46</color>点/秒；全队角色攻击力提升<color=#2BAD00>10%</color>，最大生命值提升<color=#2BAD00>10%</color>，该效果全队唯一；装备者开启或延长<color=#FFFFFF>[以太帷幕]</color>时，使全队的暴击伤害提升<color=#2BAD00>30%</color>，持续60秒，重复触发刷新持续时间。"
       },
       "2": {
-        "Name": "(Test1)测试武器",
-        "Desc": "(Test1)装备者的能量自动回复提升<color=#2BAD00>0.53</color>点/秒；全队角色攻击力提升<color=#2BAD00>11.5%</color>，生命值上限提升<color=#2BAD00>11.5%</color>，该效果全队唯一；装备者开启或延长<color=#FFFFFF>[以太帷幕]</color>时，使全队的暴击伤害提升<color=#2BAD00>34.5%</color>，持续60秒，重复触发延长持续时间。"
+        "Name": "易碎之甜",
+        "Desc": "装备者的能量自动回复提升<color=#2BAD00>0.53</color>点/秒；全队角色攻击力提升<color=#2BAD00>11.5%</color>，最大生命值提升<color=#2BAD00>11.5%</color>，该效果全队唯一；装备者开启或延长<color=#FFFFFF>[以太帷幕]</color>时，使全队的暴击伤害提升<color=#2BAD00>34.5%</color>，持续60秒，重复触发刷新持续时间。"
       },
       "3": {
-        "Name": "(Test1)测试武器",
-        "Desc": "(Test1)装备者的能量自动回复提升<color=#2BAD00>0.6</color>点/秒；全队角色攻击力提升<color=#2BAD00>13%</color>，生命值上限提升<color=#2BAD00>13%</color>，该效果全队唯一；装备者开启或延长<color=#FFFFFF>[以太帷幕]</color>时，使全队的暴击伤害提升<color=#2BAD00>39%</color>，持续60秒，重复触发延长持续时间。"
+        "Name": "易碎之甜",
+        "Desc": "装备者的能量自动回复提升<color=#2BAD00>0.6</color>点/秒；全队角色攻击力提升<color=#2BAD00>13%</color>，最大生命值提升<color=#2BAD00>13%</color>，该效果全队唯一；装备者开启或延长<color=#FFFFFF>[以太帷幕]</color>时，使全队的暴击伤害提升<color=#2BAD00>39%</color>，持续60秒，重复触发刷新持续时间。"
       },
       "4": {
-        "Name": "(Test1)测试武器",
-        "Desc": "(Test1)装备者的能量自动回复提升<color=#2BAD00>0.67</color>点/秒；全队角色攻击力提升<color=#2BAD00>14.5%</color>，生命值上限提升<color=#2BAD00>14.5%</color>，该效果全队唯一；装备者开启或延长<color=#FFFFFF>[以太帷幕]</color>时，使全队的暴击伤害提升<color=#2BAD00>43.5%</color>，持续60秒，重复触发延长持续时间。"
+        "Name": "易碎之甜",
+        "Desc": "装备者的能量自动回复提升<color=#2BAD00>0.67</color>点/秒；全队角色攻击力提升<color=#2BAD00>14.5%</color>，最大生命值提升<color=#2BAD00>14.5%</color>，该效果全队唯一；装备者开启或延长<color=#FFFFFF>[以太帷幕]</color>时，使全队的暴击伤害提升<color=#2BAD00>43.5%</color>，持续60秒，重复触发刷新持续时间。"
       },
       "5": {
-        "Name": "(Test1)测试武器",
-        "Desc": "(Test1)装备者的能量自动回复提升<color=#2BAD00>0.74</color>点/秒；全队角色攻击力提升<color=#2BAD00>16%</color>，生命值上限提升<color=#2BAD00>16%</color>，该效果全队唯一；装备者开启或延长<color=#FFFFFF>[以太帷幕]</color>时，使全队的暴击伤害提升<color=#2BAD00>48%</color>，持续60秒，重复触发延长持续时间。"
+        "Name": "易碎之甜",
+        "Desc": "装备者的能量自动回复提升<color=#2BAD00>0.74</color>点/秒；全队角色攻击力提升<color=#2BAD00>16%</color>，最大生命值提升<color=#2BAD00>16%</color>，该效果全队唯一；装备者开启或延长<color=#FFFFFF>[以太帷幕]</color>时，使全队的暴击伤害提升<color=#2BAD00>48%</color>，持续60秒，重复触发刷新持续时间。"
       }
     },
     "Profession": 5
@@ -29550,9 +29571,9 @@
     "Id": 14143,
     "CodeName": "Weapon_S_1431",
     "Name": "云霓孤光",
-    "Desc": "(Test1)叶瞬光武器背景描述测试文本",
+    "Desc": "由稚嫩到成熟，从迷惘至决意。\n长路漫漫，而她挽剑向前，所行处空无一人。\n直至剑光惊鸿，照彻云霓。\n\n<color=#959595>「每当我挥剑时，它都会微微发热…很温暖呢。」——叶瞬光。</color>",
     "Desc2": "装备后可提升[强攻]代理人的战斗能力",
-    "Desc3": "(Test1)测试文本",
+    "Desc3": "世事多变，而此心恒常，一如云岿永伫。",
     "Rarity": "S",
     "Icon": "Assets/NapResources/UI/Sprite/A1DynamicLoad/ItemIconWeapon/UnPacker/Weapon_S_1431.png",
     "WeaponType": {
@@ -29908,24 +29929,24 @@
     "Materials": "10:12000,101010:4|10:28000,101020:12|10:60000,101020:20|10:100000,101030:10|10:200000,101030:20",
     "Talents": {
       "1": {
-        "Name": "(Test1)测试武器",
-        "Desc": "(Test1)装备者造成的<color=#F0D12B>物理属性</color>伤害穿透率提升<color=#2BAD00>15%</color>；装备者开启<color=#FFFFFF>[以太帷幕]</color>时，自身造成的伤害提升<color=#2BAD00>30%</color>，暴击伤害提升<color=#2BAD00>20%</color>，持续30秒，重复触发时刷新持续时间。"
+        "Name": "玉魄冰心",
+        "Desc": "装备者造成的伤害无视目标<color=#2BAD00>20%</color><color=#F0D12B>物理属性伤害抗性</color>；装备者开启<color=#FFFFFF>[以太帷幕]</color>时，自身造成的伤害提升<color=#2BAD00>25%</color>，暴击伤害提升<color=#2BAD00>25%</color>，持续40秒，重复触发时刷新持续时间。"
       },
       "2": {
-        "Name": "(Test1)测试武器",
-        "Desc": "(Test1)装备者造成的<color=#F0D12B>物理属性</color>伤害穿透率提升<color=#2BAD00>16%</color>；装备者开启<color=#FFFFFF>[以太帷幕]</color>时，自身造成的伤害提升<color=#2BAD00>34.5%</color>，暴击伤害提升<color=#2BAD00>23%</color>，持续30秒，重复触发时刷新持续时间。"
+        "Name": "玉魄冰心",
+        "Desc": "装备者造成的伤害无视目标<color=#2BAD00>22%</color><color=#F0D12B>物理属性伤害抗性</color>；装备者开启<color=#FFFFFF>[以太帷幕]</color>时，自身造成的伤害提升<color=#2BAD00>28.7%</color>，暴击伤害提升<color=#2BAD00>28.7%</color>，持续40秒，重复触发时刷新持续时间。"
       },
       "3": {
-        "Name": "(Test1)测试武器",
-        "Desc": "(Test1)装备者造成的<color=#F0D12B>物理属性</color>伤害穿透率提升<color=#2BAD00>17%</color>；装备者开启<color=#FFFFFF>[以太帷幕]</color>时，自身造成的伤害提升<color=#2BAD00>39%</color>，暴击伤害提升<color=#2BAD00>26%</color>，持续30秒，重复触发时刷新持续时间。"
+        "Name": "玉魄冰心",
+        "Desc": "装备者造成的伤害无视目标<color=#2BAD00>24%</color><color=#F0D12B>物理属性伤害抗性</color>；装备者开启<color=#FFFFFF>[以太帷幕]</color>时，自身造成的伤害提升<color=#2BAD00>32.5%</color>，暴击伤害提升<color=#2BAD00>32.5%</color>，持续40秒，重复触发时刷新持续时间。"
       },
       "4": {
-        "Name": "(Test1)测试武器",
-        "Desc": "(Test1)装备者造成的<color=#F0D12B>物理属性</color>伤害穿透率提升<color=#2BAD00>18%</color>；装备者开启<color=#FFFFFF>[以太帷幕]</color>时，自身造成的伤害提升<color=#2BAD00>43.5%</color>，暴击伤害提升<color=#2BAD00>29%</color>，持续30秒，重复触发时刷新持续时间。"
+        "Name": "玉魄冰心",
+        "Desc": "装备者造成的伤害无视目标<color=#2BAD00>26%</color><color=#F0D12B>物理属性伤害抗性</color>；装备者开启<color=#FFFFFF>[以太帷幕]</color>时，自身造成的伤害提升<color=#2BAD00>36.2%</color>，暴击伤害提升<color=#2BAD00>36.2%</color>，持续40秒，重复触发时刷新持续时间。"
       },
       "5": {
-        "Name": "(Test1)测试武器",
-        "Desc": "(Test1)装备者造成的<color=#F0D12B>物理属性</color>伤害穿透率提升<color=#2BAD00>20%</color>；装备者开启<color=#FFFFFF>[以太帷幕]</color>时，自身造成的伤害提升<color=#2BAD00>48%</color>，暴击伤害提升<color=#2BAD00>32%</color>，持续30秒，重复触发时刷新持续时间。"
+        "Name": "玉魄冰心",
+        "Desc": "装备者造成的伤害无视目标<color=#2BAD00>28%</color><color=#F0D12B>物理属性伤害抗性</color>；装备者开启<color=#FFFFFF>[以太帷幕]</color>时，自身造成的伤害提升<color=#2BAD00>40%</color>，暴击伤害提升<color=#2BAD00>40%</color>，持续40秒，重复触发时刷新持续时间。"
       }
     },
     "Profession": 1
@@ -31445,23 +31466,23 @@
     "Talents": {
       "1": {
         "Name": "7×24",
-        "Desc": "位于后台时，装备者的能量自动回复提升<color=#2BAD00>1.5</color>点/秒；装备者发动<color=#FFFFFF>[强化特殊技]</color>造成<color=#F0D12B>物理属性</color>伤害时，装备者攻击造成的失衡值提升<color=#2BAD00>9%</color>，最多叠加3层，持续10秒，叠加到3层时，全队角色造成的暴击伤害额外提升<color=#2BAD00>30%</color>，持续40秒，重复触发时刷新持续时间，暴击伤害提升效果全队唯一。"
+        "Desc": "位于后台时，装备者的能量自动回复提升<color=#2BAD00>1.5</color>点/秒；装备者发动<color=#FFFFFF>[强化特殊技]</color>造成<color=#F0D12B>物理属性</color>伤害时，装备者攻击造成的失衡值提升<color=#2BAD00>9%</color>，最多叠加3层，持续10秒，叠加到3层时，全队角色暴击伤害额外提升<color=#2BAD00>30%</color>，持续40秒，重复触发时刷新持续时间，暴击伤害提升效果全队唯一。"
       },
       "2": {
         "Name": "7×24",
-        "Desc": "位于后台时，装备者的能量自动回复提升<color=#2BAD00>1.7</color>点/秒；装备者发动<color=#FFFFFF>[强化特殊技]</color>造成<color=#F0D12B>物理属性</color>伤害时，装备者攻击造成的失衡值提升<color=#2BAD00>10.3%</color>，最多叠加3层，持续10秒，叠加到3层时，全队角色造成的暴击伤害额外提升<color=#2BAD00>34.5%</color>，持续40秒，重复触发时刷新持续时间，暴击伤害提升效果全队唯一。"
+        "Desc": "位于后台时，装备者的能量自动回复提升<color=#2BAD00>1.7</color>点/秒；装备者发动<color=#FFFFFF>[强化特殊技]</color>造成<color=#F0D12B>物理属性</color>伤害时，装备者攻击造成的失衡值提升<color=#2BAD00>10.3%</color>，最多叠加3层，持续10秒，叠加到3层时，全队角色暴击伤害额外提升<color=#2BAD00>34.5%</color>，持续40秒，重复触发时刷新持续时间，暴击伤害提升效果全队唯一。"
       },
       "3": {
         "Name": "7×24",
-        "Desc": "位于后台时，装备者的能量自动回复提升<color=#2BAD00>1.9</color>点/秒；装备者发动<color=#FFFFFF>[强化特殊技]</color>造成<color=#F0D12B>物理属性</color>伤害时，装备者攻击造成的失衡值提升<color=#2BAD00>11.7%</color>，最多叠加3层，持续10秒，叠加到3层时，全队角色造成的暴击伤害额外提升<color=#2BAD00>39%</color>，持续40秒，重复触发时刷新持续时间，暴击伤害提升效果全队唯一。"
+        "Desc": "位于后台时，装备者的能量自动回复提升<color=#2BAD00>1.9</color>点/秒；装备者发动<color=#FFFFFF>[强化特殊技]</color>造成<color=#F0D12B>物理属性</color>伤害时，装备者攻击造成的失衡值提升<color=#2BAD00>11.7%</color>，最多叠加3层，持续10秒，叠加到3层时，全队角色暴击伤害额外提升<color=#2BAD00>39%</color>，持续40秒，重复触发时刷新持续时间，暴击伤害提升效果全队唯一。"
       },
       "4": {
         "Name": "7×24",
-        "Desc": "位于后台时，装备者的能量自动回复提升<color=#2BAD00>2.1</color>点/秒；装备者发动<color=#FFFFFF>[强化特殊技]</color>造成<color=#F0D12B>物理属性</color>伤害时，装备者攻击造成的失衡值提升<color=#2BAD00>13%</color>，最多叠加3层，持续10秒，叠加到3层时，全队角色造成的暴击伤害额外提升<color=#2BAD00>43.5%</color>，持续40秒，重复触发时刷新持续时间，暴击伤害提升效果全队唯一。"
+        "Desc": "位于后台时，装备者的能量自动回复提升<color=#2BAD00>2.1</color>点/秒；装备者发动<color=#FFFFFF>[强化特殊技]</color>造成<color=#F0D12B>物理属性</color>伤害时，装备者攻击造成的失衡值提升<color=#2BAD00>13%</color>，最多叠加3层，持续10秒，叠加到3层时，全队角色暴击伤害额外提升<color=#2BAD00>43.5%</color>，持续40秒，重复触发时刷新持续时间，暴击伤害提升效果全队唯一。"
       },
       "5": {
         "Name": "7×24",
-        "Desc": "位于后台时，装备者的能量自动回复提升<color=#2BAD00>2.3</color>点/秒；装备者发动<color=#FFFFFF>[强化特殊技]</color>造成<color=#F0D12B>物理属性</color>伤害时，装备者攻击造成的失衡值提升<color=#2BAD00>14.5%</color>，最多叠加3层，持续10秒，叠加到3层时，全队角色造成的暴击伤害额外提升<color=#2BAD00>48%</color>，持续40秒，重复触发时刷新持续时间，暴击伤害提升效果全队唯一。"
+        "Desc": "位于后台时，装备者的能量自动回复提升<color=#2BAD00>2.3</color>点/秒；装备者发动<color=#FFFFFF>[强化特殊技]</color>造成<color=#F0D12B>物理属性</color>伤害时，装备者攻击造成的失衡值提升<color=#2BAD00>14.5%</color>，最多叠加3层，持续10秒，叠加到3层时，全队角色暴击伤害额外提升<color=#2BAD00>48%</color>，持续40秒，重复触发时刷新持续时间，暴击伤害提升效果全队唯一。"
       }
     },
     "Profession": 2

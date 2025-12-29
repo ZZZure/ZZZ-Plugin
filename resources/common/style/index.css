@@ -84,8 +84,11 @@
 .property.frost {
   background-image: url("../images/IconFrost.png");
 }
-.property.auricink {
+.property.auricInk {
   background-image: url("../images/IconAuricInk.png");
+}
+.property.rimeEdge {
+  background-image: url("../images/IconRimeEdge.png");
 }
 
 .prop-icon {
