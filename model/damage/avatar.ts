@@ -24,25 +24,47 @@ export const scoreFnc: {
 
 export type scoreFunction = typeof scoreFnc[string]
 
+export interface CharCalcModel {
+	/** 规则名 */
+	name: string
+	/** 规则作者 */
+	author: string
+	/** 
+	 * 判断此规则是否生效
+	 * - 用于加强角色应用新规则
+	 * - 若皆不符合，选择最后一个规则
+	 */
+	rule?: (avatar: ZZZAvatarInfo) => boolean
+	/** 
+	 * 处理函数，用于动态定义`buff`和`skill`
+	 * - 若同时存在`buffs`或`skills`，会先注册直接导出的buffs和skills，然后调用此函数
+	 */
+	calc?: (buffM: BuffManager, calc: Calculator, avatar: ZZZAvatarInfo) => void
+	/** buff列表 */
+	buffs: buff[]
+	/** 技能列表 */
+	skills: skill[]
+}
+
+export interface WeaponCalcModel {
+	calc?: (buffM: BuffManager, star: number) => void
+	buffs: buff[]
+}
+
+export interface SetCalcModel {
+	calc?: (buffM: BuffManager, count: number) => void
+	buffs: buff[]
+}
+
 const calcFnc: {
 	character: {
-		[charID: string]: {
-			calc?: (buffM: BuffManager, calc: Calculator, avatar: ZZZAvatarInfo) => void
-			buffs: buff[]
-			skills: skill[]
-		}
+		[charID: string]: CharCalcModel[]
 	}
 	weapon: {
-		[name: string]: {
-			calc?: (buffM: BuffManager, star: number) => void
-			buffs: buff[]
-		}
+		[name: string]: WeaponCalcModel
 	}
 	set: {
-		[name: string]: {
-			calc?: (buffM: BuffManager, count: number) => void
-			buffs: buff[]
-		}
+		[name: string]: SetCalcModel
 	}
 } = {
 	character: Object.create(null),
@@ -97,15 +119,36 @@ async function importChar(charName: string, isWatch = false) {
 		const loadCalcJS = async () => {
 			if (!fs.existsSync(calcFilePath)) return
 			const m = await import(`./character/${charName}/${calcFile}?${Date.now()}`)
-			if (!m.calc && (!m.buffs || !m.skills)) throw new Error('伤害计算文件格式错误：' + charName)
-			calcFnc.character[id] = m
+			if (m.default) {
+				if (Array.isArray(m.default)) {
+					calcFnc.character[id] = m.default
+				} else {
+					calcFnc.character[id] = [m.default]
+				}
+			} else {
+				calcFnc.character[id] = [{ ...m }]
+			}
+			const models = calcFnc.character[id]
+			if (
+				!Array.isArray(models) ||
+				!models.length ||
+				!models.every(m => typeof m === 'object' && (m.calc || (m.buffs && m.skills)))
+			) {
+				delete calcFnc.character[id]
+				throw '伤害计算代码导出格式错误'
+			}
+			models.forEach(m => {
+				const isDefault = calcFile === 'calc.js'
+				m.name ??= isDefault ? '默认' : '自定义'
+				m.author ??= isDefault ? 'UCPr' : '未知'
+			})
 		}
 		const scoreFilePath = path.join(dir, scoreFile)
 		const loadScoreJS = async () => {
 			if (!fs.existsSync(scoreFilePath)) return
 			const m = await import(`./character/${charName}/${scoreFile}?${Date.now()}`)
 			const fnc = m.default
-			if (!fnc || typeof fnc !== 'function') throw new Error('评分权重文件格式错误：' + charName)
+			if (!fnc || typeof fnc !== 'function') '评分权重代码导出格式错误'
 			scoreFnc[id] = fnc
 		}
 		if (isWatch) {
@@ -145,8 +188,18 @@ const weakMapCalc = new WeakMap<ZZZAvatarInfo, Calculator>()
 /** 角色计算实例 */
 export function avatar_calc(avatar: ZZZAvatarInfo) {
 	if (weakMapCalc.has(avatar)) return weakMapCalc.get(avatar)!
-	const m = calcFnc.character[avatar.id]
-	if (!m) return
+	const models = calcFnc.character[avatar.id]
+	if (!models) return
+	let m: CharCalcModel = models[models.length - 1]
+	if (models.length > 1) {
+		for (const model of models) {
+			if (model.rule && model.rule(avatar)) {
+				m = model
+				break
+			}
+		}
+	}
+	logger.debug(`${avatar.name_mi18n} 伤害计算规则：${m.name} by ${m.author}`)
 	const buffM = new BuffManager(avatar)
 	const calc = new Calculator(buffM)
 	weakMapCalc.set(avatar, calc)
