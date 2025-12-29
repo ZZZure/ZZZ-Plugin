@@ -4,13 +4,13 @@ export const buffs = [
     name: '1影',
     type: '无视抗性',
     value: 0.1,
-    is: { team: true }
+    teamTarget: true
   },
   {
     name: '2影',
     type: '增伤',
     value: 0.15,
-    is: { team: true }
+    teamTarget: true
   },
   {
     name: '4影',
@@ -27,29 +27,31 @@ export const buffs = [
   {
     name: '核心被动：奇巧缤纷',
     type: '攻击力',
+    teamTarget: true,
+    showInPanel: true,
     value: ({ avatar, calc }) => {
       const initial_ATK = avatar.initial_properties.ATK
       const level = calc.get_SkillLevel('T')
       const max = [600, 700, 800, 900, 1000, 1100, 1200][level - 1]
       return Math.min(max, initial_ATK * 0.4)
-    },
-    is: { team: true }
+    }
   },
   {
     name: '核心被动：奇巧缤纷',
     type: '增伤',
     value: 0.15,
-    is: { team: true }
+    teamTarget: true
   },
   {
     name: '额外能力：人多乐趣大',
     type: '异常增伤',
-    value: ({ avatar }) => {
-      const { AnomalyMastery } = avatar.initial_properties
+    showInPanel: true,
+    teamTarget: true,
+    value: ({ avatar, calc }) => {
+      const AnomalyMastery = calc.get_AnomalyMastery()
       if (AnomalyMastery <= 100) return 0
       return Math.min(0.2, (AnomalyMastery - 100) * 0.002) * (avatar.rank >= 1 ? 1.3 : 1)
-    },
-    is: { team: true }
+    }
   }
 ]
 

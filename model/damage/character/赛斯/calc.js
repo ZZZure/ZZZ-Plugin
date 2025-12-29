@@ -9,6 +9,7 @@ export const buffs = [
   {
     name: '核心被动：守望者',
     type: '异常精通',
+    teamTarget: ({ teammates }) => teammates,
     value: 'T'
   }
 ]

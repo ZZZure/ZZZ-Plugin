@@ -140,12 +140,16 @@ async function importFile(type: 'weapon' | 'set', name: string, isWatch = false)
 
 init()
 
+const weakMapCalc = new WeakMap<ZZZAvatarInfo, Calculator>()
+
 /** 角色计算实例 */
 export function avatar_calc(avatar: ZZZAvatarInfo) {
+	if (weakMapCalc.has(avatar)) return weakMapCalc.get(avatar)!
 	const m = calcFnc.character[avatar.id]
 	if (!m) return
 	const buffM = new BuffManager(avatar)
 	const calc = new Calculator(buffM)
+	weakMapCalc.set(avatar, calc)
 	logger.debug('initial_properties', avatar.initial_properties)
 	weapon_buff(avatar.weapon, buffM)
 	set_buff(avatar.equip, buffM)
@@ -182,14 +186,14 @@ export function set_buff(equips: ZZZAvatarInfo['equip'], buffM: BuffManager) {
 	for (const equip of equips) {
 		if (equip.equipment_type == 5) {
 			// 属伤加成
-			const index = [31503, 31603, 31703, 31803, 31903].indexOf(equip.main_properties[0].property_id)
-			if (index > -1 && elementEnum[index]) {
+			const index = [31503, 31603, 31703, 31803, , 31903].indexOf(equip.main_properties[0].property_id)
+			if (index > -1 && elementEnum[index + 200]) {
 				// @ts-ignore
 				buffM.new({
 					name: '驱动盘5号位',
 					type: '增伤',
 					value: Number(equip.main_properties[0].base.replace('%', '')) / 100,
-					element: elementEnum[index]
+					element: elementEnum[index + 200]
 				})
 			}
 		}

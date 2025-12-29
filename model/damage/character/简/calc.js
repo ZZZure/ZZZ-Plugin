@@ -15,6 +15,13 @@ export const buffs = [
   },
   {
     name: '2影',
+    type: '无视防御',
+    range: ['强击'],
+    value: 0.15,
+    teamTarget: ({ teammates }) => teammates
+  },
+  {
+    name: '2影',
     type: '异常暴击伤害',
     value: 0.5,
     range: ['强击']
@@ -22,6 +29,7 @@ export const buffs = [
   {
     name: '4影',
     type: '异常增伤',
+    teamTarget: true,
     value: 0.18
   },
   {

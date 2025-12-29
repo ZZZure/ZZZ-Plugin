@@ -1,12 +1,11 @@
 import type { ZZZAvatarInfo } from '../avatar.js'
 import type { Equip } from '../equip.js'
 import { baseValueData, formatScoreWeight } from '../../lib/score.js'
+import { rarityEnum, professionEnum } from './BuffManager.js'
 import { idToName } from '../../lib/convert/property.js'
 import { aliasToID } from '../../lib/convert/char.js'
 import { getMapData } from '../../utils/file.js'
 import { scoreFnc } from './avatar.js'
-
-enum rarity { S, A, B }
 
 type Weight = { [propID: string]: number }
 
@@ -49,12 +48,12 @@ export default class Score {
 
   /** 品质倍率 */
   get_rarity_multiplier() {
-    switch (rarity[this.equip.rarity]) {
-      case rarity.S:
+    switch (rarityEnum[this.equip.rarity]) {
+      case rarityEnum.S:
         return 1
-      case rarity.A:
+      case rarityEnum.A:
         return 2 / 3
-      case rarity.B:
+      case rarityEnum.B:
         return 1 / 3
       default:
         return 1
@@ -131,20 +130,20 @@ export default class Score {
     // 无预设权重且无计算函数（新角色），选择相应基本规则
     if (!def_weight && !scoreFnc[avatar.id]) {
       switch (avatar.avatar_profession) {
-        case 1: // 强攻
+        case professionEnum.强攻:
           def_weight = ['主C·双爆']
           break
-        case 2: // 击破
+        case professionEnum.击破:
           def_weight = ['冲击·双爆', '冲击·攻击']
           break
-        case 3: // 异常
+        case professionEnum.异常:
           def_weight = ['主C·异常', '辅助·异常']
           break
-        case 4: // 支援
-        case 5: // 防护
+        case professionEnum.支援:
+        case professionEnum.防护:
           def_weight = ['辅助·双爆', '辅助·异常']
           break
-        case 6: // 命破
+        case professionEnum.命破:
           def_weight = ['命破·双爆']
           break
       }

@@ -15,7 +15,8 @@ export const buffs = [
   {
     type: '增伤',
     value: 0.2,
-    check: ({ avatar, buffM }) => buffM.setCount.拂晓生花 >= 4 && avatar.avatar_profession === 1, // 仅强攻角色
+    check: ({ avatar, buffM, runtime }) =>
+      buffM.setCount.拂晓生花 >= 4 && avatar.avatar_profession === runtime.professionEnum.强攻, // 仅强攻角色
     range: ['A']
   }
 ]

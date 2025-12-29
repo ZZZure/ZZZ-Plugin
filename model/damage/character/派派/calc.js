@@ -10,6 +10,7 @@ export const buffs = [
   {
     name: '额外能力：同步疾驰',
     type: '增伤',
+    teamTarget: true,
     value: 0.18
   }
 ]

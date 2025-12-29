@@ -3,6 +3,7 @@ export const buffs = [
   {
     name: '1影',
     type: '无视防御',
+    teamTarget: true,
     value: 0.15
   },
   {
@@ -19,7 +20,14 @@ export const buffs = [
   {
     name: '6影',
     type: '无视抗性',
+    teamTarget: true,
     value: 0.2
+  },
+  {
+    name: '核心被动：千秋岁',
+    type: '失衡易伤',
+    teamTarget: true,
+    value: [0.02, 0.024, 0.027, 0.03, 0.034, 0.037, 0.04].map(v => v * 20)
   },
   {
     name: '额外能力：阳关三叠',

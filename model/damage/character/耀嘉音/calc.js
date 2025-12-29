@@ -3,6 +3,7 @@ export const buffs = [
   {
     name: '1影',
     type: '无视抗性',
+    teamTarget: true,
     value: 0.06 * 3
   },
   {
@@ -14,6 +15,8 @@ export const buffs = [
   {
     name: '核心被动：《如歌的行板》',
     type: '攻击力',
+    teamTarget: true,
+    showInPanel: true,
     value: ({ avatar, calc }) => {
       const isTwo = avatar.rank >= 2 // 2影额外提升
       const max = isTwo ? 1600 : 1200
@@ -24,12 +27,14 @@ export const buffs = [
   {
     name: '技能：咏叹华彩',
     type: '增伤',
+    teamTarget: true,
     value: 'E1',
     range: ['AQ', 'E', 'R'] // 排除正常普攻
   },
   {
     name: '技能：咏叹华彩',
     type: '暴击伤害',
+    teamTarget: true,
     value: 'E2',
     range: ['AQ', 'E', 'R']
   }

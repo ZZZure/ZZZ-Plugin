@@ -1,10 +1,14 @@
 import type { ZZZAvatarInfo } from '../avatar.js'
 import type { Calculator, skill } from './Calculator.ts'
-import _ from 'lodash'
+
+export enum rarityEnum { S, A, B }
 
 export enum elementEnum {
-  // 物理、火、冰、电、以太
-  Physical, Fire, Ice, Electric, Ether
+  Physical = 200,
+  Fire = 201,
+  Ice = 202,
+  Electric = 203,
+  Ether = 205
 }
 
 export enum anomalyEnum {
@@ -39,6 +43,18 @@ export enum buffTypeEnum {
 /** Buff增益类型 */
 export type buffType = keyof typeof buffTypeEnum
 
+export enum professionEnum {
+  强攻 = 1, 击破, 异常, 支援, 防护, 命破
+}
+
+/** ID 2 EN */
+export const elementType2element = (elementType: number) => elementEnum[elementType] as element
+
+export const runtime = { elementType2element, rarityEnum, elementEnum, anomalyEnum, buffTypeEnum, professionEnum }
+
+/** 提供部分运行时变量，简化操作 */
+export type Runtime = typeof runtime
+
 export interface buff {
   /** Buff状态，true生效，false无效 */
   status: boolean
@@ -51,7 +67,7 @@ export interface buff {
   /**
    * Buff增益数值，可为数值、字符串、数组、函数
    * @number
-   * - 一般情况下此值即为提高值
+   * - 此值即为提高值
    * - 当buff增益类型为**攻击力/冲击力/异常精通/异常掌控/防御力/生命值**时，若此值 **<1**，则将此值理解为**初始属性**的**百分比提高**
    * @string
    * 角色自身的buff提高值可能随技能/天赋等级提高而提高，此时可以于data.json的"buff"中添加倍率数组（同上支持百分比提高），此时value即为键名，其首字母必须为对应技能的基类（参考技能类型命名标准）
@@ -62,10 +78,11 @@ export interface buff {
    * @function
    * 函数返回值即为提高值
    */
-  value: number | string | number[] | (({ avatar, buffM, calc }: {
+  value: number | string | number[] | (({ avatar, buffM, calc, runtime }: {
     avatar: ZZZAvatarInfo
     buffM: BuffManager
     calc: Calculator
+    runtime: Runtime
   }) => number)
   /**
    * Buff增益技能类型**生效范围**；参考技能类型命名标准
@@ -98,18 +115,33 @@ export interface buff {
    * - buff.source为**套装**时，判断套装数量>=该值
    * - buff.source为**影画**时，判断影画数量>=该值
    */
-  check?: (({ avatar, buffM, calc }: {
+  check?: (({ avatar, buffM, calc, teammates, runtime }: {
     avatar: ZZZAvatarInfo
     buffM: BuffManager
     calc: Calculator
+    teammates?: ZZZAvatarInfo[]
+    runtime: Runtime
   }) => boolean) | number
-  /** Buff描述符 */
-  is: {
-    /** 是否团队增益 @default false */
-    team?: boolean
-    /** 为团队增益时，同名效果是否可叠加 @default false */
-    stack?: boolean
-  }
+  /** 是否在面板中显示。用于在面板的伤害统计中显示角色的buff增益值 @default false */
+  showInPanel?: boolean
+  /**
+   * 判断在团队中增益哪些角色
+   * @boolean `true`对全队生效 `false`仅对自身生效
+   * @funtion
+   * - 返回`true`则为团队增益，返回`false`则仅对自身生效，返回角色数组则只对这些角色生效
+   * - 计算单人伤害时，`teammates`为空数组
+   * @default false
+   */
+  teamTarget?: boolean | (({ teammates, avatar, buffM, calc, runtime }: {
+    /** 队友实例数组 */
+    teammates: ZZZAvatarInfo[]
+    avatar: ZZZAvatarInfo
+    buffM: BuffManager
+    calc: Calculator
+    runtime: Runtime
+  }) => boolean | ZZZAvatarInfo[])
+  /** 同名同类效果是否可叠加。不可叠加时，取最大值 @default true */
+  stackable?: boolean
 }
 
 type filterable = 'name' | 'element' | 'type' | 'range' | 'source'
@@ -142,11 +174,8 @@ export class BuffManager {
     if (!buff.name && (buff.source || this.defaultBuff.source) === '套装' && this.defaultBuff.name && typeof buff.check === 'number')
       buff.name = this.defaultBuff.name + buff.check
     const oriBuff = buff
-    buff = _.merge({
-      status: true,
-      // is: {},
-      ...this.defaultBuff
-    }, buff)
+    // @ts-expect-error
+    buff = { status: true, ...this.defaultBuff, ...buff }
     if (buff.range && !Array.isArray(buff.range))
       buff.range = oriBuff.range = [buff.range]
     if (!buff.source) {
@@ -155,8 +184,11 @@ export class BuffManager {
       else if (/^\d影/.test(buff.name)) buff.source = oriBuff.source = '影画'
       else if (buff.name.includes('技')) buff.source = oriBuff.source = '技能'
     }
-    if (!buff.name || !buff.value || !buff.source || !buffTypeEnum[buffTypeEnum[buff.type]])
-      return logger.warn('无效buff：', buff)
+    for (const key of ['name', 'value', 'source'] as const) {
+      if (!buff[key]) return logger.warn(`无效buff：缺少${key}字段`, buff)
+    }
+    if (buffTypeEnum[buffTypeEnum[buff.type]] !== buff.type)
+      return logger.warn(`无效buff：非法type字段`, buff)
     // 音擎buff职业检查
     if (buff.source === '音擎') {
       const professionCheck = (avatar: ZZZAvatarInfo) => {
@@ -165,7 +197,7 @@ export class BuffManager {
         return avatar.avatar_profession === weapon_profession
       }
       const oriCheck = typeof buff.check === 'function' && buff.check
-      buff.check = ({ avatar, buffM, calc }) => professionCheck(avatar) && (!oriCheck || oriCheck({ avatar, buffM, calc }))
+      buff.check = ({ avatar, buffM, calc, runtime }) => professionCheck(avatar) && (!oriCheck || oriCheck({ avatar, buffM, calc, runtime }))
       // 影画buff影画数检查
     } else if (buff.source === '影画' && !buff.check) {
       buff.check = oriBuff.check = +buff.name[0]
@@ -247,7 +279,8 @@ export class BuffManager {
                 if (!buff.check({
                   avatar: this.avatar,
                   buffM: this,
-                  calc: valueOcalc as Calculator
+                  calc: valueOcalc as Calculator,
+                  runtime
                 })) return false
                 weakMapCheck.set(buff, true)
               }
@@ -255,6 +288,14 @@ export class BuffManager {
               logger.debug('未传入calc：' + buff.name)
               return false
             }
+          }
+          if (buff.teamTarget) {
+            if (typeof buff.teamTarget === 'function') {
+              const result = buff.teamTarget({ teammates: [], avatar: this.avatar, buffM: this, calc: valueOcalc as Calculator, runtime })
+              if (Array.isArray(result)) return result.includes(this.avatar)
+              return result
+            }
+            return buff.teamTarget
           }
           return true
         })

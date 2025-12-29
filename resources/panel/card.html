@@ -153,7 +153,7 @@
     <div class="title">
       <% include(sys.specialTitle, {en: 'METAL' , cn: '驱动盘信息' }) %>
     </div>
-    {{if charData.equip_score !== false}}
+    {{if charData.equip_score}}
     <div class="equip-stats">
       <div class="box1">
         <div class="equip-score {{charData.equip_comment}}">
@@ -250,11 +250,44 @@
           {{/each}}
 
       </div>
+
       {{set damages = charData?.damages}}
-      {{if damages && damages?.length}}
+      {{set showInPanelBuffs = charData?.showInPanelBuffs}}
+      {{if damages?.length || showInPanelBuffs?.length}}
       <div class="title damage-title">
         <% include(sys.specialTitle, {en: 'DAMAGE' , cn: '伤害统计' }) %>
       </div>
+      {{/if}}
+
+      {{if showInPanelBuffs?.length}}
+      <div class="damagelist">
+        <div class="dmg-tr column4 titlebar no-zzz-font">
+          <div class="td dmg-td">%</div>
+          <div class="dmg-td">增益名称</div>
+          <div class="dmg-td">增益类型</div>
+          <div class="dmg-td">增益数值</div>
+        </div>
+        {{each showInPanelBuffs buff}}
+        <div class="dmg-tr column4">
+          <div class="dmg-td">-</div>
+          <div class="dmg-td no-zzz-font">{{buff.name}}</div>
+          <div class="dmg-td no-zzz-font">{{buff.type}}</div>
+          <div class="dmg-td">
+            {{buff.value < 2 ? 
+              ((buff.value * 100).toFixed(0) + '%') : 
+              (buff.value % 1 === 0 ? buff.value : buff.value.toFixed(2))
+            }}{{if buff.max}}/{{
+              buff.max < 2 ? 
+              ((buff.max * 100).toFixed(0) + '%') : 
+              (buff.max % 1 === 0 ? buff.max : buff.max.toFixed(2))
+            }}{{/if}}
+          </div>
+        </div>
+        {{/each}}
+      </div>
+      {{/if}}
+
+      {{if damages?.length}}
       <div class="damagelist">
         <div class="dmg-tr column4 titlebar no-zzz-font">
           <div class="td dmg-td">%</div>
@@ -278,6 +311,7 @@
         </div>
       </div>
       {{/if}}
+
     </div>
   </div>
   {{/block}}

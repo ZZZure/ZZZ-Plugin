@@ -1,14 +1,9 @@
 import { baseValueData, formatScoreWeight } from '../../lib/score.js';
+import { rarityEnum, professionEnum } from './BuffManager.js';
 import { idToName } from '../../lib/convert/property.js';
 import { aliasToID } from '../../lib/convert/char.js';
 import { getMapData } from '../../utils/file.js';
 import { scoreFnc } from './avatar.js';
-var rarity;
-(function (rarity) {
-    rarity[rarity["S"] = 0] = "S";
-    rarity[rarity["A"] = 1] = "A";
-    rarity[rarity["B"] = 2] = "B";
-})(rarity || (rarity = {}));
 const equipScore = getMapData('EquipScore');
 for (const charName in equipScore) {
     const charID = +charName || aliasToID(charName);
@@ -37,12 +32,12 @@ export default class Score {
         return (0.25 + +this.equip.level * 0.05) || 1;
     }
     get_rarity_multiplier() {
-        switch (rarity[this.equip.rarity]) {
-            case rarity.S:
+        switch (rarityEnum[this.equip.rarity]) {
+            case rarityEnum.S:
                 return 1;
-            case rarity.A:
+            case rarityEnum.A:
                 return 2 / 3;
-            case rarity.B:
+            case rarityEnum.B:
                 return 1 / 3;
             default:
                 return 1;
@@ -109,20 +104,20 @@ export default class Score {
         let def_weight = equipScore[avatar.id];
         if (!def_weight && !scoreFnc[avatar.id]) {
             switch (avatar.avatar_profession) {
-                case 1:
+                case professionEnum.强攻:
                     def_weight = ['主C·双爆'];
                     break;
-                case 2:
+                case professionEnum.击破:
                     def_weight = ['冲击·双爆', '冲击·攻击'];
                     break;
-                case 3:
+                case professionEnum.异常:
                     def_weight = ['主C·异常', '辅助·异常'];
                     break;
-                case 4:
-                case 5:
+                case professionEnum.支援:
+                case professionEnum.防护:
                     def_weight = ['辅助·双爆', '辅助·异常'];
                     break;
-                case 6:
+                case professionEnum.命破:
                     def_weight = ['命破·双爆'];
                     break;
             }

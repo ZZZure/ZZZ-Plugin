@@ -3,11 +3,14 @@ export const buffs = [
   {
     name: '4影',
     type: '暴击伤害',
+    teamTarget: ({ teammates }) => teammates, // 仅对队友生效
     value: 0.1
   },
   {
     name: '技能：加油！',
     type: '攻击力',
+    teamTarget: true, // 全队生效
+    showInPanel: true,
     value: ({ calc }) => {
       const ratio = calc.calc_value('E1')
       const fixed = calc.calc_value('E2')

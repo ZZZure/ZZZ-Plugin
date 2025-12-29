@@ -9,6 +9,7 @@ export const buffs = [
   {
     name: '2影',
     type: '穿透率',
+    teamTarget: true,
     value: 0.2
   },
   {
@@ -34,6 +35,7 @@ export const buffs = [
     name: '额外能力：星火燎原',
     type: '异常持续时间',
     value: 3,
+    teamTarget: true,
     range: ['灼烧']
   }
 ]

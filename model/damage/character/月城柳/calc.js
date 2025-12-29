@@ -20,6 +20,7 @@ export const buffs = [
   {
     name: '4影',
     type: '穿透率',
+    teamTarget: true,
     value: 0.16
   },
   {
@@ -37,6 +38,7 @@ export const buffs = [
   {
     name: '核心被动：月蚀',
     type: '倍率',
+    teamTarget: true,
     value: 'T1',
     range: ['紊乱']
   },

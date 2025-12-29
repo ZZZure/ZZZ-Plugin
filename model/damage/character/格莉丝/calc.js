@@ -3,6 +3,7 @@ export const buffs = [
   {
     name: '2影',
     type: '无视抗性',
+    teamTarget: true,
     value: 0.085
   },
   {

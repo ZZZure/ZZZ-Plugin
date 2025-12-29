@@ -6,6 +6,8 @@ export const buffs = [
   },
   {
     type: '暴击伤害',
+    teamTarget: true,
+    stackable: false,
     value: [0.015, 0.0172, 0.0195, 0.0217, 0.024].map(v => v * 20),
     element: ['Ice', 'Fire']
   }

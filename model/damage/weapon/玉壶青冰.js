@@ -6,6 +6,8 @@ export const buffs = [
   },
   {
     type: '增伤',
+    teamTarget: true,
+    stackable: false,
     value: [0.2, 0.23, 0.26, 0.29, 0.32]
   }
 ]

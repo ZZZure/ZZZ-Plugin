@@ -3,6 +3,7 @@ export const buffs = [
   {
     name: '4影',
     type: '暴击率',
+    teamTarget: true,
     value: 0.1
   },
   {

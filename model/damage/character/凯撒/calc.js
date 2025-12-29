@@ -3,11 +3,13 @@ export const buffs = [
   {
     name: '1影',
     type: '无视抗性',
+    teamTarget: true,
     value: 0.15
   },
   {
     name: '2影',
     type: '攻击力',
+    teamTarget: true,
     value: ({ calc }) => calc.calc_value('T') * 0.5
   },
   {
@@ -35,11 +37,13 @@ export const buffs = [
   {
     name: '核心被动：坚韧之壁',
     type: '攻击力',
+    teamTarget: true,
     value: 'T'
   },
   {
     name: '额外能力：战意激昂',
     type: '增伤',
+    teamTarget: true,
     value: 0.25
   },
   {

@@ -3,18 +3,21 @@ export const buffs = [
   {
     name: '1影',
     type: '无视防御',
+    teamTarget: true,
     value: 0.2
   },
   {
     name: '2影',
     type: '异常增伤',
     value: 0.15,
+    teamTarget: true,
     range: ['强击']
   },
   {
     name: '2影',
     type: '异常增伤',
     value: 0.15,
+    teamTarget: true,
     range: ['紊乱'],
     element: 'Physical'
   },
@@ -29,6 +32,7 @@ export const buffs = [
     type: '倍率',
     value: 1.8,
     element: 'Physical',
+    teamTarget: true,
     range: ['紊乱']
   },
   {

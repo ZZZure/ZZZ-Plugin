@@ -1,6 +1,6 @@
-import type { BuffManager, anomaly, buff, buffType, element } from './BuffManager.ts'
+import type { BuffManager, Runtime, anomaly, buff, buffType, element } from './BuffManager.ts'
 import type { ZZZAvatarInfo } from '../avatar.js'
-import { elementEnum, anomalyEnum } from './BuffManager.js'
+import { runtime, elementType2element, anomalyEnum } from './BuffManager.js'
 import * as prop from '../../lib/convert/property.js'
 import { getMapData } from '../../utils/file.js'
 import { charData } from './avatar.js'
@@ -27,10 +27,11 @@ export interface skill {
    * @function
    * 函数返回值即为倍率
    */
-  multiplier?: number | string | number[] | (({ avatar, buffM, calc }: {
+  multiplier?: number | string | number[] | (({ avatar, buffM, calc, runtime }: {
     avatar: ZZZAvatarInfo
     buffM: BuffManager
     calc: Calculator
+    runtime: Runtime
   }) => number)
   /** 指定局内固定属性 */
   props?: { [key in buffType]?: number }
@@ -55,10 +56,11 @@ export interface skill {
   /** 禁用伤害计算cache */
   banCache?: boolean
   /** 是否计算该技能 */
-  check?: (({ avatar, buffM, calc }: {
+  check?: (({ avatar, buffM, calc, runtime }: {
     avatar: ZZZAvatarInfo
     buffM: BuffManager
     calc: Calculator
+    runtime: Runtime
   }) => boolean)
   /** 自定义计算逻辑 */
   dmg?: (calc: Calculator) => damage
@@ -66,7 +68,7 @@ export interface skill {
    * 伤害计算前调用，可自由定义各属性等
    * 此操作只作用于当前技能
    */
-  before?: ({ avatar, calc, usefulBuffs, skill, props, areas }: {
+  before?: ({ avatar, calc, usefulBuffs, skill, props, areas, runtime }: {
     avatar: ZZZAvatarInfo
     calc: Calculator
     usefulBuffs: buff[]
@@ -76,15 +78,17 @@ export interface skill {
     props: damage['props']
     /** 乘区数据。设置后不会更改 */
     areas: damage['areas']
+    runtime: Runtime
   }) => void
   /** 伤害计算后调用，可对结果进行修改等 */
-  after?: ({ avatar, calc, usefulBuffs, skill, damage }: {
+  after?: ({ avatar, calc, usefulBuffs, skill, damage, runtime }: {
     avatar: ZZZAvatarInfo
     calc: Calculator
     usefulBuffs: buff[]
     /** 技能自身 */
     skill: skill
     damage: damage
+    runtime: Runtime
   }) => void
 }
 
@@ -127,13 +131,11 @@ export interface damage {
     /** 期望伤害 */
     expectDMG: number
   }
-  add?: (damage: string | damage) => void
-  fnc?: (fnc: (n: number) => number) => void
-  x?: (n: number) => void
+  fnc: (fnc: (n: number) => number) => void
+  x: (n: number) => void
+  add: (damage: string | damage) => void
+  del: (damage: string | damage) => void
 }
-
-/** ID 2 EN */
-const elementType2element = (elementType: number) => elementEnum[[0, 1, 2, 3, -1, 4][elementType - 200]] as element
 
 const subBaseValueData = {
   "生命值百分比": [0.03, '3.0%'],
@@ -199,8 +201,10 @@ export class Calculator {
   readonly skills: skill[] = []
   /** 对当前所计算的技能有用的buff、计算后的buff */
   private readonly usefulBuffResults: Map<buff, buff> = new Map()
+  /** 技能伤害缓存 */
   private cache: { [type: string]: damage } = Object.create(null)
-  private props: Exclude<damage['props'], undefined> = {}
+  /** 角色属性缓存 */
+  private props: NonNullable<damage['props']> = {}
   /** 当前正在计算的技能 */
   skill: skill
   defaultSkill: { [key in keyof skill]?: skill[key] } = {}
@@ -241,17 +245,17 @@ export class Calculator {
       return this.skills
     }
     const oriSkill = skill
-    skill = _.merge({
-      ...this.defaultSkill
-    }, skill)
+    skill = { ...this.defaultSkill, ...skill }
     if (!skill.element) skill.element = oriSkill.element = elementType2element(this.avatar.element_type)
-    if (!skill.name || !skill.type) return logger.warn('无效skill：', skill)
+    for (const key of ['name', 'type'] as const) {
+      if (!skill[key]) return logger.warn(`无效skill：缺少${key}字段`, skill)
+    }
     if (skill.check && +skill.check) {
       const num = skill.check as unknown as number
       skill.check = oriSkill.check = ({ avatar }) => avatar.rank >= num
     }
     skill.isAnomalyDMG ??= oriSkill.isAnomalyDMG = typeof anomalyEnum[skill.type.slice(0, 2) as anomaly] === 'number'
-    skill.isSheerDMG ??= oriSkill.isSheerDMG = this.avatar.avatar_profession === 6 && elementType2element(this.avatar.element_type) === skill.element && !skill.isAnomalyDMG
+    skill.isSheerDMG ??= oriSkill.isSheerDMG = this.avatar.avatar_profession === runtime.professionEnum.命破 && elementType2element(this.avatar.element_type) === skill.element && !skill.isAnomalyDMG
     this.skills.push(skill)
     return this.skills
   }
@@ -279,7 +283,7 @@ export class Calculator {
     }
     this.skill = skill
     if (!skill.banCache && this.cache[skill.type]) return this.cache[skill.type]
-    if (skill.check && !skill.check({ avatar: this.avatar, buffM: this.buffM, calc: this })) return
+    if (skill.check && !skill.check({ avatar: this.avatar, buffM: this.buffM, calc: this, runtime })) return
     logger.debug(`${logger.green(skill.type)}${skill.name}伤害计算：`)
     if (skill.dmg) {
       const dmg = skill.dmg(this)
@@ -297,7 +301,7 @@ export class Calculator {
       redirect: skill.redirect
     }, this)
     const areas = {} as damage['areas']
-    if (skill.before) skill.before({ avatar: this.avatar, calc: this, usefulBuffs, skill, props, areas })
+    if (skill.before) skill.before({ avatar: this.avatar, calc: this, usefulBuffs, skill, props, areas, runtime })
     logger.debug(`有效buff*${usefulBuffs.length}/${this.buffM.buffs.length}`)
     const { isAnomalyDMG = false, isSheerDMG = false } = skill
 
@@ -317,7 +321,7 @@ export class Calculator {
               Multiplier = skill.multiplier[this.get_SkillLevel(skill.type[0]) - 1]
               break
             case 'function':
-              Multiplier = skill.multiplier({ avatar: this.avatar, buffM: this.buffM, calc: this })
+              Multiplier = skill.multiplier({ avatar: this.avatar, buffM: this.buffM, calc: this, runtime })
               break
             default:
               Multiplier = this.get_SkillMultiplier(skill.type)
@@ -390,31 +394,88 @@ export class Calculator {
         critDMG: commonArea * (CRITDMG + 1) * SheerBoostArea,
         expectDMG: commonArea * CriticalArea * SheerBoostArea
       }
-    const damage: damage = { skill, usefulBuffs: _.sortBy(Array.from(this.usefulBuffResults.values()), ['type', 'value']).reverse(), props, areas, result }
-    this.usefulBuffResults.clear()
-    if (skill.after) {
-      damage.add = (d) => {
+    const damageHandler = {
+      fnc: (fnc: (value: number) => number) => {
+        damage.result.critDMG = fnc(damage.result.critDMG)
+        damage.result.expectDMG = fnc(damage.result.expectDMG)
+      },
+      x: (n: number) => {
+        logger.debug('伤害系数：' + n)
+        damage.fnc(v => v * n)
+      },
+      add: (d: string | damage) => {
         if (typeof d === 'string') d = this.calc_skill(d)
         if (!d) return
         logger.debug('增加伤害：' + d.skill.name, d.result)
         damage.result.expectDMG += d.result.expectDMG
         damage.result.critDMG += d.result.critDMG || d.result.expectDMG
+      },
+      del: (d: string | damage) => {
+        if (typeof d === 'string') d = this.calc_skill(d)
+        if (!d) return
+        logger.debug('减少伤害：' + d.skill.name, d.result)
+        damage.result.expectDMG -= d.result.expectDMG
+        damage.result.critDMG -= d.result.critDMG || d.result.expectDMG
       }
-      damage.fnc = (fnc) => {
-        damage.result.critDMG = fnc(damage.result.critDMG)
-        damage.result.expectDMG = fnc(damage.result.expectDMG)
+    }
+    const damage = new Proxy({
+      skill,
+      usefulBuffs: _.sortBy(Array.from(this.usefulBuffResults.values()), ['type', 'value']).reverse(),
+      props,
+      areas,
+      result
+    }, {
+      get: (target, prop: string) => {
+        if (prop in damageHandler) {
+          return damageHandler[prop as keyof typeof damageHandler]
+        }
+        return target[prop as Exclude<keyof damage, keyof typeof damageHandler>]
       }
-      damage.x = (n) => {
-        logger.debug('伤害系数：' + n)
-        damage.fnc!(v => v * n)
-      }
-      skill.after({ avatar: this.avatar, calc: this, usefulBuffs, skill, damage })
-      delete damage.add, delete damage.fnc, delete damage.x
+    }) as damage
+    this.usefulBuffResults.clear()
+    if (skill.after) {
+      skill.after({ avatar: this.avatar, calc: this, usefulBuffs, skill, damage, runtime })
     }
     logger.debug('最终伤害：', result)
     if (!skill.banCache) this.cache[skill.type] = damage
     // console.log(damage)
     return damage
+  }
+
+  calc_showInPanel_buffs() {
+    return this.buffM.buffs
+      .filter(buff => buff.showInPanel)
+      .map(buff => {
+        try {
+          const value = this.calc_value(buff.value, buff)
+          const { _base_properties, _initial_properties } = this.avatar
+          // @ts-expect-error 自动计算理论最大值
+          this.avatar._base_properties = this.avatar._initial_properties = new Proxy({}, {
+            get: (target, prop) => {
+              // logger.debug(`计算buff理论最大值，访问属性：${String(prop)}`)
+              return Number.MAX_SAFE_INTEGER
+            }
+          })
+          let max = 0
+          try {
+            this.props = {}
+            max = this.calc_value(buff.value, buff)
+          } catch { }
+          this.avatar._base_properties = _base_properties
+          this.avatar._initial_properties = _initial_properties
+          if (max === Infinity || !max || max > 9999) {
+            max = 0
+          }
+          return { ...buff, value, max }
+        } catch (e) {
+          logger.error('buff计算错误：', buff, e)
+          return
+        }
+      })
+      .filter(v => v && v.value) as (buff & {
+        value: number
+        max: number
+      })[]
   }
 
   calc() {
@@ -715,7 +776,7 @@ export class Calculator {
       case 'number': return value
       case 'function': {
         if (buff) buff.status = false
-        const v = +value({ avatar: this.avatar, buffM: this.buffM, calc: this }) || 0
+        const v = +value({ avatar: this.avatar, buffM: this.buffM, calc: this, runtime }) || 0
         if (buff) buff.status = true
         return v
       }
@@ -737,6 +798,7 @@ export class Calculator {
    * @param isRatio 是否启用buff.value为数值/字符串/数组类型且计算结果值<1时按 **`初始数值`** 百分比提高处理
    */
   get(type: buff['type'], initial: number, skill: skill = this.skill, usefulBuffs: buff[] = this.buffM.buffs, isRatio = false): number {
+    const nonStackableBuffRecord = new Map<string, number>()
     return this.props[type] ??= this.buffM._filter(usefulBuffs, {
       element: skill?.element,
       range: [skill?.type],
@@ -748,6 +810,22 @@ export class Calculator {
       // 启用isRatio时：若计算值绝对值小于1，按照百分比提高处理
       if (isRatio && Math.abs(add) < 1 && (typeof value === 'number' || typeof value === 'string' || Array.isArray(value)))
         add *= initial
+      // 检查不可叠加buff
+      if (buff.stackable === false) {
+        if (nonStackableBuffRecord.has(buff.name)) {
+          const recorded = nonStackableBuffRecord.get(buff.name)!
+          if (Math.abs(recorded) >= Math.abs(add)) {
+            logger.debug(`\tBuff：${buff.name}已存在，且数值相同/更高，不计入结果`)
+            return previousValue
+          } else {
+            logger.debug(`\tBuff：${buff.name}已存在，且数值更低，替换为更高数值`)
+            previousValue -= recorded
+            nonStackableBuffRecord.set(buff.name, add)
+          }
+        } else {
+          nonStackableBuffRecord.set(buff.name, add)
+        }
+      }
       if (!this.usefulBuffResults.has(buff))
         this.usefulBuffResults.set(buff, { ...buff, value: add })
       logger.debug(`\tBuff：${buff.name}对${(buff.include ? (buff.range ? [buff.range, buff.include] : buff.include) : buff.range) || '全类型'}增加${add}${buff.element || ''}${type}`)

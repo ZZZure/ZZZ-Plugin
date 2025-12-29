@@ -1,9 +1,8 @@
-import { elementEnum, anomalyEnum } from './BuffManager.js';
+import { runtime, elementType2element, anomalyEnum } from './BuffManager.js';
 import * as prop from '../../lib/convert/property.js';
 import { getMapData } from '../../utils/file.js';
 import { charData } from './avatar.js';
 import _ from 'lodash';
-const elementType2element = (elementType) => elementEnum[[0, 1, 2, 3, -1, 4][elementType - 200]];
 const subBaseValueData = {
     "生命值百分比": [0.03, '3.0%'],
     "生命值": [112, '112'],
@@ -70,19 +69,19 @@ export class Calculator {
             return this.skills;
         }
         const oriSkill = skill;
-        skill = _.merge({
-            ...this.defaultSkill
-        }, skill);
+        skill = { ...this.defaultSkill, ...skill };
         if (!skill.element)
             skill.element = oriSkill.element = elementType2element(this.avatar.element_type);
-        if (!skill.name || !skill.type)
-            return logger.warn('无效skill：', skill);
+        for (const key of ['name', 'type']) {
+            if (!skill[key])
+                return logger.warn(`无效skill：缺少${key}字段`, skill);
+        }
         if (skill.check && +skill.check) {
             const num = skill.check;
             skill.check = oriSkill.check = ({ avatar }) => avatar.rank >= num;
         }
         skill.isAnomalyDMG ??= oriSkill.isAnomalyDMG = typeof anomalyEnum[skill.type.slice(0, 2)] === 'number';
-        skill.isSheerDMG ??= oriSkill.isSheerDMG = this.avatar.avatar_profession === 6 && elementType2element(this.avatar.element_type) === skill.element && !skill.isAnomalyDMG;
+        skill.isSheerDMG ??= oriSkill.isSheerDMG = this.avatar.avatar_profession === runtime.professionEnum.命破 && elementType2element(this.avatar.element_type) === skill.element && !skill.isAnomalyDMG;
         this.skills.push(skill);
         return this.skills;
     }
@@ -99,7 +98,7 @@ export class Calculator {
         this.skill = skill;
         if (!skill.banCache && this.cache[skill.type])
             return this.cache[skill.type];
-        if (skill.check && !skill.check({ avatar: this.avatar, buffM: this.buffM, calc: this }))
+        if (skill.check && !skill.check({ avatar: this.avatar, buffM: this.buffM, calc: this, runtime }))
             return;
         logger.debug(`${logger.green(skill.type)}${skill.name}伤害计算：`);
         if (skill.dmg) {
@@ -118,7 +117,7 @@ export class Calculator {
         }, this);
         const areas = {};
         if (skill.before)
-            skill.before({ avatar: this.avatar, calc: this, usefulBuffs, skill, props, areas });
+            skill.before({ avatar: this.avatar, calc: this, usefulBuffs, skill, props, areas, runtime });
         logger.debug(`有效buff*${usefulBuffs.length}/${this.buffM.buffs.length}`);
         const { isAnomalyDMG = false, isSheerDMG = false } = skill;
         if (!areas.BasicArea) {
@@ -136,7 +135,7 @@ export class Calculator {
                             Multiplier = skill.multiplier[this.get_SkillLevel(skill.type[0]) - 1];
                             break;
                         case 'function':
-                            Multiplier = skill.multiplier({ avatar: this.avatar, buffM: this.buffM, calc: this });
+                            Multiplier = skill.multiplier({ avatar: this.avatar, buffM: this.buffM, calc: this, runtime });
                             break;
                         default:
                             Multiplier = this.get_SkillMultiplier(skill.type);
@@ -205,10 +204,16 @@ export class Calculator {
             critDMG: commonArea * (CRITDMG + 1) * SheerBoostArea,
             expectDMG: commonArea * CriticalArea * SheerBoostArea
         };
-        const damage = { skill, usefulBuffs: _.sortBy(Array.from(this.usefulBuffResults.values()), ['type', 'value']).reverse(), props, areas, result };
-        this.usefulBuffResults.clear();
-        if (skill.after) {
-            damage.add = (d) => {
+        const damageHandler = {
+            fnc: (fnc) => {
+                damage.result.critDMG = fnc(damage.result.critDMG);
+                damage.result.expectDMG = fnc(damage.result.expectDMG);
+            },
+            x: (n) => {
+                logger.debug('伤害系数：' + n);
+                damage.fnc(v => v * n);
+            },
+            add: (d) => {
                 if (typeof d === 'string')
                     d = this.calc_skill(d);
                 if (!d)
@@ -216,22 +221,71 @@ export class Calculator {
                 logger.debug('增加伤害：' + d.skill.name, d.result);
                 damage.result.expectDMG += d.result.expectDMG;
                 damage.result.critDMG += d.result.critDMG || d.result.expectDMG;
-            };
-            damage.fnc = (fnc) => {
-                damage.result.critDMG = fnc(damage.result.critDMG);
-                damage.result.expectDMG = fnc(damage.result.expectDMG);
-            };
-            damage.x = (n) => {
-                logger.debug('伤害系数：' + n);
-                damage.fnc(v => v * n);
-            };
-            skill.after({ avatar: this.avatar, calc: this, usefulBuffs, skill, damage });
-            delete damage.add, delete damage.fnc, delete damage.x;
+            },
+            del: (d) => {
+                if (typeof d === 'string')
+                    d = this.calc_skill(d);
+                if (!d)
+                    return;
+                logger.debug('减少伤害：' + d.skill.name, d.result);
+                damage.result.expectDMG -= d.result.expectDMG;
+                damage.result.critDMG -= d.result.critDMG || d.result.expectDMG;
+            }
+        };
+        const damage = new Proxy({
+            skill,
+            usefulBuffs: _.sortBy(Array.from(this.usefulBuffResults.values()), ['type', 'value']).reverse(),
+            props,
+            areas,
+            result
+        }, {
+            get: (target, prop) => {
+                if (prop in damageHandler) {
+                    return damageHandler[prop];
+                }
+                return target[prop];
+            }
+        });
+        this.usefulBuffResults.clear();
+        if (skill.after) {
+            skill.after({ avatar: this.avatar, calc: this, usefulBuffs, skill, damage, runtime });
         }
         logger.debug('最终伤害：', result);
         if (!skill.banCache)
             this.cache[skill.type] = damage;
         return damage;
+    }
+    calc_showInPanel_buffs() {
+        return this.buffM.buffs
+            .filter(buff => buff.showInPanel)
+            .map(buff => {
+            try {
+                const value = this.calc_value(buff.value, buff);
+                const { _base_properties, _initial_properties } = this.avatar;
+                this.avatar._base_properties = this.avatar._initial_properties = new Proxy({}, {
+                    get: (target, prop) => {
+                        return Number.MAX_SAFE_INTEGER;
+                    }
+                });
+                let max = 0;
+                try {
+                    this.props = {};
+                    max = this.calc_value(buff.value, buff);
+                }
+                catch { }
+                this.avatar._base_properties = _base_properties;
+                this.avatar._initial_properties = _initial_properties;
+                if (max === Infinity || !max || max > 9999) {
+                    max = 0;
+                }
+                return { ...buff, value, max };
+            }
+            catch (e) {
+                logger.error('buff计算错误：', buff, e);
+                return;
+            }
+        })
+            .filter(v => v && v.value);
     }
     calc() {
         return this.skills.map(skill => {
@@ -458,7 +512,7 @@ export class Calculator {
             case 'function': {
                 if (buff)
                     buff.status = false;
-                const v = +value({ avatar: this.avatar, buffM: this.buffM, calc: this }) || 0;
+                const v = +value({ avatar: this.avatar, buffM: this.buffM, calc: this, runtime }) || 0;
                 if (buff)
                     buff.status = true;
                 return v;
@@ -477,6 +531,7 @@ export class Calculator {
         }
     }
     get(type, initial, skill = this.skill, usefulBuffs = this.buffM.buffs, isRatio = false) {
+        const nonStackableBuffRecord = new Map();
         return this.props[type] ??= this.buffM._filter(usefulBuffs, {
             element: skill?.element,
             range: [skill?.type],
@@ -487,6 +542,23 @@ export class Calculator {
             let add = this.calc_value(value, buff);
             if (isRatio && Math.abs(add) < 1 && (typeof value === 'number' || typeof value === 'string' || Array.isArray(value)))
                 add *= initial;
+            if (buff.stackable === false) {
+                if (nonStackableBuffRecord.has(buff.name)) {
+                    const recorded = nonStackableBuffRecord.get(buff.name);
+                    if (Math.abs(recorded) >= Math.abs(add)) {
+                        logger.debug(`\tBuff：${buff.name}已存在，且数值相同/更高，不计入结果`);
+                        return previousValue;
+                    }
+                    else {
+                        logger.debug(`\tBuff：${buff.name}已存在，且数值更低，替换为更高数值`);
+                        previousValue -= recorded;
+                        nonStackableBuffRecord.set(buff.name, add);
+                    }
+                }
+                else {
+                    nonStackableBuffRecord.set(buff.name, add);
+                }
+            }
             if (!this.usefulBuffResults.has(buff))
                 this.usefulBuffResults.set(buff, { ...buff, value: add });
             logger.debug(`\tBuff：${buff.name}对${(buff.include ? (buff.range ? [buff.range, buff.include] : buff.include) : buff.range) || '全类型'}增加${add}${buff.element || ''}${type}`);

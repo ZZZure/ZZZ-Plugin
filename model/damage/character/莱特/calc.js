@@ -4,6 +4,7 @@ export const buffs = [
     name: '1影',
     type: '无视抗性',
     value: 0.1,
+    teamTarget: true,
     element: ['Fire', 'Ice']
   },
   {
@@ -22,6 +23,13 @@ export const buffs = [
       const value = calc.calc_value(buff.value)
       return value * 0.2
     },
+    teamTarget: true
+  },
+  {
+    name: '2影',
+    type: '失衡易伤',
+    teamTarget: true,
+    value: 0.25
   },
   {
     name: '核心被动：助燃剂',
@@ -32,19 +40,19 @@ export const buffs = [
     name: '核心被动：助燃剂',
     type: '无视抗性',
     value: 0.15,
+    teamTarget: true,
     element: ['Fire', 'Ice']
   },
   {
     name: '额外能力：斗志昂扬',
     type: '增伤',
+    showInPanel: true,
+    teamTarget: true,
     element: ['Fire', 'Ice'],
     value: ({ calc }) => {
       const Impact = calc.get_Impact()
       const step = 0.0125 + Math.max(0, (Impact - 170) / 10 * 25 / 10000)
       return Math.min(0.75, step * 20)
-    },
-    is: {
-      team: true
     }
   }
 ]

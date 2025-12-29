@@ -9,6 +9,7 @@ export const buffs = [
   {
     name: '额外能力：协议合同',
     type: '暴击率',
+    teamTarget: true,
     value: 0.16
   }
 ]

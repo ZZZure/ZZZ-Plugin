@@ -9,7 +9,14 @@ export const buffs = [
     name: '核心被动：金属狼足',
     type: '无视抗性',
     value: 0.25,
+    teamTarget: true,
     element: 'Ice'
+  },
+  {
+    name: '额外能力：优雅猎群',
+    type: '失衡易伤',
+    teamTarget: true,
+    value: 0.35
   }
 ]
 

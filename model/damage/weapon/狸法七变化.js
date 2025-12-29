@@ -7,7 +7,8 @@ export const buffs = [
   },
   {
     type: '异常精通',
-    value: [60, 69, 78, 87, 96],
-    is: { team: true }
+    teamTarget: true,
+    stackable: false,
+    value: [60, 69, 78, 87, 96]
   }
 ]

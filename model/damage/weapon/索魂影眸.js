@@ -2,11 +2,9 @@
 export const buffs = [
   {
     type: '无视防御',
-    value: [0.25, 0.2875, 0.325, 0.3625, 0.4],
-    is: {
-      team: true,
-      stack: false
-    }
+    teamTarget: true,
+    stackable: false,
+    value: [0.25, 0.2875, 0.325, 0.3625, 0.4]
   },
   {
     type: '冲击力',

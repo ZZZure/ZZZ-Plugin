@@ -3,10 +3,8 @@ export const buffs = [
   {
     name: '1影',
     type: '异常增伤',
-    value: 0.16,
-    is: {
-      team: true
-    }
+    teamTarget: true,
+    value: 0.16
   },
   {
     name: '2影',

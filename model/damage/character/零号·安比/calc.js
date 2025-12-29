@@ -19,6 +19,7 @@ export const buffs = [
   {
     name: '核心被动：电位差',
     type: '暴击伤害',
+    teamTarget: true,
     value: ({ calc }) => calc.get_CRITDMG() * calc.calc_value('T2'),
     range: ['追加攻击']
   },
@@ -32,9 +33,7 @@ export const buffs = [
     type: '增伤',
     value: 0.25,
     range: ['追加攻击'],
-    is: {
-      team: true
-    }
+    teamTarget: true
   }
 ]
 

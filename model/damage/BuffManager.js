@@ -1,11 +1,16 @@
-import _ from 'lodash';
+export var rarityEnum;
+(function (rarityEnum) {
+    rarityEnum[rarityEnum["S"] = 0] = "S";
+    rarityEnum[rarityEnum["A"] = 1] = "A";
+    rarityEnum[rarityEnum["B"] = 2] = "B";
+})(rarityEnum || (rarityEnum = {}));
 export var elementEnum;
 (function (elementEnum) {
-    elementEnum[elementEnum["Physical"] = 0] = "Physical";
-    elementEnum[elementEnum["Fire"] = 1] = "Fire";
-    elementEnum[elementEnum["Ice"] = 2] = "Ice";
-    elementEnum[elementEnum["Electric"] = 3] = "Electric";
-    elementEnum[elementEnum["Ether"] = 4] = "Ether";
+    elementEnum[elementEnum["Physical"] = 200] = "Physical";
+    elementEnum[elementEnum["Fire"] = 201] = "Fire";
+    elementEnum[elementEnum["Ice"] = 202] = "Ice";
+    elementEnum[elementEnum["Electric"] = 203] = "Electric";
+    elementEnum[elementEnum["Ether"] = 205] = "Ether";
 })(elementEnum || (elementEnum = {}));
 export var anomalyEnum;
 (function (anomalyEnum) {
@@ -43,6 +48,17 @@ export var buffTypeEnum;
     buffTypeEnum[buffTypeEnum["\u51B2\u51FB\u529B"] = 20] = "\u51B2\u51FB\u529B";
     buffTypeEnum[buffTypeEnum["\u5F02\u5E38\u638C\u63A7"] = 21] = "\u5F02\u5E38\u638C\u63A7";
 })(buffTypeEnum || (buffTypeEnum = {}));
+export var professionEnum;
+(function (professionEnum) {
+    professionEnum[professionEnum["\u5F3A\u653B"] = 1] = "\u5F3A\u653B";
+    professionEnum[professionEnum["\u51FB\u7834"] = 2] = "\u51FB\u7834";
+    professionEnum[professionEnum["\u5F02\u5E38"] = 3] = "\u5F02\u5E38";
+    professionEnum[professionEnum["\u652F\u63F4"] = 4] = "\u652F\u63F4";
+    professionEnum[professionEnum["\u9632\u62A4"] = 5] = "\u9632\u62A4";
+    professionEnum[professionEnum["\u547D\u7834"] = 6] = "\u547D\u7834";
+})(professionEnum || (professionEnum = {}));
+export const elementType2element = (elementType) => elementEnum[elementType];
+export const runtime = { elementType2element, rarityEnum, elementEnum, anomalyEnum, buffTypeEnum, professionEnum };
 let depth = 0, weakMapCheck = new WeakMap();
 export class BuffManager {
     avatar;
@@ -60,10 +76,7 @@ export class BuffManager {
         if (!buff.name && (buff.source || this.defaultBuff.source) === '套装' && this.defaultBuff.name && typeof buff.check === 'number')
             buff.name = this.defaultBuff.name + buff.check;
         const oriBuff = buff;
-        buff = _.merge({
-            status: true,
-            ...this.defaultBuff
-        }, buff);
+        buff = { status: true, ...this.defaultBuff, ...buff };
         if (buff.range && !Array.isArray(buff.range))
             buff.range = oriBuff.range = [buff.range];
         if (!buff.source) {
@@ -76,8 +89,12 @@ export class BuffManager {
             else if (buff.name.includes('技'))
                 buff.source = oriBuff.source = '技能';
         }
-        if (!buff.name || !buff.value || !buff.source || !buffTypeEnum[buffTypeEnum[buff.type]])
-            return logger.warn('无效buff：', buff);
+        for (const key of ['name', 'value', 'source']) {
+            if (!buff[key])
+                return logger.warn(`无效buff：缺少${key}字段`, buff);
+        }
+        if (buffTypeEnum[buffTypeEnum[buff.type]] !== buff.type)
+            return logger.warn(`无效buff：非法type字段`, buff);
         if (buff.source === '音擎') {
             const professionCheck = (avatar) => {
                 const weapon_profession = avatar.weapon?.profession;
@@ -86,7 +103,7 @@ export class BuffManager {
                 return avatar.avatar_profession === weapon_profession;
             };
             const oriCheck = typeof buff.check === 'function' && buff.check;
-            buff.check = ({ avatar, buffM, calc }) => professionCheck(avatar) && (!oriCheck || oriCheck({ avatar, buffM, calc }));
+            buff.check = ({ avatar, buffM, calc, runtime }) => professionCheck(avatar) && (!oriCheck || oriCheck({ avatar, buffM, calc, runtime }));
         }
         else if (buff.source === '影画' && !buff.check) {
             buff.check = oriBuff.check = +buff.name[0];
@@ -164,7 +181,8 @@ export class BuffManager {
                                 if (!buff.check({
                                     avatar: this.avatar,
                                     buffM: this,
-                                    calc: valueOcalc
+                                    calc: valueOcalc,
+                                    runtime
                                 }))
                                     return false;
                                 weakMapCheck.set(buff, true);
@@ -174,6 +192,15 @@ export class BuffManager {
                             logger.debug('未传入calc：' + buff.name);
                             return false;
                         }
+                    }
+                    if (buff.teamTarget) {
+                        if (typeof buff.teamTarget === 'function') {
+                            const result = buff.teamTarget({ teammates: [], avatar: this.avatar, buffM: this, calc: valueOcalc, runtime });
+                            if (Array.isArray(result))
+                                return result.includes(this.avatar);
+                            return result;
+                        }
+                        return buff.teamTarget;
                     }
                     return true;
                 });

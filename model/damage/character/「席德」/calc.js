@@ -1,3 +1,11 @@
+// 对自己和面板最强的强攻队友生效
+const team = ({ teammates, avatar, runtime }) => {
+  const strongest = teammates
+    .filter(t => t.avatar_profession === runtime.professionEnum.强攻)
+    .sort((a, b) => a.equip_score - b.equip_score)[0]
+  return strongest ? [avatar, strongest] : [avatar]
+}
+
 /** @type {import('../../interface.ts').buff[]} */
 export const buffs = [
   {
@@ -9,6 +17,7 @@ export const buffs = [
   {
     name: '2影',
     type: '无视防御',
+    teamTarget: team,
     value: 0.2
   },
   {
@@ -31,16 +40,19 @@ export const buffs = [
   {
     name: '核心被动：花链协议',
     type: '攻击力',
+    teamTarget: team,
     value: 'T1'
   },
   {
     name: '核心被动：花链协议',
     type: '暴击伤害',
+    teamTarget: team,
     value: 'T2'
   },
   {
     name: '核心被动：花链协议',
     type: '增伤',
+    teamTarget: team,
     value: 'T3'
   },
   {
