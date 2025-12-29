@@ -1,4 +1,4 @@
-/** @type {import('../interface.ts').buff[]} */
+/** @type {import('#interface').buff[]} */
 export const buffs = [
   {
     type: '防御力',

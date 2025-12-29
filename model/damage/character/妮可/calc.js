@@ -1,4 +1,4 @@
-/** @type {import('../../interface.ts').buff[]} */
+/** @type {import('#interface').buff[]} */
 export const buffs = [
   {
     name: '6影',
@@ -21,7 +21,7 @@ export const buffs = [
   }
 ]
 
-/** @type {import('../../interface.ts').skill[]} */
+/** @type {import('#interface').skill[]} */
 export const skills = [
   { name: '侵蚀每次', type: '侵蚀' },
   { name: '闪避反击：牵制炮击', type: 'CF' },

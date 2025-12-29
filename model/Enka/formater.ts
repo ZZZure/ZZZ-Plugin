@@ -1,4 +1,4 @@
-import type { Mys, Enka, Map } from './interface.ts'
+import type { Mys, Enka, Map } from '#interface'
 import { getMapData } from '../../utils/file.js'
 
 type FilterValueType<T, U> = {

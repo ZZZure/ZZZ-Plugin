@@ -52,7 +52,7 @@ export async function refreshPanelFromEnka(uid) {
     return res.status
   }
   const data = await res.json()
-  /** @type {import('./interface.ts').Enka.Avatar[]} */
+  /** @type {import('#interface').Enka.Avatar[]} */
   const panelList = data?.PlayerInfo?.ShowcaseDetail?.AvatarList
   if (!panelList || !Array.isArray(panelList)) {
     logger.warn('Enka更新面板失败：获取面板数据失败')

@@ -6,7 +6,7 @@ const team = ({ teammates, avatar, runtime }) => {
   return strongest ? [avatar, strongest] : [avatar]
 }
 
-/** @type {import('../../interface.ts').buff[]} */
+/** @type {import('#interface').buff[]} */
 export const buffs = [
   {
     name: '1影',
@@ -70,7 +70,7 @@ export const buffs = [
   }
 ]
 
-/** @type {import('../../interface.ts').skill[]} */
+/** @type {import('#interface').skill[]} */
 export const skills = [
   { name: '感电每次', type: '感电' },
   { name: '普攻：霜蕊轮舞四段', type: 'AP4' },

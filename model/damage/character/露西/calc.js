@@ -1,4 +1,4 @@
-/** @type {import('../../interface.ts').buff[]} */
+/** @type {import('#interface').buff[]} */
 export const buffs = [
   {
     name: '4影',
@@ -19,7 +19,7 @@ export const buffs = [
   }
 ]
 
-/** @type {import('../../interface.ts').skill['before']} */
+/** @type {import('#interface').skill['before']} */
 const before = ({ calc, usefulBuffs, props }) => {
   const jiayou = usefulBuffs.find(buff => buff.name === '技能：加油！')
   const delta = calc.calc_value(jiayou?.value)
@@ -28,7 +28,7 @@ const before = ({ calc, usefulBuffs, props }) => {
   usefulBuffs.splice(0, usefulBuffs.length)
 }
 
-/** @type {import('../../interface.ts').skill[]} */
+/** @type {import('#interface').skill[]} */
 export const skills = [
   { name: '灼烧', type: '灼烧' },
   { name: '普攻：淑女的球棍四段', type: 'AP4' },

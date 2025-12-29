@@ -1,4 +1,4 @@
-/** @type {import('../../interface.ts').buff[]} */
+/** @type {import('#interface').buff[]} */
 export const buffs = [
   {
     name: '1影',
@@ -39,9 +39,9 @@ export const buffs = [
   }
 ]
 
-/** @param {import('../../interface.ts').Calculator} vva */
+/** @param {import('#interface').Calculator} vva */
 const generateBefore = (vva) => {
-  /** @type {import('../../interface.ts').skill['before']} */
+  /** @type {import('#interface').skill['before']} */
   const before = ({ avatar, calc, areas }) => {
     const AnomalyMultiplier = calc.get_AnomalyMultiplier(undefined, undefined, 1)
     const ATK = calc.get_ATK(calc.skill)
@@ -53,7 +53,7 @@ const generateBefore = (vva) => {
   return before
 }
 
-/** @type {import('../../interface.ts').skill[]} */
+/** @type {import('#interface').skill[]} */
 export const skills = [
   { name: '侵蚀每段', type: '侵蚀' },
   { name: '紊乱', type: '紊乱' },
@@ -93,9 +93,9 @@ export const skills = [
 ]
 
 /**
- * @param {import('../../interface.ts').BuffManager} buffM
- * @param {import('../../interface.ts').Calculator} calc
- * @param {import('../../interface.ts').ZZZAvatarInfo} avatar
+ * @param {import('#interface').BuffManager} buffM
+ * @param {import('#interface').Calculator} calc
+ * @param {import('#interface').ZZZAvatarInfo} avatar
  */
 // export function calc(buffM, calc, avatar) {
 

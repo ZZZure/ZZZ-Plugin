@@ -1,4 +1,4 @@
-/** @type {import('../../interface.ts').scoreFunction} */
+/** @type {import('#interface').scoreFunction} */
 export default function (avatar) {
   const props = avatar.initial_properties
   // (暴击率 * 2 + 爆伤 >= 200%) 且 (异常精通 < 300) 时转为直伤流规则

@@ -1,5 +1,5 @@
 /**
- * @param {import('../interface.ts').BuffManager} buffM
+ * @param {import('#interface').BuffManager} buffM
  * @param {number} count 套装数量
  */
 export function calc(buffM, count) {
@@ -24,7 +24,7 @@ export function calc(buffM, count) {
   }
 }
 
-/** @type {import('../interface.ts').buff[]} */
+/** @type {import('#interface').buff[]} */
 export const buffs = [
   {
     type: ,

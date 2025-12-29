@@ -1,4 +1,4 @@
-/** @type {import('../../interface.ts').CharCalcModel} */
+/** @type {import('#interface').CharCalcModel} */
 export default {
   name: '默认',
 
@@ -67,6 +67,27 @@ export default {
 
   buffs: [
     {
+      name: '核心被动：',
+      type: ,
+      value: 0,
+      element: ,
+      range: ['']
+    },
+    {
+      name: '额外能力：',
+      type: ,
+      value: 0,
+      element: ,
+      range: ['']
+    },
+    {
+      name: '技能：',
+      type: ,
+      value: 0,
+      element: ,
+      range: ['']
+    },
+    {
       name: '1影',
       type: ,
       value: 0,
@@ -90,27 +111,6 @@ export default {
       value: 0,
       range: ['']
     },
-    {
-      name: '核心被动：',
-      type: ,
-      value: 0,
-      element: ,
-      range: ['']
-    },
-    {
-      name: '额外能力：',
-      type: ,
-      value: 0,
-      element: ,
-      range: ['']
-    },
-    {
-      name: '技能：',
-      type: ,
-      value: 0,
-      element: ,
-      range: ['']
-    }
   ],
 
   skills: [

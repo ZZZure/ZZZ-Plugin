@@ -1,4 +1,4 @@
-/** @type {import('../../interface.ts').buff[]} */
+/** @type {import('#interface').buff[]} */
 export const buffs = [
   {
     name: '1影',
@@ -53,7 +53,7 @@ export const buffs = [
   }
 ]
 
-/** @type {import('../../interface.ts').skill[]} */
+/** @type {import('#interface').skill[]} */
 export const skills = [
   { name: '普攻：横行斩打六段', type: 'AP6' },
   { name: '蓄力普攻：此路不通！', type: 'AX' },

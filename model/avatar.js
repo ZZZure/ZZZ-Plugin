@@ -223,13 +223,13 @@ export class ZZZAvatarInfo {
     this.name_mi18n = name_mi18n;
     /** @type {string} 角色全名 */
     this.full_name_mi18n = full_name_mi18n;
-    /** @type {import('./damage/interface.ts').elementEnum} 元素种类 */
+    /** @type {import('#interface').elementEnum} 元素种类 */
     this.element_type = element_type;
     /** @type {number} 子元素种类 */
     this.sub_element_type = sub_element_type;
     /** @type {string} */
     this.camp_name_mi18n = camp_name_mi18n;
-    /** @type {import('./damage/interface.ts').professionEnum} 职业 */
+    /** @type {import('#interface').professionEnum} 职业 */
     this.avatar_profession = avatar_profession;
     /** @type {string} 稀有度 */
     this.rarity = rarity;

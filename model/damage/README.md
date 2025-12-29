@@ -27,7 +27,7 @@
 在函数体中，可根据玩家角色数据**动态选用**不同的权重方案。示例（原爱丽丝直伤流规则）：
 
 ```js
-/** @type {import('../../interface.ts').scoreFunction} */
+/** @type {import('#interface').scoreFunction} */
 export default function (avatar) {
   const { CRITRate, CRITDMG, AnomalyProficiency } = avatar.initial_properties
   // (暴击率 * 2 + 爆伤 >= 200%) 且 (异常精通 < 300) 时转为直伤流规则

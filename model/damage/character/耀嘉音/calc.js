@@ -1,4 +1,4 @@
-/** @type {import('../../interface.ts').buff[]} */
+/** @type {import('#interface').buff[]} */
 export const buffs = [
   {
     name: '1影',
@@ -40,12 +40,12 @@ export const buffs = [
   }
 ]
 
-/** @type {import('../../interface.ts').skill['before']} */
+/** @type {import('#interface').skill['before']} */
 const before = ({ avatar, calc, props, skill }) => {
   if (avatar.rank >= 6) props.倍率 = calc.get_SkillMultiplier(skill.type) * 2
 }
 
-/** @type {import('../../interface.ts').skill[]} */
+/** @type {import('#interface').skill[]} */
 export const skills = [
   { name: '普攻：《随想曲》三段', type: 'AP3' },
   {
