@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { ZZZChallenge } from '../model/abyss.js';
 import { rulePrefix } from '../lib/common.js';
 import { saveAbyssData } from '../lib/db.js';
-import { isGroupRankAllowed, addUserToGroupRank } from '../lib/rank.js';
+import { isGroupRankAllowed, isUserRankAllowed, addUserToGroupRank, setUidAndQQ } from '../lib/rank.js';
 
 export class Abyss extends ZZZPlugin {
   constructor() {
@@ -43,12 +43,16 @@ export class Abyss extends ZZZPlugin {
       return this.reply('式舆防卫战数据为空');
     }
     // 持久化到文件
-    const uid = await this.getUID();
-    let userRankAllowed = 0;
+    const rank_type = 'ABYSS';
+    const uid = await this.getUID();    
+    let userRankAllowed = null;
     if (uid) {
       if (this.e?.group_id) {
         // 无论如何在当前群里面都探测到了 uid
-        await addUserToGroupRank(uid, this.e.group_id);
+        await addUserToGroupRank(rank_type, uid, this.e.group_id);
+        const qq = (this.e.at && !this.e.atBot) ? this.e.at : this.e.user_id;
+        await setUidAndQQ(this.e.group_id, uid, qq);
+        userRankAllowed = await isUserRankAllowed(rank_type, uid, this.e.group_id);
       }
 
       // 存记录的时候先不管 userRankAllowed

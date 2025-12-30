@@ -5,7 +5,7 @@ import { ZZZChallenge } from '../model/abyss.js';
 import { Deadly } from '../model/deadly.js';
 import { rulePrefix } from '../lib/common.js';
 import { getAbyssDataInGroupRank, getDeadlyDataInGroupRank } from '../lib/db.js';
-import { isUserRankAllowed, isGroupRankAllowed, getUsersInGroupRank, setUserRankAllowed } from '../lib/rank.js'
+import { isUserRankAllowed, isGroupRankAllowed, getUsersInGroupRank, setUserRankAllowed, getUid2QQsMapping, removeUidAllRecord } from '../lib/rank.js'
 
 export class Rank extends ZZZPlugin {
   constructor() {
@@ -24,7 +24,7 @@ export class Rank extends ZZZPlugin {
           fnc: 'deadlyRank',
         },
         {
-          reg: `${rulePrefix}(显示|展示|开启|打开|on|启用|启动|隐藏|取消显示|关闭|关掉|off|禁用|停止)(式舆防卫战|式舆|深渊|防卫战|防卫|危局强袭战|危局|强袭|强袭战)(群(内)?)?排名$`,
+          reg: `${rulePrefix}(显示|展示|开启|打开|on|启用|启动|隐藏|取消显示|关闭|关掉|off|禁用|停止)(式舆防卫战|式舆|深渊|防卫战|防卫|危局强袭战|危局|强袭|强袭战)?(群(内)?)?排名$`,
           fnc: 'switchRank',
         },
       ],
@@ -32,6 +32,8 @@ export class Rank extends ZZZPlugin {
     this.isGroupRankAllowed = isGroupRankAllowed;
   }
   async abyssRank() {
+    const rank_type = 'ABYSS';
+
     if (!(this.e?.group_id)) {
       return this.reply('请在群聊中使用该命令！');
     }
@@ -40,8 +42,24 @@ export class Rank extends ZZZPlugin {
       return this.reply('当前群深渊排名功能已关闭！')
     }
     // 先从当前群中筛选出已注册用户
-    const uidInGroupRank = await getUsersInGroupRank(this.e.group_id);
-    let rawData = getAbyssDataInGroupRank(uidInGroupRank);
+    const uidInGroupRank = await getUsersInGroupRank(rank_type, this.e.group_id);
+    // 加入是否在群里面的校验
+    // uid 对应的 QQ 如果有还在群里面的，则保留；
+    // 否则删除 UID 对应的记录（包括排行榜和 UID2QQS 映射）
+    const memberMap = await this.e.group?.getMemberMap() || new Map();
+    const qqInGroupSet = new Set(Array.from(memberMap.keys(), String));
+
+    const uid2qqs = await getUid2QQsMapping(this.e.group_id);
+    let uidInGroupRankFiltered = [];
+    for (const uid of uidInGroupRank) {
+      if (uid2qqs[uid].some(qq => qqInGroupSet.has(qq))) {
+        uidInGroupRankFiltered.push(uid);
+      } else {
+        await removeUidAllRecord(this.e.group_id, uid);
+      }
+    }    
+
+    let rawData = getAbyssDataInGroupRank(uidInGroupRankFiltered);
     // 筛选
     // 获取当前时间的 UNIX 时间戳（秒）
     const currentTimestamp = Math.floor(Date.now() / 1000);   
@@ -50,7 +68,7 @@ export class Rank extends ZZZPlugin {
     const filteredByUser = [];
     for (const item of rawData) {
       const gameUid = _.get(item, 'player.player.game_uid');
-      const userRankAllowed = await isUserRankAllowed(gameUid, this.e.group_id);
+      const userRankAllowed = await isUserRankAllowed(rank_type, gameUid, this.e.group_id);
       if (/^[0-9]{8}$/.test(gameUid) && userRankAllowed) {
         filteredByUser.push(item);
       }
@@ -105,6 +123,8 @@ export class Rank extends ZZZPlugin {
   }
 
   async deadlyRank() {
+    const rank_type = 'DEADLY';
+
     if (!(this.e?.group_id)) {
       return this.reply('请在群聊中使用该命令！');
     }
@@ -113,8 +133,23 @@ export class Rank extends ZZZPlugin {
       await this.reply('当前群危局强袭战排名功能已关闭！')
     }
     // 先从当前群中筛选出已注册用户
-    const uidInGroupRank = await getUsersInGroupRank(this.e.group_id);
-    let rawData = getDeadlyDataInGroupRank(uidInGroupRank);
+    const uidInGroupRank = await getUsersInGroupRank(rank_type, this.e.group_id);
+    // 加入是否在群里面的校验
+    // uid 对应的 QQ 如果有还在群里面的，则保留；
+    // 否则删除 UID 对应的记录（包括排行榜和 UID2QQS 映射）
+    const memberMap = await this.e.group?.getMemberMap() || new Map();
+    const qqInGroupSet = new Set(Array.from(memberMap.keys(), String));
+
+    const uid2qqs = await getUid2QQsMapping(this.e.group_id);
+    let uidInGroupRankFiltered = [];
+    for (const uid of uidInGroupRank) {
+      if (uid2qqs[uid].some(qq => qqInGroupSet.has(qq))) {
+        uidInGroupRankFiltered.push(uid);
+      } else {
+        await removeUidAllRecord(this.e.group_id, uid);
+      }
+    }
+    let rawData = getDeadlyDataInGroupRank(uidInGroupRankFiltered);
     // 筛选
     // 获取当前时间的 UNIX 时间戳（秒）
     const currentTimestamp = Math.floor(Date.now() / 1000);
@@ -123,7 +158,7 @@ export class Rank extends ZZZPlugin {
     const filteredByUser = [];
     for (const item of rawData) {
       const gameUid = _.get(item, 'player.player.game_uid');
-      const userRankAllowed = await isUserRankAllowed(gameUid, this.e.group_id);
+      const userRankAllowed = await isUserRankAllowed(rank_type, gameUid, this.e.group_id);
       if (/^[0-9]{8}$/.test(gameUid) && userRankAllowed) {
         filteredByUser.push(item);
       }
@@ -165,7 +200,7 @@ export class Rank extends ZZZPlugin {
       .value();
     
     if (scoredData.length === 0) {
-      return this.reply('没有危局强袭战排名，请先 %显示深渊排名，并且用 %危局 查询战绩');
+      return this.reply('没有危局强袭战排名，请先 %显示危局排名，并且用 %危局 查询战绩');
     }
     
     scoredData = _.sortBy(scoredData, 'score').reverse();  // 降序排序，分数越高排名越前
@@ -213,7 +248,20 @@ export class Rank extends ZZZPlugin {
       // 或者返回错误提示
       return this.reply('请输入"显示"或"隐藏"来设置是否显示个人的深渊排名', false, { at: true });
     }
-    await setUserRankAllowed(uid, this.e.group_id, isEnable);
+
+    // 类型判断
+    let rank_types = []
+    if (/式舆防卫战|式舆|深渊|防卫战|防卫/.test(this.e.msg)) {
+      rank_types = ['ABYSS']
+    } else if (/危局强袭战|危局|强袭|强袭战/.test(this.e.msg)) {
+      rank_types = ['DEADLY']
+    } else {
+      rank_types = ['ABYSS', 'DEADLY']
+    }
+    
+    for (const rank_type of rank_types) {
+      await setUserRankAllowed(rank_type, uid, this.e.group_id, isEnable);
+    }
     const enableString = isEnable ? '显示' : '隐藏';
     await this.e.reply(
       `绝区零 UID: ${uid}，深渊排名功能已设置为: ${enableString}`,

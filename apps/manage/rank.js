@@ -1,5 +1,4 @@
-import { removeAllAbyssData, removeAllDeadlyData } from '../../lib/db.js';
-import { setGroupRankAllowed } from '../../lib/rank.js';
+import { setGroupRankAllowed, removeGroupRank } from '../../lib/rank.js';
 
 export async function switchGroupRank() {
   if (!this.e?.isMaster) {
@@ -29,10 +28,27 @@ export async function switchGroupRank() {
 }
 
 export async function resetGroupRank() {
+  if (!(this.e?.group_id)) {
+    return this.reply('请在群聊中使用该命令！');
+  }
+
   if (this.e?.isMaster) {
-    removeAllAbyssData();
-    removeAllDeadlyData();
-    return this.reply('清除深渊排名成功！', false, { at: true, recallMsg: 100 });
+    let rank_types = []
+    let rank_type_str = ''
+    if (/式舆防卫战|式舆|深渊|防卫战|防卫/.test(this.e.msg)) {
+      rank_types = ['ABYSS']
+      rank_type_str = '式舆防卫战'
+    } else if (/危局强袭战|危局|强袭|强袭战/.test(this.e.msg)) {
+      rank_types = ['DEADLY']
+      rank_type_str = '危局强袭战'
+    } else {
+      rank_types = ['ABYSS', 'DEADLY']
+      rank_type_str = '式舆防卫战和危局强袭战'
+    }
+    for (const rank_type of rank_types) {
+      await removeGroupRank(rank_type, this.e.group_id);
+    }
+    return this.reply(`清除${rank_type_str}排名成功！`, false, { at: true, recallMsg: 100 });
   } else {
     return this.reply('仅限主人操作', false, { at: true, recallMsg: 100 });
   }
