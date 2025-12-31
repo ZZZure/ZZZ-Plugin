@@ -114,7 +114,10 @@ async function importChar(charName: string, isWatch = false) {
 	const calcFile = getFileName('calc', '.js')
 	const scoreFile = getFileName('score', '.js')
 	try {
-		const loadCharData = () => charData[id] = JSON.parse(fs.readFileSync(dataPath, 'utf8'))
+		const loadCharData = () => {
+			if (!fs.existsSync(dataPath)) return
+			charData[id] = JSON.parse(fs.readFileSync(dataPath, 'utf8'))
+		}
 		const calcFilePath = path.join(dir, calcFile)
 		const loadCalcJS = async () => {
 			if (!fs.existsSync(calcFilePath)) return
