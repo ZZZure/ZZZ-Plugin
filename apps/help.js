@@ -478,7 +478,7 @@ export class Help extends ZZZPlugin {
           ],
         },
       ];
-      await this.render('help/index.html', {
+      return await this.render('help/index.html', {
         helpData: _helpData,
       });
     }
