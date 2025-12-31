@@ -184,6 +184,46 @@ const helpData = [
     ],
   },
   {
+    title: '卡池记录',
+    icon: 'frost',
+    items: [
+      {
+        title: '复刻记录',
+        desc: '查看角色/音擎复刻记录',
+        needCK: false,
+        needSK: false,
+        commands: [
+          '五星角色复刻记录',
+          '四星音擎复刻记录',
+          '艾莲复刻记录',
+        ],
+      },
+      {
+        title: '当前卡池',
+        desc: '查看当前版本卡池信息',
+        needCK: false,
+        needSK: false,
+        commands: [
+          '卡池',
+          '本期卡池',
+          '当前卡池',
+        ],
+      },
+      {
+        title: '历史版本卡池',
+        desc: '查看指定/全部版本卡池信息',
+        needCK: false,
+        needSK: false,
+        commands: [
+          '2.5卡池',
+          '1.0上半卡池',
+          '卡池记录',
+          '卡池历史',
+        ],
+      },
+    ]
+  },
+  {
     title: '挑战提醒',
     icon: 'dungeon',
     items: [

@@ -20,7 +20,7 @@ export class PoolHistory extends ZZZPlugin {
           fnc: 'dispatchHandler'
         },
         {
-          reg: `${rulePrefix}(当前|本期|当期)卡池$`,
+          reg: `${rulePrefix}(当前|本期|当期)?卡池$`,
           fnc: 'queryCurrentPool'
         },
         {
