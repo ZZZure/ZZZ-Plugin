@@ -1,6 +1,94 @@
 .container {
   background-image: url('./images/bg2.jpg');
 }
+
+.summary-section {
+  margin: 0 1em 1em;
+  .summary-card {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.5em;
+    padding: 1em;
+    .summary-title {
+      font-size: 1.2em;
+      color: rgb(240, 145, 53);
+      margin-bottom: 0.8em;
+      font-weight: bold;
+    }
+    .summary-content {
+      display: flex;
+      justify-content: space-around;
+      .summary-item {
+        text-align: center;
+        .label {
+          font-size: 0.8em;
+          color: rgb(176, 176, 176);
+          margin-bottom: 0.3em;
+        }
+        .value {
+          font-size: 1.3em;
+          color: white;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+
+.layer-section {
+  margin: 0 1em 1.5em;
+  .layer-title {
+    font-size: 1.5em;
+    color: rgb(240, 145, 53);
+    margin-bottom: 0.8em;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 0 0.1em 0.05em rgba(0, 0, 0, 0.5);
+  }
+  .summary-card {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.5em;
+    padding: 1em;
+    margin-bottom: 1em;
+    .summary-content {
+      display: flex;
+      justify-content: space-around;
+      .summary-item {
+        text-align: center;
+        .label {
+          font-size: 0.8em;
+          color: rgb(176, 176, 176);
+          margin-bottom: 0.3em;
+        }
+        .value {
+          font-size: 1.1em;
+          color: white;
+          font-weight: bold;
+        }
+      }
+    }
+    .buff-info {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 0.5em;
+      padding: 0.8em;
+      margin-top: 0.8em;
+      .buff-label {
+        font-size: 0.9em;
+        color: rgb(240, 145, 53);
+        margin-bottom: 0.4em;
+        font-weight: bold;
+      }
+      .buff-text {
+        font-size: 0.85em;
+        color: #ddd;
+        line-height: 1.5;
+        white-space: pre-wrap;
+      }
+    }
+  }
+}
 .card {
   margin: 0 1em;
   .user-info {
@@ -13,54 +101,61 @@
     overflow: hidden;
     margin: 0 1em;
     margin-bottom: 1.5em;
-    padding-top: 5.2em;
+    padding-top: 3.2em;
     padding-left: 2em;
     padding-right: 2em;
     justify-content: space-around;
     .info {
       display: flex;
+      flex-direction: column;
       font-size: 2em;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1.1em;
       padding: 0 0.6em;
       .time {
-        color: rgb(127, 127, 127);
-      }
-      .ranks {
         display: flex;
-        gap: 0.5em;
-        .rank {
-          width: 1.5em;
-          position: relative;
-          .count {
-            position: absolute;
-            bottom: -0.3em;
-            right: -0.5em;
-            font-size: 0.6em;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 1.2em;
-            height: 1.2em;
-            background-color: rgba(0, 0, 0, 0.5);
-          }
+        justify-content: space-between;
+        width: 100%;
+        color: rgb(127, 127, 127);
+        font-size: 0.5em;
+        margin-bottom: 0.5em;
+        .start {
+          text-align: left;
+          padding-left: 0.5em;
+        }
+        .end {
+          text-align: right;
+          padding-right: 0.5em;
         }
       }
-    }
-    .cost {
-      display: flex;
-      justify-content: space-between;
-      font-size: 1.2em;
-      .item {
+      .cost {
         display: flex;
-        align-items: flex-end;
-        gap: 0.5em;
-        .label {
-          font-size: 0.68em;
-          margin-bottom: 0.1em;
-          color: rgb(176, 176, 176);
+        justify-content: space-between;
+        font-size: 0.6em;
+        width: 100%;
+        .rank {
+          width: 2em;
+          position: relative;
+          .rank-icon {
+            width: 72%;
+            height: auto;
+          }
+        }
+        .item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.2em;
+          .label {
+            font-size: 0.9em;
+            color: rgb(176, 176, 176);
+          }
+          .value {
+            font-size: 1.1em;
+            color: white;
+            font-weight: bold;
+          }
         }
       }
     }
@@ -87,6 +182,7 @@
       .content {
         z-index: 0;
         position: relative;
+        flex-grow: 1;
         &::after {
           content: attr(data-content);
           -webkit-text-stroke: 0.22em #000;
@@ -95,6 +191,15 @@
           top: 0;
           z-index: -1;
         }
+      }
+      .score {
+        font-size: 0.9em;
+        color: rgb(240, 145, 53);
+        font-weight: bold;
+      }
+      .spent {
+        color: #ddd;
+        font-size: 0.8em;
       }
       &.a,
       &.A {
@@ -107,6 +212,28 @@
       &.s,
       &.S {
         color: rgb(240, 145, 53);
+      }
+      &.SP {
+        color: rgb(255, 215, 0);
+      }
+    }
+    .buff-info {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 0.5em;
+      padding: 0.8em;
+      margin-top: 0.8em;
+      .buff-label {
+        font-size: 0.9em;
+        color: rgb(240, 145, 53);
+        margin-bottom: 0.4em;
+        font-weight: bold;
+      }
+      .buff-text {
+        font-size: 0.85em;
+        color: #ddd;
+        line-height: 1.5;
+        white-space: pre-wrap;
       }
     }
 
@@ -121,13 +248,18 @@
           padding: 0 0.5em;
         }
         .spent, .time {
-          color: #ddd;
-          font-size: 0.8em;
-          padding: 0 0.2em;
-        }
-        .spent {
-          margin-right: auto;
-        }
+        color: #ddd;
+        font-size: 0.8em;
+        padding: 0 0.2em;
+      }
+      .spent {
+        margin-right: auto;
+      }
+      .buff-title {
+        font-size: 0.75em;
+        color: rgb(240, 145, 53);
+        margin-left: 0.5em;
+      }
         .advantage {
           display: flex;
           align-items: center;
@@ -182,6 +314,11 @@
           &.rankS {
             &::after {
               background: rgb(230, 119, 51);
+            }
+          }
+          &.rankSP {
+            &::after {
+              background: rgb(255, 215, 0);
             }
           }
           &.rankB {

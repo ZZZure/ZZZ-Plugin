@@ -9,59 +9,69 @@
   {{include sys.playerInfo}}
   <div class="status">
     <div class="info">
-      <div class="time">{{abyss.begin_time}}</div>
-      <div class="ranks">
-        <div class="rank">
-          <div class="rank-icon s"></div>
-          <div class="count">{{abyss.rate_count.S}}</div>
-        </div>
-        <div class="rank">
-          <div class="rank-icon a"></div>
-          <div class="count">{{abyss.rate_count.A}}</div>
-        </div>
-        <div class="rank">
-          <div class="rank-icon b"></div>
-          <div class="count">{{abyss.rate_count.B}}</div>
-        </div>
+      <div class="time">
+        <div class="start">{{abyss.begin_time}}</div>
+        <div class="end">{{abyss.end_time}}</div>
       </div>
-      <div class="time">{{abyss.end_time}}</div>
-    </div>
-    <div class="cost">
-      <div class="item">
-        <div class="label">当期最快通关时间</div>
-        <div class="value">{{abyss.fast_layer_time_str}}</div>
-      </div>
-      <div class="item">
-        <div class="label">最高通关防线</div>
-        <div class="value">第{{abyss.max_layer}}防线</div>
+      <div class="cost">
+        <div class="item rank">
+          <div class="label">评级</div>
+          <div class="rank-icon {{abyss.brief.rating.replace('+', 'P')}}"></div>
+        </div>
+        <div class="item">
+          <div class="label">总分数</div>
+          <div class="value">{{abyss.brief.score}}</div>
+        </div>
+        <div class="item">
+          <div class="label">排名百分比</div>
+          <div class="value">{{abyss.brief.rank_percent/100}}%</div>
+        </div>
+        <div class="item">
+          <div class="label">最高通关防线</div>
+          <div class="value">第{{abyss.max_layer}}防线</div>
+        </div>
       </div>
     </div>
   </div>
 
   <% include(sys.specialTitle, {en: 'ABYSS' , cn: '式舆防卫战' }) %>
 
-    {{each abyss.all_floor_detail floor i}}
+  {{if abyss.fifth_layer_detail}}
+  <div class="layer-section">
+    <div class="layer-title">第五层</div>
+    <div class="summary-card">
+      <div class="summary-content">
+        <div class="summary-item">
+          <div class="label">评级</div>
+          <div class="value">{{abyss.fifth_layer_detail.rating}}</div>
+        </div>
+        <div class="summary-item">
+          <div class="label">分数</div>
+          <div class="value">{{abyss.fifth_layer_detail.score}}</div>
+        </div>
+        <div class="summary-item">
+          <div class="label">总耗时</div>
+          <div class="value">{{abyss.fifth_layer_detail.battle_time}}秒</div>
+        </div>
+        <div class="summary-item">
+          <div class="label">挑战时间</div>
+          <div class="value">{{abyss.fifth_layer_detail.formattedTime}}</div>
+        </div>
+      </div>
+    </div>
+    {{each abyss.fifth_layer_detail.nodes node i}}
     <div class="item-card">
-      <div class="title {{floor.rating}}">
-        <div class="rank-icon {{floor.rating}}"></div>
-        <div class="content" data-content="{{floor.zone_name}}">{{floor.zone_name}}</div>
+      <div class="title {{node.rating}}">
+        <div class="rank-icon {{node.rating.replace('+', 'P')}}"></div>
+        <div class="content" data-content="第{{i+1}}关">第{{i+1}}关</div>
+        <div class="spent">{{node.formattedTime}}</div>
+        <div class="score">{{node.score}}分</div>
       </div>
       <div class="team">
-        <div class="info">
-          <div class="label">队伍1</div>
-          <div class="spent">耗时：{{floor.node_1.formattedTime}}</div>
-          <div class="time">{{floor.formattedTime}}</div>
-          <div class="advantage">
-            <span>有利</span>
-            {{each floor.node_1.elements element i}}
-            <div class="property {{element}}"></div>
-            {{/each}}
-          </div>
-        </div>
         <div class="list">
           <% for(let i=0 ; i < 3 ; i++) { %>
-            {{if floor.node_1.avatars?.[i]}}
-            {{set char = floor.node_1.avatars[i]}}
+            {{if node.avatar_list?.[i]}}
+            {{set char = node.avatar_list[i]}}
             <div class="item char rank{{char.rarity}}">
               <div class="rank rank-icon {{char.rarity}}"></div>
               <div class="property {{char.element}}"></div>
@@ -77,14 +87,14 @@
               <div class="item char rankb"></div>
               {{/if}}
               <% } %>
-                {{if floor.node_1.buddy}}
-                <div class="item bangboo rank{{floor.node_1.buddy.rarity}}">
-                  <div class="rank rank-icon {{floor.node_1.buddy.rarity}}"></div>
+                {{if node.buddy}}
+                <div class="item bangboo rank{{node.buddy.rarity}}">
+                  <div class="rank rank-icon {{node.buddy.rarity}}"></div>
                   <div class="image">
-                    <img src="{{floor.node_1.buddy.square_icon}}" alt="">
+                    <img src="{{node.buddy.square_icon}}" alt="">
                   </div>
                   <div class="c-info">
-                    <div class="level">等级{{floor.node_1.buddy.level}}</div>
+                    <div class="level">等级{{node.buddy.level}}</div>
                   </div>
                 </div>
                 {{else}}
@@ -92,23 +102,54 @@
                   {{/if}}
         </div>
       </div>
+      {{if node.buff?.text}}
+      <div class="buff-info">
+        <div class="buff-label">{{node.buff?.title || ''}}</div>
+        <div class="buff-text"><%- node.buff.text %></div>
+      </div>
+      {{/if}}
+    </div>
+    {{/each}}
+  </div>
+  {{/if}}
 
-      <div class="team">
-        <div class="info">
-          <div class="label">队伍2</div>
-          <div class="spent">耗时：{{floor.node_2.formattedTime}}</div>
-          <div class="time">{{floor.formattedTime}}</div>
-          <div class="advantage">
-            <span>有利</span>
-            {{each floor.node_2.elements element i}}
-            <div class="property {{element}}"></div>
-            {{/each}}
-          </div>
+  {{if abyss.fourth_layer_detail}}
+  <div class="layer-section">
+    <div class="layer-title">第四层</div>
+    <div class="summary-card">
+      <div class="summary-content">
+        <div class="summary-item">
+          <div class="label">评级</div>
+          <div class="value">{{abyss.fourth_layer_detail.formattedRating}}</div>
         </div>
+        <div class="summary-item">
+          <div class="label">总耗时</div>
+          <div class="value">{{abyss.fourth_layer_detail.battle_time}}秒</div>
+        </div>
+        <div class="summary-item">
+          <div class="label">挑战时间</div>
+          <div class="value">{{abyss.fourth_layer_detail.formattedTime}}</div>
+        </div>
+      </div>
+      {{if abyss.fourth_layer_detail.buff?.text}}
+      <div class="buff-info">
+        <div class="buff-label">{{abyss.fourth_layer_detail.buff?.title || ''}}</div>
+        <div class="buff-text"><%- abyss.fourth_layer_detail.buff.text %></div>
+      </div>
+      {{/if}}
+    </div>
+    {{each abyss.fourth_layer_detail.nodes node i}}
+    <div class="item-card">
+      <div class="title {{abyss.fourth_layer_detail.rating}}">
+        <div class="rank-icon {{abyss.fourth_layer_detail.rating.replace('+', 'P')}}"></div>
+        <div class="content" data-content="第{{i+1}}关">第{{i+1}}关</div>
+        <div class="spent">{{node.formattedTime}}</div>
+      </div>
+      <div class="team">
         <div class="list">
           <% for(let i=0 ; i < 3 ; i++) { %>
-            {{if floor.node_2.avatars?.[i]}}
-            {{set char = floor.node_2.avatars[i]}}
+            {{if node.avatar_list?.[i]}}
+            {{set char = node.avatar_list[i]}}
             <div class="item char rank{{char.rarity}}">
               <div class="rank rank-icon {{char.rarity}}"></div>
               <div class="property {{char.element}}"></div>
@@ -121,17 +162,17 @@
               </div>
             </div>
             {{else}}
-              <div class="item bangboo rankb"></div>
+              <div class="item char rankb"></div>
               {{/if}}
               <% } %>
-                {{if floor.node_2.buddy}}
-                <div class="item bangboo rank{{floor.node_2.buddy.rarity}}">
-                  <div class="rank rank-icon {{floor.node_2.buddy.rarity}}"></div>
+                {{if node.buddy}}
+                <div class="item bangboo rank{{node.buddy.rarity}}">
+                  <div class="rank rank-icon {{node.buddy.rarity}}"></div>
                   <div class="image">
-                    <img src="{{floor.node_2.buddy.square_icon}}" alt="">
+                    <img src="{{node.buddy.square_icon}}" alt="">
                   </div>
                   <div class="c-info">
-                    <div class="level">等级{{floor.node_2.buddy.level}}</div>
+                    <div class="level">等级{{node.buddy.level}}</div>
                   </div>
                 </div>
                 {{else}}
@@ -141,6 +182,8 @@
       </div>
     </div>
     {{/each}}
+  </div>
+  {{/if}}
 </div>
 
 {{/block}}

@@ -6,6 +6,10 @@ import { getSquareAvatar, getSquareBangboo } from '../lib/download.js';
  * @property {number} level
  * @property {string} rarity
  * @property {number} element_type
+ * @property {number} avatar_profession
+ * @property {number} rank
+ * @property {string} role_square_url
+ * @property {number} sub_element_type
  */
 
 /**
@@ -13,6 +17,7 @@ import { getSquareAvatar, getSquareBangboo } from '../lib/download.js';
  * @property {number} id
  * @property {string} rarity
  * @property {number} level
+ * @property {string} bangboo_rectangle_url
  */
 
 /**
@@ -26,13 +31,6 @@ import { getSquareAvatar, getSquareBangboo } from '../lib/download.js';
  */
 
 /**
- * @typedef {Object} IMonsterInfo
- * @property {number} id
- * @property {string} name
- * @property {number} weak_element_type
- */
-
-/**
  * @typedef {Object} IBuff
  * @property {string} title
  * @property {string} text
@@ -40,10 +38,15 @@ import { getSquareAvatar, getSquareBangboo } from '../lib/download.js';
 
 /**
  * @typedef {Object} IChallengeNode
- * @property {IChallengeAvatar[]} avatars
+ * @property {number} layer_id
+ * @property {string} rating
+ * @property {IBuff} buffer
+ * @property {number} score
+ * @property {IChallengeAvatar[]} avatar_list
  * @property {IChallengeBangboo} buddy
- * @property {number[]} element_type_list
- * @property {IMonsterInfo} monster_info
+ * @property {number} battle_time
+ * @property {string} monster_pic
+ * @property {number} max_score
  */
 
 /**
@@ -57,36 +60,48 @@ import { getSquareAvatar, getSquareBangboo } from '../lib/download.js';
  */
 
 /**
- * @typedef {Object} IFloorDetail
- * @property {number} layer_index
+ * @typedef {Object} IBrief
+ * @property {number} cur_period_zone_layer_count
+ * @property {number} score
+ * @property {number} rank_percent
+ * @property {number} battle_time
  * @property {string} rating
- * @property {number} layer_id
- * @property {IBuff[]} buffs
- * @property {IChallengeNode} node_1
- * @property {IChallengeNode} node_2
- * @property {number} challenge_time
- * @property {string} zone_name
- * @property {IFloorChallengeTime} floor_challenge_time
+ * @property {IFloorChallengeTime|null} challenge_time
+ * @property {number} max_score
  */
 
 /**
- * @typedef {Object} IRating
- * @property {number} times
- * @property {string} rating
+ * @typedef {Object} IFifthLayerDetail
+ * @property {IChallengeNode[]} layer_challenge_info_list
  */
 
 /**
- * @typedef {Object} IZZZChallenge
- * @property {number} schedule_id
- * @property {number} begin_time
- * @property {number} end_time
- * @property {IRating[]} rating_list
- * @property {boolean} has_data
- * @property {IFloorDetail[]} all_floor_detail
- * @property {number} fast_layer_time
- * @property {number} max_layer
+ * @typedef {Object} IFourthLayerDetail
+ * @property {IBuff} buffer
+ * @property {IFloorChallengeTime} challenge_time
+ * @property {string} rating
+ * @property {IChallengeNode[]} layer_challenge_info_list
+ */
+
+/**
+ * @typedef {Object} IHadalInfoV2
+ * @property {number} zone_id
  * @property {IHadalTime} hadal_begin_time
  * @property {IHadalTime} hadal_end_time
+ * @property {boolean} pass_fifth_floor
+ * @property {IBrief} brief
+ * @property {IFifthLayerDetail|null} fitfh_layer_detail
+ * @property {IFourthLayerDetail|null} fourth_layer_detail
+ * @property {string} begin_time
+ * @property {string} end_time
+ */
+
+/**
+ * @typedef {Object} IHadalData
+ * @property {string} hadal_ver
+ * @property {IHadalInfoV2} hadal_info_v2
+ * @property {string} nick_name
+ * @property {string} icon
  */
 
 /**
@@ -97,11 +112,22 @@ export class ChallengeAvatar {
    * @param {IChallengeAvatar} data
    */
   constructor(data) {
+    /** @type {number} */
     this.id = data.id;
+    /** @type {number} */
     this.level = data.level;
+    /** @type {string} */
     this.rarity = data.rarity;
+    /** @type {number} */
     this.element_type = data.element_type;
+    /** @type {number} */
+    this.avatar_profession = data.avatar_profession;
+    /** @type {number} */
     this.rank = data.rank;
+    /** @type {string} */
+    this.role_square_url = data.role_square_url;
+    /** @type {number} */
+    this.sub_element_type = data.sub_element_type;
   }
 
   async get_assets() {
@@ -122,28 +148,19 @@ export class ChallengeBangboo {
    * @param {IChallengeBangboo} data
    */
   constructor(data) {
+    /** @type {number} */
     this.id = data.id;
+    /** @type {string} */
     this.rarity = data.rarity;
+    /** @type {number} */
     this.level = data.level;
+    /** @type {string} */
+    this.bangboo_rectangle_url = data.bangboo_rectangle_url;
   }
 
   async get_assets() {
     const result = await getSquareBangboo(this.id);
     this.square_icon = result;
-  }
-}
-
-/**
- * @class MonsterInfo.
- */
-export class MonsterInfo {
-  /**
-   * @param {IMonsterInfo} data
-   */
-  constructor(data) {
-    this.id = data.id;
-    this.name = data.name;
-    this.weak_element_type = data.weak_element_type;
   }
 }
 
@@ -156,7 +173,15 @@ export class Buff {
    */
   constructor(data) {
     this.title = data.title;
-    this.text = data.text;
+    this.text = this.formatText(data.text);
+  }
+
+  formatText(text) {
+    if (!text) return '';
+    let formatted = text.replace(/\\n/g, '\n');
+    formatted = formatted.replace(/<color=([^>]+)>/g, '<span style="color: $1">');
+    formatted = formatted.replace(/<\/color>/g, '</span>');
+    return formatted;
   }
 }
 
@@ -168,32 +193,33 @@ export class ChallengeNode {
    * @param {IChallengeNode} data
    */
   constructor(data) {
+    /** @type {number} */
+    this.layer_id = data.layer_id;
+    /** @type {string} */
+    this.rating = data.rating;
+    /** @type {IBuff} */
+    this.buff = data.buffer ? new Buff(data.buffer) : null;
+    /** @type {number} */
+    this.score = data.score || 0;
     /** @type {IChallengeAvatar[]} */
-    this.avatars = data?.avatars?.map(avatar => new ChallengeAvatar(avatar));
+    this.avatar_list = data?.avatar_list?.map(avatar => new ChallengeAvatar(avatar)) || [];
     /** @type {IChallengeBangboo} */
-    this.buddy = data?.buddy && new ChallengeBangboo(data.buddy);
-    /** @type {number[]} */
-    this.element_type_list = data.element_type_list;
-    /** @type {MonsterInfo} */
-    this.monster_info =
-      data?.monster_info && new MonsterInfo(data.monster_info);
+    this.buddy = data?.buddy ? new ChallengeBangboo(data.buddy) : null;
     /** @type {number} */
     this.battle_time = data.battle_time;
+    /** @type {string} */
+    this.monster_pic = data.monster_pic;
+    /** @type {number} */
+    this.max_score = data.max_score;
   }
 
   async get_assets() {
-    if (this.avatars) {
-      await Promise.all(this.avatars.map(avatar => avatar.get_assets()));
+    if (this.avatar_list) {
+      await Promise.all(this.avatar_list.map(avatar => avatar.get_assets()));
     }
     if (this.buddy) {
       await this.buddy.get_assets();
     }
-  }
-
-  get elements() {
-    return this.element_type_list.map(type => {
-      return element.IDToElement(type);
-    });
   }
 
   get formattedTime() {
@@ -227,129 +253,141 @@ export class FloorChallengeTime {
 
   /** @type {string} */
   get formattedTime() {
-    return `${this.year}/${this.month}/${this.day} ${this.hour}:${this.minute}:${this.second}`;
+    return `${this.year}.${String(this.month).padStart(2, '0')}.${String(
+      this.day
+    ).padStart(2, '0')} ${String(this.hour).padStart(2, '0')}:${String(
+      this.minute
+    ).padStart(2, '0')}:${String(this.second).padStart(2, '0')}`;
   }
 }
 
 /**
- * @class FloorDetail.
+ * @class FifthLayerDetail.
  */
-export class FloorDetail {
+export class FifthLayerDetail {
   /**
-   * @param {IFloorDetail} data
+   * @param {IFifthLayerDetail} data
+   * @param {IBrief} brief
    */
-  constructor(data) {
+  constructor(data, brief) {
+    /** @type {IChallengeNode[]} */
+    this.nodes = data.layer_challenge_info_list.map(node => new ChallengeNode(node));
     /** @type {number} */
-    this.layer_index = data.layer_index;
+    this.battle_time = data.layer_challenge_info_list.reduce((acc, cur) => acc + cur.battle_time, 0);
+    /** @type {number} */
+    this.score = brief.score;
+    /** @type {FloorChallengeTime} */
+    this.challenge_time = new FloorChallengeTime(brief.challenge_time);
     /** @type {string} */
-    this.rating = data.rating;
-    /** @type {number} */
-    this.layer_id = data.layer_id;
-    /** @type {IBuff[]} */
-    this.buffs = data.buffs.map(buff => new Buff(buff));
-    /** @type {IChallengeNode} */
-    this.node_1 = data?.node_1 && new ChallengeNode(data.node_1);
-    /** @type {IChallengeNode} */
-    this.node_2 = data?.node_2 && new ChallengeNode(data.node_2);
-    /** @type {number} */
-    this.challenge_time = data.challenge_time;
-    /** @type {string} */
-    this.zone_name = data.zone_name;
-    /** @type {IFloorChallengeTime} */
-    this.floor_challenge_time = new FloorChallengeTime(
-      data.floor_challenge_time
-    );
+    this.rating = brief.rating;
   }
 
   async get_assets() {
-    if (this.node_1) {
-      await this.node_1.get_assets();
-    }
-    if (this.node_2) {
-      await this.node_2.get_assets();
-    }
+    await Promise.all(this.nodes.map(node => node.get_assets()));
+  }
+
+  get formattedTime() {
+    return this.challenge_time.formattedTime;
+  }
+
+  get formattedRating() {
+    return this.nodes.map(node => node.rating.replace('+', 'P')).join(' ');
+  }
+}
+
+export class FourthLayerDetail {
+  /**
+   * @param {IFourthLayerDetail} data
+   */
+  constructor(data) {
+    /** @type {IBuff} */
+    this.buff = new Buff(data.buffer);
+    /** @type {IFloorChallengeTime} */
+    this.challenge_time = new FloorChallengeTime(data.challenge_time);
+    /** @type {string} */
+    this.rating = data.rating;
+    /** @type {IChallengeNode[]} */
+    this.nodes = data.layer_challenge_info_list.map(node => new ChallengeNode(node));
+    /** @type {number} */
+    this.battle_time = data.layer_challenge_info_list.reduce((acc, cur) => acc + cur.battle_time, 0);
+  }
+
+  async get_assets() {
+    await Promise.all(this.nodes.map(node => node.get_assets()));
   }
 
   /** @type {string} */
   get formattedTime() {
-    const time = this.floor_challenge_time;
-    return `${time.year}.${String(time.month).padStart(2, '0')}.${String(
-      time.day
-    ).padStart(2, '0')} ${String(time.hour).padStart(2, '0')}:${String(
-      time.minute
-    ).padStart(2, '0')}:${String(time.second).padStart(2, '0')}`;
+    return this.challenge_time.formattedTime;
+  }
+
+  get formattedRating() {
+    return this.rating.replace('+', 'P');
   }
 }
 
-/**
- * @class Rating.
- */
-export class Rating {
+export class Brief {
   /**
-   * @param {IRating} data
+   * @param {IBrief} data
    */
   constructor(data) {
-    this.times = data.times;
+    /** @type {number} */
+    this.max_layer = data.cur_period_zone_layer_count;
+    /** @type {number} */
+    this.score = data.score;
+    /** @type {number} */
+    this.rank_percent = data.rank_percent;
+    /** @type {number} */
+    this.battle_time = data.battle_time;
+    /** @type {string} */
     this.rating = data.rating;
+    /** @type {IFloorChallengeTime|null} */
+    this.challenge_time = data.challenge_time ? new FloorChallengeTime(data.challenge_time) : null;
+    /** @type {number} */
+    this.max_score = data.max_score;
   }
 }
+
 
 /**
  * @class ZZZChallenge.
  */
 export class ZZZChallenge {
   /**
-   * @param {IZZZChallenge} data
+   * @param {IHadalInfoV2} data
    */
   constructor(data) {
-    // 类型标注
     /** @type {number} */
-    this.schedule_id = data.schedule_id;
-    /** @type {number} */
+    this.zone_id = data.zone_id;
+    /** @type {string} */
     this._begin_time = data.begin_time;
-    /** @type {number} */
+    /** @type {string} */
     this._end_time = data.end_time;
-    /** @type {IRating[]} */
-    this.rating_list = data.rating_list.map(rating => new Rating(rating));
+    /** @type {Brief} */
+    this.brief = new Brief(data.brief);
     /** @type {boolean} */
-    this.has_data = data.has_data;
-    /** @type {IFloorDetail[]} */
-    this.all_floor_detail = data.all_floor_detail.map(
-      floorDetail => new FloorDetail(floorDetail)
-    );
+    this.pass_fifth_floor = data.pass_fifth_floor;
+    /** @type {FifthLayerDetail|null} */
+    this.fifth_layer_detail = data.fitfh_layer_detail ? new FifthLayerDetail(data.fitfh_layer_detail, data.brief) : null;
+    /** @type {FourthLayerDetail|null} */
+    this.fourth_layer_detail = data.fourth_layer_detail ? new FourthLayerDetail(data.fourth_layer_detail) : null;
     /** @type {number} */
-    this.fast_layer_time = data.fast_layer_time;
-    /** @type {number} */
-    this.max_layer = data.max_layer;
+    this.max_layer = data.brief.cur_period_zone_layer_count;
     /** @type {IHadalTime} */
     this.hadal_begin_time = data.hadal_begin_time;
     /** @type {IHadalTime} */
     this.hadal_end_time = data.hadal_end_time;
-
-    /** @type {{
-     *  S: number;
-     *  A: number;
-     *  B: number;
-     * }} */
-    this.rate_count = {
-      S: this.rating_list.find(rating => rating.rating === 'S')?.times || 0,
-      A: this.rating_list.find(rating => rating.rating === 'A')?.times || 0,
-      B: this.rating_list.find(rating => rating.rating === 'B')?.times || 0,
-    };
   }
 
   async get_assets() {
-    await Promise.all(this.all_floor_detail.map(floor => floor.get_assets()));
-  }
-
-  get fast_layer_time_str() {
-    // 将秒数转换为 xx小时xx分钟xx秒 的格式，例如：234 -> 3分钟54秒
-    const seconds = this.fast_layer_time % 60;
-    const minutes = Math.floor(this.fast_layer_time / 60) % 60;
-    const hours = Math.floor(this.fast_layer_time / 3600);
-    return `${hours ? hours + '小时' : ''}${minutes ? minutes + '分钟' : ''}${
-      seconds ? seconds + '秒' : ''
-    }`;
+    const floors = [];
+    if (this.fifth_layer_detail) {
+      floors.push(this.fifth_layer_detail);
+    }
+    if (this.fourth_layer_detail) {
+      floors.push(this.fourth_layer_detail);
+    }
+    await Promise.all(floors.map(floor => floor.get_assets()));
   }
 
   /** @type {string} */
@@ -368,5 +406,10 @@ export class ZZZChallenge {
       2,
       '0'
     )}`;
+  }
+
+  formatRating(rating) {
+    if (!rating) return '';
+    return rating.replace('+', 'P');
   }
 }

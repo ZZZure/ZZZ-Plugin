@@ -38,6 +38,10 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
+  &.sp,
+  &.SP {
+    background-image: url('../images/RANK_SP.png');
+  }
   &.s,
   &.S {
     background-image: url('../images/RANK_S.png');

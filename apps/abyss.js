@@ -31,10 +31,13 @@ export class Abyss extends ZZZPlugin {
       this.reply(e.message);
       throw e;
     });
-    if (!abyssData?.has_data) {
+    if (!abyssData?.hadal_ver == "v2") {
+      return this.reply('式舆防卫战数据不是最新版本，可能为之前的深渊');
+    }
+    if (!(abyssData?.hadal_info_v2?.fitfh_layer_detail || abyssData?.hadal_info_v2?.fourth_layer_detail)) {
       return this.reply('没有式舆防卫战数据');
     }
-    const abyss = new ZZZChallenge(abyssData);
+    const abyss = new ZZZChallenge(abyssData.hadal_info_v2);
     const timer = setTimeout(() => {
       if (this?.reply) {
         this.reply('查询成功，正在下载图片资源，请稍候。');

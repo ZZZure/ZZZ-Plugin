@@ -2,6 +2,94 @@
   background-image: url("./images/bg2.jpg");
 }
 
+.summary-section {
+  margin: 0 1em 1em;
+}
+.summary-section .summary-card {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5em;
+  padding: 1em;
+}
+.summary-section .summary-card .summary-title {
+  font-size: 1.2em;
+  color: rgb(240, 145, 53);
+  margin-bottom: 0.8em;
+  font-weight: bold;
+}
+.summary-section .summary-card .summary-content {
+  display: flex;
+  justify-content: space-around;
+}
+.summary-section .summary-card .summary-content .summary-item {
+  text-align: center;
+}
+.summary-section .summary-card .summary-content .summary-item .label {
+  font-size: 0.8em;
+  color: rgb(176, 176, 176);
+  margin-bottom: 0.3em;
+}
+.summary-section .summary-card .summary-content .summary-item .value {
+  font-size: 1.3em;
+  color: white;
+  font-weight: bold;
+}
+
+.layer-section {
+  margin: 0 1em 1.5em;
+}
+.layer-section .layer-title {
+  font-size: 1.5em;
+  color: rgb(240, 145, 53);
+  margin-bottom: 0.8em;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 0 0.1em 0.05em rgba(0, 0, 0, 0.5);
+}
+.layer-section .summary-card {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5em;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+.layer-section .summary-card .summary-content {
+  display: flex;
+  justify-content: space-around;
+}
+.layer-section .summary-card .summary-content .summary-item {
+  text-align: center;
+}
+.layer-section .summary-card .summary-content .summary-item .label {
+  font-size: 0.8em;
+  color: rgb(176, 176, 176);
+  margin-bottom: 0.3em;
+}
+.layer-section .summary-card .summary-content .summary-item .value {
+  font-size: 1.1em;
+  color: white;
+  font-weight: bold;
+}
+.layer-section .summary-card .buff-info {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5em;
+  padding: 0.8em;
+  margin-top: 0.8em;
+}
+.layer-section .summary-card .buff-info .buff-label {
+  font-size: 0.9em;
+  color: rgb(240, 145, 53);
+  margin-bottom: 0.4em;
+  font-weight: bold;
+}
+.layer-section .summary-card .buff-info .buff-text {
+  font-size: 0.85em;
+  color: #ddd;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
 .card {
   margin: 0 1em;
 }
@@ -15,13 +103,14 @@
   overflow: hidden;
   margin: 0 1em;
   margin-bottom: 1.5em;
-  padding-top: 5.2em;
+  padding-top: 3.2em;
   padding-left: 2em;
   padding-right: 2em;
   justify-content: space-around;
 }
 .card .status .info {
   display: flex;
+  flex-direction: column;
   font-size: 2em;
   justify-content: space-between;
   align-items: center;
@@ -29,43 +118,49 @@
   padding: 0 0.6em;
 }
 .card .status .info .time {
-  color: rgb(127, 127, 127);
-}
-.card .status .info .ranks {
-  display: flex;
-  gap: 0.5em;
-}
-.card .status .info .ranks .rank {
-  width: 1.5em;
-  position: relative;
-}
-.card .status .info .ranks .rank .count {
-  position: absolute;
-  bottom: -0.3em;
-  right: -0.5em;
-  font-size: 0.6em;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.2em;
-  height: 1.2em;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-.card .status .cost {
   display: flex;
   justify-content: space-between;
-  font-size: 1.2em;
+  width: 100%;
+  color: rgb(127, 127, 127);
+  font-size: 0.5em;
+  margin-bottom: 0.5em;
 }
-.card .status .cost .item {
+.card .status .info .time .start {
+  text-align: left;
+  padding-left: 0.5em;
+}
+.card .status .info .time .end {
+  text-align: right;
+  padding-right: 0.5em;
+}
+.card .status .info .cost {
   display: flex;
-  align-items: flex-end;
-  gap: 0.5em;
+  justify-content: space-between;
+  font-size: 0.6em;
+  width: 100%;
 }
-.card .status .cost .item .label {
-  font-size: 0.68em;
-  margin-bottom: 0.1em;
+.card .status .info .cost .rank {
+  width: 2em;
+  position: relative;
+}
+.card .status .info .cost .rank .rank-icon {
+  width: 72%;
+  height: auto;
+}
+.card .status .info .cost .item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2em;
+}
+.card .status .info .cost .item .label {
+  font-size: 0.9em;
   color: rgb(176, 176, 176);
+}
+.card .status .info .cost .item .value {
+  font-size: 1.1em;
+  color: white;
+  font-weight: bold;
 }
 .card .item-card {
   border-image-source: url("./images/BgFrame01.png");
@@ -91,6 +186,7 @@
 .card .item-card .title .content {
   z-index: 0;
   position: relative;
+  flex-grow: 1;
 }
 .card .item-card .title .content::after {
   content: attr(data-content);
@@ -100,6 +196,15 @@
   top: 0;
   z-index: -1;
 }
+.card .item-card .title .score {
+  font-size: 0.9em;
+  color: rgb(240, 145, 53);
+  font-weight: bold;
+}
+.card .item-card .title .spent {
+  color: #ddd;
+  font-size: 0.8em;
+}
 .card .item-card .title.a, .card .item-card .title.A {
   color: rgb(195, 56, 240);
 }
@@ -108,6 +213,28 @@
 }
 .card .item-card .title.s, .card .item-card .title.S {
   color: rgb(240, 145, 53);
+}
+.card .item-card .title.SP {
+  color: rgb(255, 215, 0);
+}
+.card .item-card .buff-info {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5em;
+  padding: 0.8em;
+  margin-top: 0.8em;
+}
+.card .item-card .buff-info .buff-label {
+  font-size: 0.9em;
+  color: rgb(240, 145, 53);
+  margin-bottom: 0.4em;
+  font-weight: bold;
+}
+.card .item-card .buff-info .buff-text {
+  font-size: 0.85em;
+  color: #ddd;
+  line-height: 1.5;
+  white-space: pre-wrap;
 }
 .card .item-card .team {
   padding: 0.5em 2em;
@@ -128,6 +255,11 @@
 }
 .card .item-card .team .info .spent {
   margin-right: auto;
+}
+.card .item-card .team .info .buff-title {
+  font-size: 0.75em;
+  color: rgb(240, 145, 53);
+  margin-left: 0.5em;
 }
 .card .item-card .team .info .advantage {
   display: flex;
@@ -183,6 +315,9 @@
 }
 .card .item-card .team .list .item.rankS::after {
   background: rgb(230, 119, 51);
+}
+.card .item-card .team .list .item.rankSP::after {
+  background: rgb(255, 215, 0);
 }
 .card .item-card .team .list .item.rankB::after {
   background: rgb(93, 183, 249);

@@ -28,6 +28,9 @@
   background-position: center;
   background-size: contain;
 }
+.rank-icon.sp, .rank-icon.SP {
+  background-image: url("../images/RANK_SP.png");
+}
 .rank-icon.s, .rank-icon.S {
   background-image: url("../images/RANK_S.png");
 }
