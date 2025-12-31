@@ -264,6 +264,8 @@ export class ZZZAvatarInfo {
     this.isNew = isNew;
     /** @type {string} 立绘链接 */
     this.role_vertical_painting_url = role_vertical_painting_url;
+    /** @type {string} 时装ID。原皮时为空 */
+    this.skin_id = this.role_vertical_painting_url?.match?.(/role_vertical_painting_\d+_(\d+).png$/)?.[1] || '';
     /** @type {number}  等级级别（取十位数字）*/
     this.level_rank = Math.floor(this.level / 10);
     const weight = Score.getFinalWeight(this);
@@ -531,8 +533,7 @@ export class ZZZAvatarInfo {
       }
     }
     if (!role_icon) {
-      const skin_id = this.role_vertical_painting_url?.match?.(/role_vertical_painting_\d+_(\d+).png$/)?.[1] || '';
-      role_icon = await getRoleImage(this.id, skin_id);
+      role_icon = await getRoleImage(this.id, this.skin_id);
     }
     /** @type {string} */
     this.role_icon = role_icon;

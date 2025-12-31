@@ -90,7 +90,7 @@ export class SingleGachaLog {
   async get_assets() {
     if (this.item_type === '音擎') {
       const result = await getWeaponImage(this.item_id);
-      logger.debug('音擎result', result);
+      // logger.debug('音擎result', result);
       this.square_icon = result;
     } else if (this.item_type === '邦布') {
       const result = await getSquareBangboo(this.item_id);

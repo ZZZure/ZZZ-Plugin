@@ -362,6 +362,20 @@ export namespace Map {
     }
   }
 
+  export interface BangbooId2Data {
+    [bangboo_id: string]: {
+      sprite_id: string
+      icon: string
+      rank: number
+      codename: string
+      EN: string
+      desc: string
+      KO: string
+      CHS: string
+      JA: string
+    }
+  }
+
 }
 
 export namespace Hakush {

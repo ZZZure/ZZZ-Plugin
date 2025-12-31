@@ -8,17 +8,24 @@ import {
   getWeaponImage,
   getHakushCharacter,
   getHakushWeapon,
+  getSquareBangboo,
 } from '../../lib/download.js';
 import { char } from '../../lib/convert.js';
 import { getAllSuitID } from '../../lib/convert/equip.js';
 import { getAllWeaponID } from '../../lib/convert/weapon.js';
+import { getAllBangbooID } from '../../lib/convert/bangboo.js'
 import * as LocalURI from '../../lib/download/const.js';
 
+let downloading = false;
 export async function downloadAll() {
   if (!this.e.isMaster) return false;
+  if (downloading) {
+    return this.reply('下载任务正在进行中，请稍后再试', false, { at: true, recallMsg: 100 });
+  }
   const charIDs = char.getAllCharactersID();
   const equipSprites = getAllSuitID();
   const weaponSprites = getAllWeaponID();
+  const bangbooIDs = getAllBangbooID();
   const result = {
     images: {
       char: {
@@ -51,6 +58,11 @@ export async function downloadAll() {
         failed: 0,
         total: weaponSprites.length,
       },
+      bangboo: {
+        success: 0,
+        failed: 0,
+        total: bangbooIDs.length,
+      },
     },
     hakush: {
       char: {
@@ -65,84 +77,57 @@ export async function downloadAll() {
       },
     },
   };
+  downloading = true;
   await this.reply(
-    '开始下载资源，注意，仅支持下载面板的角色图、武器图、套装图，以及角色卡片的角色头像图。暂不支持下载邦布头像。',
+    '开始下载全部资源：代理人、音擎、驱动盘、邦布图片等，请耐心等待……',
     false,
     { at: true, recallMsg: 100 }
   );
+  const downloadFnc = async (fnc, id, info) => {
+    try {
+      const result = await fnc(id);
+      if (result) {
+        info.success++;
+      } else {
+        info.failed++;
+      }
+    } catch (err) {
+      info.failed++;
+      logger.error(`下载资源错误：${fnc.name}(${id})`, err);
+    }
+  }
   for (const id of charIDs) {
-    try {
-      await getSquareAvatar(id);
-      result.images.charSquare.success++;
-    } catch (error) {
-      logger.error('getSquareAvatar', id, error);
-      result.images.charSquare.failed++;
-    }
-    try {
-      await getSmallSquareAvatar(id);
-      result.images.charSmallSquare.success++;
-    } catch (error) {
-      logger.error('getSmallSquareAvatar', id, error);
-      result.images.charSmallSquare.failed++;
-    }
-    try {
-      await getRoleImage(id);
-      result.images.char.success++;
-    } catch (error) {
-      logger.error('getRoleImage', id, error);
-      result.images.char.failed++;
-    }
-    try {
-      await getRoleCircleImage(id);
-      result.images.charCircle.success++;
-    } catch (error) {
-      logger.error('getRoleCircleImage', id, error);
-      result.images.charCircle.failed++;
-    }
-    try {
-      await getHakushCharacter(id);
-      result.hakush.char.success++;
-    } catch (error) {
-      logger.error('getHakushCharacter', id, error);
-      result.hakush.char.failed++;
-    }
+    await downloadFnc(getSquareAvatar, id, result.images.charSquare);
+    await downloadFnc(getSmallSquareAvatar, id, result.images.charSmallSquare);
+    await downloadFnc(getRoleImage, id, result.images.char);
+    await downloadFnc(getRoleCircleImage, id, result.images.charCircle);
+    await downloadFnc(getHakushCharacter, id, result.hakush.char);
   }
   for (const sprite of equipSprites) {
-    try {
-      await getSuitImage(sprite);
-      result.images.equip.success++;
-    } catch (error) {
-      logger.error('getSuitImage', sprite, error);
-      result.images.equip.failed++;
-    }
+    await downloadFnc(getSuitImage, sprite, result.images.equip);
   }
   for (const sprite of weaponSprites) {
-    try {
-      await getWeaponImage(sprite);
-      result.images.weapon.success++;
-    } catch (error) {
-      logger.error('getWeaponImage', sprite, error);
-      result.images.weapon.failed++;
-    }
-    try {
-      await getHakushWeapon(sprite);
-      result.hakush.equip.success++;
-    } catch (error) {
-      logger.error('getHakushWeapon', sprite, error);
-      result.hakush.equip.failed++;
-    }
+    await downloadFnc(getWeaponImage, sprite, result.images.weapon);
+    await downloadFnc(getHakushWeapon, sprite, result.hakush.equip);
   }
+  for (const id of bangbooIDs) {
+    await downloadFnc(getSquareBangboo, id, result.images.bangboo);
+  }
+  const generateMsg = (name, data) => `${name}：总数${data.total}，成功${data.success}，失败${data.failed}`;
   const messages = [
-    '资源下载完成（成功的包含先前下载的资源）',
-    `角色图需下载${charIDs.length}张，成功${result.images.char.success}张，失败${result.images.char.failed}张`,
-    `角色头像图需下载${charIDs.length}张，成功${result.images.charSquare.success}张，失败${result.images.charSquare.failed}张`,
-    `角色圆形图需下载${charIDs.length}张，成功${result.images.charCircle.success}张，失败${result.images.charCircle.failed}张`,
-    `角色头像图(练度统计)需下载${charIDs.length}张，成功${result.images.charSmallSquare.success}张，失败${result.images.charSmallSquare.failed}张`,
-    `驱动盘套装图需下载${equipSprites.length}张，成功${result.images.equip.success}张，失败${result.images.equip.failed}张`,
-    `武器图需下载${weaponSprites.length}张，成功${result.images.weapon.success}张，失败${result.images.weapon.failed}张`,
-    `Hakush角色数据需下载${charIDs.length}个，成功${result.hakush.char.success}张，失败${result.hakush.char.failed}个`,
-    `Hakush驱动盘数据需下载${equipSprites.length}个，成功${result.hakush.equip.success}张，失败${result.hakush.equip.failed}个`,
+    '资源下载完成（成功包含已下载资源）',
+    generateMsg('角色图', result.images.char),
+    generateMsg('角色头像图', result.images.charSquare),
+    generateMsg('角色圆形图', result.images.charCircle),
+    generateMsg('角色头像图(练度统计)', result.images.charSmallSquare),
+    generateMsg('驱动盘套装图', result.images.equip),
+    generateMsg('武器图', result.images.weapon),
+    generateMsg('邦布图', result.images.bangboo),
+    generateMsg('Hakush角色数据', result.hakush.char),
+    generateMsg('Hakush驱动盘数据', result.hakush.equip),
+    '注：下载失败可能源于该资源尚处于内测中'
   ];
+  downloading = false;
   await this.reply(messages.join('\n'));
 }
 export async function deleteAll() {

@@ -54,9 +54,10 @@ const request = (url, options = {}, retry = 0, timeout = 15000) => {
       return await _request(url, { signal, ...options });
     } catch (error) {
       logger.debug(
-        error.name === 'AbortError'
-          ? 'Request timed out'
-          : `Fetch error: ${error.message}`
+        `请求失败：` +
+        (error.name === 'AbortError'
+          ? 'Request timed out '
+          : `Fetch error: ${error.message} `) + url
       );
       err = error;
       return await _fetch(url, options, retryCount + 1);
