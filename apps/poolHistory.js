@@ -1,9 +1,9 @@
 import { aliasToName } from '../lib/convert/char.js'
+import common from '../../../lib/common/common.js'
 import { rulePrefix } from '../lib/common.js'
 import { ZZZPlugin } from '../lib/plugin.js'
 import settings from '../lib/settings.js'
 import fetch from 'node-fetch'
-import common from '../../../lib/common/common.js'
 
 const DATA_URL = 'https://raw.githubusercontent.com/iaoongin/GachaClock/main/spider/data/zzz/history.json'
 
