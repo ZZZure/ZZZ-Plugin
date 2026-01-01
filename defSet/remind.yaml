@@ -1,4 +1,4 @@
 enable: true # 功能总开关
 globalRemindTime: '每日20时' # 全局提醒时间，用于没有个人设置的用户
-abyssCheckLevel: 7 # 式舆防卫战提醒检查的最高关卡（用户可自行设置，最高为7）
+abyssCheckLevel: 5 # 式舆防卫战提醒检查的最高关卡（用户可自行设置，最高为6。设置为6时会进一步检查第五层S+评价）
 deadlyStars: 6 # 危局强袭战星星阈值

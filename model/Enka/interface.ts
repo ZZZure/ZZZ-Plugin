@@ -138,12 +138,10 @@ export namespace Mys {
   export interface Skill {
     level: number
     skill_type: number
-    items: Item[]
-  }
-
-  export interface Item {
-    title: string
-    text: string
+    items: {
+      title: string
+      text: string
+    }[]
   }
 
   export interface Skin {
@@ -170,6 +168,102 @@ export namespace Mys {
     talent_title: string
     talent_content: string
     profession: number
+  }
+
+  /** 式舆防卫战v2数据 */
+  export interface Abyss {
+    hadal_ver: string
+    hadal_info_v2: {
+      zone_id: number
+      hadal_begin_time: Time
+      hadal_end_time: Time
+      pass_fifth_floor: boolean
+      brief: {
+        cur_period_zone_layer_count: number
+        score: number
+        rank_percent: number
+        battle_time: number
+        rating: string
+        challenge_time: Time
+        max_score: number
+      }
+      fitfh_layer_detail?: {
+        layer_challenge_info_list: {
+          layer_id: number
+          rating: string
+          buffer: {
+            title: string
+            text: string
+          }
+          score: number
+          avatar_list: {
+            id: number
+            level: number
+            rarity: string
+            element_type: number
+            avatar_profession: number
+            rank: number
+            role_square_url: string
+            sub_element_type: number
+          }[]
+          buddy: {
+            id: number
+            rarity: string
+            level: number
+            bangboo_rectangle_url: string
+          }
+          battle_time: number
+          monster_pic: string
+          max_score: number
+        }[]
+      }
+      fourth_layer_detail?: AbyssLayerDetail
+      third_layer_detail?: AbyssLayerDetail
+      second_layer_detail?: AbyssLayerDetail
+      first_layer_detail?: AbyssLayerDetail
+      begin_time: string
+      end_time: string
+    }
+    nick_name: string
+    icon: string
+  }
+
+  export interface Time {
+    year: number
+    month: number
+    day: number
+    hour: number
+    minute: number
+    second: number
+  }
+
+  export interface AbyssLayerDetail {
+    buffer: {
+      title: string
+      text: string
+    }
+    challenge_time: Time
+    rating: string
+    layer_challenge_info_list: {
+      layer_id: number
+      battle_time: number
+      avatar_list: {
+        id: number
+        level: number
+        rarity: string
+        element_type: number
+        avatar_profession: number
+        rank: number
+        role_square_url: string
+        sub_element_type: number
+      }[]
+      buddy: {
+        id: number
+        rarity: string
+        level: number
+        bangboo_rectangle_url: string
+      }
+    }
   }
 
 }

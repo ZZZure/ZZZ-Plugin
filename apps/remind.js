@@ -5,21 +5,6 @@ import { ZZZPlugin } from '../lib/plugin.js';
 
 const USER_CONFIGS_KEY = 'ZZZ:REMIND:USER_CONFIGS';
 
-// 计算到指定等级为止的S评级数量
-function getSRankCountUpTo(allFloorDetail, maxLevel) {
-  const sSet = new Set(
-    allFloorDetail.filter(f => f.rating === 'S').map(f => f.layer_index)
-  );
-  const minLevel = Math.min(...allFloorDetail.map(f => f.layer_index));
-  let sRankCount = 0;
-  for (let level = 1; level <= maxLevel; level++) {
-    if (sSet.has(level) || level < minLevel) {
-      sRankCount++;
-    }
-  }
-  return sRankCount;
-}
-
 export class Remind extends ZZZPlugin {
   constructor() {
     super({
@@ -164,8 +149,11 @@ export class Remind extends ZZZPlugin {
       return this.reply(enable ? '提醒已开启，请勿重复操作' : '提醒功能尚未开启');
     }
     userConfig.enable = enable;
+    if (userConfig.abyssCheckLevel > 6) {
+      userConfig.abyssCheckLevel = 5;
+    }
     await this.setUserConfig(this.e.user_id, userConfig);
-    await this.reply(`提醒功能已${enable ? '开启' : '关闭'}${enable ? `，将在${userConfig.remindTime || defaultConfig.globalRemindTime}对防卫战<${userConfig.abyssCheckLevel}层或危局<${userConfig.deadlyStars}星进行提醒` : ''}`);
+    await this.reply(`提醒功能已${enable ? '开启' : '关闭'}${enable ? `，将在${userConfig.remindTime || defaultConfig.globalRemindTime}对防卫战S评级<${Math.min(5, userConfig.abyssCheckLevel)}层${userConfig.abyssCheckLevel === 6 ? '或第五层<S+评价' : ''}或危局<${userConfig.deadlyStars}星进行提醒` : ''}`);
   }
 
   async setGlobalRemindEnable() {
@@ -190,8 +178,8 @@ export class Remind extends ZZZPlugin {
     if (!match) return;
     const threshold = Number(match[1]);
 
-    if (threshold < 1 || threshold > 7) {
-      return this.reply('防卫战阈值必须在1到7之间');
+    if (threshold < 1 || threshold > 6) {
+      return this.reply('防卫战阈值必须在1到6之间');
     }
 
     if (isGlobal) {
@@ -210,7 +198,7 @@ export class Remind extends ZZZPlugin {
       await this.setUserConfig(this.e.user_id, userConfig);
     };
 
-    await this.reply(`${isGlobal ? '全局默认' : ''}式舆防卫战阈值已设为: <${threshold}层时提醒`);
+    await this.reply(`${isGlobal ? '全局默认' : ''}式舆防卫战阈值已设为: S层数<${Math.min(5, threshold)}层${threshold === 6 ? '或第五层<S+评价' : ''}时提醒`);
   }
 
   async setDeadlyThreshold() {
@@ -303,20 +291,62 @@ export class Remind extends ZZZPlugin {
     const defaultConfig = settings.getConfig('remind');
     // 检查式舆防卫战
     try {
-      const abyssRawData = await api.getFinalData('zzzChallenge', { deviceFp });
+      /** @type {import('#interface').Mys.Abyss} */
+      const abyssRawData = await api.getFinalData('zzzChallenge_v2', { deviceFp });
       const len = messages.length;
-      if (!abyssRawData || !abyssRawData.has_data) {
-        messages.push('式舆防卫战S评级: 0/7');
+      const abyssData = abyssRawData?.hadal_info_v2;
+      if (!abyssData) {
+        messages.push('式舆防卫战S评级: 0/5');
       } else {
-        const abyssCheckLevel = userConfig.abyssCheckLevel ?? defaultConfig.abyssCheckLevel;
-        const sCount = getSRankCountUpTo(abyssRawData.all_floor_detail, 7);
-        const status = sCount >= abyssCheckLevel ? ' ✓' : '';
-        if (showAll || sCount < abyssCheckLevel) {
-          messages.push(`式舆防卫战S评级: ${sCount}/7${status}`);
+        let abyssCheckLevel = userConfig.abyssCheckLevel ?? defaultConfig.abyssCheckLevel;
+        // 兼容旧版本，重置为检查每层S评价
+        if (abyssCheckLevel > 6) abyssCheckLevel = 5;
+        const fifthRating = abyssData.brief?.rating;
+        const sCount = (fifthRating?.startsWith('S') ? 1 : 0) +
+          (() => {
+            const {
+              first_layer_detail: firstLayer,
+              second_layer_detail: secondLayer,
+              third_layer_detail: thirdLayer,
+              fourth_layer_detail: fourthLayer
+            } = abyssData;
+            if (!thirdLayer && fourthLayer?.rating === 'S') {
+              return 4;
+            }
+            let extra = 0;
+            if (!secondLayer && thirdLayer?.rating === 'S') {
+              extra = 2;
+            } else if (!firstLayer && secondLayer?.rating === 'S') {
+              extra = 1;
+            }
+            const floors = ['first', 'second', 'third', 'fourth'];
+            return floors.reduce((acc, floor) => {
+              const layerDetail = abyssData[`${floor}_layer_detail`];
+              if (layerDetail?.rating === 'S') {
+                acc++;
+              }
+              return acc;
+            }, extra);
+          })();
+        if (abyssCheckLevel < 6) {
+          const status = sCount >= abyssCheckLevel ? ' ✓' : '';
+          if (showAll || sCount < abyssCheckLevel) {
+            messages.push(`式舆防卫战S评级: ${sCount}/5${status}`);
+            if (fifthRating) {
+              messages.push(`第五层评价: ${fifthRating}`);
+            }
+          }
+        } else {
+          // 检查S+评价
+          const status = fifthRating === 'S+' ? ' ✓' : '';
+          if (showAll || sCount < 5 || fifthRating !== 'S+') {
+            messages.push(`式舆防卫战S评级: ${sCount}/5${status}`);
+            messages.push(`第五层评价: ${fifthRating || '无'}${status}`);
+          }
         }
       }
-      if (len !== messages.length && abyssRawData?.hadal_begin_time && abyssRawData?.hadal_end_time) {
-        const { hadal_begin_time, hadal_end_time } = abyssRawData;
+      if (len !== messages.length && abyssData?.hadal_begin_time && abyssData?.hadal_end_time) {
+        const { hadal_begin_time, hadal_end_time } = abyssData;
         const { days, hours } = this.getTimeRemaining(hadal_end_time);
         messages.push(`统计周期：${hadal_begin_time.year}/${hadal_begin_time.month}/${hadal_begin_time.day} - ${hadal_end_time.year}/${hadal_end_time.month}/${hadal_end_time.day}`);
         messages.push(`刷新剩余: ${days}天${hours}小时`);
