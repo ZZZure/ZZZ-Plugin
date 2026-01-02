@@ -227,13 +227,16 @@ export class Bos {
   }
 
   async get_assets() {
-    const race_icon_b64 = request
-      .get(this.race_icon, {}, { responseType: 'arraybuffer' })
-      .then(response => response.arrayBuffer())
-      .then(
-        buffer =>
-          `data:image/png;base64,${Buffer.from(buffer).toString('base64')}`
-      );
+    let race_icon_b64;
+    if (this.race_icon) {
+      race_icon_b64 = request
+        .get(this.race_icon, {}, { responseType: 'arraybuffer' })
+        .then(response => response.arrayBuffer())
+        .then(
+          buffer =>
+            `data:image/png;base64,${Buffer.from(buffer).toString('base64')}`
+        );
+    }
     const icon_b64 = request
       .get(this.icon, {}, { responseType: 'arraybuffer' })
       .then(response => response.arrayBuffer())
