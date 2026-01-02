@@ -292,7 +292,7 @@ export class Remind extends ZZZPlugin {
     // 检查式舆防卫战
     try {
       /** @type {import('#interface').Mys.Abyss} */
-      const abyssRawData = await api.getFinalData('zzzChallenge_v2', { deviceFp });
+      const abyssRawData = await api.getFinalData('zzzChallenge', { deviceFp });
       const len = messages.length;
       const abyssData = abyssRawData?.hadal_info_v2;
       if (!abyssData) {
