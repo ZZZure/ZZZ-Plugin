@@ -40,7 +40,7 @@ export class Wiki extends ZZZPlugin {
       priority: _.get(settings.getConfig('priority'), 'wiki', 70),
       rule: [
         {
-          reg: `${rulePrefix}(.*)天赋(.*)$`,
+          reg: `${rulePrefix}(.*)(天赋|技能)(.*)$`,
           fnc: 'skills',
         },
         {
@@ -51,12 +51,12 @@ export class Wiki extends ZZZPlugin {
     });
   }
   async skills() {
-    const reg = new RegExp(`${rulePrefix}(.*)天赋(.*)$`);
+    const reg = new RegExp(`${rulePrefix}(.*)(?:天赋|技能)(.*)$`);
     const charname = this.e.msg.match(reg)[4];
     if (!charname) return false;
-    const levelsChar = this.e.msg.match(reg)[5];
+    const levelsChar = this.e.msg.match(reg)[5]?.trim();
     const levels = !!levelsChar
-      ? levelsChar.split('.').map(x => {
+      ? levelsChar.split(/\.|\s+/).map(x => {
           const _x = Number(x.trim());
           if (!_.isNaN(_x)) return _x;
           if (_.isString(x)) return x.toUpperCase().charCodeAt(0) - 64;
