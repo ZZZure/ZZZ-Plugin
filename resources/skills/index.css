@@ -42,9 +42,9 @@
   margin: 0.5em;
 }
 .skills .skill {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.8);
   padding: 0.5em;
-  border-radius: 0.5em;
+  border-radius: 1em;
   backdrop-filter: blur(5px);
 }
 .skills .skill .description {
