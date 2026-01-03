@@ -6,6 +6,16 @@
   margin: 0 1em;
   padding-top: 1em;
 
+  .tips {
+    font-size: 0.8em;
+    margin: 1em;
+    color: #979797;
+
+    p {
+      margin-bottom: 0.5em;
+    }
+  }
+
   .layer-container {
     background-color: rgba($color: #000, $alpha: 0.6);
     border: 0.15em solid #333;

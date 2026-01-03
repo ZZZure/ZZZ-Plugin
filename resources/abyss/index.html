@@ -8,6 +8,10 @@
 <div class="card">
   {{include sys.playerInfo}}
 
+  <div class="tips">
+    <p>统计周期 {{abyss.formatTime(abyss.hadal_begin_time)}} - {{abyss.formatTime(abyss.hadal_end_time)}}</p>
+  </div>
+
   {{set fifth = abyss.fitfh_layer_detail?.layer_challenge_info_list}}
   {{if fifth && abyss.brief}}
   <!-- 第五层 -->

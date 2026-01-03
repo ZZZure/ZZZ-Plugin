@@ -6,6 +6,14 @@
   margin: 0 1em;
   padding-top: 1em;
 }
+.card .tips {
+  font-size: 0.8em;
+  margin: 1em;
+  color: #979797;
+}
+.card .tips p {
+  margin-bottom: 0.5em;
+}
 .card .layer-container {
   background-color: rgba(0, 0, 0, 0.6);
   border: 0.15em solid #333;
