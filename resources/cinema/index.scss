@@ -3,6 +3,7 @@
   align-items: flex-start;
   padding: 1em;
   gap: 1em;
+
   .avatar {
     width: 5em;
     aspect-ratio: 1;
@@ -11,24 +12,29 @@
     background-color: white;
     border-radius: 50%;
     overflow: hidden;
+
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
   }
+
   .info {
     display: flex;
     flex-direction: column;
     gap: 0.5em;
+
     .name {
       display: flex;
       align-items: flex-end;
       gap: 0.5em;
+
       .simple {
         font-size: 1.5em;
       }
     }
+
     .description {
       font-size: 0.8em;
     }
@@ -46,6 +52,7 @@
     color: white;
     font-size: 2rem;
     margin: 0;
+    font-weight: normal;
   }
 
   .subtitle {
@@ -66,12 +73,17 @@
 
   .section-title {
     font-size: 1.5rem;
+    font-weight: normal;
     margin-bottom: 0.5rem;
   }
 
   .section-content {
     font-size: 1.3rem;
     line-height: 1.5;
+
+    strong {
+      font-weight: normal;
+    }
   }
 
   .highlight {

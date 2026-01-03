@@ -45,6 +45,7 @@
   color: white;
   font-size: 2rem;
   margin: 0;
+  font-weight: normal;
 }
 .cinema .subtitle {
   color: #6666ff;
@@ -61,11 +62,15 @@
 }
 .cinema .section-title {
   font-size: 1.5rem;
+  font-weight: normal;
   margin-bottom: 0.5rem;
 }
 .cinema .section-content {
   font-size: 1.3rem;
   line-height: 1.5;
+}
+.cinema .section-content strong {
+  font-weight: normal;
 }
 .cinema .highlight {
   color: #ffd700;
