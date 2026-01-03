@@ -5034,7 +5034,7 @@
       },
       "3112611": {
         "Name": "简·漪光夜曲",
-        "Desc": "...",
+        "Desc": "海滨漫步何须阳光作陪？于真名不详的潜伏者而言，夜色才是最忠实的伙伴。「无名氏」小姐说，夜晚的大海埋藏着不可言说的秘密——这句话是真相，还是谎言？",
         "Image": "IconRole24_01"
       }
     }
@@ -8277,6 +8277,11 @@
         "Name": "潘引壶·食引百味",
         "Desc": "云岿山现存最大款式的弟子服饰，既容师兄肚量，又容百味调料，头顶铁锅乃一种首创。但…刚炒完菜的锅放在头上，真的不烫吗？",
         "Image": "IconRole45"
+      },
+      "3114211": {
+        "Name": "AvatarSkin_PanYinhu_Name_001",
+        "Desc": "AvatarSkin_PanYinhu_Desc_001",
+        "Image": "IconRole45_01"
       }
     }
   },
@@ -8476,12 +8481,12 @@
     "Skin": {
       "3114310": {
         "Name": "叶瞬光·流云照影",
-        "Desc": "...",
+        "Desc": "云纹织锦，剑光照影，衣着亦如其人。\n到底是谁选中了这套衣裙，是自己，亦或是内心更深处的…那个她？",
         "Image": "IconRole55"
       },
       "3114311": {
         "Name": "叶瞬光·暖霞拾光",
-        "Desc": "...",
+        "Desc": "霞光温柔，微风和煦，而你们在街道上行走，期待着下一次邂逅。",
         "Image": "IconRole55_01"
       }
     }
@@ -9493,6 +9498,408 @@
         "Name": "琉音·铃语判词",
         "Desc": "电话那头传来甜美的问候，俯耳倾听，那问候化作浅浅低语，宣告判决已至——开个玩笑，只是普通的满意度回访啦。",
         "Image": "IconRole54"
+      }
+    }
+  },
+  "1491": {
+    "sprite_id": "",
+    "name": "千夏",
+    "full_name": "Partner_Name_1491",
+    "en_name": "Sunna",
+    "WeaponType": "4",
+    "ElementType": "200",
+    "Camp": "妄想天使",
+    "HitType": "打击",
+    "Rarity": "S",
+    "Attack": 108,
+    "AttackGrowth": 63517,
+    "BreakStun": 83,
+    "Defence": 48,
+    "DefenceGrowth": 65524,
+    "HpMax": 681,
+    "HpGrowth": 924944,
+    "Crit": 500,
+    "CritDamage": 5000,
+    "ElementAbnormalPower": 96,
+    "ElementMystery": 95,
+    "PenDelta": 0,
+    "PenRate": 0,
+    "SpRecover": 100,
+    "Level": {
+      "1": {
+        "HpMax": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "LevelMax": 10,
+        "LevelMin": 0,
+        "Materials": {
+          "10": 24000,
+          "100214": 4
+        }
+      },
+      "2": {
+        "HpMax": 468,
+        "Attack": 39,
+        "Defence": 33,
+        "LevelMax": 20,
+        "LevelMin": 10,
+        "Materials": {
+          "10": 56000,
+          "100224": 12
+        }
+      },
+      "3": {
+        "HpMax": 936,
+        "Attack": 77,
+        "Defence": 66,
+        "LevelMax": 30,
+        "LevelMin": 20,
+        "Materials": {
+          "10": 120000,
+          "100224": 20
+        }
+      },
+      "4": {
+        "HpMax": 1403,
+        "Attack": 116,
+        "Defence": 99,
+        "LevelMax": 40,
+        "LevelMin": 30,
+        "Materials": {
+          "10": 200000,
+          "100234": 10
+        }
+      },
+      "5": {
+        "HpMax": 1871,
+        "Attack": 154,
+        "Defence": 133,
+        "LevelMax": 50,
+        "LevelMin": 40,
+        "Materials": {
+          "10": 400000,
+          "100234": 20
+        }
+      },
+      "6": {
+        "HpMax": 2339,
+        "Attack": 193,
+        "Defence": 166,
+        "LevelMax": 60,
+        "LevelMin": 50,
+        "Materials": {}
+      }
+    },
+    "ExtraLevel": {
+      "1": {
+        "MaxLevel": 15,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 0
+          },
+          "12102": {
+            "Prop": 12102,
+            "Name": "攻击力",
+            "Format": "{0:0.#%}",
+            "Value": 600
+          }
+        }
+      },
+      "2": {
+        "MaxLevel": 25,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "12102": {
+            "Prop": 12102,
+            "Name": "攻击力",
+            "Format": "{0:0.#%}",
+            "Value": 600
+          }
+        }
+      },
+      "3": {
+        "MaxLevel": 35,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "12102": {
+            "Prop": 12102,
+            "Name": "攻击力",
+            "Format": "{0:0.#%}",
+            "Value": 1200
+          }
+        }
+      },
+      "4": {
+        "MaxLevel": 45,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "12102": {
+            "Prop": 12102,
+            "Name": "攻击力",
+            "Format": "{0:0.#%}",
+            "Value": 1200
+          }
+        }
+      },
+      "5": {
+        "MaxLevel": 55,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "12102": {
+            "Prop": 12102,
+            "Name": "攻击力",
+            "Format": "{0:0.#%}",
+            "Value": 1800
+          }
+        }
+      },
+      "6": {
+        "MaxLevel": 60,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 75
+          },
+          "12102": {
+            "Prop": 12102,
+            "Name": "攻击力",
+            "Format": "{0:0.#%}",
+            "Value": 1800
+          }
+        }
+      }
+    },
+    "Skin": {
+      "3114910": {
+        "Name": "AvatarSkin_Summer_Name_000",
+        "Desc": "AvatarSkin_Summer_Desc_000",
+        "Image": "IconRole41"
+      }
+    }
+  },
+  "1501": {
+    "sprite_id": "",
+    "name": "爱芮",
+    "full_name": "Partner_Name_1501",
+    "en_name": "Aria",
+    "WeaponType": "3",
+    "ElementType": "205",
+    "Camp": "妄想天使",
+    "HitType": "打击",
+    "Rarity": "S",
+    "Attack": 124,
+    "AttackGrowth": 74992,
+    "BreakStun": 87,
+    "Defence": 50,
+    "DefenceGrowth": 67561,
+    "HpMax": 623,
+    "HpGrowth": 845544,
+    "Crit": 500,
+    "CritDamage": 5000,
+    "ElementAbnormalPower": 140,
+    "ElementMystery": 116,
+    "PenDelta": 0,
+    "PenRate": 0,
+    "SpRecover": 120,
+    "Level": {
+      "1": {
+        "HpMax": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "LevelMax": 10,
+        "LevelMin": 0,
+        "Materials": {
+          "10": 24000,
+          "100213": 4
+        }
+      },
+      "2": {
+        "HpMax": 428,
+        "Attack": 44,
+        "Defence": 34,
+        "LevelMax": 20,
+        "LevelMin": 10,
+        "Materials": {
+          "10": 56000,
+          "100223": 12
+        }
+      },
+      "3": {
+        "HpMax": 855,
+        "Attack": 89,
+        "Defence": 68,
+        "LevelMax": 30,
+        "LevelMin": 20,
+        "Materials": {
+          "10": 120000,
+          "100223": 20
+        }
+      },
+      "4": {
+        "HpMax": 1283,
+        "Attack": 133,
+        "Defence": 103,
+        "LevelMax": 40,
+        "LevelMin": 30,
+        "Materials": {
+          "10": 200000,
+          "100233": 10
+        }
+      },
+      "5": {
+        "HpMax": 1710,
+        "Attack": 177,
+        "Defence": 137,
+        "LevelMax": 50,
+        "LevelMin": 40,
+        "Materials": {
+          "10": 400000,
+          "100233": 20
+        }
+      },
+      "6": {
+        "HpMax": 2138,
+        "Attack": 222,
+        "Defence": 171,
+        "LevelMax": 60,
+        "LevelMin": 50,
+        "Materials": {}
+      }
+    },
+    "ExtraLevel": {
+      "1": {
+        "MaxLevel": 15,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 0
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 16
+          }
+        }
+      },
+      "2": {
+        "MaxLevel": 25,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 16
+          }
+        }
+      },
+      "3": {
+        "MaxLevel": 35,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 32
+          }
+        }
+      },
+      "4": {
+        "MaxLevel": 45,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 32
+          }
+        }
+      },
+      "5": {
+        "MaxLevel": 55,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 48
+          }
+        }
+      },
+      "6": {
+        "MaxLevel": 60,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 75
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 48
+          }
+        }
+      }
+    },
+    "Skin": {
+      "3115010": {
+        "Name": "AvatarSkin_Aria_Name_000",
+        "Desc": "AvatarSkin_Aria_Desc_000",
+        "Image": "IconRole47"
       }
     }
   },

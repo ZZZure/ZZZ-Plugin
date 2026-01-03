@@ -285,6 +285,17 @@
     "CHS": "共鸣布",
     "JA": "レゾナンボンプ"
   },
+  "54010": {
+    "sprite_id": "",
+    "icon": "",
+    "rank": 4,
+    "codename": "筆頭ファン",
+    "EN": "Fan",
+    "desc": "Can be exchanged for a custom model Bangboo.\nTo be added",
+    "KO": "Bangboo_Name_54010",
+    "CHS": "粉丝",
+    "JA": "ファン"
+  },
   "54011": {
     "sprite_id": "26",
     "icon": "UI/Sprite/A1DynamicLoad/BangbooModGarage/UnPacker/BangbooRole/BangbooGarageRole26.png",
