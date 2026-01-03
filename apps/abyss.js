@@ -29,7 +29,7 @@ export class Abyss extends ZZZPlugin {
       this.reply(e.message);
       throw e;
     });
-    if (!abyssData?.hadal_ver == "v2") {
+    if (abyssData?.hadal_ver !== "v2") {
       return this.reply('式舆防卫战数据不是最新版本，可能为之前的深渊');
     }
     const data = abyssData?.hadal_info_v2;
