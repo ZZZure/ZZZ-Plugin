@@ -488,9 +488,9 @@ class Passive {
   }
 
   /** @type {PassiveLevel} */
-  getPassiveData(level = 1) {
-    this._level = level;
-    this.currentLevel = this.Level[level];
+  getPassiveData(level = 6) {
+    this._level = +level || 6;
+    this.currentLevel = Object.values(this.Level).find(v => v.Level === this._level);
     return this.currentLevel;
   }
 }

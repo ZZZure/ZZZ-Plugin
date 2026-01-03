@@ -51,7 +51,6 @@ export class Wiki extends ZZZPlugin {
     });
   }
   async skills() {
-    logger.debug('skills');
     const reg = new RegExp(`${rulePrefix}(.*)天赋(.*)$`);
     const charname = this.e.msg.match(reg)[4];
     if (!charname) return false;
