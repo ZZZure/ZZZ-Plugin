@@ -2,6 +2,20 @@
   background-image: url("./images/bg.png");
 }
 
+.rating-icon.S,
+.rating-icon.SP {
+  filter: drop-shadow(0 0 0.2em rgba(167, 193, 2, 0.8)) brightness(1.1);
+}
+
+.rating-icon.A,
+.rating-icon.AP {
+  filter: drop-shadow(0 0 0.2em rgba(201, 0, 201, 0.8)) brightness(1.1);
+}
+
+.rating-icon.B {
+  filter: drop-shadow(0 0 0.2em rgba(0, 68, 209, 0.8)) brightness(1.1);
+}
+
 .card {
   margin: 0 1em;
   padding-top: 1em;
@@ -47,8 +61,10 @@
 .card .layer-header .header-top .title-section .total-score-section .total-score {
   color: #e6e6e6;
   font-size: 2.5em;
+  text-shadow: 3px 4px #383434;
 }
 .card .layer-header .header-top .title-section .total-score-section .max-score-icon {
+  filter: drop-shadow(0 0 0.1em rgba(197, 251, 255, 0.6)) brightness(1.1);
   width: 9.4em;
   height: 3.8em;
 }
@@ -195,6 +211,7 @@
 }
 .card .content .value .val {
   background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.4) 100%);
+  filter: drop-shadow(2px 4px 6px black);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -225,6 +242,7 @@
   position: relative;
   border-radius: 0.5em;
   box-shadow: 0 0 0 0.12em black, 0 0 0 0.24em #333534;
+  filter: drop-shadow(4px 6px 8px black);
 }
 .card .content .list .item > * {
   position: inherit;

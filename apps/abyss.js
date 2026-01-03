@@ -1,7 +1,6 @@
 import { rulePrefix } from '../lib/common.js';
 import { ZZZPlugin } from '../lib/plugin.js';
 import settings from '../lib/settings.js';
-import _ from 'lodash';
 
 export class Abyss extends ZZZPlugin {
   constructor() {
@@ -9,7 +8,7 @@ export class Abyss extends ZZZPlugin {
       name: '[ZZZ-Plugin]abyss',
       dsc: 'zzz式舆防卫战',
       event: 'message',
-      priority: _.get(settings.getConfig('priority'), 'abyss', 70),
+      priority: settings.getConfig('priority')?.abyss ?? 70,
       rule: [
         {
           reg: `${rulePrefix}(上期|往期)?(式舆防卫战|式舆|深渊|防卫战|防卫)$`,
