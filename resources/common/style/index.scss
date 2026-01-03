@@ -50,6 +50,71 @@
   &.B {
     background-image: url('../images/RANK_B.png');
   }
+
+  @for $i from 1 through 5 {
+    &.bg#{$i} {
+      background-image: url('../images/rank_bg/#{$i}.png');
+    }
+  }
+}
+
+.rating-icon {
+  aspect-ratio: 1;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  &.sp,
+  &.SP {
+    background-image: url('../images/rating/SP.png');
+  }
+  &.s,
+  &.S {
+    background-image: url('../images/rating/S.png');
+  }
+  &.s-corner,
+  &.S-corner {
+    background-image: url('../images/rating/S-corner.png');
+  }
+  &.a,
+  &.A {
+    background-image: url('../images/rating/A.png');
+  }
+  &.a-corner,
+  &.A-corner {
+    background-image: url('../images/rating/A-corner.png');
+  }
+  &.b,
+  &.B {
+    background-image: url('../images/rating/B.png');
+  }
+  &.b-corner,
+  &.B-corner {
+    background-image: url('../images/rating/B-corner.png');
+  }
+}
+
+.team-icon {
+  aspect-ratio: 1;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  @for $i from 1 through 3 {
+    &.team0#{$i} {
+      background-image: url('../images/team/0#{$i}.png');
+    }
+  }
+}
+
+.max-score-icon {
+  aspect-ratio: 1;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  @each $i in (50000,65000,149500,150000,182000,195000,663000) {
+    &.score#{$i} {
+      background-image: url('../images/max_score/#{$i}.png');
+    }
+  }
 }
 
 .rarity-icon {

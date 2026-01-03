@@ -37,6 +37,93 @@
 .rank-icon.b, .rank-icon.B {
   background-image: url("../images/RANK_B.png");
 }
+.rank-icon.bg1 {
+  background-image: url("../images/rank_bg/1.png");
+}
+.rank-icon.bg2 {
+  background-image: url("../images/rank_bg/2.png");
+}
+.rank-icon.bg3 {
+  background-image: url("../images/rank_bg/3.png");
+}
+.rank-icon.bg4 {
+  background-image: url("../images/rank_bg/4.png");
+}
+.rank-icon.bg5 {
+  background-image: url("../images/rank_bg/5.png");
+}
+
+.rating-icon {
+  aspect-ratio: 1;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+.rating-icon.sp, .rating-icon.SP {
+  background-image: url("../images/rating/SP.png");
+}
+.rating-icon.s, .rating-icon.S {
+  background-image: url("../images/rating/S.png");
+}
+.rating-icon.s-corner, .rating-icon.S-corner {
+  background-image: url("../images/rating/S-corner.png");
+}
+.rating-icon.a, .rating-icon.A {
+  background-image: url("../images/rating/A.png");
+}
+.rating-icon.a-corner, .rating-icon.A-corner {
+  background-image: url("../images/rating/A-corner.png");
+}
+.rating-icon.b, .rating-icon.B {
+  background-image: url("../images/rating/B.png");
+}
+.rating-icon.b-corner, .rating-icon.B-corner {
+  background-image: url("../images/rating/B-corner.png");
+}
+
+.team-icon {
+  aspect-ratio: 1;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+.team-icon.team01 {
+  background-image: url("../images/team/01.png");
+}
+.team-icon.team02 {
+  background-image: url("../images/team/02.png");
+}
+.team-icon.team03 {
+  background-image: url("../images/team/03.png");
+}
+
+.max-score-icon {
+  aspect-ratio: 1;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+.max-score-icon.score50000 {
+  background-image: url("../images/max_score/50000.png");
+}
+.max-score-icon.score65000 {
+  background-image: url("../images/max_score/65000.png");
+}
+.max-score-icon.score149500 {
+  background-image: url("../images/max_score/149500.png");
+}
+.max-score-icon.score150000 {
+  background-image: url("../images/max_score/150000.png");
+}
+.max-score-icon.score182000 {
+  background-image: url("../images/max_score/182000.png");
+}
+.max-score-icon.score195000 {
+  background-image: url("../images/max_score/195000.png");
+}
+.max-score-icon.score663000 {
+  background-image: url("../images/max_score/663000.png");
+}
 
 .rarity-icon {
   aspect-ratio: 1;
