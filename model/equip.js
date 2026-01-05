@@ -1,7 +1,7 @@
 import { property } from '../lib/convert.js';
 import { getSuitImage, getWeaponImage } from '../lib/download.js';
 import { getEquipPropertyEnhanceCount } from '../lib/score.js';
-import Score from './damage/Score.js';
+import Score from './score/Score.js';
 
 /**
  * @class

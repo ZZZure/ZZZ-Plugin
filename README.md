@@ -45,7 +45,9 @@ git clone --depth=1 https://gitee.com/bietiaop/ZZZ-Plugin.git ./plugins/ZZZ-Plug
 
 ## 自定义评分权重、伤害计算
 
-**自定义评分权重**和**自定义伤害计算**请查看[此教程](./model/damage/README.md)
+**自定义评分权重**请查看[此教程](./model/score/README.md)
+
+**自定义伤害计算**请查看[此教程](./model/damage/README.md)
 
 ## 攻略、图鉴
 
@@ -59,6 +61,8 @@ git clone --depth=1 https://gitee.com/bietiaop/ZZZ-Plugin.git ./plugins/ZZZ-Plug
   Mora-Plugin是一个Yunzai-Bot的插件 仅用于自我学习其他优秀插件
 
 ## 自定义面板图
+
+> 注意：未自定义角色面板图时，若穿戴角色时装，立绘会自动显示为时装立绘。自定义面板图后该功能失效
 
 将你下载的面板图放在`zzz插件目录/resources/images/panel/[角色名称]/`文件夹下。若文件夹不存在请自行创建。
 

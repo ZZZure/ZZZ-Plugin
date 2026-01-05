@@ -1,11 +1,11 @@
 import type { ZZZAvatarInfo } from '../avatar.js'
 import type { Equip } from '../equip.js'
 import { baseValueData, formatScoreWeight } from '../../lib/score.js'
-import { rarityEnum, professionEnum } from './BuffManager.js'
+import { rarityEnum, professionEnum } from '../damage/BuffManager.js'
 import { idToName } from '../../lib/convert/property.js'
 import { aliasToID } from '../../lib/convert/char.js'
 import { getMapData } from '../../utils/file.js'
-import { scoreFnc } from './avatar.js'
+import { scoreFnc } from '../damage/avatar.js'
 
 type Weight = { [propID: string]: number }
 
@@ -41,12 +41,12 @@ export default class Score {
     this.userMainStat = this.equip.main_properties[0].property_id
   }
 
-  /** 等级倍率 */
+  /** 等级系数 */
   get_level_multiplier() {
     return (0.25 + +this.equip.level * 0.05) || 1
   }
 
-  /** 品质倍率 */
+  /** 品质系数 */
   get_rarity_multiplier() {
     switch (rarityEnum[this.equip.rarity]) {
       case rarityEnum.S:
@@ -92,27 +92,29 @@ export default class Score {
   /** 计算驱动盘得分 */
   get_score() {
     const rarity_multiplier = this.get_rarity_multiplier()
+    const level_multiplier = this.get_level_multiplier()
     const actual_count = this.get_actual_count()
-    if (actual_count === 0 && this.partition <= 3) {
-      // 1…1个有效副词条都没有吗？真是拿你没办法呢~给点主词条的分吧~❤️杂鱼~❤️杂鱼~❤️
-      return 12 * this.get_level_multiplier() * rarity_multiplier
-    }
     const max_count = this.get_max_count()
     if (max_count === 0) return 0
     // 123号位
     if (this.partition <= 3) {
-      const score = actual_count / max_count * rarity_multiplier * 55
-      logger.debug(`[${this.partition}号位] ${logger.magenta(`${actual_count} / ${max_count} * ${rarity_multiplier} * 55 = ${score}`)}`)
-      return score
+      const min_score = 12 * level_multiplier * rarity_multiplier
+      if (actual_count === 0) {
+        // 1…1个有效副词条都没有吗？真是拿你没办法呢~给点主词条的分吧~❤️杂鱼~❤️杂鱼~❤️
+        return min_score
+      }
+      const score = actual_count / max_count * level_multiplier * rarity_multiplier * 55
+      logger.debug(`[${this.partition}号位] ${logger.magenta(`${actual_count} / ${max_count} * ${level_multiplier} * ${rarity_multiplier} * 55 = ${score}`)}`)
+      return Math.max(score, min_score)
     }
     // 456号位
     const mainMaxStat = mainStats[this.partition]
       .filter(p => this.weight[p])
       .sort((a, b) => this.weight[b] - this.weight[a])[0]
-    const mainScore = (mainMaxStat ? 12 * (this.weight[this.userMainStat] || 0) / this.weight[mainMaxStat] : 12) * this.get_level_multiplier()
+    const mainScore = mainMaxStat ? 12 * (this.weight[this.userMainStat] || 0) / this.weight[mainMaxStat] : 12
     const subScore = actual_count / max_count * 43
-    const score = (mainScore + subScore) * rarity_multiplier
-    logger.debug(`[${this.partition}号位] ${logger.magenta(`(${mainScore} + ${subScore}) * ${rarity_multiplier} = ${score}`)}`)
+    const score = (mainScore + subScore) * level_multiplier * rarity_multiplier
+    logger.debug(`[${this.partition}号位] ${logger.magenta(`(${mainScore} + ${subScore}) * ${level_multiplier} * ${rarity_multiplier} = ${score}`)}`)
     return score
   }
 
@@ -205,7 +207,7 @@ export default class Score {
 
 }
 
-/** 预定义权重规则 */
+/** 预设权重规则 */
 const predefinedWeights: Record<string, {
   rule: (avatar: ZZZAvatarInfo) => boolean,
   value: Record<string, number>

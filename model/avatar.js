@@ -10,7 +10,7 @@ import { avatar_calc } from './damage/avatar.js';
 import { baseValueData } from '../lib/score.js';
 import { Equip, Weapon } from './equip.js';
 import { Property } from './property.js';
-import Score from './damage/Score.js'
+import Score from './score/Score.js'
 import { Skill } from './skill.js';
 import path from 'path';
 import _ from 'lodash';
