@@ -1,13 +1,16 @@
 {
   "name": "zzz-plugin",
   "type": "module",
-  "version": "0.0.1",
-  "description": "",
+  "version": "2.0.0",
+  "description": "绝区零云崽插件",
   "main": "index.js",
   "keywords": [],
   "author": "ZZZure",
-  "license": "ISC",
+  "scripts": {
+    "build": "tsc",
+    "watch": "nodemon --exec tsc"
+  },
   "imports": {
-    "#interface": "./model/damage/interface.ts"
+    "#interface": "./src/model/damage/interface.ts"
   }
 }
