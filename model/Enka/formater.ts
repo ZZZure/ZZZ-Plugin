@@ -542,7 +542,7 @@ export function parseInfo(enkaAvatar: Enka.Avatar) {
   info.sub_element_type = ({
     1091: 1, // 星见雅
     1371: 2, // 仪玄
-    1431: 3, // 叶瞬光
+    1431: 4, // 叶瞬光
   })[info.id] || 0
   info.group_icon_path = ''
   info.hollow_icon_path = ''

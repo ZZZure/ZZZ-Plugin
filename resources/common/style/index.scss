@@ -25,6 +25,7 @@
   font-family: 'tttgbnumber', 'HYWenHei-55W', system-ui, -apple-system,
     BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
     'Open Sans', 'Helvetica Neue', sans-serif;
+
   strong,
   b {
     font-family: 'zzz', 'tttgbnumber', 'HYWenHei-55W', system-ui, -apple-system,
@@ -38,14 +39,17 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
+
   &.s,
   &.S {
     background-image: url('../images/RANK_S.png');
   }
+
   &.a,
   &.A {
     background-image: url('../images/RANK_A.png');
   }
+
   &.b,
   &.B {
     background-image: url('../images/RANK_B.png');
@@ -63,30 +67,37 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
+
   &.sp,
   &.SP {
     background-image: url('../images/rating/SP.png');
   }
+
   &.s,
   &.S {
     background-image: url('../images/rating/S.png');
   }
+
   &.s-corner,
   &.S-corner {
     background-image: url('../images/rating/S-corner.png');
   }
+
   &.a,
   &.A {
     background-image: url('../images/rating/A.png');
   }
+
   &.a-corner,
   &.A-corner {
     background-image: url('../images/rating/A-corner.png');
   }
+
   &.b,
   &.B {
     background-image: url('../images/rating/B.png');
   }
+
   &.b-corner,
   &.B-corner {
     background-image: url('../images/rating/B-corner.png');
@@ -98,6 +109,7 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
+
   @for $i from 1 through 3 {
     &.team0#{$i} {
       background-image: url('../images/team/0#{$i}.png');
@@ -110,7 +122,8 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  @each $i in (50000,65000,149500,150000,182000,195000,663000) {
+
+  @each $i in (50000, 65000, 149500, 150000, 182000, 195000, 663000) {
     &.score#{$i} {
       background-image: url('../images/max_score/#{$i}.png');
     }
@@ -122,22 +135,27 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
+
   &.a,
   &.A {
     background-image: url('../images/Rarity_A.png');
   }
+
   &.b,
   &.B {
     background-image: url('../images/Rarity_B.png');
   }
+
   &.c,
   &.C {
     background-image: url('../images/Rarity_C.png');
   }
+
   &.s,
   &.S {
     background-image: url('../images/Rarity_S.png');
   }
+
   &.x,
   &.X {
     background-image: url('../images/Rarity_X.png');
@@ -149,29 +167,37 @@
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+
   &.fire {
     background-image: url('../images/IconFire.png');
   }
+
   &.ice {
     background-image: url('../images/IconIce.png');
   }
+
   &.physdmg {
     background-image: url('../images/IconPhysDmg.png');
   }
+
   &.thunder {
     background-image: url('../images/IconThunder.png');
   }
+
   &.dungeon {
     background-image: url('../images/IconDungeonBuffEther.png');
   }
+
   &.frost {
     background-image: url('../images/IconFrost.png');
   }
+
   &.auricInk {
     background-image: url('../images/IconAuricInk.png');
   }
-  &.rimeEdge {
-    background-image: url('../images/IconRimeEdge.png');
+
+  &.honedEdge {
+    background-image: url('../images/IconHonedEdge.png');
   }
 }
 
@@ -180,60 +206,79 @@
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+
   &.attack {
     background-image: url('../images/property/IconAttack.png');
   }
+
   &.breakstun {
     background-image: url('../images/property/IconBreakStun.png');
   }
+
   &.crit {
     background-image: url('../images/property/IconCrit.png');
   }
+
   &.critdam {
     background-image: url('../images/property/IconCritDam.png');
   }
+
   &.def {
     background-image: url('../images/property/IconDef.png');
   }
+
   &.dungeonbuffether {
     background-image: url('../images/property/IconDungeonBuffEther.png');
   }
+
   &.elementabnormalpower {
     background-image: url('../images/property/IconElementAbnormalPower.png');
   }
+
   &.elementmystery {
     background-image: url('../images/property/IconElementMystery.png');
   }
+
   &.fire {
     background-image: url('../images/property/IconFire.png');
   }
+
   &.hpmax {
     background-image: url('../images/property/IconHpMax.png');
   }
+
   &.ice {
     background-image: url('../images/property/IconIce.png');
   }
+
   &.penratio {
     background-image: url('../images/property/IconPenRatio.png');
   }
+
   &.penvalue {
     background-image: url('../images/property/IconPenValue.png');
   }
+
   &.physdmg {
     background-image: url('../images/property/IconPhysDmg.png');
   }
+
   &.spgetratio {
     background-image: url('../images/property/IconSpGetRatio.png');
   }
+
   &.spmax {
     background-image: url('../images/property/IconSpMax.png');
   }
+
   &.sprecover {
     background-image: url('../images/property/IconSpRecover.png');
   }
+
   &.thunder {
     background-image: url('../images/property/IconThunder.png');
   }
+
   &.sheerforce {
     background-image: url('../images/property/IconSheerForce.png');
   }
@@ -244,18 +289,23 @@
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+
   &.anomaly {
     background-image: url('../images/prop/IconAnomaly.png');
   }
+
   &.attack {
     background-image: url('../images/prop/IconAttack.png');
   }
+
   &.defense {
     background-image: url('../images/prop/IconDefence.png');
   }
+
   &.stun {
     background-image: url('../images/prop/IconStun.png');
   }
+
   &.support {
     background-image: url('../images/prop/IconSupport.png');
   }
@@ -266,33 +316,39 @@
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+
   &.assist,
   &.Switch,
   &.switch {
     background-image: url('../images/skills/assist.webp');
   }
+
   &.basic,
   &.Normal,
   &.normal {
     background-image: url('../images/skills/basic.webp');
   }
+
   &.chain,
   &.Ultimate,
   &.UltimateReady,
   &.ultimateready {
     background-image: url('../images/skills/chain.webp');
   }
+
   &.core,
   &.Core,
   &.CoreSkill,
   &.coreskill {
     background-image: url('../images/skills/core.webp');
   }
+
   &.dodge,
   &.Evade,
   &.evade {
     background-image: url('../images/skills/dodge.webp');
   }
+
   &.special,
   &.Special,
   &.SpecialReady,
@@ -311,6 +367,7 @@
   padding: 0 2.4em;
   position: relative;
   margin: 0.5em 0;
+
   .parallelograms {
     $pwidth: 0.7em;
     display: flex;
@@ -319,25 +376,23 @@
     position: inherit;
     padding-bottom: 0.4em;
     z-index: 1;
+
     span {
       width: 1.3em;
       height: 80%;
       background-color: rgb(246, 202, 69);
       margin-right: -0.2em;
-      -webkit-clip-path: polygon(
-        $pwidth 0%,
-        100% 0%,
-        calc(100% - $pwidth) 100%,
-        0% 100%
-      );
-      clip-path: polygon(
-        $pwidth 0%,
-        100% 0%,
-        calc(100% - $pwidth) 100%,
-        0% 100%
-      );
+      -webkit-clip-path: polygon($pwidth 0%,
+          100% 0%,
+          calc(100% - $pwidth) 100%,
+          0% 100%);
+      clip-path: polygon($pwidth 0%,
+          100% 0%,
+          calc(100% - $pwidth) 100%,
+          0% 100%);
     }
   }
+
   .bg-content {
     position: absolute;
     bottom: -0.1em;
@@ -348,6 +403,7 @@
     width: 100%;
     text-align: center;
   }
+
   .content {
     flex-grow: 1;
     flex-shrink: 1;
