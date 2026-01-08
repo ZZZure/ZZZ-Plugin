@@ -3,7 +3,7 @@
 }
 
 body {
-  width: 1800px;
+  width: 2000px;
 }
 
 .card {
@@ -17,6 +17,8 @@ body {
       .result {
         display: flex;
         padding: 0 1em;
+        justify-content: space-between;
+        width: 100%;
         .rank {
           width: 70px;
           height: 70px;
@@ -24,6 +26,9 @@ body {
             width: 100%;
             height: 100%;
           }
+        }
+        .value .label, .rank .label {
+          color: white;
         }
       }
     }
@@ -142,21 +147,23 @@ body {
       .team {
         flex: 1;
         .info {
-          display: flex;
-          background-color: rgba(0, 0, 0, 0.2);
-          align-items: center;
-          margin-bottom: 0.5em;
-          .label {
-            padding: 0 0.5em;
-          }
-          .spent, .time {
-            color: #ddd;
-            font-size: 0.8em;
-            padding: 0 0.2em;
-          }
-          .spent {
-            margin-right: auto;
-          }
+            display: flex;
+            background-color: rgba(0, 0, 0, 0.2);
+            align-items: center;
+            margin-bottom: 0.5em;
+            .label {
+              padding: 0 0.5em;
+            }
+            .spent, .time {
+              color: #ddd;
+              font-size: 0.8em;
+              padding: 0 0.2em;
+            }
+            .star {
+              color: white;
+              font-size: 0.8em;
+              padding: 0 0.2em;
+            }
           .advantage {
             display: flex;
             align-items: center;
@@ -282,6 +289,31 @@ body {
             }
           }
         }
+      }
+    }
+  }
+
+  .notes-container {
+    padding: 0.5em 1em;
+    border-image-source: url('./images/BgFrame01.png');
+    border-image-slice: 200 100 70 280 fill;
+    border-image-width: 2em 1em 0.7em 2.8em;
+    border-image-outset: 0em 0em 0em 0em;
+    border-image-repeat: stretch stretch;
+    // padding: 0.8em 0.5em;
+    margin-bottom: 1em;
+    display: flex;
+    .notes {
+      margin: 0 2em;
+      
+      li {
+        margin: 0.3em 0;
+        color: #979797;
+      }
+      
+      .command {
+        color: rgb(255, 215, 0);
+        padding: 0 0.3em;
       }
     }
   }

@@ -3,7 +3,7 @@
 }
 
 body {
-  width: 1800px;
+  width: 2000px;
 }
 
 .card {
@@ -20,6 +20,8 @@ body {
 .card .record .user-info .result {
   display: flex;
   padding: 0 1em;
+  justify-content: space-between;
+  width: 100%;
 }
 .card .record .user-info .result .rank {
   width: 70px;
@@ -28,6 +30,9 @@ body {
 .card .record .user-info .result .rank .rank-icon {
   width: 100%;
   height: 100%;
+}
+.card .record .user-info .result .value .label, .card .record .user-info .result .rank .label {
+  color: white;
 }
 .card .record .status {
   background: url("./images/status.png") no-repeat center center;
@@ -153,8 +158,10 @@ body {
   font-size: 0.8em;
   padding: 0 0.2em;
 }
-.card .record .item-card .team .info .spent {
-  margin-right: auto;
+.card .record .item-card .team .info .star {
+  color: white;
+  font-size: 0.8em;
+  padding: 0 0.2em;
 }
 .card .record .item-card .team .info .advantage {
   display: flex;
@@ -274,6 +281,27 @@ body {
   border: solid 0.1em #000;
   color: white;
   z-index: 2;
+}
+.card .notes-container {
+  padding: 0.5em 1em;
+  border-image-source: url("./images/BgFrame01.png");
+  border-image-slice: 200 100 70 280 fill;
+  border-image-width: 2em 1em 0.7em 2.8em;
+  border-image-outset: 0em 0em 0em 0em;
+  border-image-repeat: stretch stretch;
+  margin-bottom: 1em;
+  display: flex;
+}
+.card .notes-container .notes {
+  margin: 0 2em;
+}
+.card .notes-container .notes li {
+  margin: 0.3em 0;
+  color: #979797;
+}
+.card .notes-container .notes .command {
+  color: rgb(255, 215, 0);
+  padding: 0 0.3em;
 }
 
 /*# sourceMappingURL=index.css.map */

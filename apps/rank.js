@@ -1,7 +1,6 @@
 import { ZZZPlugin } from '../lib/plugin.js';
 import settings from '../lib/settings.js';
 import _ from 'lodash';
-import { ZZZChallenge } from '../model/abyss.js';
 import { Deadly } from '../model/deadly.js';
 import { rulePrefix } from '../lib/common.js';
 import { getAbyssDataInGroupRank, getDeadlyDataInGroupRank } from '../lib/db.js';
@@ -75,23 +74,20 @@ export class Rank extends ZZZPlugin {
     }
     
     let scoredData = _.chain(filteredByUser)
+      .filter(item => 
+        _.get(item, 'result.hadal_ver') === 'v2'
+      )
       .filter(item => {
-        const beginTime = _.get(item, 'result.begin_time');
-        const endTime = _.get(item, 'result.end_time');
+        const beginTime = _.get(item, 'result.hadal_info_v2.begin_time');
+        const endTime = _.get(item, 'result.hadal_info_v2.end_time');
         return currentTimestamp >= beginTime && currentTimestamp <= endTime;
       })
-      .filter(item => _.get(item, 'result.has_data') === true)
-      .map(item => {
-        const detail = _.get(item, 'result.all_floor_detail[0]', {});
-        const node1Time = _.get(detail, 'node_1.battle_time', 6000);
-        const node2Time = _.get(detail, 'node_2.battle_time', 6000);
-        const layerIndex = _.get(detail, 'layer_index', 0);
-        
-        const score = -100000 * layerIndex + node1Time + node2Time;
+      .map(item => {        
+        const score = _.get(item, 'result.hadal_info_v2.brief.score', 0);
         
         return {
           ...item,
-          result: new ZZZChallenge(item.result),
+          result: item.result,
           score: score
         };
       })
@@ -101,21 +97,11 @@ export class Rank extends ZZZPlugin {
       return this.reply('没有式舆防卫战排名，请先 %显示深渊排名，并且用 %深渊 查询战绩');
     }
 
-    scoredData = _.sortBy(scoredData, 'score');  // 默认升序
+    scoredData = _.sortBy(scoredData, 'score').reverse();
     // 读取配置中的最大显示数量
     const maxDisplay = _.get(settings.getConfig('rank'), 'max_display', 15);
     // 取前maxDisplay个数据
     scoredData = scoredData.slice(0, maxDisplay);
-    const timer = setTimeout(() => {
-      if (this?.reply) {
-        this.reply('查询成功，正在下载图片资源，请稍候。');
-      }
-    }, 5000);
-    await Promise.all(_.map(scoredData, async (item) => {
-        await item.result.get_assets();
-    }));
-    // 清除定时器
-    clearTimeout(timer);
     const finalData = {
       scoredData
     }
