@@ -1,5 +1,5 @@
+import type { ZZZAvatarInfo } from '#interface'
 import type { skill } from './Calculator.js'
-import type { ZZZAvatarInfo } from '../avatar.js'
 import { aliasToID } from '../../lib/convert/char.js'
 import { buff, BuffManager } from './BuffManager.js'
 import { elementEnum } from './BuffManager.js'
@@ -235,6 +235,7 @@ export function weapon_buff(weapon: ZZZAvatarInfo['weapon'], buffM: BuffManager)
 
 /** 套装加成 */
 export function set_buff(equips: ZZZAvatarInfo['equip'], buffM: BuffManager) {
+	if (!equips || equips.length === 0) return
 	buffM.default({ name: '', source: '套装' })
 	const setCount: { [name: string]: number } = {}
 	for (const equip of equips) {

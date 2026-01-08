@@ -1,3 +1,4 @@
+import type { Mys, Weight } from '#interface'
 import { char, element } from '../lib/convert.js'
 import {
   getRoleImage,
@@ -20,84 +21,57 @@ import fs from 'fs'
  * @class
  */
 export class Avatar {
-  /**
-   * @param {number} id
-   * @param {number} level
-   * @param {string} name_mi18n
-   * @param {string} full_name_mi18n
-   * @param {number} element_type
-   * @param {string} camp_name_mi18n
-   * @param {number} avatar_profession
-   * @param {string} rarity
-   * @param {string} group_icon_path
-   * @param {string} hollow_icon_path
-   * @param {number} rank
-   * @param {boolean} is_chosen
-   */
-  constructor(
-    id,
-    level,
-    name_mi18n,
-    full_name_mi18n,
-    element_type,
-    camp_name_mi18n,
-    avatar_profession,
-    rarity,
-    group_icon_path,
-    hollow_icon_path,
-    rank,
-    is_chosen
-  ) {
-    this.id = id
-    this.level = level
-    this.name_mi18n = name_mi18n
-    this.full_name_mi18n = full_name_mi18n
-    this.element_type = element_type
-    this.camp_name_mi18n = camp_name_mi18n
-    this.avatar_profession = avatar_profession
-    this.rarity = rarity
-    this.group_icon_path = group_icon_path
-    this.hollow_icon_path = hollow_icon_path
-    this.rank = rank
-    this.is_chosen = is_chosen
+  element_str: string
 
+  constructor(
+    public id: number,
+    public level: number,
+    public name_mi18n: string,
+    public full_name_mi18n: string,
+    public element_type: number,
+    public camp_name_mi18n: string,
+    public avatar_profession: number,
+    public rarity: string,
+    public group_icon_path: string,
+    public hollow_icon_path: string,
+    public rank: number,
+    public is_chosen: boolean
+  ) {
     this.element_str = element.IDToElement(element_type)
   }
+
 }
 
 /**
  * @class
  */
 export class AvatarIconPaths {
-  /**
-   * @param {string} group_icon_path
-   * @param {string} hollow_icon_path
-   */
-  constructor(group_icon_path, hollow_icon_path) {
-    this.group_icon_path = group_icon_path
-    this.hollow_icon_path = hollow_icon_path
-  }
+
+  constructor(
+    public group_icon_path: string,
+    public hollow_icon_path: string
+  ) { }
+
 }
 
 /**
  * @class
  */
 export class ZZZAvatarBasic {
-  /**
-   * @param {{
-   *  id: number;
-   *  level: number;
-   *  name_mi18n: string;
-   *  full_name_mi18n: string;
-   *  element_type: number;
-   *  camp_name_mi18n: string;
-   *  avatar_profession: number;
-   *  rarity: string;
-   *  rank: number;
-   *  is_chosen: boolean;
-   * }} data
-   */
-  constructor(data) {
+  id: number
+  level: number
+  name_mi18n: string
+  full_name_mi18n: string
+  element_type: number
+  camp_name_mi18n: string
+  avatar_profession: number
+  rarity: string
+  rank: number
+  is_chosen: boolean
+  element_str: string
+  square_icon: string
+
+  constructor(data: Mys.AvatarList['avatar_list'][number]) {
     const {
       id,
       level,
@@ -126,36 +100,22 @@ export class ZZZAvatarBasic {
 
   async get_assets() {
     const result = await getSquareAvatar(this.id)
-    this.square_icon = result
+    this.square_icon = result || ''
   }
+
 }
 
 /**
  * @class
  */
 export class Rank {
-  // 类型标注
-  /** @type {number} */
-  id
-  /** @type {string} */
-  name
-  /** @type {string} */
-  desc
-  /** @type {number} */
-  pos
-  /** @type {boolean} */
-  is_unlocked
+  id: number
+  name: string
+  desc: string
+  pos: number
+  is_unlocked: boolean
 
-  /**
-   * @param {{
-   *  id: number;
-   *  name: string;
-   *  desc: string;
-   *  pos: number;
-   *  is_unlocked: boolean;
-   * }} data
-   */
-  constructor(data) {
+  constructor(data: Mys.Avatar['ranks'][number]) {
     const { id, name, desc, pos, is_unlocked } = data
     this.id = id
     this.name = name
@@ -163,35 +123,91 @@ export class Rank {
     this.pos = pos
     this.is_unlocked = is_unlocked
   }
+
 }
 
 /**
- * @class
+ * @class 代理人详情类
  */
 export class ZZZAvatarInfo {
-  /**
-   * @param {{
-   *  id: number;
-   *  level: number;
-   *  name_mi18n: string;
-   *  full_name_mi18n: string;
-   *  element_type: number;
-   *  sub_element_type: number;
-   *  camp_name_mi18n: string;
-   *  avatar_profession: number;
-   *  rarity: string;
-   *  group_icon_path: string;
-   *  hollow_icon_path: string;
-   *  equip: Equip[];
-   *  weapon: Weapon;
-   *  properties: Property[];
-   *  skills: Skill[];
-   *  rank: number;
-   *  ranks: Rank[];
-   *  isNew?: boolean;
-   * }} data
-   */
-  constructor(data) {
+  /** 角色ID */
+  id: number
+  /** 角色等级 */
+  level: number
+  /** 角色名称 */
+  name_mi18n: string
+  /** 角色全名 */
+  full_name_mi18n: string
+  /** 元素类型 */
+  element_type: number
+  /** 子元素类型 */
+  sub_element_type: number
+  /** 阵营名称 */
+  camp_name_mi18n: string
+  /** 职业 */
+  avatar_profession: number
+  /** 稀有度 */
+  rarity: string
+  /** 阵营图标链接 */
+  group_icon_path: string
+  /** 角色图标链接 */
+  hollow_icon_path: string
+  /** 驱动盘 */
+  equip: Equip[] | null
+  /** 音擎 */
+  weapon: Weapon | null
+  /** 属性 */
+  properties: Property[]
+  /** 技能 */
+  skills: Skill[]
+  /** 影画数 */
+  rank: number
+  /** 影画列表 */
+  ranks: Rank[]
+  /** 已解锁影画数 */
+  ranks_num: number
+  /** 属性 */
+  element_str: string
+  /** 立绘链接 */
+  role_vertical_painting_url: string
+  /** 时装ID。原皮时为空 */
+  skin_id: any
+  /** 等级级别（取十位数字）*/
+  level_rank: number
+  /** 评分计算规则 */
+  weightRule: string
+  /** 评分权重 */
+  scoreWeight: Weight
+  _base_properties?: {
+    HP: number
+    ATK: number
+    DEF: number
+    Impact: number
+    AnomalyMastery: number
+    AnomalyProficiency: number
+    EnergyRegen: number
+  }
+  _initial_properties: {
+    HP: number
+    ATK: number
+    DEF: number
+    Impact: number
+    CRITRate: number
+    CRITDMG: number
+    /** 异常掌控 */
+    AnomalyMastery: number
+    /** 异常精通 */
+    AnomalyProficiency: number
+    Pen: number
+    PenRatio: number
+    EnergyRegen: number
+  }
+  _damages: any
+  square_icon: string | null
+  small_square_icon: string | null
+  role_icon: string
+
+  constructor(data: Mys.Avatar) {
     const {
       id,
       level,
@@ -210,60 +226,35 @@ export class ZZZAvatarInfo {
       skills,
       rank,
       ranks,
-      isNew,
       role_vertical_painting_url,
     } = data
-    /** @type {number} 角色ID */
     this.id = id
-    /** @type {number} 角色等级 */
     this.level = level
-    /** @type {string} 角色名称 */
     this.name_mi18n = name_mi18n
-    /** @type {string} 角色全名 */
     this.full_name_mi18n = full_name_mi18n
-    /** @type {import('../@types/interface').elementEnum} 元素种类 */
     this.element_type = element_type
-    /** @type {number} 子元素种类 */
     this.sub_element_type = sub_element_type
-    /** @type {string} */
     this.camp_name_mi18n = camp_name_mi18n
-    /** @type {import('../@types/interface').professionEnum} 职业 */
     this.avatar_profession = avatar_profession
-    /** @type {string} 稀有度 */
     this.rarity = rarity
-    /** @type {string} */
     this.group_icon_path = group_icon_path
-    /** @type {string} */
     this.hollow_icon_path = hollow_icon_path
-    /** @type {Equip[]} 驱动盘 */
     this.equip =
       (equip &&
         (Array.isArray(equip)
           ? equip.map(equip => new Equip(equip))
-          : new Equip(equip))) ||
+          : [new Equip(equip)])) ||
       []
-    /** @type {Weapon} 武器 */
     this.weapon = weapon ? new Weapon(weapon) : null
-    /** @type {Property[]} 属性 */
     this.properties =
       properties && properties.map(property => new Property(property))
-    /** @type {Skill[]} 技能 */
     this.skills = skills && skills.map(skill => new Skill(skill))
-    /** @type {number} 影 */
     this.rank = rank
-    /** @type {Rank[]} */
     this.ranks = ranks && ranks.map(rank => new Rank(rank))
-    /** @type {number} */
-    this.ranks_num = this.ranks.filter(rank => rank.is_unlocked).length
-    /** @type {string} */
+    this.ranks_num = rank
     this.element_str = element.IDToElement(element_type, sub_element_type)
-    /** @type {boolean} */
-    this.isNew = isNew
-    /** @type {string} 立绘链接 */
     this.role_vertical_painting_url = role_vertical_painting_url
-    /** @type {string} 时装ID。原皮时为空 */
     this.skin_id = this.role_vertical_painting_url?.match?.(/role_vertical_painting_\d+_(\d+).png$/)?.[1] || ''
-    /** @type {number}  等级级别（取十位数字）*/
     this.level_rank = Math.floor(this.level / 10)
     const weight = Score.getFinalWeight(this)
     this.weightRule = weight[0]
@@ -273,22 +264,10 @@ export class ZZZAvatarInfo {
     }
   }
 
-  getProperty(name) {
+  getProperty(name: string) {
     return this.properties.find(property => property.property_name === name)
   }
 
-  /** @type {{
-   * hpmax: Property;
-   * attack: Property;
-   * def: Property;
-   * breakstun: Property;
-   * crit: Property;
-   * critdam: Property;
-   * elementabnormalpower: Property;
-   * elementmystery: Property;
-   * penratio: Property;
-   * sprecover: Property;
-   * }} */
   get basic_properties() {
     const data = {
       hpmax: this.getProperty('生命值'),
@@ -311,10 +290,7 @@ export class ZZZAvatarInfo {
   get base_properties() {
     if (this._base_properties) return this._base_properties
     const basic_properties = this.basic_properties
-    /**
-     * @param {keyof ZZZAvatarInfo['basic_properties']} name
-     */
-    const get = (name) => {
+    const get = (name: keyof ZZZAvatarInfo['basic_properties']) => {
       const data = basic_properties[name]
       return Number(data?.base || data?.final || 0)
     }
@@ -333,13 +309,10 @@ export class ZZZAvatarInfo {
   get initial_properties() {
     if (this._initial_properties) return this._initial_properties
     const basic_properties = this.basic_properties
-    /**
-     * @param {keyof ZZZAvatarInfo['basic_properties']} name
-     */
-    const get = (name) => {
+    const get = (name: keyof ZZZAvatarInfo['basic_properties']) => {
       if (!basic_properties[name]) return 0
       const data = basic_properties[name].final
-      return Number(data.includes('%') ? data.replace('%', '') / 100 : data)
+      return Number(data.includes('%') ? +data.replace('%', '') / 100 : data)
     }
     return this._initial_properties = {
       HP: get('hpmax'),
@@ -352,13 +325,12 @@ export class ZZZAvatarInfo {
       AnomalyMastery: get('elementabnormalpower'),
       /** 异常精通 */
       AnomalyProficiency: get('elementmystery'),
-      Pen: this.equip.reduce((prev, curr) => prev + curr.get_property(23203), 0),
+      Pen: this.equip?.reduce((prev, curr) => prev + curr.get_property(23203), 0) || 0,
       PenRatio: get('penratio'),
       EnergyRegen: get('sprecover')
     }
   }
 
-  /** @type {import("./damage/Calculator.ts").damage[]} */
   get damages() {
     if (this._damages) return this._damages
     return this._damages = avatar_calc(this)?.calc()
@@ -380,7 +352,6 @@ export class ZZZAvatarInfo {
     return 0
   }
 
-  /** @type {'C'|'B'|'A'|'S'|'SS'|'SSS'|'ACE'|'MAX'} */
   get equip_comment() {
     const score = this.equip_score
     if (score < 80) {
@@ -410,7 +381,7 @@ export class ZZZAvatarInfo {
     return 'C'
   }
 
-  /** @type {number} 练度分数 */
+  /** 练度分数 */
   get proficiency_score() {
     let base_score = 3
     if (this.rarity === 'S') {
@@ -437,10 +408,9 @@ export class ZZZAvatarInfo {
     return score
   }
 
-  /** @type {Equip[]} equip_final */
   get equip_final() {
-    const result = []
-    this.equip.forEach(equip => {
+    const result: Equip[] = []
+    this.equip?.forEach(equip => {
       if (equip.equipment_type) {
         result[equip.equipment_type - 1] = equip
       }
@@ -450,9 +420,8 @@ export class ZZZAvatarInfo {
 
   /** 词条统计 */
   get propertyStats() {
-    /** @type {{ [propID: string]: { id: number, name: string, weight: number, value: string, count: number } }} */
-    const stats = {}
-    for (const equip of this.equip) {
+    const stats: { [propID: string]: { id: number; name: string; weight: number; value: string; count: number } } = {}
+    for (const equip of this.equip || []) {
       for (const property of equip.properties) {
         const propID = property.property_id
         stats[propID] ??= {
@@ -478,7 +447,7 @@ export class ZZZAvatarInfo {
   }
 
   /** 面板属性label效果 */
-  get_label(propID) {
+  get_label(propID: number | string) {
     const base = this.scoreWeight?.[propID]
     if (!base) return ''
     return base === 1 ? 'yellow' :
@@ -488,36 +457,31 @@ export class ZZZAvatarInfo {
 
   /**
    * 获取基础资源
-   * @returns {Promise<void>}
    */
-  async get_basic_assets() {
+  async get_basic_assets(): Promise<void> {
     const result = await getSquareAvatar(this.id)
-    /** @type {string} */
     this.square_icon = result
   }
 
   /**
    * 获取基础小资源
-   * @returns {Promise<void>}
    */
-  async get_small_basic_assets() {
+  async get_small_basic_assets(): Promise<void> {
     const result = await getSmallSquareAvatar(this.id)
-    /** @type {string} */
     this.small_square_icon = result
     await this?.weapon?.get_assets?.()
   }
 
   /**
    * 获取详细资源
-   * @returns {Promise<void>}
    */
-  async get_detail_assets() {
+  async get_detail_assets(): Promise<void> {
     const paths = Array.from(new Set([
       this.name_mi18n,
       this.full_name_mi18n,
       char.IDToCharName(this.id, false),
       char.IDToCharName(this.id, true)
-    ].filter(Boolean))).map(p => path.join(imageResourcesPath, 'panel', p))
+    ].filter(Boolean))).map((p) => path.join(imageResourcesPath, 'panel', p as string))
     let role_icon = ''
     const custom_panel_images = paths.find(p => fs.existsSync(p))
     if (custom_panel_images) {
@@ -530,12 +494,11 @@ export class ZZZAvatarInfo {
       }
     }
     if (!role_icon) {
-      role_icon = await getRoleImage(this.id, this.skin_id)
+      role_icon = await getRoleImage(this.id, this.skin_id) || ''
     }
-    /** @type {string} */
     this.role_icon = role_icon
     await this?.weapon?.get_assets?.()
-    for (const equip of this.equip) {
+    for (const equip of this.equip || []) {
       await equip.get_assets()
     }
   }
@@ -545,25 +508,23 @@ export class ZZZAvatarInfo {
     await this.get_detail_assets()
     await this.get_small_basic_assets()
   }
+
 }
 
 /**
  * @class
  */
 export class ZZZUser {
-  /**
-   * @param {{
-   *  game_biz: string;
-   *  region: string;
-   *  game_uid: string;
-   *  nickname: string;
-   *  level: number;
-   *  is_chosen: boolean;
-   *  region_name: string;
-   *  is_official: boolean;
-   * }} data
-   */
-  constructor(data) {
+  game_biz: string
+  region: string
+  game_uid: string
+  nickname: string
+  level: number
+  is_chosen: boolean
+  region_name: string
+  is_official: boolean
+
+  constructor(data: Mys.User['list'][number]) {
     const {
       game_biz,
       region,
@@ -583,4 +544,5 @@ export class ZZZUser {
     this.region_name = region_name
     this.is_official = is_official
   }
+
 }

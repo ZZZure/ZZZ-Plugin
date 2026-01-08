@@ -1,33 +1,12 @@
-import type {
-  Client,
-  segment as segmentSource
-} from 'icqq'
-import type redisM from 'redis'
-import type chalk from 'chalk'
+export type * from './global.d.ts'
+export type * from './message.d.ts'
+export type * from '../model/damage/avatar.ts'
+export type * from '../model/damage/BuffManager.ts'
+export type * from '../model/damage/Calculator.ts'
+export type * from '../model/score/Score.ts'
+export type * from '../model/avatar.ts'
 
-declare global {
-  var Bot: typeof Client.prototype
-  var redis: redisM.RedisClientType
-  var segment: typeof segmentSource
-  // @ts-expect-error
-  var logger: {
-    chalk: typeof chalk
-    red: typeof chalk
-    yellow: typeof chalk
-    blue: typeof chalk
-    magenta: typeof chalk
-    cyan: typeof chalk
-    green: typeof chalk
-    trace: (...args: any[]) => void
-    debug: (...args: any[]) => void
-    info: (...args: any[]) => void
-    error: (...args: any[]) => void
-    warn: (...args: any[]) => void
-    fatal: (...args: any[]) => void
-    mark: (...args: any[]) => void
-  }
-}
-
+/** 插件配置 */
 export namespace Config {
 
   export interface KeyValue {
@@ -143,7 +122,8 @@ export namespace Config {
 
 }
 
-export namespace Mys {
+/** mys接口数据 */
+export declare namespace Mys {
 
   export interface KeyValue {
     zzzAvatarList: AvatarList
@@ -611,7 +591,7 @@ export namespace Mys {
   }
 
   /** 用户 */
-  interface User {
+  export interface User {
     list: {
       game_biz: string
       region: string
@@ -811,6 +791,7 @@ export namespace Mys {
 
 }
 
+/** Enka面板数据 */
 export namespace Enka {
 
   export interface Avatar {
@@ -877,6 +858,7 @@ export namespace Enka {
 
 }
 
+/** resources/map/*.json数据 */
 export namespace Map {
 
   export interface KeyValue {
@@ -1058,6 +1040,7 @@ export namespace Map {
 
 }
 
+/** Hakush接口数据 */
 export namespace Hakush {
   export interface PartnerData {
     Id: number

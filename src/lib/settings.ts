@@ -1,4 +1,4 @@
-import type { Config } from '#interface'
+import type { Config } from '../@types/interface.js'
 import { configPath, dataPath, defPath, pluginName } from './path.js'
 import chokidar from 'chokidar'
 import YAML from 'yaml'

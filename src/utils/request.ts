@@ -72,7 +72,7 @@ const request = (url: string, options: RequestInit = {}, retry = 0, timeout = 15
  * @param data 请求数据
  * @param options 请求配置
  */
-request.get = async (url: string, data: Record<string, any>, options: RequestInit & { retry?: number; timeout?: number } = {}) => {
+request.get = async (url: string, data: Record<string, any> = {}, options: RequestInit & { retry?: number; timeout?: number } = {}) => {
   const u = new URL(url)
   for (const key in data) {
     u.searchParams.append(key, data[key])

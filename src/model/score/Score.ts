@@ -1,5 +1,5 @@
-import type { ZZZAvatarInfo } from '../avatar.js'
-import type { Equip } from '../equip.js'
+import type { ZZZAvatarInfo } from '#interface'
+import type { Equip } from '../equip.ts'
 import { baseValueData, formatScoreWeight } from '../../lib/score.js'
 import { rarityEnum, professionEnum } from '../damage/BuffManager.js'
 import { idToName } from '../../lib/convert/property.js'
@@ -7,10 +7,9 @@ import { aliasToID } from '../../lib/convert/char.js'
 import { getMapData } from '../../utils/file.js'
 import { scoreFnc } from '../damage/avatar.js'
 
-type Weight = { [propID: string]: number }
+export type Weight = { [propID: string]: number }
 
-//@ts-expect-error
-const equipScore = getMapData('EquipScore') as { [charID: string]: string[] | { rules?: string[], [propID: string]: number } }
+const equipScore = getMapData('EquipScore')
 for (const charName in equipScore) {
   const charID = +charName || aliasToID(charName)
   if (!charID) {
@@ -48,7 +47,7 @@ export default class Score {
 
   /** 品质系数 */
   get_rarity_multiplier() {
-    switch (rarityEnum[this.equip.rarity]) {
+    switch (rarityEnum[this.equip.rarity as keyof typeof rarityEnum]) {
       case rarityEnum.S:
         return 1
       case rarityEnum.A:
@@ -189,7 +188,7 @@ export default class Score {
       final_weight = def_weight
     }
     // console.log(avatar.name_mi18n, 'default_final_weight', final_weight)
-    final_weight = formatScoreWeight(final_weight, avatar.id)
+    final_weight = formatScoreWeight(final_weight!, avatar.id)
     const calc_weight = scoreFnc[avatar.id] && scoreFnc[avatar.id](avatar)
     if (calc_weight) {
       rule_name = calc_weight[0]

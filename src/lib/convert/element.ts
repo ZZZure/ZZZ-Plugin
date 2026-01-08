@@ -15,8 +15,8 @@ const SUB_ELEMENT_TYPE = {
 /**
  * 元素ID转元素类型名
  */
-export const IDToElement = (id: keyof typeof ELEMENT_TYPE, sub_id: keyof typeof SUB_ELEMENT_TYPE) => {
-  if (sub_id && SUB_ELEMENT_TYPE[sub_id])
-    return SUB_ELEMENT_TYPE[sub_id]
-  return ELEMENT_TYPE[id]
+export const IDToElement = (id: string | number, sub_id?: string | number) => {
+  if (sub_id && SUB_ELEMENT_TYPE[sub_id as keyof typeof SUB_ELEMENT_TYPE])
+    return SUB_ELEMENT_TYPE[sub_id as keyof typeof SUB_ELEMENT_TYPE]
+  return ELEMENT_TYPE[id as keyof typeof ELEMENT_TYPE] || 'unknown'
 }

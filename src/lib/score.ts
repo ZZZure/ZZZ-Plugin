@@ -1,3 +1,4 @@
+import type { Weight } from '#interface'
 import { getMapData } from '../utils/file.js'
 import { IDToCharData } from './convert/char.js'
 import { nameToId } from './convert/property.js'
@@ -9,6 +10,14 @@ const elementType2propId = (elementType: number) => [31503, 31603, 31703, 31803,
 /**
  * 将权重数据格式化为ID格式权重数据
  */
+export function formatScoreWeight(
+  oriScoreWeight: string[],
+  charID: number
+): string[]
+export function formatScoreWeight(
+  oriScoreWeight: { [propName: string]: number },
+  charID: number
+): Weight
 export function formatScoreWeight(
   oriScoreWeight: string[] | { [propName: string]: number },
   charID: number
@@ -38,7 +47,7 @@ export function formatScoreWeight(
  * @param propertyID 属性id
  * @param value 属性值
  */
-export const getEquipPropertyEnhanceCount = (propertyID: string, value: string): number => {
+export const getEquipPropertyEnhanceCount = (propertyID: string | number, value: string): number => {
   const baseValue = baseValueData[propertyID]
   const numericValue = +value.replace('%', '')
   return Math.trunc(numericValue / baseValue - 1 || 0)

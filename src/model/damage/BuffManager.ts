@@ -1,4 +1,4 @@
-import type { ZZZAvatarInfo } from '../avatar.js'
+import type { ZZZAvatarInfo } from '#interface'
 import type { Calculator, skill } from './Calculator.ts'
 
 export enum rarityEnum { S, A, B }

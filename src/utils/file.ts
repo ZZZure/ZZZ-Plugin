@@ -1,4 +1,4 @@
-import type { Map } from '#interface'
+import type { Map } from '../@types/interface.js'
 import { mapResourcesPath } from '../lib/path.js'
 import fs from 'fs'
 

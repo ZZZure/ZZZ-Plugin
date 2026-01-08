@@ -1,13 +1,13 @@
-import plugin from '../../../../lib/plugins/plugin.js'
-import MysZZZApi from './mysapi.js'
-import { getCk, rulePrefix } from './common.js'
-import _ from 'lodash'
+import type { Mys } from '#interface'
 import NoteUser from '../../../genshin/model/mys/NoteUser.js'
-import settings from './settings.js'
-import request from '../utils/request.js'
-import path from 'path'
 import { pluginName, resourcesPath } from './path.js'
+import { getCk, rulePrefix } from './common.js'
+import request from '../utils/request.js'
+import settings from './settings.js'
+import MysZZZApi from './mysapi.js'
 import version from './version.js'
+import path from 'path'
+import _ from 'lodash'
 
 export class ZZZPlugin extends plugin {
 
@@ -22,9 +22,8 @@ export class ZZZPlugin extends plugin {
 
   /**
    * 获取用户 UID（如果需要同时获取API，可以直接调用 getAPI）
-   * @returns {Promise<string | boolean>}
    */
-  async getUID() {
+  async getUID(): Promise<string> {
     // 默认为当前用户
     let user: any = this.e
     // 获取配置
@@ -54,12 +53,8 @@ export class ZZZPlugin extends plugin {
 
   /**
    * 获取用户 ltuid
-   * @returns {Promise<string | boolean>}
-   * @memberof ZZZPlugin
-   * @description 获取用户 ltuid
-   * @returns {Promise<string | boolean>}
    */
-  async getLtuid() {
+  async getLtuid(): Promise<string> {
     const uid = await this.getUID()
     const ck = await getCk(this.e)
     if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
@@ -71,9 +66,9 @@ export class ZZZPlugin extends plugin {
     })
     return currentCK?.ltuid || ''
   }
+
   /**
    * 获取米游社 API
-   * @returns {Promise<{api: MysZZZApi, uid: string, deviceFp: string}>}
    */
   async getAPI() {
     this.e.game = 'zzz'
@@ -168,10 +163,10 @@ export class ZZZPlugin extends plugin {
   }
 
   /**
-   * 获取玩家信息（当调用此方法时，会获取用户的玩家信息，并将其保存到`e.playerCard`中，方便渲染用户信息（此部分请查阅`lib/render.js`中两个模块的作用））
-   * @returns {Promise<boolean | object>}
+   * 获取玩家信息（当调用此方法时，会获取用户的玩家信息，
+   * 并将其保存到`e.playerCard`中，方便渲染用户信息（此部分请查阅`lib/render.js`中两个模块的作用））
    */
-  async getPlayerInfo(playerData: any = null) {
+  async getPlayerInfo(playerData: Mys.User | null = null) {
     if (!playerData) {
       // 获取 米游社 API
       const { api, uid } = await this.getAPI()

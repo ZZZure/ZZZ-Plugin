@@ -11,6 +11,6 @@
     "watch": "nodemon --exec tsc"
   },
   "imports": {
-    "#interface": "./src/model/damage/interface.ts"
+    "#interface": "./src/@types/interface.d.ts"
   }
 }

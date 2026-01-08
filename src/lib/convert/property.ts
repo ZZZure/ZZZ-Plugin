@@ -34,7 +34,7 @@ const pro_id = {
  * 获取属性css类名
  * @param _id 属性id
  */
-export function idToClassName(_id: string): string | null {
+export function idToClassName(_id: string | number): string | null {
   let propId = +_id.toString().slice(0, 3) as keyof typeof prop_id
   const propIcon = prop_id[propId]
   if (!propIcon) return null
