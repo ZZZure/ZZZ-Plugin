@@ -2,8 +2,6 @@ import { rulePrefix } from '../lib/common.js';
 import { ZZZPlugin } from '../lib/plugin.js';
 import settings from '../lib/settings.js';
 import _ from 'lodash';
-import { ZZZChallenge } from '../model/abyss.js';
-import { rulePrefix } from '../lib/common.js';
 import { saveAbyssData } from '../lib/db.js';
 import { isGroupRankAllowed, isUserRankAllowed, addUserToGroupRank, setUidAndQQ } from '../lib/rank.js';
 
