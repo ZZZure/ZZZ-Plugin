@@ -182,25 +182,6 @@ export interface GroupMessageType extends GroupMessage {
   ) => Promise<any>
   /** 群实例 */
   group: Group
-  //   /** 群名 */
-  //   get name(): string | undefined
-  //   /** 机器人是否是群主 */
-  //   get is_owner(): boolean
-  //   /** 机器人禁言剩余时间 */
-  //   get mute_left(): number
-  //   /** 撤回指定群消息 */
-  //   recallMsg(message_id: string): Promise<boolean>
-  //   /** 获取群员map */
-  //   getMemberMap(): Promise<Map<number, MemberInfo>>
-  //   /** 退群，若为群主则解散该群 */
-  //   quit(): Promise<boolean>
-  //   /** 获取群员实例 */
-  //   pickMember(uid: number, strict?: boolean): Member
-  //   /** 发送一条消息 */
-  //   sendMsg(content: Sendable, source?: Quotable, anony?: boolean): Promise<MessageRet>
-  //   /** 制作一条合并转发消息以备发送（制作一次可以到处发） 需要注意的是，好友图片和群图片的内部格式不一样，对着群制作的转发消息中的图片，发给好友可能会裂图，反过来也一样 支持4层套娃转发（PC仅显示3层） */
-  //   makeForwardMsg(msglist: Forwardable | Forwardable[]): Promise<XmlElem>
-  // }
   /** Bot实例 */
   bot: typeof Client.prototype
   /** Member实例 */

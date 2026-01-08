@@ -1,4 +1,4 @@
-import type { Mys, Enka, Map } from '#interface'
+import type { Mys, Enka, MapJSON } from '#interface'
 import { getMapData } from '../../utils/file.js'
 
 type FilterValueType<T, U> = {
@@ -13,9 +13,9 @@ enum Rarity {
   B = 2
 }
 
-const WeaponId2Data = getMapData('WeaponId2Data') as Map.WeaponId2Data
-const PartnerId2Data = getMapData('PartnerId2Data') as Map.PartnerId2Data
-const SuitData = getMapData('SuitData') as Map.SuitData
+const WeaponId2Data = getMapData('WeaponId2Data')
+const PartnerId2Data = getMapData('PartnerId2Data')
+const SuitData = getMapData('SuitData')
 
 const id2zh = {
   111: '生命值',
@@ -79,7 +79,7 @@ export class Equip {
   readonly enkaEquip: Enka.Equip
   readonly Equipment: Enka.Equip['Equipment']
   readonly id: number
-  readonly data: Map.SuitData[string]
+  readonly data: MapJSON.SuitData[string]
   readonly info: FilterValueType<Mys.Equip, string | number | boolean>
   readonly equip: Mys.Equip
   constructor(enkaEquip: Enka.Equip) {
@@ -172,7 +172,7 @@ export class Equip {
 
 export class Weapon {
   readonly id: number
-  readonly data: Map.WeaponId2Data[string]
+  readonly data: MapJSON.WeaponId2Data[string]
   readonly info: FilterValueType<Mys.Weapon, string | number | boolean>
   readonly weapon: Mys.Weapon
   constructor(readonly enkaWeapon: Enka.Weapon) {
@@ -252,7 +252,7 @@ type initialProperty = {
 }
 
 export class Property {
-  readonly data: Map.PartnerId2Data[string]
+  readonly data: MapJSON.PartnerId2Data[string]
   readonly keepPercent = [201, 211, 231, 315, 316, 317, 318, 319]
   constructor(
     readonly info: FilterValueType<Mys.Avatar, string | number | boolean>,

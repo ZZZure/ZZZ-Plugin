@@ -593,12 +593,12 @@ export class Calculator {
       // @ts-expect-error
       valueBase: '0'
     })
-    const equips = this.avatar.equip.reduce((acc: string[], e) => {
+    const equips = this.avatar.equip?.reduce((acc: string[], e) => {
       if (e.equipment_type < 4) return acc
       const name = e.main_properties[0]?.property_name
       if (name) acc.push(name)
       return acc
-    }, ['空白对照'])
+    }, ['空白对照']) || []
     // @ts-expect-error 只保留装备的主词条del
     const main_differences = this.calc_differences(buffs, skill)
     return main_differences.filter(v => {
@@ -784,7 +784,7 @@ export class Calculator {
       case 'object': {
         if (!Array.isArray(value) || !buff) return 0
         switch (buff.source) {
-          case '音擎': return value[this.avatar.weapon.star - 1] || 0
+          case '音擎': return this.avatar.weapon ? value[this.avatar.weapon.star - 1] || 0 : 0
           case '核心被动':
           case '额外能力': return value[this.get_SkillLevel('T') - 1] || 0
         }

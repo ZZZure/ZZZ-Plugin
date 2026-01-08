@@ -123,7 +123,7 @@ export namespace Config {
 }
 
 /** mys接口数据 */
-export declare namespace Mys {
+export namespace Mys {
 
   export interface KeyValue {
     zzzAvatarList: AvatarList
@@ -859,7 +859,7 @@ export namespace Enka {
 }
 
 /** resources/map/*.json数据 */
-export namespace Map {
+export namespace MapJSON {
 
   export interface KeyValue {
     AnomalyData: AnomalyData[]
@@ -1042,6 +1042,7 @@ export namespace Map {
 
 /** Hakush接口数据 */
 export namespace Hakush {
+
   export interface PartnerData {
     Id: number
     Icon: string
