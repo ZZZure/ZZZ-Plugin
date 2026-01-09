@@ -51,7 +51,7 @@ export class Rank extends ZZZPlugin {
     const uid2qqs = await getUid2QQsMapping(this.e.group_id);
     let uidInGroupRankFiltered = [];
     for (const uid of uidInGroupRank) {
-      if (uid2qqs[uid].some(qq => qqInGroupSet.has(qq))) {
+      if (uid in uid2qqs && uid2qqs[uid].some(qq => qqInGroupSet.has(qq))) {
         uidInGroupRankFiltered.push(uid);
       } else {
         await removeUidAllRecord(this.e.group_id, uid);
@@ -126,7 +126,7 @@ export class Rank extends ZZZPlugin {
     const uid2qqs = await getUid2QQsMapping(this.e.group_id);
     let uidInGroupRankFiltered = [];
     for (const uid of uidInGroupRank) {
-      if (uid2qqs[uid].some(qq => qqInGroupSet.has(qq))) {
+      if (uid in uid2qqs && uid2qqs[uid].some(qq => qqInGroupSet.has(qq))) {
         uidInGroupRankFiltered.push(uid);
       } else {
         await removeUidAllRecord(this.e.group_id, uid);
