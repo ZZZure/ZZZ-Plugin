@@ -73,16 +73,14 @@ export class Rank extends ZZZPlugin {
       }
     }
     
-    let scoredData = _.chain(filteredByUser)
-      .filter(item => 
-        _.get(item, 'result.hadal_ver') === 'v2'
-      )
+    let scoredData = filteredByUser
+      .filter(item => _.get(item, 'result.hadal_ver') === 'v2')
       .filter(item => {
         const beginTime = _.get(item, 'result.hadal_info_v2.begin_time');
         const endTime = _.get(item, 'result.hadal_info_v2.end_time');
         return currentTimestamp >= beginTime && currentTimestamp <= endTime;
       })
-      .map(item => {        
+      .map(item => {
         const score = _.get(item, 'result.hadal_info_v2.brief.score', 0);
         
         return {
@@ -90,8 +88,7 @@ export class Rank extends ZZZPlugin {
           result: item.result,
           score: score
         };
-      })
-      .value();
+      });
     
     if (scoredData.length === 0) {
       return this.reply('没有式舆防卫战排名，请先 %显示深渊排名，并且用 %深渊 查询战绩');
@@ -150,7 +147,7 @@ export class Rank extends ZZZPlugin {
       }
     }
     
-    let scoredData = _.chain(filteredByUser)
+    let scoredData = filteredByUser
       .filter(item => {
         // 危局强袭战的数据结构中时间字段是对象格式，需要转换为时间戳
         const startTime = new Date(
@@ -182,8 +179,7 @@ export class Rank extends ZZZPlugin {
           result: new Deadly(item.result),
           score: 1000000 * totalStar + totalScore // (星级, 得分) 的字典序
         };
-      })
-      .value();
+      });
     
     if (scoredData.length === 0) {
       return this.reply('没有危局强袭战排名，请先 %显示危局排名，并且用 %危局 查询战绩');
