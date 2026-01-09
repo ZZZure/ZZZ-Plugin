@@ -395,5 +395,14 @@
         }
       }
     }
+
+    .notes {
+      margin: 0 2em;
+
+      .command {
+        color: rgb(255, 215, 0);
+        padding: 0 0.3em;
+      }
+    }
   }
 }

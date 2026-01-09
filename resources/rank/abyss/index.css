@@ -1,0 +1,307 @@
+.container {
+  background-image: url("./images/bg2.jpg");
+}
+
+body {
+  width: 2000px;
+}
+
+.card {
+  margin: 0 1em;
+}
+.card .record {
+  display: flex;
+  margin: 0;
+}
+.card .record .user-info {
+  width: 450px;
+  padding: 0;
+}
+.card .record .user-info .result {
+  display: flex;
+  padding: 0 1em;
+  justify-content: space-between;
+  width: 100%;
+}
+.card .record .user-info .result .rank {
+  width: 70px;
+  height: 70px;
+}
+.card .record .user-info .result .rank .rank-icon {
+  width: 100%;
+  height: 100%;
+}
+.card .record .user-info .result .value .label, .card .record .user-info .result .rank .label {
+  color: white;
+}
+.card .record .status {
+  background: url("./images/status.png") no-repeat center center;
+  background-size: 110% 160%;
+  aspect-ratio: 2.4;
+  overflow: hidden;
+  margin: 0 1em;
+  margin-bottom: 1.5em;
+  padding-top: 5.2em;
+  padding-left: 2em;
+  padding-right: 2em;
+  justify-content: space-around;
+}
+.card .record .status .info {
+  display: flex;
+  font-size: 2em;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.1em;
+  padding: 0 0.6em;
+}
+.card .record .status .info .time {
+  color: rgb(127, 127, 127);
+}
+.card .record .status .info .ranks {
+  display: flex;
+}
+.card .record .status .info .ranks .rank {
+  width: 1.5em;
+  position: relative;
+}
+.card .record .status .info .ranks .rank .count {
+  position: absolute;
+  bottom: -0.3em;
+  right: -0.5em;
+  font-size: 0.6em;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2em;
+  height: 1.2em;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.card .record .status .cost {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2em;
+}
+.card .record .status .cost .item {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5em;
+}
+.card .record .status .cost .item .label {
+  font-size: 0.68em;
+  margin-bottom: 0.1em;
+  color: rgb(176, 176, 176);
+}
+.card .record .item-card {
+  border-image-source: url("./images/BgFrame01.png");
+  border-image-slice: 200 100 70 280 fill;
+  border-image-width: 2em 1em 0.7em 2.8em;
+  border-image-outset: 0em 0em 0em 0em;
+  border-image-repeat: stretch stretch;
+  margin-bottom: 1em;
+  display: flex;
+  width: 1000px;
+}
+.card .record .item-card .title {
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0.2em 0.5em;
+  font-size: 1.2em;
+  box-shadow: 0 0.1em 0.05em rgba(0, 0, 0, 0.5);
+}
+.card .record .item-card .title .rank-icon {
+  width: 1em;
+}
+.card .record .item-card .title .content {
+  z-index: 0;
+  position: relative;
+}
+.card .record .item-card .title .content::after {
+  content: attr(data-content);
+  -webkit-text-stroke: 0.22em #000;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+}
+.card .record .item-card .title.a, .card .record .item-card .title.A {
+  color: rgb(195, 56, 240);
+}
+.card .record .item-card .title.b, .card .record .item-card .title.B {
+  color: rgb(93, 189, 246);
+}
+.card .record .item-card .title.s, .card .record .item-card .title.S {
+  color: rgb(240, 145, 53);
+}
+.card .record .item-card {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: flex-start;
+  padding: 0.5em 1em;
+}
+.card .record .item-card .team {
+  flex: 1;
+}
+.card .record .item-card .team .info {
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.2);
+  align-items: center;
+  margin-bottom: 0.5em;
+}
+.card .record .item-card .team .info .label {
+  padding: 0 0.5em;
+}
+.card .record .item-card .team .info .spent, .card .record .item-card .team .info .time {
+  color: #ddd;
+  font-size: 0.8em;
+  padding: 0 0.2em;
+}
+.card .record .item-card .team .info .star {
+  color: white;
+  font-size: 0.8em;
+  padding: 0 0.2em;
+}
+.card .record .item-card .team .info .advantage {
+  display: flex;
+  align-items: center;
+  margin-left: 0.3em;
+  font-size: 0.8em;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(0.1em);
+  height: 100%;
+  padding: 0.1em 0.4em;
+  border-radius: 0.4em 0 0 0.4em;
+  min-width: 5.5em;
+}
+.card .record .item-card .team .info .advantage .property {
+  width: 1em;
+}
+.card .record .item-card .team .list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 0.8fr;
+  align-items: flex-end;
+  gap: 5px;
+}
+.card .record .item-card .team .list .item {
+  width: 100%;
+  position: relative;
+}
+.card .record .item-card .team .list .item > * {
+  position: inherit;
+  z-index: 1;
+}
+.card .record .item-card .team .list .item.bangboo {
+  font-size: 0.8em;
+}
+.card .record .item-card .team .list .item::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0.2em;
+  left: -0.2em;
+  width: 100%;
+  height: 100%;
+  background: rgb(138, 51, 183);
+  z-index: 0;
+}
+.card .record .item-card .team .list .item .rank {
+  position: absolute;
+  top: 0.2em;
+  left: 0.1em;
+  width: 1.5em;
+  color: white;
+  z-index: 2;
+}
+.card .record .item-card .team .list .item.rankS::after {
+  background: rgb(230, 119, 51);
+}
+.card .record .item-card .team .list .item.rankB::after {
+  background: rgb(93, 183, 249);
+}
+.card .record .item-card .team .list .item .image {
+  width: 100%;
+  aspect-ratio: 0.8;
+  background-color: #e2e2e2;
+}
+.card .record .item-card .team .list .item .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.card .record .item-card .team .list .item .c-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgb(0, 0, 0);
+  color: white;
+  display: flex;
+  text-align: center;
+}
+.card .record .item-card .team .list .item .c-info .ranks {
+  background: rgb(117, 117, 117);
+  padding: 0 0.2em;
+}
+.card .record .item-card .team .list .item .c-info .ranks.r1 {
+  background: rgb(58, 116, 43);
+}
+.card .record .item-card .team .list .item .c-info .ranks.r2 {
+  background: rgb(61, 132, 214);
+}
+.card .record .item-card .team .list .item .c-info .ranks.r3 {
+  background: rgb(223, 118, 118);
+}
+.card .record .item-card .team .list .item .c-info .ranks.r4 {
+  background: rgb(51, 54, 161);
+}
+.card .record .item-card .team .list .item .c-info .ranks.r5 {
+  background: rgb(102, 127, 19);
+}
+.card .record .item-card .team .list .item .c-info .ranks.r6 {
+  background: rgb(218, 48, 32);
+}
+.card .record .item-card .team .list .item .c-info .level {
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+.card .record .item-card .team .list .item .property {
+  position: absolute;
+  top: 0.2em;
+  right: 0.1em;
+  width: 1.6em;
+  background-color: #000;
+  border-radius: 50%;
+  border: solid 0.1em #000;
+  color: white;
+  z-index: 2;
+}
+.card .notes-container {
+  padding: 0.5em 1em;
+  border-image-source: url("./images/BgFrame01.png");
+  border-image-slice: 200 100 70 280 fill;
+  border-image-width: 2em 1em 0.7em 2.8em;
+  border-image-outset: 0em 0em 0em 0em;
+  border-image-repeat: stretch stretch;
+  margin-bottom: 1em;
+  display: flex;
+}
+.card .notes-container .notes {
+  margin: 0 2em;
+}
+.card .notes-container .notes li {
+  margin: 0.3em 0;
+  color: #979797;
+}
+.card .notes-container .notes .command {
+  color: rgb(255, 215, 0);
+  padding: 0 0.3em;
+}
+
+/*# sourceMappingURL=index.css.map */

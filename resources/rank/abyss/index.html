@@ -1,0 +1,93 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{@sys.currentPath}}/index.css">
+{{/block}}
+
+{{block 'main'}}
+<div class="card">
+  <% include(sys.specialTitle, {en: 'ABYSS RANK' , cn: '式舆防卫战排名' }) %>
+    {{each scoredData record i}}
+    <div class="record">
+      <div class="user-info">
+        <link rel="stylesheet" type="text/css" href="{{@sys.resourcesPath}}/common/layout/playerinfo.css" />
+        {{set avatar = record.player.avatar}}
+        {{set player = record.player.player}}
+        <div class="avatar">
+          <img src="{{avatar}}" alt="Avatar">
+        </div>
+        <div class="info-bar">
+          <div class="info">
+            <div class="nickname">{{player.nickname}}</div>
+          </div>
+          <div class="info">
+            <div class="label level">Lv{{player.level}}</div>
+            <div class="label server">{{player.region_name}}</div>
+          </div>
+          <div class="uid">UID {{player.game_uid}}</div>
+          <div class="result">
+            <div class="value">
+              <div class="label">总得分</div>
+              <div class="value">{{record.result.hadal_info_v2.brief.score}}</div>
+            </div>
+            <div class="rank">
+              <div class="label">评级</div>
+              <div class="value">{{record.result.hadal_info_v2.brief.rating}}</div>
+            </div>
+          </div>
+        </div>
+      </div>      
+      <div class="item-card">
+        {{each record.result.hadal_info_v2.fitfh_layer_detail.layer_challenge_info_list layer i}}
+        <div class="team">
+          <div class="info">
+            <div class="star">{{layer.rating}}</div>
+            <div class="label">{{layer.buffer.title}}</div>            
+            <div class="spent">得分：{{layer.score}}</div>
+          </div>
+          <div class="list">
+            <% for(let j=0 ; j < 3 ; j++) { %>
+              {{if layer.avatar_list?.[j]}}
+              {{set char = layer.avatar_list[j]}}
+              <div class="item char rank{{char.rarity}}">
+                <div class="rank rank-icon {{char.rarity}}"></div>
+                <div class="image">
+                  <img src="{{char.role_square_url}}" alt="">
+                </div>
+                <div class="c-info">
+                  <div class="ranks r{{char.rank}}">{{char.rank}}影</div>
+                  <div class="level">等级{{char.level}}</div>
+                </div>
+              </div>
+              {{else}}
+                <div class="item char rankb"></div>
+              {{/if}}
+              <% } %>
+                {{if layer.buddy}}
+                <div class="item bangboo rank{{layer.buddy.rarity}}">
+                  <div class="rank rank-icon {{layer.buddy.rarity}}"></div>
+                  <div class="image">
+                    <img src="{{layer.buddy.bangboo_rectangle_url}}" alt="">
+                  </div>
+                  <div class="c-info">
+                    <div class="level">等级{{layer.buddy.level}}</div>
+                  </div>
+                </div>
+                {{else}}
+                  <div class="item bangboo rankb"></div>
+                {{/if}}
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{/each}}
+    <div class="notes-container">
+      <ul class="notes">
+        <li>式舆防卫战排名仅统计第五层的成绩</li>
+        <li>请在群内查询<span class="command">%式舆防卫战</span>，以参与对应群的式舆防卫战排名</li>
+      </ul>
+    </div>
+</div>
+
+{{/block}}

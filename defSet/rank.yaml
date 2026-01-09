@@ -1,0 +1,7 @@
+allow_group: true # 是否允许群组使用群内排名功能
+max_display: 15 # 排名显示最大数量
+white_list: # 白名单群组
+  - 123456789
+black_list: # 黑名单群组
+  - 987654321
+# 如果 allow_group 为 false，则 white_list 会生效，否则 black_list 会生效

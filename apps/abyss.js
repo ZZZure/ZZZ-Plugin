@@ -1,6 +1,9 @@
 import { rulePrefix } from '../lib/common.js';
 import { ZZZPlugin } from '../lib/plugin.js';
 import settings from '../lib/settings.js';
+import _ from 'lodash';
+import { saveAbyssData } from '../lib/db.js';
+import { isGroupRankAllowed, isUserRankAllowed, addUserToGroupRank, setUidAndQQ } from '../lib/rank.js';
 
 export class Abyss extends ZZZPlugin {
   constructor() {
@@ -16,6 +19,7 @@ export class Abyss extends ZZZPlugin {
         },
       ],
     });
+    this.isGroupRankAllowed = isGroupRankAllowed;
   }
   async abyss() {
     const { api, deviceFp } = await this.getAPI();
@@ -36,9 +40,31 @@ export class Abyss extends ZZZPlugin {
     if (['fitfh', 'fourth', 'third', 'second', 'first'].every(layer => !data?.[`${layer}_layer_detail`])) {
       return this.reply('式舆防卫战数据为空');
     }
+    // 持久化到文件
+    const rank_type = 'ABYSS';
+    const uid = await this.getUID();    
+    let userRankAllowed = null;
+    if (uid) {
+      if (this.e?.group_id) {
+        // 无论如何在当前群里面都探测到了 uid
+        await addUserToGroupRank(rank_type, uid, this.e.group_id);
+        const qq = (this.e.at && !this.e.atBot) ? this.e.at : this.e.user_id;
+        await setUidAndQQ(this.e.group_id, uid, qq);
+        userRankAllowed = await isUserRankAllowed(rank_type, uid, this.e.group_id);
+      }
+
+      // 存记录的时候先不管 userRankAllowed
+      if (this.isGroupRankAllowed()) {
+        saveAbyssData(uid, {
+          player: this.e.playerCard,
+          result: abyssData
+        });
+      }
+    }
     const abyss = processAbyssData(data);
     const finalData = {
       abyss,
+      userRankAllowed
     };
     await this.render('abyss/index.html', finalData, this);
   }

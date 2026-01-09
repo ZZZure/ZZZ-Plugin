@@ -94,5 +94,15 @@
   </div>
   {{/each}}
 
+  <div class="item-card">
+    <ul class="notes">
+      {{if userRankAllowed !== null}}
+        <li>当前危局强袭战排名状态：{{userRankAllowed ? '显示' : '隐藏'}}，可通过<span class="command">%显示/隐藏危局强袭战排名</span>切换</li>
+      {{else}}
+        <li>请在群内查询<span class="command">%危局强袭战</span>，以参与对应群的危局强袭战排名</li>
+      {{/if}}
+    </ul>
+  </div>
+
 </div>
 {{/block}}

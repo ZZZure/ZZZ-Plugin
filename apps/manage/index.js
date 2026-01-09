@@ -12,6 +12,8 @@ import * as version from './version.js';
 
 import * as device from './device.js';
 
+import * as rank from './rank.js';
+
 export default {
   assets,
   guides,
@@ -20,4 +22,5 @@ export default {
   panel,
   version,
   device,
+  rank
 };

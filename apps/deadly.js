@@ -3,6 +3,8 @@ import settings from '../lib/settings.js';
 import _ from 'lodash';
 import { Deadly } from '../model/deadly.js';
 import { rulePrefix } from '../lib/common.js';
+import { saveDeadlyData } from '../lib/db.js';
+import { isGroupRankAllowed, isUserRankAllowed, addUserToGroupRank, setUidAndQQ } from '../lib/rank.js';
 
 export class deadly extends ZZZPlugin {
   constructor() {
@@ -18,6 +20,7 @@ export class deadly extends ZZZPlugin {
         },
       ],
     });
+    this.isGroupRankAllowed = isGroupRankAllowed;
   }
   async deadly() {
     const { api, deviceFp } = await this.getAPI();
@@ -34,6 +37,27 @@ export class deadly extends ZZZPlugin {
     if (!deadlyData?.has_data) {
       return this.reply('没有危局强袭战数据');
     }
+    // 持久化到文件
+    const rank_type = 'DEADLY';
+    const uid = await this.getUID();
+    let userRankAllowed = null;
+    if (uid) {
+      if (this.e?.group_id) {
+        // 无论如何在当前群里面都探测到了 uid
+        await addUserToGroupRank(rank_type, uid, this.e.group_id);
+        const qq = (this.e.at && !this.e.atBot) ? this.e.at : this.e.user_id;
+        await setUidAndQQ(this.e.group_id, uid, qq);
+        userRankAllowed = await isUserRankAllowed(rank_type, uid, this.e.group_id);
+      }
+
+      // 存记录的时候先不管 userRankAllowed
+      if (this.isGroupRankAllowed()) {
+        saveDeadlyData(uid, {
+          player: this.e.playerCard,
+          result: deadlyData
+        });
+      }
+    }
     const deadly = new Deadly(deadlyData);
     const timer = setTimeout(() => {
       if (this?.reply) {
@@ -44,8 +68,8 @@ export class deadly extends ZZZPlugin {
     clearTimeout(timer);
     const finalData = {
       deadly,
+      userRankAllowed,
     };
-    logger.debug(JSON.stringify(finalData, null, 2));
     await this.render('deadly/index.html', finalData, this);
   }
 }

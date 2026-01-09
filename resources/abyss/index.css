@@ -332,5 +332,12 @@
   display: flex;
   text-align: center;
 }
+.card .item-card .notes {
+  margin: 0 2em;
+}
+.card .item-card .notes .command {
+  color: rgb(255, 215, 0);
+  padding: 0 0.3em;
+}
 
 /*# sourceMappingURL=index.css.map */
