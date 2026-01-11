@@ -29,6 +29,8 @@ export class Rank extends ZZZPlugin {
       ],
     });
     this.isGroupRankAllowed = isGroupRankAllowed;
+    // 渲染结果的 JPEG quality，TRSS 默认值 90 会报神秘小错误
+    this.quality = 60;
   }
   async abyssRank() {
     const rank_type = 'ABYSS';
@@ -96,7 +98,9 @@ export class Rank extends ZZZPlugin {
 
     scoredData = _.sortBy(scoredData, 'score').reverse();
     // 读取配置中的最大显示数量
-    const maxDisplay = _.get(settings.getConfig('rank'), 'max_display', 15);
+    let maxDisplay = _.get(settings.getConfig('rank'), 'max_display', 15);
+    // TODO: 先改成 5 避免神秘的渲染问题，之后再说看要和 miao-plugin 一样默认 15 还是怎么说
+    maxDisplay = Math.max(1, Math.min(maxDisplay, 5));
     // 取前maxDisplay个数据
     scoredData = scoredData.slice(0, maxDisplay);
     const finalData = {
@@ -187,7 +191,9 @@ export class Rank extends ZZZPlugin {
     
     scoredData = _.sortBy(scoredData, 'score').reverse();  // 降序排序，分数越高排名越前
     // 读取配置中的最大显示数量
-    const maxDisplay = _.get(settings.getConfig('rank'), 'max_display', 15);
+    let maxDisplay = _.get(settings.getConfig('rank'), 'max_display', 15);
+    // TODO: 先改成 5 避免神秘的渲染问题，之后再说看要和 miao-plugin 一样默认 15 还是怎么说
+    maxDisplay = Math.max(1, Math.min(maxDisplay, 5));
     // 取前maxDisplay个数据
     scoredData = scoredData.slice(0, maxDisplay);
     const timer = setTimeout(() => {
