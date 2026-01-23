@@ -31,6 +31,7 @@ export class Rank extends ZZZPlugin {
     this.isGroupRankAllowed = isGroupRankAllowed;
     // 渲染结果的 JPEG quality，TRSS 默认值 90 会报神秘小错误
     this.quality = 60;
+    this.scale = 0.25;
   }
   async abyssRank() {
     const rank_type = 'ABYSS';
@@ -84,11 +85,27 @@ export class Rank extends ZZZPlugin {
       })
       .map(item => {
         const score = _.get(item, 'result.hadal_info_v2.brief.score', 0);
+        const rating = _.get(item, 'result.hadal_info_v2.brief.rating', 'C');
+        // 获取更新时间，使用最后一次挑战的时间
+        const layers = _.get(item, 'result.hadal_info_v2.fitfh_layer_detail.layer_challenge_info_list', []);
+        let updateTime = 0;
+        for (const layer of layers) {
+          const challengeTime = _.get(layer, 'challenge_time', 0);
+          updateTime = Math.max(updateTime, challengeTime);
+        }
+        if (updateTime === 0) {
+          // 如果没有挑战时间，使用当前时间戳
+          updateTime = currentTimestamp;
+        }
         
         return {
           ...item,
           result: item.result,
-          score: score
+          score: {
+            score,
+            rating,
+            updateTime,
+          }
         };
       });
     
@@ -96,11 +113,23 @@ export class Rank extends ZZZPlugin {
       return this.reply('没有式舆防卫战排名，请先 %显示深渊排名，并且用 %深渊 查询战绩');
     }
 
-    scoredData = _.sortBy(scoredData, 'score').reverse();
+    // 使用自定义比较函数排序
+    scoredData.sort((a, b) => {
+      // 首先比较得分，降序
+      if (a.score.score !== b.score.score) {
+        return b.score.score - a.score.score;
+      }
+      // 如果得分相同，比较评级，降序
+      if (a.score.rating !== b.score.rating) {
+        const ratingOrder = { 'S+': 5, 'S': 4, 'A': 3, 'B': 2, 'C': 1 };
+        return (ratingOrder[b.score.rating]) - (ratingOrder[a.score.rating]);
+      }
+      // 如果评级相同，比较更新时间，升序
+      return a.score.updateTime - b.score.updateTime;
+    });
     // 读取配置中的最大显示数量
     let maxDisplay = _.get(settings.getConfig('rank'), 'max_display', 15);
-    // TODO: 先改成 5 避免神秘的渲染问题，之后再说看要和 miao-plugin 一样默认 15 还是怎么说
-    maxDisplay = Math.max(1, Math.min(maxDisplay, 5));
+    maxDisplay = Math.max(1, Math.min(maxDisplay, 15));
     // 取前maxDisplay个数据
     scoredData = scoredData.slice(0, maxDisplay);
     const finalData = {
@@ -177,11 +206,34 @@ export class Rank extends ZZZPlugin {
         // 危局强袭战的排名依据是总分
         const totalScore = _.get(item, 'result.total_score', 0);
         const totalStar = _.get(item, 'result.total_star', 0);
+        // 获取最后一次的更新时间，要通过比较
+        const challenges = _.get(item, 'result.list');
+        let updateTime = 0;
+        // 转换成UNIX时间戳，更新时间
+        for (const challenge of challenges) {
+          const challengeTime = new Date(
+            challenge.challenge_time.year,
+            challenge.challenge_time.month - 1,
+            challenge.challenge_time.day,
+            challenge.challenge_time.hour,
+            challenge.challenge_time.minute,
+            challenge.challenge_time.second
+          ).getTime() / 1000;
+          updateTime = Math.max(updateTime, challengeTime);
+        }
+        if (updateTime === 0) {
+          // 如果数据没有更新到时间，那么就采用当前时间戳糊弄一下
+          updateTime = currentTimestamp;  
+        }
         
         return {
           ...item,
           result: new Deadly(item.result),
-          score: 1000000 * totalStar + totalScore // (星级, 得分) 的字典序
+          score: {
+            totalStar,
+            totalScore,
+            updateTime
+          }
         };
       });
     
@@ -189,11 +241,22 @@ export class Rank extends ZZZPlugin {
       return this.reply('没有危局强袭战排名，请先 %显示危局排名，并且用 %危局 查询战绩');
     }
     
-    scoredData = _.sortBy(scoredData, 'score').reverse();  // 降序排序，分数越高排名越前
+    // 使用自定义比较函数排序，避免溢出问题
+    scoredData.sort((a, b) => {
+      // 首先比较星级，降序
+      if (a.score.totalStar !== b.score.totalStar) {
+        return b.score.totalStar - a.score.totalStar;
+      }
+      // 如果星级相同，比较得分，降序
+      if (a.score.totalScore !== b.score.totalScore) {
+        return b.score.totalScore - a.score.totalScore;
+      }
+      // 如果得分相同，比较更新时间，升序
+      return a.score.updateTime - b.score.updateTime;
+    });
     // 读取配置中的最大显示数量
     let maxDisplay = _.get(settings.getConfig('rank'), 'max_display', 15);
-    // TODO: 先改成 5 避免神秘的渲染问题，之后再说看要和 miao-plugin 一样默认 15 还是怎么说
-    maxDisplay = Math.max(1, Math.min(maxDisplay, 5));
+    maxDisplay = Math.max(1, Math.min(maxDisplay, 15));
     // 取前maxDisplay个数据
     scoredData = scoredData.slice(0, maxDisplay);
     const timer = setTimeout(() => {

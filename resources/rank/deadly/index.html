@@ -25,61 +25,77 @@
             <div class="label server">{{player.region_name}}</div>
           </div>
           <div class="uid">UID {{player.game_uid}}</div>
-          <div class="result">
-            <div class="value">
-              <div class="label">总得分</div>
-              <div class="value">{{record.result.total_score}}</div>
-            </div>
-            <div class="rank">
-              <div class="label">星级</div>
-              <div class="value">{{record.result.total_star}}</div>
-            </div>
+        </div>
+        <div class="result">
+          <div class="value">
+            <div class="label">总得分</div>
+            <div class="value">{{record.result.total_score}}</div>
+          </div>
+          <div class="rank">
+            <div class="label">星级</div>
+            <div class="value">{{record.result.total_star}}</div>
           </div>
         </div>
       </div>      
+      <% for(let i=0 ; i < 3 ; i++) { %>
+      {{set team = record.result.list[i]}}
       <div class="item-card">
-        {{each record.result.list team i}}
-        <div class="team">
-          <div class="info">
-            <div class="label">{{team.boss[0].name}}</div>
-            <div class="spent">得分：{{team.score}}</div>
-            <div class="star">{{team.star}}星</div>
+        {{if team}}
+        <div class="pop"><img src="{{team.buffer[0].icon}}" alt=""></div>
+        <div class="content">
+          <div class="header">
+            <div class="name">{{team.boss[0].name}}</div>
+            <div class="value">
+              <div class="val">{{team.score}}</div>
+              <div class="stars">
+                <% for(let j=0 ; j < team.star ; j++) { %>
+                  <div class="star"></div>
+                  <% } %>
+                    <% for(let j=0 ; j < team.total_star - team.star ; j++) { %>
+                      <div class="star inactive"></div>
+                      <% } %>
+              </div>
+            </div>
           </div>
           <div class="list">
             <% for(let j=0 ; j < 3 ; j++) { %>
+            <div class="char-container">
               {{if team.avatar_list?.[j]}}
-              {{set char = team.avatar_list[j]}}
-              <div class="item char rank{{char.rarity}}">
-                <div class="rank rank-icon {{char.rarity}}"></div>
-                <div class="image">
-                  <img src="{{char.role_square_url}}" alt="">
+              <div class="item char">
+                {{if team.avatar_list[j].rank}}
+                <div class="count">{{team.avatar_list[j].rank}}</div>
+                {{/if}}
+                <div class="rank_disp">
+                  <div class="rank rank-icon {{team.avatar_list[j].rarity}}"></div>
                 </div>
-                <div class="c-info">
-                  <div class="ranks r{{char.rank}}">{{char.rank}}影</div>
-                  <div class="level">等级{{char.level}}</div>
+                <div class="image">
+                  <img src="{{team.avatar_list[j].role_square_url}}" alt="">
                 </div>
               </div>
               {{else}}
-                <div class="item char rankb"></div>
-              {{/if}}
-              <% } %>
-                {{if team.buddy}}
-                <div class="item bangboo rank{{team.buddy.rarity}}">
-                  <div class="rank rank-icon {{team.buddy.rarity}}"></div>
-                  <div class="image">
-                    <img src="{{team.buddy.bangboo_rectangle_url}}" alt="">
-                  </div>
-                  <div class="c-info">
-                    <div class="level">等级{{team.buddy.level}}</div>
-                  </div>
-                </div>
-                {{else}}
-                  <div class="item bangboo rankb"></div>
+                <div class="item char"></div>
                 {{/if}}
+            </div>
+            <% } %>
+            <div class="bangboo-container">
+              {{if team.buddy}}
+              <div class="item bangboo">
+                <div class="rank_disp">
+                  <div class="rank rank-icon {{team.buddy.rarity}}"></div>
+                </div>
+                <div class="image">
+                  <img src="{{team.buddy.bangboo_rectangle_url}}" alt="">
+                </div>
+              </div>
+              {{else}}
+                <div class="item bangboo"></div>
+              {{/if}}
+            </div>
           </div>
         </div>
-        {{/each}}
+        {{/if}}
       </div>
+      <% } %>
     </div>
     {{/each}}
 </div>

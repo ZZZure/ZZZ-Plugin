@@ -25,61 +25,78 @@
             <div class="label server">{{player.region_name}}</div>
           </div>
           <div class="uid">UID {{player.game_uid}}</div>
-          <div class="result">
-            <div class="value">
-              <div class="label">总得分</div>
-              <div class="value">{{record.result.hadal_info_v2.brief.score}}</div>
-            </div>
-            <div class="rank">
-              <div class="label">评级</div>
-              <div class="value">{{record.result.hadal_info_v2.brief.rating}}</div>
-            </div>
+        </div>
+        <div class="result">
+          <div class="value">
+            <div class="label">总得分</div>
+            {{if record.score.score === 150000}}
+              <div class="max-score-icon score150000"></div>
+            {{else}}
+              <div class="total-score">{{record.score.score}}</div>
+            {{/if}}
+          </div>
+          <div class="rank">
+            <div class="label">评级</div>
+            <div class="rating-icon {{record.score.rating.replace('+', 'P')}}"></div>
           </div>
         </div>
-      </div>      
+      </div>
+      <% for(let i=0 ; i < 3 ; i++) { %>
+      {{set layer = record.result.hadal_info_v2.fitfh_layer_detail.layer_challenge_info_list[i]}}
       <div class="item-card">
-        {{each record.result.hadal_info_v2.fitfh_layer_detail.layer_challenge_info_list layer i}}
-        <div class="team">
-          <div class="info">
-            <div class="star">{{layer.rating}}</div>
-            <div class="label">{{layer.buffer.title}}</div>            
-            <div class="spent">得分：{{layer.score}}</div>
+        {{if layer}}
+
+        <div class="content">
+          <div class="header">
+            <div class="name">{{layer.buffer.title}}</div>
+            <div class="value">
+              {{if layer.score === 50000}}
+                <div class="max-score-icon score50000"></div>
+              {{else}}
+                <div class="val">{{layer.score}}</div>
+              {{/if}}
+              <div class="rating-icon {{layer.rating.replace('+', 'P')}}"></div>
+            </div>
           </div>
           <div class="list">
             <% for(let j=0 ; j < 3 ; j++) { %>
+            <div class="char-container">
               {{if layer.avatar_list?.[j]}}
-              {{set char = layer.avatar_list[j]}}
-              <div class="item char rank{{char.rarity}}">
-                <div class="rank rank-icon {{char.rarity}}"></div>
-                <div class="image">
-                  <img src="{{char.role_square_url}}" alt="">
+              <div class="item char">
+                {{if layer.avatar_list[j].rank}}
+                <div class="count">{{layer.avatar_list[j].rank}}</div>
+                {{/if}}
+                <div class="rank_disp">
+                  <div class="rank rank-icon {{layer.avatar_list[j].rarity}}"></div>
                 </div>
-                <div class="c-info">
-                  <div class="ranks r{{char.rank}}">{{char.rank}}影</div>
-                  <div class="level">等级{{char.level}}</div>
+                <div class="image">
+                  <img src="{{layer.avatar_list[j].role_square_url}}" alt="">
                 </div>
               </div>
               {{else}}
-                <div class="item char rankb"></div>
-              {{/if}}
-              <% } %>
-                {{if layer.buddy}}
-                <div class="item bangboo rank{{layer.buddy.rarity}}">
-                  <div class="rank rank-icon {{layer.buddy.rarity}}"></div>
-                  <div class="image">
-                    <img src="{{layer.buddy.bangboo_rectangle_url}}" alt="">
-                  </div>
-                  <div class="c-info">
-                    <div class="level">等级{{layer.buddy.level}}</div>
-                  </div>
-                </div>
-                {{else}}
-                  <div class="item bangboo rankb"></div>
+                <div class="item char"></div>
                 {{/if}}
+            </div>
+            <% } %>
+            <div class="bangboo-container">
+              {{if layer.buddy}}
+              <div class="item bangboo">
+                <div class="rank_disp">
+                  <div class="rank rank-icon {{layer.buddy.rarity}}"></div>
+                </div>
+                <div class="image">
+                  <img src="{{layer.buddy.bangboo_rectangle_url}}" alt="">
+                </div>
+              </div>
+              {{else}}
+                <div class="item bangboo"></div>
+              {{/if}}
+            </div>
           </div>
         </div>
-        {{/each}}
+        {{/if}}
       </div>
+      <% } %>
     </div>
     {{/each}}
     <div class="notes-container">

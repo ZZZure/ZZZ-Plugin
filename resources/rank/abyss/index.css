@@ -1,286 +1,285 @@
-.container {
-  background-image: url("./images/bg2.jpg");
+body {
+  width: 2400px;
 }
 
-body {
-  width: 2000px;
+.rating-icon.S,
+.rating-icon.SP {
+  filter: drop-shadow(0 0 0.2em rgba(167, 193, 2, 0.8)) brightness(1.1);
+}
+
+.rating-icon.A,
+.rating-icon.AP {
+  filter: drop-shadow(0 0 0.2em rgba(201, 0, 201, 0.8)) brightness(1.1);
+}
+
+.rating-icon.B {
+  filter: drop-shadow(0 0 0.2em rgba(0, 68, 209, 0.8)) brightness(1.1);
+}
+
+.max-score-icon {
+  filter: drop-shadow(0 0 0.1em rgba(197, 251, 255, 0.6)) brightness(1.1);
+  width: 5.6em;
+  height: 2em;
+}
+
+.max-score-icon.score50000 {
+  width: 3.2em;
+  height: 1.2em;
+  scale: 1.1;
+  margin-top: 0.2em;
+}
+
+.item-rating {
+  position: absolute;
+  top: 0.4em;
+  right: 0.6em;
+  width: 5em;
+  height: 5em;
+  z-index: 3;
 }
 
 .card {
   margin: 0 1em;
+  padding-top: 1em;
+}
+.card .star {
+  background-color: rgba(0, 0, 0, 0.5);
+  background-image: url("./images/star-icon-light.png");
+  border-radius: 50%;
+  background-size: contain;
+}
+.card .star.inactive {
+  background-image: url("./images/star-icon-dark.png");
 }
 .card .record {
   display: flex;
-  margin: 0;
+  gap: 1em;
+  margin-bottom: 1em;
+  align-items: center;
+  height: 9em;
 }
 .card .record .user-info {
-  width: 450px;
-  padding: 0;
+  width: 650px;
+  padding: 0.5em;
+  border-image-slice: 200 100 70 280 fill;
+  border-image-width: 2em 1em 0.7em 2.8em;
+  border-image-outset: 0em 0em 0em 0em;
+  border-image-repeat: stretch stretch;
+}
+.card .record .user-info .info-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
 }
 .card .record .user-info .result {
   display: flex;
-  padding: 0 1em;
-  justify-content: space-between;
-  width: 100%;
+  padding: 0.5em;
+  gap: 1em;
+  margin-top: 0.5em;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.card .record .user-info .result .value {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.card .record .user-info .result .value .label {
+  font-size: 1.5em;
+  color: #ddd;
+}
+.card .record .user-info .result .value .total-score {
+  font-size: 1.5em;
+  font-weight: bold;
 }
 .card .record .user-info .result .rank {
-  width: 70px;
-  height: 70px;
-}
-.card .record .user-info .result .rank .rank-icon {
-  width: 100%;
-  height: 100%;
-}
-.card .record .user-info .result .value .label, .card .record .user-info .result .rank .label {
-  color: white;
-}
-.card .record .status {
-  background: url("./images/status.png") no-repeat center center;
-  background-size: 110% 160%;
-  aspect-ratio: 2.4;
-  overflow: hidden;
-  margin: 0 1em;
-  margin-bottom: 1.5em;
-  padding-top: 5.2em;
-  padding-left: 2em;
-  padding-right: 2em;
-  justify-content: space-around;
-}
-.card .record .status .info {
   display: flex;
-  font-size: 2em;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: 1.1em;
-  padding: 0 0.6em;
 }
-.card .record .status .info .time {
-  color: rgb(127, 127, 127);
+.card .record .user-info .result .rank .label {
+  font-size: 1.5em;
+  color: #ddd;
 }
-.card .record .status .info .ranks {
-  display: flex;
+.card .record .user-info .result .rank .value {
+  font-size: 1.5em;
+  font-weight: bold;
 }
-.card .record .status .info .ranks .rank {
-  width: 1.5em;
-  position: relative;
-}
-.card .record .status .info .ranks .rank .count {
-  position: absolute;
-  bottom: -0.3em;
-  right: -0.5em;
-  font-size: 0.6em;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.2em;
-  height: 1.2em;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-.card .record .status .cost {
-  display: flex;
-  justify-content: space-between;
-  font-size: 1.2em;
-}
-.card .record .status .cost .item {
-  display: flex;
-  align-items: flex-end;
-  gap: 0.5em;
-}
-.card .record .status .cost .item .label {
-  font-size: 0.68em;
-  margin-bottom: 0.1em;
-  color: rgb(176, 176, 176);
+.card .record .user-info .result .rank .rating-icon {
+  width: 60px;
+  transform: scale(1.5);
+  transform-origin: center;
 }
 .card .record .item-card {
+  width: 22em;
+  height: 100%;
   border-image-source: url("./images/BgFrame01.png");
   border-image-slice: 200 100 70 280 fill;
   border-image-width: 2em 1em 0.7em 2.8em;
   border-image-outset: 0em 0em 0em 0em;
   border-image-repeat: stretch stretch;
+  padding: 1.5em 1.7em;
   margin-bottom: 1em;
   display: flex;
-  width: 1000px;
-}
-.card .record .item-card .title {
-  display: flex;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 0.2em 0.5em;
-  font-size: 1.2em;
-  box-shadow: 0 0.1em 0.05em rgba(0, 0, 0, 0.5);
-}
-.card .record .item-card .title .rank-icon {
-  width: 1em;
-}
-.card .record .item-card .title .content {
-  z-index: 0;
+  gap: 1.2em;
   position: relative;
+  min-width: 0;
 }
-.card .record .item-card .title .content::after {
-  content: attr(data-content);
-  -webkit-text-stroke: 0.22em #000;
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: -1;
-}
-.card .record .item-card .title.a, .card .record .item-card .title.A {
-  color: rgb(195, 56, 240);
-}
-.card .record .item-card .title.b, .card .record .item-card .title.B {
-  color: rgb(93, 189, 246);
-}
-.card .record .item-card .title.s, .card .record .item-card .title.S {
-  color: rgb(240, 145, 53);
-}
-.card .record .item-card {
+.card .record .item-card .content {
   display: flex;
-  flex-direction: row;
-  width: 100%;
-  align-items: flex-start;
-  padding: 0.5em 1em;
-}
-.card .record .item-card .team {
+  flex-direction: column;
+  gap: 0.2em;
   flex: 1;
+  margin-right: 0.3em;
 }
-.card .record .item-card .team .info {
+.card .record .item-card .content .header {
   display: flex;
-  background-color: rgba(0, 0, 0, 0.2);
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.5em;
+  width: 100%;
 }
-.card .record .item-card .team .info .label {
-  padding: 0 0.5em;
+.card .record .item-card .content .header .name {
+  background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.4) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.2em;
+  flex-shrink: 0;
 }
-.card .record .item-card .team .info .spent, .card .record .item-card .team .info .time {
-  color: #ddd;
-  font-size: 0.8em;
-  padding: 0 0.2em;
-}
-.card .record .item-card .team .info .star {
-  color: white;
-  font-size: 0.8em;
-  padding: 0 0.2em;
-}
-.card .record .item-card .team .info .advantage {
+.card .record .item-card .content .header .value {
   display: flex;
+  font-size: 1.6em;
+  gap: 0.2em;
   align-items: center;
-  margin-left: 0.3em;
-  font-size: 0.8em;
-  background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(0.1em);
-  height: 100%;
-  padding: 0.1em 0.4em;
-  border-radius: 0.4em 0 0 0.4em;
-  min-width: 5.5em;
+  flex-shrink: 0;
 }
-.card .record .item-card .team .info .advantage .property {
-  width: 1em;
+.card .record .item-card .content .header .value .val {
+  background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.4) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
-.card .record .item-card .team .list {
+.card .record .item-card .content .header .value .rating-icon {
+  width: 60px;
+  transform: scale(1.5);
+  transform-origin: center;
+}
+.card .record .item-card .content .header .value .stars {
+  display: flex;
+  margin-left: 0.2em;
+  align-items: center;
+}
+.card .record .item-card .content .header .value .stars .star {
+  width: 0.9em;
+  height: 0.9em;
+  margin-left: -0.25em;
+}
+.card .record .item-card .content .list {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 0.8fr;
+  grid-template-columns: 1fr 1fr 1fr 0.7fr;
   align-items: flex-end;
-  gap: 5px;
+  gap: 1em;
+  margin-top: auto;
+  margin-bottom: 0.2em;
 }
-.card .record .item-card .team .list .item {
+.card .record .item-card .content .list .char-container,
+.card .record .item-card .content .list .bangboo-container {
+  width: 100%;
+}
+.card .record .item-card .content .list .char-container .item,
+.card .record .item-card .content .list .bangboo-container .item {
   width: 100%;
   position: relative;
+  border-radius: 0.5em;
+  box-shadow: 0 0 0 0.12em black, 0 0 0 0.24em #333534;
 }
-.card .record .item-card .team .list .item > * {
+.card .record .item-card .content .list .char-container .item > *,
+.card .record .item-card .content .list .bangboo-container .item > * {
   position: inherit;
   z-index: 1;
 }
-.card .record .item-card .team .list .item.bangboo {
+.card .record .item-card .content .list .char-container .item.bangboo,
+.card .record .item-card .content .list .bangboo-container .item.bangboo {
   font-size: 0.8em;
 }
-.card .record .item-card .team .list .item::after {
+.card .record .item-card .content .list .char-container .item .count,
+.card .record .item-card .content .list .bangboo-container .item .count {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0.1em 0.3em;
+  font-size: 0.8em;
+  border-bottom-left-radius: 0.3em;
+  border-top-right-radius: 0.5em;
+}
+.card .record .item-card .content .list .char-container .item .rank_disp,
+.card .record .item-card .content .list .bangboo-container .item .rank_disp {
+  position: absolute;
+  top: 0em;
+  left: 0em;
+  background-color: rgb(0, 0, 0);
+  z-index: 2;
+  padding: 0.1em;
+  border-bottom-right-radius: 0.25em;
+  border-top-left-radius: 0.25em;
+}
+.card .record .item-card .content .list .char-container .item .rank_disp .rank,
+.card .record .item-card .content .list .bangboo-container .item .rank_disp .rank {
+  width: 1em;
+  color: white;
+  position: relative;
+}
+.card .record .item-card .content .list .char-container .item .rank_disp .rank::before,
+.card .record .item-card .content .list .bangboo-container .item .rank_disp .rank::before {
   content: "";
-  display: block;
   position: absolute;
-  top: 0.2em;
-  left: -0.2em;
-  width: 100%;
-  height: 100%;
-  background: rgb(138, 51, 183);
-  z-index: 0;
+  top: -0.1em;
+  right: -0.4em;
+  width: 0.3em;
+  height: 0.3em;
+  background: radial-gradient(circle at 100% 0, transparent 0.3em, rgb(0, 0, 0) 0.3em);
+  rotate: 90deg;
 }
-.card .record .item-card .team .list .item .rank {
+.card .record .item-card .content .list .char-container .item .rank_disp .rank::after,
+.card .record .item-card .content .list .bangboo-container .item .rank_disp .rank::after {
+  content: "";
   position: absolute;
-  top: 0.2em;
-  left: 0.1em;
-  width: 1.5em;
-  color: white;
-  z-index: 2;
+  bottom: -0.4em;
+  left: -0.1em;
+  width: 0.3em;
+  height: 0.3em;
+  background: radial-gradient(circle at 100% 0, transparent 0.3em, rgb(0, 0, 0) 0.3em);
+  rotate: 90deg;
 }
-.card .record .item-card .team .list .item.rankS::after {
-  background: rgb(230, 119, 51);
-}
-.card .record .item-card .team .list .item.rankB::after {
-  background: rgb(93, 183, 249);
-}
-.card .record .item-card .team .list .item .image {
+.card .record .item-card .content .list .char-container .item .image,
+.card .record .item-card .content .list .bangboo-container .item .image {
   width: 100%;
-  aspect-ratio: 0.8;
-  background-color: #e2e2e2;
-}
-.card .record .item-card .team .list .item .image img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-}
-.card .record .item-card .team .list .item .c-info {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: rgb(0, 0, 0);
-  color: white;
-  display: flex;
-  text-align: center;
-}
-.card .record .item-card .team .list .item .c-info .ranks {
-  background: rgb(117, 117, 117);
-  padding: 0 0.2em;
-}
-.card .record .item-card .team .list .item .c-info .ranks.r1 {
-  background: rgb(58, 116, 43);
-}
-.card .record .item-card .team .list .item .c-info .ranks.r2 {
-  background: rgb(61, 132, 214);
-}
-.card .record .item-card .team .list .item .c-info .ranks.r3 {
-  background: rgb(223, 118, 118);
-}
-.card .record .item-card .team .list .item .c-info .ranks.r4 {
-  background: rgb(51, 54, 161);
-}
-.card .record .item-card .team .list .item .c-info .ranks.r5 {
-  background: rgb(102, 127, 19);
-}
-.card .record .item-card .team .list .item .c-info .ranks.r6 {
-  background: rgb(218, 48, 32);
-}
-.card .record .item-card .team .list .item .c-info .level {
-  flex-grow: 1;
-  flex-shrink: 1;
+  aspect-ratio: 1;
+  border-radius: 0.5em;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  text-align: center;
 }
-.card .record .item-card .team .list .item .property {
+.card .record .item-card .content .list .char-container .item .image img,
+.card .record .item-card .content .list .bangboo-container .item .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+.card .record .item-card .content .list .char-container .item.bangboo .image,
+.card .record .item-card .content .list .bangboo-container .item.bangboo .image {
+  position: relative;
+}
+.card .record .item-card .content .list .char-container .item.bangboo .image img,
+.card .record .item-card .content .list .bangboo-container .item.bangboo .image img {
+  width: 210%;
+  height: 200%;
   position: absolute;
-  top: 0.2em;
-  right: 0.1em;
-  width: 1.6em;
-  background-color: #000;
-  border-radius: 50%;
-  border: solid 0.1em #000;
-  color: white;
-  z-index: 2;
+  object-position: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-40%, -35%);
 }
 .card .notes-container {
   padding: 0.5em 1em;
