@@ -297,5 +297,26 @@ body {
   left: 50%;
   transform: translate(-40%, -35%);
 }
+.card .notes-container {
+  padding: 0.5em 1em;
+  border-image-source: url("./images/BgFrame01.png");
+  border-image-slice: 200 100 70 280 fill;
+  border-image-width: 2em 1em 0.7em 2.8em;
+  border-image-outset: 0em 0em 0em 0em;
+  border-image-repeat: stretch stretch;
+  margin-bottom: 1em;
+  display: flex;
+}
+.card .notes-container .notes {
+  margin: 0 2em;
+}
+.card .notes-container .notes li {
+  margin: 0.3em 0;
+  color: #979797;
+}
+.card .notes-container .notes .command {
+  color: rgb(255, 215, 0);
+  padding: 0 0.3em;
+}
 
 /*# sourceMappingURL=index.css.map */
