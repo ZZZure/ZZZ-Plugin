@@ -28,10 +28,10 @@
   border-image-source: url("./images/bg4.png");
 }
 .card .title.t5 {
-  border-image-source: url("./images/bg1.png");
+  border-image-source: url("./images/bg5.png");
 }
 .card .title.t6 {
-  border-image-source: url("./images/bg2.png");
+  border-image-source: url("./images/bg6.png");
 }
 .card .title .info {
   flex-grow: 1;
