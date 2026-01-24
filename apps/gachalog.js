@@ -3,7 +3,7 @@ import { getAuthKey } from '../lib/authkey.js';
 import settings from '../lib/settings.js';
 import _ from 'lodash';
 import common from '../../../lib/common/common.js';
-import { anaylizeGachaLog, updateGachaLog, updateGachaLog_os } from '../lib/gacha.js';
+import { anaylizeGachaLog, updateGachaLog, updateGachaLog_ck } from '../lib/gacha.js';
 import { getZZZGachaLink, getZZZGachaLogByAuthkey } from '../lib/gacha/core.js';
 import { gacha_type_meta_data } from '../lib/gacha/const.js';
 import { getQueryVariable } from '../utils/network.js';
@@ -127,7 +127,7 @@ export class GachaLog extends ZZZPlugin {
     if (/^(1[0-9])[0-9]{8}/i.test(uid)) {
       const { api, deviceFp } = await this.getAPI();
       this.reply('抽卡记录获取中请稍等...可能需要一段时间，请耐心等待');
-      const { data, count } = await updateGachaLog_os(api, uid, deviceFp);
+      const { data, count } = await updateGachaLog_ck(api, uid, deviceFp);
       let msg = [];
       msg.push(`抽卡记录更新成功，共${Object.keys(data).length}个卡池`);
       for (const name in data) {
