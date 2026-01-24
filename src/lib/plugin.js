@@ -5,6 +5,7 @@ import _ from 'lodash';
 import NoteUser from '../../../genshin/model/mys/NoteUser.js';
 import settings from '../../lib/settings.js';
 import request from '../utils/request.js';
+import fetch from 'node-fetch'
 import path from 'path';
 import { pluginName, resourcesPath } from './path.js';
 import version from '../../lib/version.js';
@@ -120,11 +121,22 @@ export class ZZZPlugin extends plugin {
         }
       }
       const sdk = api.getUrl('getFp', data);
-      const res = await request(sdk.url, {
-        headers: sdk.headers,
-        method: 'POST',
-        body: sdk.body,
-      });
+      let res;
+      try {
+        res = await fetch(sdk.url, {
+          headers: sdk.headers,
+          method: 'POST',
+          body: sdk.body,
+        });
+      } catch (error) {
+        logger.error(error.toString());
+        if (!/^(1[0-9])[0-9]{8}/i.test(uid)) {
+          deviceFp = '38d805c20d53d';
+        } else {
+          deviceFp = '38d7f4c72b736';
+        }
+        return { api, uid, deviceFp };
+      }
       const fpRes = await res.json();
       logger.debug(`[米游社][设备指纹]${JSON.stringify(fpRes)}`);
       deviceFp = fpRes?.data?.device_fp;
@@ -241,7 +253,9 @@ export class ZZZPlugin extends plugin {
         // 布局路径
         const layoutPath = data.pluResPath + 'common/layout/';
         // 当前的渲染路径
-        const renderPathFull = data.pluResPath + renderPath.split('/')[0] + '/';
+        // 可能有多级（e.g., rank/abyss/index.html），取目录
+        const renderPathDir = renderPath.substring(0, renderPath.lastIndexOf('/') + 1);
+        const renderPathFull = data.pluResPath + renderPathDir + '/';
         // 合并数据
         return {
           // 玩家信息

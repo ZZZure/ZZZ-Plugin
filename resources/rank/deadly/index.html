@@ -1,0 +1,109 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{@sys.currentPath}}/index.css">
+{{/block}}
+
+{{block 'main'}}
+<div class="card">
+  <% include(sys.specialTitle, {en: 'DEADLY RANK' , cn: '危局强袭战排名' }) %>
+    {{each scoredData record i}}
+    <div class="record">
+      <div class="user-info">
+        <link rel="stylesheet" type="text/css" href="{{@sys.resourcesPath}}/common/layout/playerinfo.css" />
+        {{set avatar = record.player.avatar}}
+        {{set player = record.player.player}}
+        <div class="avatar">
+          <img src="{{avatar}}" alt="Avatar">
+        </div>
+        <div class="info-bar">
+          <div class="info">
+            <div class="nickname">{{player.nickname}}</div>
+          </div>
+          <div class="info">
+            <div class="label level">Lv{{player.level}}</div>
+            <div class="label server">{{player.region_name}}</div>
+          </div>
+          <div class="uid">UID {{player.game_uid}}</div>
+        </div>
+        <div class="result">
+          <div class="value">
+            <div class="label">总得分</div>
+            <div class="value">{{record.result.total_score}}</div>
+          </div>
+          <div class="rank">
+            <div class="label">星级</div>
+            <div class="value">{{record.result.total_star}}</div>
+          </div>
+        </div>
+      </div>      
+      <% for(let i=0 ; i < 3 ; i++) { %>
+      {{set team = record.result.list[i]}}
+      <div class="item-card">
+        {{if team}}
+        <div class="pop"><img src="{{team.buffer[0].icon}}" alt=""></div>
+        <div class="content">
+          <div class="header">
+            <div class="name">{{team.boss[0].name}}</div>
+            <div class="value">
+              <div class="val">{{team.score}}</div>
+              <div class="stars">
+                <% for(let j=0 ; j < team.star ; j++) { %>
+                  <div class="star"></div>
+                  <% } %>
+                    <% for(let j=0 ; j < team.total_star - team.star ; j++) { %>
+                      <div class="star inactive"></div>
+                      <% } %>
+              </div>
+            </div>
+          </div>
+          <div class="list">
+            <% for(let j=0 ; j < 3 ; j++) { %>
+            <div class="char-container">
+              {{if team.avatar_list?.[j]}}
+              <div class="item char">
+                {{if team.avatar_list[j].rank}}
+                <div class="count">{{team.avatar_list[j].rank}}</div>
+                {{/if}}
+                <div class="rank_disp">
+                  <div class="rank rank-icon {{team.avatar_list[j].rarity}}"></div>
+                </div>
+                <div class="image">
+                  <img src="{{team.avatar_list[j].role_square_url}}" alt="">
+                </div>
+              </div>
+              {{else}}
+                <div class="item char"></div>
+                {{/if}}
+            </div>
+            <% } %>
+            <div class="bangboo-container">
+              {{if team.buddy}}
+              <div class="item bangboo">
+                <div class="rank_disp">
+                  <div class="rank rank-icon {{team.buddy.rarity}}"></div>
+                </div>
+                <div class="image">
+                  <img src="{{team.buddy.bangboo_rectangle_url}}" alt="">
+                </div>
+              </div>
+              {{else}}
+                <div class="item bangboo"></div>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+        {{/if}}
+      </div>
+      <% } %>
+    </div>
+    {{/each}}
+    <div class="notes-container">
+      <ul class="notes">
+        <li>请在群内查询<span class="command">%危局强袭战</span>，以参与对应群的危局强袭战排名</li>
+        <li>对于分数持平的情况，会根据分数的更新时间进行排序，更新时间越早的排名越靠前</li>
+      </ul>
+    </div>
+</div>
+
+{{/block}}
