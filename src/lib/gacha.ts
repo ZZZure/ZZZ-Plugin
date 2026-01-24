@@ -182,21 +182,8 @@ export const updateGachaLog_os = async (api: MysZZZApi, uid: string, deviceFp: s
 
 /**
  * 抽卡分析
- * @param {string} uid  ZZZUID
- * @returns {Promise<{
- *  name: string;
- *  timeRange: string;
- *  list: SingleGachaLog[];
- *  lastFive: number | string;
- *  fiveStars: number;
- *  upCount: number;
- *  totalCount: number;
- *  avgFive: string;
- *  avgUp: string;
- *  level: number;
- *  tag: string;
- *  emoji: number;
- * }[]>} 分析结果
+ * @param uid  ZZZUID
+ * @returns 分析结果
  */
 export const anaylizeGachaLog = async (uid: string) => {
   // 读取已保存的数据

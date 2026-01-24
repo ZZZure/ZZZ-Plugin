@@ -1,13 +1,13 @@
-import { Config, Mys } from '#interface'
+import type { Mys } from '#interface'
 import { generateSeed } from '../../utils/data.js'
 import settings from '../settings.js'
 import crypto from 'crypto'
 import _ from 'lodash'
+
 /**
  * derived from miao-yunzai
  */
 export default class ZZZApiTool {
-
   uid: string
   isZZZ: boolean
   server: string
@@ -24,11 +24,7 @@ export default class ZZZApiTool {
       query: string
     }
   }
-  /**
-   *
-   * @param {uid} uid
-   * @param {server} server
-   */
+
   constructor(uid: string, server: string) {
     this.uid = uid
     this.isZZZ = true
@@ -214,5 +210,6 @@ export default class ZZZApiTool {
       },
     }
     return urlMap[this.game as keyof typeof urlMap]
-  };
+  }
+
 }

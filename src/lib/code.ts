@@ -46,8 +46,8 @@ async function getActId() {
 
   const keywords = ['前瞻直播', '兑换码', '前瞻', '直播']
   for (const nav of ret.data.navigator) {
-    const name = nav.name
-    if (name && keywords.every(word => name.includes(word))) {
+    const name = nav?.name
+    if (name && keywords.some(word => name.includes(word))) {
       const matched = nav.app_path?.match(/act_id=(.*?)&/)
       if (matched) return matched[1]
     }

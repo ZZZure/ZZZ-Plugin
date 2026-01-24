@@ -263,7 +263,7 @@ export class BuffManager {
                 return false
               }
             }
-            // @ts-ignore
+            // @ts-expect-error
             if (buff[key] !== param[key]) return false
           }
           if (buff.check) {
@@ -334,7 +334,7 @@ export class BuffManager {
       | ((buff: buff, index: number) => boolean),
     valueOcalc?: buff[T] | Calculator
   ) {
-    // @ts-ignore
+    // @ts-expect-error
     return this._filter(this.buffs, param, valueOcalc)
   }
 

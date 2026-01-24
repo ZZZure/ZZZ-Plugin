@@ -1,6 +1,7 @@
-import type { Cookie } from './common.js'
-import type { Message } from 'icqq'
 import type Handler from '../../../../lib/plugins/handler.js'
+import type { Cookie } from './common.js'
+import type { Mys } from '#interface'
+import type { Message } from 'icqq'
 import MysApi from '../../../genshin/model/mys/mysApi.js'
 import { randomString } from '../utils/data.js'
 import ZZZApiTool from './mysapi/tool.js'
@@ -8,9 +9,8 @@ import { MysError } from './error.js'
 import settings from './settings.js'
 import crypto from 'crypto'
 import _ from 'lodash'
-// @ts-expect-error
+// @ts-ignore
 import md5 from 'md5'
-import { Mys } from '#interface'
 
 // const DEVICE_ID = randomString(32).toUpperCase()
 // const DEVICE_NAME = randomString(_.random(1, 10));
@@ -27,7 +27,7 @@ export default class MysZZZApi extends MysApi {
     handler?: typeof Handler
     e?: Message
   }) {
-    // @ts-expect-error
+    // @ts-ignore
     super(uid, cookie, option, true)
     // 初始化 uid、server、apiTool
     this.uid = uid
@@ -38,7 +38,7 @@ export default class MysZZZApi extends MysApi {
     // 绑定过🐎插件 （如果存在）
     this.handler = option?.handler
     // 绑定yunzai event （如果存在）
-    // @ts-expect-error
+    // @ts-ignore
     this.e = option?.e || {}
     // 获取 cookie 和设备 ID
     if (typeof this.cookie !== 'string' && this.cookie) {
@@ -218,10 +218,8 @@ export default class MysZZZApi extends MysApi {
 
   /**
    * 获取DS
-   * @param q
-   * @param b
    */
-  getDs(q = '', b = '') {
+  getDs(query = '', body = '') {
     let n = ''
     if (['prod_gf_cn'].includes(this.server)) {
       n = 'xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs'
@@ -230,7 +228,7 @@ export default class MysZZZApi extends MysApi {
     }
     const t = Math.round(new Date().getTime() / 1000)
     const r = Math.floor(Math.random() * 900000 + 100000)
-    const DS = md5(`salt=${n}&t=${t}&r=${r}&b=${b}&q=${q}`)
+    const DS = md5(`salt=${n}&t=${t}&r=${r}&b=${body}&q=${query}`)
     return `${t},${r},${DS}`
   }
 
@@ -246,8 +244,6 @@ export default class MysZZZApi extends MysApi {
 
   /**
    * 获取请求头
-   * @param query
-   * @param body
    */
   getHeaders(query: string = '', body: string = ''): {
     [key: string]: any

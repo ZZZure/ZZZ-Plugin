@@ -5,15 +5,13 @@ import _ from 'lodash'
 
 /**
  * 保存月度数据
- * @param uid
- * @param newData
  */
-export const saveMonthlyNewData = (uid: string, ...newDatas: any[]): Mys.Monthly[] => {
+export const saveMonthlyNewData = (uid: string, ...newDatas: Mys.Monthly[]) => {
   // 获取先前月度数据
   const savedData = getMonthlyData(uid)
   // 合并新旧数据
   const mergedData = _.unionBy(newDatas, savedData, 'data_month').sort(
-    (a, b) => a.data_month - b.data_month
+    (a, b) => +a.data_month - +b.data_month
   )
   // 保存数据
   saveMonthlyData(uid, mergedData)
@@ -24,7 +22,7 @@ export const saveMonthlyNewData = (uid: string, ...newDatas: any[]): Mys.Monthly
  * 获取月度数据
  * @param api
  * @param deviceFp
- * @param month
+ * @param month 月份
  */
 export const getMonthly = async (api: MysZZZApi, deviceFp: string, month: string) => {
   // 获取月度数据
@@ -32,14 +30,14 @@ export const getMonthly = async (api: MysZZZApi, deviceFp: string, month: string
     deviceFp,
     query: { month },
   })
-  saveMonthlyNewData(api.uid, data)
+  if (data) {
+    saveMonthlyNewData(api.uid, data)
+  }
   return data
 }
 
 /**
  * 月度数据（统计）
- * @param api
- * @param deviceFp
  */
 export const getMonthlyCollect = async (api: MysZZZApi, deviceFp: string) => {
   // 获取当前月度数据

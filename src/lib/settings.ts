@@ -62,7 +62,9 @@ class Setting {
     }
   }
 
-  // 配置对象化 用于锅巴插件界面填充
+  /**
+   * 配置对象化 用于锅巴插件界面填充
+   */
   merge() {
     let sets: { [key: string]: any } = {}
     let appsConfig = fs
@@ -76,7 +78,9 @@ class Setting {
     return sets
   }
 
-  // 配置对象分析 用于锅巴插件界面设置
+  /**
+   * 配置对象分析 用于锅巴插件界面设置
+   */
   analysis(config: filesData) {
     for (const key of Object.keys(config) as files[]) {
       this.setConfig(key, config[key])
@@ -216,7 +220,9 @@ class Setting {
     return this.setYaml(app, 'config', { ...defSet, ...config })
   }
 
-  // 将对象写入YAML文件
+  /**
+   * 将对象写入YAML文件
+   */
   setYaml<T extends files>(app: T, type: fileTypes, Object: Config.KeyValue[T]): boolean {
     let file = this.getFilePath(app, type)
     try {
@@ -228,7 +234,9 @@ class Setting {
     }
   }
 
-  // 读取YAML文件 返回对象
+  /**
+   * 读取YAML文件 返回对象
+   */
   getYaml<T extends files>(app: T, type: fileTypes): Config.KeyValue[T] {
     let file = this.getFilePath(app, type)
     if (this[type][app]) return this[type][app]
@@ -237,7 +245,9 @@ class Setting {
     return this[type][app]
   }
 
-  // 获取YAML文件目录
+  /**
+   * 获取YAML文件目录
+   */
   getFilePath(app: files, type: fileTypes) {
     const appFilename = `${app}.yaml`
     if (type === 'defSet') return path.join(this.defPath, appFilename)
@@ -256,7 +266,9 @@ class Setting {
     }
   }
 
-  // 监听配置文件
+  /**
+   * 监听配置文件
+   */
   watch<T extends files>(file: string, app: T, type: fileTypes = 'defSet') {
     if (this.watcher[type][app]) return
     const watcher = chokidar.watch(file)

@@ -1,8 +1,5 @@
 import type { Mys } from '#interface'
 
-/**
- * @class
- */
 export class Property {
   property_name: string
   property_id: number

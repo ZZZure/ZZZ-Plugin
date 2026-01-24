@@ -2,8 +2,8 @@ import fetch, { RequestInit } from 'node-fetch'
 
 /**
  * 请求
- * @param {string} url 请求地址
- * @param {object} options 请求配置
+ * @param url 请求地址
+ * @param options 请求配置
  */
 const _request = async (url: string, options: RequestInit) => {
   const response = await fetch(url, options)

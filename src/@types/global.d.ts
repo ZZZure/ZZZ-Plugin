@@ -19,7 +19,6 @@ declare global {
   var Bot: typeof Client.prototype
   var redis: redisM.RedisClientType
   var segment: typeof segmentSource
-  // @ts-ignore
   var logger: {
     chalk: typeof chalk
     red: typeof chalk

@@ -6,7 +6,6 @@ const RANK_MAP = {
 
 /**
  * 获取星级对应的字母
- * @param id
  */
 export function getRankChar(id: keyof typeof RANK_MAP) {
   return RANK_MAP[id] || ''

@@ -1,9 +1,6 @@
 import type { Mys } from '#interface'
 import request from '../utils/request.js'
 
-/**
- * @class Deadly.
- */
 export class Deadly {
   start_time: DeadlyTime
   end_time: DeadlyTime
@@ -28,6 +25,7 @@ export class Deadly {
     this.total_score = data.total_score
     this.list = data.list.map(item => new DeadlyList(item))
   }
+
   async get_assets() {
     const avatar_icon_b64 = await request
       .get(this.avatar_icon)
@@ -39,11 +37,9 @@ export class Deadly {
     this.avatar_icon = avatar_icon_b64
     await Promise.all(this.list.map(item => item.get_assets()))
   }
+
 }
 
-/**
- * @class DeadlyList.
- */
 export class DeadlyList {
   star: number
   score: number
@@ -73,11 +69,9 @@ export class DeadlyList {
       ...this.buffer.map(buffer => buffer.get_assets()),
     ])
   }
+
 }
 
-/**
- * @class AvatarList.
- */
 export class AvatarList {
   rarity: string
   element_type: number
@@ -109,11 +103,9 @@ export class AvatarList {
       )
     this.role_square_url = role_square_b64
   }
+
 }
 
-/**
- * @class Buddy.
- */
 export class Buddy {
   id: number
   rarity: string
@@ -137,11 +129,9 @@ export class Buddy {
       )
     this.bangboo_rectangle_url = bangboo_rectangle_b64
   }
+
 }
 
-/**
- * @class DeadBuffer.
- */
 export class DeadBuffer {
   desc: string
   icon: string
@@ -163,11 +153,9 @@ export class DeadBuffer {
       )
     this.icon = icon_b64
   }
+
 }
 
-/**
- * @class Bos.
- */
 export class Bos {
   race_icon: string
   icon: string
@@ -214,9 +202,6 @@ export class Bos {
 
 }
 
-/**
- * @class DeadlyTime.
- */
 export class DeadlyTime {
   hour: number
   minute: number

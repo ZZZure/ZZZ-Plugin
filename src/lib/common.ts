@@ -1,4 +1,3 @@
-// @ts-ignore
 import User from '../../../genshin/model/user.js'
 import { getStoken } from './authkey.js'
 
@@ -23,11 +22,11 @@ export const getCk = async (e: any, s = false): Promise<Record<string, Cookie> |
   let stoken = ''
   const user = new User(e)
   if (s) {
-    stoken = getStoken(e)
+    stoken = getStoken(e)?.stoken || ''
   }
-  // @ts-expect-error
+  // @ts-ignore
   if (typeof user.getCk === 'function') {
-    // @ts-expect-error
+    // @ts-ignore
     let ck = user.getCk()
     Object.keys(ck).forEach(k => {
       if (ck[k].ck) {

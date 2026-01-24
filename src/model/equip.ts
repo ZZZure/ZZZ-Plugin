@@ -4,9 +4,6 @@ import { getEquipPropertyEnhanceCount } from '../lib/score.js'
 import { property } from '../lib/convert.js'
 import Score from './score/Score.js'
 
-/**
- * @class
- */
 export class EquipProperty {
   property_name: string
   property_id: number
@@ -28,9 +25,6 @@ export class EquipProperty {
 
 }
 
-/**
- * @class
- */
 export class EquipMainProperty {
   property_name: string
   property_id: number
@@ -57,9 +51,6 @@ export class EquipMainProperty {
 
 }
 
-/**
- * @class
- */
 export class EquipSuit {
   suit_id: number
   name: string
@@ -77,9 +68,6 @@ export class EquipSuit {
 
 }
 
-/**
- * @class
- */
 export class Equip {
   id: number
   level: number
@@ -132,7 +120,6 @@ export class Equip {
   /**
    * 获取装备属性分数
    * @param weight 权重
-   * @returns {number}
    */
   get_score(weight: { [propID: string]: number }): number {
     if (!weight) return this.score
@@ -141,7 +128,6 @@ export class Equip {
     return this.score
   }
 
-  /** @type {'C'|'B'|'A'|'S'|'SS'|'SSS'|'ACE'|'MAX'|false} */
   get comment() {
     if (this.score <= 12) {
       return 'C'
@@ -172,9 +158,6 @@ export class Equip {
 
 }
 
-/**
- * @class
- */
 export class Weapon {
   id: number
   level: number

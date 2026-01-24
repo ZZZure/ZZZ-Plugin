@@ -1,8 +1,5 @@
 import type { Mys } from '#interface'
 
-/**
- * @class ListData
- */
 class ListData {
   data_type: string
   count: number
@@ -16,9 +13,6 @@ class ListData {
 
 }
 
-/**
- * @class IncomeComponents
- */
 class IncomeComponents {
   action: string
   num: number
@@ -30,7 +24,6 @@ class IncomeComponents {
     this.percent = data.percent
   }
 
-  /** @type {string} */
   get name() {
     switch (this.action) {
       case 'daily_activity_rewards':
@@ -54,9 +47,6 @@ class IncomeComponents {
 
 }
 
-/**
- * @class MonthData
- */
 class MonthData {
   list: ListData[]
   income_components: IncomeComponents[]
@@ -82,9 +72,6 @@ class MonthData {
 
 }
 
-/**
- * @class Monthly
- */
 export class Monthly {
   uid: string
   region: string

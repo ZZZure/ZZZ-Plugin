@@ -4,13 +4,13 @@ import request from '../../utils/request.js'
 
 /**
  * 获取抽卡链接
- * @param {string} authKey 米游社认证密钥
- * @param {string} gachaType 祈愿类型（池子代码）
- * @param {string} initLogGachaBaseType
- * @param {number} page 页数
- * @param {string} endId 最后一个数据的 id
- * @param {string} size 页面数据大小
- * @returns {Promise<string>} 抽卡链接
+ * @param authKey 米游社认证密钥
+ * @param gachaType 祈愿类型（池子代码）
+ * @param initLogGachaBaseType
+ * @param page 页数
+ * @param endId 最后一个数据的 id
+ * @param size 页面数据大小
+ * @returns 抽卡链接
  */
 export const getZZZGachaLink = async (
   authKey: string,
@@ -52,11 +52,11 @@ export const getZZZGachaLink = async (
 
 /**
  * 通过米游社认证密钥获取抽卡记录
- * @param {string} authKey 米游社认证密钥
- * @param {string} gachaType 祈愿类型（池子代码）
- * @param {string} initLogGachaBaseType
- * @param {number} page 页数
- * @param {string} endId 最后一个数据的 id
+ * @param authKey 米游社认证密钥
+ * @param gachaType 祈愿类型（池子代码）
+ * @param initLogGachaBaseType
+ * @param page 页数
+ * @param endId 最后一个数据的 id
  */
 export const getZZZGachaLogByAuthkey = async (
   authKey: string,

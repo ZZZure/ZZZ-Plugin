@@ -5,8 +5,9 @@ import _ from 'lodash'
 
 let Update = null
 try {
+  // @ts-ignore
   Update = (await import('../../../other/update.js').catch(e => null))?.update
-  // @ts-expect-error
+  // @ts-ignore
   Update ||= (await import('../../system/apps/update.js')).update
 } catch (e) {
   logger.error(

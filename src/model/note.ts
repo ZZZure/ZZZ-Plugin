@@ -1,8 +1,5 @@
 import { converSecondsToHM } from '../utils/time.js'
 
-/**
- * @class
- */
 export class Vitality {
 
   constructor(public max: number, public current: number) {
@@ -15,11 +12,7 @@ export class Vitality {
 
 }
 
-/**
- * @class
- */
 export class VhsSale {
-
 
   constructor(public sale_state: string) {
 
@@ -51,9 +44,6 @@ export class EnergyProgress {
 
 }
 
-/**
- * @class
- */
 export class Energy {
   progress: EnergyProgress
   restore: number
@@ -67,9 +57,6 @@ export class Energy {
 
 }
 
-/**
- * @class
- */
 export class ZZZNoteResp {
   energy: Energy
   vitality: Vitality

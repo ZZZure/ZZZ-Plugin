@@ -1,3 +1,4 @@
+import type { Enka } from '#interface'
 import { Enka2Mys } from './formater.js'
 import settings from '../../lib/settings.js'
 import fetch from 'node-fetch'
@@ -52,8 +53,7 @@ export async function refreshPanelFromEnka(uid: string | number) {
     return res.status
   }
   const data = await res.json() as any
-  /** @type {import('#interface').Enka.Avatar[]} */
-  const panelList = data?.PlayerInfo?.ShowcaseDetail?.AvatarList
+  const panelList = data?.PlayerInfo?.ShowcaseDetail?.AvatarList as Enka.Avatar[]
   if (!panelList || !Array.isArray(panelList)) {
     logger.warn('Enka更新面板失败：获取面板数据失败')
     return res.status

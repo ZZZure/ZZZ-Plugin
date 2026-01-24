@@ -980,7 +980,6 @@ export namespace MapJSON {
   }
 
   export interface EquipScore {
-    //@ts-expect-error
     [charID: string]: string[] | { rules?: string[], [propID: string]: number }
   }
 

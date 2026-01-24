@@ -132,8 +132,7 @@ export const mergePanel = async (uid: string, newData: Mys.Avatar[]) => {
 }
 
 /**
- *获取面板数据
- * @param uid
+ * 获取面板数据
  */
 export const getPanelList = (uid: string) => {
   const data = getPanelData(uid)
@@ -142,7 +141,6 @@ export const getPanelList = (uid: string) => {
 
 /**
  * 获取面板数据（原始数据）
- * @param uid
  */
 export const getPanelListOrigin = (uid: string) => {
   return getPanelData(uid)
@@ -150,8 +148,6 @@ export const getPanelListOrigin = (uid: string) => {
 
 /**
  * 获取某个角色的面板数据
- * @param uid
- * @param name
  * @returns false name对应角色不存在 | null 无面板数据 | ZZZAvatarInfo 面板数据
  */
 export const getPanel = (uid: string, name: string) => {
@@ -169,8 +165,6 @@ export const getPanel = (uid: string, name: string) => {
 
 /**
  * 获取某个角色的面板数据（原始数据）
- * @param uid
- * @param name
  * @returns false name对应角色不存在 | null 无面板数据 | Mys.Avatar 面板数据
  */
 export const getPanelOrigin = (uid: string, name: string) => {
@@ -192,7 +186,6 @@ export const formatPanelDatas = (data: Mys.Avatar[]) => {
 
 /**
  * 将Mys.Avatar数据格式化为ZZZAvatarInfo
- * @param data
  */
 export const formatPanelData = (data: Mys.Avatar) => {
   return new ZZZAvatarInfo(data)

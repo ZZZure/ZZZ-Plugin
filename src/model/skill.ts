@@ -1,6 +1,3 @@
-/**
- * @class
- */
 export class SkillItem {
 
   constructor(public title: string, public text: string) {
@@ -9,9 +6,6 @@ export class SkillItem {
 
 }
 
-/**
- * @class
- */
 export class Skill {
   level: number
   skill_type: number

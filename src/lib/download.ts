@@ -7,7 +7,7 @@ import {
 
 /**
  * 获取角色头像（方形）
- * @param charID
+ * @param charID 角色ID
  */
 export const getSquareAvatar = async (charID: string | number) => {
   let result: string | null = ''
@@ -29,7 +29,7 @@ export const getSquareAvatar = async (charID: string | number) => {
 
 /**
  * 获取角色头像（小方形）
- * @param charID
+ * @param charID 角色ID
  */
 export const getSmallSquareAvatar = async (charID: string | number) => {
   const sprite = convert.char.IDToCharSprite(charID)
@@ -54,7 +54,7 @@ export const getSmallSquareAvatar = async (charID: string | number) => {
 
 /**
  * 获取邦布头像（方形）
- * @param bangbooId
+ * @param bangbooId 邦布ID
  */
 export const getSquareBangboo = async (bangbooId: string | number) => {
   let result: string | null = ''
@@ -86,7 +86,7 @@ export const getSquareBangboo = async (bangbooId: string | number) => {
 
 /**
  * 获取武器图片
- * @param id
+ * @param id 武器ID
  */
 export const getWeaponImage = async (id: string | number) => {
   const name = convert.weapon.IDToWeaponFileName(id)
@@ -107,7 +107,7 @@ export const getWeaponImage = async (id: string | number) => {
 
 /**
  * 获取角色图片
- * @param id
+ * @param id 角色ID
  * @param skin_id 皮肤ID
  */
 export const getRoleImage = async (id: string | number, skin_id?: string) => {
@@ -131,7 +131,7 @@ export const getRoleImage = async (id: string | number, skin_id?: string) => {
 
 /**
  * 获取角色圆形图片
- * @param id
+ * @param id 角色ID
  */
 export const getRoleCircleImage = async (id: string | number) => {
   const sprite = convert.char.IDToCharSprite(id)
@@ -152,7 +152,7 @@ export const getRoleCircleImage = async (id: string | number) => {
 
 /**
  * 获取套装图片
- * @param suitId
+ * @param suitId 套装ID
  */
 export const getSuitImage = async (suitId: string | number) => {
   const suitName = convert.equip.equipIdToSprite(suitId)
@@ -169,7 +169,7 @@ export const getSuitImage = async (suitId: string | number) => {
 
 /**
  * 获取3D套装图片
- * @param suitId
+ * @param suitId 套装ID
  */
 export const getSuit3DImage = async (suitId: string | number) => {
   const suitName = convert.equip.equipIdToSprite(suitId)
@@ -184,7 +184,7 @@ export const getSuit3DImage = async (suitId: string | number) => {
 
 /**
  * 获取Hakush角色数据
- * @param charId
+ * @param charId 角色ID
  * @returns 文件内容（JSON）
  */
 export const getHakushCharacter = async (charId: string | number) => {
@@ -199,7 +199,7 @@ export const getHakushCharacter = async (charId: string | number) => {
 
 /**
  * 获取Hakush武器数据
- * @param weaponId
+ * @param weaponId 武器ID
  */
 export const getHakushWeapon = async (weaponId: string | number) => {
   const filename = `${weaponId}.json`
@@ -213,7 +213,7 @@ export const getHakushWeapon = async (weaponId: string | number) => {
 
 /**
  * 获取Hakush UI
- * @param filename
+ * @param filename 文件名
  */
 export const getHakushUI = async (filename: string) => {
   const result = await downloadHakushFile('ZZZ_UI', 'HAKUSH_UI_PATH', filename)

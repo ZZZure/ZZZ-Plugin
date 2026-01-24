@@ -247,7 +247,7 @@ class SkillDetail {
 
   /**
    * 获取技能详情数据
-   * @param level
+   * @param level 等级
    */
   getDetailData(level = 12) {
     this.level = level
@@ -321,8 +321,8 @@ class Skill {
 
   /**
    * 获取技能数据
-   * @param skill
-   * @param level
+   * @param skill 技能类型
+   * @param level 等级
    */
   getSkillData(skill: keyof Hakush.PartnerData['Skill'], level = 12) {
     return this[skill].getDetailData(level)
@@ -330,9 +330,15 @@ class Skill {
 
   /**
    * 获取所有技能数据
-   * @param levels
+   * @param levels 等级对象
    */
-  getAllSkillData(levels: Record<string, number>) {
+  getAllSkillData(levels: {
+    BasicLevel?: number
+    DodgeLevel?: number
+    AssistLevel?: number
+    SpecialLevel?: number
+    ChainLevel?: number
+  }) {
     const {
       BasicLevel = 12,
       DodgeLevel = 12,
@@ -363,7 +369,6 @@ class PassiveLevel {
     this.Name = data.Name
     this.Desc = data.Desc
 
-    /** @type {string[]} */
     this.description = data.Desc.map(
       item =>
         '<div class="line">' +
@@ -400,7 +405,6 @@ class Passive {
     }
   }
 
-  /** @type {PassiveLevel} */
   getPassiveData(level = 6) {
     this._level = +level || 6
     this.currentLevel = this.Level[this._level]
@@ -422,7 +426,6 @@ class TalentLevel {
     this.Desc = data.Desc
     this.Desc2 = data.Desc2
 
-    /** @type {string} */
     this.description = this.Desc
       ? '<div class="line">' +
       this.Desc.replace(
@@ -438,7 +441,6 @@ class TalentLevel {
       '</div>'
       : ''
 
-    /** @type {string} */
     this.description2 = this.Desc2
       ? '<div class="line">' +
       this.Desc2.replace(

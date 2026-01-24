@@ -1,7 +1,5 @@
 /**
  * 欧非分析
- * @param ast
- * @param lst
  */
 export const getLevelFromList = (ast: number, lst: number[]) => {
   if (ast === 0) {

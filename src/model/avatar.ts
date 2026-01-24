@@ -17,9 +17,6 @@ import path from 'path'
 import _ from 'lodash'
 import fs from 'fs'
 
-/**
- * @class
- */
 export class Avatar {
   element_str: string
 
@@ -42,9 +39,6 @@ export class Avatar {
 
 }
 
-/**
- * @class
- */
 export class AvatarIconPaths {
 
   constructor(
@@ -54,9 +48,6 @@ export class AvatarIconPaths {
 
 }
 
-/**
- * @class
- */
 export class ZZZAvatarBasic {
   id: number
   level: number
@@ -105,9 +96,6 @@ export class ZZZAvatarBasic {
 
 }
 
-/**
- * @class
- */
 export class Rank {
   id: number
   name: string
@@ -127,7 +115,7 @@ export class Rank {
 }
 
 /**
- * @class 代理人详情类
+ * 代理人详情类
  */
 export class ZZZAvatarInfo {
   /** 角色ID */
@@ -512,7 +500,7 @@ export class ZZZAvatarInfo {
 }
 
 /**
- * @class
+ * mys用户类
  */
 export class ZZZUser {
   game_biz: string

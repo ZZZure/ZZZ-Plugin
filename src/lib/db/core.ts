@@ -73,7 +73,7 @@ export function removeDB(dbName: keyof typeof dbPath, dbFile: string) {
 
 /**
  * 读取数据库下所有文件为 list
- * @param {keyof dbPath} dbName 数据库名称
+ * @param dbName 数据库名称
  */
 export function getAllDB<
   Key extends keyof typeof dbPath

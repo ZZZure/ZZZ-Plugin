@@ -78,7 +78,6 @@ async function init() {
 	// debug模式下监听文件变化
 	const isWatch = await (async () => {
 		try {
-			// @ts-ignore
 			return (await import('../../../../../lib/config/config.js')).default.bot.log_level === 'debug'
 		} catch {
 			return false
@@ -243,7 +242,7 @@ export function set_buff(equips: ZZZAvatarInfo['equip'], buffM: BuffManager) {
 			// 属伤加成
 			const index = [31503, 31603, 31703, 31803, , 31903].indexOf(equip.main_properties[0].property_id)
 			if (index > -1 && elementEnum[index + 200]) {
-				// @ts-ignore
+				// @ts-expect-error
 				buffM.new({
 					name: '驱动盘5号位',
 					type: '增伤',

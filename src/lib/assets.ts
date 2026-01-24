@@ -5,6 +5,7 @@ import {
   RESOURCE_PATH,
   GUIDE_PATH,
 } from './assets/const.js'
+
 // 保存上次找的节点
 let lastFindFastestUrl = {
   url: '',
@@ -36,9 +37,9 @@ export const getFatestUrl = async () => {
 
 /**
  * 获取远程路径
- * @param {keyof TYPE_PATH} type 资源类型
- * @param {keyof RESOURCE_PATH | keyof GUIDE_PATH} label 资源标签
- * @param {string} name 资源名称
+ * @param type 资源类型
+ * @param label 资源标签
+ * @param name 资源名称
  */
 export const getRemotePath = async (type: keyof typeof TYPE_PATH, label: keyof typeof RESOURCE_PATH | keyof typeof GUIDE_PATH, name: string) => {
   const url = await getFatestUrl()
@@ -47,8 +48,8 @@ export const getRemotePath = async (type: keyof typeof TYPE_PATH, label: keyof t
 
 /**
  * 获取资源远程路径
- * @param {keyof RESOURCE_PATH} label 资源标签
- * @param {string} name 资源名称
+ * @param label 资源标签
+ * @param name 资源名称
  */
 export const getResourceRemotePath = async (label: keyof typeof RESOURCE_PATH, name: string): Promise<string> => {
   return getRemotePath(TYPE_PATH.resource, label, name)

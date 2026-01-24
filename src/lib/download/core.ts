@@ -4,8 +4,8 @@ import fs from 'fs'
 
 /**
  * 下载文件
- * @param {string} url 下载地址
- * @param {string} savePath 保存路径
+ * @param url 下载地址
+ * @param savePath 保存路径
  */
 export const downloadFile = async (url: string, savePath: string) => {
   // 下载文件
@@ -27,8 +27,8 @@ export const downloadFile = async (url: string, savePath: string) => {
 
 /**
  * 查看文件是否存在，如果存在则返回路径，否则下载文件
- * @param {string} url 下载地址
- * @param {string} savePath 保存路径
+ * @param url 下载地址
+ * @param savePath 保存路径
  */
 export const checkFile = async (url: any, savePath: string) => {
   if (fs.existsSync(savePath)) {

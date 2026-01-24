@@ -212,7 +212,7 @@ export class ZZZPlugin extends plugin {
     } else if (this.e.friend?.getAvatarUrl) {
       avatar = await this.e.friend.getAvatarUrl()
     } else {
-      // @ts-expect-error
+      // @ts-ignore
       avatar = this.e?.bot?.avatar
     }
     // 写入数据

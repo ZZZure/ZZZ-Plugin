@@ -62,7 +62,7 @@ export const downloadResourceImage = async (
   }
   return result
 }
-// downloadHakushFile('ZZZ_CHARACTER')
+
 /**
  * 下载Hakush文件
  * @param base 远程地址

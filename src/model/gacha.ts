@@ -5,9 +5,6 @@ import {
   getWeaponImage,
 } from '../lib/download.js'
 
-/**
- * @class
- */
 export class SingleGachaLog {
   uid: string
   gacha_id: string
@@ -51,9 +48,6 @@ export class SingleGachaLog {
     this.square_icon = ''
   }
 
-  /**
-   *
-   */
   equals(item: Mys.Gacha['list'][number]) {
     return (
       this.uid === item.uid &&
@@ -81,9 +75,6 @@ export class SingleGachaLog {
 
 }
 
-/**
- * @class
- */
 export class ZZZGachaLogResp {
   page: string
   size: string

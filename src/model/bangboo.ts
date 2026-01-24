@@ -1,9 +1,6 @@
 import type { Mys } from '#interface'
 import { getSquareBangboo } from '../lib/download.js'
 
-/**
- * @class
- */
 export class Buddy {
   id: number
   name: string
@@ -28,9 +25,6 @@ export class Buddy {
 
 }
 
-/**
- * @class
- */
 export class Item {
   id: number
   name: string
@@ -54,9 +48,6 @@ export class Item {
 
 }
 
-/**
- * @class
- */
 export class BangbooWiki {
   item_id: string
   wiki_url: string
@@ -68,9 +59,6 @@ export class BangbooWiki {
 
 }
 
-/**
- * @class
- */
 export class ZZZBangbooResp {
   items: Item[]
   bangboo_wiki: BangbooWiki
