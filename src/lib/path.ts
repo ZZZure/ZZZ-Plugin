@@ -16,11 +16,11 @@ export const srcPath = path.join(pluginPath, 'src')
 /** 构建后路径 */
 export const distPath = path.join(pluginPath, 'dist')
 
+/** apps 路径 */
+export const appPath = path.join(distPath, 'apps')
+
 /** 插件名 */
 export const pluginName = path.basename(pluginPath)
-
-/** apps 路径 */
-export const appPath = path.join(srcPath, 'apps')
 
 /** resources */
 export const resourcesPath = path.join(pluginPath, 'resources')

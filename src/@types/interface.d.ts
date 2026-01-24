@@ -143,6 +143,26 @@ export namespace ZZZ {
     player: Mys.User['list'][number]
   }
 
+  /** 插件data数据 */
+  export interface DBMap {
+    gacha: {
+      音擎频段: Mys.Gacha['list']
+      独家频段: Mys.Gacha['list']
+      常驻频段: Mys.Gacha['list']
+      邦布频段: Mys.Gacha['list']
+    }
+    panel: Mys.Avatar[]
+    monthly: Mys.Monthly[]
+    abyss: {
+      player: ZZZ.playerCard
+      result: Mys.Abyss
+    }
+    deadly: {
+      player: ZZZ.playerCard
+      result: Mys.Deadly
+    }
+  }
+
 }
 
 /** mys接口数据 */
@@ -263,6 +283,8 @@ export namespace Mys {
       is_original: boolean
     }[]
     role_square_url: string
+    /** 插件更新面板标记 */
+    isNew?: boolean
   }
 
   export interface Equip {
@@ -645,6 +667,31 @@ export namespace Mys {
       rank_type: string
       id: string
       square_icon: string
+    }[]
+    gacha_item_list?: {
+      uid: string
+      gacha_id: string
+      gacha_type: string
+      item_id: string
+      count: string
+      time: string
+      name: string
+      lang: string
+      item_type: string
+      rank_type: string
+      id: string
+      square_icon: string
+
+      date?: {
+        year: number
+        month: number
+        day: number
+        hour: number
+        minute: number
+        second: number
+      }
+      item_name?: string
+      rarity?: 'S' | 'A' | 'B'
     }[]
     region: string
     region_time_zone: number
@@ -1173,36 +1220,7 @@ export namespace Hakush {
         Material: { [key: string]: { [key: string]: number } }
       }
       Special: {
-        Description: {
-          Name: string
-          Desc?: string
-          Potential: any[]
-          Param?: {
-            Name: string
-            Desc: string
-            Param?: {
-              [key: string]: {
-                Main: number
-                Growth: number
-                Format: string
-                DamagePercentage: number
-                DamagePercentageGrowth: number
-                StunRatio: number
-                StunRatioGrowth: number
-                SpRecovery: number
-                SpRecoveryGrowth: number
-                FeverRecovery: number
-                FeverRecoveryGrowth: number
-                AttributeInfliction: number
-                SpConsume: number
-                AttackData: any[]
-                RpRecovery: number
-                RpRecoveryGrowth: number
-              }
-            }
-            Potential: any[]
-          }[]
-        }[]
+        Description: AssistDescription[]
         Material: { [key: string]: { [key: string]: number } }
       }
       Chain: {
@@ -1293,6 +1311,52 @@ export namespace Hakush {
       }
       Potential: any[]
     }[]
+  }
+
+  export interface WeaponData {
+    Id: number
+    CodeName: string
+    Name: string
+    Desc: string
+    Desc2: string
+    Desc3: string
+    Rarity: number
+    Icon: string
+    WeaponType: {
+      [profession_id: string]: string
+    }
+    BaseProperty: {
+      Name: string
+      Name2: string
+      Format: string
+      Value: number
+    }
+    RandProperty: {
+      Name: string
+      Name2: string
+      Format: string
+      Value: number
+    }
+    Level: {
+      [key: string]: {
+        Exp: number
+        Rate: number
+        Rate2: number
+      }
+    }
+    Stars: {
+      [key: string]: {
+        StarRate: number
+        RandRate: number
+      }
+    }
+    Materials: string
+    Talents: {
+      [key: string]: {
+        Name: string
+        Desc: string
+      }
+    }
   }
 
   export interface DeadlyBoss {

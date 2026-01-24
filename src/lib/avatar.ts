@@ -1,4 +1,5 @@
 import type MysZZZApi from './mysapi.js'
+import type { Mys } from '#interface'
 import { ZZZAvatarBasic, ZZZAvatarInfo } from '../model/avatar.js'
 import { getPanelData, savePanelData } from './db.js'
 import settings from './settings.js'
@@ -11,7 +12,9 @@ import _ from 'lodash'
  * @param deviceFp
  * @param origin 是否返回原始数据
  */
-export const getAvatarBasicList = async (api: MysZZZApi, deviceFp: string, origin: boolean = false) => {
+export async function getAvatarBasicList(api: MysZZZApi, deviceFp: string, origin?: false): Promise<ZZZAvatarBasic[] | null>
+export async function getAvatarBasicList(api: MysZZZApi, deviceFp: string, origin: true): Promise<Mys.AvatarList['avatar_list'] | null>
+export async function getAvatarBasicList(api: MysZZZApi, deviceFp: string, origin: boolean = false) {
   // 获取米游社角色列表
   const avatarBaseListData = await api.getFinalData('zzzAvatarList', {
     deviceFp,
@@ -32,8 +35,11 @@ export const getAvatarBasicList = async (api: MysZZZApi, deviceFp: string, origi
  * @param deviceFp
  * @param origin 是否返回原始数据
  */
-export const getAvatarInfoList = async (api: MysZZZApi, deviceFp: string, origin: boolean = false) => {
+export async function getAvatarInfoList(api: MysZZZApi, deviceFp: string, origin?: false): Promise<ZZZAvatarInfo[] | null>
+export async function getAvatarInfoList(api: MysZZZApi, deviceFp: string, origin: true): Promise<Mys.Avatar[] | null>
+export async function getAvatarInfoList(api: MysZZZApi, deviceFp: string, origin: boolean = false) {
   // 获取角色基础信息列表
+  // @ts-expect-error
   const avatarBaseList = await getAvatarBasicList(api, deviceFp, origin)
   if (!avatarBaseList) return null
   // 获取角色详细信息列表
@@ -66,11 +72,11 @@ export const getAvatarInfoList = async (api: MysZZZApi, deviceFp: string, origin
 
 /**
  * 更新面板数据
- * @param {string} uid 用户 ID
- * @param {Array} newData 新数据
- * @returns {Array} 合并后的数据
+ * @param uid 用户 ID
+ * @param newData 新数据
+ * @returns 合并后的数据
  */
-export const updatePanelData = (uid, newData) => {
+export const updatePanelData = (uid: string, newData: Mys.Avatar[]) => {
   // 获取已保存数据
   const originData = getPanelData(uid)
   // 初始化最终数据
@@ -99,11 +105,10 @@ export const updatePanelData = (uid, newData) => {
 
 /**
  * 刷新面板
- * @param {MysZZZApi} api
- * @param {string} deviceFp
- * @returns {Promise<ZZZAvatarInfo[] | null>}
+ * @param api
+ * @param deviceFp
  */
-export const refreshPanel = async (api, deviceFp) => {
+export const refreshPanel = async (api: MysZZZApi, deviceFp: string) => {
   // 获取新数据
   const newData = await getAvatarInfoList(api, deviceFp, true)
   if (!newData) return null
@@ -112,10 +117,10 @@ export const refreshPanel = async (api, deviceFp) => {
 
 /**
  * 合并保存新面板
- * @param {string|number} uid UID
- * @param {import('#interface').Mys.Avatar[]} newData
+ * @param uid UID
+ * @param newData 新数据
  */
-export const mergePanel = async (uid, newData) => {
+export const mergePanel = async (uid: string, newData: Mys.Avatar[]) => {
   // 合并新旧数据
   const finalData = updatePanelData(uid, newData)
   const formattedData = finalData.map(item => new ZZZAvatarInfo(item))
@@ -128,30 +133,28 @@ export const mergePanel = async (uid, newData) => {
 
 /**
  *获取面板数据
- * @param {string} uid
- * @returns {ZZZAvatarInfo[]}
+ * @param uid
  */
-export const getPanelList = uid => {
+export const getPanelList = (uid: string) => {
   const data = getPanelData(uid)
   return data.map(item => new ZZZAvatarInfo(item))
 }
 
 /**
  * 获取面板数据（原始数据）
- * @param {string} uid
- * @returns {Array}
+ * @param uid
  */
-export const getPanelListOrigin = uid => {
+export const getPanelListOrigin = (uid: string) => {
   return getPanelData(uid)
 }
 
 /**
  * 获取某个角色的面板数据
- * @param {string} uid
- * @param {string} name
- * @returns {ZZZAvatarInfo | null | false}
+ * @param uid
+ * @param name
+ * @returns false name对应角色不存在 | null 无面板数据 | ZZZAvatarInfo 面板数据
  */
-export const getPanel = (uid, name) => {
+export const getPanel = (uid: string, name: string) => {
   // 通过名称（包括别名）获取角色 ID
   const id = char.aliasToID(name)
   if (!id) return false
@@ -166,11 +169,11 @@ export const getPanel = (uid, name) => {
 
 /**
  * 获取某个角色的面板数据（原始数据）
- * @param {string} uid
- * @param {string} name
- * @returns {ZZZAvatarInfo | null | false}
+ * @param uid
+ * @param name
+ * @returns false name对应角色不存在 | null 无面板数据 | Mys.Avatar 面板数据
  */
-export const getPanelOrigin = (uid, name) => {
+export const getPanelOrigin = (uid: string, name: string) => {
   const id = char.aliasToID(name)
   if (!id) return false
   const data = getPanelData(uid)
@@ -181,19 +184,16 @@ export const getPanelOrigin = (uid, name) => {
 }
 
 /**
- * 将数据数组格式化
- * @param {Array} data
- * @returns {Array<ZZZAvatarInfo>}
+ * 将Mys.Avatar[]数据格式化为ZZZAvatarInfo[]
  */
-export const formatPanelDatas = data => {
+export const formatPanelDatas = (data: Mys.Avatar[]) => {
   return data.map(item => new ZZZAvatarInfo(item))
 }
 
 /**
- * 将数据格式化
- * @param {Object} data
- * @returns {ZZZAvatarInfo}
+ * 将Mys.Avatar数据格式化为ZZZAvatarInfo
+ * @param data
  */
-export const formatPanelData = data => {
+export const formatPanelData = (data: Mys.Avatar) => {
   return new ZZZAvatarInfo(data)
 }

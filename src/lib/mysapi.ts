@@ -359,6 +359,7 @@ export default class MysZZZApi extends MysApi {
   async getFinalData<T extends keyof Mys.KeyValue>(
     type: T,
     data: {
+      [key: string]: any
       deviceFp?: string
       query?: Record<string, any>
       headers?: Record<string, any>

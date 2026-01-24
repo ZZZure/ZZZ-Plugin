@@ -1,4 +1,4 @@
-import type { Mys } from '#interface'
+import type { EventType, Mys } from '#interface'
 import NoteUser from '../../../genshin/model/mys/NoteUser.js'
 import { pluginName, resourcesPath } from './path.js'
 import { getCk, rulePrefix } from './common.js'
@@ -226,12 +226,21 @@ export class ZZZPlugin extends plugin {
 
   /**
    * 渲染函数
-   * @param {string} renderPath 渲染路径
-   * @param {object} renderData 渲染数据
-   * @param {object} cfg 配置
-   * @returns {Promise<any>}
+   * @param renderPath 渲染路径
+   * @param renderData 渲染数据
+   * @param cfg 配置
    */
-  render(renderPath, renderData = {}, cfg = {}) {
+  render(
+    renderPath: string,
+    renderData: any = {},
+    cfg: {
+      e?: EventType
+      scale?: number
+      retType?: 'default' | 'base64' | 'msgId'
+      recallMsg?: number
+      beforeRender?: (options: { data: any }) => any
+    } = {}
+  ) {
     const e = this.e || cfg?.e
     // 判断是否存在e.runtime
     if (!e.runtime) {
@@ -254,7 +263,7 @@ export class ZZZPlugin extends plugin {
     return e.runtime.render(pluginName, renderPath, renderData, {
       // 合并传入的配置
       ...cfg,
-      beforeRender({ data }) {
+      beforeRender({ data }: { data: any }) {
         // 资源路径
         const resPath = data.pluResPath
         // 布局路径

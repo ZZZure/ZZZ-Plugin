@@ -1,4 +1,4 @@
-import type { Mys, ZZZ } from '#interface'
+import type { ZZZ } from '#interface'
 import { checkFolderExistAndCreate } from '../../utils/file.js'
 import { dataPath } from '../path.js'
 import path from 'path'
@@ -12,33 +12,14 @@ export const dbPath = {
   deadly: 'deadly',
 }
 
-export interface DBMap {
-  gacha: {
-    音擎频段: Mys.Gacha['list']
-    独家频段: Mys.Gacha['list']
-    常驻频段: Mys.Gacha['list']
-    邦布频段: Mys.Gacha['list']
-  }
-  panel: Mys.Avatar[]
-  monthly: Mys.Monthly[]
-  abyss: {
-    player: ZZZ.playerCard
-    result: Mys.Abyss
-  }
-  deadly: {
-    player: ZZZ.playerCard
-    result: Mys.Deadly
-  }
-}
-
 /**
  * 读取数据库
  * @param dbName 数据库名称
  * @param dbFile 数据库文件名
  */
 export function getDB<
-  Key extends keyof DBMap
->(dbName: Key, dbFile: string): DBMap[Key] | null {
+  Key extends keyof ZZZ.DBMap
+>(dbName: Key, dbFile: string): ZZZ.DBMap[Key] | null {
   const db = dbPath[dbName]
   const dbFolder = path.join(dataPath, db)
   try {
@@ -58,7 +39,7 @@ export function getDB<
  */
 export function setDB<
   Key extends keyof typeof dbPath
->(dbName: Key, dbFile: string, data: DBMap[Key]) {
+>(dbName: Key, dbFile: string, data: ZZZ.DBMap[Key]) {
   const db = dbPath[dbName]
   const dbFolder = path.join(dataPath, db)
   try {
@@ -96,7 +77,7 @@ export function removeDB(dbName: keyof typeof dbPath, dbFile: string) {
  */
 export function getAllDB<
   Key extends keyof typeof dbPath
->(dbName: Key): DBMap[Key][] {
+>(dbName: Key): ZZZ.DBMap[Key][] {
   const db = dbPath[dbName]
   const dbFolder = path.join(dataPath, db)
   try {

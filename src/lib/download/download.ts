@@ -1,3 +1,4 @@
+import type { Hakush } from '#interface'
 import { getResourceRemotePath } from '../assets.js'
 import * as HakushURL from '../assets/hakushurl.js'
 import * as MysURL from '../assets/mysurl.js'
@@ -61,22 +62,26 @@ export const downloadResourceImage = async (
   }
   return result
 }
-
+// downloadHakushFile('ZZZ_CHARACTER')
 /**
  * 下载Hakush文件
  * @param base 远程地址
  * @param localBase 本地地址
  * @param filename 文件名
  */
-export const downloadHakushFile = async (
-  _base: keyof typeof HakushURL,
+export const downloadHakushFile = async<Base extends keyof typeof HakushURL>(
+  _base: Base,
   _localBase: keyof typeof LocalURI,
   filename: string = ''
-) => {
+): Promise<
+  Base extends 'ZZZ_CHARACTER' ? (Hakush.PartnerData | null) :
+  Base extends 'ZZZ_WEAPON' ? (Hakush.WeaponData | null) :
+  string | null
+> => {
   const base = HakushURL[_base]
   const localBase = LocalURI[_localBase]
   const finalPath = path.join(localBase, filename)
-  let url = base
+  let url: string = base
   if (filename) {
     url += `/${filename}`
   }
@@ -85,12 +90,8 @@ export const downloadHakushFile = async (
   if (filepath) {
     // 如果是JSON文件，返回JSON对象
     if (filename.endsWith('.json')) {
-      // 打开文件
-      const file = fs.openSync(filepath, 'r')
       // 读取文件内容
-      const content = fs.readFileSync(file).toString()
-      // 关闭文件
-      fs.closeSync(file)
+      const content = fs.readFileSync(filepath, 'utf-8')
       // 返回文件内容
       const data = JSON.parse(content)
       // 测试数据每次请求都重新下载
@@ -110,16 +111,16 @@ export const downloadHakushFile = async (
         if (!filepath_new) {
           return data
         }
-        const file = fs.openSync(filepath_new, 'r')
-        const content = fs.readFileSync(file).toString()
-        fs.closeSync(file)
+        const content = fs.readFileSync(filepath_new, 'utf-8')
         return JSON.parse(content)
       }
       return data
     } else {
+      // @ts-expect-error
       return filepath
     }
   } else {
+    // @ts-expect-error
     return null
   }
 }

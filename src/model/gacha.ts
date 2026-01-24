@@ -54,7 +54,7 @@ export class SingleGachaLog {
   /**
    *
    */
-  equals(item: SingleGachaLog) {
+  equals(item: Mys.Gacha['list'][number]) {
     return (
       this.uid === item.uid &&
       this.id === item.id &&

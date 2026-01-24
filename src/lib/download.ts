@@ -152,8 +152,7 @@ export const getRoleCircleImage = async (id: string | number) => {
 
 /**
  * 获取套装图片
- * @param {string | number} suitId
- * @returns Promise<string>
+ * @param suitId
  */
 export const getSuitImage = async (suitId: string | number) => {
   const suitName = convert.equip.equipIdToSprite(suitId)

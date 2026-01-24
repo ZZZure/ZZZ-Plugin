@@ -13,6 +13,8 @@ export const gacha_type_meta_data_os = {
   邦布频段: ['GACHA_TYPE_BANGBOO'],
 }
 
+export type GachaType = keyof typeof gacha_type_meta_data
+
 export const item_type_os = {
   ITEM_TYPE_WEAPON: '音擎',
   ITEM_TYPE_AVATAR: '代理人',

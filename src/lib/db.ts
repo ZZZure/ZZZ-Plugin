@@ -1,5 +1,5 @@
+import type { ZZZ } from '#interface'
 import {
-  type DBMap,
   getDB,
   setDB,
   removeDB,
@@ -17,7 +17,7 @@ export function getGachaLog(uid: string) {
  * @param uid
  * @param data
  */
-export function saveGachaLog(uid: string, data: DBMap['gacha']) {
+export function saveGachaLog(uid: string, data: ZZZ.DBMap['gacha']) {
   setDB('gacha', uid, data)
 }
 
@@ -32,7 +32,7 @@ export function getPanelData(uid: string) {
  * @param uid
  * @param data
  */
-export function savePanelData(uid: string, data: DBMap['panel']) {
+export function savePanelData(uid: string, data: ZZZ.DBMap['panel']) {
   setDB('panel', uid, data)
 }
 
@@ -40,7 +40,7 @@ export function savePanelData(uid: string, data: DBMap['panel']) {
  * @param uid
  * @param data
  */
-export function saveAbyssData(uid: string, data: DBMap['abyss']) {
+export function saveAbyssData(uid: string, data: ZZZ.DBMap['abyss']) {
   setDB('abyss', uid, data)
 }
 
@@ -62,14 +62,14 @@ export function removeAbyssData(uid: string) {
  * @param uids
  */
 export function getAbyssDataInGroupRank(uids: string[]) {
-  return uids.map(uid => getAbyssData(uid)).filter((item): item is DBMap['abyss'] => item !== null)
+  return uids.map(uid => getAbyssData(uid)).filter((item): item is ZZZ.DBMap['abyss'] => item !== null)
 }
 
 export function removeAllAbyssData(): boolean {
   return removeAllDB('abyss')
 }
 
-export function saveDeadlyData(uid: string, data: DBMap['deadly']) {
+export function saveDeadlyData(uid: string, data: ZZZ.DBMap['deadly']) {
   setDB('deadly', uid, data)
 }
 
@@ -82,7 +82,7 @@ export function removeDeadlyData(uid: string) {
 }
 
 export function getDeadlyDataInGroupRank(uids: string[]) {
-  return uids.map(uid => getDeadlyData(uid)).filter((item): item is DBMap['deadly'] => item !== null)
+  return uids.map(uid => getDeadlyData(uid)).filter((item): item is ZZZ.DBMap['deadly'] => item !== null)
 }
 
 export function removeAllDeadlyData(): boolean {
@@ -100,6 +100,6 @@ export function getMonthlyData(uid: string) {
  * @param uid
  * @param data
  */
-export function saveMonthlyData(uid: string, data: DBMap['monthly']) {
+export function saveMonthlyData(uid: string, data: ZZZ.DBMap['monthly']) {
   setDB('monthly', uid, data)
 }
