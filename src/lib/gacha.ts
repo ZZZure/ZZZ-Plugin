@@ -2,9 +2,9 @@ import type MysZZZApi from './mysapi.js'
 import type { ZZZ } from '#interface'
 import {
   gacha_type_meta_data,
-  gacha_type_meta_data_os,
-  item_type_os,
-  rarity_os,
+  gacha_type_meta_data_ck,
+  item_type_ck,
+  rarity_ck,
   FLOORS_MAP,
   HOMO_TAG,
   EMOJI,
@@ -102,13 +102,13 @@ export const updateGachaLog = async (authKey: string, uid: string, region: strin
  * @param deviceFp 米游社指纹
  * @returns 更新后的抽卡数据
  */
-export const updateGachaLog_os = async (api: MysZZZApi, uid: string, deviceFp: string) => {
+export const updateGachaLog_ck = async (api: MysZZZApi, uid: string, deviceFp: string) => {
   // 获取之前的抽卡数据
   const previousLog = getGachaLog(uid) || {} as ZZZ.DBMap['gacha']
   // 新的抽卡数据
   const newCount: { [x in GachaType]?: number } = {}
   // 遍历所有池子
-  for (const name of Object.keys(gacha_type_meta_data_os) as GachaType[]) {
+  for (const name of Object.keys(gacha_type_meta_data_ck) as GachaType[]) {
     if (!previousLog[name]) {
       // 如果没有数据，初始化为空数组
       previousLog[name] = []
@@ -124,7 +124,7 @@ export const updateGachaLog_os = async (api: MysZZZApi, uid: string, deviceFp: s
     // 新数据
     const newData = []
     // 遍历当前池子的所有类型
-    for (const type of gacha_type_meta_data_os[name]) {
+    for (const type of gacha_type_meta_data_ck[name]) {
       // 循环获取数据
       queryLabel: while (true) {
         // 获取抽卡记录
@@ -148,8 +148,8 @@ export const updateGachaLog_os = async (api: MysZZZApi, uid: string, deviceFp: s
             time: `${date.year}-${date.month.toString().padStart(2, '0')}-${date.day.toString().padStart(2, '0')} ${date.hour.toString().padStart(2, '0')}:${date.minute.toString().padStart(2, '0')}:${date.second.toString().padStart(2, '0')}`,
             name: item.item_name!,
             lang: 'zh-cn',
-            item_type: item_type_os[item.item_type as keyof typeof item_type_os],
-            rank_type: rarity_os[item.rarity!],
+            item_type: item_type_ck[item.item_type as keyof typeof item_type_ck],
+            rank_type: rarity_ck[item.rarity!],
             id: item.id,
             square_icon: '',
           }
@@ -300,9 +300,13 @@ export const anaylizeGachaLog = async (uid: string) => {
     if (avgUp !== '-') {
       if ('音擎频段' === name) {
         level = getLevelFromList(+avgUp, [62, 75, 88, 99, 111])
+      } else if ('音擎回响' === name) {
+        level = getLevelFromList(+avgUp, [62, 75, 88, 99, 111])
       } else if ('邦布频段' === name) {
         level = getLevelFromList(+avgUp, [51, 55, 61, 68, 70])
       } else if ('独家频段' === name) {
+        level = getLevelFromList(+avgUp, [74, 87, 99, 105, 120])
+      } else if ('独家重映' === name) {
         level = getLevelFromList(+avgUp, [74, 87, 99, 105, 120])
       }
     }

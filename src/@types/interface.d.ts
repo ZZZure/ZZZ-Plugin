@@ -147,7 +147,9 @@ export namespace ZZZ {
   export interface DBMap {
     gacha: {
       音擎频段: Mys.Gacha['list']
+      音擎回响: Mys.Gacha['list']
       独家频段: Mys.Gacha['list']
+      独家重映: Mys.Gacha['list']
       常驻频段: Mys.Gacha['list']
       邦布频段: Mys.Gacha['list']
     }

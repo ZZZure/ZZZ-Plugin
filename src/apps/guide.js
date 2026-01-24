@@ -40,7 +40,7 @@ export class Guide extends ZZZPlugin {
   getGuideFolder(groupIndex) {
     let guideFolder = path.join(
       ZZZ_GUIDES_PATH,
-      guides.guideSources[groupIndex - 1]
+      guides.guideSources[groupIndex - 1]  || ''
     );
     return guideFolder;
   }
