@@ -18,6 +18,7 @@ export namespace Config {
     panel: panel
     priority: priority
     remind: remind
+    rank: rank
   }
 
   export interface alias {
@@ -118,6 +119,28 @@ export namespace Config {
     abyssCheckLevel: number
     /** 危局强袭战星数阈值 */
     deadlyStars: number
+  }
+
+  export interface rank {
+    /** 是否允许群组使用群内排名功能 */
+    allow_group: boolean
+    /** 排名显示最大数量 */
+    max_display: number
+    /** 白名单群组 */
+    white_list: number[]
+    /** 黑名单群组 */
+    black_list: number[]
+  }
+
+}
+
+/** 插件数据 */
+export namespace ZZZ {
+
+  /** 玩家信息 */
+  export interface playerCard {
+    avatar: string
+    player: Mys.User['list'][number]
   }
 
 }

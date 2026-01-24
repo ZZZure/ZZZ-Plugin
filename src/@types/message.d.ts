@@ -11,6 +11,7 @@ import type {
   MessageRet
 } from 'icqq'
 import type Runtime from '../../../../lib/plugins/runtime.js'
+import type { ZZZ } from '#interface'
 
 type _EventMap_ = Pick<OriEventMap, Exclude<keyof OriEventMap, 'message.group' | 'message' | 'message.private'>>
 
@@ -258,4 +259,8 @@ export interface EventType extends Message {
   runtime: Runtime
   /** Friend实例 */
   friend?: Friend
+  /** 游戏标识 */
+  game: string
+  /** 玩家信息 */
+  playerCard?: ZZZ.playerCard
 }

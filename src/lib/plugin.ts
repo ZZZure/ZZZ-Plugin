@@ -6,6 +6,7 @@ import request from '../utils/request.js'
 import settings from './settings.js'
 import MysZZZApi from './mysapi.js'
 import version from './version.js'
+import fetch from 'node-fetch'
 import path from 'path'
 import _ from 'lodash'
 
@@ -118,11 +119,22 @@ export class ZZZPlugin extends plugin {
       if (!sdk) {
         return { api: null, uid: null, deviceFp: null }
       }
-      const res = await request(sdk.url, {
-        headers: sdk.headers,
-        method: 'POST',
-        body: sdk.body,
-      })
+      let res: any
+      try {
+        res = await fetch(sdk.url, {
+          headers: sdk.headers,
+          method: 'POST',
+          body: sdk.body,
+        })
+      } catch (error: any) {
+        logger.error(error.toString())
+        if (!/^(1[0-9])[0-9]{8}/i.test(uid)) {
+          deviceFp = '38d805c20d53d'
+        } else {
+          deviceFp = '38d7f4c72b736'
+        }
+        return { api, uid, deviceFp }
+      }
       const fpRes = await res.json() as any
       logger.debug(`[米游社][设备指纹]${JSON.stringify(fpRes)}`)
       deviceFp = fpRes?.data?.device_fp
@@ -167,6 +179,7 @@ export class ZZZPlugin extends plugin {
    * 并将其保存到`e.playerCard`中，方便渲染用户信息（此部分请查阅`lib/render.js`中两个模块的作用））
    */
   async getPlayerInfo(playerData: Mys.User | null = null) {
+    let player: Mys.User['list'][number] | null = null
     if (!playerData) {
       // 获取 米游社 API
       const { api, uid } = await this.getAPI()
@@ -181,8 +194,12 @@ export class ZZZPlugin extends plugin {
 
       if (!playerData) throw new Error('获取用户数据失败')
       // 取第一个用户信息
-      playerData =
-        playerData?.list?.find(item => item.game_uid == uid) || playerData?.list?.[0]
+      player = playerData?.list?.find(item => item.game_uid == uid) || playerData?.list?.[0]
+    } else {
+      player = playerData.list?.[0] || null
+    }
+    if (!player) {
+      throw new Error('获取玩家信息失败')
     }
 
     // 获取用户头像
@@ -195,15 +212,16 @@ export class ZZZPlugin extends plugin {
     } else if (this.e.friend?.getAvatarUrl) {
       avatar = await this.e.friend.getAvatarUrl()
     } else {
+      // @ts-expect-error
       avatar = this.e?.bot?.avatar
     }
     // 写入数据
     this.e.playerCard = {
-      avatar: avatar,
-      player: playerData,
+      avatar,
+      player,
     }
     // 返回数据
-    return playerData
+    return player
   }
 
   /**
@@ -242,7 +260,9 @@ export class ZZZPlugin extends plugin {
         // 布局路径
         const layoutPath = data.pluResPath + 'common/layout/'
         // 当前的渲染路径
-        const renderPathFull = data.pluResPath + renderPath.split('/')[0] + '/'
+        // 可能有多级（e.g., rank/abyss/index.html），取目录
+        const renderPathDir = renderPath.substring(0, renderPath.lastIndexOf('/') + 1)
+        const renderPathFull = data.pluResPath + renderPathDir
         // 合并数据
         return {
           // 玩家信息

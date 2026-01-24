@@ -1,16 +1,18 @@
+import type { Mys, ZZZ } from '#interface'
 import { checkFolderExistAndCreate } from '../../utils/file.js'
-import { readFileSync, writeFileSync } from 'fs'
 import { dataPath } from '../path.js'
 import path from 'path'
-import { Mys } from '#interface'
+import fs from 'fs'
 
 export const dbPath = {
   gacha: 'gacha',
   panel: 'panel',
   monthly: 'monthly',
+  abyss: 'abyss',
+  deadly: 'deadly',
 }
 
-interface DBMap {
+export interface DBMap {
   gacha: {
     音擎频段: Mys.Gacha['list']
     独家频段: Mys.Gacha['list']
@@ -19,6 +21,14 @@ interface DBMap {
   }
   panel: Mys.Avatar[]
   monthly: Mys.Monthly[]
+  abyss: {
+    player: ZZZ.playerCard
+    result: Mys.Abyss
+  }
+  deadly: {
+    player: ZZZ.playerCard
+    result: Mys.Deadly
+  }
 }
 
 /**
@@ -27,13 +37,13 @@ interface DBMap {
  * @param dbFile 数据库文件名
  */
 export function getDB<
-  T extends keyof DBMap
->(dbName: T, dbFile: string): DBMap[T] | null {
+  Key extends keyof DBMap
+>(dbName: Key, dbFile: string): DBMap[Key] | null {
   const db = dbPath[dbName]
   const dbFolder = path.join(dataPath, db)
   try {
     const dbPath = path.join(dbFolder, `${dbFile}.json`)
-    return JSON.parse(readFileSync(dbPath, 'utf-8'))
+    return JSON.parse(fs.readFileSync(dbPath, 'utf-8'))
   } catch (error: any) {
     logger.debug(`读取数据库失败: ${error.message}`)
     return null
@@ -46,14 +56,75 @@ export function getDB<
  * @param dbFile 数据库文件名
  * @param data 数据
  */
-export function setDB(dbName: keyof typeof dbPath, dbFile: string, data: any) {
+export function setDB<
+  Key extends keyof typeof dbPath
+>(dbName: Key, dbFile: string, data: DBMap[Key]) {
   const db = dbPath[dbName]
   const dbFolder = path.join(dataPath, db)
   try {
     checkFolderExistAndCreate(dbFolder)
     const dbPath = path.join(dbFolder, `${dbFile}.json`)
-    writeFileSync(dbPath, JSON.stringify(data, null, 2))
+    fs.writeFileSync(dbPath, JSON.stringify(data, null, 2))
+  } catch (error: any) {
+    logger.debug(`写入数据库失败: ${error.message}`)
+  }
+}
+
+/**
+ * 删除数据库
+ * @param dbName 数据库名称
+ * @param dbFile 数据库文件名
+ */
+export function removeDB(dbName: keyof typeof dbPath, dbFile: string) {
+  const db = dbPath[dbName]
+  const dbFolder = path.join(dataPath, db)
+  try {
+    const dbPath = path.join(dbFolder, `${dbFile}.json`)
+    if (fs.existsSync(dbPath)) {
+      fs.unlinkSync(dbPath)
+      return true
+    }
+  } catch (error: any) {
+    logger.debug(`删除数据库失败: ${error.message}`)
+  }
+  return false
+}
+
+/**
+ * 读取数据库下所有文件为 list
+ * @param {keyof dbPath} dbName 数据库名称
+ */
+export function getAllDB<
+  Key extends keyof typeof dbPath
+>(dbName: Key): DBMap[Key][] {
+  const db = dbPath[dbName]
+  const dbFolder = path.join(dataPath, db)
+  try {
+    const files = fs.readdirSync(dbFolder)
+    return files
+      .filter(file => file.endsWith('.json'))
+      .map(file => JSON.parse(fs.readFileSync(path.join(dbFolder, file), 'utf-8')))
   } catch (error: any) {
     logger.debug(`读取数据库失败: ${error.message}`)
+    return []
+  }
+}
+
+/**
+ * 删除数据库下所有文件
+ * @param dbName 数据库名称
+ */
+export function removeAllDB(dbName: keyof typeof dbPath) {
+  const db = dbPath[dbName]
+  const dbFolder = path.join(dataPath, db)
+  try {
+    const files = fs.readdirSync(dbFolder)
+    files
+      .filter(file => file.endsWith('.json'))
+      .forEach(file => fs.unlinkSync(path.join(dbFolder, file)))
+    return true
+  } catch (error: any) {
+    logger.debug(`删除数据库失败: ${error.message}`)
+    return false
   }
 }
