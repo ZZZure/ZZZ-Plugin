@@ -401,12 +401,12 @@ class Passive {
     this.Materials = data.Materials
 
     for (const [key, value] of Object.entries(data.Level)) {
-      this.Level[value.Level] = new PassiveLevel(value)
+      this.Level[value.Level - 1] = new PassiveLevel(value)
     }
   }
 
   getPassiveData(level = 6) {
-    this._level = +level || 6
+    this._level = +level
     this.currentLevel = this.Level[this._level]
     return this.currentLevel
   }
