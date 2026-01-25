@@ -7,6 +7,10 @@ const pluginName = path.basename(path.dirname(fileURLToPath(import.meta.url)))
 
 const toBuild = ['apps', 'lib', 'model', 'utils']
 
+const assetDirs = [
+  { from: 'src/model/damage', to: 'dist/model/damage', exts: ['.js', '.json'] }
+]
+
 // tsc编译→更新相应文件→删除编译文件夹
 async function init() {
   console.log('开始编译……')
@@ -14,8 +18,31 @@ async function init() {
     execSync('tsc')
     // eslint-disable-next-line no-empty
   } catch { }
-  console.log('编译完成，开始更新文件……')
+  console.log('编译完成，开始更新编译文件……')
   const files = []
+  function copyAssets() {
+    assetDirs.forEach(({ from, to, exts }) => {
+      if (!fs.existsSync(from)) return
+      const copy = (src, dest) => {
+        const stat = fs.statSync(src)
+        if (stat.isDirectory()) {
+          fs.mkdirSync(dest, { recursive: true })
+          fs.readdirSync(src).forEach(name => copy(path.join(src, name), path.join(dest, name)))
+          return
+        }
+        if (exts.includes(path.extname(src))) {
+          if (fs.existsSync(dest)) {
+            const dstStat = fs.statSync(dest)
+            if (dstStat.size === stat.size && dstStat.mtimeMs === stat.mtimeMs) return
+          }
+          fs.mkdirSync(path.dirname(dest), { recursive: true })
+          fs.copyFileSync(src, dest)
+          files.push(dest)
+        }
+      }
+      copy(from, to)
+    })
+  }
   function copyFolderRecursively(orlDirPath, targetDirPath) {
     fs.mkdirSync(targetDirPath, { recursive: true })
     fs.readdirSync(orlDirPath).forEach(element => {
@@ -35,7 +62,9 @@ async function init() {
     if (!fs.existsSync(oriDirPath)) return
     copyFolderRecursively(oriDirPath, targetDirPath)
   })
-  console.log('文件更新完毕，删除无关文件……')
+  console.log('编译文件更新完毕，开始更新资源文件……')
+  copyAssets()
+  console.log('资源文件更新完毕，开始删除无关文件……')
   fs.readdirSync('dist').map(v => {
     if (v === '.tsbuildinfo') return
     if (!toBuild.includes(v)) {
@@ -44,7 +73,7 @@ async function init() {
   })
   console.log('pnpm build 完毕')
   if (files.length) {
-    console.log('更新文件：')
+    console.log(`更新文件 * ${files.length}：`)
     files.forEach(v => console.log(`   - ${v}`))
   } else {
     console.log('无文件更新')

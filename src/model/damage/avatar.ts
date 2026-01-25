@@ -2,6 +2,7 @@ import type { ZZZAvatarInfo } from '#interface'
 import type { skill } from './Calculator.js'
 import { aliasToID } from '../../lib/convert/char.js'
 import { buff, BuffManager } from './BuffManager.js'
+import { fileURLToPath, pathToFileURL } from 'url'
 import { elementEnum } from './BuffManager.js'
 import { Calculator } from './Calculator.js'
 import { srcPath } from '../../lib/path.js'
@@ -9,9 +10,10 @@ import chokidar from 'chokidar'
 import path from 'path'
 import fs from 'fs'
 
-const damagePath = path.join(srcPath, 'model', 'damage')
-
-const prefix = '../../../src/model/damage'
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const srcDamagePath = path.join(srcPath, 'model', 'damage')
+const damagePath = fs.existsSync(srcDamagePath) ? srcDamagePath : __dirname
+const prefix = pathToFileURL(damagePath).href
 
 export const charData: {
 	[id: string]: {
