@@ -14,7 +14,7 @@ export const getHakushCharacterData = async (alias: string) => {
 
 export const isSkillLevelLegal = (key: string, level: number) => {
   if (key === 'CoreLevel') {
-    return !!level && level >= 0 && level <= 6
+    return Number.isInteger(level) && level >= 0 && level <= 6
   }
-  return !!level && level >= 1 && level <= 12
+  return Number.isInteger(level) && level >= 1 && level <= 12
 }

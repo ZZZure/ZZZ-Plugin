@@ -245,7 +245,7 @@ export interface EventType extends Message {
   /** */
   notice_type: string
   /** 群实例 */
-  group: Group
+  group?: Group
   /** Bot实例 */
   bot: typeof Client.prototype
   /** */

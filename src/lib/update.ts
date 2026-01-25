@@ -3,7 +3,7 @@ import { pluginName } from './path.js'
 import { exec } from 'child_process'
 import _ from 'lodash'
 
-let Update = null
+let Update: (new (...args: any[]) => any) | null = null
 try {
   // @ts-ignore
   Update = (await import('../../../other/update.js').catch(e => null))?.update
@@ -14,7 +14,7 @@ try {
     `[${pluginName}]未获取到更新js ${logger.yellow('更新功能')} 将无法使用`
   )
 }
-let ZZZUpdate = null
+let ZZZUpdate: (new (...args: any[]) => any) | null = null
 
 type CommitLog = {
   /** 提交ID */

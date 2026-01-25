@@ -16,6 +16,22 @@ type watchType = {
   [key in fileTypes]: { [key in files]: chokidar.FSWatcher }
 }
 
+type ArrayKeys<T> = {
+  [K in keyof T]-?: T[K] extends Array<any> ? K : never
+}[keyof T]
+
+type ArrayElement<T> = T extends Array<infer U> ? U : never
+
+type IsPlainObject<T> = T extends object ?
+  T extends any[] ? false :
+  T extends (...args: any[]) => any ? false : true
+  : false
+
+type SingleValue<T extends files, K extends keyof Config.KeyValue[T]> =
+  IsPlainObject<Config.KeyValue[T][K]> extends true
+  ? Partial<Config.KeyValue[T][K]>
+  : Config.KeyValue[T][K]
+
 class Setting {
   defPath: string
   configPath: string
@@ -174,15 +190,17 @@ class Setting {
    * 设置对应模块用户配置单个键值对
    */
   setSingleConfig<T extends files, K extends keyof Config.KeyValue[T]>(
-    app: T, key: K, value: Config.KeyValue[T][K]
+    app: T,
+    key: K,
+    value: SingleValue<T, K>
   ) {
     // 先获取默认配置
     const defSet = this.getdefSet(app)
     const config = this.getConfig(app)
-    if (value instanceof Object) {
+    if (value && typeof value === 'object' && !Array.isArray(value)) {
       config[key] = { ...config[key], ...value }
     } else {
-      config[key] = value
+      config[key] = value as Config.KeyValue[T][K]
     }
     return this.setYaml(app, 'config', { ...defSet, ...config })
   }
@@ -190,33 +208,36 @@ class Setting {
   /**
    * 向数组中添加元素
    */
-  addArrayleConfig<T extends files, K extends keyof Config.KeyValue[T]>(
-    app: T, key: K, value: Config.KeyValue[T][K]
+  addArrayleConfig<
+    T extends files,
+    K extends ArrayKeys<Config.KeyValue[T]>
+  >(
+    app: T, key: K, value: ArrayElement<Config.KeyValue[T][K]>
   ) {
     const defSet = this.getdefSet(app)
     const config = this.getConfig(app)
-    if (!config[key]) {
-      // @ts-expect-error
-      config[key] = []
-    }
-    // @ts-expect-error
-    config[key].push(value)
+    const list = (Array.isArray(config[key]) ? config[key] : []) as ArrayElement<Config.KeyValue[T][K]>[]
+    list.push(value)
+    config[key] = list as Config.KeyValue[T][K]
     return this.setYaml(app, 'config', { ...defSet, ...config })
   }
 
   /**
    * 从数组中删除元素
    */
-  removeArrayleConfig<T extends files, K extends keyof Config.KeyValue[T]>(
-    app: T, key: K, value: Config.KeyValue[T][K]
+  removeArrayleConfig<
+    T extends files,
+    K extends ArrayKeys<Config.KeyValue[T]>
+  >(
+    app: T, key: K, value: ArrayElement<Config.KeyValue[T][K]>
   ) {
     const defSet = this.getdefSet(app)
     const config = this.getConfig(app)
     if (!config[key] || !Array.isArray(config[key])) {
       return false
     }
-    // @ts-expect-error
-    config[key] = config[key].filter(item => item !== value)
+    const list = config[key] as ArrayElement<Config.KeyValue[T][K]>[]
+    config[key] = list.filter(item => item !== value) as Config.KeyValue[T][K]
     return this.setYaml(app, 'config', { ...defSet, ...config })
   }
 

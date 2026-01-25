@@ -1,3 +1,4 @@
+import type { EventType } from '#interface'
 import fs from 'fs'
 import {
   getRoleImage,
@@ -16,77 +17,105 @@ import { getAllWeaponID } from '../../lib/convert/weapon.js'
 import { getAllBangbooID } from '../../lib/convert/bangboo.js'
 import * as LocalURI from '../../lib/download/const.js'
 
+interface DownloadCounter {
+  success: number
+  failed: number
+  total: number
+}
+
+interface DownloadResult {
+  images: {
+    char: DownloadCounter
+    charSmallSquare: DownloadCounter
+    charCircle: DownloadCounter
+    charSquare: DownloadCounter
+    equip: DownloadCounter
+    weapon: DownloadCounter
+    bangboo: DownloadCounter
+  }
+  hakush: {
+    char: DownloadCounter
+    equip: DownloadCounter
+  }
+}
+
 let downloading = false
-export async function downloadAll() {
-  if (!this.e.isMaster) return false
+export async function downloadAll(e: EventType) {
+  // @ts-expect-error
+  e ||= this.e
+  if (!e.isMaster) return false
   if (downloading) {
-    return this.reply('下载任务正在进行中，请稍后再试', false, { at: true, recallMsg: 100 })
+    return e.reply('下载任务正在进行中，请稍后再试', false, { at: true, recallMsg: 100 })
   }
   const charIDs = char.getAllCharactersID()
   const equipSprites = getAllSuitID()
   const weaponSprites = getAllWeaponID()
   const bangbooIDs = getAllBangbooID()
-  const result = {
+  const result: DownloadResult = {
     images: {
       char: {
         success: 0,
         failed: 0,
-        total: charIDs.length,
+        total: charIDs.length
       },
       charSmallSquare: {
         success: 0,
         failed: 0,
-        total: charIDs.length,
+        total: charIDs.length
       },
       charCircle: {
         success: 0,
         failed: 0,
-        total: charIDs.length,
+        total: charIDs.length
       },
       charSquare: {
         success: 0,
         failed: 0,
-        total: charIDs.length,
+        total: charIDs.length
       },
       equip: {
         success: 0,
         failed: 0,
-        total: equipSprites.length,
+        total: equipSprites.length
       },
       weapon: {
         success: 0,
         failed: 0,
-        total: weaponSprites.length,
+        total: weaponSprites.length
       },
       bangboo: {
         success: 0,
         failed: 0,
-        total: bangbooIDs.length,
-      },
+        total: bangbooIDs.length
+      }
     },
     hakush: {
       char: {
         success: 0,
         failed: 0,
-        total: charIDs.length,
+        total: charIDs.length
       },
       equip: {
         success: 0,
         failed: 0,
-        total: equipSprites.length,
-      },
-    },
+        total: equipSprites.length
+      }
+    }
   }
   downloading = true
-  await this.reply(
+  await e.reply(
     '开始下载全部资源：代理人、音擎、驱动盘、邦布图片等，请耐心等待……',
     false,
     { at: true, recallMsg: 100 }
   )
-  const downloadFnc = async (fnc, id, info) => {
+  const downloadFnc = async (
+    fnc: (id: number | string) => Promise<boolean | unknown>,
+    id: number | string,
+    info: DownloadCounter
+  ): Promise<void> => {
     try {
-      const result = await fnc(id)
-      if (result) {
+      const res = await fnc(id)
+      if (res) {
         info.success++
       } else {
         info.failed++
@@ -113,7 +142,7 @@ export async function downloadAll() {
   for (const id of bangbooIDs) {
     await downloadFnc(getSquareBangboo, id, result.images.bangboo)
   }
-  const generateMsg = (name, data) => `${name}：总数${data.total}，成功${data.success}，失败${data.failed}`
+  const generateMsg = (name: string, data: DownloadCounter) => `${name}：总数${data.total}，成功${data.success}，失败${data.failed}`
   const messages = [
     '资源下载完成（成功包含已下载资源）',
     generateMsg('角色图', result.images.char),
@@ -128,21 +157,24 @@ export async function downloadAll() {
     '注：下载失败可能源于该资源尚处于内测中'
   ]
   downloading = false
-  await this.reply(messages.join('\n'))
+  await e.reply(messages.join('\n'))
 }
-export async function deleteAll() {
-  if (!this.e.isMaster) return false
-  await this.reply(
+
+export async function deleteAll(e: EventType) {
+  // @ts-expect-error
+  e ||= this.e
+  if (!e.isMaster) return false
+  await e.reply(
     '【注意】正在删除所有资源图片，后续使用需要重新下载！',
     false,
     { at: true, recallMsg: 100 }
   )
   // 将 localURI 值迭代删除
-  for (const dir of Object.values(LocalURI)) {
+  for (const dir of Object.values(LocalURI) as string[]) {
     logger.debug(`删除文件夹：${dir}`)
     if (fs.existsSync(dir)) {
-      fs.rmSync(dir, { recursive: true })
+      fs.rmSync(dir, { recursive: true, force: true })
     }
   }
-  await this.reply('资源图片已删除！', false, { at: true, recallMsg: 100 })
+  await e.reply('资源图片已删除！', false, { at: true, recallMsg: 100 })
 }

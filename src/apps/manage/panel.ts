@@ -1,61 +1,65 @@
+import type { EventType } from '#interface'
+import type { MessageElem } from 'icqq'
 import { char } from '../../lib/convert.js'
 import { downloadFile } from '../../lib/download/core.js'
 import { imageResourcesPath } from '../../lib/path.js'
 import common from '../../../../../lib/common/common.js'
 import fs from 'fs'
 import path from 'path'
-export async function uploadCharacterImg() {
-  if (!this.e.isMaster) {
-    return this.reply('只有主人才能添加', false, { at: true, recallMsg: 100 })
+
+export async function uploadCharacterImg(e: EventType) {
+  // @ts-expect-error
+  e ||= this.e
+  if (!e.isMaster) {
+    return e.reply('只有主人才能添加', false, { at: true, recallMsg: 100 })
   }
   const reg = /(上传|添加)(.+)(角色|面板)图$/
-  const match = this.e.msg.match(reg)
+  const match = e.msg.match(reg)
   if (!match) {
     return false
   }
   const charName = match[2].trim()
   const name = char.aliasToName(charName)
   if (!name) {
-    return this.reply('未找到对应角色', false, { at: true, recallMsg: 100 })
+    return e.reply('未找到对应角色', false, { at: true, recallMsg: 100 })
   }
-  const images = []
+  const images: MessageElem[] = []
   // 下面方法来源于miao-plugin/apps/character/ImgUpload.js
-  for (const val of this.e.message) {
+  for (const val of e.message) {
     if (val.type === 'image') {
       images.push(val)
     }
   }
   if (images.length === 0) {
-    let source
-    if (this.e.getReply) {
-      source = await this.e.getReply()
-    } else if (this.e.source) {
-      if (this.e.group?.getChatHistory) {
-        // 支持at图片添加，以及支持后发送
+    let source: any
+    if (e.getReply) {
+      source = await e.getReply()
+    } else if (e.source) {
+      if (e.group?.getChatHistory) {
         source = (
-          await this.e.group.getChatHistory(this.e.source?.seq, 1)
+          await e.group.getChatHistory(e.source?.seq, 1)
         ).pop()
-      } else if (this.e.friend?.getChatHistory) {
+      } else if (e.friend?.getChatHistory) {
         source = (
-          await this.e.friend.getChatHistory(this.e.source?.time + 1, 1)
+          await e.friend.getChatHistory(e.source?.time + 1, 1)
         ).pop()
       }
     }
     if (source) {
-      for (const val of source.message) {
+      for (const val of source.message as MessageElem[]) {
         if (val.type === 'image') {
           images.push(val)
-        } else if (val.type === 'xml' || val.type === 'forward') {
-          let resid
+        } else if (val.type === 'xml' || (val as any).type === 'forward') {
+          let resid: string | undefined
           try {
-            resid = val.data
+            resid = (val as any).data
               .match(/m_resid="(\d|\w|\/|\+)*"/)[0]
               .replace(/m_resid=|"/g, '')
           } catch (err) {
-            resid = val.id
+            resid = (val as any).id
           }
           if (!resid) break
-          let message = await this.e.bot.getForwardMsg(resid)
+          const message = await e.bot.getForwardMsg(resid)
           for (const item of message) {
             for (const i of item.message) {
               if (i.type === 'image') {
@@ -68,7 +72,7 @@ export async function uploadCharacterImg() {
     }
   }
   if (images.length <= 0) {
-    return this.reply(
+    return e.reply(
       '消息中未找到图片，请将要发送的图片与消息一同发送或引用要添加的图像。',
       false,
       { at: true, recallMsg: 100 }
@@ -81,41 +85,43 @@ export async function uploadCharacterImg() {
   for (const image of images) {
     let fileName = new Date().getTime().toString()
     let fileType = 'png'
-    if (image.file) {
-      fileName = image.file.substring(0, image.file.lastIndexOf('.'))
-      fileType = image.file.substring(image.file.lastIndexOf('.') + 1)
+    if ((image as any).file) {
+      fileName = (image as any).file.substring(0, (image as any).file.lastIndexOf('.'))
+      fileType = (image as any).file.substring((image as any).file.lastIndexOf('.') + 1)
     }
     const filePath = path.join(panelImagesPath, `${fileName}.${fileType}`)
-    const result = await downloadFile(image.url, filePath)
+    const result = await downloadFile((image as any).url, filePath)
     if (result) {
       success++
     } else {
       failed++
     }
   }
-  return this.reply(`成功上传${success}张图片，失败${failed}张图片。`, false, {
+  return e.reply(`成功上传${success}张图片，失败${failed}张图片。`, false, {
     at: true,
-    recallMsg: 100,
+    recallMsg: 100
   })
 }
 
-export async function getCharacterImages() {
+export async function getCharacterImages(e: EventType) {
+  // @ts-expect-error
+  e ||= this.e
   const reg = /(获取|查看)(.+)(角色|面板)图(\d+)?$/
-  const match = this.e.msg.match(reg)
+  const match = e.msg.match(reg)
   if (!match) {
     return false
   }
   const charName = match[2].trim()
   const name = char.aliasToName(charName)
-  let page = match[4]
+  let page: number | string | undefined = match[4]
   if (!name) {
-    return this.reply('未找到对应角色', false, { at: true, recallMsg: 100 })
+    return e.reply('未找到对应角色', false, { at: true, recallMsg: 100 })
   }
   const pageSize = 5
   const resourcesImagesPath = imageResourcesPath
   const panelImagesPath = path.join(resourcesImagesPath, `panel/${name}`)
   const files = fs.readdirSync(panelImagesPath)
-  const images = []
+  const images: string[] = []
   for (const file of files) {
     images.push(path.join(panelImagesPath, file))
   }
@@ -126,10 +132,10 @@ export async function getCharacterImages() {
   const start = (page - 1) * pageSize
   const end = page * pageSize
   if (start >= images.length) {
-    return this.reply('哪有这么多图片', false, { at: true, recallMsg: 100 })
+    return e.reply('哪有这么多图片', false, { at: true, recallMsg: 100 })
   }
   const imagePaths = images.slice(start, end)
-  const imageMsg = imagePaths.map(imagePath => {
+  const imageMsg: Array<string | (string | MessageElem)[]> = imagePaths.map(imagePath => {
     const id = String(images.findIndex(value => value === imagePath) + 1)
     const msg = [`ID：${id}`, segment.image(imagePath)]
     return msg
@@ -143,33 +149,35 @@ export async function getCharacterImages() {
     '删除或者添加后会重新排序ID，此时若想删除，请重新获取图片列表，否则可能会删除错误的图片。'
   )
   if (imageMsg.length)
-    await this.reply(await common.makeForwardMsg(this.e, imageMsg))
+    await e.reply(await common.makeForwardMsg(e, imageMsg))
 }
 
-export async function deleteCharacterImg() {
-  if (!this.e.isMaster) {
-    return this.reply('只有主人才能删除', false, { at: true, recallMsg: 100 })
+export async function deleteCharacterImg(e: EventType) {
+  // @ts-expect-error
+  e ||= this.e
+  if (!e.isMaster) {
+    return e.reply('只有主人才能删除', false, { at: true, recallMsg: 100 })
   }
   const reg = /(删除)(.+)(角色|面板)图(.+)$/
-  const match = this.e.msg.match(reg)
+  const match = e.msg.match(reg)
   if (!match) {
     return false
   }
   const charName = match[2].trim()
   const name = char.aliasToName(charName)
   if (!name) {
-    return this.reply('未找到对应角色', false, { at: true, recallMsg: 100 })
+    return e.reply('未找到对应角色', false, { at: true, recallMsg: 100 })
   }
   const ids = match[4].split(/[,，、\s]+/)
   const resourcesImagesPath = imageResourcesPath
   const panelImagesPath = path.join(resourcesImagesPath, `panel/${name}`)
   const files = fs.readdirSync(panelImagesPath)
-  const images = []
+  const images: string[] = []
   for (const file of files) {
     images.push(path.join(panelImagesPath, file))
   }
-  const success = []
-  const failed = []
+  const success: string[] = []
+  const failed: string[] = []
   for (const id of ids) {
     const index = Number(id) - 1
     if (index < 0 || index >= images.length) {
@@ -182,8 +190,8 @@ export async function deleteCharacterImg() {
   }
   const msgs = [
     `成功删除ID为${success.join(',')}的图片`,
-    failed ? `删除失败ID为${failed.join(',')}` : '无失败ID',
-    '删除后会重新排序ID，若想要再次删除，请重新获取图片列表，否则可能会删除错误的图片。',
+    failed.length ? `删除失败ID为${failed.join(',')}` : '无失败ID',
+    '删除后会重新排序ID，若想要再次删除，请重新获取图片列表，否则可能会删除错误的图片。'
   ]
-  return this.reply(common.makeForwardMsg(this.e, msgs))
+  return e.reply(await common.makeForwardMsg(e, msgs))
 }
