@@ -7,6 +7,7 @@ config/**/*.*
 
 data/**/*.*
 
+/node_modules
 /dist
 /test
 src/model/damage/character/**/*_user.*
@@ -16,7 +17,7 @@ resources/data/**/*.*
 model/damage/map/
 
 resources/map/ElementData.json
-src/apps/test.js
+src/apps/test*
 src/model/score/Score copy.js
 src/model/score/Score copy.ts
 src/model/Enka/test.js

@@ -13,6 +13,7 @@ type filesData = {
 }
 
 type watchType = {
+  // @ts-ignore
   [key in fileTypes]: { [key in files]: chokidar.FSWatcher }
 }
 

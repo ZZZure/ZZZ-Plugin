@@ -6,6 +6,7 @@ import fs from 'fs'
 
 const User = await (async () => {
   try {
+    // @ts-ignore
     return (await import('../../../xiaoyao-cvs-plugin/model/user.js')).default
   } catch (e) {
     logger.warn('建议安装逍遥插件以获得更佳体验')

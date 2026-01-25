@@ -9,7 +9,6 @@ import { MysError } from './error.js'
 import settings from './settings.js'
 import crypto from 'crypto'
 import _ from 'lodash'
-// @ts-ignore
 import md5 from 'md5'
 
 // const DEVICE_ID = randomString(32).toUpperCase()

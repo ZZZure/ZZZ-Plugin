@@ -16,11 +16,10 @@
     "tsBuildInfoFile": "./dist/.tsbuildinfo",
     "outDir": "./dist",
     "baseUrl": "./src",
-    "rootDir": "./src"
+    "rootDir": "../../"
   },
   "include": [
-    "./src/**/*.ts",
-    "./src/**/*.js",
+    "./src/**/*.ts"
   ],
   "exclude": [
     "./dist",

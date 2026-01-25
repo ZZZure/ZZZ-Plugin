@@ -85,6 +85,7 @@ export class ZZZPlugin extends plugin {
 
     // 创建米游社 API 对象
     const api = new MysZZZApi(uid, ck, {
+      // @ts-ignore
       handler: this.e?.runtime?.handler || {},
       e: this.e,
     })

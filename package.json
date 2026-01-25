@@ -7,10 +7,24 @@
   "keywords": [],
   "author": "ZZZure",
   "scripts": {
-    "build": "tsc",
-    "watch": "nodemon --exec tsc"
+    "build": "node build.js",
+    "watch": "nodemon --exec pnpm run build",
+    "check": "tsc --noEmit"
   },
   "imports": {
     "#interface": "./src/@types/interface.d.ts"
+  },
+  "peerDependencies": {
+    "chokidar": "^4.0.3",
+    "icqq": "*",
+    "lodash": "^4.17.21",
+    "md5": "^2.3.0",
+    "yaml": "^2.8.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.21",
+    "@types/md5": "^2.3.6",
+    "nodemon": "^3.1.11",
+    "typescript": "^5.9.3"
   }
 }
