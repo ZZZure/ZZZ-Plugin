@@ -154,7 +154,7 @@ export async function downloadAll(e: EventType) {
     generateMsg('邦布图', result.images.bangboo),
     generateMsg('Hakush角色数据', result.hakush.char),
     generateMsg('Hakush驱动盘数据', result.hakush.equip),
-    '注：下载失败可能源于该资源尚处于内测中'
+    '注：下载失败可能缘于该资源尚处于内测中'
   ]
   downloading = false
   await e.reply(messages.join('\n'))
