@@ -15,13 +15,13 @@ export class monthly extends ZZZPlugin {
       rule: [
         {
           reg: `${rulePrefix}(monthly|菲林|邦布券|收入|月报)((\\d{4})年)?((\\d{1,2}|上)月)?$`,
-          fnc: 'monthly',
+          fnc: 'monthly'
         },
         {
           reg: `${rulePrefix}(monthly|菲林|邦布券|收入|月报)统计$`,
-          fnc: 'monthlyCollect',
-        },
-      ],
+          fnc: 'monthlyCollect'
+        }
+      ]
     })
   }
 
@@ -33,15 +33,15 @@ export class monthly extends ZZZPlugin {
     if (!match) {
       return this.reply('参数错误，请检查输入')
     }
-    let year = match[3]
-    let month = match[5]
+    const year = match[3]
+    const month = match[5]
     const { api, deviceFp } = await this.getAPI()
     await this.getPlayerInfo()
     const monthlyResponse = await getMonthly(
       api,
       deviceFp,
       this.getDateString(year, month)
-    ).catch(e => {
+    ).catch((e: Error) => {
       this.reply(e.message)
       throw e
     })
@@ -53,7 +53,7 @@ export class monthly extends ZZZPlugin {
     }
     const monthlyData = new Monthly(monthlyResponse)
     const finalData = {
-      monthly: monthlyData,
+      monthly: monthlyData
     }
     await this.render('monthly/index.html', finalData)
   }
@@ -63,8 +63,8 @@ export class monthly extends ZZZPlugin {
     await this.getPlayerInfo()
     const collect = await getMonthlyCollect(
       api,
-      deviceFp,
-    ).catch(e => {
+      deviceFp
+    ).catch((e: Error) => {
       this.reply(e.message)
       throw e
     })
@@ -91,21 +91,21 @@ export class monthly extends ZZZPlugin {
       boopon: collectData.reduce(
         (acc, cur) => acc + cur.month_data.overview.boopon,
         0
-      ),
+      )
     }
 
     const finalData = {
       collect: collectData,
       range: `${start}～${end}`,
-      total,
+      total
     }
 
     await this.render('monthly/collect.html', finalData)
   }
 
-  getDateString(year, month) {
-    let _year = +year,
-      _month = +month
+  getDateString(year?: string, month?: string) {
+    let _year = +year!
+    let _month = +month!
     if (!_month) {
       return ''
     }
@@ -115,7 +115,7 @@ export class monthly extends ZZZPlugin {
     if (!_year || _year < 2023) {
       _year = currentYear
     }
-    if (_month === '上') {
+    if (month === '上') {
       _month = current_month - 1
       if (_month === 0) {
         _month = 12
@@ -126,9 +126,9 @@ export class monthly extends ZZZPlugin {
     if (queryTime > currentTime) {
       return ''
     }
-    _month = _month < 10 ? `0${_month}` : `${_month}`
+    const monthStr = _month < 10 ? `0${_month}` : `${_month}`
 
-    return `${_year}${_month}`
+    return `${_year}${monthStr}`
   }
 
 }

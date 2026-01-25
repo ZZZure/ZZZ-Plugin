@@ -25,7 +25,7 @@ import fs from 'fs'
  * @param uid ZZZUID
  * @returns 更新后的抽卡数据
  */
-export const updateGachaLog = async (authKey: string, uid: string, region: string, game_biz: string) => {
+export const updateGachaLog = async (authKey: string, uid: string, region?: string, game_biz?: string) => {
   // 获取之前的抽卡数据
   const previousLog = getGachaLog(uid) || {} as ZZZ.DBMap['gacha']
   // 新的抽卡数据

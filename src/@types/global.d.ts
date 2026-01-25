@@ -1,6 +1,7 @@
 import type { EventMap, EventType } from './message.ts'
 import type {
   Client,
+  MessageRet,
   segment as segmentSource,
   Sendable
 } from 'icqq'
@@ -109,7 +110,7 @@ declare global {
     reply(msg?: Sendable, quote?: boolean, data?: {
       at?: boolean
       recallMsg?: number
-    }): any
+    }): Promise<MessageRet>
     conKey(isGroup?: boolean): string
     /**
      * @param fnc 执行方法名

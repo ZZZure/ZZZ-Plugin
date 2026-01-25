@@ -3,26 +3,25 @@ import { ZZZPlugin } from '../lib/plugin.js'
 import settings from '../lib/settings.js'
 import _ from 'lodash'
 
-/**
- * @typedef {Object} HelpItem
- * @property {string} title
- * @property {string} desc
- * @property {boolean} needCK
- * @property {boolean} needSK
- * @property {string[]} commands
- */
-/**
- * @typedef {Object} HelpData
- * @property {string} title
- * @property {'fire'|'ice'|'physdmg'|'thunder'|'dungeon'} icon
- * @property {HelpItem[]} items
- */
+type IconType =
+  | 'fire' | 'ice' | 'physdmg' | 'thunder' | 'dungeon'
+  | 'frost' | 'auricInk' | 'honedEdge'
 
-/**
- * @type {HelpData[]}
- * @description 帮助数据
- */
-const helpData = [
+interface HelpItem {
+  title: string
+  desc: string
+  needCK: boolean
+  needSK: boolean
+  commands: string[]
+}
+
+interface HelpData {
+  title: string
+  icon: IconType
+  items: HelpItem[]
+}
+
+const helpData: HelpData[] = [
   {
     title: '信息查询',
     icon: 'fire',
@@ -415,15 +414,15 @@ export class Help extends ZZZPlugin {
       rule: [
         {
           reg: `${rulePrefix}(帮助|help)$`,
-          fnc: 'help',
-        },
-      ],
+          fnc: 'help'
+        }
+      ]
     })
   }
 
   async help() {
     if (this.e?.isMaster) {
-      const _helpData = [
+      const _helpData: HelpData[] = [
         ...helpData,
         {
           title: '管理功能',
@@ -564,11 +563,11 @@ export class Help extends ZZZPlugin {
         },
       ]
       return await this.render('help/index.html', {
-        helpData: _helpData,
+        helpData: _helpData
       })
     }
     await this.render('help/index.html', {
-      helpData,
+      helpData
     })
   }
 

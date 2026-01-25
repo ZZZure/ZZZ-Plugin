@@ -14,9 +14,9 @@ export class Note extends ZZZPlugin {
       rule: [
         {
           reg: `${rulePrefix}(note|每日|体力|便笺|便签)$`,
-          fnc: 'note',
-        },
-      ],
+          fnc: 'note'
+        }
+      ]
     })
   }
 
@@ -24,15 +24,15 @@ export class Note extends ZZZPlugin {
     const { api, deviceFp } = await this.getAPI()
     await this.getPlayerInfo()
     const noteResponse = await api.getFinalData('zzzNote', {
-      deviceFp,
-    }).catch(e => {
+      deviceFp
+    }).catch((e: Error) => {
       this.reply(e.message)
       throw e
     })
     if (!noteResponse) return false
-    const noteData = new ZZZNoteResp(noteResponse)
+    const noteData = new ZZZNoteResp(noteResponse as any)
     const finalData = {
-      note: noteData,
+      note: noteData
     }
     await this.render('note/index.html', finalData)
   }

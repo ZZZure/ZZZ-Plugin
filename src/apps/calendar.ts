@@ -14,9 +14,9 @@ export class Calendar extends ZZZPlugin {
       rule: [
         {
           reg: `${rulePrefix}(cal|日历)$`,
-          fnc: 'calendar',
-        },
-      ],
+          fnc: 'calendar'
+        }
+      ]
     })
   }
 
@@ -25,7 +25,7 @@ export class Calendar extends ZZZPlugin {
       .get(
         'https://announcement-api.mihoyo.com/common/nap_cn/announcement/api/getAnnList?game=nap&game_biz=nap_cn&lang=zh-cn&bundle_id=nap_cn&channel_id=1&level=70&platform=pc&region=prod_gf_cn&uid=12345678'
       )
-      .then(res => res.json())
+      .then(res => res.json()) as any
     if (!activityList?.data) {
       return this.reply('获取活动列表失败')
     }
@@ -34,10 +34,10 @@ export class Calendar extends ZZZPlugin {
       .get(
         `https://announcement-static.mihoyo.com/common/nap_cn/announcement/api/getAnnContent?game=nap&game_biz=nap_cn&lang=zh-cn&bundle_id=nap_cn&platform=pc&region=prod_gf_cn&t=${t}&level=70&channel_id=1`
       )
-      .then(res => res.json())
+      .then(res => res.json()) as any
     const contentList = activityContent?.data?.list || []
     const calendarContent = contentList.find(
-      item => item.title.includes('日历') && item.subtitle.includes('活动日历')
+      (item: any) => item.title.includes('日历') && item.subtitle.includes('活动日历')
     )
 
     const htmlContent = calendarContent?.content || ''

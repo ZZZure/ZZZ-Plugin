@@ -117,7 +117,8 @@ export class ZZZPlugin extends plugin {
       }
       const sdk = api.getUrl('getFp', data)
       if (!sdk) {
-        return { api: null, uid: null, deviceFp: null }
+        this.reply('获取请求数据失败')
+        throw new Error('获取请求数据失败')
       }
       let res: any
       try {
@@ -139,7 +140,8 @@ export class ZZZPlugin extends plugin {
       logger.debug(`[米游社][设备指纹]${JSON.stringify(fpRes)}`)
       deviceFp = fpRes?.data?.device_fp
       if (!deviceFp) {
-        return { api: null, uid: null, deviceFp: null }
+        this.reply('获取设备指纹失败')
+        throw new Error('获取设备指纹失败')
       }
       await redis.set(`ZZZ:DEVICE_FP:${ltuid}:FP`, deviceFp, {
         EX: 86400 * 7,
@@ -240,7 +242,7 @@ export class ZZZPlugin extends plugin {
       recallMsg?: number
       beforeRender?: (options: { data: any }) => any
     } = {}
-  ) {
+  ): any {
     const e = this.e || cfg?.e
     // 判断是否存在e.runtime
     if (!e.runtime) {

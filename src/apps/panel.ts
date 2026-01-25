@@ -24,30 +24,32 @@ export class Panel extends ZZZPlugin {
       rule: [
         {
           reg: `${rulePrefix}(.*)面板(展柜)?(刷新|更新|列表)?$`,
-          fnc: 'handleRule',
+          fnc: 'handleRule'
         },
         {
           reg: `${rulePrefix}练度(统计)?$`,
-          fnc: 'proficiency',
+          fnc: 'proficiency'
         },
         {
           reg: `${rulePrefix}原图$`,
-          fnc: 'getCharOriImage',
-        },
+          fnc: 'getCharOriImage'
+        }
       ],
       handler: [
         { key: 'zzz.tool.panel', fn: 'getCharPanelTool' },
-        { key: 'zzz.tool.panelList', fn: 'getCharPanelListTool' },
-      ],
+        { key: 'zzz.tool.panelList', fn: 'getCharPanelListTool' }
+      ]
     })
   }
 
   async handleRule() {
     if (!this.e.msg) return
     const reg = new RegExp(`${rulePrefix}(.*?)(?:展柜)?面板(?:展柜)?(刷新|更新|列表)?$`)
-    const pre = this.e.msg.match(reg)[4]?.trim()
-    const suf = this.e.msg.match(reg)[5]?.trim()
-    if (['刷新', '更新'].includes(pre) || ['刷新', '更新'].includes(suf))
+    const match = this.e.msg.match(reg)
+    if (!match) return false
+    const pre = match[4]?.trim()
+    const suf = match[5]?.trim()
+    if (['刷新', '更新'].includes(pre || '') || ['刷新', '更新'].includes(suf || ''))
       return await this.refreshPanel()
     if (!pre || suf === '列表') return await this.getCharPanelList()
     const queryPanelReg = new RegExp(`${rulePrefix}(.*)面板$`)
@@ -60,11 +62,11 @@ export class Panel extends ZZZPlugin {
     const lastQueryTime = await redis.get(`ZZZ:PANEL:${uid}:LASTTIME`)
     const panelSettings = settings.getConfig('panel')
     const coldTime = _.get(panelSettings, 'interval', 300)
-    if (lastQueryTime && Date.now() - lastQueryTime < 1000 * coldTime) {
+    if (lastQueryTime && Date.now() - Number(lastQueryTime) < 1000 * coldTime) {
       return this.reply(`${coldTime}秒内只能更新一次，请稍后再试`)
     }
     const isEnka = this.e.msg.includes('展柜') || !(await getCk(this.e))
-    let result
+    let result: any[] | null = null
     if (isEnka) {
       const data = await refreshPanelFromEnka(uid)
         .catch(err => err)
@@ -86,14 +88,17 @@ export class Panel extends ZZZPlugin {
     } else {
       const oriReply = this.reply.bind(this)
       let errorMsg = ''
-      this.reply = (msg) => errorMsg += '\n' + msg
+      this.reply = (msg) => {
+        errorMsg += '\n' + msg
+        return Promise.resolve(null as any)
+      }
       try {
         const { api, deviceFp } = await this.getAPI()
         await oriReply('正在更新面板列表，请稍候...')
         await this.getPlayerInfo()
         await redis.set(`ZZZ:PANEL:${uid}:LASTTIME`, Date.now())
         result = await refreshPanelFunction(api, deviceFp)
-      } catch (err) {
+      } catch (err: any) {
         logger.error('面板列表更新失败：', err)
         errorMsg = (err.message || '') + errorMsg
       }
@@ -106,7 +111,7 @@ export class Panel extends ZZZPlugin {
     const newChar = result.filter(item => item.isNew)
     const finalData = {
       newChar: newChar.length,
-      list: result,
+      list: result
     }
     await this.render('panel/refresh.html', finalData)
   }
@@ -118,7 +123,7 @@ export class Panel extends ZZZPlugin {
       return this.reply(`UID:${uid}无本地面板数据，请先%更新面板 或 %更新展柜面板`)
     }
     const hasCk = !!(await getCk(this.e))
-    await this.getPlayerInfo(hasCk ? undefined : parsePlayerInfo({ uid }))
+    await this.getPlayerInfo(hasCk ? undefined : parsePlayerInfo({ uid }) as any)
     const timer = setTimeout(() => {
       if (this?.reply) {
         this.reply('查询成功，正在下载图片资源，请稍候。')
@@ -130,12 +135,12 @@ export class Panel extends ZZZPlugin {
     clearTimeout(timer)
     const finalData = {
       count: result?.length || 0,
-      list: result,
+      list: result
     }
     await this.render('panel/list.html', finalData)
   }
 
-  async getCharPanelListTool(uid, origin = false) {
+  async getCharPanelListTool(uid: string, origin = false) {
     if (!uid) {
       return false
     }
@@ -159,24 +164,18 @@ export class Panel extends ZZZPlugin {
     } else if (data === null) {
       return this.reply(`暂无角色${name}面板数据，请先%更新面板`)
     }
-    // data.id = 1431
-    // data.name_mi18n = data.full_name_mi18n = '叶瞬光'
-    // data.element_type = 200
-    // data.sub_element_type = 3
-    // data.weapon.id = 14143
-    // data.weapon.name = '云霓孤光'
-    let handler = this.e.runtime.handler || {}
+    const handler = this.e.runtime.handler || {}
 
     if (handler.has('zzz.tool.panel')) {
       await handler.call('zzz.tool.panel', this.e, {
         uid,
         data: data,
-        needSave: false,
+        needSave: false
       })
     }
   }
 
-  async getCharPanelTool(e, _data = {}) {
+  async getCharPanelTool(e: any, _data: { uid?: string; data?: any; needSave?: boolean; reply?: boolean; needImg?: boolean | string } = {}) {
     if (e) this.e = e
     if (e?.reply) this.reply = e.reply
 
@@ -209,10 +208,10 @@ export class Panel extends ZZZPlugin {
     clearTimeout(timer)
     const finalData = {
       uid,
-      charData: parsedData,
+      charData: parsedData
     }
     const image = needImg ? await this.render('panel/card.html', finalData, {
-      retType: 'base64',
+      retType: 'base64'
     }) : needImg
 
     if (reply) {
@@ -222,12 +221,12 @@ export class Panel extends ZZZPlugin {
           `ZZZ:PANEL:IMAGE:${res.message_id}`,
           parsedData.role_icon,
           {
-            EX: 3600 * 3,
+            EX: 3600 * 3
           }
         )
       return {
         message: res,
-        image,
+        image
       }
     }
 
@@ -244,10 +243,10 @@ export class Panel extends ZZZPlugin {
     result.sort((a, b) => {
       return b.proficiency_score - a.proficiency_score
     })
-    const WeaponCount = result.filter(item => item?.weapon).length,
-      SWeaponCount = result.filter(
-        item => item?.weapon && item.weapon.rarity === 'S'
-      ).length
+    const WeaponCount = result.filter(item => item?.weapon).length
+    const SWeaponCount = result.filter(
+      item => item?.weapon && item.weapon.rarity === 'S'
+    ).length
     const general = {
       total: result.length,
       SCount: result.filter(item => item.rarity === 'S').length,
@@ -255,12 +254,12 @@ export class Panel extends ZZZPlugin {
       SSSCount: result.reduce((acc, item) => {
         if (item.equip) {
           acc += item.equip.filter(
-            equip => ['SSS', 'ACE', 'MAX'].includes(equip.comment)
+            equip => ['SSS', 'ACE', 'MAX'].includes(String(equip.comment))
           ).length
         }
         return acc
       }, 0),
-      highRank: result.filter(item => item.rank > 4).length,
+      highRank: result.filter(item => item.rank > 4).length
     }
     const timer = setTimeout(() => {
       if (this?.reply) {
@@ -273,13 +272,13 @@ export class Panel extends ZZZPlugin {
     clearTimeout(timer)
     const finalData = {
       general,
-      list: result,
+      list: result
     }
     await this.render('proficiency/index.html', finalData)
   }
 
   async getCharOriImage() {
-    let source
+    let source: any
     if (this.e.getReply) {
       source = await this.e.getReply()
     } else if (this.e.source) {

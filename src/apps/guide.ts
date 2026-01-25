@@ -15,6 +15,8 @@ import fs from 'fs'
 const ZZZ_GUIDES_PATH = path.join(imageResourcesPath, 'guides')
 
 export class Guide extends ZZZPlugin {
+  url: string
+
   constructor() {
     super({
       name: '[ZZZ-Plugin]Guide',
@@ -24,28 +26,28 @@ export class Guide extends ZZZPlugin {
       rule: [
         {
           reg: `^${rulePrefix}攻略(说明|帮助)$`,
-          fnc: 'GuideHelp',
+          fnc: 'GuideHelp'
         },
         {
           reg: `${rulePrefix}(更新)?\\S+攻略(\\d+|all)?$`,
-          fnc: 'Guide',
-        },
-      ],
+          fnc: 'Guide'
+        }
+      ]
     })
 
     this.url =
       'https://bbs-api.mihoyo.com/post/wapi/getPostFullInCollection?&gids=8&collection_id='
   }
 
-  getGuideFolder(groupIndex) {
-    let guideFolder = path.join(
+  getGuideFolder(groupIndex: number) {
+    const guideFolder = path.join(
       ZZZ_GUIDES_PATH,
       guides.guideSources[groupIndex - 1] || ''
     )
     return guideFolder
   }
 
-  async getGuidePath(groupIndex, characterName, isUpdate = false) {
+  async getGuidePath(groupIndex: number, characterName: string, isUpdate = false) {
     const filename = `role_guide_${characterName}.png`
     const guidePath = path.join(this.getGuideFolder(groupIndex), filename)
     if (fs.existsSync(guidePath) && !isUpdate) return guidePath
@@ -53,17 +55,13 @@ export class Guide extends ZZZPlugin {
   }
 
   async Guide() {
-    let reg = new RegExp(`${rulePrefix}(更新|刷新)?(\\S+)攻略(\\d+|all)?$`)
-    let [
-      ,
-      ,
-      ,
-      ,
-      isUpdate,
-      alias,
-      group = _.get(settings.getConfig('guide'), 'default_guide', 1).toString(),
-    ] = this.e.msg.match(reg)
     // all -> 0
+    const reg = new RegExp(`${rulePrefix}(更新|刷新)?(\\S+)攻略(\\d+|all)?$`)
+    const match = this.e.msg.match(reg)
+    if (!match) return false
+    const [, , , , isUpdate, aliasRaw, groupRaw = _.get(settings.getConfig('guide'), 'default_guide', 1).toString()] = match
+    let alias = aliasRaw
+    let group: string | number = groupRaw
     if (group === 'all') {
       group = '0'
     }
@@ -82,7 +80,7 @@ export class Guide extends ZZZPlugin {
     }
 
     if (group === 0) {
-      const msg = []
+      const msg: any[] = []
       for (
         let i = 1;
         i <=
@@ -113,8 +111,8 @@ export class Guide extends ZZZPlugin {
   }
 
   /** 下载攻略图 */
-  async getImg(name, group) {
-    let mysRes = []
+  async getImg(name: string, group: number) {
+    let mysRes: any[] = []
     guides.collection_id[group].forEach(id =>
       mysRes.push(this.getData(this.url + id))
     )
@@ -123,13 +121,14 @@ export class Guide extends ZZZPlugin {
       mysRes = await Promise.all(mysRes)
     } catch (error) {
       console.log(`米游社接口报错：${error}}`)
-      return this.e.reply('暂无攻略数据，请稍后再试')
+      this.e.reply('暂无攻略数据，请稍后再试')
+      return false
     }
 
     // 搜索时过滤特殊符号，譬如「11号」
     const filtered_name = name.replace(/[^a-zA-Z0-9\u4e00-\u9fa5]/g, '')
-    let posts = lodash.flatten(lodash.map(mysRes, item => item.data.posts))
-    let url
+    const posts = lodash.flatten(lodash.map(mysRes, item => item.data.posts))
+    let url: string | undefined
     for (const val of posts) {
       if (
         val.post.subject
@@ -137,7 +136,7 @@ export class Guide extends ZZZPlugin {
           .includes(filtered_name)
       ) {
         let max = 0
-        val.image_list.forEach((v, i) => {
+        val.image_list.forEach((v: any, i: number) => {
           if (
             Number(v.size) >= Number(val.image_list[max].size) &&
             v.format != 'gif' // 动图天生 size 会撑得很大
@@ -171,17 +170,17 @@ export class Guide extends ZZZPlugin {
   }
 
   /** 获取数据 */
-  async getData(url) {
-    let response = await fetch(url, { method: 'get' })
+  async getData(url: string) {
+    const response = await fetch(url, { method: 'get' })
     if (!response.ok) {
       return false
     }
-    return await response.json()
+    return await response.json() as any
   }
 
   /** %攻略帮助 */
   async GuideHelp() {
-    let reply_msg = [
+    const reply_msg = [
       '绝区零角色攻略帮助:',
       '%艾莲攻略+攻略id',
       '%更新艾莲攻略+攻略id',
@@ -189,7 +188,7 @@ export class Guide extends ZZZPlugin {
       '%设置所有攻略显示个数+攻略id',
       '示例: %艾莲攻略2',
       '',
-      '攻略来源:',
+      '攻略来源:'
     ].concat(
       guides.guideSources.map((element, index) => `${index + 1}: ${element}`)
     )

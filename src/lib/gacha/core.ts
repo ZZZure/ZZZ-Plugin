@@ -18,8 +18,8 @@ export const getZZZGachaLink = async (
   initLogGachaBaseType: string = '2',
   page: number = 1,
   endId: string = '0',
-  serverId: string,
-  game_biz: string
+  serverId?: string,
+  game_biz?: string
 ): Promise<string> => {
   const region = serverId || 'prod_gf_cn'
   const gamebiz = game_biz || 'nap_cn'
@@ -65,8 +65,8 @@ export const getZZZGachaLogByAuthkey = async (
   initLogGachaBaseType: string = '2',
   page: number = 1,
   endId: string = '0',
-  region: string,
-  game_biz: string
+  region?: string,
+  game_biz?: string
 ) => {
   // 获取抽卡链接
   const link = await getZZZGachaLink(

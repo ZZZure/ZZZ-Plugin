@@ -1,7 +1,24 @@
+import type { Mys } from '#interface'
 import { rulePrefix } from '../lib/common.js'
 import { ZZZPlugin } from '../lib/plugin.js'
 import settings from '../lib/settings.js'
 import _ from 'lodash'
+
+type RemindConfig = {
+  enable: boolean
+  abyssCheckLevel: number
+  deadlyStars: number
+  remindTime?: string
+}
+
+type TimeRange = {
+  year: number
+  month: number
+  day: number
+  hour: number
+  minute: number
+  second: number
+}
 
 const USER_CONFIGS_KEY = 'ZZZ:REMIND:USER_CONFIGS'
 
@@ -15,47 +32,47 @@ export class Remind extends ZZZPlugin {
       rule: [
         {
           reg: `${rulePrefix}(开启|关闭)挑战提醒$`,
-          fnc: 'setSubscribeEnable',
+          fnc: 'setSubscribeEnable'
         },
         {
           reg: `${rulePrefix}(开启|启用|关闭|禁用)全局挑战提醒$`,
           fnc: 'setGlobalRemindEnable',
-          permission: 'master',
+          permission: 'master'
         },
         {
           reg: `${rulePrefix}设置(全局)?式舆阈值\\s*(\\d+)`,
-          fnc: 'setAbyssThreshold',
+          fnc: 'setAbyssThreshold'
         },
         {
           reg: `${rulePrefix}设置(全局)?危局阈值\\s*(\\d+)`,
-          fnc: 'setDeadlyThreshold',
+          fnc: 'setDeadlyThreshold'
         },
         {
           reg: `${rulePrefix}查询挑战状态$`,
-          fnc: 'checkNow',
+          fnc: 'checkNow'
         },
         {
           reg: `${rulePrefix}设置个人提醒时间\\s*(每日\\d+时(?:(\\d+)分)?|每周.\\d+时(?:(\\d+)分)?)`,
-          fnc: 'setMyRemindTime',
+          fnc: 'setMyRemindTime'
         },
         {
           reg: `${rulePrefix}个人提醒时间$`,
-          fnc: 'viewMyRemindTime',
+          fnc: 'viewMyRemindTime'
         },
         {
           reg: `${rulePrefix}(重置|删除|取消)个人提醒时间`,
-          fnc: 'deleteMyRemindTime',
+          fnc: 'deleteMyRemindTime'
         },
         {
           reg: `${rulePrefix}设置全局提醒时间\\s*(每日\\d+时(?:(\\d+)分)?|每周.\\d+时(?:(\\d+)分)?)`,
           fnc: 'setGlobalRemindTime',
-          permission: 'master',
+          permission: 'master'
         },
         {
           reg: `${rulePrefix}全局提醒时间$`,
-          fnc: 'viewGlobalRemindTime',
-        },
-      ],
+          fnc: 'viewGlobalRemindTime'
+        }
+      ]
     })
 
     const globalRemindConfig = settings.getConfig('remind')
@@ -63,21 +80,21 @@ export class Remind extends ZZZPlugin {
       this.task = {
         name: 'ZZZ-Plugin式舆防卫战/危局强袭战提醒任务',
         cron: '0 */10 * * * ?',
-        fnc: () => this.runTask(),
+        fnc: () => this.runTask()
       }
     }
   }
 
-  async getUserConfig(userId) {
+  async getUserConfig(userId: number): Promise<RemindConfig | null> {
     const userConfigJson = await redis.hGet(USER_CONFIGS_KEY, String(userId))
-    return userConfigJson ? JSON.parse(userConfigJson) : null
+    return userConfigJson ? JSON.parse(userConfigJson) as RemindConfig : null
   }
 
-  async setUserConfig(userId, config) {
+  async setUserConfig(userId: number, config: RemindConfig) {
     await redis.hSet(USER_CONFIGS_KEY, String(userId), JSON.stringify(config))
   }
 
-  parseRemindTimeMessage(message) {
+  parseRemindTimeMessage(message: string): { remindTime: string | null; error: string | null } {
     const pattern = /提醒时间\s*(每日\d+时(?:(\d+)分)?|每周.\d+时(?:(\d+)分)?)/
     const match = message.match(pattern)
     if (!match) return { remindTime: null, error: '时间格式错误' }
@@ -89,7 +106,7 @@ export class Remind extends ZZZPlugin {
     return { remindTime, error: null }
   }
 
-  isTimeMatch(remindTime, date) {
+  isTimeMatch(remindTime: string | undefined, date: Date) {
     if (!remindTime) return false
 
     const currentDay = date.getDay() // 0 = 周日, 1 = 周一, ..., 6 = 周六
@@ -104,7 +121,7 @@ export class Remind extends ZZZPlugin {
         return currentHour === hour && currentMinute === minute
       }
     } else if (remindTime.includes('每周')) {
-      const dayMap = { '日': 0, '天': 0, '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6 }
+      const dayMap: Record<string, number> = { '日': 0, '天': 0, '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6 }
       const match = remindTime.match(/每周(.)(\d+)时(?:(\d+)分)?/)
       if (match) {
         const dayChar = match[1]
@@ -125,7 +142,7 @@ export class Remind extends ZZZPlugin {
     if (!(this.e.bot ?? Bot).fl.get(this.e.user_id)) {
       this.reply('请添加好友后重试')
       return false
-    };
+    }
     return true
   }
 
@@ -142,7 +159,7 @@ export class Remind extends ZZZPlugin {
       userConfig = {
         enable: false,
         abyssCheckLevel: defaultConfig.abyssCheckLevel,
-        deadlyStars: defaultConfig.deadlyStars,
+        deadlyStars: defaultConfig.deadlyStars
       }
     }
     if (userConfig.enable === enable) {
@@ -191,12 +208,12 @@ export class Remind extends ZZZPlugin {
         userConfig = {
           enable: false,
           abyssCheckLevel: defaultConfig.abyssCheckLevel,
-          deadlyStars: defaultConfig.deadlyStars,
+          deadlyStars: defaultConfig.deadlyStars
         }
       }
       userConfig.abyssCheckLevel = threshold
       await this.setUserConfig(this.e.user_id, userConfig)
-    };
+    }
 
     await this.reply(`${isGlobal ? '全局默认' : ''}式舆防卫战阈值已设为: S层数<${Math.min(5, threshold)}层${threshold === 6 ? '或第五层<S+评价' : ''}时提醒`)
   }
@@ -224,7 +241,7 @@ export class Remind extends ZZZPlugin {
         userConfig = {
           enable: false,
           abyssCheckLevel: defaultConfig.abyssCheckLevel,
-          deadlyStars: defaultConfig.deadlyStars,
+          deadlyStars: defaultConfig.deadlyStars
         }
       }
 
@@ -246,7 +263,7 @@ export class Remind extends ZZZPlugin {
       userConfig = {
         enable: false, // 不开启提醒，仅用于查询
         abyssCheckLevel: defaultConfig.abyssCheckLevel,
-        deadlyStars: defaultConfig.deadlyStars,
+        deadlyStars: defaultConfig.deadlyStars
       }
     }
     await this.reply('正在查询，请稍候...')
@@ -258,10 +275,10 @@ export class Remind extends ZZZPlugin {
     }
   }
 
-  getTimeRemaining({ year, month, day, hour, minute, second }) {
+  getTimeRemaining({ year, month, day, hour, minute, second }: TimeRange) {
     const targetDate = new Date(year, month - 1, day, hour, minute, second)
     const now = new Date()
-    const timeDiff = targetDate - now
+    const timeDiff = targetDate.getTime() - now.getTime()
     if (timeDiff <= 0) return { days: 0, hours: 0 }
     const totalHours = Math.floor(timeDiff / (1000 * 60 * 60))
     const days = Math.floor(totalHours / 24)
@@ -269,16 +286,18 @@ export class Remind extends ZZZPlugin {
     return { days, hours }
   }
 
-  async checkUser(userId, userConfig, showAll = false, contextE = null) {
-    let messages = []
+  async checkUser(userId: number, userConfig: RemindConfig, showAll = false, contextE: any = null) {
+    const messages: string[] = []
 
     const originalE = this.e
     this.e = contextE || this.e
 
-    let api, deviceFp
+    let api: any
+    let deviceFp: string | undefined
     try {
-      // 获取 API 和玩家信息
-      ({ api, deviceFp } = await this.getAPI())
+      const apiResult = await this.getAPI()
+      api = apiResult.api
+      deviceFp = apiResult.deviceFp ?? undefined
       await this.getPlayerInfo()
     } catch (error) {
       logger.error(`[ZZZ-Plugin] 为用户 ${userId} 获取API或玩家信息失败: ${error}`)
@@ -291,8 +310,7 @@ export class Remind extends ZZZPlugin {
     const defaultConfig = settings.getConfig('remind')
     // 检查式舆防卫战
     try {
-      /** @type {import('#interface').Mys.Abyss} */
-      const abyssRawData = await api.getFinalData('zzzChallenge', { deviceFp })
+      const abyssRawData = await api.getFinalData('zzzChallenge', { deviceFp }) as Mys.Abyss
       const len = messages.length
       const abyssData = abyssRawData?.hadal_info_v2
       if (!abyssData) {
@@ -319,7 +337,7 @@ export class Remind extends ZZZPlugin {
             } else if (!firstLayer && secondLayer?.rating === 'S') {
               extra = 1
             }
-            const floors = ['first', 'second', 'third', 'fourth']
+            const floors = ['first', 'second', 'third', 'fourth'] as const
             return floors.reduce((acc, floor) => {
               const layerDetail = abyssData[`${floor}_layer_detail`]
               if (layerDetail?.rating === 'S') {
@@ -399,9 +417,9 @@ export class Remind extends ZZZPlugin {
     const globalRemindTime = globalRemindConfig.globalRemindTime || '每日20时'
 
     for (const key in allUserConfigs) {
-      const userConfig = JSON.parse(allUserConfigs[key])
+      const userConfig = JSON.parse(allUserConfigs[key]) as RemindConfig
       if (!userConfig.enable) continue
-      const userId = +key
+      const userId = Number(key)
       if (!Bot.fl.get(userId)) continue
 
       const remindTime = userConfig.remindTime || globalRemindTime
@@ -411,12 +429,12 @@ export class Remind extends ZZZPlugin {
         const mockE = {
           user_id: userId,
           game: 'zzz',
-          reply: (msg) => logger.info(`[Remind Mock Reply] ${msg}`)
+          reply: (msg: string) => logger.info(`[Remind Mock Reply] ${msg}`)
         }
 
         const messages = await this.checkUser(userId, userConfig, false, mockE)
         if (messages.length > 0) {
-          await Bot.pickFriend(userId).sendMsg('【式舆/危局挑战提醒】\n' + messages.join('\n')).catch(err => {
+          await Bot.pickFriend(userId).sendMsg('【式舆/危局挑战提醒】\n' + messages.join('\n')).catch((err: any) => {
             logger.error(`[ZZZ-Plugin] 式舆/危局挑战提醒推送用户 ${userId} 失败`, err)
           })
         }
@@ -428,7 +446,7 @@ export class Remind extends ZZZPlugin {
   async setMyRemindTime() {
     if (!this.checkEnableAndFriend()) return
     const { remindTime, error } = this.parseRemindTimeMessage(this.e.msg)
-    if (!remindTime) return await this.reply(error)
+    if (!remindTime) return await this.reply(error || '时间格式错误')
 
     let userConfig = await this.getUserConfig(this.e.user_id)
     if (!userConfig) {
@@ -436,7 +454,7 @@ export class Remind extends ZZZPlugin {
       userConfig = {
         enable: false,
         abyssCheckLevel: defaultConfig.abyssCheckLevel,
-        deadlyStars: defaultConfig.deadlyStars,
+        deadlyStars: defaultConfig.deadlyStars
       }
     }
 
@@ -458,7 +476,7 @@ export class Remind extends ZZZPlugin {
 
   async deleteMyRemindTime() {
     if (!this.checkEnableAndFriend()) return
-    let userConfig = await this.getUserConfig(this.e.user_id)
+    const userConfig = await this.getUserConfig(this.e.user_id)
     if (userConfig && userConfig.remindTime) {
       delete userConfig.remindTime
       await this.setUserConfig(this.e.user_id, userConfig)
@@ -474,7 +492,7 @@ export class Remind extends ZZZPlugin {
     }
 
     const { remindTime: globalRemindTime, error } = this.parseRemindTimeMessage(this.e.msg)
-    if (!globalRemindTime) return await this.reply(error)
+    if (!globalRemindTime) return await this.reply(error || '时间格式错误')
     settings.setSingleConfig('remind', 'globalRemindTime', globalRemindTime)
     await this.reply(`全局提醒时间已更新为: ${globalRemindTime}`)
   }

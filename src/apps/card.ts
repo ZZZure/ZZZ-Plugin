@@ -14,9 +14,9 @@ export class Card extends ZZZPlugin {
       rule: [
         {
           reg: `${rulePrefix}(card|卡片|个人信息|角色)$`,
-          fnc: 'card',
-        },
-      ],
+          fnc: 'card'
+        }
+      ]
     })
   }
 
@@ -24,33 +24,38 @@ export class Card extends ZZZPlugin {
     const { api, deviceFp } = await this.getAPI()
     await this.getPlayerInfo()
     const indexData = await api.getFinalData('zzzIndex', {
-      deviceFp,
-    }).catch(e => {
+      deviceFp
+    }).catch((e: Error) => {
       this.reply(e.message)
       throw e
     })
     if (!indexData) return false
 
-    let zzzAvatarList = await api.getFinalData('zzzAvatarList', {
-      deviceFp,
-    }).catch(e => {
+    const zzzAvatarList = await api.getFinalData('zzzAvatarList', {
+      deviceFp
+    }).catch((e: Error) => {
       this.reply(e.message)
       throw e
     })
     if (!zzzAvatarList) return false
     indexData.avatar_list = zzzAvatarList.avatar_list
 
-    let zzzBuddyList = await api.getFinalData('zzzBuddyList', {
-      deviceFp,
-    }).catch(e => {
+    const zzzBuddyList = await api.getFinalData('zzzBuddyList', {
+      deviceFp
+    }).catch((e: Error) => {
       this.reply(e.message)
       throw e
     })
     if (!zzzBuddyList) return false
-    indexData.buddy_list = zzzBuddyList.list
+    indexData.buddy_list = zzzBuddyList.list?.map((item) => ({
+      ...item,
+      // @ts-expect-error
+      bangboo_rectangle_url: item.bangboo_rectangle_url || item.bangboo_square_url
+    }))
     const finalIndexData = new ZZZIndexResp(indexData)
-    this.e.playerCard.player.region_name =
-      finalIndexData.stats.world_level_name
+    if (this.e.playerCard?.player) {
+      this.e.playerCard.player.region_name = finalIndexData.stats.world_level_name
+    }
     const timer = setTimeout(() => {
       if (this?.reply) {
         this.reply('查询成功，正在下载图片资源，请稍候。')
@@ -59,7 +64,7 @@ export class Card extends ZZZPlugin {
     await finalIndexData.get_assets()
     clearTimeout(timer)
     const data = {
-      card: finalIndexData,
+      card: finalIndexData
     }
     await this.render('card/index.html', data)
   }

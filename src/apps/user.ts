@@ -4,6 +4,21 @@ import { ZZZPlugin } from '../lib/plugin.js'
 import settings from '../lib/settings.js'
 import _ from 'lodash'
 
+type DeviceBindInfo = {
+  device_id: string
+  device_fp: string
+}
+
+type DeviceInfo = {
+  deviceName: string
+  deviceBoard: string
+  deviceModel: string
+  oaid: string
+  androidVersion: string
+  deviceFingerprint: string
+  deviceProduct: string
+}
+
 export class User extends ZZZPlugin {
   constructor() {
     super({
@@ -14,17 +29,17 @@ export class User extends ZZZPlugin {
       rule: [
         {
           reg: `${rulePrefix}绑定设备$`,
-          fnc: 'bindDevice',
+          fnc: 'bindDevice'
         },
         {
           reg: `${rulePrefix}解绑设备$`,
-          fnc: 'deleteBind',
+          fnc: 'deleteBind'
         },
         {
           reg: `${rulePrefix}绑定设备帮助$`,
-          fnc: 'bindDeviceHelp',
-        },
-      ],
+          fnc: 'bindDeviceHelp'
+        }
+      ]
     })
   }
 
@@ -33,7 +48,6 @@ export class User extends ZZZPlugin {
     if (/^(1[0-9])[0-9]{8}/i.test(uid)) {
       return this.reply('国际服不需要绑定设备')
     }
-    //先throw一步（
     this.setContext('toBindDevice')
     await this.reply(
       `为UID ${uid}绑定设备，请发送设备信息(建议私聊发送)，或者发送“取消”取消绑定`,
@@ -57,29 +71,30 @@ export class User extends ZZZPlugin {
       return this.reply('已取消', false, { at: true, recallMsg: 100 })
     }
     try {
-      const info = JSON.parse(msg)
+      const info = JSON.parse(msg) as DeviceBindInfo | DeviceInfo
       if (!info) {
         return this.reply('设备信息格式错误', false, { at: true, recallMsg: 100 })
       }
-      if (!!info?.device_id && !!info.device_fp) {
+      if ((info as DeviceBindInfo)?.device_id && (info as DeviceBindInfo).device_fp) {
         this.finish('toBindDevice')
-        await redis.set(`ZZZ:DEVICE_FP:${ltuid}:FP`, info.device_fp)
-        await redis.set(`ZZZ:DEVICE_FP:${ltuid}:ID`, info.device_id)
+        await redis.set(`ZZZ:DEVICE_FP:${ltuid}:FP`, (info as DeviceBindInfo).device_fp)
+        await redis.set(`ZZZ:DEVICE_FP:${ltuid}:ID`, (info as DeviceBindInfo).device_id)
         return this.reply('绑定设备成功', false, { at: true, recallMsg: 100 })
       }
+      const deviceInfo = info as DeviceInfo
       if (
-        !info?.deviceName ||
-        !info?.deviceBoard ||
-        !info?.deviceModel ||
-        !info?.oaid ||
-        !info?.androidVersion ||
-        !info?.deviceFingerprint ||
-        !info?.deviceProduct
+        !deviceInfo?.deviceName ||
+        !deviceInfo?.deviceBoard ||
+        !deviceInfo?.deviceModel ||
+        !deviceInfo?.oaid ||
+        !deviceInfo?.androidVersion ||
+        !deviceInfo?.deviceFingerprint ||
+        !deviceInfo?.deviceProduct
       ) {
         return this.reply('设备信息格式错误', false, { at: true, recallMsg: 100 })
       }
       await redis.del(`ZZZ:DEVICE_FP:${ltuid}:FP`)
-      await redis.set(`ZZZ:DEVICE_FP:${ltuid}:BIND`, JSON.stringify(info))
+      await redis.set(`ZZZ:DEVICE_FP:${ltuid}:BIND`, JSON.stringify(deviceInfo))
       const { deviceFp } = await this.getAPI()
       if (!deviceFp) {
         return this.reply('绑定设备失败')
@@ -131,9 +146,8 @@ export class User extends ZZZPlugin {
       '--------------------------------',
       '[解绑设备]',
       '发送 %解绑设备 即可',
-    ],
-      msg = msgs.join('\n')
-    await this.reply(await common.makeForwardMsg(this.e, msg, '绑定设备帮助'))
+    ]
+    await this.reply(await common.makeForwardMsg(this.e, [msgs.join('\n')], '绑定设备帮助'))
   }
 
 }

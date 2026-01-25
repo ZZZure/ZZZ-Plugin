@@ -1,3 +1,4 @@
+import type { Mys } from '#interface'
 import { isGroupRankAllowed, isUserRankAllowed, addUserToGroupRank, setUidAndQQ } from '../lib/rank.js'
 import { rulePrefix } from '../lib/common.js'
 import { saveAbyssData } from '../lib/db.js'
@@ -6,6 +7,8 @@ import settings from '../lib/settings.js'
 import _ from 'lodash'
 
 export class Abyss extends ZZZPlugin {
+  isGroupRankAllowed: typeof isGroupRankAllowed
+
   constructor() {
     super({
       name: '[ZZZ-Plugin]abyss',
@@ -15,9 +18,9 @@ export class Abyss extends ZZZPlugin {
       rule: [
         {
           reg: `${rulePrefix}(上期|往期)?(式舆防卫战|式舆|深渊|防卫战|防卫)$`,
-          fnc: 'abyss',
-        },
-      ],
+          fnc: 'abyss'
+        }
+      ]
     })
     this.isGroupRankAllowed = isGroupRankAllowed
   }
@@ -25,39 +28,37 @@ export class Abyss extends ZZZPlugin {
   async abyss() {
     const { api, deviceFp } = await this.getAPI()
     await this.getPlayerInfo()
-    const method = this.e.msg.match(`(上期|往期)`)
-      ? 'zzzChallengePeriod'
-      : 'zzzChallenge'
+    const method = this.e.msg.match(`(上期|往期)`) ? 'zzzChallengePeriod' : 'zzzChallenge'
     const abyssData = await api.getFinalData(method, {
       deviceFp,
-    }).catch(e => {
+    }).catch((e: Error) => {
       this.reply(e.message)
       throw e
     })
-    if (abyssData?.hadal_ver !== "v2") {
+    if (abyssData?.hadal_ver !== 'v2') {
       return this.reply('式舆防卫战数据不是最新版本，可能为之前的深渊')
     }
     const data = abyssData?.hadal_info_v2
-    if (['fitfh', 'fourth', 'third', 'second', 'first'].every(layer => !data?.[`${layer}_layer_detail`])) {
+    if ((['fitfh', 'fourth', 'third', 'second', 'first'] as const).every(layer => !data?.[`${layer}_layer_detail`])) {
       return this.reply('式舆防卫战数据为空')
     }
     // 持久化到文件
     const rank_type = 'ABYSS'
     const uid = await this.getUID()
-    let userRankAllowed = null
+    let userRankAllowed: boolean | null = null
     if (uid) {
       if (this.e?.group_id) {
         // 无论如何在当前群里面都探测到了 uid
         await addUserToGroupRank(rank_type, uid, this.e.group_id)
         const qq = (this.e.at && !this.e.atBot) ? this.e.at : this.e.user_id
         await setUidAndQQ(this.e.group_id, uid, qq)
-        userRankAllowed = await isUserRankAllowed(rank_type, uid, this.e.group_id)
+        userRankAllowed = !!(await isUserRankAllowed(rank_type, uid, this.e.group_id))
       }
 
       // 存记录的时候先不管 userRankAllowed
       if (this.isGroupRankAllowed()) {
         saveAbyssData(uid, {
-          player: this.e.playerCard,
+          player: this.e.playerCard!,
           result: abyssData
         })
       }
@@ -72,8 +73,12 @@ export class Abyss extends ZZZPlugin {
 
 }
 
-function processAbyssData(abyss) {
-  const rankPercent = abyss.brief.rank_percent / 100
+function processAbyssData(abyss: Mys.Abyss['hadal_info_v2'] & {
+  rankBg?: number
+  formatTime?: (time: { year: number; month: number; day: number; hour: number; minute: number; second: number }) => string
+  formatBattleTime?: (seconds: number) => string
+}) {
+  const rankPercent = (abyss?.brief?.rank_percent || 0) / 100
   if (rankPercent < 1) {
     abyss.rankBg = 1
   } else if (rankPercent < 5) {
@@ -85,11 +90,11 @@ function processAbyssData(abyss) {
   } else {
     abyss.rankBg = 5
   }
-  abyss.formatTime = function (time) {
-    const pad = (num) => num.toString().padStart(2, '0')
+  abyss.formatTime = function (time: { year: number; month: number; day: number; hour: number; minute: number; second: number }) {
+    const pad = (num: number) => num.toString().padStart(2, '0')
     return `${time.year}-${pad(time.month)}-${pad(time.day)} ${pad(time.hour)}:${pad(time.minute)}:${pad(time.second)}`
   }
-  abyss.formatBattleTime = function (seconds) {
+  abyss.formatBattleTime = function (seconds: number) {
     const mins = Math.floor(seconds / 60)
     const secs = seconds % 60
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`

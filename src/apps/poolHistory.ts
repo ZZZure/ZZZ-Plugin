@@ -1,3 +1,4 @@
+import type { Sendable } from 'icqq'
 import { aliasToName } from '../lib/convert/char.js'
 import common from '../../../../lib/common/common.js'
 import { rulePrefix } from '../lib/common.js'
@@ -7,7 +8,27 @@ import fetch from 'node-fetch'
 
 const DATA_URL = 'https://raw.githubusercontent.com/iaoongin/GachaClock/main/spider/data/zzz/history.json'
 
+type PoolType = '角色' | '武器'
+
+interface PoolRecord {
+  img: string
+  title: string
+  type: PoolType | string
+  version: string
+  timer: string
+  s: string
+  a: string[]
+  img_path: string
+  _endTimeStamp?: number
+  startTime?: string
+  endTime?: string
+}
+
 export class PoolHistory extends ZZZPlugin {
+  dataCacheKey: string
+  dataCacheExpireKey: string
+  queryAllPoolMsgCacheKey: string
+
   constructor() {
     super({
       name: '[ZZZ-Plugin]PoolHistory',
@@ -38,14 +59,14 @@ export class PoolHistory extends ZZZPlugin {
     this.queryAllPoolMsgCacheKey = 'ZZZ:PoolHistory:queryAllPoolMsg'
   }
 
-  parseTime(pool) {
+  parseTime(pool: PoolRecord): { startTime: Date | null; endTime: Date | null } {
     const { startTime, endTime } = pool
     if (!startTime || !endTime) return { startTime: null, endTime: null }
     return { startTime: new Date(startTime), endTime: new Date(endTime) }
   }
 
   async dispatchHandler() {
-    const rawContent = this.parseMsgPrefix().replace(/(复刻|卡池)(统计|记录|历史)$/, '').trim()
+    const rawContent = this.parseMsgPrefix().replace(/(复刻|卡池)(统计|记录|历史)$/u, '').trim()
     if (/^(五星|S级?)?(角色|代理人)$/i.test(rawContent)) {
       return await this.handleSummary('S', '角色')
     }
@@ -62,38 +83,34 @@ export class PoolHistory extends ZZZPlugin {
     return await this.handleHistoryQuery(name)
   }
 
-  async handleSummary(targetRank, targetType) {
+  async handleSummary(targetRank: 'S' | 'A', targetType: PoolType) {
     const data = await this.fetchData()
     if (!data) return this.reply('卡池历史记录数据获取失败')
     const now = new Date()
-    const itemMap = new Map()
+    const itemMap = new Map<string, { startTime: Date; endTime: Date }>()
     data.forEach(pool => {
       if (pool.type !== targetType) return
       const { startTime, endTime } = this.parseTime(pool)
-      if (!endTime) return
-      let targets = []
+      if (!startTime || !endTime) return
+      let targets: string[] = []
       if (targetRank === 'S') {
         if (pool.s) targets.push(pool.s)
       } else {
         if (Array.isArray(pool.a)) targets = pool.a
       }
       targets.forEach(name => {
-        if (!itemMap.has(name) || endTime > itemMap.get(name).endTime) {
+        if (!itemMap.has(name) || endTime > itemMap.get(name)!.endTime) {
           itemMap.set(name, { startTime, endTime })
         }
       })
     })
-    const currentList = []
-    const historyList = []
+    const historyList: { name: string; days: number }[] = []
     itemMap.forEach((timeInfo, name) => {
-      if (now >= timeInfo.startTime && now <= timeInfo.endTime) {
-        currentList.push(name)
-      } else {
-        if (now < timeInfo.startTime) return
-        const diff = now - timeInfo.endTime
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24))
-        historyList.push({ name, days: days > 0 ? days : 0 })
-      }
+      if (now >= timeInfo.startTime && now <= timeInfo.endTime) return
+      if (now < timeInfo.startTime) return
+      const diff = now.getTime() - timeInfo.endTime.getTime()
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+      historyList.push({ name, days: days > 0 ? days : 0 })
     })
     historyList.sort((a, b) => b.days - a.days)
     const historyStr = historyList.map(r => `${r.name}: ${String(r.days).padStart(3, ' ')}天未复刻`).join('\n')
@@ -101,7 +118,7 @@ export class PoolHistory extends ZZZPlugin {
     return this.reply(`【 ${targetRank}级${displayType}复刻统计 】\n${historyStr}`)
   }
 
-  async handleHistoryQuery(queryName) {
+  async handleHistoryQuery(queryName: string) {
     const data = await this.fetchData()
     if (!data) return this.reply('卡池历史记录数据获取失败')
     const records = data.filter(pool => {
@@ -132,11 +149,11 @@ export class PoolHistory extends ZZZPlugin {
       return startTime && endTime && now >= startTime && now <= endTime
     })
     if (activePools.length === 0) return this.reply('当前没有正在进行的活动卡池。')
-    const replyMsg = [`=== 📅 绝区零本期卡池 ===\n`]
+    const replyMsg: Sendable = [`=== 📅 绝区零本期卡池 ===\n`]
     if (activePools.length > 0) {
       const sample = activePools[0]
       const { endTime } = this.parseTime(sample)
-      const remainingDays = Math.ceil((endTime - now) / (1000 * 60 * 60 * 24))
+      const remainingDays = Math.ceil((endTime!.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
       replyMsg.push(`版本：v${sample.version}\n时间：${sample.timer}\n时间：剩余约${remainingDays}天\n`)
     }
     const rolePools = activePools.filter(p => p.type === '角色')
@@ -174,7 +191,7 @@ export class PoolHistory extends ZZZPlugin {
     }
     const data = await this.fetchData()
     if (!data) return this.reply('卡池历史记录数据获取失败')
-    const versions = [...new Set(data.map(p => p.version.replace(/(上半|下半)$/, '')))]
+    const versions = [...new Set(data.map(p => p.version.replace(/(上半|下半)$/u, '')))]
     const title = '绝区零全版本卡池记录'
     const replyMsg = [title, ...versions.map(v => this.generatePoolMsg(data, v, '')).reverse()]
     const msg = await common.makeForwardMsg(this.e, replyMsg, title)
@@ -189,6 +206,7 @@ export class PoolHistory extends ZZZPlugin {
     if (!data) return this.reply('卡池历史记录数据获取失败')
     const rawContent = this.parseMsgPrefix()
     const match = rawContent.match(/^v?(\d+\.\d+)(上半|下半)?卡池$/)
+    if (!match) return false
     const [, version, phase] = match
     const replyMsg = this.generatePoolMsg(data, version, phase)
     if (replyMsg) {
@@ -196,19 +214,22 @@ export class PoolHistory extends ZZZPlugin {
     }
   }
 
-  generatePoolMsg(data, version, phase) {
+  generatePoolMsg(data: PoolRecord[], version: string, phase?: string | null) {
     const pools = data.filter(pool => {
       if (!pool.version.startsWith(version)) return false
       if (phase && !pool.version.includes(phase)) return false
       return true
     })
-    if (pools.length === 0) return this.reply(`未查询到绝区零${version}${phase || ''}版本的卡池数据`)
+    if (pools.length === 0) {
+      this.reply(`未查询到绝区零${version}${phase || ''}版本的卡池数据`)
+      return false
+    }
     const versionStages = [...new Set(pools.map(p => p.version))].sort((a, b) => {
       if (a.includes('上半') && b.includes('下半')) return -1
       if (a.includes('下半') && b.includes('上半')) return 1
       return a.localeCompare(b)
     })
-    const replyMsg = [`【 绝区零 v${versionStages.length === 1 ? versionStages[0] : version} 卡池 】\n`]
+    const replyMsg: Sendable = [`【 绝区零 v${versionStages.length === 1 ? versionStages[0] : version} 卡池 】\n`]
     for (const stage of versionStages) {
       const stagePools = pools.filter(p => p.version === stage)
       const timerDisplay = stagePools[0]?.timer?.replace(/ \d{2}:\d{2}:\d{2}/g, '')
@@ -236,48 +257,34 @@ export class PoolHistory extends ZZZPlugin {
     return replyMsg
   }
 
-  /** @returns {Promise<{
-    img: string
-    title: string
-    type: string
-    version: string
-    timer: string
-    s: string
-    a: string[]
-    img_path: string
-    _endTimeStamp: number
-    startTime: string
-    endTime: string
-    * }[]>} data
-    */
-  async fetchData() {
+  async fetchData(): Promise<PoolRecord[] | undefined> {
     const cacheValid = await redis.get(this.dataCacheExpireKey)
     if (cacheValid) {
       const cache = await redis.get(this.dataCacheKey)
       if (cache) {
-        return JSON.parse(cache)
+        return JSON.parse(cache) as PoolRecord[]
       }
       redis.del(this.dataCacheExpireKey)
       redis.del(this.dataCacheKey)
     }
-    let rawData
+    let rawData: PoolRecord[] | undefined
     try {
       const response = await fetch(DATA_URL, {
         method: 'GET',
         headers: { 'Cache-Control': 'no-cache' },
-        timeout: 6000
+        signal: AbortSignal.timeout(6000)
       })
       if (!response.ok) {
-        throw '请求失败：' + response.status
+        throw new Error('请求失败：' + response.status)
       }
-      rawData = await response.json()
-    } catch (err) {
+      rawData = await response.json() as PoolRecord[]
+    } catch (err: any) {
       const cache = await redis.get(this.dataCacheKey)
       logger.error(err)
       if (cache) {
-        return JSON.parse(cache)
+        return JSON.parse(cache) as PoolRecord[]
       }
-      return this.reply(`卡池历史记录数据获取失败: ${err.message || err}`)
+      return this.reply(`卡池历史记录数据获取失败: ${err.message || err}`) as any
     }
     const data = this.processData(rawData)
     if (data) {
@@ -290,47 +297,35 @@ export class PoolHistory extends ZZZPlugin {
     }
   }
 
-  /** @param {{
-    img: string
-    title: string
-    type: string
-    version: string
-    timer: string
-    s: string
-    a: string[]
-    img_path: string
-    _endTimeStamp: number
-    * }[]} data
-    */
-  processData(data) {
+  processData(data: PoolRecord[]) {
     // 临时处理缺失的1.0上半卡池数据
     if (!data.find(v => v.version === '1.0上半')) {
       data.push(
         {
-          "img": "https://patchwiki.biligame.com/images/zzz/thumb/7/7f/8pesvtvchbs3t2jhqjhckd9k08pe7ui.png/900px-%E7%8B%AC%E5%AE%B6%E9%A2%91%E6%AE%B5001%E6%9C%9F.png",
-          "title": "「慵懒逐浪」001期独家频段",
-          "type": "角色",
-          "version": "1.0上半",
-          "timer": "公测开启后 ~ 2024/07/24 11:59:59",
-          "s": "艾莲",
-          "a": [
-            "安东",
-            "苍角"
+          img: 'https://patchwiki.biligame.com/images/zzz/thumb/7/7f/8pesvtvchbs3t2jhqjhckd9k08pe7ui.png/900px-%E7%8B%AC%E5%AE%B6%E9%A2%91%E6%AE%B5001%E6%9C%9F.png',
+          title: '「慵懒逐浪」001期独家频段',
+          type: '角色',
+          version: '1.0上半',
+          timer: '公测开启后 ~ 2024/07/24 11:59:59',
+          s: '艾莲',
+          a: [
+            '安东',
+            '苍角'
           ],
-          "img_path": "img/zzz/history/「慵懒逐浪」001期独家频段.png"
+          img_path: 'img/zzz/history/「慵懒逐浪」001期独家频段.png'
         },
         {
-          "img": "https://patchwiki.biligame.com/images/zzz/thumb/3/32/gs2uajlo6v2h6pljzij84wdiwhu9fkj.png/900px-%E9%9F%B3%E6%93%8E%E9%A2%91%E6%AE%B5001%E6%9C%9F.png",
-          "title": "「喧哗奏鸣」001期音擎频段",
-          "type": "武器",
-          "version": "1.0上半",
-          "timer": "公测开启后 ~ 2024/07/24 11:59:59",
-          "s": "深海访客",
-          "a": [
-            "含羞恶面",
-            "旋钻机-赤轴"
+          img: 'https://patchwiki.biligame.com/images/zzz/thumb/3/32/gs2uajlo6v2h6pljzij84wdiwhu9fkj.png/900px-%E9%9F%B3%E6%93%8E%E9%A2%91%E6%AE%B5001%E6%9C%9F.png',
+          title: '「喧哗奏鸣」001期音擎频段',
+          type: '武器',
+          version: '1.0上半',
+          timer: '公测开启后 ~ 2024/07/24 11:59:59',
+          s: '深海访客',
+          a: [
+            '含羞恶面',
+            '旋钻机-赤轴'
           ],
-          "img_path": "img/zzz/history/「喧哗奏鸣」001期音擎频段.png"
+          img_path: 'img/zzz/history/「喧哗奏鸣」001期音擎频段.png'
         })
     }
     data.forEach(pool => {
@@ -343,7 +338,7 @@ export class PoolHistory extends ZZZPlugin {
         pool._endTimeStamp = 0
       }
     })
-    data.sort((a, b) => a._endTimeStamp - b._endTimeStamp)
+    data.sort((a, b) => (a._endTimeStamp || 0) - (b._endTimeStamp || 0))
     for (let i = 0; i < data.length; i++) {
       const pool = data[i]
       if (pool.timer.startsWith('公测开启后')) {
@@ -358,8 +353,8 @@ export class PoolHistory extends ZZZPlugin {
         let prevEndTime = 0
         for (let j = i - 1; j >= 0; j--) {
           const prev = data[j]
-          if (prev._endTimeStamp > 0 && prev._endTimeStamp < pool._endTimeStamp) {
-            prevEndTime = prev._endTimeStamp
+          if ((prev._endTimeStamp || 0) > 0 && (prev._endTimeStamp || 0) < (pool._endTimeStamp || 0)) {
+            prevEndTime = prev._endTimeStamp || 0
             break
           }
         }
@@ -375,7 +370,9 @@ export class PoolHistory extends ZZZPlugin {
         pool.endTime = endPart
         pool.timer = `${pool.startTime} ~ ${pool.endTime}`
       } else {
-        [pool.startTime, pool.endTime] = pool.timer.split('~').map(s => s.trim())
+        const [start, end] = pool.timer.split('~').map(s => s.trim())
+        pool.startTime = start
+        pool.endTime = end
       }
     }
     return data

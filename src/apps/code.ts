@@ -14,9 +14,9 @@ export class Code extends ZZZPlugin {
       rule: [
         {
           reg: `${rulePrefix}(code|兑换码)$`,
-          fnc: 'code',
-        },
-      ],
+          fnc: 'code'
+        }
+      ]
     })
   }
 

@@ -35,22 +35,16 @@ export class Damage extends ZZZPlugin {
     } else if (data === null) {
       return this.reply(`暂无角色${name}面板数据，请先%更新面板`)
     }
-    // data.id = 1431
-    // data.name_mi18n = data.full_name_mi18n = '叶瞬光'
-    // data.element_type = 200
-    // data.sub_element_type = 3
-    // data.weapon.id = 14143
-    // data.weapon.name = '云霓孤光'
     const parsedData = formatPanelData(data)
     const calc = avatar_calc(parsedData)
     const damages = parsedData._damages = calc?.calc()
     if (!calc || !damages?.length) return this.reply(`暂无角色${name}的伤害计算`)
-    let skillIndex = match[5] && match[5] - 1
+    let skillIndex = match[5] && (Number(match[5]) - 1)
     if (skillIndex && skillIndex > damages.length)
       skillIndex = damages.length - 1
-    else if (skillIndex < 0)
+    else if (skillIndex && skillIndex < 0)
       skillIndex = 0
-    const sub_differences = calc.calc_sub_differences(damages[skillIndex]?.skill)
+    const sub_differences = calc.calc_sub_differences(skillIndex === '' ? undefined : damages[skillIndex]?.skill)
     if (skillIndex === '') {
       const _s_ = sub_differences[0]?.[0].damage.skill
       skillIndex = ((_s_ && damages.findIndex(({ skill }) => skill.name === _s_.name && skill.type === _s_.type) + 1) || damages.length) - 1

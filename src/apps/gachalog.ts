@@ -1,6 +1,6 @@
 import { anaylizeGachaLog, updateGachaLog, updateGachaLog_ck } from '../lib/gacha.js'
 import { getZZZGachaLink, getZZZGachaLogByAuthkey } from '../lib/gacha/core.js'
-import { gacha_type_meta_data } from '../lib/gacha/const.js'
+import { gacha_type_meta_data, GachaType } from '../lib/gacha/const.js'
 import { getQueryVariable } from '../utils/network.js'
 import common from '../../../../lib/common/common.js'
 import { getAuthKey } from '../lib/authkey.js'
@@ -19,25 +19,25 @@ export class GachaLog extends ZZZPlugin {
       rule: [
         {
           reg: `^${rulePrefix}抽卡帮助$`,
-          fnc: 'gachaHelp',
+          fnc: 'gachaHelp'
         },
         {
           reg: `${rulePrefix}抽卡链接$`,
-          fnc: 'startGachaLog',
+          fnc: 'startGachaLog'
         },
         {
           reg: `${rulePrefix}(刷新|更新)抽卡(链接|记录)?$`,
-          fnc: 'refreshGachaLog',
+          fnc: 'refreshGachaLog'
         },
         {
           reg: `^${rulePrefix}抽卡(分析|记录|统计)$`,
-          fnc: 'gachaLogAnalysis',
+          fnc: 'gachaLogAnalysis'
         },
         {
           reg: `^${rulePrefix}获取抽卡链接$`,
-          fnc: 'getGachaLink',
-        },
-      ],
+          fnc: 'getGachaLink'
+        }
+      ]
     })
   }
 
@@ -51,21 +51,20 @@ export class GachaLog extends ZZZPlugin {
       '二、通过 Cookie 刷新抽卡链接（需 bot 主人安装逍遥插件）',
       '1. 前提绑定 Cookie 或者 扫码登录',
       '2. 发送【#zzz刷新抽卡链接】',
-      '当抽卡链接绑定完后，可以通过命令【#zzz抽卡分析】来查看抽卡分析',
+      '当抽卡链接绑定完后，可以通过命令【#zzz抽卡分析】来查看抽卡分析'
     ].join('\n')
     await this.reply(reply_msg)
   }
-
   async startGachaLog() {
     const allowGroup = _.get(settings.getConfig('gacha'), 'allow_group', false)
-    const whiteList = _.get(settings.getConfig('gacha'), 'white_list', [])
-    const blackList = _.get(settings.getConfig('gacha'), 'black_list', [])
+    const whiteList = _.get(settings.getConfig('gacha'), 'white_list', []) as number[]
+    const blackList = _.get(settings.getConfig('gacha'), 'black_list', []) as number[]
     if (!this.e.isPrivate) {
       const currentGroup = this.e?.group_id
       if (!currentGroup) {
         return this.reply('获取群聊ID失败，请尝试私聊发送抽卡链接', false, {
           at: true,
-          recallMsg: 100,
+          recallMsg: 100
         })
       }
       if (!allowGroup) {
@@ -75,7 +74,7 @@ export class GachaLog extends ZZZPlugin {
             false,
             {
               at: true,
-              recallMsg: 100,
+              recallMsg: 100
             }
           )
         }
@@ -86,7 +85,7 @@ export class GachaLog extends ZZZPlugin {
             false,
             {
               at: true,
-              recallMsg: 100,
+              recallMsg: 100
             }
           )
         }
@@ -118,11 +117,11 @@ export class GachaLog extends ZZZPlugin {
       this.finish('gachaLog')
       return this.reply('抽卡链接格式错误，请重新发起%抽卡链接', false, {
         at: true,
-        recallMsg: 100,
+        recallMsg: 100
       })
     }
     this.finish('gachaLog')
-    this.getLogWithOutUID(key, region, game_biz)
+    this.getLogWithOutUID(key || '', region || '', game_biz || '')
   }
 
   async refreshGachaLog() {
@@ -132,15 +131,15 @@ export class GachaLog extends ZZZPlugin {
       const { api, deviceFp } = await this.getAPI()
       this.reply('抽卡记录获取中请稍等...可能需要一段时间，请耐心等待')
       const { data, count } = await updateGachaLog_ck(api, uid, deviceFp)
-      let msg = []
+      const msg: string[] = []
       msg.push(`抽卡记录更新成功，共${Object.keys(data).length}个卡池`)
       for (const name in data) {
         msg.push(
-          `${name}新增${count[name] || 0}条记录，一共${data[name].length}条记录`
+          `${name}新增${count[name as GachaType] || 0}条记录，一共${data[name as GachaType].length}条记录`
         )
       }
       return this.reply(
-        await common.makeForwardMsg(this.e, msg.join('\n'), '抽卡记录更新成功')
+        await common.makeForwardMsg(this.e, msg, '抽卡记录更新成功')
       )
     }
     const lastQueryTime = await redis.get(`ZZZ:GACHA:${uid}:LASTTIME`)
@@ -151,43 +150,42 @@ export class GachaLog extends ZZZPlugin {
       if (!key) {
         return this.reply('authKey获取失败，请检查cookie是否过期')
       }
-      if (lastQueryTime && Date.now() - lastQueryTime < 1000 * coldTime) {
+      if (lastQueryTime && Date.now() - Number(lastQueryTime) < 1000 * coldTime) {
         return this.reply(`${coldTime}秒内只能刷新一次，请稍后再试`)
       }
       await redis.set(`ZZZ:GACHA:${uid}:LASTTIME`, Date.now())
       this.getLog(key)
-    } catch (error) {
+    } catch (error: any) {
       await this.reply(error.message)
     }
   }
 
-  async getLog(key) {
+  async getLog(key: string) {
     const uid = await this.getUID()
     if (!uid) return false
     this.reply('抽卡记录获取中请稍等...可能需要一段时间，请耐心等待')
     const { data, count } = await updateGachaLog(key, uid)
-    let msg = []
+    const msg: string[] = []
     msg.push(`抽卡记录更新成功，共${Object.keys(data).length}个卡池`)
     for (const name in data) {
       msg.push(
-        `${name}新增${count[name] || 0}条记录，一共${data[name].length}条记录`
+        `${name}新增${count[name as GachaType] || 0}条记录，一共${data[name as GachaType].length}条记录`
       )
     }
     return this.reply(
-      await common.makeForwardMsg(this.e, msg.join('\n'), '抽卡记录更新成功')
+      await common.makeForwardMsg(this.e, msg, '抽卡记录更新成功')
     )
   }
 
-  async getLogWithOutUID(key, region, game_biz) {
+  async getLogWithOutUID(key: string, region?: string, game_biz?: string) {
     await this.reply(
       '抽卡链接解析成功，正在查询抽卡记录，可能耗费一段时间，请勿重复发送',
       false,
       { at: true, recallMsg: 100 }
     )
-    /** @type {string} */
-    let uid
+    let uid: string | undefined
     queryLabel: for (const name in gacha_type_meta_data) {
-      for (const type of gacha_type_meta_data[name]) {
+      for (const type of gacha_type_meta_data[name as GachaType]) {
         const log = await getZZZGachaLogByAuthkey(
           key,
           type,
@@ -206,15 +204,15 @@ export class GachaLog extends ZZZPlugin {
     if (!uid) {
       return this.reply('未查询到uid，请检查链接是否正确', false, {
         at: true,
-        recallMsg: 100,
+        recallMsg: 100
       })
     }
     const { data, count } = await updateGachaLog(key, uid, region, game_biz)
-    let msg = []
+    const msg: string[] = []
     msg.push(`抽卡记录更新成功，共${Object.keys(data).length}个卡池`)
     for (const name in data) {
       msg.push(
-        `${name}新增${count[name] || 0}条记录，一共${data[name].length}条记录`
+        `${name}新增${count[name as GachaType] || 0}条记录，一共${data[name as GachaType].length}条记录`
       )
     }
     return this.reply(
@@ -228,7 +226,7 @@ export class GachaLog extends ZZZPlugin {
     await this.getPlayerInfo()
     await this.reply('正在分析抽卡记录，请稍等', false, {
       at: true,
-      recallMsg: 100,
+      recallMsg: 100
     })
     const data = await anaylizeGachaLog(uid)
     if (!data) {
@@ -237,12 +235,12 @@ export class GachaLog extends ZZZPlugin {
         false,
         {
           at: true,
-          recallMsg: 100,
+          recallMsg: 100
         }
       )
     }
     const result = {
-      data,
+      data
     }
     await this.render('gachalog/index.html', result)
   }

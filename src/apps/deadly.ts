@@ -7,6 +7,8 @@ import settings from '../lib/settings.js'
 import _ from 'lodash'
 
 export class deadly extends ZZZPlugin {
+  isGroupRankAllowed: typeof isGroupRankAllowed
+
   constructor() {
     super({
       name: '[ZZZ-Plugin]deadly',
@@ -16,9 +18,9 @@ export class deadly extends ZZZPlugin {
       rule: [
         {
           reg: `${rulePrefix}(上期|往期)?(危局强袭战|危局|强袭|强袭战)$`,
-          fnc: 'deadly',
-        },
-      ],
+          fnc: 'deadly'
+        }
+      ]
     })
     this.isGroupRankAllowed = isGroupRankAllowed
   }
@@ -26,12 +28,10 @@ export class deadly extends ZZZPlugin {
   async deadly() {
     const { api, deviceFp } = await this.getAPI()
     await this.getPlayerInfo()
-    const method = this.e.msg.match(`(上期|往期)`)
-      ? 'zzzDeadlyPeriod'
-      : 'zzzDeadly'
+    const method = this.e.msg.match(`(上期|往期)`) ? 'zzzDeadlyPeriod' : 'zzzDeadly'
     const deadlyData = await api.getFinalData(method, {
-      deviceFp,
-    }).catch(e => {
+      deviceFp
+    }).catch((e: Error) => {
       this.reply(e.message)
       throw e
     })
@@ -41,20 +41,20 @@ export class deadly extends ZZZPlugin {
     // 持久化到文件
     const rank_type = 'DEADLY'
     const uid = await this.getUID()
-    let userRankAllowed = null
+    let userRankAllowed: boolean | null = null
     if (uid) {
       if (this.e?.group_id) {
         // 无论如何在当前群里面都探测到了 uid
         await addUserToGroupRank(rank_type, uid, this.e.group_id)
         const qq = (this.e.at && !this.e.atBot) ? this.e.at : this.e.user_id
         await setUidAndQQ(this.e.group_id, uid, qq)
-        userRankAllowed = await isUserRankAllowed(rank_type, uid, this.e.group_id)
+        userRankAllowed = !!(await isUserRankAllowed(rank_type, uid, this.e.group_id))
       }
 
       // 存记录的时候先不管 userRankAllowed
       if (this.isGroupRankAllowed()) {
         saveDeadlyData(uid, {
-          player: this.e.playerCard,
+          player: this.e.playerCard!,
           result: deadlyData
         })
       }
@@ -69,7 +69,7 @@ export class deadly extends ZZZPlugin {
     clearTimeout(timer)
     const finalData = {
       deadly,
-      userRankAllowed,
+      userRankAllowed
     }
     await this.render('deadly/index.html', finalData, this)
   }
