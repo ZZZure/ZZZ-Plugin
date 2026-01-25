@@ -1,7 +1,8 @@
-import { rulePrefix } from '../lib/common.js';
-import { ZZZPlugin } from '../lib/plugin.js';
-import settings from '../lib/settings.js';
-import _ from 'lodash';
+import { rulePrefix } from '../lib/common.js'
+import { ZZZPlugin } from '../lib/plugin.js'
+import settings from '../lib/settings.js'
+import _ from 'lodash'
+
 /**
  * @typedef {Object} HelpItem
  * @property {string} title
@@ -402,7 +403,8 @@ const helpData = [
       },
     ],
   },
-];
+]
+
 export class Help extends ZZZPlugin {
   constructor() {
     super({
@@ -416,8 +418,9 @@ export class Help extends ZZZPlugin {
           fnc: 'help',
         },
       ],
-    });
+    })
   }
+
   async help() {
     if (this.e?.isMaster) {
       const _helpData = [
@@ -559,13 +562,14 @@ export class Help extends ZZZPlugin {
             }
           ],
         },
-      ];
+      ]
       return await this.render('help/index.html', {
         helpData: _helpData,
-      });
+      })
     }
     await this.render('help/index.html', {
       helpData,
-    });
+    })
   }
+
 }

@@ -1,8 +1,8 @@
-import { ZZZPlugin } from '../lib/plugin.js';
-import settings from '../lib/settings.js';
-import _ from 'lodash';
-import { rulePrefix } from '../lib/common.js';
-import { getCodeMsg } from '../lib/code.js';
+import { rulePrefix } from '../lib/common.js'
+import { ZZZPlugin } from '../lib/plugin.js'
+import { getCodeMsg } from '../lib/code.js'
+import settings from '../lib/settings.js'
+import _ from 'lodash'
 
 export class Code extends ZZZPlugin {
   constructor() {
@@ -17,10 +17,12 @@ export class Code extends ZZZPlugin {
           fnc: 'code',
         },
       ],
-    });
+    })
   }
+
   async code() {
-    const msg = await getCodeMsg();
-    return this.reply(msg);
+    const msg = await getCodeMsg()
+    return this.reply(msg)
   }
+
 }

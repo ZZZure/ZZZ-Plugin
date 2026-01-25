@@ -1,13 +1,13 @@
-import { ZZZPlugin } from '../lib/plugin.js';
-import { getAuthKey } from '../lib/authkey.js';
-import settings from '../lib/settings.js';
-import _ from 'lodash';
-import common from '../../../../lib/common/common.js';
-import { anaylizeGachaLog, updateGachaLog, updateGachaLog_ck } from '../lib/gacha.js';
-import { getZZZGachaLink, getZZZGachaLogByAuthkey } from '../lib/gacha/core.js';
-import { gacha_type_meta_data } from '../lib/gacha/const.js';
-import { getQueryVariable } from '../utils/network.js';
-import { rulePrefix } from '../lib/common.js';
+import { anaylizeGachaLog, updateGachaLog, updateGachaLog_ck } from '../lib/gacha.js'
+import { getZZZGachaLink, getZZZGachaLogByAuthkey } from '../lib/gacha/core.js'
+import { gacha_type_meta_data } from '../lib/gacha/const.js'
+import { getQueryVariable } from '../utils/network.js'
+import common from '../../../../lib/common/common.js'
+import { getAuthKey } from '../lib/authkey.js'
+import { rulePrefix } from '../lib/common.js'
+import { ZZZPlugin } from '../lib/plugin.js'
+import settings from '../lib/settings.js'
+import _ from 'lodash'
 
 export class GachaLog extends ZZZPlugin {
   constructor() {
@@ -38,8 +38,9 @@ export class GachaLog extends ZZZPlugin {
           fnc: 'getGachaLink',
         },
       ],
-    });
+    })
   }
+
   async gachaHelp() {
     const reply_msg = [
       'ZZZ-Plugin 抽卡链接绑定方法：',
@@ -51,20 +52,21 @@ export class GachaLog extends ZZZPlugin {
       '1. 前提绑定 Cookie 或者 扫码登录',
       '2. 发送【#zzz刷新抽卡链接】',
       '当抽卡链接绑定完后，可以通过命令【#zzz抽卡分析】来查看抽卡分析',
-    ].join('\n');
-    await this.reply(reply_msg);
+    ].join('\n')
+    await this.reply(reply_msg)
   }
+
   async startGachaLog() {
-    const allowGroup = _.get(settings.getConfig('gacha'), 'allow_group', false);
-    const whiteList = _.get(settings.getConfig('gacha'), 'white_list', []);
-    const blackList = _.get(settings.getConfig('gacha'), 'black_list', []);
+    const allowGroup = _.get(settings.getConfig('gacha'), 'allow_group', false)
+    const whiteList = _.get(settings.getConfig('gacha'), 'white_list', [])
+    const blackList = _.get(settings.getConfig('gacha'), 'black_list', [])
     if (!this.e.isPrivate) {
-      const currentGroup = this.e?.group_id;
+      const currentGroup = this.e?.group_id
       if (!currentGroup) {
         return this.reply('获取群聊ID失败，请尝试私聊发送抽卡链接', false, {
           at: true,
           recallMsg: 100,
-        });
+        })
       }
       if (!allowGroup) {
         if (whiteList.length <= 0 || !whiteList?.includes(currentGroup)) {
@@ -75,7 +77,7 @@ export class GachaLog extends ZZZPlugin {
               at: true,
               recallMsg: 100,
             }
-          );
+          )
         }
       } else {
         if (blackList.length > 0 && blackList?.includes(currentGroup)) {
@@ -86,100 +88,104 @@ export class GachaLog extends ZZZPlugin {
               at: true,
               recallMsg: 100,
             }
-          );
+          )
         }
       }
       await this.reply(
         '请注意，当前在群聊中发送抽卡链接，包含authkey，其他人获取authkey可能导致未知后果，请谨慎操作，请在机器人回复你获取链接成功后及时撤回抽卡链接消息。',
         false,
         { at: true, recallMsg: 100 }
-      );
+      )
     }
-    this.setContext('gachaLog');
+    this.setContext('gachaLog')
     await this.reply(
       '请发送抽卡链接，发送“取消”即可取消本次抽卡链接刷新',
       false,
       { at: true, recallMsg: 100 }
-    );
+    )
   }
+
   async gachaLog() {
-    const msg = this.e.msg.trim();
+    const msg = this.e.msg.trim()
     if (msg.includes('取消')) {
-      this.finish('gachaLog');
-      return this.reply('已取消', false, { at: true, recallMsg: 100 });
+      this.finish('gachaLog')
+      return this.reply('已取消', false, { at: true, recallMsg: 100 })
     }
-    const key = getQueryVariable(msg, 'authkey');
-    const region = getQueryVariable(msg, 'region');
-    const game_biz = getQueryVariable(msg, 'game_biz');
+    const key = getQueryVariable(msg, 'authkey')
+    const region = getQueryVariable(msg, 'region')
+    const game_biz = getQueryVariable(msg, 'game_biz')
     if (!key && !region && !game_biz) {
-      this.finish('gachaLog');
+      this.finish('gachaLog')
       return this.reply('抽卡链接格式错误，请重新发起%抽卡链接', false, {
         at: true,
         recallMsg: 100,
-      });
+      })
     }
-    this.finish('gachaLog');
-    this.getLogWithOutUID(key, region, game_biz);
+    this.finish('gachaLog')
+    this.getLogWithOutUID(key, region, game_biz)
   }
+
   async refreshGachaLog() {
-    const uid = await this.getUID();
-    if (!uid) return false;
+    const uid = await this.getUID()
+    if (!uid) return false
     if (/^(1[0-9])[0-9]{8}/i.test(uid)) {
-      const { api, deviceFp } = await this.getAPI();
-      this.reply('抽卡记录获取中请稍等...可能需要一段时间，请耐心等待');
-      const { data, count } = await updateGachaLog_ck(api, uid, deviceFp);
-      let msg = [];
-      msg.push(`抽卡记录更新成功，共${Object.keys(data).length}个卡池`);
+      const { api, deviceFp } = await this.getAPI()
+      this.reply('抽卡记录获取中请稍等...可能需要一段时间，请耐心等待')
+      const { data, count } = await updateGachaLog_ck(api, uid, deviceFp)
+      let msg = []
+      msg.push(`抽卡记录更新成功，共${Object.keys(data).length}个卡池`)
       for (const name in data) {
         msg.push(
           `${name}新增${count[name] || 0}条记录，一共${data[name].length}条记录`
-        );
+        )
       }
       return this.reply(
         await common.makeForwardMsg(this.e, msg.join('\n'), '抽卡记录更新成功')
-      );
+      )
     }
-    const lastQueryTime = await redis.get(`ZZZ:GACHA:${uid}:LASTTIME`);
-    const gachaConfig = settings.getConfig('gacha');
-    const coldTime = _.get(gachaConfig, 'interval', 300);
+    const lastQueryTime = await redis.get(`ZZZ:GACHA:${uid}:LASTTIME`)
+    const gachaConfig = settings.getConfig('gacha')
+    const coldTime = _.get(gachaConfig, 'interval', 300)
     try {
-      const key = await getAuthKey(this.e, this.User, uid);
+      const key = await getAuthKey(this.e, this.User, uid)
       if (!key) {
-        return this.reply('authKey获取失败，请检查cookie是否过期');
+        return this.reply('authKey获取失败，请检查cookie是否过期')
       }
       if (lastQueryTime && Date.now() - lastQueryTime < 1000 * coldTime) {
-        return this.reply(`${coldTime}秒内只能刷新一次，请稍后再试`);
+        return this.reply(`${coldTime}秒内只能刷新一次，请稍后再试`)
       }
-      await redis.set(`ZZZ:GACHA:${uid}:LASTTIME`, Date.now());
-      this.getLog(key);
+      await redis.set(`ZZZ:GACHA:${uid}:LASTTIME`, Date.now())
+      this.getLog(key)
     } catch (error) {
-      await this.reply(error.message);
+      await this.reply(error.message)
     }
   }
+
   async getLog(key) {
-    const uid = await this.getUID();
-    if (!uid) return false;
-    this.reply('抽卡记录获取中请稍等...可能需要一段时间，请耐心等待');
-    const { data, count } = await updateGachaLog(key, uid);
-    let msg = [];
-    msg.push(`抽卡记录更新成功，共${Object.keys(data).length}个卡池`);
+    const uid = await this.getUID()
+    if (!uid) return false
+    this.reply('抽卡记录获取中请稍等...可能需要一段时间，请耐心等待')
+    const { data, count } = await updateGachaLog(key, uid)
+    let msg = []
+    msg.push(`抽卡记录更新成功，共${Object.keys(data).length}个卡池`)
     for (const name in data) {
       msg.push(
         `${name}新增${count[name] || 0}条记录，一共${data[name].length}条记录`
-      );
+      )
     }
     return this.reply(
       await common.makeForwardMsg(this.e, msg.join('\n'), '抽卡记录更新成功')
-    );
+    )
   }
+
   async getLogWithOutUID(key, region, game_biz) {
     await this.reply(
       '抽卡链接解析成功，正在查询抽卡记录，可能耗费一段时间，请勿重复发送',
       false,
       { at: true, recallMsg: 100 }
-    );
+    )
     /** @type {string} */
-    let uid;
+    let uid
     queryLabel: for (const name in gacha_type_meta_data) {
       for (const type of gacha_type_meta_data[name]) {
         const log = await getZZZGachaLogByAuthkey(
@@ -190,10 +196,10 @@ export class GachaLog extends ZZZPlugin {
           '0',
           region,
           game_biz
-        );
+        )
         if (log && log.list && log.list.length > 0) {
-          uid = log.list[0].uid;
-          break queryLabel;
+          uid = log.list[0].uid
+          break queryLabel
         }
       }
     }
@@ -201,30 +207,30 @@ export class GachaLog extends ZZZPlugin {
       return this.reply('未查询到uid，请检查链接是否正确', false, {
         at: true,
         recallMsg: 100,
-      });
+      })
     }
-    const { data, count } = await updateGachaLog(key, uid, region, game_biz);
-    let msg = [];
-    msg.push(`抽卡记录更新成功，共${Object.keys(data).length}个卡池`);
+    const { data, count } = await updateGachaLog(key, uid, region, game_biz)
+    let msg = []
+    msg.push(`抽卡记录更新成功，共${Object.keys(data).length}个卡池`)
     for (const name in data) {
       msg.push(
         `${name}新增${count[name] || 0}条记录，一共${data[name].length}条记录`
-      );
+      )
     }
     return this.reply(
       await common.makeForwardMsg(this.e, msg, '抽卡记录更新成功')
-    );
+    )
   }
 
   async gachaLogAnalysis() {
-    const uid = await this.getUID();
-    if (!uid) return false;
-    await this.getPlayerInfo();
+    const uid = await this.getUID()
+    if (!uid) return false
+    await this.getPlayerInfo()
     await this.reply('正在分析抽卡记录，请稍等', false, {
       at: true,
       recallMsg: 100,
-    });
-    const data = await anaylizeGachaLog(uid);
+    })
+    const data = await anaylizeGachaLog(uid)
     if (!data) {
       return this.reply(
         '未查询到抽卡记录，请先发送抽卡链接或%更新抽卡记录',
@@ -233,27 +239,29 @@ export class GachaLog extends ZZZPlugin {
           at: true,
           recallMsg: 100,
         }
-      );
+      )
     }
     const result = {
       data,
-    };
-    await this.render('gachalog/index.html', result);
+    }
+    await this.render('gachalog/index.html', result)
   }
+
   async getGachaLink() {
-    const uid = await this.getUID();
+    const uid = await this.getUID()
     if (/^(1[0-9])[0-9]{8}/i.test(uid)) {
-      return this.reply('国际服不支持此功能');
+      return this.reply('国际服不支持此功能')
     }
-    if (!uid) return false;
+    if (!uid) return false
     if (!this.e.isPrivate || this.e.isGroup) {
-      return this.reply('请私聊获取抽卡链接', false, { at: true });
+      return this.reply('请私聊获取抽卡链接', false, { at: true })
     }
-    const key = await getAuthKey(this.e, this.User, uid);
+    const key = await getAuthKey(this.e, this.User, uid)
     if (!key) {
-      return this.reply('authKey获取失败，请检查cookie是否过期');
+      return this.reply('authKey获取失败，请检查cookie是否过期')
     }
-    const link = await getZZZGachaLink(key);
-    await this.reply(link);
+    const link = await getZZZGachaLink(key)
+    await this.reply(link)
   }
+
 }

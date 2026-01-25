@@ -1,9 +1,9 @@
+import { isGroupRankAllowed, isUserRankAllowed, addUserToGroupRank, setUidAndQQ } from '../lib/rank.js'
 import { rulePrefix } from '../lib/common.js'
+import { saveAbyssData } from '../lib/db.js'
 import { ZZZPlugin } from '../lib/plugin.js'
 import settings from '../lib/settings.js'
 import _ from 'lodash'
-import { saveAbyssData } from '../lib/db.js'
-import { isGroupRankAllowed, isUserRankAllowed, addUserToGroupRank, setUidAndQQ } from '../lib/rank.js'
 
 export class Abyss extends ZZZPlugin {
   constructor() {
@@ -21,6 +21,7 @@ export class Abyss extends ZZZPlugin {
     })
     this.isGroupRankAllowed = isGroupRankAllowed
   }
+
   async abyss() {
     const { api, deviceFp } = await this.getAPI()
     await this.getPlayerInfo()
@@ -68,6 +69,7 @@ export class Abyss extends ZZZPlugin {
     }
     await this.render('abyss/index.html', finalData, this)
   }
+
 }
 
 function processAbyssData(abyss) {

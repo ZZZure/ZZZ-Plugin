@@ -1,8 +1,9 @@
-import { ZZZPlugin } from '../lib/plugin.js';
-import settings from '../lib/settings.js';
-import _ from 'lodash';
-import { rulePrefix } from '../lib/common.js';
-import { getHakushCharacterData, isSkillLevelLegal } from '../lib/hakush.js';
+import { getHakushCharacterData, isSkillLevelLegal } from '../lib/hakush.js'
+import { rulePrefix } from '../lib/common.js'
+import { ZZZPlugin } from '../lib/plugin.js'
+import settings from '../lib/settings.js'
+import _ from 'lodash'
+
 const displays = [
   {
     key: 'Basic',
@@ -29,7 +30,7 @@ const displays = [
     name: '连携技',
     icon: 'chain',
   },
-];
+]
 
 export class Wiki extends ZZZPlugin {
   constructor() {
@@ -48,21 +49,22 @@ export class Wiki extends ZZZPlugin {
           fnc: 'cinema',
         },
       ],
-    });
+    })
   }
+
   async skills() {
-    const reg = new RegExp(`${rulePrefix}(.*)(?:天赋|技能)(.*)$`);
-    const charname = this.e.msg.match(reg)[4];
-    if (!charname) return false;
-    const levelsChar = this.e.msg.match(reg)[5]?.trim();
+    const reg = new RegExp(`${rulePrefix}(.*)(?:天赋|技能)(.*)$`)
+    const charname = this.e.msg.match(reg)[4]
+    if (!charname) return false
+    const levelsChar = this.e.msg.match(reg)[5]?.trim()
     const levels = !!levelsChar
       ? levelsChar.split(/\.|\s+/).map(x => {
-        const _x = Number(x.trim());
-        if (!_.isNaN(_x)) return _x;
-        if (_.isString(x)) return x.toUpperCase().charCodeAt(0) - 64;
-        return null;
+        const _x = Number(x.trim())
+        if (!_.isNaN(_x)) return _x
+        if (_.isString(x)) return x.toUpperCase().charCodeAt(0) - 64
+        return null
       })
-      : [];
+      : []
     const [
       BasicLevel = 12,
       DodgeLevel = 12,
@@ -70,7 +72,7 @@ export class Wiki extends ZZZPlugin {
       SpecialLevel = 12,
       ChainLevel = 12,
       CoreLevel = 6,
-    ] = levels;
+    ] = levels
     if (
       !isSkillLevelLegal('BasicLevel', BasicLevel) ||
       !isSkillLevelLegal('DodgeLevel', DodgeLevel) ||
@@ -79,39 +81,41 @@ export class Wiki extends ZZZPlugin {
       !isSkillLevelLegal('ChainLevel', ChainLevel) ||
       !isSkillLevelLegal('CoreLevel', CoreLevel)
     ) {
-      return false;
+      return false
     }
-    const charData = await getHakushCharacterData(charname);
+    const charData = await getHakushCharacterData(charname)
     if (!charData)
-      return this.reply(`暂无${charname}角色数据`);
+      return this.reply(`暂无${charname}角色数据`)
     charData.Skill.getAllSkillData({
       BasicLevel,
       DodgeLevel,
       AssistLevel,
       SpecialLevel,
       ChainLevel,
-    });
-    charData.Passive.getPassiveData(CoreLevel);
-    await charData.get_assets();
+    })
+    charData.Passive.getPassiveData(CoreLevel)
+    await charData.get_assets()
     const finalData = {
       charData,
       displays,
-    };
-    await this.render('skills/index.html', finalData);
-  }
-  async cinema() {
-    const reg = new RegExp(`${rulePrefix}(.*)(意象影画|意象|影画|命座)$`);
-    const charname = this.e.msg.match(reg)[4];
-    if (!charname) return false;
-    const charData = await getHakushCharacterData(charname);
-    const cinemaData = charData?.Talent;
-    if (!cinemaData) {
-      return this.reply(`未找到${charname}的数据`);
     }
-    await charData.get_assets();
+    await this.render('skills/index.html', finalData)
+  }
+
+  async cinema() {
+    const reg = new RegExp(`${rulePrefix}(.*)(意象影画|意象|影画|命座)$`)
+    const charname = this.e.msg.match(reg)[4]
+    if (!charname) return false
+    const charData = await getHakushCharacterData(charname)
+    const cinemaData = charData?.Talent
+    if (!cinemaData) {
+      return this.reply(`未找到${charname}的数据`)
+    }
+    await charData.get_assets()
     const finalData = {
       charData,
-    };
-    await this.render('cinema/index.html', finalData);
+    }
+    await this.render('cinema/index.html', finalData)
   }
+
 }
