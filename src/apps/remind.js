@@ -279,7 +279,7 @@ export class Remind extends ZZZPlugin {
     try {
       // 获取 API 和玩家信息
       ({ api, deviceFp } = await this.getAPI());
-      await this.getPlayerInfo(this.e);
+      await this.getPlayerInfo();
     } catch (error) {
       logger.error(`[ZZZ-Plugin] 为用户 ${userId} 获取API或玩家信息失败: ${error}`);
       messages.push('查询失败，请稍后再试');
