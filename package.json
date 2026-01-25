@@ -9,7 +9,9 @@
   "scripts": {
     "build": "node build.js",
     "watch": "nodemon --exec pnpm run build",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint:fix": "eslint \"src/**/*.ts\" --fix"
   },
   "imports": {
     "#interface": "./src/@types/interface.d.ts"
@@ -24,6 +26,9 @@
   "devDependencies": {
     "@types/lodash": "^4.17.21",
     "@types/md5": "^2.3.6",
+    "@typescript-eslint/eslint-plugin": "^8.53.1",
+    "@typescript-eslint/parser": "^8.53.1",
+    "eslint": "^9.39.2",
     "nodemon": "^3.1.11",
     "typescript": "^5.9.3"
   }

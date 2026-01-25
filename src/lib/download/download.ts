@@ -21,8 +21,8 @@ export const downloadMysImage = async (
   const base = MysURL[_base]
   const localBase = LocalURI[_localBase]
   const finalPath = path.join(localBase, filename)
-  let url = `${base}/${filename}`
-  let result = await checkFile(url, finalPath)
+  const url = `${base}/${filename}`
+  const result = await checkFile(url, finalPath)
   return result
 }
 

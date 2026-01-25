@@ -27,7 +27,7 @@ export const getCk = async (e: any, s = false): Promise<Record<string, Cookie> |
   // @ts-ignore
   if (typeof user.getCk === 'function') {
     // @ts-ignore
-    let ck = user.getCk()
+    const ck = user.getCk()
     Object.keys(ck).forEach(k => {
       if (ck[k].ck) {
         ck[k].ck = `${stoken}${ck[k].ck}`

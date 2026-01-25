@@ -60,7 +60,7 @@ export class Guide extends ZZZPlugin {
     const match = this.e.msg.match(reg)
     if (!match) return false
     const [, , , , isUpdate, aliasRaw, groupRaw = _.get(settings.getConfig('guide'), 'default_guide', 1).toString()] = match
-    let alias = aliasRaw
+    const alias = aliasRaw
     let group: string | number = groupRaw
     if (group === 'all') {
       group = '0'

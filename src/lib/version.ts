@@ -16,7 +16,7 @@ type log = {
 }
 
 // 存放更新日志
-let changelogs: log[] = []
+const changelogs: log[] = []
 
 // 当前版本
 let currentVersion = ''
@@ -25,7 +25,7 @@ let currentVersion = ''
 let versionCount = 4
 
 // 读取 package.json（此处为读取Yunzai-Bot的package.json）
-let packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'))
+const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'))
 
 // 尝试读取更新日志文件
 try {

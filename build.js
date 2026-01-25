@@ -12,6 +12,7 @@ async function init() {
   console.log('开始编译……')
   try {
     execSync('tsc')
+    // eslint-disable-next-line no-empty
   } catch { }
   console.log('编译完成，开始更新文件……')
   const files = []

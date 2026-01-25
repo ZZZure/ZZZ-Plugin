@@ -131,7 +131,7 @@ export default class ZZZApiTool {
     } = data
     const deviceBrand = deviceInfo.split('/')[0]
     const deviceDisplay = deviceInfo.split('/')[3]
-    let urlMap = {
+    const urlMap = {
       zzz: {
         ...(['prod_gf_cn'].includes(this.server)
           ? {

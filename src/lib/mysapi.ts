@@ -95,8 +95,10 @@ export default class MysZZZApi extends MysApi {
     // 获取请求参数（即APITool中默认的请求参数，此参数理应是不可获取的，详细请参照 lib/mysapi/tool.js`）
     let {
       url,
-      query = '',
       body = '',
+    } = urlMap[type]
+    const {
+      query = '',
       noDs = false,
       dsSalt = '',
     } = urlMap[type]
@@ -107,7 +109,7 @@ export default class MysZZZApi extends MysApi {
       let str = ''
       if (typeof data.query === 'object') {
         // 拼接 query
-        for (let key in data.query) {
+        for (const key in data.query) {
           if (data.query[key] === undefined) continue
           else if (data.query[key] === null) str += `${key}&`
           else if (Array.isArray(data.query[key])) {
@@ -191,7 +193,7 @@ export default class MysZZZApi extends MysApi {
     }
     // 如果是获取 AuthKey，写入额外参数
     if (type === 'zzzAuthKey') {
-      let extra = {
+      const extra = {
         DS: this.getDS2(),
         Host: 'api-takumi.mihoyo.com',
       }
@@ -376,7 +378,7 @@ export default class MysZZZApi extends MysApi {
     // 从 this.cookie 中获取ltuid
     const ck = this.cookie
     const m = ck.match(/ltuid=(\d+);/)
-    let ltuid = m ? m[1] : null
+    const ltuid = m ? m[1] : null
     if (ltuid) {
       const _bindInfo = await redis.get(`ZZZ:DEVICE_FP:${ltuid}:BIND`)
       if (_bindInfo) {

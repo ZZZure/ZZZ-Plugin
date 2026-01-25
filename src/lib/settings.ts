@@ -64,7 +64,7 @@ class Setting {
     if (!fs.existsSync(this.configPath)) {
       fs.mkdirSync(this.configPath)
     }
-    for (let file of files) {
+    for (const file of files) {
       if (!fs.existsSync(path.join(this.configPath, file))) {
         fs.copyFileSync(
           path.join(this.defPath, file),
@@ -83,13 +83,13 @@ class Setting {
    * 配置对象化 用于锅巴插件界面填充
    */
   merge() {
-    let sets: { [key: string]: any } = {}
-    let appsConfig = fs
+    const sets: { [key: string]: any } = {}
+    const appsConfig = fs
       .readdirSync(this.defPath)
       .filter(file => file.endsWith('.yaml'))
-    for (let appConfig of appsConfig) {
+    for (const appConfig of appsConfig) {
       // 依次将每个文本填入键
-      let filename = appConfig.replace(/.yaml/g, '').trim() as files
+      const filename = appConfig.replace(/.yaml/g, '').trim() as files
       sets[filename] = this.getConfig(filename)
     }
     return sets
@@ -246,7 +246,7 @@ class Setting {
    * 将对象写入YAML文件
    */
   setYaml<T extends files>(app: T, type: fileTypes, Object: Config.KeyValue[T]): boolean {
-    let file = this.getFilePath(app, type)
+    const file = this.getFilePath(app, type)
     try {
       fs.writeFileSync(file, YAML.stringify(Object), 'utf8')
       return true
@@ -260,7 +260,7 @@ class Setting {
    * 读取YAML文件 返回对象
    */
   getYaml<T extends files>(app: T, type: fileTypes): Config.KeyValue[T] {
-    let file = this.getFilePath(app, type)
+    const file = this.getFilePath(app, type)
     if (this[type][app]) return this[type][app]
     this[type][app] = YAML.parse(fs.readFileSync(file, 'utf8'))
     this.watch(file, app, type)

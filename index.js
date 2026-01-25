@@ -1,3 +1,4 @@
+/// <reference path="./src/@types/global.d.ts"/>
 import { configPath, dataPath, appPath } from './dist/lib/path.js'
 import fs from 'fs'
 
@@ -5,9 +6,9 @@ logger.info('*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*')
 logger.info('ZZZ-Plugin 加载中')
 logger.info('仓库地址 https://github.com/ZZZure/ZZZ-plugin')
 logger.info('Created By ZZZure Project (MIHOMO)')
-logger.info('*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*');
+logger.info('*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*')
 
-[configPath, dataPath].forEach(dir => {
+void [configPath, dataPath].forEach(dir => {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir)
   }

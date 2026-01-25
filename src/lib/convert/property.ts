@@ -35,7 +35,7 @@ const pro_id = {
  * @param _id 属性id
  */
 export function idToClassName(_id: string | number): string | null {
-  let propId = +_id.toString().slice(0, 3) as keyof typeof prop_id
+  const propId = +_id.toString().slice(0, 3) as keyof typeof prop_id
   const propIcon = prop_id[propId]
   if (!propIcon) return null
   return propIcon

@@ -67,7 +67,7 @@ if (Update) {
       }
       const log = []
       let current = true
-      for (let str of logAll) {
+      for (const str of logAll) {
         if (!str) continue
         const sp = str.split('||')
         if (sp[0] === this.oldCommitId) break
