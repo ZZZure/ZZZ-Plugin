@@ -1,13 +1,35 @@
 {
   "name": "zzz-plugin",
   "type": "module",
-  "version": "0.0.1",
-  "description": "",
+  "version": "2.0.0",
+  "description": "绝区零云崽插件",
   "main": "index.js",
   "keywords": [],
   "author": "ZZZure",
-  "license": "ISC",
+  "scripts": {
+    "build": "node build.js",
+    "watch": "nodemon --exec pnpm run build",
+    "check": "tsc --noEmit",
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint:fix": "eslint \"src/**/*.ts\" --fix"
+  },
   "imports": {
-    "#interface": "./model/damage/interface.ts"
+    "#interface": "./src/@types/interface.d.ts"
+  },
+  "peerDependencies": {
+    "chokidar": "^4.0.3",
+    "icqq": "*",
+    "lodash": "^4.17.21",
+    "md5": "^2.3.0",
+    "yaml": "^2.8.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.21",
+    "@types/md5": "^2.3.6",
+    "@typescript-eslint/eslint-plugin": "^8.53.1",
+    "@typescript-eslint/parser": "^8.53.1",
+    "eslint": "^9.39.2",
+    "nodemon": "^3.1.11",
+    "typescript": "^5.9.3"
   }
 }

@@ -1,0 +1,212 @@
+import type { Mys } from '#interface'
+import { getSuitImage, getWeaponImage } from '../lib/download.js'
+import { getEquipPropertyEnhanceCount } from '../lib/score.js'
+import { property } from '../lib/convert.js'
+import Score from './score/Score.js'
+
+export class EquipProperty {
+  property_name: string
+  property_id: number
+  base: string
+  base_score: number
+  classname: string | null
+  count: number
+
+  constructor(data: Mys.Equip['properties'][number]) {
+    const { property_name, property_id, base } = data
+    this.property_name = property_name
+    this.property_id = property_id
+    this.base = base
+    this.base_score = 0
+    this.classname = property.idToClassName(property_id)
+    /** 词条强化次数 */
+    this.count = getEquipPropertyEnhanceCount(property_id, base)
+  }
+
+}
+
+export class EquipMainProperty {
+  property_name: string
+  property_id: number
+  base: string
+  classname: string | null
+
+  constructor(data: Mys.Equip['main_properties'][number]) {
+    const { property_name, property_id, base } = data
+    this.property_name = property_name
+    this.property_id = property_id
+    this.base = base
+    this.classname = property.idToClassName(property_id)
+  }
+
+  get short_name() {
+    if (this.property_name.includes('属性伤害加成')) {
+      return this.property_name.replace('属性伤害加成', '伤加成')
+    }
+    if (this.property_name === '能量自动回复') {
+      return '能量回复'
+    }
+    return this.property_name
+  }
+
+}
+
+export class EquipSuit {
+  suit_id: number
+  name: string
+  own: number
+  desc1: string
+  desc2: string
+
+  constructor(suit_id: number, name: string, own: number, desc1: string, desc2: string) {
+    this.suit_id = suit_id
+    this.name = name
+    this.own = own
+    this.desc1 = desc1
+    this.desc2 = desc2
+  }
+
+}
+
+export class Equip {
+  id: number
+  level: number
+  name: string
+  icon: string
+  rarity: string
+  properties: EquipProperty[]
+  main_properties: EquipMainProperty[]
+  equip_suit: Mys.EquipSuit
+  equipment_type: number
+  suit_icon: string | null
+  score: any
+
+  constructor(data: Mys.Avatar['equip'][number]) {
+    const {
+      id,
+      level,
+      name,
+      icon,
+      rarity,
+      properties,
+      main_properties,
+      equip_suit,
+      equipment_type,
+    } = data
+    this.id = id
+    this.level = level
+    this.name = name
+    this.icon = icon
+    this.rarity = rarity
+    this.properties = properties.map(item => new EquipProperty(item))
+    this.main_properties = main_properties.map(
+      item => new EquipMainProperty(item)
+    )
+    this.equip_suit = equip_suit
+    this.equipment_type = equipment_type
+  }
+
+  get_property(id: number) {
+    const result =
+      this.properties.find(item => item.property_id === id)?.base || '0'
+    return Number(result)
+  }
+
+  async get_assets() {
+    const result = await getSuitImage(this.id)
+    this.suit_icon = result
+  }
+
+  /**
+   * 获取装备属性分数
+   * @param weight 权重
+   */
+  get_score(weight: { [propID: string]: number }): number {
+    if (!weight) return this.score
+    this.properties.forEach(item => item.base_score = weight[item.property_id] || 0)
+    this.score = Score.main(this, weight)
+    return this.score
+  }
+
+  get comment() {
+    if (this.score <= 12) {
+      return 'C'
+    }
+    if (this.score < 20) {
+      return 'B'
+    }
+    if (this.score < 28) {
+      return 'A'
+    }
+    if (this.score < 32) {
+      return 'S'
+    }
+    if (this.score < 36) {
+      return 'SS'
+    }
+    if (this.score < 40) {
+      return 'SSS'
+    }
+    if (this.score < 48) {
+      return 'ACE'
+    }
+    if (this.score >= 48) {
+      return 'MAX'
+    }
+    return false
+  }
+
+}
+
+export class Weapon {
+  id: number
+  level: number
+  name: string
+  star: number
+  icon: string
+  rarity: string
+  properties: EquipProperty[]
+  main_properties: EquipMainProperty[]
+  talent_title: string
+  talent_content: string
+  profession: number
+  /** 等级级别（取十位数字） */
+  level_rank: number
+  square_icon: string | null
+
+  constructor(data: NonNullable<Mys.Avatar['weapon']>) {
+    const {
+      id,
+      level,
+      name,
+      star,
+      icon,
+      rarity,
+      properties,
+      main_properties,
+      talent_title,
+      talent_content,
+      profession,
+    } = data
+    this.id = id
+    this.level = level
+    this.name = name
+    this.star = star
+    this.icon = icon
+    this.rarity = rarity
+    this.properties = properties.map(item => new EquipProperty(item))
+    this.main_properties = main_properties.map(
+      item => new EquipMainProperty(item)
+    )
+    this.talent_title = talent_title
+    this.talent_content = talent_content
+    this.profession = profession
+    this.level_rank = Math.floor(level / 10)
+  }
+
+  async get_assets() {
+    const result = await getWeaponImage(this.id)
+    this.square_icon = result
+  }
+
+}

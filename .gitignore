@@ -1,13 +1,25 @@
+.vscode
+.VSCodeCounter
 *.css.map
 config/**/*.*
-!config/.gitkeep
 
 .DS_Store
 
 data/**/*.*
-!data/.gitkeep
+
+/node_modules
+/dist
+/test
+src/model/damage/character/**/*_user.*
 
 resources/images/**/*.*
 resources/data/**/*.*
 model/damage/map/
-model/damage/character/**/*_user.*
+
+resources/map/ElementData.json
+src/apps/test*
+src/model/score/Score copy.js
+src/model/score/Score copy.ts
+src/model/Enka/test.js
+src/model/Enka/parseData.js
+src/model/damage/map
