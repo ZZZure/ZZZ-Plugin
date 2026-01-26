@@ -118,7 +118,8 @@ git clone --depth=1 https://gitee.com/bietiaop/ZZZ-Plugin.git ./plugins/ZZZ-Plug
 
 > [!important]
 > 请勿直接修改 **main** 分支的 dist 等编译产物；请基于 dev 分支修改并提交 PR，CI 会自动编译并同步到 main。
-> 请勿直接修改 **resources** 下的 css 编译产物；请基于对应的 scss 文件修改并提交。
+> 
+> 请勿直接修改 **resources** 下的 css 编译产物；请基于 dev 分支对应的 scss 文件修改并提交。
 
 * 提交前请确保本地已运行 `pnpm build`，能够成功通过编译且无报错
 
@@ -128,7 +129,7 @@ git clone --depth=1 https://gitee.com/bietiaop/ZZZ-Plugin.git ./plugins/ZZZ-Plug
 
 * 在脱离宿主环境下（如独立开发或在github actions中编译），可使用 [tsconfig.src.json](./tsconfig.src.json) 进行编译：通过 `pnpm build:src` 进行编译，或使用 `pnpm watch:src` 进行监听编译
 
-* SCSS：项目的 scss 文件集中在 [resources](./resources/) 的子目录，开发时请修改 scss，不要提交生成的 css
+* SCSS：项目的 scss 文件集中在 [resources](./resources/) 的子目录，开发时请修改 scss，请勿提交生成的 css
   * 全部编译：`pnpm build:css`
   * 全部监听：`pnpm watch:css`
   * CI 会在同步到 main 时执行 `pnpm build:css`（忽略编译异常）
