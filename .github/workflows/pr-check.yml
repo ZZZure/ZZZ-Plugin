@@ -1,0 +1,48 @@
+name: PR Checks
+
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+
+concurrency:
+  group: pr-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  block-main:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.pull_request.base.ref == 'main' }}
+    steps:
+      - name: Reject direct PRs to main
+        run: |
+          echo "不允许直接向 main 分支发起pr请求。请将您的更改提交到 dev 分支，然后向 dev 分支发起pr请求。"
+          exit 1
+
+  validate:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.pull_request.base.ref != 'main' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: pnpm check
+        run: pnpm check
+
+      - name: pnpm lint
+        run: pnpm lint

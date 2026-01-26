@@ -112,9 +112,20 @@ git clone --depth=1 https://gitee.com/bietiaop/ZZZ-Plugin.git ./plugins/ZZZ-Plug
 
 # 贡献
 
-请先 `fork` 本仓库，修改并测试完成后提交PR。
+请先 `fork` 本仓库 **dev分支**，修改 **dev分支** 并测试完成后提交PR。
 
 **请注意：**
+
+> [!important]
+> 请勿直接修改 main 分支的 dist 等编译产物；请基于 dev 分支修改并提交 PR，CI 会自动编译并同步到 main。
+
+* 提交前请确保本地已运行 `pnpm build`，能够成功通过编译且无报错
+
+* 代码风格请参考 `.eslintrc.json`，可使用 `pnpm lint` 进行自检，`pnpm lint:fix` 自动修复部分问题
+
+* 在宿主环境下（如将插件安装于Miao-Yunzai中进行开发），[tsconfig.json](./tsconfig.json)可确保ts环境正确并正常编译：通过 `pnpm build` 进行编译，或使用 `pnpm watch` 进行监听编译
+
+* 在脱离宿主环境下（如在github actions中），可使用 [tsconfig.src.json](./tsconfig.src.json) 进行编译：通过 `pnpm build:src` 进行编译，或使用 `pnpm watch:src` 进行监听编译
 
 * 你的 CSS 必须是 `scss` 编写
 

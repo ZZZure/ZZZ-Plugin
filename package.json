@@ -9,7 +9,8 @@
   "scripts": {
     "build": "node build.js",
     "build:src": "node build.js --only-src",
-    "watch": "nodemon --exec pnpm run build",
+    "watch": "nodemon -w src -e js,ts --exec pnpm run build",
+    "watch:src": "nodemon -w src -e js,ts --exec pnpm run build:src",
     "check": "tsc --noEmit",
     "lint": "eslint \"src/**/*.ts\"",
     "lint:fix": "eslint \"src/**/*.ts\" --fix"
