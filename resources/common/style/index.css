@@ -1,0 +1,338 @@
+@font-face {
+  font-family: "zzz";
+  src: url("../fonts/inpinhongmengti.ttf");
+}
+@font-face {
+  font-family: "tttgbnumber";
+  src: url("../../../../../genshin/resources/font/tttgbnumber.ttf");
+}
+@font-face {
+  font-family: "HYWenHei-55W";
+  src: url("../../../../../genshin/resources/font/HYWenHei-55W.ttf");
+}
+.zzz-font {
+  font-family: "zzz", "tttgbnumber", "HYWenHei-55W", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.no-zzz-font {
+  font-family: "tttgbnumber", "HYWenHei-55W", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+.no-zzz-font strong,
+.no-zzz-font b {
+  font-family: "zzz", "tttgbnumber", "HYWenHei-55W", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.rank-icon {
+  aspect-ratio: 1;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+.rank-icon.s, .rank-icon.S {
+  background-image: url("../images/RANK_S.png");
+}
+.rank-icon.a, .rank-icon.A {
+  background-image: url("../images/RANK_A.png");
+}
+.rank-icon.b, .rank-icon.B {
+  background-image: url("../images/RANK_B.png");
+}
+.rank-icon.bg1 {
+  background-image: url("../images/rank_bg/1.png");
+}
+.rank-icon.bg2 {
+  background-image: url("../images/rank_bg/2.png");
+}
+.rank-icon.bg3 {
+  background-image: url("../images/rank_bg/3.png");
+}
+.rank-icon.bg4 {
+  background-image: url("../images/rank_bg/4.png");
+}
+.rank-icon.bg5 {
+  background-image: url("../images/rank_bg/5.png");
+}
+
+.rating-icon {
+  aspect-ratio: 1;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+.rating-icon.sp, .rating-icon.SP {
+  background-image: url("../images/rating/SP.png");
+}
+.rating-icon.s, .rating-icon.S {
+  background-image: url("../images/rating/S.png");
+}
+.rating-icon.s-corner, .rating-icon.S-corner {
+  background-image: url("../images/rating/S-corner.png");
+}
+.rating-icon.a, .rating-icon.A {
+  background-image: url("../images/rating/A.png");
+}
+.rating-icon.a-corner, .rating-icon.A-corner {
+  background-image: url("../images/rating/A-corner.png");
+}
+.rating-icon.b, .rating-icon.B {
+  background-image: url("../images/rating/B.png");
+}
+.rating-icon.b-corner, .rating-icon.B-corner {
+  background-image: url("../images/rating/B-corner.png");
+}
+
+.team-icon {
+  aspect-ratio: 1;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+.team-icon.team01 {
+  background-image: url("../images/team/01.png");
+}
+.team-icon.team02 {
+  background-image: url("../images/team/02.png");
+}
+.team-icon.team03 {
+  background-image: url("../images/team/03.png");
+}
+
+.max-score-icon {
+  aspect-ratio: 1;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+.max-score-icon.score50000 {
+  background-image: url("../images/max_score/50000.png");
+}
+.max-score-icon.score65000 {
+  background-image: url("../images/max_score/65000.png");
+}
+.max-score-icon.score149500 {
+  background-image: url("../images/max_score/149500.png");
+}
+.max-score-icon.score150000 {
+  background-image: url("../images/max_score/150000.png");
+}
+.max-score-icon.score182000 {
+  background-image: url("../images/max_score/182000.png");
+}
+.max-score-icon.score195000 {
+  background-image: url("../images/max_score/195000.png");
+}
+.max-score-icon.score663000 {
+  background-image: url("../images/max_score/663000.png");
+}
+
+.rarity-icon {
+  aspect-ratio: 1;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+.rarity-icon.a, .rarity-icon.A {
+  background-image: url("../images/Rarity_A.png");
+}
+.rarity-icon.b, .rarity-icon.B {
+  background-image: url("../images/Rarity_B.png");
+}
+.rarity-icon.c, .rarity-icon.C {
+  background-image: url("../images/Rarity_C.png");
+}
+.rarity-icon.s, .rarity-icon.S {
+  background-image: url("../images/Rarity_S.png");
+}
+.rarity-icon.x, .rarity-icon.X {
+  background-image: url("../images/Rarity_X.png");
+}
+
+.property {
+  aspect-ratio: 1;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.property.fire {
+  background-image: url("../images/IconFire.png");
+}
+.property.ice {
+  background-image: url("../images/IconIce.png");
+}
+.property.physdmg {
+  background-image: url("../images/IconPhysDmg.png");
+}
+.property.thunder {
+  background-image: url("../images/IconThunder.png");
+}
+.property.dungeon {
+  background-image: url("../images/IconDungeonBuffEther.png");
+}
+.property.frost {
+  background-image: url("../images/IconFrost.png");
+}
+.property.auricInk {
+  background-image: url("../images/IconAuricInk.png");
+}
+.property.honedEdge {
+  background-image: url("../images/IconHonedEdge.png");
+}
+
+.prop-icon {
+  aspect-ratio: 1;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.prop-icon.attack {
+  background-image: url("../images/property/IconAttack.png");
+}
+.prop-icon.breakstun {
+  background-image: url("../images/property/IconBreakStun.png");
+}
+.prop-icon.crit {
+  background-image: url("../images/property/IconCrit.png");
+}
+.prop-icon.critdam {
+  background-image: url("../images/property/IconCritDam.png");
+}
+.prop-icon.def {
+  background-image: url("../images/property/IconDef.png");
+}
+.prop-icon.dungeonbuffether {
+  background-image: url("../images/property/IconDungeonBuffEther.png");
+}
+.prop-icon.elementabnormalpower {
+  background-image: url("../images/property/IconElementAbnormalPower.png");
+}
+.prop-icon.elementmystery {
+  background-image: url("../images/property/IconElementMystery.png");
+}
+.prop-icon.fire {
+  background-image: url("../images/property/IconFire.png");
+}
+.prop-icon.hpmax {
+  background-image: url("../images/property/IconHpMax.png");
+}
+.prop-icon.ice {
+  background-image: url("../images/property/IconIce.png");
+}
+.prop-icon.penratio {
+  background-image: url("../images/property/IconPenRatio.png");
+}
+.prop-icon.penvalue {
+  background-image: url("../images/property/IconPenValue.png");
+}
+.prop-icon.physdmg {
+  background-image: url("../images/property/IconPhysDmg.png");
+}
+.prop-icon.spgetratio {
+  background-image: url("../images/property/IconSpGetRatio.png");
+}
+.prop-icon.spmax {
+  background-image: url("../images/property/IconSpMax.png");
+}
+.prop-icon.sprecover {
+  background-image: url("../images/property/IconSpRecover.png");
+}
+.prop-icon.thunder {
+  background-image: url("../images/property/IconThunder.png");
+}
+.prop-icon.sheerforce {
+  background-image: url("../images/property/IconSheerForce.png");
+}
+
+.pro-icon {
+  aspect-ratio: 1;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.pro-icon.anomaly {
+  background-image: url("../images/prop/IconAnomaly.png");
+}
+.pro-icon.attack {
+  background-image: url("../images/prop/IconAttack.png");
+}
+.pro-icon.defense {
+  background-image: url("../images/prop/IconDefence.png");
+}
+.pro-icon.stun {
+  background-image: url("../images/prop/IconStun.png");
+}
+.pro-icon.support {
+  background-image: url("../images/prop/IconSupport.png");
+}
+
+.skill-icon {
+  aspect-ratio: 1;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.skill-icon.assist, .skill-icon.Switch, .skill-icon.switch {
+  background-image: url("../images/skills/assist.webp");
+}
+.skill-icon.basic, .skill-icon.Normal, .skill-icon.normal {
+  background-image: url("../images/skills/basic.webp");
+}
+.skill-icon.chain, .skill-icon.Ultimate, .skill-icon.UltimateReady, .skill-icon.ultimateready {
+  background-image: url("../images/skills/chain.webp");
+}
+.skill-icon.core, .skill-icon.Core, .skill-icon.CoreSkill, .skill-icon.coreskill {
+  background-image: url("../images/skills/core.webp");
+}
+.skill-icon.dodge, .skill-icon.Evade, .skill-icon.evade {
+  background-image: url("../images/skills/dodge.webp");
+}
+.skill-icon.special, .skill-icon.Special, .skill-icon.SpecialReady, .skill-icon.specialready {
+  background-image: url("../images/skills/special.webp");
+}
+
+.special-title {
+  width: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  align-items: stretch;
+  padding: 0 2.4em;
+  position: relative;
+  margin: 0.5em 0;
+}
+.special-title .parallelograms {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  position: inherit;
+  padding-bottom: 0.4em;
+  z-index: 1;
+}
+.special-title .parallelograms span {
+  width: 1.3em;
+  height: 80%;
+  background-color: rgb(246, 202, 69);
+  margin-right: -0.2em;
+  -webkit-clip-path: polygon(0.7em 0%, 100% 0%, calc(100% - 0.7em) 100%, 0% 100%);
+  clip-path: polygon(0.7em 0%, 100% 0%, calc(100% - 0.7em) 100%, 0% 100%);
+}
+.special-title .bg-content {
+  position: absolute;
+  bottom: -0.1em;
+  left: 0;
+  transform: skewX(-8deg);
+  color: rgba(255, 255, 255, 0.1);
+  font-size: 2.7em;
+  width: 100%;
+  text-align: center;
+}
+.special-title .content {
+  flex-grow: 1;
+  flex-shrink: 1;
+  font-size: 1.5em;
+  text-align: center;
+  position: inherit;
+  z-index: 1;
+}
+
+/*# sourceMappingURL=index.css.map */
