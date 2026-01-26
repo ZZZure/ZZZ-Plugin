@@ -5,7 +5,6 @@ import { getLevelFromList } from './gacha/tool.js';
 import { SingleGachaLog } from '../model/gacha.js';
 import { sleep } from '../utils/time.js';
 import { rank } from './convert.js';
-import fs from 'fs';
 export const updateGachaLog = async (authKey, uid, region, game_biz) => {
     const previousLog = getGachaLog(uid) || {};
     const newCount = {};
@@ -22,7 +21,6 @@ export const updateGachaLog = async (authKey, uid, region, game_biz) => {
         for (const type of gacha_type_meta_data[name]) {
             queryLabel: while (true) {
                 const log = await getZZZGachaLogByAuthkey(authKey, type, type[0], page, endId, region, game_biz);
-                fs.writeFileSync(`./plugins/ZZZ-Plugin/test/gacha_${name}.json`, JSON.stringify(log, null, 2));
                 if (!log || !log?.list || log?.list?.length === 0) {
                     break;
                 }
