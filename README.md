@@ -45,9 +45,9 @@ git clone --depth=1 https://gitee.com/bietiaop/ZZZ-Plugin.git ./plugins/ZZZ-Plug
 
 ## 自定义评分权重、伤害计算
 
-**自定义评分权重**请查看[此教程](./model/score/README.md)
+**自定义评分权重**请查看[此教程](./src/model/score/README.md)
 
-**自定义伤害计算**请查看[此教程](./model/damage/README.md)
+**自定义伤害计算**请查看[此教程](./src/model/damage/README.md)
 
 ## 攻略、图鉴
 
