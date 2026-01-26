@@ -86,6 +86,7 @@ jobs:
           git -C "$MAIN_ROOT" config user.name "${AUTHOR_NAME}"
           git -C "$MAIN_ROOT" config user.email "${AUTHOR_EMAIL}"
           git -C "$MAIN_ROOT" add -A
+          git -C "$MAIN_ROOT" add -f resources/**/*.css
           git -C "$MAIN_ROOT" add -f dist
           if git -C "$MAIN_ROOT" diff --cached --quiet; then
             echo "No changes to commit."
