@@ -91,7 +91,7 @@ export interface buff {
    * - 若需全匹配的精细操作，可使用**include**与**exclude**参数
    */
   range?: string[] | anomaly[] | "追加攻击"[]
-  /** 
+  /**
    * Buff增益技能类型**生效技能**
    * - 不同于**range**，仅全匹配type时该值生效，不会向后覆盖生效
    * - 无**range**且无**include**则该buff对**exclude**以外的全部技能生效
@@ -99,7 +99,7 @@ export interface buff {
    * - 当技能参数存在**redirect**时，**range**与**include**的区别在于**include**不会尝试匹配**redirect**
    */
   include?: string[]
-  /** 
+  /**
    * Buff增益技能类型**排除技能**
    * - 与**include**相同，仅全匹配type时该值生效，不会向后覆盖生效
    * - 优先级高于**range**与**include**
@@ -107,7 +107,7 @@ export interface buff {
   exclude?: string[]
   /** Buff增益属性类型，无则对全部生效 */
   element?: element | element[]
-  /** 
+  /**
    * 检查buff是否生效
    * @function
    * 音擎会自动添加职业检查

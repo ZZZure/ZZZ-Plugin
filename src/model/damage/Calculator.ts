@@ -14,7 +14,7 @@ export interface skill {
   type: string
   /** 属性类型，不指定时，默认取角色属性 */
   element: element
-  /** 
+  /**
    * 指定技能倍率（基础倍率，可吃倍率增益）
    * @default number[] 默认于character/角色名/data.json中自动获取
    * @number
@@ -37,11 +37,11 @@ export interface skill {
   props?: { [key in buffType]?: number }
   /**
    * 重定向技能伤害类型
-   * 
+   *
    * 当出现“X"(造成的伤害)被视为“Y”(伤害)时，可使用该参数指定Y的类型。
    * - 不存在重定向时，range向后覆盖生效
    * - 存在重定向时，range与type全匹配时生效，redirect向后覆盖生效
-   * 
+   *
    * 当为数组类型时（多类型共存），满足数组内其一类型即可，判断规则同上
    */
   redirect?: string | string[] | anomaly[] | "追加攻击"[]
@@ -699,7 +699,7 @@ export class Calculator {
     }
   }
 
-  /** 
+  /**
    * 获取技能等级
    * @param baseType 技能基类 'A', 'E', 'C', 'R', 'T', 'L'
    */

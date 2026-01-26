@@ -32,6 +32,10 @@ export default [
         plugin: true,
       },
     },
+    rules: {
+      ...js.configs.recommended.rules,
+      'no-trailing-spaces': 'error',
+    },
   },
   {
     files: ['**/*.ts'],
@@ -49,6 +53,7 @@ export default [
     },
     rules: {
       'prefer-const': 'warn',
+      'no-trailing-spaces': 'error',
       '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/consistent-type-definitions': 'off',

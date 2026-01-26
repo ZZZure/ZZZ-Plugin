@@ -33,13 +33,13 @@ export interface CharCalcModel {
 	name: string
 	/** 规则作者 */
 	author: string
-	/** 
+	/**
 	 * 判断此规则是否生效
 	 * - 用于加强角色应用新规则
 	 * - 若皆不符合，选择最后一个规则
 	 */
 	rule?: (avatar: ZZZAvatarInfo) => boolean
-	/** 
+	/**
 	 * 处理函数，用于动态定义`buff`和`skill`
 	 * - 若同时存在`buffs`或`skills`，会先注册直接导出的buffs和skills，然后调用此函数
 	 */
