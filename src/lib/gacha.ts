@@ -17,7 +17,6 @@ import { getLevelFromList } from './gacha/tool.js'
 import { SingleGachaLog } from '../model/gacha.js'
 import { sleep } from '../utils/time.js'
 import { rank } from './convert.js'
-import fs from 'fs'
 
 /**
  * 更新抽卡数据
@@ -61,7 +60,6 @@ export const updateGachaLog = async (authKey: string, uid: string, region?: stri
           region,
           game_biz
         )
-        fs.writeFileSync(`./plugins/ZZZ-Plugin/test/gacha_${name}.json`, JSON.stringify(log, null, 2))
         if (!log || !log?.list || log?.list?.length === 0) {
           break
         }
