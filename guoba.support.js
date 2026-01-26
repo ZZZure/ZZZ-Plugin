@@ -1,14 +1,15 @@
-import settings from './lib/settings.js';
-import lodash from 'lodash';
-import { resourcesPath } from './lib/path.js';
-import path from 'path';
+/// <reference path="./src/@types/yunzai/index.d.ts"/>
+import { resourcesPath } from './lib/path.js'
+import settings from './lib/settings.js'
+import lodash from 'lodash'
+import path from 'path'
 
 // 支持锅巴
 export function supportGuoba() {
-  let allGroup = [];
+  let allGroup = []
   Bot.gl.forEach((v, k) => {
-    allGroup.push({ label: `${v.group_name}(${k})`, value: k });
-  });
+    allGroup.push({ label: `${v.group_name}(${k})`, value: k })
+  })
   return {
     pluginInfo: {
       name: 'ZZZ-Plugin',
@@ -482,18 +483,18 @@ export function supportGuoba() {
         },
       ],
       getConfigData() {
-        return settings.merge();
+        return settings.merge()
       },
       // 设置配置的方法（前端点确定后调用的方法）
       setConfigData(data, { Result }) {
-        let config = {};
+        let config = {}
         for (let [keyPath, value] of Object.entries(data)) {
-          lodash.set(config, keyPath, value);
+          lodash.set(config, keyPath, value)
         }
-        config = lodash.merge({}, settings.merge, config);
-        settings.analysis(config);
-        return Result.ok({}, '保存成功~');
+        config = lodash.merge({}, settings.merge, config)
+        settings.analysis(config)
+        return Result.ok({}, '保存成功~')
       },
     },
-  };
+  }
 }

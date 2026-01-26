@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "module": "NodeNext",
+    "target": "ES2022",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "removeComments": true,
+    "strictPropertyInitialization": false,
+    "skipLibCheck": true,
+    "declaration": false,
+    "incremental": true,
+    "tsBuildInfoFile": "./dist/.tsbuildinfo",
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "rootDir": "../../",
+    "typeRoots": [
+      "./src/@types",
+      "./node_modules/@types"
+    ]
+  },
+  "include": [
+    "./src/**/*.ts",
+  ],
+  "exclude": [
+    "./dist",
+    "./src/model/damage/character",
+    "./src/model/damage/weapon",
+    "./src/model/damage/set",
+  ]
+}

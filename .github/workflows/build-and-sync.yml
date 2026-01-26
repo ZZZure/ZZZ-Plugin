@@ -1,0 +1,96 @@
+name: Build and Sync to main
+
+on:
+  push:
+    branches:
+      - dev
+
+concurrency:
+  group: build-and-sync-dev
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout dev
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: dev
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build
+        run: pnpm run build:src
+
+      - name: Prepare main worktree
+        run: |
+          git fetch origin main:main || true
+          git worktree remove ../main-worktree --force || true
+          git worktree add ../main-worktree main
+          git -C ../main-worktree reset --hard origin/main
+
+      - name: Sync artifacts to main
+        run: |
+          rsync -a --delete --quiet \
+            --exclude='.git' \
+            --exclude='node_modules' \
+            --exclude='src' \
+            ./ ../main-worktree/
+          rm -rf ../main-worktree/src
+
+      - name: Commit and push to main
+        run: |
+          DEV_ROOT="$GITHUB_WORKSPACE"
+          MAIN_ROOT="$DEV_ROOT/../main-worktree"
+          BEFORE_SHA="${{ github.event.before }}"
+          CURRENT_SHA="${{ github.sha }}"
+          AUTHOR_NAME="$(git -C "$DEV_ROOT" log -1 --pretty=format:'%an' "$CURRENT_SHA")"
+          AUTHOR_EMAIL="$(git -C "$DEV_ROOT" log -1 --pretty=format:'%ae' "$CURRENT_SHA")"
+          SOURCE_SHA="$(git -C "$DEV_ROOT" rev-parse --short "$CURRENT_SHA")"
+          LATEST_MSG="$(git -C "$DEV_ROOT" log -1 --pretty=format:'%s' "$CURRENT_SHA")"
+          if [ "$BEFORE_SHA" = "0000000000000000000000000000000000000000" ] || [ -z "$BEFORE_SHA" ]; then
+            LOG_RANGE="$(git -C "$DEV_ROOT" log --pretty=format:'%h %s' -1 "$CURRENT_SHA")"
+          else
+            LOG_RANGE="$(git -C "$DEV_ROOT" log --pretty=format:'%h %s' "$BEFORE_SHA..$CURRENT_SHA")"
+          fi
+          OTHER_COMMITS="$(printf "%s" "$LOG_RANGE" | tail -n +2)"
+          COMMIT_MSG="${LATEST_MSG} [${SOURCE_SHA}]"
+          if [ -n "$OTHER_COMMITS" ]; then
+            COMMIT_MSG="$(printf '%s\n\nOther commits:\n%s' "$COMMIT_MSG" "$OTHER_COMMITS")"
+          fi
+          if [ ! -e "$MAIN_ROOT/.git" ]; then
+            echo "main worktree missing at $MAIN_ROOT"
+            ls -la "$MAIN_ROOT" || true
+            exit 1
+          fi
+          git -C "$MAIN_ROOT" config user.name "${AUTHOR_NAME}"
+          git -C "$MAIN_ROOT" config user.email "${AUTHOR_EMAIL}"
+          git -C "$MAIN_ROOT" add -A
+          git -C "$MAIN_ROOT" add -f dist
+          if git -C "$MAIN_ROOT" diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git -C "$MAIN_ROOT" commit -m "${COMMIT_MSG}"
+          git -C "$MAIN_ROOT" push --force-with-lease origin HEAD:main
+
+      - name: Cleanup
+        if: always()
+        run: git worktree remove ../main-worktree --force || true
