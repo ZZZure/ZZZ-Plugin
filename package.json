@@ -9,8 +9,10 @@
   "scripts": {
     "build": "node build.js",
     "build:src": "node build.js --only-src",
+    "build:css": "sass resources:resources --update --no-error-css",
     "watch": "nodemon -w src -e js,ts --exec pnpm run build",
     "watch:src": "nodemon -w src -e js,ts --exec pnpm run build:src",
+    "watch:css": "sass resources:resources --watch --no-error-css",
     "check": "tsc --noEmit",
     "lint": "eslint \"src/**/*.ts\"",
     "lint:fix": "eslint \"src/**/*.ts\" --fix"
@@ -41,6 +43,7 @@
     "md5": "^2.3.0",
     "node-fetch": "^3.3.2",
     "nodemon": "^3.1.11",
+    "sass": "^1.97.3",
     "typescript": "^5.9.3",
     "yaml": "^2.8.0"
   }
