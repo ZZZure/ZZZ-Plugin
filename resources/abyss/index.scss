@@ -170,6 +170,16 @@
       height: 5em;
       z-index: 3;
     }
+
+    .notes {
+      font-size: 0.8em;
+      margin: 0 2em;
+
+      .command {
+        color: rgb(255, 215, 0);
+        padding: 0 0.3em;
+      }
+    }
   }
 
   // 第1-4层单卡样式
@@ -396,13 +406,5 @@
       }
     }
 
-    .notes {
-      margin: 0 2em;
-
-      .command {
-        color: rgb(255, 215, 0);
-        padding: 0 0.3em;
-      }
-    }
   }
 }

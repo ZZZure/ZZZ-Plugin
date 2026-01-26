@@ -145,6 +145,16 @@
   height: 5em;
   z-index: 3;
 }
+.card .item-card .notes,
+.card .lower-item-card .notes {
+  font-size: 0.8em;
+  margin: 0 2em;
+}
+.card .item-card .notes .command,
+.card .lower-item-card .notes .command {
+  color: rgb(255, 215, 0);
+  padding: 0 0.3em;
+}
 .card .lower-item-card {
   flex: 1;
   padding: 1em;
@@ -331,13 +341,6 @@
   color: white;
   display: flex;
   text-align: center;
-}
-.card .item-card .notes {
-  margin: 0 2em;
-}
-.card .item-card .notes .command {
-  color: rgb(255, 215, 0);
-  padding: 0 0.3em;
 }
 
 /*# sourceMappingURL=index.css.map */
