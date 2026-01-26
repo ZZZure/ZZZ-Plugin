@@ -312,7 +312,7 @@ export class ZZZPlugin extends plugin {
             // 版权信息（简化版）
             createdby: `Created By <div class="highlight"><span>${pluginName}</span><div class="version">${version.version}</div></div> & Powered By <div class="highlight">ZZZure</div>`,
           },
-          quality: 100,
+          quality: 90,
         }
       },
     })
