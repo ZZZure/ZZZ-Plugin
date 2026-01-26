@@ -1,6 +1,7 @@
 .vscode
 .VSCodeCounter
 *.css.map
+resources/**/*.css
 config/**/*.*
 
 .DS_Store
