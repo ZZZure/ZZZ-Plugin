@@ -147,6 +147,7 @@
 }
 .card .item-card .notes,
 .card .lower-item-card .notes {
+  font-size: 0.8em;
   margin: 0 2em;
 }
 .card .item-card .notes .command,
