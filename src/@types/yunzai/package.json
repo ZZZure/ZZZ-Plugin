@@ -1,0 +1,10 @@
+{
+  "name": "@types/yunzai",
+  "version": "0.0.1",
+  "author": {
+    "name": "UCPr",
+    "url": "https://github.com/UCPr251"
+  },
+  "description": "concise TypeScript definitions for yunzav3 & ZZZ-Plugin",
+  "types": "index.d.ts"
+}

@@ -1,4 +1,4 @@
-/// <reference path="./src/@types/global.d.ts"/>
+/// <reference path="./src/@types/yunzai/index.d.ts"/>
 import { resourcesPath } from './lib/path.js'
 import settings from './lib/settings.js'
 import lodash from 'lodash'

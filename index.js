@@ -1,4 +1,4 @@
-/// <reference path="./src/@types/global.d.ts"/>
+/// <reference path="./src/@types/yunzai/index.d.ts"/>
 import { configPath, dataPath, appPath } from './dist/lib/path.js'
 import fs from 'fs'
 

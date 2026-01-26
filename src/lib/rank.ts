@@ -52,8 +52,8 @@ export async function isUserRankAllowed(rank_type: string, uid: string, group_id
 export async function getUsersInGroupRank(rank_type: string, group_id: string | number): Promise<string[]> {
   const users = await redis.keys(`ZZZ:RANK:${rank_type}:${group_id}:*`)
   return users
-    .map(user => user.split(':')[4])
-    .filter(uid => uid.match(/^[0-9]{8}$/))
+    .map((user: string) => user.split(':')[4])
+    .filter((uid: string) => uid.match(/^[0-9]{8}$/))
 }
 
 export async function removeGroupRank(rank_type: string, group_id: string | number) {

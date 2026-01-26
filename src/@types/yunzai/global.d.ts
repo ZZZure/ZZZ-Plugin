@@ -1,4 +1,4 @@
-import type { EventMap, EventType } from './message.ts'
+import type { EventMap, EventType } from './message.js'
 import type {
   Client,
   MessageRet,

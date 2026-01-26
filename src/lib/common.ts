@@ -1,3 +1,4 @@
+// @ts-ignore
 import User from '../../../genshin/model/user.js'
 import { getStoken } from './authkey.js'
 

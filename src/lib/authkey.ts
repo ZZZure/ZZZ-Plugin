@@ -1,3 +1,5 @@
+import type { Mys } from '#interface'
+// @ts-ignore
 import type NoteUser from '../../../genshin/model/mys/NoteUser.js'
 import request from '../utils/request.js'
 import MysZZZApi from './mysapi.js'
@@ -85,7 +87,7 @@ export const getAuthKey = async (e: any, _user: NoteUser, zzzUid: string, authAp
   const ck = `stuid=${stoken.stuid};stoken=${stoken.stoken};mid=${stoken.mid};`
   // 实例化 API
   const api = new MysZZZApi(zzzUid, ck)
-  let type = 'zzzAuthKey'
+  let type: Mys.UrlType = 'zzzAuthKey'
   switch (authAppid) {
     case 'csc': {
       type = 'zzzAuthKey'

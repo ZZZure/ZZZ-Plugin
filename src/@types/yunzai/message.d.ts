@@ -10,7 +10,7 @@ import type {
   Message,
   MessageRet
 } from 'icqq'
-import type Runtime from '../../../../lib/plugins/runtime.js'
+import type Runtime from '../../../../../lib/plugins/runtime.js'
 import type { ZZZ } from '#interface'
 
 type _EventMap_ = Pick<OriEventMap, Exclude<keyof OriEventMap, 'message.group' | 'message' | 'message.private'>>

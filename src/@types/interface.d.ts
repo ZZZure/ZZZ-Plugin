@@ -1,5 +1,5 @@
-export type * from './global.d.ts'
-export type * from './message.d.ts'
+export type * from './yunzai/global.d.ts'
+export type * from './yunzai/message.d.ts'
 export type * from '../model/damage/avatar.ts'
 export type * from '../model/damage/BuffManager.ts'
 export type * from '../model/damage/Calculator.ts'
@@ -186,6 +186,11 @@ export namespace Mys {
     zzzDeadlyPeriod: Deadly
     zzzVoidFrontBattleAbstractInfo: VoidFrontBattleAbstractInfo
   }
+
+  /** 米游社UrlType */
+  export type UrlType =
+    | (keyof Mys.KeyValue & {})
+    | 'zzzVoidFrontBattle' | 'getFp' | 'zzzAuthKey' | 'deviceLogin' | 'saveDevice'
 
   /** 面板角色列表 */
   export interface AvatarList {

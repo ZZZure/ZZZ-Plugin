@@ -1,4 +1,5 @@
 import type { EventType, Mys } from '#interface'
+// @ts-ignore
 import NoteUser from '../../../genshin/model/mys/NoteUser.js'
 import { pluginName, resourcesPath } from './path.js'
 import { getCk, rulePrefix } from './common.js'

@@ -193,8 +193,8 @@ export class PoolHistory extends ZZZPlugin {
     if (!data) return this.reply('卡池历史记录数据获取失败')
     const versions = [...new Set(data.map(p => p.version.replace(/(上半|下半)$/u, '')))]
     const title = '绝区零全版本卡池记录'
-    const replyMsg = [title, ...versions.map(v => this.generatePoolMsg(data, v, '')).reverse()]
-    const msg = await common.makeForwardMsg(this.e, replyMsg, title)
+    const replyMsg = [title, ...versions.map(v => this.generatePoolMsg(data, v, '')).filter(Boolean).reverse()]
+    const msg = await common.makeForwardMsg(this.e, replyMsg as Sendable[], title)
     redis.set(this.queryAllPoolMsgCacheKey, JSON.stringify(msg), {
       EX: 7 * 24 * 60 * 60 // 缓存7*24小时
     })

@@ -1,7 +1,7 @@
 import type Handler from '../../../../lib/plugins/handler.js'
 import type { Cookie } from './common.js'
-import type { Mys } from '#interface'
-import type { Message } from 'icqq'
+import type { EventType, Mys } from '#interface'
+// @ts-ignore
 import MysApi from '../../../genshin/model/mys/mysApi.js'
 import { randomString } from '../utils/data.js'
 import ZZZApiTool from './mysapi/tool.js'
@@ -19,12 +19,18 @@ import md5 from 'md5'
  */
 export default class MysZZZApi extends MysApi {
   handler?: typeof Handler
-  e?: Message
+  e?: EventType
+  uid: string
+  server: string
+  apiTool: ZZZApiTool
+  _device: string
+  declare _device_fp: { data: { device_fp: string } }
+  declare getData: (type: any, data: any, cached?: boolean) => Promise<any>
   declare cookie: string
 
   constructor(uid: string, cookie: string | Record<string, Cookie>, option?: {
     handler?: typeof Handler
-    e?: Message
+    e?: EventType
   }) {
     // @ts-ignore
     super(uid, cookie, option, true)
@@ -86,22 +92,24 @@ export default class MysZZZApi extends MysApi {
    * @param type
    * @param data
    */
-  getUrl(type: string, data: any = {}) {
+  getUrl(type: Mys.UrlType, data: any = {}) {
     // 设置设备ID
     data.deviceId = this._device
     // 获取请求地址
     const urlMap = this.apiTool.getUrlMap(data)
-    if (!urlMap[type]) return false
+    // @ts-expect-error
+    const target = urlMap[type]
+    if (!target) return false
     // 获取请求参数（即APITool中默认的请求参数，此参数理应是不可获取的，详细请参照 lib/mysapi/tool.js`）
     let {
       url,
       body = '',
-    } = urlMap[type]
+    } = target
     const {
       query = '',
       noDs = false,
       dsSalt = '',
-    } = urlMap[type]
+    } = target
     // 如果有query，拼接到url上
     if (query) url += `?${query}`
     // 如果传入了 query 参数，将 query 参数拼接到 url 上

@@ -10,16 +10,15 @@ data/**/*.*
 /node_modules
 /dist
 /test
+pnpm-lock.yaml
+
 src/model/damage/character/**/*_user.*
 
 resources/images/**/*.*
 resources/data/**/*.*
-model/damage/map/
 
 resources/map/ElementData.json
 src/apps/test*
-src/model/score/Score copy.js
-src/model/score/Score copy.ts
 src/model/Enka/test.js
 src/model/Enka/parseData.js
 src/model/damage/map
