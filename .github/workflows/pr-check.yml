@@ -26,6 +26,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -37,6 +39,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22.18.0
+
+      - name: Reject generated CSS changes
+        run: |
+          CHANGED=$(git diff --name-only --diff-filter=ACMR origin/${{ github.event.pull_request.base.ref }}...HEAD | grep -E '\.css$' || true)
+          if [ -n "$CHANGED" ]; then
+            echo "PR 中包含生成的 CSS 文件，请修改并提交 SCSS 源码："
+            echo "$CHANGED"
+            exit 1
+          fi
 
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile

@@ -39,6 +39,9 @@ jobs:
       - name: Build
         run: pnpm run build:src
 
+      - name: Build styles
+        run: pnpm run build:css || echo "build:css failed (ignored for sync)"
+
       - name: Prepare main worktree
         run: |
           git fetch origin main:main || true
