@@ -1,0 +1,136 @@
+.container {
+  padding-top: 3em;
+}
+
+.card {
+  border-image: url("./images/BgFrame.png");
+  border-image-slice: 325 0 162.5 0 fill;
+  border-image-width: 10em 0em 5em 0em;
+  border-image-repeat: round stretch;
+  min-height: 30em;
+  overflow: hidden;
+  padding: 5em 2.2em 2.2em 2.2em;
+}
+.card .battery {
+  display: flex;
+  align-items: center;
+  gap: 1.5em;
+  padding: 0.5em;
+  border: solid 0.2em rgb(174, 174, 174);
+  border-radius: 0.7em;
+  color: rgb(167, 167, 167);
+  background: url("./images/batteryBg.png") no-repeat center center;
+  background-size: cover;
+  margin: 1.5em 0;
+}
+.card .battery .icon {
+  width: 7em;
+  height: 7em;
+  border-radius: 50%;
+  border-image: url("./images/PetSelectBG.png");
+  border-image-width: 0;
+  border-image-outset: 0em;
+  border-image-repeat: round;
+  border-image-slice: 1 fill;
+  overflow: hidden;
+  padding: 1.4em;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+.card .battery .icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.card .battery .info {
+  flex-grow: 1;
+  flex-shrink: 1;
+  margin-right: 1em;
+}
+.card .battery .info .bvalue {
+  display: flex;
+  align-items: flex-end;
+}
+.card .battery .info .bvalue .title {
+  font-size: 1.2em;
+}
+.card .battery .info .bvalue .value .big {
+  font-size: 1.5em;
+  color: rgb(253, 209, 73);
+  margin: 0 0.7em;
+}
+.card .battery .info .bleft {
+  display: flex;
+  gap: 0.2em;
+  font-size: 0.8em;
+}
+.card .battery .info .bleft .value {
+  color: white;
+}
+.card .battery .info .texture {
+  width: 100%;
+  border-image: url("./images/ActivityGeneralBtnBg02.png");
+  border-image-slice: 30 40 30 24 fill;
+  border-image-width: 1em 1.5em 1em 0.9em;
+  border-image-repeat: stretch stretch;
+  padding: 1.1em 1.23em 1.1em 0.6em;
+  margin-top: 0.7em;
+}
+.card .battery .info .texture .progress {
+  height: 0.5em;
+  border-radius: 0.3em;
+  background-color: rgb(244, 198, 68);
+}
+.card .active-list {
+  font-size: 1.2em;
+  padding: 0 1em;
+  margin-top: -0.5em;
+}
+.card .active-list .active {
+  display: flex;
+  border-bottom: solid 0.07em rgba(255, 255, 255, 0.3);
+  align-items: center;
+  color: rgb(216, 216, 216);
+  gap: 0.5em;
+  padding-right: 1em;
+  padding-top: 1em;
+  padding-bottom: 0.2em;
+}
+.card .active-list .active .status {
+  width: 1.8em;
+  height: 1.8em;
+  border-radius: 50%;
+  background-color: rgb(34, 39, 37);
+  flex-grow: 0;
+  flex-shrink: 0;
+  background: url("./images/no.png") no-repeat center center;
+  background-size: contain;
+}
+.card .active-list .active .status.finish {
+  background: url("./images/yes.png") no-repeat center center;
+  background-size: contain;
+}
+.card .active-list .active .title {
+  flex-grow: 1;
+  padding: 0;
+  font-size: 1.1em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card .active-list .active .value {
+  display: flex;
+  align-items: flex-end;
+  font-size: 1.2em;
+  color: rgb(253, 209, 73);
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+.card .active-list .active .value .sub {
+  font-size: 0.8em;
+  color: rgb(255, 255, 255);
+  margin-left: 0.2em;
+}
+
+/*# sourceMappingURL=index.css.map */

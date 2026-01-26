@@ -1,0 +1,170 @@
+.container {
+  background-image: url("./images/bg1.jpg");
+  background-size: cover;
+}
+
+.panel > .info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7em;
+  padding: 0 2em;
+  margin-bottom: 1em;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(0.2em);
+}
+.panel > .info .user-info {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.panel > .info .count {
+  font-size: 1.4em;
+  flex-shrink: 0;
+  flex-grow: 0;
+  padding: 0.3em 0.7em;
+  border-radius: 0.5em;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  filter: drop-shadow(0 0 0.1em rgba(216, 255, 254, 0.6));
+  margin-right: 0.6em;
+  position: relative;
+}
+.panel > .info .count::after {
+  content: "";
+  position: absolute;
+  right: -0.38em;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 0.4em solid transparent;
+  border-left: 0.4em solid rgba(0, 0, 0, 0.8);
+  border-bottom: 0.4em solid transparent;
+}
+.panel > .info .icon {
+  width: 3.5em;
+  flex-grow: 0;
+  flex-shrink: 0;
+  aspect-ratio: 1;
+  display: flex;
+  background: url("./images/refresh_title.png") center/contain no-repeat;
+}
+.panel > .list {
+  border: 0.1em solid rgb(87, 80, 102);
+  background-color: rgba(0, 0, 0, 0.5);
+  margin: 0 1.5em 1.5em;
+  border-radius: 0.5em;
+  min-height: 3em;
+  min-width: 5em;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  padding: 0.4em 0.6em 0.5em;
+}
+.panel > .list .empty {
+  color: white;
+  font-size: 0.8em;
+  text-align: center;
+  width: 100%;
+  padding-top: 0.6em;
+}
+.panel > .list .item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 20%;
+  align-items: center;
+  padding: 0.2em 0em;
+}
+.panel > .list .item .icon {
+  background: url("./images/avatar_box.png") center/contain no-repeat;
+  margin-bottom: 0.2em;
+  position: relative;
+}
+.panel > .list .item .icon .new {
+  position: absolute;
+  right: 0.2em;
+  top: 0.4em;
+  width: 0.5em;
+  height: 0.5em;
+  background-color: rgb(51, 235, 0);
+  border-radius: 50%;
+}
+.panel > .list .item .icon img.streng {
+  width: 3.5em;
+  height: 3.5em;
+  border-radius: 50%;
+  padding: 0.25em 0.25em 0.3em 0.25em;
+  object-fit: cover;
+  object-position: center;
+}
+.panel > .list .item .icon .rank {
+  position: absolute;
+  right: 1.25em;
+  bottom: -0.1em;
+  border-radius: 50%;
+  color: white;
+  width: 1em;
+  height: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.05em;
+  background-color: rgb(117, 117, 117);
+}
+.panel > .list .item .icon .rank span {
+  font-size: 0.7em;
+}
+.panel > .list .item .icon .rank.r1 {
+  background-color: rgb(58, 116, 43);
+}
+.panel > .list .item .icon .rank.r2 {
+  background-color: rgb(61, 132, 214);
+}
+.panel > .list .item .icon .rank.r3 {
+  background-color: rgb(223, 118, 118);
+}
+.panel > .list .item .icon .rank.r4 {
+  background-color: rgb(51, 54, 161);
+}
+.panel > .list .item .icon .rank.r5 {
+  background-color: rgb(102, 127, 19);
+}
+.panel > .list .item .icon .rank.r6 {
+  background-color: rgb(218, 48, 32);
+}
+.panel > .list .item .name {
+  width: 5.4em;
+  overflow: visible;
+  padding: 0.1em 0;
+  padding-left: 0.5em;
+  border-image-slice: 0 30 0 40 fill;
+  border-image-width: 0em 0.45em 0em 0.7em;
+  border-image-outset: 0 0.11em 0 0;
+  border-image-repeat: stretch stretch;
+  border-image-source: url("./images/CurseBG04.png");
+  display: flex;
+  align-items: center;
+  color: white;
+}
+.panel > .list .item .name .img {
+  width: 1em;
+  display: inline-block;
+  flex-shrink: 0;
+  flex-grow: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  background-size: 70%;
+  box-shadow: 0 0 0 0.07em rgba(85, 85, 85, 0.5);
+}
+.panel > .list .item .name span {
+  font-size: 0.7em;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+/*# sourceMappingURL=refresh.css.map */
