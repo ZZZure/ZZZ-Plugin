@@ -19,6 +19,7 @@ import fs from 'fs'
 
 export class Avatar {
   element_str: string
+  sub_element_str: string
 
   constructor(
     public id: number,
@@ -26,6 +27,7 @@ export class Avatar {
     public name_mi18n: string,
     public full_name_mi18n: string,
     public element_type: number,
+    public sub_element_type: number,
     public camp_name_mi18n: string,
     public avatar_profession: number,
     public rarity: string,
@@ -35,6 +37,7 @@ export class Avatar {
     public is_chosen: boolean
   ) {
     this.element_str = element.idToName(element_type)
+    this.sub_element_str = element.idToName(element_type, sub_element_type)
   }
 
 }
@@ -54,12 +57,14 @@ export class ZZZAvatarBasic {
   name_mi18n: string
   full_name_mi18n: string
   element_type: number
+  sub_element_type: number
   camp_name_mi18n: string
   avatar_profession: number
   rarity: string
   rank: number
   is_chosen: boolean
   element_str: string
+  sub_element_str: string
   square_icon: string
 
   constructor(data: Mys.AvatarList['avatar_list'][number]) {
@@ -69,6 +74,7 @@ export class ZZZAvatarBasic {
       name_mi18n,
       full_name_mi18n,
       element_type,
+      sub_element_type = 0,
       camp_name_mi18n,
       avatar_profession,
       rarity,
@@ -80,6 +86,7 @@ export class ZZZAvatarBasic {
     this.name_mi18n = name_mi18n
     this.full_name_mi18n = full_name_mi18n
     this.element_type = element_type
+    this.sub_element_type = sub_element_type
     this.camp_name_mi18n = camp_name_mi18n
     this.avatar_profession = avatar_profession
     this.rarity = rarity
@@ -87,6 +94,7 @@ export class ZZZAvatarBasic {
     this.is_chosen = is_chosen
 
     this.element_str = element.idToName(element_type)
+    this.sub_element_str = element.idToName(element_type, sub_element_type)
   }
 
   async get_assets() {
@@ -154,8 +162,10 @@ export class ZZZAvatarInfo {
   ranks: Rank[]
   /** 已解锁影画数 */
   ranks_num: number
-  /** 属性 */
+  /** 角色元素名 */
   element_str: string
+  /** 角色子元素名 */
+  sub_element_str: string
   /** 立绘链接 */
   role_vertical_painting_url: string
   /** 时装ID。原皮时为空 */
@@ -240,7 +250,8 @@ export class ZZZAvatarInfo {
     this.rank = rank
     this.ranks = ranks && ranks.map(rank => new Rank(rank))
     this.ranks_num = rank
-    this.element_str = element.idToName(element_type, sub_element_type)
+    this.element_str = element.idToName(element_type)
+    this.sub_element_str = element.idToName(element_type, sub_element_type)
     this.role_vertical_painting_url = role_vertical_painting_url
     this.skin_id = this.role_vertical_painting_url?.match?.(/role_vertical_painting_\d+_(\d+).png$/)?.[1] || ''
     this.level_rank = Math.floor(this.level / 10)
