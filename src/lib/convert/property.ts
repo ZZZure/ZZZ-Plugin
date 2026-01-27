@@ -1,6 +1,8 @@
 import { getMapData } from '../../utils/file.js'
 
 const propertyData = getMapData('Property2Name')
+
+/** 属性css命名 */
 const prop_id = {
   111: 'hpmax',
   121: 'attack',
@@ -20,6 +22,15 @@ const prop_id = {
   317: 'ice',
   318: 'thunder',
   319: 'dungeonbuffether',
+}
+
+/** 职业css命名 */
+const pro_id = {
+  1: 'attack',
+  2: 'stun',
+  3: 'anomaly',
+  4: 'support',
+  5: 'defense',
 }
 
 /**

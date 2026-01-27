@@ -941,6 +941,7 @@ export namespace MapJSON {
   export interface KeyValue {
     AnomalyData: AnomalyData[]
     BangbooId2Data: BangbooId2Data
+    ElementData: ElementData[]
     EquipBaseValue: EquipBaseValue
     EquipMainStats: EquipMainStats
     EquipScore: EquipScore
@@ -976,6 +977,16 @@ export namespace MapJSON {
       CHS: string
       JA: string
     }
+  }
+
+  export interface ElementData {
+    element_type: number
+    sub_element_type: number
+    zh: string
+    zh_sub: string
+    en: string
+    en_sub: string
+    property_id: number
   }
 
   export interface EquipBaseValue {

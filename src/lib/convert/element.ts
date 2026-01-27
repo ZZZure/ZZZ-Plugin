@@ -1,22 +1,23 @@
-const ELEMENT_TYPE = {
-  200: 'physdmg',
-  201: 'fire',
-  202: 'ice',
-  203: 'thunder',
-  205: 'dungeon',
-}
+import { getMapData } from '../../utils/file.js'
 
-const SUB_ELEMENT_TYPE = {
-  1: 'frost',
-  2: 'auricInk',
-  4: 'honedEdge',
+const ElementData = getMapData('ElementData')
+
+/**
+ * 元素ID转元素数据
+ * @param id element_type
+ * @param sub_id sub_element_type
+ */
+export function idToData(id: string | number, sub_id: string | number = 0) {
+  id = Number(id)
+  sub_id = Number(sub_id)
+  return ElementData.find(i => i.element_type === id && i.sub_element_type === sub_id) || null
 }
 
 /**
- * 元素ID转元素类型名
+ * 获取元素名（en_sub）
  */
-export const IDToElement = (id: string | number, sub_id?: string | number) => {
-  if (sub_id && SUB_ELEMENT_TYPE[sub_id as keyof typeof SUB_ELEMENT_TYPE])
-    return SUB_ELEMENT_TYPE[sub_id as keyof typeof SUB_ELEMENT_TYPE]
-  return ELEMENT_TYPE[id as keyof typeof ELEMENT_TYPE] || 'unknown'
+export const idToName = (id: string | number, sub_id: string | number = 0) => {
+  const data = idToData(id, sub_id)
+  if (!data) return ''
+  return data.en_sub
 }

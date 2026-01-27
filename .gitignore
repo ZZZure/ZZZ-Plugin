@@ -18,7 +18,6 @@ src/model/damage/character/**/*_user.*
 resources/images/**/*.*
 resources/data/**/*.*
 
-resources/map/ElementData.json
 src/apps/test*
 src/model/Enka/test.js
 src/model/Enka/parseData.js

@@ -4,8 +4,8 @@ import settings from '../lib/settings.js'
 import _ from 'lodash'
 
 type IconType =
-  | 'fire' | 'ice' | 'physdmg' | 'thunder' | 'dungeon'
-  | 'frost' | 'auricInk' | 'honedEdge'
+  | 'Physical' | 'HonedEdge' | 'Fire' | 'Ice' | 'Frost'
+  | 'Electric' | 'Ether' | 'AuricInk'
 
 interface HelpItem {
   title: string
@@ -24,7 +24,7 @@ interface HelpData {
 const helpData: HelpData[] = [
   {
     title: '信息查询',
-    icon: 'fire',
+    icon: 'Fire',
     items: [
       {
         title: '基本信息',
@@ -70,7 +70,7 @@ const helpData: HelpData[] = [
   },
   {
     title: '抽卡记录',
-    icon: 'ice',
+    icon: 'Ice',
     items: [
       {
         title: '刷新抽卡记录',
@@ -97,7 +97,7 @@ const helpData: HelpData[] = [
   },
   {
     title: '角色面板',
-    icon: 'thunder',
+    icon: 'Electric',
     items: [
       {
         title: '刷新角色面板',
@@ -145,7 +145,7 @@ const helpData: HelpData[] = [
   },
   {
     title: '战绩查询',
-    icon: 'dungeon',
+    icon: 'Ether',
     items: [
       {
         title: '查看式舆防卫战',
@@ -206,7 +206,7 @@ const helpData: HelpData[] = [
   },
   {
     title: '卡池记录',
-    icon: 'frost',
+    icon: 'Frost',
     items: [
       {
         title: '复刻记录',
@@ -246,7 +246,7 @@ const helpData: HelpData[] = [
   },
   {
     title: '挑战提醒',
-    icon: 'dungeon',
+    icon: 'HonedEdge',
     items: [
       {
         title: '开关挑战提醒',
@@ -315,7 +315,7 @@ const helpData: HelpData[] = [
   },
   {
     title: '角色攻略',
-    icon: 'physdmg',
+    icon: 'Ice',
     items: [
       {
         title: '查看角色攻略',
@@ -349,7 +349,7 @@ const helpData: HelpData[] = [
   },
   {
     title: '其他',
-    icon: 'fire',
+    icon: 'Fire',
     items: [
       {
         title: '兑换码',
@@ -426,7 +426,7 @@ export class Help extends ZZZPlugin {
         ...helpData,
         {
           title: '管理功能',
-          icon: 'dungeon',
+          icon: 'AuricInk',
           items: [
             {
               title: '更新',
