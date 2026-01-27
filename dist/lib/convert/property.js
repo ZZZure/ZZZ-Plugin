@@ -20,13 +20,6 @@ const prop_id = {
     318: 'thunder',
     319: 'dungeonbuffether',
 };
-const pro_id = {
-    1: 'attack',
-    2: 'stun',
-    3: 'anomaly',
-    4: 'support',
-    5: 'defense',
-};
 export function idToClassName(_id) {
     const propId = +_id.toString().slice(0, 3);
     const propIcon = prop_id[propId];

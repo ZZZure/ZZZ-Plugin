@@ -3,7 +3,7 @@ import { getHakushCharacter } from './download.js';
 import * as convert from './convert.js';
 export const getHakushCharacterData = async (alias) => {
     const name = convert.char.aliasToName(alias);
-    const id = convert.char.charNameToID(name);
+    const id = convert.char.nameToId(name);
     if (!id)
         return null;
     const data = await getHakushCharacter(id);

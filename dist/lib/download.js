@@ -2,7 +2,7 @@ import * as convert from './convert.js';
 import { downloadMysImage, downloadResourceImage, downloadHakushFile, } from './download/download.js';
 export const getSquareAvatar = async (charID) => {
     let result = '';
-    const sprite = convert.char.IDToCharSprite(charID);
+    const sprite = convert.char.idToSprite(charID);
     if (sprite) {
         const filename = `IconRoleCrop${sprite}.webp`;
         result = await downloadHakushFile('ZZZ_UI', 'HAKUSH_ZZZ_SQUARE_AVATAR_PATH', filename);
@@ -14,7 +14,7 @@ export const getSquareAvatar = async (charID) => {
     return result;
 };
 export const getSmallSquareAvatar = async (charID) => {
-    const sprite = convert.char.IDToCharSprite(charID);
+    const sprite = convert.char.idToSprite(charID);
     if (!sprite)
         return null;
     let filename = `IconRoleGeneral${sprite}.png`;
@@ -28,7 +28,7 @@ export const getSmallSquareAvatar = async (charID) => {
 };
 export const getSquareBangboo = async (bangbooId) => {
     let result = '';
-    const sprite = convert.bangboo.bangbooIdToSprite(bangbooId);
+    const sprite = convert.bangboo.idToSprite(bangbooId);
     if (sprite) {
         const filename = `BangbooGarageRole${sprite}.webp`;
         result = await downloadHakushFile('ZZZ_UI', 'HAKUSH_ZZZ_SQUARE_BANGBOO_PATH', filename);
@@ -42,7 +42,7 @@ export const getSquareBangboo = async (bangbooId) => {
     return result;
 };
 export const getWeaponImage = async (id) => {
-    const name = convert.weapon.IDToWeaponFileName(id);
+    const name = convert.weapon.idToFileName(id);
     if (!name)
         return null;
     let result = '';
@@ -55,7 +55,7 @@ export const getWeaponImage = async (id) => {
     return result;
 };
 export const getRoleImage = async (id, skin_id) => {
-    const sprite = convert.char.IDToCharSprite(id);
+    const sprite = convert.char.idToSprite(id);
     if (!sprite)
         return null;
     let result = '';
@@ -75,7 +75,7 @@ export const getRoleImage = async (id, skin_id) => {
     return result;
 };
 export const getRoleCircleImage = async (id) => {
-    const sprite = convert.char.IDToCharSprite(id);
+    const sprite = convert.char.idToSprite(id);
     if (!sprite)
         return null;
     let result = '';
@@ -88,7 +88,7 @@ export const getRoleCircleImage = async (id) => {
     return result;
 };
 export const getSuitImage = async (suitId) => {
-    const suitName = convert.equip.equipIdToSprite(suitId);
+    const suitName = convert.equip.idToSprite(suitId);
     if (!suitName)
         return null;
     const filename = `${suitName}.png`;
@@ -101,7 +101,7 @@ export const getSuitImage = async (suitId) => {
     return result;
 };
 export const getSuit3DImage = async (suitId) => {
-    const suitName = convert.equip.equipIdToSprite(suitId);
+    const suitName = convert.equip.idToSprite(suitId);
     const filename = `${suitName}_3d.png`;
     const result = await downloadResourceImage('suit_3d', 'ZZZ_SUIT_3D_PATH', filename);
     return result;

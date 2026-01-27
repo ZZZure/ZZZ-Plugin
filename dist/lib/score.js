@@ -1,6 +1,6 @@
-import { getMapData } from '../utils/file.js';
-import { IDToCharData } from './convert/char.js';
 import { nameToId } from './convert/property.js';
+import { getMapData } from '../utils/file.js';
+import { char } from './convert.js';
 export const baseValueData = getMapData('EquipBaseValue');
 const elementType2propId = (elementType) => [31503, 31603, 31703, 31803, , 31903][elementType - 200];
 export function formatScoreWeight(oriScoreWeight, charID) {
@@ -16,7 +16,7 @@ export function formatScoreWeight(oriScoreWeight, charID) {
             continue;
         let propID;
         if (charID && propName === '属性伤害加成') {
-            propID = elementType2propId(+IDToCharData(charID)?.ElementType);
+            propID = elementType2propId(+char.idToData(charID)?.ElementType);
         }
         else {
             propID = +propName || nameToId(propName);

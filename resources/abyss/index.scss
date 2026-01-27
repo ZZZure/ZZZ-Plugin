@@ -72,7 +72,8 @@
           }
 
           .max-score-icon {
-            filter: drop-shadow(0 0 0.1em rgba(197, 251, 255, 0.6)) brightness(1.1);
+            filter: drop-shadow(0 0 0.1em rgba(197, 251, 255, 0.6))
+              brightness(1.1);
             width: 9.4em;
             height: 3.8em;
           }
@@ -207,7 +208,9 @@
     border-radius: 0.6em;
     overflow: hidden;
     border: 0.1em solid #343434;
-    box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.3), 0.2em 0.2em 0 rgb(0, 0, 0);
+    box-shadow:
+      0 0 0.5em rgba(0, 0, 0, 0.3),
+      0.2em 0.2em 0 rgb(0, 0, 0);
     flex-shrink: 0;
     flex-grow: 0;
     background-image: url('./images/boss_bg_4.png');
@@ -257,9 +260,11 @@
       }
 
       .val {
-        background: linear-gradient(180deg,
-            rgba(255, 255, 255, 1) 0%,
-            rgba(255, 255, 255, 0.4) 100%);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 1) 0%,
+          rgba(255, 255, 255, 0.4) 100%
+        );
         filter: drop-shadow(2px 4px 6px black);
         -webkit-background-clip: text;
         background-clip: text;
@@ -295,10 +300,12 @@
         width: 100%;
         position: relative;
         border-radius: 0.5em;
-        box-shadow: 0 0 0 0.12em black, 0 0 0 0.24em #333534;
+        box-shadow:
+          0 0 0 0.12em black,
+          0 0 0 0.24em #333534;
         filter: drop-shadow(4px 6px 8px black);
 
-        >* {
+        > * {
           position: inherit;
           z-index: 1;
         }
@@ -341,9 +348,11 @@
               right: -0.4em;
               width: 0.3em;
               height: 0.3em;
-              background: radial-gradient(circle at 100% 0,
-                  transparent 0.3em,
-                  rgb(0, 0, 0) 0.3em);
+              background: radial-gradient(
+                circle at 100% 0,
+                transparent 0.3em,
+                rgb(0, 0, 0) 0.3em
+              );
               rotate: 90deg;
             }
 
@@ -354,9 +363,11 @@
               left: -0.1em;
               width: 0.3em;
               height: 0.3em;
-              background: radial-gradient(circle at 100% 0,
-                  transparent 0.3em,
-                  rgb(0, 0, 0) 0.3em);
+              background: radial-gradient(
+                circle at 100% 0,
+                transparent 0.3em,
+                rgb(0, 0, 0) 0.3em
+              );
               rotate: 90deg;
             }
           }
@@ -405,6 +416,5 @@
         }
       }
     }
-
   }
 }

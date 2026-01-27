@@ -357,8 +357,8 @@ export class ZZZAvatarInfo {
         const paths = Array.from(new Set([
             this.name_mi18n,
             this.full_name_mi18n,
-            char.IDToCharName(this.id, false),
-            char.IDToCharName(this.id, true)
+            char.idToName(this.id, false),
+            char.idToName(this.id, true)
         ].filter(Boolean))).map((p) => path.join(imageResourcesPath, 'panel', p));
         let role_icon = '';
         const custom_panel_images = paths.find(p => fs.existsSync(p));

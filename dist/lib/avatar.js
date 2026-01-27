@@ -84,7 +84,7 @@ export const getPanelListOrigin = (uid) => {
     return getPanelData(uid);
 };
 export const getPanel = (uid, name) => {
-    const id = char.aliasToID(name);
+    const id = char.aliasToId(name);
     if (!id)
         return false;
     const _data = getPanelData(uid);
@@ -95,7 +95,7 @@ export const getPanel = (uid, name) => {
     return result;
 };
 export const getPanelOrigin = (uid, name) => {
-    const id = char.aliasToID(name);
+    const id = char.aliasToId(name);
     if (!id)
         return false;
     const data = getPanelData(uid);

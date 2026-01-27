@@ -1,6 +1,6 @@
 import { getMapData } from '../../utils/file.js';
 const SuitData = getMapData('SuitData');
-export function equipIdToSprite(equipId) {
+export function idToSprite(equipId) {
     equipId = equipId.toString();
     if (equipId.length === 5) {
         const suitId = equipId.slice(0, 3) + '00';

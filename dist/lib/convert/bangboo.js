@@ -1,12 +1,12 @@
 import { getMapData } from '../../utils/file.js';
 const BangbooId2Data = getMapData('BangbooId2Data');
-export const bangbooIdToData = (bangboo_id) => {
+export const idToData = (bangboo_id) => {
     return BangbooId2Data[bangboo_id] || null;
 };
-export const bangbooIdToName = (bangboo_id) => {
+export const idToName = (bangboo_id) => {
     return BangbooId2Data[bangboo_id]?.CHS || null;
 };
-export const bangbooIdToSprite = (bangboo_id) => {
+export const idToSprite = (bangboo_id) => {
     return BangbooId2Data[bangboo_id]?.sprite_id || null;
 };
 export const getAllBangbooID = () => {

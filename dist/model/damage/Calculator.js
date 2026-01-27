@@ -1,6 +1,6 @@
 import { runtime, elementType2element, anomalyEnum } from './BuffManager.js';
-import * as prop from '../../lib/convert/property.js';
 import { getMapData } from '../../utils/file.js';
+import { property } from '../../lib/convert.js';
 import { charData } from './avatar.js';
 import _ from 'lodash';
 const subBaseValueData = {
@@ -303,7 +303,7 @@ export class Calculator {
             types = Object.entries(this.avatar.scoreWeight)
                 .reduce((acc, [id, weight]) => {
                 if (weight > 0) {
-                    const type = prop.idToName(id);
+                    const type = property.idToName(id);
                     if (type && subBaseValueData[type]) {
                         acc.push({ type, weight });
                     }
@@ -315,11 +315,11 @@ export class Calculator {
                 .map(({ type }) => type);
         }
         const base = {};
-        types.forEach(t => base[t] = t.includes('百分比') ? this.avatar.base_properties[prop.nameZHToNameEN(t.replace('百分比', ''))] * subBaseValueData[t][0] : subBaseValueData[t][0]);
+        types.forEach(t => base[t] = t.includes('百分比') ? this.avatar.base_properties[property.nameZHToNameEN(t.replace('百分比', ''))] * subBaseValueData[t][0] : subBaseValueData[t][0]);
         logger.debug(logger.red('副词条差异计算变化值：'), base);
         const buffs = types.map(t => ({
             name: t,
-            shortName: prop.nameToShortName3(t),
+            shortName: property.nameToShortName3(t),
             type: t.replace('百分比', ''),
             value: base[t],
             valueBase: subBaseValueData[t][1]
@@ -338,7 +338,7 @@ export class Calculator {
             types = Object.entries(this.avatar.scoreWeight)
                 .reduce((acc, [id, weight]) => {
                 if (weight > 0) {
-                    const type = prop.idToName(id);
+                    const type = property.idToName(id);
                     if (type && mainBaseValueData[type]) {
                         acc.push({ type, weight });
                     }
@@ -350,15 +350,15 @@ export class Calculator {
                 .map(({ type }) => type);
         }
         const base = {};
-        types.forEach(t => base[t] = (t.includes('百分比') || ['异常掌控', '冲击力', '能量自动回复'].includes(t)) ? this.avatar.base_properties[prop.nameZHToNameEN(t.replace('百分比', ''))] * mainBaseValueData[t][0] : mainBaseValueData[t][0]);
+        types.forEach(t => base[t] = (t.includes('百分比') || ['异常掌控', '冲击力', '能量自动回复'].includes(t)) ? this.avatar.base_properties[property.nameZHToNameEN(t.replace('百分比', ''))] * mainBaseValueData[t][0] : mainBaseValueData[t][0]);
         logger.debug(logger.red('主词条差异计算变化值：'), base);
         const buffs = types.map(t => {
             const data = {
                 name: t,
-                shortName: prop.nameToShortName3(t),
+                shortName: property.nameToShortName3(t),
                 type: (t.includes('属性伤害加成') ? '增伤' : t.replace('百分比', '')),
                 value: base[t],
-                element: (t.includes('属性伤害加成') ? prop.nameZHToNameEN(t).replace('DMGBonus', '') : ''),
+                element: (t.includes('属性伤害加成') ? property.nameZHToNameEN(t).replace('DMGBonus', '') : ''),
                 valueBase: mainBaseValueData[t][1]
             };
             if (!data.element)

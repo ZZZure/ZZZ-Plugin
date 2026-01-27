@@ -1,7 +1,7 @@
 import settings from '../settings.js';
 import { getMapData } from '../../utils/file.js';
 const PartnerId2Data = getMapData('PartnerId2Data');
-export const IDToCharName = (id, full = true, en = false) => {
+export const idToName = (id, full = true, en = false) => {
     const data = PartnerId2Data?.[id];
     if (!data)
         return null;
@@ -11,16 +11,16 @@ export const IDToCharName = (id, full = true, en = false) => {
         return data?.['full_name'];
     return data?.['name'];
 };
-export const IDToCharSprite = (id) => {
+export const idToSprite = (id) => {
     const data = PartnerId2Data?.[id];
     if (!data)
         return null;
     return data?.['sprite_id'];
 };
-export const IDToCharData = (id) => {
+export const idToData = (id) => {
     return PartnerId2Data[id] || null;
 };
-export const charNameToID = (name) => {
+export const nameToId = (name) => {
     for (const [id, data] of Object.entries(PartnerId2Data)) {
         if (data['name'] === name)
             return Number(id);
@@ -29,7 +29,7 @@ export const charNameToID = (name) => {
     }
     return null;
 };
-export const charNameToSprite = (name) => {
+export const nameToSprite = (name) => {
     for (const [_id, data] of Object.entries(PartnerId2Data)) {
         if (data['name'] === name)
             return data['sprite_id'];
@@ -54,11 +54,11 @@ export const aliasToName = (_alias) => {
 };
 export const aliasToSprite = (_alias) => {
     const name = aliasToName(_alias);
-    return charNameToSprite(name);
+    return nameToSprite(name);
 };
-export const aliasToID = (name) => {
+export const aliasToId = (name) => {
     const _name = aliasToName(name);
-    const id = charNameToID(_name);
+    const id = nameToId(_name);
     return id;
 };
 export const getAllCharactersID = () => {

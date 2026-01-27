@@ -1,9 +1,9 @@
-import { aliasToID } from '../../lib/convert/char.js';
 import { BuffManager } from './BuffManager.js';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { elementEnum } from './BuffManager.js';
 import { Calculator } from './Calculator.js';
 import { srcPath } from '../../lib/path.js';
+import { char } from '../../lib/convert.js';
 import chokidar from 'chokidar';
 import path from 'path';
 import fs from 'fs';
@@ -47,7 +47,7 @@ function watchFile(path, fnc) {
     });
 }
 async function importChar(charName, isWatch = false) {
-    const id = aliasToID(charName);
+    const id = char.aliasToId(charName);
     if (!id)
         return logger.warn(`未找到角色${charName}的ID`);
     const dir = path.join(damagePath, 'character', charName);
