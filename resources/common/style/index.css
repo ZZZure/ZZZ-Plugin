@@ -147,35 +147,35 @@
   background-image: url("../images/Rarity_X.png");
 }
 
-.property {
+.element-icon {
   aspect-ratio: 1;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
 }
-.property.fire {
-  background-image: url("../images/IconFire.png");
+.element-icon.physical, .element-icon.Physical {
+  background-image: url("../images/element/Physical.png");
 }
-.property.ice {
-  background-image: url("../images/IconIce.png");
+.element-icon.honededge, .element-icon.HonedEdge {
+  background-image: url("../images/element/HonedEdge.png");
 }
-.property.physdmg {
-  background-image: url("../images/IconPhysDmg.png");
+.element-icon.fire, .element-icon.Fire {
+  background-image: url("../images/element/Fire.png");
 }
-.property.thunder {
-  background-image: url("../images/IconThunder.png");
+.element-icon.ice, .element-icon.Ice {
+  background-image: url("../images/element/Ice.png");
 }
-.property.dungeon {
-  background-image: url("../images/IconDungeonBuffEther.png");
+.element-icon.frost, .element-icon.Frost {
+  background-image: url("../images/element/Frost.png");
 }
-.property.frost {
-  background-image: url("../images/IconFrost.png");
+.element-icon.electric, .element-icon.Electric {
+  background-image: url("../images/element/Electric.png");
 }
-.property.auricInk {
-  background-image: url("../images/IconAuricInk.png");
+.element-icon.ether, .element-icon.Ether {
+  background-image: url("../images/element/Ether.png");
 }
-.property.honedEdge {
-  background-image: url("../images/IconHonedEdge.png");
+.element-icon.auricink, .element-icon.AuricInk {
+  background-image: url("../images/element/AuricInk.png");
 }
 
 .prop-icon {
@@ -249,19 +249,19 @@
   background-repeat: no-repeat;
 }
 .pro-icon.anomaly {
-  background-image: url("../images/prop/IconAnomaly.png");
+  background-image: url("../images/profession/IconAnomaly.png");
 }
 .pro-icon.attack {
-  background-image: url("../images/prop/IconAttack.png");
+  background-image: url("../images/profession/IconAttack.png");
 }
 .pro-icon.defense {
-  background-image: url("../images/prop/IconDefence.png");
+  background-image: url("../images/profession/IconDefense.png");
 }
 .pro-icon.stun {
-  background-image: url("../images/prop/IconStun.png");
+  background-image: url("../images/profession/IconStun.png");
 }
 .pro-icon.support {
-  background-image: url("../images/prop/IconSupport.png");
+  background-image: url("../images/profession/IconSupport.png");
 }
 
 .skill-icon {

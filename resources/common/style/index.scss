@@ -16,21 +16,56 @@
 }
 
 .zzz-font {
-  font-family: 'zzz', 'tttgbnumber', 'HYWenHei-55W', system-ui, -apple-system,
-    BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
-    'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family:
+    'zzz',
+    'tttgbnumber',
+    'HYWenHei-55W',
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Open Sans',
+    'Helvetica Neue',
+    sans-serif;
 }
 
 .no-zzz-font {
-  font-family: 'tttgbnumber', 'HYWenHei-55W', system-ui, -apple-system,
-    BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
-    'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family:
+    'tttgbnumber',
+    'HYWenHei-55W',
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Open Sans',
+    'Helvetica Neue',
+    sans-serif;
 
   strong,
   b {
-    font-family: 'zzz', 'tttgbnumber', 'HYWenHei-55W', system-ui, -apple-system,
-      BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
-      'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family:
+      'zzz',
+      'tttgbnumber',
+      'HYWenHei-55W',
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      Oxygen,
+      Ubuntu,
+      Cantarell,
+      'Open Sans',
+      'Helvetica Neue',
+      sans-serif;
   }
 }
 
@@ -162,42 +197,50 @@
   }
 }
 
-.property {
+.element-icon {
   aspect-ratio: 1;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
 
-  &.fire {
-    background-image: url('../images/IconFire.png');
+  &.physical,
+  &.Physical {
+    background-image: url('../images/element/Physical.png');
   }
 
-  &.ice {
-    background-image: url('../images/IconIce.png');
+  &.honededge,
+  &.HonedEdge {
+    background-image: url('../images/element/HonedEdge.png');
   }
 
-  &.physdmg {
-    background-image: url('../images/IconPhysDmg.png');
+  &.fire,
+  &.Fire {
+    background-image: url('../images/element/Fire.png');
   }
 
-  &.thunder {
-    background-image: url('../images/IconThunder.png');
+  &.ice,
+  &.Ice {
+    background-image: url('../images/element/Ice.png');
   }
 
-  &.dungeon {
-    background-image: url('../images/IconDungeonBuffEther.png');
+  &.frost,
+  &.Frost {
+    background-image: url('../images/element/Frost.png');
   }
 
-  &.frost {
-    background-image: url('../images/IconFrost.png');
+  &.electric,
+  &.Electric {
+    background-image: url('../images/element/Electric.png');
   }
 
-  &.auricInk {
-    background-image: url('../images/IconAuricInk.png');
+  &.ether,
+  &.Ether {
+    background-image: url('../images/element/Ether.png');
   }
 
-  &.honedEdge {
-    background-image: url('../images/IconHonedEdge.png');
+  &.auricink,
+  &.AuricInk {
+    background-image: url('../images/element/AuricInk.png');
   }
 }
 
@@ -291,23 +334,23 @@
   background-repeat: no-repeat;
 
   &.anomaly {
-    background-image: url('../images/prop/IconAnomaly.png');
+    background-image: url('../images/profession/IconAnomaly.png');
   }
 
   &.attack {
-    background-image: url('../images/prop/IconAttack.png');
+    background-image: url('../images/profession/IconAttack.png');
   }
 
   &.defense {
-    background-image: url('../images/prop/IconDefence.png');
+    background-image: url('../images/profession/IconDefense.png');
   }
 
   &.stun {
-    background-image: url('../images/prop/IconStun.png');
+    background-image: url('../images/profession/IconStun.png');
   }
 
   &.support {
-    background-image: url('../images/prop/IconSupport.png');
+    background-image: url('../images/profession/IconSupport.png');
   }
 }
 
@@ -382,14 +425,18 @@
       height: 80%;
       background-color: rgb(246, 202, 69);
       margin-right: -0.2em;
-      -webkit-clip-path: polygon($pwidth 0%,
-          100% 0%,
-          calc(100% - $pwidth) 100%,
-          0% 100%);
-      clip-path: polygon($pwidth 0%,
-          100% 0%,
-          calc(100% - $pwidth) 100%,
-          0% 100%);
+      -webkit-clip-path: polygon(
+        $pwidth 0%,
+        100% 0%,
+        calc(100% - $pwidth) 100%,
+        0% 100%
+      );
+      clip-path: polygon(
+        $pwidth 0%,
+        100% 0%,
+        calc(100% - $pwidth) 100%,
+        0% 100%
+      );
     }
   }
 

@@ -140,7 +140,7 @@
   flex-grow: 0;
   flex-shrink: 0;
 }
-.damage .basic .info .char_info .base .property {
+.damage .basic .info .char_info .base .element-icon {
   width: 1em;
   flex-grow: 0;
   flex-shrink: 0;

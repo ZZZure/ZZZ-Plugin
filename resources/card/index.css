@@ -122,7 +122,7 @@
   white-space: nowrap;
   text-align: center;
 }
-.card .list .item .property {
+.card .list .item .element-icon {
   position: absolute;
   top: 0.2em;
   right: 0.1em;

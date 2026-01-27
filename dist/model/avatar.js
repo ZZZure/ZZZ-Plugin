@@ -38,7 +38,7 @@ export class Avatar {
         this.hollow_icon_path = hollow_icon_path;
         this.rank = rank;
         this.is_chosen = is_chosen;
-        this.element_str = element.IDToElement(element_type);
+        this.element_str = element.idToName(element_type);
     }
 }
 export class AvatarIconPaths {
@@ -74,7 +74,7 @@ export class ZZZAvatarBasic {
         this.rarity = rarity;
         this.rank = rank;
         this.is_chosen = is_chosen;
-        this.element_str = element.IDToElement(element_type);
+        this.element_str = element.idToName(element_type);
     }
     async get_assets() {
         const result = await getSquareAvatar(this.id);
@@ -153,7 +153,7 @@ export class ZZZAvatarInfo {
         this.rank = rank;
         this.ranks = ranks && ranks.map(rank => new Rank(rank));
         this.ranks_num = rank;
-        this.element_str = element.IDToElement(element_type, sub_element_type);
+        this.element_str = element.idToName(element_type, sub_element_type);
         this.role_vertical_painting_url = role_vertical_painting_url;
         this.skin_id = this.role_vertical_painting_url?.match?.(/role_vertical_painting_\d+_(\d+).png$/)?.[1] || '';
         this.level_rank = Math.floor(this.level / 10);

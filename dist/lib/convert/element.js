@@ -1,17 +1,13 @@
-const ELEMENT_TYPE = {
-    200: 'physdmg',
-    201: 'fire',
-    202: 'ice',
-    203: 'thunder',
-    205: 'dungeon',
-};
-const SUB_ELEMENT_TYPE = {
-    1: 'frost',
-    2: 'auricInk',
-    4: 'honedEdge',
-};
-export const IDToElement = (id, sub_id) => {
-    if (sub_id && SUB_ELEMENT_TYPE[sub_id])
-        return SUB_ELEMENT_TYPE[sub_id];
-    return ELEMENT_TYPE[id] || 'unknown';
+import { getMapData } from '../../utils/file.js';
+const ElementData = getMapData('ElementData');
+export function idToData(id, sub_id = 0) {
+    id = Number(id);
+    sub_id = Number(sub_id);
+    return ElementData.find(i => i.element_type === id && i.sub_element_type === sub_id) || null;
+}
+export const idToName = (id, sub_id = 0) => {
+    const data = idToData(id, sub_id);
+    if (!data)
+        return '';
+    return data.en_sub;
 };

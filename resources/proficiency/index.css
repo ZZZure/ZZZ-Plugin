@@ -83,7 +83,7 @@
   bottom: 0;
   left: 8em;
 }
-.list .item .content .property {
+.list .item .content .element-icon {
   width: 0.8em;
   position: absolute;
   z-index: 1;

@@ -1,0 +1,74 @@
+[
+  {
+    "element_type": 200,
+    "sub_element_type": 0,
+    "zh": "物理",
+    "zh_sub": "物理",
+    "en": "Physical",
+    "en_sub": "Physical",
+    "property_id": 31503
+  },
+  {
+    "element_type": 200,
+    "sub_element_type": 4,
+    "zh": "物理",
+    "zh_sub": "凛刃",
+    "en": "Physical",
+    "en_sub": "HonedEdge",
+    "property_id": 31503
+  },
+  {
+    "element_type": 201,
+    "sub_element_type": 0,
+    "zh": "火",
+    "zh_sub": "火",
+    "en": "Fire",
+    "en_sub": "Fire",
+    "property_id": 31603
+  },
+  {
+    "element_type": 202,
+    "sub_element_type": 0,
+    "zh": "冰",
+    "zh_sub": "冰",
+    "en": "Ice",
+    "en_sub": "Ice",
+    "property_id": 31703
+  },
+  {
+    "element_type": 202,
+    "sub_element_type": 1,
+    "zh": "冰",
+    "zh_sub": "烈霜",
+    "en": "Ice",
+    "en_sub": "Frost",
+    "property_id": 31703
+  },
+  {
+    "element_type": 203,
+    "sub_element_type": 0,
+    "zh": "电",
+    "zh_sub": "电",
+    "en": "Electric",
+    "en_sub": "Electric",
+    "property_id": 31803
+  },
+  {
+    "element_type": 205,
+    "sub_element_type": 0,
+    "zh": "以太",
+    "zh_sub": "以太",
+    "en": "Ether",
+    "en_sub": "Ether",
+    "property_id": 31903
+  },
+  {
+    "element_type": 205,
+    "sub_element_type": 2,
+    "zh": "以太",
+    "zh_sub": "玄墨",
+    "en": "Ether",
+    "en_sub": "AuricInk",
+    "property_id": 31903
+  }
+]
