@@ -14,8 +14,8 @@
     "watch:src": "nodemon -w src -e js,ts --exec pnpm run build:src",
     "watch:css": "sass resources:resources --watch --no-error-css",
     "check": "tsc --noEmit",
-    "lint": "eslint \"src/**/*.ts\"",
-    "lint:fix": "eslint \"src/**/*.ts\" --fix"
+    "lint": "eslint \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint:fix": "eslint \"src/**/*.ts\" \"src/**/*.js\" --fix"
   },
   "imports": {
     "#interface": "./src/@types/interface.d.ts"

@@ -13,6 +13,9 @@ export default [
       'dist/**',
       'resources/**',
       'src/**/*.d.ts',
+      'src/model/damage/**/模板.js',
+      'src/model/damage/**/模板/*.js',
+      'src/model/damage/map',
     ],
   },
   {
