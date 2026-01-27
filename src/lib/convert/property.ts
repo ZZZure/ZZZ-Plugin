@@ -22,14 +22,6 @@ const prop_id = {
   319: 'dungeonbuffether',
 }
 
-const pro_id = {
-  1: 'attack',
-  2: 'stun',
-  3: 'anomaly',
-  4: 'support',
-  5: 'defense',
-}
-
 /**
  * 获取属性css类名
  * @param _id 属性id

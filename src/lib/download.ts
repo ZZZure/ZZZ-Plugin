@@ -11,7 +11,7 @@ import {
  */
 export const getSquareAvatar = async (charID: string | number) => {
   let result: string | null = ''
-  const sprite = convert.char.IDToCharSprite(charID)
+  const sprite = convert.char.idToSprite(charID)
   if (sprite) {
     const filename = `IconRoleCrop${sprite}.webp`
     result = await downloadHakushFile('ZZZ_UI', 'HAKUSH_ZZZ_SQUARE_AVATAR_PATH', filename)
@@ -32,7 +32,7 @@ export const getSquareAvatar = async (charID: string | number) => {
  * @param charID 角色ID
  */
 export const getSmallSquareAvatar = async (charID: string | number) => {
-  const sprite = convert.char.IDToCharSprite(charID)
+  const sprite = convert.char.idToSprite(charID)
   if (!sprite) return null
   let filename = `IconRoleGeneral${sprite}.png`
   let result: string | null = ''
@@ -58,7 +58,7 @@ export const getSmallSquareAvatar = async (charID: string | number) => {
  */
 export const getSquareBangboo = async (bangbooId: string | number) => {
   let result: string | null = ''
-  const sprite = convert.bangboo.bangbooIdToSprite(bangbooId)
+  const sprite = convert.bangboo.idToSprite(bangbooId)
   if (sprite) {
     const filename = `BangbooGarageRole${sprite}.webp`
     result = await downloadHakushFile(
@@ -89,7 +89,7 @@ export const getSquareBangboo = async (bangbooId: string | number) => {
  * @param id 武器ID
  */
 export const getWeaponImage = async (id: string | number) => {
-  const name = convert.weapon.IDToWeaponFileName(id)
+  const name = convert.weapon.idToFileName(id)
   if (!name) return null
   let result: string | null = ''
   const filename = `${name}_High.png`
@@ -111,7 +111,7 @@ export const getWeaponImage = async (id: string | number) => {
  * @param skin_id 皮肤ID
  */
 export const getRoleImage = async (id: string | number, skin_id?: string) => {
-  const sprite = convert.char.IDToCharSprite(id)
+  const sprite = convert.char.idToSprite(id)
   if (!sprite) return null
   let result: string | null = ''
   let filename = `IconRole${sprite}.png`
@@ -134,7 +134,7 @@ export const getRoleImage = async (id: string | number, skin_id?: string) => {
  * @param id 角色ID
  */
 export const getRoleCircleImage = async (id: string | number) => {
-  const sprite = convert.char.IDToCharSprite(id)
+  const sprite = convert.char.idToSprite(id)
   if (!sprite) return null
   let result: string | null = ''
   let filename = `IconRoleCircle${sprite}.png`
@@ -155,7 +155,7 @@ export const getRoleCircleImage = async (id: string | number) => {
  * @param suitId 套装ID
  */
 export const getSuitImage = async (suitId: string | number) => {
-  const suitName = convert.equip.equipIdToSprite(suitId)
+  const suitName = convert.equip.idToSprite(suitId)
   if (!suitName) return null
   const filename = `${suitName}.png`
   let result: string | null = ''
@@ -172,7 +172,7 @@ export const getSuitImage = async (suitId: string | number) => {
  * @param suitId 套装ID
  */
 export const getSuit3DImage = async (suitId: string | number) => {
-  const suitName = convert.equip.equipIdToSprite(suitId)
+  const suitName = convert.equip.idToSprite(suitId)
   const filename = `${suitName}_3d.png`
   const result = await downloadResourceImage(
     'suit_3d',

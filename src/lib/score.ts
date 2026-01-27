@@ -1,7 +1,7 @@
 import type { Weight } from '#interface'
-import { getMapData } from '../utils/file.js'
-import { IDToCharData } from './convert/char.js'
 import { nameToId } from './convert/property.js'
+import { getMapData } from '../utils/file.js'
+import { char } from './convert.js'
 
 export const baseValueData = getMapData('EquipBaseValue')
 
@@ -31,7 +31,7 @@ export function formatScoreWeight(
       continue
     let propID
     if (charID && propName === '属性伤害加成') {
-      propID = elementType2propId(+IDToCharData(charID)?.ElementType)
+      propID = elementType2propId(+char.idToData(charID)?.ElementType)
     } else {
       propID = +propName || nameToId(propName)
     }

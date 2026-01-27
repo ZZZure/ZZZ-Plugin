@@ -9,7 +9,7 @@ const PartnerId2Data = getMapData('PartnerId2Data')
  * @param full 显示全称
  * @param en 是否为英文
  */
-export const IDToCharName = (id: string | number, full: boolean = true, en: boolean = false): string | null => {
+export const idToName = (id: string | number, full: boolean = true, en: boolean = false): string | null => {
   const data = PartnerId2Data?.[id]
   if (!data) return null
   if (en) return data?.['en_name']
@@ -20,7 +20,7 @@ export const IDToCharName = (id: string | number, full: boolean = true, en: bool
 /**
  * 角色ID转图片名
  */
-export const IDToCharSprite = (id: string | number): string | null => {
+export const idToSprite = (id: string | number): string | null => {
   const data = PartnerId2Data?.[id]
   if (!data) return null
   return data?.['sprite_id']
@@ -29,14 +29,14 @@ export const IDToCharSprite = (id: string | number): string | null => {
 /**
  * 角色数据
  */
-export const IDToCharData = (id: string | number) => {
+export const idToData = (id: string | number) => {
   return PartnerId2Data[id] || null
 }
 
 /**
  * 角色名转ID
  */
-export const charNameToID = (name: string | null): number | null => {
+export const nameToId = (name: string | null): number | null => {
   for (const [id, data] of Object.entries(PartnerId2Data)) {
     if (data['name'] === name) return Number(id)
     if (data['full_name'] && data['full_name'] === name) return Number(id)
@@ -47,7 +47,7 @@ export const charNameToID = (name: string | null): number | null => {
 /**
  * 角色名转图片名
  */
-export const charNameToSprite = (name: string | null): string | null => {
+export const nameToSprite = (name: string | null): string | null => {
   for (const [_id, data] of Object.entries(PartnerId2Data)) {
     if (data['name'] === name) return data['sprite_id']
   }
@@ -76,15 +76,15 @@ export const aliasToName = (_alias: string): string | null => {
  */
 export const aliasToSprite = (_alias: any): string | null => {
   const name = aliasToName(_alias)
-  return charNameToSprite(name)
+  return nameToSprite(name)
 }
 
 /**
  * 别称转ID
  */
-export const aliasToID = (name: any): number | null => {
+export const aliasToId = (name: any): number | null => {
   const _name = aliasToName(name)
-  const id = charNameToID(_name)
+  const id = nameToId(_name)
   return id
 }
 

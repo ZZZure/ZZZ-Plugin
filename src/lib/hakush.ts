@@ -4,7 +4,7 @@ import * as convert from './convert.js'
 
 export const getHakushCharacterData = async (alias: string) => {
   const name = convert.char.aliasToName(alias)
-  const id = convert.char.charNameToID(name)
+  const id = convert.char.nameToId(name)
   if (!id) return null
   const data = await getHakushCharacter(id)
   if (!data) return null

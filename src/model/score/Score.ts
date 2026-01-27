@@ -3,15 +3,15 @@ import type { Equip } from '../equip.ts'
 import { baseValueData, formatScoreWeight } from '../../lib/score.js'
 import { rarityEnum, professionEnum } from '../damage/BuffManager.js'
 import { idToName } from '../../lib/convert/property.js'
-import { aliasToID } from '../../lib/convert/char.js'
 import { getMapData } from '../../utils/file.js'
 import { scoreFnc } from '../damage/avatar.js'
+import { char } from '../../lib/convert.js'
 
 export type Weight = { [propID: string]: number }
 
 const equipScore = getMapData('EquipScore')
 for (const charName in equipScore) {
-  const charID = +charName || aliasToID(charName)
+  const charID = +charName || char.aliasToId(charName)
   if (!charID) {
     logger.warn(`驱动盘评分：未找到角色${charName}的角色ID`)
     delete equipScore[charName]

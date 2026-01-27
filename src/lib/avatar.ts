@@ -152,7 +152,7 @@ export const getPanelListOrigin = (uid: string) => {
  */
 export const getPanel = (uid: string, name: string) => {
   // 通过名称（包括别名）获取角色 ID
-  const id = char.aliasToID(name)
+  const id = char.aliasToId(name)
   if (!id) return false
   const _data = getPanelData(uid)
   // 获取所有面板数据
@@ -168,7 +168,7 @@ export const getPanel = (uid: string, name: string) => {
  * @returns false name对应角色不存在 | null 无面板数据 | Mys.Avatar 面板数据
  */
 export const getPanelOrigin = (uid: string, name: string) => {
-  const id = char.aliasToID(name)
+  const id = char.aliasToId(name)
   if (!id) return false
   const data = getPanelData(uid)
   // 通过 ID 获取角色数据
