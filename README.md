@@ -45,9 +45,9 @@ git clone --depth=1 https://gitee.com/bietiaop/ZZZ-Plugin.git ./plugins/ZZZ-Plug
 
 ## 自定义评分权重、伤害计算
 
-**自定义评分权重**请查看[此教程](https://github.com/ZZZure/ZZZ-Plugin/blob/dev/src/model/damage/README.md)
+**自定义评分权重**请查看[此教程](https://github.com/ZZZure/ZZZ-Plugin/blob/dev/src/model/score/README.md)
 
-**自定义伤害计算**请查看[此教程](https://github.com/ZZZure/ZZZ-Plugin/blob/dev/src/model/score/README.md)
+**自定义伤害计算**请查看[此教程](https://github.com/ZZZure/ZZZ-Plugin/blob/dev/src/model/damage/README.md)
 
 ## 攻略、图鉴
 
@@ -66,7 +66,7 @@ git clone --depth=1 https://gitee.com/bietiaop/ZZZ-Plugin.git ./plugins/ZZZ-Plug
 
 将你下载的面板图放在`zzz插件目录/resources/images/panel/[角色名称]/`文件夹下。若文件夹不存在请自行创建。
 
-**角色名称**可以是[米游社绳网情报站](https://baike.mihoyo.com/zzz/wiki/channel/map/2/43)中显示的代理人`简称`或`全称`，也可以是[插件数据PartnerId2Data](resources\map\PartnerId2Data.json)中的`name`或`full_name`。四个路径依序检测，取第一个存在的路径中的面板图
+**角色名称**可以是[米游社绳网情报站](https://baike.mihoyo.com/zzz/wiki/channel/map/2/43)中显示的代理人`简称`或`全称`，也可以是[插件数据PartnerId2Data](resources/map/PartnerId2Data.json)中的`name`或`full_name`。四个路径依序检测，取第一个存在的路径中的面板图
 
 若要查看或者批量删除自定义面板图，请发送指令 `%帮助` 进行查看如何使用相关指令。
 
@@ -112,27 +112,40 @@ git clone --depth=1 https://gitee.com/bietiaop/ZZZ-Plugin.git ./plugins/ZZZ-Plug
 
 # 贡献
 
-请先 `fork` 本仓库 **dev分支**，修改 **dev分支** 并测试完成后提交PR。
+请先 `fork`或切换至 本仓库 **dev分支**，修改 **dev分支** 并测试完成后提交PR。
 
 **请注意：**
 
 > [!important]
-> 请勿直接修改 **main** 分支的 dist 等编译产物；请基于 dev 分支修改并提交 PR，CI 会自动编译并同步到 main。
+> 请勿直接修改 **main** 分支的 dist 等编译产物；请基于 dev 分支修改并提交 PR，CI 会自动编译ts并同步到 main。
 > 
-> 请勿直接修改 **resources** 下的 css 编译产物；请基于 dev 分支对应的 scss 文件修改并提交。
+> 请勿直接修改 **resources** 下的 css 编译产物；请基于 dev 分支对应的 scss 文件修改并提交，CI 会自动编译scss并同步到 main。
 
-* 提交前请确保本地已运行 `pnpm build`，能够成功通过编译且无报错
+## 开发规范
 
-* 代码风格请参考 [eslint.config.mjs](./eslint.config.mjs)，可使用 `pnpm lint` 进行自检，`pnpm lint:fix` 自动修复部分问题
+* 提交前请确保本地已运行 `pnpm check`，能够成功通过且无报错
 
-* 在宿主环境下（如将插件安装于Miao-Yunzai中进行开发），[tsconfig.json](./tsconfig.json)可确保ts环境正确并正常编译：通过 `pnpm build` 进行编译，或使用 `pnpm watch` 进行监听编译
+* 代码风格请参考 [eslint.config.mjs](./eslint.config.mjs)
+  * 代码自检：`pnpm lint`
+  * 自动修复：`pnpm lint:fix`
 
-* 在脱离宿主环境下（如独立开发或在github actions中编译），可使用 [tsconfig.src.json](./tsconfig.src.json) 进行编译：通过 `pnpm build:src` 进行编译，或使用 `pnpm watch:src` 进行监听编译
+## TS环境、编译
 
-* SCSS：项目的 scss 文件集中在 [resources](./resources/) 的子目录，开发时请修改 scss，请勿提交生成的 css
+* 在宿主环境下（如将插件安装于Miao-Yunzai中进行开发），可使用[tsconfig.json](./tsconfig.json)作为ts环境配置
+  * 全部编译：`pnpm build`
+  * 监听编译：`pnpm watch`
+
+* 在脱离宿主环境下（如独立开发或在github actions中编译），可使用 [tsconfig.src.json](./tsconfig.src.json) 作为ts环境配置
+  * 全部编译：`pnpm build:src`
+  * 监听编译：`pnpm watch:src`
+
+## SCSS编译
+
+* 本项目的样式使用 scss 编写
+
+* 项目的 scss 文件集中在 [resources](./resources/) 的子目录，开发时请编写/修改 scss，请勿提交 css
   * 全部编译：`pnpm build:css`
-  * 全部监听：`pnpm watch:css`
-  * CI 会在同步到 main 时执行 `pnpm build:css`（忽略编译异常）
+  * 监听编译：`pnpm watch:css`
 
 # 鸣谢
 
