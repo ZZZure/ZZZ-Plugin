@@ -16,8 +16,17 @@ export function idToData(id: string | number, sub_id: string | number = 0) {
 /**
  * 获取元素名（en_sub）
  */
-export const idToName = (id: string | number, sub_id: string | number = 0) => {
+export function idToName(id: string | number, sub_id: string | number = 0) {
   const data = idToData(id, sub_id)
   if (!data) return ''
   return data.en_sub
+}
+
+/**
+ * ID转属性ID
+ */
+export function idToPropertyId(id: string | number) {
+  const data = idToData(id)
+  if (!data) return null
+  return data.property_id
 }
