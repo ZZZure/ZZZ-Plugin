@@ -15,7 +15,6 @@
     "incremental": true,
     "tsBuildInfoFile": "./dist/.tsbuildinfo",
     "outDir": "./dist",
-    "baseUrl": "./src",
     "rootDir": "../../",
     "typeRoots": [
       "./src/@types",
