@@ -55,6 +55,7 @@ export class GachaLog extends ZZZPlugin {
     ].join('\n')
     await this.reply(reply_msg)
   }
+
   async startGachaLog() {
     const allowGroup = _.get(settings.getConfig('gacha'), 'allow_group', false)
     const whiteList = _.get(settings.getConfig('gacha'), 'white_list', []) as number[]

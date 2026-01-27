@@ -336,5 +336,13 @@ export const anaylizeGachaLog = async (uid: string) => {
       emoji,
     })
   }
+  const order = ['独家频段', '独家重映', '音擎频段', '音擎回响', '常驻频段', '邦布频段']
+  result.sort((a, b) => {
+    const ai = order.indexOf(a.name)
+    const bi = order.indexOf(b.name)
+    const aIdx = ai === -1 ? order.length : ai
+    const bIdx = bi === -1 ? order.length : bi
+    return aIdx - bIdx
+  })
   return result
 }

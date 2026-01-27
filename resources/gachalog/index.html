@@ -8,7 +8,7 @@
 <div class="card">
   {{include sys.playerInfo}}
   {{each data item i}}
-  <div class="title t{{i+1}}">
+  <div class="title t{{((i+1) / 2).toFixed(0)}}">
     <div class="info">
       <div class="type">
         <div class="label">{{item.name}}</div>

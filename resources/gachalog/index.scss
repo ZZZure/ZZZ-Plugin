@@ -13,7 +13,7 @@
     padding: 0.7em 2.3em 0.7em 3.7em;
     display: flex;
     align-items: center;
-    @for $i from 1 through 6 {
+    @for $i from 1 through 3 {
       &.t#{$i} {
         border-image-source: url('./images/bg#{$i}.png');
       }
