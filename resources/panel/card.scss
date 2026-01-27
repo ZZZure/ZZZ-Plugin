@@ -399,6 +399,7 @@
       color: transparent;
     }
   }
+
   .b,
   .B {
     .comment {
@@ -412,6 +413,7 @@
       color: transparent;
     }
   }
+
   .a,
   .A {
     .comment {
@@ -425,6 +427,7 @@
       color: transparent;
     }
   }
+
   .s,
   .S {
     .comment {
@@ -438,6 +441,7 @@
       color: transparent;
     }
   }
+
   .ss,
   .SS {
     .comment {
@@ -451,6 +455,7 @@
       color: transparent;
     }
   }
+
   .sss,
   .SSS {
     .comment {
@@ -464,6 +469,7 @@
       color: transparent;
     }
   }
+
   .ace,
   .ACE,
   .max,
@@ -498,6 +504,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+
         .comment-box {
           font-size: 1.2em;
           width: 2.8em;
@@ -512,12 +519,14 @@
           position: relative;
           z-index: 1;
         }
+
         .value {
           border: 0.1em solid rgba(155, 155, 155);
           border-left: none;
           padding: 0.1em 0.3em;
           margin-left: -0.1em;
           border-radius: 0 0.4em 0.4em 0;
+
           .subt {
             font-size: 0.8em;
           }
@@ -566,8 +575,8 @@
           &:nth-child(7) {
             border-radius: 0 0.4em 0 0;
           }
-          
-          &:nth-child(3n){
+
+          &:nth-child(3n) {
             border: #707070 solid;
             border-width: 0.1em 0.1em 0 0.1em;
           }
@@ -632,6 +641,7 @@
     align-items: stretch;
     margin-top: 1em;
     overflow: hidden;
+
     .box {
       $size: 3em;
       border-image-source: url('./images/equip_bg.png');
@@ -732,6 +742,7 @@
         gap: 0.2em;
         font-size: 0.9em;
         align-items: flex-end;
+
         .value {
           font-size: 0.9em;
           background: linear-gradient(
@@ -748,6 +759,7 @@
       .property-list {
         padding: 0 0.5em;
         overflow: hidden;
+
         .properties {
           display: flex;
           align-items: center;
@@ -769,6 +781,7 @@
             gap: 0.1em;
             flex-grow: 0;
             flex-shrink: 0;
+
             span {
               // 箭头样式
               width: 0.3em;
@@ -789,19 +802,24 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             opacity: 1;
+
             &.hit0 {
               opacity: 0.6;
             }
+
             &.hit25 {
               opacity: 0.8;
             }
+
             &.hit50 {
               opacity: 1;
             }
+
             &.hit75 {
               opacity: 1;
               color: rgb(238, 207, 139);
             }
+
             &.hit100 {
               opacity: 1;
               color: rgb(249, 189, 64);
@@ -816,17 +834,20 @@
 
           &.main {
             background-color: rgb(65, 147, 237);
+
             .prop-icon {
               width: 1.2em;
               margin-bottom: 0.2em;
               filter: drop-shadow(0 0 0.4em rgba(0, 0, 0, 0.3));
             }
+
             .label {
               color: rgb(255, 255, 255);
               text-shadow: 0 0 0.4em rgba(0, 0, 0, 0.3);
               font-size: 0.8em;
               opacity: 1;
             }
+
             .value {
               color: rgb(255, 255, 255);
               text-shadow: 0 0 0.4em rgba(0, 0, 0, 0.3);
@@ -864,12 +885,13 @@
     .dmg-tr {
       display: grid;
       border-bottom: 0.1em solid rgba(255, 255, 255, 0.2);
-  
+
       &:first-child {
         font-size: 1.1em;
         background: rgba(0, 0, 0, 0.2);
         text-shadow: 0 0 0.2em rgba(0, 0, 0, 0.6);
         color: rgb(206, 190, 149);
+
         .dmg-td {
           text-align: center !important;
           background: none !important;
@@ -891,6 +913,7 @@
       grid-template-columns: 1fr !important;
       padding: 0.3em !important;
       color: #bbb !important;
+
       span {
         color: #fff !important;
       }
@@ -901,10 +924,12 @@
       font-size: 0.9em;
       border-right: 0.1em solid rgba(255, 255, 255, 0.2);
       overflow: hidden;
+
       &:nth-child(2) {
         background: rgba(0, 0, 0, 0.2);
         color: rgb(206, 190, 149);
       }
+
       &:last-child {
         border-right: none;
       }

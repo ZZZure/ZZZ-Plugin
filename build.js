@@ -1,8 +1,8 @@
 import { execSync } from 'child_process'
 import { fileURLToPath } from 'url'
+import crypto from 'crypto'
 import path from 'path'
 import fs from 'fs'
-import crypto from 'crypto'
 
 const pluginName = path.basename(path.dirname(fileURLToPath(import.meta.url)))
 

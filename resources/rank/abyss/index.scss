@@ -191,7 +191,9 @@ body {
               width: 100%;
               position: relative;
               border-radius: 0.5em;
-              box-shadow: 0 0 0 0.12em black, 0 0 0 0.24em #333534;
+              box-shadow:
+                0 0 0 0.12em black,
+                0 0 0 0.24em #333534;
               > * {
                 position: inherit;
                 z-index: 1;
@@ -298,12 +300,12 @@ body {
     display: flex;
     .notes {
       margin: 0 2em;
-      
+
       li {
         margin: 0.3em 0;
         color: #979797;
       }
-      
+
       .command {
         color: rgb(255, 215, 0);
         padding: 0 0.3em;

@@ -2,7 +2,7 @@
   padding-top: 0.8em;
   overflow: hidden;
   position: relative;
- 
+
   .uid {
     font-size: 0.6em;
     text-align: center;
@@ -385,8 +385,8 @@
     position: relative;
     z-index: 5;
   }
-  
-  .title:nth-child(n+2) {
+
+  .title:nth-child(n + 2) {
     padding-top: 0.5em;
   }
 
@@ -447,7 +447,6 @@
 
   /* 伤害统计 */
   .damage-list {
-
     .column3 {
       grid-template-columns: 0.28fr 2fr 2fr;
     }
@@ -457,7 +456,6 @@
     }
 
     .dmg-tr {
-
       &.current {
         background: rgb(120, 104, 73);
 
@@ -531,7 +529,7 @@
       &.zero {
         background-color: #222;
       }
-  
+
       &:first-child {
         background: rgba(0, 0, 0, 0.2);
         color: rgb(206, 190, 149);
@@ -544,7 +542,6 @@
       &.negative {
         background-color: rgb(22, 65, 33);
       }
-
     }
   }
 }

@@ -110,7 +110,9 @@
       border-radius: 0.6em;
       overflow: hidden;
       border: 0.1em solid #343434;
-      box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.3), 0.2em 0.2em 0 rgb(0, 0, 0);
+      box-shadow:
+        0 0 0.5em rgba(0, 0, 0, 0.3),
+        0.2em 0.2em 0 rgb(0, 0, 0);
       flex-shrink: 0;
       flex-grow: 0;
       &::before {
@@ -215,7 +217,9 @@
           width: 100%;
           position: relative;
           border-radius: 0.5em;
-          box-shadow: 0 0 0 0.12em black, 0 0 0 0.24em #333534;
+          box-shadow:
+            0 0 0 0.12em black,
+            0 0 0 0.24em #333534;
           > * {
             position: inherit;
             z-index: 1;
