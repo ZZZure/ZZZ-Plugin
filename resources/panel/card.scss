@@ -98,7 +98,7 @@
         width: 140%;
         position: relative;
         right: 20%;
-        padding: 0.3em 0.2em;
+        padding: 0.3em 0.1em;
         padding-right: 20%;
         padding-left: 8%;
         border-image-slice: 0 30 0 40 fill;
@@ -148,7 +148,7 @@
 
           .role_ranks {
             display: flex;
-            gap: 0.1em;
+            gap: 0.15em;
 
             span {
               width: 1.2em;
@@ -178,10 +178,9 @@
       }
 
       .property_info {
-        background-color: rgb(47, 47, 47);
+        background-color: rgb(38 38 38);
         border-left: 0.1em solid rgb(0, 0, 0);
-        padding-top: 0.2em;
-        background: url('./images/BgFrame01.png') center / 150% no-repeat;
+        padding-top: 0.15em;
 
         .title {
           font-size: 0.6em;
@@ -208,7 +207,8 @@
               background-color: rgba(221, 224, 221, 0.25);
             }
 
-            .prop-icon {
+            .prop-icon,
+            .element-icon {
               width: 1em;
               flex-grow: 0;
               flex-shrink: 0;

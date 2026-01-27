@@ -191,6 +191,7 @@ export class ZZZAvatarInfo {
             penratio: this.getProperty('穿透率'),
             sprecover: this.getProperty('能量自动回复'),
             adrenalineaccumulate: this.getProperty('闪能自动累积'),
+            dmgbonus: this.properties.find(property => property.property_id == element.idToPropertyId(this.element_type)),
         };
         return data;
     }

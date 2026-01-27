@@ -6,7 +6,7 @@
     "zh_sub": "物理",
     "en": "Physical",
     "en_sub": "Physical",
-    "property_id": 31503
+    "property_id": 315
   },
   {
     "element_type": 200,
@@ -15,7 +15,7 @@
     "zh_sub": "凛刃",
     "en": "Physical",
     "en_sub": "HonedEdge",
-    "property_id": 31503
+    "property_id": 315
   },
   {
     "element_type": 201,
@@ -24,7 +24,7 @@
     "zh_sub": "火",
     "en": "Fire",
     "en_sub": "Fire",
-    "property_id": 31603
+    "property_id": 316
   },
   {
     "element_type": 202,
@@ -33,7 +33,7 @@
     "zh_sub": "冰",
     "en": "Ice",
     "en_sub": "Ice",
-    "property_id": 31703
+    "property_id": 317
   },
   {
     "element_type": 202,
@@ -42,7 +42,7 @@
     "zh_sub": "烈霜",
     "en": "Ice",
     "en_sub": "Frost",
-    "property_id": 31703
+    "property_id": 317
   },
   {
     "element_type": 203,
@@ -51,7 +51,7 @@
     "zh_sub": "电",
     "en": "Electric",
     "en_sub": "Electric",
-    "property_id": 31803
+    "property_id": 318
   },
   {
     "element_type": 205,
@@ -60,7 +60,7 @@
     "zh_sub": "以太",
     "en": "Ether",
     "en_sub": "Ether",
-    "property_id": 31903
+    "property_id": 319
   },
   {
     "element_type": 205,
@@ -69,6 +69,6 @@
     "zh_sub": "玄墨",
     "en": "Ether",
     "en_sub": "AuricInk",
-    "property_id": 31903
+    "property_id": 319
   }
 ]

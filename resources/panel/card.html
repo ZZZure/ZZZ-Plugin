@@ -104,6 +104,13 @@
             <div class="value">{{basic_properties.sprecover.final}}</div>
           </div>
           {{/if}}
+          {{if basic_properties.dmgbonus}}
+          <div class="properties">
+            <div class="element-icon {{charData.element_str}}"></div>
+            <div class="label {{charData.get_label(basic_properties.dmgbonus.property_id + '03')}}">{{basic_properties.dmgbonus.property_name}}</div>
+            <div class="value">{{basic_properties.dmgbonus.final}}</div>
+          </div>
+          {{/if}}
         </div>
       </div>
       <div class="weapon_info">
