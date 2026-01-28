@@ -28,6 +28,7 @@ export class VoidFrontBattle extends ZZZPlugin {
     })
     this.isGroupRankAllowed = isGroupRankAllowed
   }
+
   async voidFrontBattle() {
     const { api, deviceFp } = await this.getAPI()
     await this.getPlayerInfo()
@@ -83,9 +84,14 @@ export class VoidFrontBattle extends ZZZPlugin {
     }
     await this.render("voidFrontBattle/index.html", finalData, this)
   }
+
 }
 
-function processVoidFrontBattleData(voidFrontBattle: Mys.VoidFrontBattleDetail) {
+function processVoidFrontBattleData(
+  voidFrontBattle: Mys.VoidFrontBattleDetail & {
+    [key: string]: any
+  }
+) {
   const rankPercent = voidFrontBattle.void_front_battle_abstract_info_brief.rank_percent / 100
   if (rankPercent < 1) {
     voidFrontBattle.rankBg = 1
@@ -114,14 +120,5 @@ function processVoidFrontBattleData(voidFrontBattle: Mys.VoidFrontBattleDetail) 
     const pad = (num: number) => num.toString().padStart(2, "0")
     return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`
   }
-  voidFrontBattle.void_front_battle_abstract_info_brief.formatted_end_time =
-    voidFrontBattle.formatTimestamp(voidFrontBattle.void_front_battle_abstract_info_brief.end_ts)
-  voidFrontBattle.boss_challenge_record.main_challenge_record.formatted_challenge_time =
-    voidFrontBattle.formatTime(
-      voidFrontBattle.boss_challenge_record.main_challenge_record.challenge_time,
-    )
-  voidFrontBattle.main_challenge_record_list.forEach(record => {
-    record.formatted_challenge_time = voidFrontBattle.formatTime!(record.challenge_time)
-  })
   return voidFrontBattle
 }

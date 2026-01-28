@@ -7,7 +7,7 @@
   <div class="tips">
     <p>
       统计周期
-      截止时间：{{voidFrontBattle.void_front_battle_abstract_info_brief.formatted_end_time}}
+      截止时间：{{voidFrontBattle.formatTimestamp(voidFrontBattle.void_front_battle_abstract_info_brief.end_ts)}}
     </p>
   </div>
 
@@ -70,7 +70,7 @@
         <!-- 第三行：通关时间 -->
         <div class="boss-row boss-time-row">
           <div class="challenge-time">
-            通关时间：{{bossChallenge.main_challenge_record.formatted_challenge_time}}
+            通关时间：{{voidFrontBattle.formatTime(voidFrontBattle.boss_challenge_record.main_challenge_record.challenge_time)}}
           </div>
         </div>
 
@@ -206,7 +206,7 @@
 
         <!-- 第三行：通关时间 -->
         <div class="boss-row boss-time-row">
-          <div class="challenge-time">通关时间：{{stageItem.formatted_challenge_time}}</div>
+          <div class="challenge-time">通关时间：{{voidFrontBattle.formatTime(stageItem.challenge_time)}}</div>
         </div>
 
         <!-- 第四行：角色和邦布信息 -->
