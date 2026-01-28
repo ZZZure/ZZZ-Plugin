@@ -157,6 +157,7 @@
         display: flex;
         justify-content: flex-end;
         align-items: center;
+        z-index: 0;
 
         img {
           height: 100%;
@@ -164,7 +165,19 @@
           max-width: 50%;
           object-fit: contain;
           display: block;
-          opacity: 0.8;
+          transform: translateX(-8%);
+          -webkit-mask-image:
+            linear-gradient(to left, transparent 0%, rgba(0, 0, 0, 0.4) 10%, rgba(0, 0, 0, 0.8) 20%, #000 70%),
+            linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.4) 10%, rgba(0, 0, 0, 0.8) 20%, #000 70%),
+            linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.4) 10%, rgba(0, 0, 0, 0.8) 20%, #000 70%),
+            linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 0.4) 10%, rgba(0, 0, 0, 0.8) 20%, #000 70%);
+          mask-image:
+            linear-gradient(to left, transparent 0%, rgba(0, 0, 0, 0.4) 10%, rgba(0, 0, 0, 0.8) 20%, #000 70%),
+            linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.4) 10%, rgba(0, 0, 0, 0.8) 20%, #000 70%),
+            linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.4) 10%, rgba(0, 0, 0, 0.8) 20%, #000 70%),
+            linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 0.4) 10%, rgba(0, 0, 0, 0.8) 20%, #000 70%);
+          -webkit-mask-composite: multiply, multiply, multiply;
+          mask-composite: intersect, intersect, intersect;
         }
       }
     }
