@@ -19,7 +19,7 @@ export default class ZZZApiTool {
   hostPublicData: string
   hostBbs: string = ''
   zzzUrlMap: {
-    [key in Exclude<keyof Mys.KeyValue, 'zzzGacha_Record'>]: {
+    [key in Exclude<keyof Mys.KeyValue, 'zzzGacha_Record' | 'zzzVoidFrontBattleDetail'>]: {
       url: string
       query: string
     }
@@ -202,7 +202,7 @@ export default class ZZZApiTool {
               query: `lang=zh-cn&uid=${this.uid}&region=${this.server}&gacha_type=${data.type}&end_id=${data.endId}`,
             }
           }),
-        zzzVoidFrontBattle: {
+        zzzVoidFrontBattleDetail: {
           url: `${this.hostRecord}event/game_record_zzz/api/zzz/void_front_battle_detail`,
           query: `lang=zh-cn&uid=${this.uid}&region=${this.server}&void_front_id=${data.void_front_id}`,
         },

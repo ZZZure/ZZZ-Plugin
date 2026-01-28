@@ -1,14 +1,13 @@
-export type * from './yunzai/global.d.ts'
-export type * from './yunzai/message.d.ts'
-export type * from '../model/damage/avatar.ts'
-export type * from '../model/damage/BuffManager.ts'
-export type * from '../model/damage/Calculator.ts'
-export type * from '../model/score/Score.ts'
-export type * from '../model/avatar.ts'
+export type * from "./yunzai/global.d.ts"
+export type * from "./yunzai/message.d.ts"
+export type * from "../model/damage/avatar.ts"
+export type * from "../model/damage/BuffManager.ts"
+export type * from "../model/damage/Calculator.ts"
+export type * from "../model/score/Score.ts"
+export type * from "../model/avatar.ts"
 
 /** 插件配置 */
 export namespace Config {
-
   export interface KeyValue {
     alias: alias
     config: config
@@ -84,6 +83,10 @@ export namespace Config {
     card: number
     /** 深渊 */
     abyss: number
+    /** 危局 */
+    deadly: number
+    /** 临界推演 */
+    voidFrontBattle: number
     /** 抽卡 */
     gachalog: number
     /** 攻略 */
@@ -131,27 +134,25 @@ export namespace Config {
     /** 黑名单群组 */
     black_list: number[]
   }
-
 }
 
 /** 插件数据 */
 export namespace ZZZ {
-
   /** 玩家信息 */
   export interface playerCard {
     avatar: string
-    player: Mys.User['list'][number]
+    player: Mys.User["list"][number]
   }
 
   /** 插件data数据 */
   export interface DBMap {
     gacha: {
-      音擎频段: Mys.Gacha['list']
-      音擎回响: Mys.Gacha['list']
-      独家频段: Mys.Gacha['list']
-      独家重映: Mys.Gacha['list']
-      常驻频段: Mys.Gacha['list']
-      邦布频段: Mys.Gacha['list']
+      音擎频段: Mys.Gacha["list"]
+      音擎回响: Mys.Gacha["list"]
+      独家频段: Mys.Gacha["list"]
+      独家重映: Mys.Gacha["list"]
+      常驻频段: Mys.Gacha["list"]
+      邦布频段: Mys.Gacha["list"]
     }
     panel: Mys.Avatar[]
     monthly: Mys.Monthly[]
@@ -163,13 +164,15 @@ export namespace ZZZ {
       player: ZZZ.playerCard
       result: Mys.Deadly
     }
+    voidFrontBattle: {
+      player: ZZZ.playerCard
+      result: Mys.VoidFrontBattleDetail
+    }
   }
-
 }
 
 /** mys接口数据 */
 export namespace Mys {
-
   export interface KeyValue {
     zzzAvatarList: AvatarList
     zzzAvatarInfo: AvatarInfo
@@ -185,12 +188,16 @@ export namespace Mys {
     zzzDeadly: Deadly
     zzzDeadlyPeriod: Deadly
     zzzVoidFrontBattleAbstractInfo: VoidFrontBattleAbstractInfo
+    zzzVoidFrontBattleDetail: VoidFrontBattleDetail
   }
 
   /** 米游社UrlType */
   export type UrlType =
     | (keyof Mys.KeyValue & {})
-    | 'zzzVoidFrontBattle' | 'getFp' | 'zzzAuthKey' | 'deviceLogin' | 'saveDevice'
+    | "getFp"
+    | "zzzAuthKey"
+    | "deviceLogin"
+    | "saveDevice"
 
   /** 面板角色列表 */
   export interface AvatarList {
@@ -698,7 +705,7 @@ export namespace Mys {
         second: number
       }
       item_name?: string
-      rarity?: 'S' | 'A' | 'B'
+      rarity?: "S" | "A" | "B"
     }[]
     region: string
     region_time_zone: number
@@ -866,11 +873,141 @@ export namespace Mys {
     has_detail_record: boolean
   }
 
+  /** 临界推演详细信息 */
+  export interface VoidFrontBattleDetail {
+    void_front_battle_abstract_info_brief: {
+      void_front_id: number
+      end_ts_over_42_days: boolean
+      end_ts: number
+      has_ending_record: boolean
+      ending_record_name: string
+      ending_record_bg_pic: string
+      total_score: number
+      rank_percent: number
+      max_score: number
+      left_ts: number
+      ending_record_id: number
+      formatted_end_time?: string
+    }
+    boss_challenge_record: {
+      boss_info: {
+        icon: string
+        name: string
+      }
+      main_challenge_record: {
+        avatar_list: {
+          id: number
+          level: number
+          rarity: string
+          element_type: number
+          avatar_profession: number
+          rank: number
+          role_square_url: string
+          sub_element_type: number
+        }[]
+        buddy: {
+          id: number
+          rarity: string
+          level: number
+          bangboo_rectangle_url: string
+        }
+        buffer: {
+          icon: string
+          name: string
+        }
+        score: number
+        score_ratio: number
+        star: string
+        challenge_time: {
+          year: number
+          month: number
+          day: number
+          hour: number
+          minute: number
+          second: number
+        }
+        formatted_challenge_time?: string
+        sub_challenge_record?: {
+          stage_id: number
+          score: number
+          star: string
+          challenge_time: {
+            year: number
+            month: number
+            day: number
+            hour: number
+            minute: number
+            second: number
+          }
+          avatar_list: {
+            id: number
+            level: number
+            rarity: string
+            element_type: number
+            avatar_profession: number
+            rank: number
+            role_square_url: string
+            sub_element_type: number
+          }[]
+          buddy: {
+            id: number
+            rarity: string
+            level: number
+            bangboo_rectangle_url: string
+          }
+        }[]
+      }
+    }
+    main_challenge_record_list: {
+      name: string
+      avatar_list: {
+        id: number
+        level: number
+        rarity: string
+        element_type: number
+        avatar_profession: number
+        rank: number
+        role_square_url: string
+        sub_element_type: number
+      }[]
+      buddy: {
+        id: number
+        rarity: string
+        level: number
+        bangboo_rectangle_url: string
+      }
+      buffer: {
+        icon: string
+        name: string
+      }
+      score: number
+      score_ratio: number
+      star: string
+      challenge_time: {
+        year: number
+        month: number
+        day: number
+        hour: number
+        minute: number
+        second: number
+      }
+      formatted_challenge_time?: string
+    }[]
+    rankBg?: number
+    formatTime?: (time: {
+      year: number
+      month: number
+      day: number
+      hour: number
+      minute: number
+      second: number
+    }) => string
+    formatTimestamp?: (timestamp: number) => string
+  }
 }
 
 /** Enka面板数据 */
 export namespace Enka {
-
   export interface Avatar {
     TalentToggles: boolean[]
     SkillLevelList: Skill[]
@@ -932,12 +1069,10 @@ export namespace Enka {
     Exp: number
     UpgradeLevel: number
   }
-
 }
 
 /** resources/map/*.json数据 */
 export namespace MapJSON {
-
   export interface KeyValue {
     AnomalyData: AnomalyData[]
     BangbooId2Data: BangbooId2Data
@@ -998,7 +1133,7 @@ export namespace MapJSON {
   }
 
   export interface EquipScore {
-    [charID: string]: string[] | { rules?: string[], [propID: string]: number }
+    [charID: string]: string[] | { rules?: string[]; [propID: string]: number }
   }
 
   export interface PartnerId2Data {
@@ -1124,12 +1259,10 @@ export namespace MapJSON {
       Profession: number
     }
   }
-
 }
 
 /** Hakush接口数据 */
 export namespace Hakush {
-
   export interface PartnerData {
     Id: number
     Icon: string
@@ -1380,9 +1513,7 @@ export namespace Hakush {
     Id: number
     Name: string
     Priority: number
-    Zone: {
-
-    }
+    Zone: {}
     BossAdjust: {
       [key: string]: {
         HP: number
@@ -1445,5 +1576,4 @@ export namespace Hakush {
     }
     Weather: string[]
   }
-
 }

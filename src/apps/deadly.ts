@@ -14,7 +14,7 @@ export class deadly extends ZZZPlugin {
       name: '[ZZZ-Plugin]deadly',
       dsc: 'zzz危局强袭战',
       event: 'message',
-      priority: _.get(settings.getConfig('priority'), 'deadly', 70),
+      priority: settings.getConfig('priority')?.deadly ?? 70,
       rule: [
         {
           reg: `${rulePrefix}(上期|往期)?(危局强袭战|危局|强袭|强袭战)$`,

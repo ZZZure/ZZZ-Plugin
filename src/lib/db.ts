@@ -105,6 +105,41 @@ export function removeAllDeadlyData(): boolean {
 }
 
 /**
+ * 保存临界推演数据
+ */
+export function saveVoidFrontBattleData(uid: string, data: ZZZ.DBMap['voidFrontBattle']) {
+  setDB('voidFrontBattle', uid, data);
+}
+
+/**
+ * 获取临界推演数据
+ */
+export function getVoidFrontBattleData(uid: string) {
+  return getDB('voidFrontBattle', uid);
+}
+
+/**
+ * 删除临界推演数据
+ */
+export function removeVoidFrontBattleData(uid: string) {
+  return removeDB('voidFrontBattle', uid);
+}
+
+/**
+ * 批量获取临界推演数据
+ */
+export function getVoidFrontBattleDataInGroupRank(uids: string[]) {
+  return uids.map(uid => getVoidFrontBattleData(uid)).filter((item): item is ZZZ.DBMap['voidFrontBattle'] => item !== null);
+}
+
+/**
+ * 删除所有临界推演数据
+ */
+export function removeAllVoidFrontBattleData() {
+  return removeAllDB('voidFrontBattle');
+}
+
+/**
  * 获取菲林月历数据
  */
 export function getMonthlyData(uid: string) {
