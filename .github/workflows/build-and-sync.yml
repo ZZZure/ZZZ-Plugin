@@ -70,11 +70,26 @@ jobs:
           LATEST_MSG="$(git -C "$DEV_ROOT" log -1 --pretty=format:'%s' "$CURRENT_SHA")"
           if [ "$BEFORE_SHA" = "0000000000000000000000000000000000000000" ] || [ -z "$BEFORE_SHA" ]; then
             LOG_RANGE="$(git -C "$DEV_ROOT" log --pretty=format:'%h %s' -1 "$CURRENT_SHA")"
-          else
+          elif git -C "$DEV_ROOT" merge-base --is-ancestor "$BEFORE_SHA" "$CURRENT_SHA"; then
             LOG_RANGE="$(git -C "$DEV_ROOT" log --pretty=format:'%h %s' "$BEFORE_SHA..$CURRENT_SHA")"
+          else
+            LOG_RANGE="$(git -C "$DEV_ROOT" log --pretty=format:'%h %s' -1 "$CURRENT_SHA")"
           fi
           OTHER_COMMITS="$(printf "%s" "$LOG_RANGE" | tail -n +2)"
-          COMMIT_MSG="${LATEST_MSG} [${SOURCE_SHA}]"
+          if [ "$BEFORE_SHA" = "0000000000000000000000000000000000000000" ] || [ -z "$BEFORE_SHA" ]; then
+            AUTHOR_RANGE="$(git -C "$DEV_ROOT" log --format='%an <%ae>' -1 "$CURRENT_SHA")"
+          elif git -C "$DEV_ROOT" merge-base --is-ancestor "$BEFORE_SHA" "$CURRENT_SHA"; then
+            AUTHOR_RANGE="$(git -C "$DEV_ROOT" log --format='%an <%ae>' "$BEFORE_SHA..$CURRENT_SHA")"
+          else
+            AUTHOR_RANGE="$(git -C "$DEV_ROOT" log --format='%an <%ae>' -1 "$CURRENT_SHA")"
+          fi
+          COAUTHORS="$(printf "%s" "$AUTHOR_RANGE" | sort -u | grep -v -F "$AUTHOR_EMAIL" || true)"
+          TRAILERS=""
+          while read -r LINE; do
+            [ -z "$LINE" ] && continue
+            TRAILERS="${TRAILERS}\nCo-authored-by: ${LINE}"
+          done <<< "$COAUTHORS"
+          COMMIT_MSG="${LATEST_MSG} [${SOURCE_SHA}]${TRAILERS}"
           if [ -n "$OTHER_COMMITS" ]; then
             COMMIT_MSG="$(printf '%s\n\nOther commits:\n%s' "$COMMIT_MSG" "$OTHER_COMMITS")"
           fi
