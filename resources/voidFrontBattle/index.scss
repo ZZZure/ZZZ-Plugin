@@ -18,7 +18,7 @@
 
 .card {
   margin: 0 1em;
-  padding-top: 1em;
+  padding: 1em 0;
 
   .tips {
     font-size: 0.8em;
@@ -33,7 +33,7 @@
   // 总分信息容器
   .total-info-container {
     background-color: rgba($color: #000, $alpha: 0.6);
-    border: 0.15em solid #333;
+    border: 0.4em solid #444;
     border-radius: 1em;
     padding: 1em;
     margin-bottom: 1em;
@@ -101,9 +101,9 @@
 
   .layer-container {
     background-color: rgba($color: #000, $alpha: 0.6);
-    border: 0.15em solid #333;
+    border: 0.4em solid #444;
     border-radius: 1em;
-    padding: 1em;
+    padding: 0.5em;
     margin-bottom: 1em;
   }
 
@@ -112,6 +112,7 @@
     position: relative;
 
     .boss-layout {
+      padding: 0.2em;
       display: flex;
       gap: 1em;
       position: relative;
@@ -123,6 +124,7 @@
       display: flex;
       flex-direction: column;
       gap: 0.5em;
+      padding: 0.7em;
     }
 
     .boss-info-right {
@@ -201,8 +203,8 @@
         }
 
         .max-score-icon.score182000 {
-          width: 3.2em;
-          height: 1.2em;
+          width: 7.6em;
+          height: 2.7em;
           filter: drop-shadow(0 0 0.1em rgba(197, 251, 255, 0.6)) brightness(1.1);
         }
       }
@@ -229,9 +231,9 @@
 
       .list {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: 1fr 1fr 1fr 0.7fr;
         align-items: flex-end;
-        gap: 0.3em;
+        gap: 1.2em;
         flex: 1;
 
         .item {
@@ -364,6 +366,7 @@
     position: relative;
 
     .boss-layout {
+      padding: 0.2em;
       display: flex;
       gap: 1em;
       position: relative;
@@ -375,6 +378,7 @@
       display: flex;
       flex-direction: column;
       gap: 0.5em;
+      padding: 0.7em;
     }
 
     .boss-info-right {
@@ -432,9 +436,10 @@
           text-shadow: 2px 3px #383434;
         }
 
-        .max-score-icon.score149500 {
-          width: 3.2em;
-          height: 1.2em;
+        .max-score-icon.score149500,
+        .max-score-icon.score182000 {
+          width: 7.6em;
+          height: 2.7em;
           filter: drop-shadow(0 0 0.1em rgba(197, 251, 255, 0.6)) brightness(1.1);
         }
       }
@@ -461,9 +466,9 @@
 
       .list {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: 1fr 1fr 1fr 0.7fr;
         align-items: flex-end;
-        gap: 0.3em;
+        gap: 1.2em;
         flex: 1;
 
         .item {
@@ -603,7 +608,7 @@
     border-image-width: 2em 1em 0.7em 2.8em;
     border-image-outset: 0em 0em 0em 0em;
     border-image-repeat: stretch stretch;
-    padding: 1.5em 1.7em;
+    padding: 1em 1.2em;
     display: flex;
     gap: 1.2em;
     position: relative;
@@ -622,11 +627,9 @@
   .sub-challenges {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.3em;
     margin-top: 0.3em;
 
     .sub-item-card {
-      padding: 1em;
       flex: 1;
 
       .item-rating {
@@ -669,17 +672,6 @@
           img {
             width: 1.5em;
             height: 1.5em;
-          }
-        }
-      }
-
-      .list {
-        grid-template-columns: 1fr 1fr 1fr 0.7fr;
-        gap: 0.2em;
-
-        .item {
-          &.bangboo {
-            transform: scale(0.85);
           }
         }
       }
@@ -900,6 +892,7 @@
   }
 
   .notes {
+    font-size: 0.8em;
     margin: 0 2em;
 
     .command {

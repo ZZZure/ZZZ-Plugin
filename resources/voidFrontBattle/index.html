@@ -174,8 +174,9 @@
   {{/if}}
 
   <!-- STAGE 01-04 渲染 -->
-  {{set stageList = voidFrontBattle.main_challenge_record_list}} {{if stageList && stageList.length
-  > 0}} {{each stageList stageItem i}} {{set stageNum = stageList.length - i}}
+  {{set stageList = voidFrontBattle.main_challenge_record_list}}
+  {{if stageList && stageList.length > 0}}
+  {{each stageList stageItem i}} {{set stageNum = stageList.length - i}}
   <div class="layer-container lower-layer-container">
     <div class="boss-layout">
       <!-- 左侧信息区域 -->
@@ -195,7 +196,9 @@
         <!-- 第二行：分数 + 积分倍率 -->
         <div class="boss-row boss-score-row">
           <div class="score-section">
-            {{if stageItem.score === 149500}}
+            {{if i == 0 && stageItem.score === 182000}}
+            <div class="max-score-icon score182000"></div>
+            {{else if i > 0 && stageItem.score === 149500}}
             <div class="max-score-icon score149500"></div>
             {{else}}
             <div class="score-value">{{stageItem.score}}</div>
@@ -301,7 +304,8 @@
     </div>
     {{/if}}
   </div>
-  {{/each}} {{/if}}
+  {{/each}}
+  {{/if}}
 
   <div class="item-card">
     <ul class="notes">
