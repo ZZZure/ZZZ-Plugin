@@ -50,7 +50,7 @@ export default function (avatar) {
 }
 ```
 
-- 函数参数：[ZZZAvatarInfo](../avatar.js#L174)（角色数据）
+- 函数参数：[ZZZAvatarInfo](../avatar.ts#L174)（角色数据）
 
 - 函数返回值：
   - 元组：[评分规则名, 权重数据]
@@ -66,7 +66,7 @@ export default function (avatar) {
 
 打开插件默认词条权重文件直接修改相应数据保存即可，重启生效
 
-文件路径：[ZZZ-plugin/resources/map/EquipScore.json](../../resources/map/EquipScore.json)
+文件路径：[ZZZ-plugin/resources/map/EquipScore.json](../../../resources/map/EquipScore.json)
 
 ---
 
@@ -81,9 +81,9 @@ export default function (avatar) {
 ## 基本概念
 
 1. 词条类型：
-   - [词条ID对照表](../../resources/map/Property2Name.json)
-   - [主词条](../../resources/map/EquipMainStats.json)：每个驱动盘1个主词条，1-3号位主词条固定，4-6号位主词条在其[可能范围](../../resources/map/EquipMainStats.json)内随机
-   - [副词条](../../resources/map/EquipBaseValue.json)：每个驱动盘有若干个与主词条不同的副词条，可强化提升
+   - [词条ID对照表](../../../resources/map/Property2Name.json)
+   - [主词条](../../../resources/map/EquipMainStats.json)：每个驱动盘1个主词条，1-3号位主词条固定，4-6号位主词条在其[可能范围](../../../resources/map/EquipMainStats.json)内随机
+   - [副词条](../../../resources/map/EquipBaseValue.json)：每个驱动盘有若干个与主词条不同的副词条，可强化提升
 
 2. 权重：不同词条对角色的重要性数值，决定该词条在评分中的占比，有效值0~1，一般为0.1的整数倍
 
@@ -102,7 +102,7 @@ export default function (avatar) {
 
 - 优先根据角色对应的[socre.js](#方法一预设方法推荐)确定权重
 
-- 若无socre.js，根据[默认配置](../../resources/map/EquipScore.json)确定权重
+- 若无socre.js，根据[默认配置](../../../resources/map/EquipScore.json)确定权重
 
 - 若无socre.js和默认配置，自动从[预设权重规则](#预设权重规则)中选择适用的权重配置
 
