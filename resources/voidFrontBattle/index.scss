@@ -32,70 +32,101 @@
 
   // 总分信息容器
   .total-info-container {
-    background-color: rgba($color: #000, $alpha: 0.6);
-    border: 0.4em solid #444;
-    border-radius: 1em;
-    padding: 1em;
     margin-bottom: 1em;
-  }
 
-  // 总分信息行
-  .total-info-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1em;
-
-    .total-score-section {
+    .total-info-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 686 / 218;
+      height: auto;
+      margin: 0 auto;
       display: flex;
-      align-items: center;
+      flex-direction: column;
       justify-content: center;
-      gap: 0.5em;
+      align-items: center;
+      isolation: isolate;
 
-      .total-score {
-        color: #e6e6e6;
-        font-size: 2.5em;
-        text-shadow: 3px 4px #383434;
+      // 背景填充使用结局图
+      .frame-bg {
+        position: absolute;
+        inset: 0.3em 0.4em;
+        background: var(--ending-bg) center 35% / cover no-repeat;
+        scale: 0.75;
+        border-radius: 0.6em;
+        z-index: 1;
       }
 
-      .max-score-icon {
-        filter: drop-shadow(0 0 0.1em rgba(197, 251, 255, 0.6)) brightness(1.1);
-        width: 9.4em;
-        height: 3.8em;
+      // 框体PNG蒙版
+      .frame-mask {
+        position: absolute;
+        inset: 0;
+        background: url("./images/m-deduce-detail-block-mask.png") center/contain no-repeat;
+        z-index: 3;
+        pointer-events: none;
       }
 
-      .rank-container {
+      // 总分信息行
+      .total-info-row {
         position: relative;
-        width: 6em;
-        height: 3em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1em;
+        z-index: 4;
 
-        .rank-icon {
-          width: 100%;
-          height: 100%;
-        }
+        .total-score-section {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5em;
 
-        .rank-text {
-          position: absolute;
-          top: 50%;
-          left: 40%;
-          transform: translate(-50%, -50%);
-          color: #222;
-          font-size: 1em;
-          z-index: 2;
+          .total-score {
+            color: #e6e6e6;
+            font-size: 2.5em;
+            text-shadow: 3px 4px #383434;
+          }
+
+          .max-score-icon {
+            filter: drop-shadow(0 0 0.1em rgba(197, 251, 255, 0.6)) brightness(1.1);
+            width: 12em;
+            height: 4em;
+          }
+
+          .rank-container {
+            position: relative;
+            width: 6em;
+            height: 3em;
+
+            .rank-icon {
+              width: 100%;
+              height: 100%;
+            }
+
+            .rank-text {
+              position: absolute;
+              top: 50%;
+              left: 40%;
+              transform: translate(-50%, -50%);
+              color: #222;
+              font-size: 1em;
+              z-index: 2;
+            }
+          }
         }
       }
-    }
-  }
 
-  .ending-row {
-    display: flex;
-    justify-content: center;
-    margin-top: 0.5em;
+      .ending-row {
+        position: absolute;
+        right: 1.2em;
+        bottom: 0.8em;
+        z-index: 4;
 
-    .ending-text {
-      color: #aaa;
-      font-size: 1.2em;
-      text-shadow: 1px 2px #383434;
+        .ending-text {
+          color: #999;
+          font-size: 1em;
+          text-shadow: 1px 2px #121212;
+        }
+      }
     }
   }
 

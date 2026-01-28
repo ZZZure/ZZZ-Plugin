@@ -16,22 +16,29 @@
 
   <!-- 总分信息行 -->
   <div class="total-info-container">
-    <div class="total-info-row">
-      <div class="total-score-section">
-        {{if abstractInfo.total_score === 663000}}
-        <div class="max-score-icon score663000"></div>
-        {{else}}
-        <div class="total-score">{{abstractInfo.total_score}}</div>
-        {{/if}}
+    <div
+      class="total-info-frame"
+      style="--ending-bg: url('{{abstractInfo.ending_record_bg_pic}}')"
+    >
+      <div class="total-info-row">
+        <div class="total-score-section">
+          {{if abstractInfo.total_score === 663000}}
+          <div class="max-score-icon score663000"></div>
+          {{else}}
+          <div class="total-score">{{abstractInfo.total_score}}</div>
+          {{/if}}
 
-        <div class="rank-container">
-          <div class="rank-icon bg{{voidFrontBattle.rankBg}}"></div>
-          <div class="rank-text">{{(abstractInfo.rank_percent / 100).toFixed(2)}}%</div>
+          <div class="rank-container">
+            <div class="rank-icon bg{{voidFrontBattle.rankBg}}"></div>
+            <div class="rank-text">{{(abstractInfo.rank_percent / 100).toFixed(2)}}%</div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="ending-row">
-      <div class="ending-text">{{abstractInfo.ending_record_name}}</div>
+      <div class="ending-row">
+        <div class="ending-text">{{abstractInfo.ending_record_name}}</div>
+      </div>
+      <div class="frame-bg"></div>
+      <div class="frame-mask"></div>
     </div>
   </div>
 
