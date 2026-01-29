@@ -1,5 +1,7 @@
 card: 70 # 玩家信息（卡片）
 abyss: 70 # 深渊
+deadly: 70 # 危局
+voidFrontBattle: 70 # 临界推演
 gachalog: 70 # 抽卡
 guide: 70 # 攻略
 help: 70 # 帮助

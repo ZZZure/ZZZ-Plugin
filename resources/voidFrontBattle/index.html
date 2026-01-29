@@ -1,0 +1,331 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" href="{{@sys.currentPath}}/index.css" />
+{{/block}} {{block 'main'}}
+<div class="card">
+  {{include sys.playerInfo}}
+
+  <div class="tips">
+    <p>
+      统计周期
+      截止时间：{{voidFrontBattle.formatTimestamp(voidFrontBattle.void_front_battle_abstract_info_brief.end_ts)}}
+    </p>
+  </div>
+
+  {{set abstractInfo = voidFrontBattle.void_front_battle_abstract_info_brief}} {{set bossChallenge =
+  voidFrontBattle.boss_challenge_record}} {{if abstractInfo && bossChallenge}}
+
+  <!-- 总分信息行 -->
+  <div class="total-info-container">
+    <div
+      class="total-info-frame"
+      style="--ending-bg: url('{{abstractInfo.ending_record_bg_pic}}')"
+    >
+      <div class="total-info-row">
+        <div class="total-score-section">
+          {{if abstractInfo.total_score === 663000}}
+          <div class="max-score-icon score663000"></div>
+          {{else}}
+          <div class="total-score">{{abstractInfo.total_score}}</div>
+          {{/if}}
+
+          <div class="rank-container">
+            <div class="rank-icon bg{{voidFrontBattle.rankBg}}"></div>
+            <div class="rank-text">{{(abstractInfo.rank_percent / 100).toFixed(2)}}%</div>
+          </div>
+        </div>
+      </div>
+      <div class="ending-row">
+        <div class="ending-text">{{abstractInfo.ending_record_name}}</div>
+      </div>
+      <div class="frame-bg"></div>
+      <div class="frame-mask"></div>
+    </div>
+  </div>
+
+  <!-- BOSS 挑战 (LAST STAGE) -->
+  {{set mainRecord = bossChallenge.main_challenge_record}}
+  <div class="layer-container boss-layer">
+    <div class="boss-layout">
+      <!-- 左侧信息区域 -->
+      <div class="boss-info-left">
+        <!-- 第一行：BOSS名字 + buff图案 -->
+        <div class="boss-row boss-name-row">
+          <h3 class="boss-name">{{bossChallenge.boss_info.name}}</h3>
+          <div class="buffer">
+            <img
+              src="{{mainRecord.buffer.icon}}"
+              alt="{{mainRecord.buffer.name}}"
+              title="{{mainRecord.buffer.name}}"
+            />
+          </div>
+        </div>
+
+        <!-- 第二行：分数 + 积分倍率 -->
+        <div class="boss-row boss-score-row">
+          <div class="score-section">
+            {{if mainRecord.score === 182000}}
+            <div class="max-score-icon score182000"></div>
+            {{else}}
+            <div class="score-value">{{mainRecord.score}}</div>
+            {{/if}}
+          </div>
+          <div class="score-ratio">
+            得分倍率：{{bossChallenge.main_challenge_record.score_ratio}}
+          </div>
+        </div>
+
+        <!-- 第三行：通关时间 -->
+        <div class="boss-row boss-time-row">
+          <div class="challenge-time">
+            通关时间：{{voidFrontBattle.formatTime(voidFrontBattle.boss_challenge_record.main_challenge_record.challenge_time)}}
+          </div>
+        </div>
+
+        <!-- 第四行：角色和邦布信息 -->
+        <div class="boss-row boss-team-row">
+          <div class="list">
+            <!-- 角色 -->
+            <% for(let i=0 ; i < 3 ; i++) { %> {{if mainRecord.avatar_list?.[i]}}
+            <div class="item char">
+              {{if mainRecord.avatar_list[i].rank}}
+              <div class="count">{{mainRecord.avatar_list[i].rank}}</div>
+              {{/if}}
+              <div class="rank_disp">
+                <div class="rank rank-icon {{mainRecord.avatar_list[i].rarity}}"></div>
+              </div>
+              <div class="image">
+                <img src="{{mainRecord.avatar_list[i].role_square_url}}" alt="" />
+              </div>
+            </div>
+            {{else}}
+            <div class="item char"></div>
+            {{/if}} <% } %>
+            <!-- 邦布 -->
+            {{if mainRecord.buddy}}
+            <div class="item bangboo">
+              <div class="rank_disp">
+                <div class="rank rank-icon {{mainRecord.buddy.rarity}}"></div>
+              </div>
+              <div class="image">
+                <img src="{{mainRecord.buddy.bangboo_rectangle_url}}" alt="" />
+              </div>
+            </div>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+
+      <!-- 右侧悬挂区域 -->
+      <div class="boss-info-right">
+        <!-- 上层：评级 -->
+        <div class="rating-icon {{mainRecord.star}}"></div>
+        <!-- 下层：BOSS图案 -->
+        <div class="boss-icon">
+          <img src="{{bossChallenge.boss_info.icon}}" alt="{{bossChallenge.boss_info.name}}" />
+        </div>
+      </div>
+    </div>
+
+    <!-- 子关卡 (4-1 到 4-4) 两列显示 -->
+    {{if mainRecord.sub_challenge_record}}
+    <div class="sub-challenges">
+      {{each mainRecord.sub_challenge_record subItem i}}
+      <div class="sub-item-card">
+        <div class="item-rating rating-icon {{subItem.star}}"></div>
+        <div class="content">
+          <div class="value">
+            <div class="val">{{subItem.name}}</div>
+            <div class="buffer">
+              <img
+                src="{{subItem.buffer.icon}}"
+                alt="{{subItem.buffer.name}}"
+                title="{{subItem.buffer.name}}"
+              />
+            </div>
+          </div>
+          <div class="list">
+            <!-- 角色 -->
+            <% for(let j=0 ; j < 3 ; j++) { %> {{if subItem.avatar_list?.[j]}}
+            <div class="item char">
+              {{if subItem.avatar_list[j].rank}}
+              <div class="count">{{subItem.avatar_list[j].rank}}</div>
+              {{/if}}
+              <div class="rank_disp">
+                <div class="rank rank-icon {{subItem.avatar_list[j].rarity}}"></div>
+              </div>
+              <div class="image">
+                <img src="{{subItem.avatar_list[j].role_square_url}}" alt="" />
+              </div>
+            </div>
+            {{else}}
+            <div class="item char"></div>
+            {{/if}} <% } %>
+            <!-- 邦布 -->
+            {{if subItem.buddy}}
+            <div class="item bangboo">
+              <div class="rank_disp">
+                <div class="rank rank-icon {{subItem.buddy.rarity}}"></div>
+              </div>
+              <div class="image">
+                <img src="{{subItem.buddy.bangboo_rectangle_url}}" alt="" />
+              </div>
+            </div>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    {{/if}}
+  </div>
+  {{/if}}
+
+  <!-- STAGE 01-04 渲染 -->
+  {{set stageList = voidFrontBattle.main_challenge_record_list}}
+  {{if stageList && stageList.length > 0}}
+  {{each stageList stageItem i}} {{set stageNum = stageList.length - i}}
+  <div class="layer-container lower-layer-container">
+    <div class="boss-layout">
+      <!-- 左侧信息区域 -->
+      <div class="boss-info-left">
+        <!-- 第一行：STAGE名字 + buff图案 -->
+        <div class="boss-row boss-name-row">
+          <h3 class="boss-name">{{stageItem.name}}</h3>
+          <div class="buffer">
+            <img
+              src="{{stageItem.buffer.icon}}"
+              alt="{{stageItem.buffer.name}}"
+              title="{{stageItem.buffer.name}}"
+            />
+          </div>
+        </div>
+
+        <!-- 第二行：分数 + 积分倍率 -->
+        <div class="boss-row boss-score-row">
+          <div class="score-section">
+            {{if i == 0 && stageItem.score === 182000}}
+            <div class="max-score-icon score182000"></div>
+            {{else if i > 0 && stageItem.score === 149500}}
+            <div class="max-score-icon score149500"></div>
+            {{else}}
+            <div class="score-value">{{stageItem.score}}</div>
+            {{/if}}
+          </div>
+          <div class="score-ratio">得分倍率：{{stageItem.score_ratio}}</div>
+        </div>
+
+        <!-- 第三行：通关时间 -->
+        <div class="boss-row boss-time-row">
+          <div class="challenge-time">通关时间：{{voidFrontBattle.formatTime(stageItem.challenge_time)}}</div>
+        </div>
+
+        <!-- 第四行：角色和邦布信息 -->
+        <div class="boss-row boss-team-row">
+          <div class="list">
+            <!-- 角色 -->
+            <% for(let j=0 ; j < 3 ; j++) { %> {{if stageItem.avatar_list?.[j]}}
+            <div class="item char">
+              {{if stageItem.avatar_list[j].rank}}
+              <div class="count">{{stageItem.avatar_list[j].rank}}</div>
+              {{/if}}
+              <div class="rank_disp">
+                <div class="rank rank-icon {{stageItem.avatar_list[j].rarity}}"></div>
+              </div>
+              <div class="image">
+                <img src="{{stageItem.avatar_list[j].role_square_url}}" alt="" />
+              </div>
+            </div>
+            {{else}}
+            <div class="item char"></div>
+            {{/if}} <% } %>
+            <!-- 邦布 -->
+            {{if stageItem.buddy}}
+            <div class="item bangboo">
+              <div class="rank_disp">
+                <div class="rank rank-icon {{stageItem.buddy.rarity}}"></div>
+              </div>
+              <div class="image">
+                <img src="{{stageItem.buddy.bangboo_rectangle_url}}" alt="" />
+              </div>
+            </div>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+
+      <!-- 右侧悬挂区域 -->
+      <div class="boss-info-right">
+        <div class="rating-icon {{stageItem.star}}"></div>
+      </div>
+    </div>
+
+    <!-- 子关卡阵容 -->
+    {{if stageItem.sub_challenge_record}}
+    <div class="sub-challenges">
+      {{each stageItem.sub_challenge_record subItem j}}
+      <div class="sub-item-card">
+        <div class="item-rating rating-icon {{subItem.star}}"></div>
+        <div class="content">
+          <div class="value">
+            <div class="val">{{subItem.name}}</div>
+            <div class="buffer">
+              <img
+                src="{{subItem.buffer.icon}}"
+                alt="{{subItem.buffer.name}}"
+                title="{{subItem.buffer.name}}"
+              />
+            </div>
+          </div>
+          <div class="list">
+            <!-- 角色 -->
+            <% for(let k=0 ; k < 3 ; k++) { %> {{if subItem.avatar_list?.[k]}}
+            <div class="item char">
+              {{if subItem.avatar_list[k].rank}}
+              <div class="count">{{subItem.avatar_list[k].rank}}</div>
+              {{/if}}
+              <div class="rank_disp">
+                <div class="rank rank-icon {{subItem.avatar_list[k].rarity}}"></div>
+              </div>
+              <div class="image">
+                <img src="{{subItem.avatar_list[k].role_square_url}}" alt="" />
+              </div>
+            </div>
+            {{else}}
+            <div class="item char"></div>
+            {{/if}} <% } %>
+            <!-- 邦布 -->
+            {{if subItem.buddy}}
+            <div class="item bangboo">
+              <div class="rank_disp">
+                <div class="rank rank-icon {{subItem.buddy.rarity}}"></div>
+              </div>
+              <div class="image">
+                <img src="{{subItem.buddy.bangboo_rectangle_url}}" alt="" />
+              </div>
+            </div>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    {{/if}}
+  </div>
+  {{/each}}
+  {{/if}}
+
+  <div class="item-card">
+    <ul class="notes">
+      {{if userRankAllowed !== null}}
+      <li>
+        当前临界推演排名状态：{{userRankAllowed ? '显示' : '隐藏'}}，可通过<span class="command"
+          >%显示/隐藏推演排名</span
+        >切换
+      </li>
+      {{else}}
+      <li>请在群内查询<span class="command">%临界推演</span>，以参与对应群的临界推演排名</li>
+      {{/if}}
+    </ul>
+  </div>
+</div>
+{{/block}}

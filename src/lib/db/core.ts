@@ -10,6 +10,7 @@ export const dbPath = {
   monthly: 'monthly',
   abyss: 'abyss',
   deadly: 'deadly',
+  voidFrontBattle: 'voidFrontBattle',
 }
 
 /**
