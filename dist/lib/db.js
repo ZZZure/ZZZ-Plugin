@@ -41,6 +41,21 @@ export function getDeadlyDataInGroupRank(uids) {
 export function removeAllDeadlyData() {
     return removeAllDB('deadly');
 }
+export function saveVoidFrontBattleData(uid, data) {
+    setDB('voidFrontBattle', uid, data);
+}
+export function getVoidFrontBattleData(uid) {
+    return getDB('voidFrontBattle', uid);
+}
+export function removeVoidFrontBattleData(uid) {
+    return removeDB('voidFrontBattle', uid);
+}
+export function getVoidFrontBattleDataInGroupRank(uids) {
+    return uids.map(uid => getVoidFrontBattleData(uid)).filter((item) => item !== null);
+}
+export function removeAllVoidFrontBattleData() {
+    return removeAllDB('voidFrontBattle');
+}
 export function getMonthlyData(uid) {
     return getDB('monthly', uid) || [];
 }

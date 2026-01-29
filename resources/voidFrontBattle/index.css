@@ -1,0 +1,768 @@
+.container {
+  background-image: url("./images/bg.png");
+}
+
+.rating-icon.S,
+.rating-icon.SP {
+  filter: drop-shadow(0 0 0.2em rgba(167, 193, 2, 0.8)) brightness(1.1);
+}
+
+.rating-icon.A,
+.rating-icon.AP {
+  filter: drop-shadow(0 0 0.2em rgba(201, 0, 201, 0.8)) brightness(1.1);
+}
+
+.rating-icon.B {
+  filter: drop-shadow(0 0 0.2em rgba(0, 68, 209, 0.8)) brightness(1.1);
+}
+
+.card {
+  margin: 0 1em;
+  padding: 1em 0;
+}
+.card .tips {
+  font-size: 0.8em;
+  margin: 1em;
+  color: #979797;
+}
+.card .tips p {
+  margin-bottom: 0.5em;
+}
+.card .total-info-container {
+  margin-bottom: 1em;
+}
+.card .total-info-container .total-info-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 686/218;
+  height: auto;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  isolation: isolate;
+}
+.card .total-info-container .total-info-frame .frame-bg {
+  position: absolute;
+  inset: 0.3em 0.4em;
+  background: var(--ending-bg) center 35%/cover no-repeat;
+  scale: 0.75;
+  border-radius: 0.6em;
+  z-index: 1;
+}
+.card .total-info-container .total-info-frame .frame-mask {
+  position: absolute;
+  inset: 0;
+  background: url("./images/m-deduce-detail-block-mask.png") center/contain no-repeat;
+  z-index: 3;
+  pointer-events: none;
+}
+.card .total-info-container .total-info-frame .total-info-row {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  z-index: 4;
+}
+.card .total-info-container .total-info-frame .total-info-row .total-score-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+.card .total-info-container .total-info-frame .total-info-row .total-score-section .total-score {
+  color: #e6e6e6;
+  font-size: 3em;
+  text-shadow: 3px 4px #383434;
+}
+.card .total-info-container .total-info-frame .total-info-row .total-score-section .max-score-icon {
+  filter: drop-shadow(0 0 0.1em rgba(197, 251, 255, 0.6)) brightness(1.1);
+  width: 12em;
+  height: 4em;
+}
+.card .total-info-container .total-info-frame .total-info-row .total-score-section .rank-container {
+  position: relative;
+  width: 6em;
+  height: 3em;
+}
+.card .total-info-container .total-info-frame .total-info-row .total-score-section .rank-container .rank-icon {
+  width: 100%;
+  height: 100%;
+}
+.card .total-info-container .total-info-frame .total-info-row .total-score-section .rank-container .rank-text {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  color: #222;
+  font-size: 1em;
+  z-index: 2;
+}
+.card .total-info-container .total-info-frame .ending-row {
+  position: absolute;
+  right: 1.2em;
+  bottom: 0.8em;
+  z-index: 4;
+}
+.card .total-info-container .total-info-frame .ending-row .ending-text {
+  color: #999;
+  font-size: 1em;
+  text-shadow: 1px 2px #121212;
+}
+.card .layer-container {
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 0.4em solid #444;
+  border-radius: 1em;
+  padding: 0.5em;
+  margin-bottom: 1em;
+}
+.card .boss-layer {
+  position: relative;
+}
+.card .boss-layer .boss-layout {
+  padding: 0.2em;
+  display: flex;
+  gap: 1em;
+  position: relative;
+  z-index: 1;
+}
+.card .boss-layer .boss-info-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  padding: 0.7em;
+}
+.card .boss-layer .boss-info-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  pointer-events: none;
+  z-index: 0;
+}
+.card .boss-layer .boss-info-right .rating-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 6em;
+  height: 6em;
+  z-index: 2;
+}
+.card .boss-layer .boss-info-right .boss-icon {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  z-index: 0;
+}
+.card .boss-layer .boss-info-right .boss-icon img {
+  height: 100%;
+  width: auto;
+  max-width: 50%;
+  object-fit: contain;
+  display: block;
+  transform: translateX(-8%);
+  -webkit-mask-image: linear-gradient(to left, transparent 0%, rgba(0, 0, 0, 0.4) 10%, rgba(0, 0, 0, 0.8) 20%, #000 70%), linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.4) 10%, rgba(0, 0, 0, 0.8) 20%, #000 70%), linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.4) 10%, rgba(0, 0, 0, 0.8) 20%, #000 70%), linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 0.4) 10%, rgba(0, 0, 0, 0.8) 20%, #000 70%);
+  mask-image: linear-gradient(to left, transparent 0%, rgba(0, 0, 0, 0.4) 10%, rgba(0, 0, 0, 0.8) 20%, #000 70%), linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.4) 10%, rgba(0, 0, 0, 0.8) 20%, #000 70%), linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.4) 10%, rgba(0, 0, 0, 0.8) 20%, #000 70%), linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 0.4) 10%, rgba(0, 0, 0, 0.8) 20%, #000 70%);
+  -webkit-mask-composite: multiply, multiply, multiply;
+  mask-composite: intersect, intersect, intersect;
+}
+.card .boss-layer .boss-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.card .boss-layer .boss-name-row .boss-name {
+  color: #aaa;
+  margin: 0;
+  font-size: 1.5em;
+  font-weight: lighter;
+}
+.card .boss-layer .boss-name-row .buffer img {
+  width: 2em;
+  height: 2em;
+}
+.card .boss-layer .boss-score-row .score-section {
+  display: flex;
+  align-items: center;
+}
+.card .boss-layer .boss-score-row .score-section .score-value {
+  color: #e6e6e6;
+  font-size: 2em;
+  text-shadow: 2px 3px #383434;
+}
+.card .boss-layer .boss-score-row .score-section .max-score-icon.score182000 {
+  width: 7.6em;
+  height: 2.7em;
+  filter: drop-shadow(0 0 0.1em rgba(197, 251, 255, 0.6)) brightness(1.1);
+}
+.card .boss-layer .boss-score-row .score-ratio {
+  color: #ccc;
+  font-size: 0.9em;
+  margin-left: 1em;
+  background-color: #333;
+  border-radius: 999px;
+  padding: 0.3em 0.6em;
+}
+.card .boss-layer .boss-time-row .challenge-time {
+  color: #979797;
+  font-size: 0.9em;
+}
+.card .boss-layer .boss-team-row {
+  width: 70%;
+}
+.card .boss-layer .boss-team-row .list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 0.7fr;
+  align-items: flex-end;
+  gap: 1.2em;
+  flex: 1;
+}
+.card .boss-layer .boss-team-row .list .item {
+  width: 100%;
+  position: relative;
+  border-radius: 0.5em;
+  box-shadow: 0 0 0 0.12em black, 0 0 0 0.24em #333534;
+  filter: drop-shadow(4px 6px 8px black);
+}
+.card .boss-layer .boss-team-row .list .item > * {
+  position: inherit;
+  z-index: 1;
+}
+.card .boss-layer .boss-team-row .list .item.bangboo {
+  font-size: 0.8em;
+  transform: scale(0.85);
+}
+.card .boss-layer .boss-team-row .list .item .count {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0.1em 0.3em;
+  font-size: 0.8em;
+  border-bottom-left-radius: 0.3em;
+  border-top-right-radius: 0.5em;
+}
+.card .boss-layer .boss-team-row .list .item .rank_disp {
+  position: absolute;
+  top: 0em;
+  left: 0em;
+  background-color: rgb(0, 0, 0);
+  z-index: 2;
+  padding: 0.1em;
+  border-bottom-right-radius: 0.25em;
+  border-top-left-radius: 0.25em;
+}
+.card .boss-layer .boss-team-row .list .item .rank_disp .rank {
+  width: 1em;
+  color: white;
+  position: relative;
+}
+.card .boss-layer .boss-team-row .list .item .rank_disp .rank::before {
+  content: "";
+  position: absolute;
+  top: -0.1em;
+  right: -0.4em;
+  width: 0.3em;
+  height: 0.3em;
+  background: radial-gradient(circle at 100% 0, transparent 0.3em, rgb(0, 0, 0) 0.3em);
+  rotate: 90deg;
+}
+.card .boss-layer .boss-team-row .list .item .rank_disp .rank::after {
+  content: "";
+  position: absolute;
+  bottom: -0.4em;
+  left: -0.1em;
+  width: 0.3em;
+  height: 0.3em;
+  background: radial-gradient(circle at 100% 0, transparent 0.3em, rgb(0, 0, 0) 0.3em);
+  rotate: 90deg;
+}
+.card .boss-layer .boss-team-row .list .item .image {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 0.5em;
+  overflow: hidden;
+}
+.card .boss-layer .boss-team-row .list .item .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+.card .boss-layer .boss-team-row .list .item.bangboo .image {
+  position: relative;
+}
+.card .boss-layer .boss-team-row .list .item.bangboo .image img {
+  width: 210%;
+  height: 200%;
+  position: absolute;
+  object-position: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-40%, -35%);
+}
+.card .boss-layer .boss-team-row .list .item .c-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgb(0, 0, 0);
+  color: white;
+  display: flex;
+  text-align: center;
+}
+.card .lower-layer-container {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 0.5em;
+  position: relative;
+}
+.card .lower-layer-container .boss-layout {
+  padding: 0.2em;
+  display: flex;
+  gap: 1em;
+  position: relative;
+  z-index: 1;
+}
+.card .lower-layer-container .boss-info-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  padding: 0.7em;
+}
+.card .lower-layer-container .boss-info-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  pointer-events: none;
+  z-index: 0;
+}
+.card .lower-layer-container .boss-info-right .rating-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 6em;
+  height: 6em;
+  z-index: 2;
+}
+.card .lower-layer-container .boss-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.card .lower-layer-container .boss-name-row .boss-name {
+  color: #aaa;
+  margin: 0;
+  font-size: 1.5em;
+  font-weight: lighter;
+}
+.card .lower-layer-container .boss-name-row .buffer img {
+  width: 2em;
+  height: 2em;
+}
+.card .lower-layer-container .boss-score-row .score-section {
+  display: flex;
+  align-items: center;
+}
+.card .lower-layer-container .boss-score-row .score-section .score-value {
+  color: #e6e6e6;
+  font-size: 2em;
+  text-shadow: 2px 3px #383434;
+}
+.card .lower-layer-container .boss-score-row .score-section .max-score-icon.score149500,
+.card .lower-layer-container .boss-score-row .score-section .max-score-icon.score182000 {
+  width: 7.6em;
+  height: 2.7em;
+  filter: drop-shadow(0 0 0.1em rgba(197, 251, 255, 0.6)) brightness(1.1);
+}
+.card .lower-layer-container .boss-score-row .score-ratio {
+  color: #ccc;
+  font-size: 0.9em;
+  margin-left: 1em;
+  background-color: #333;
+  border-radius: 999px;
+  padding: 0.3em 0.6em;
+}
+.card .lower-layer-container .boss-time-row .challenge-time {
+  color: #979797;
+  font-size: 0.9em;
+}
+.card .lower-layer-container .boss-team-row {
+  width: 70%;
+}
+.card .lower-layer-container .boss-team-row .list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 0.7fr;
+  align-items: flex-end;
+  gap: 1.2em;
+  flex: 1;
+}
+.card .lower-layer-container .boss-team-row .list .item {
+  width: 100%;
+  position: relative;
+  border-radius: 0.5em;
+  box-shadow: 0 0 0 0.12em black, 0 0 0 0.24em #333534;
+  filter: drop-shadow(4px 6px 8px black);
+}
+.card .lower-layer-container .boss-team-row .list .item > * {
+  position: inherit;
+  z-index: 1;
+}
+.card .lower-layer-container .boss-team-row .list .item.bangboo {
+  font-size: 0.8em;
+  transform: scale(0.85);
+}
+.card .lower-layer-container .boss-team-row .list .item .count {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0.1em 0.3em;
+  font-size: 0.8em;
+  border-bottom-left-radius: 0.3em;
+  border-top-right-radius: 0.5em;
+}
+.card .lower-layer-container .boss-team-row .list .item .rank_disp {
+  position: absolute;
+  top: 0em;
+  left: 0em;
+  background-color: rgb(0, 0, 0);
+  z-index: 2;
+  padding: 0.1em;
+  border-bottom-right-radius: 0.25em;
+  border-top-left-radius: 0.25em;
+}
+.card .lower-layer-container .boss-team-row .list .item .rank_disp .rank {
+  width: 1em;
+  color: white;
+  position: relative;
+}
+.card .lower-layer-container .boss-team-row .list .item .rank_disp .rank::before {
+  content: "";
+  position: absolute;
+  top: -0.1em;
+  right: -0.4em;
+  width: 0.3em;
+  height: 0.3em;
+  background: radial-gradient(circle at 100% 0, transparent 0.3em, rgb(0, 0, 0) 0.3em);
+  rotate: 90deg;
+}
+.card .lower-layer-container .boss-team-row .list .item .rank_disp .rank::after {
+  content: "";
+  position: absolute;
+  bottom: -0.4em;
+  left: -0.1em;
+  width: 0.3em;
+  height: 0.3em;
+  background: radial-gradient(circle at 100% 0, transparent 0.3em, rgb(0, 0, 0) 0.3em);
+  rotate: 90deg;
+}
+.card .lower-layer-container .boss-team-row .list .item .image {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 0.5em;
+  overflow: hidden;
+}
+.card .lower-layer-container .boss-team-row .list .item .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+.card .lower-layer-container .boss-team-row .list .item.bangboo .image {
+  position: relative;
+}
+.card .lower-layer-container .boss-team-row .list .item.bangboo .image img {
+  width: 210%;
+  height: 200%;
+  position: absolute;
+  object-position: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-40%, -35%);
+}
+.card .lower-layer-container .boss-team-row .list .item .c-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgb(0, 0, 0);
+  color: white;
+  display: flex;
+  text-align: center;
+}
+.card .layer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+.card .item-card,
+.card .sub-item-card {
+  border-image-source: url("./images/BgFrame01.png");
+  border-image-slice: 200 100 70 280 fill;
+  border-image-width: 2em 1em 0.7em 2.8em;
+  border-image-outset: 0em 0em 0em 0em;
+  border-image-repeat: stretch stretch;
+  padding: 1em 1.2em;
+  display: flex;
+  gap: 1.2em;
+  position: relative;
+}
+.card .item-card .item-rating,
+.card .sub-item-card .item-rating {
+  position: absolute;
+  top: 0.4em;
+  right: 0.6em;
+  width: 6em;
+  height: 6em;
+  z-index: 3;
+}
+.card .sub-challenges {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: 0.3em;
+}
+.card .sub-challenges .sub-item-card {
+  flex: 1;
+}
+.card .sub-challenges .sub-item-card .item-rating {
+  position: absolute;
+  top: 0.4em;
+  right: 0.6em;
+  width: 3em;
+  height: 3em;
+  z-index: 3;
+}
+.card .sub-challenges .sub-item-card .cover {
+  display: none;
+}
+.card .sub-challenges .sub-item-card .content {
+  width: 100%;
+}
+.card .sub-challenges .sub-item-card .value {
+  font-size: 1.2em;
+  margin-bottom: 0.2em;
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+}
+.card .sub-challenges .sub-item-card .value .val {
+  background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.4) 100%);
+  filter: drop-shadow(2px 4px 6px black);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.card .sub-challenges .sub-item-card .value .buffer img {
+  width: 1.5em;
+  height: 1.5em;
+}
+.card .cover {
+  position: relative;
+  height: 11em;
+  border-radius: 0.6em;
+  overflow: hidden;
+  border: 0.1em solid #343434;
+  box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.3), 0.2em 0.2em 0 rgb(0, 0, 0);
+  flex-shrink: 0;
+  flex-grow: 0;
+  background-size: cover;
+  background-position: center;
+}
+.card .cover::before {
+  content: "";
+  position: absolute;
+  border-radius: 0.6em;
+  z-index: 2;
+  inset: 0;
+  border: 0.15em solid rgba(255, 255, 255, 0.3);
+}
+.card .cover img {
+  height: 100%;
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+.card .content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  flex: 1;
+  margin-right: 0.3em;
+}
+.card .content .value {
+  display: flex;
+  font-size: 1.6em;
+  gap: 0.2em;
+  align-items: center;
+}
+.card .content .value .max-score-icon.score182000,
+.card .content .value .max-score-icon.score149500,
+.card .content .value .max-score-icon.score663000 {
+  width: 3.2em;
+  height: 1.2em;
+  scale: 1.1;
+  margin-top: 0.2em;
+}
+.card .content .value .val {
+  background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.4) 100%);
+  filter: drop-shadow(2px 4px 6px black);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.card .content .info {
+  display: flex;
+  margin-top: 0.3em;
+  margin-bottom: 0.6em;
+  font-size: 0.8em;
+}
+.card .content .info .time {
+  color: #979797;
+}
+.card .content .info .buffer {
+  color: #ccc;
+  margin-left: auto;
+}
+.card .content .info .buffer img {
+  width: 2em;
+  height: 2em;
+  border-radius: 0.3em;
+  border: 0.1em solid #444;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.card .content .list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 0.7fr;
+  align-items: flex-end;
+  gap: 1em;
+  margin-top: auto;
+  margin-bottom: 0.2em;
+}
+.card .content .list .item {
+  width: 100%;
+  position: relative;
+  border-radius: 0.5em;
+  box-shadow: 0 0 0 0.12em black, 0 0 0 0.24em #333534;
+  filter: drop-shadow(4px 6px 8px black);
+}
+.card .content .list .item > * {
+  position: inherit;
+  z-index: 1;
+}
+.card .content .list .item.bangboo {
+  font-size: 0.8em;
+  transform: scale(0.85);
+}
+.card .content .list .item .count {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0.1em 0.3em;
+  font-size: 0.8em;
+  border-bottom-left-radius: 0.3em;
+  border-top-right-radius: 0.5em;
+}
+.card .content .list .item .rank_disp {
+  position: absolute;
+  top: 0em;
+  left: 0em;
+  background-color: rgb(0, 0, 0);
+  z-index: 2;
+  padding: 0.1em;
+  border-bottom-right-radius: 0.25em;
+  border-top-left-radius: 0.25em;
+}
+.card .content .list .item .rank_disp .rank {
+  width: 1em;
+  color: white;
+  position: relative;
+}
+.card .content .list .item .rank_disp .rank::before {
+  content: "";
+  position: absolute;
+  top: -0.1em;
+  right: -0.4em;
+  width: 0.3em;
+  height: 0.3em;
+  background: radial-gradient(circle at 100% 0, transparent 0.3em, rgb(0, 0, 0) 0.3em);
+  rotate: 90deg;
+}
+.card .content .list .item .rank_disp .rank::after {
+  content: "";
+  position: absolute;
+  bottom: -0.4em;
+  left: -0.1em;
+  width: 0.3em;
+  height: 0.3em;
+  background: radial-gradient(circle at 100% 0, transparent 0.3em, rgb(0, 0, 0) 0.3em);
+  rotate: 90deg;
+}
+.card .content .list .item .image {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 0.5em;
+  overflow: hidden;
+}
+.card .content .list .item .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+.card .content .list .item.bangboo .image {
+  position: relative;
+}
+.card .content .list .item.bangboo .image img {
+  width: 210%;
+  height: 200%;
+  position: absolute;
+  object-position: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-40%, -35%);
+}
+.card .content .list .item .c-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgb(0, 0, 0);
+  color: white;
+  display: flex;
+  text-align: center;
+}
+.card .notes {
+  font-size: 0.8em;
+  margin: 0 2em;
+}
+.card .notes .command {
+  color: rgb(255, 215, 0);
+  padding: 0 0.3em;
+}
+
+/*# sourceMappingURL=index.css.map */
