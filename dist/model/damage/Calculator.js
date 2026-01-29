@@ -543,21 +543,18 @@ export class Calculator {
             if (isRatio && Math.abs(add) < 1 && (typeof value === 'number' || typeof value === 'string' || Array.isArray(value)))
                 add *= initial;
             if (buff.stackable === false) {
-                if (nonStackableBuffRecord.has(buff.name)) {
-                    const recorded = nonStackableBuffRecord.get(buff.name);
-                    if (Math.abs(recorded) >= Math.abs(add)) {
+                const recorded = nonStackableBuffRecord.get(buff.name);
+                if (recorded) {
+                    const recordedValue = this.usefulBuffResults.get(recorded).value;
+                    if (Math.abs(recordedValue) >= Math.abs(add)) {
                         logger.debug(`\tBuff：${buff.name}已存在，且数值相同/更高，不计入结果`);
                         return previousValue;
                     }
-                    else {
-                        logger.debug(`\tBuff：${buff.name}已存在，且数值更低，替换为更高数值`);
-                        previousValue -= recorded;
-                        nonStackableBuffRecord.set(buff.name, add);
-                    }
+                    logger.debug(`\tBuff：${buff.name}已存在，且数值更低，替换为更高数值`);
+                    previousValue -= recordedValue;
+                    this.usefulBuffResults.delete(recorded);
                 }
-                else {
-                    nonStackableBuffRecord.set(buff.name, add);
-                }
+                nonStackableBuffRecord.set(buff.name, buff);
             }
             if (!this.usefulBuffResults.has(buff))
                 this.usefulBuffResults.set(buff, { ...buff, value: add });
