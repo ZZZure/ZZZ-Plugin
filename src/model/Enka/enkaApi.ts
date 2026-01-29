@@ -3,9 +3,6 @@ import { Enka2Mys } from './formater.js'
 import settings from '../../lib/settings.js'
 import fetch from 'node-fetch'
 
-const config = settings.getConfig('config')
-const EnkaApi = config.enkaApi
-
 export function getGameRoles(uid: string | number, region = false) {
   const _uid = String(uid)
   switch (_uid.slice(0, -8)) {
@@ -42,7 +39,7 @@ export function parsePlayerInfo(SocialDetail: any = {}) {
  * @param uid
  */
 export async function refreshPanelFromEnka(uid: string | number) {
-  const res = await fetch(`${EnkaApi}${uid}`, {
+  const res = await fetch(`${settings.getConfig('config').enkaApi}${uid}`, {
     method: 'GET',
     headers: {
       'User-Agent': 'ZZZ-Plugin/UCPr',
@@ -66,7 +63,7 @@ export async function refreshPanelFromEnka(uid: string | number) {
 
 // import fs from 'fs'
 // const uid = 11070609
-// const res = await fetch(`${EnkaApi}${uid}`, {
+// const res = await fetch(`${settings.getConfig('config').enkaApi}${uid}`, {
 //   method: 'GET',
 //   headers: {
 //     'User-Agent': 'ZZZ-Plugin/UCPr',
