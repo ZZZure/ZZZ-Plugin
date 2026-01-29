@@ -1,8 +1,6 @@
 import { Enka2Mys } from './formater.js';
 import settings from '../../lib/settings.js';
 import fetch from 'node-fetch';
-const config = settings.getConfig('config');
-const EnkaApi = config.enkaApi;
 export function getGameRoles(uid, region = false) {
     const _uid = String(uid);
     switch (_uid.slice(0, -8)) {
@@ -33,7 +31,7 @@ export function parsePlayerInfo(SocialDetail = {}) {
     };
 }
 export async function refreshPanelFromEnka(uid) {
-    const res = await fetch(`${EnkaApi}${uid}`, {
+    const res = await fetch(`${settings.getConfig('config').enkaApi}${uid}`, {
         method: 'GET',
         headers: {
             'User-Agent': 'ZZZ-Plugin/UCPr',
