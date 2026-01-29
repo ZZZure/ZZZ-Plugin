@@ -62,3 +62,4 @@ export function getMonthlyData(uid) {
 export function saveMonthlyData(uid, data) {
     setDB('monthly', uid, data);
 }
+//# sourceMappingURL=db.js.map

@@ -143,3 +143,4 @@ export class Manage extends ZZZPlugin {
         this.resetGroupRank = manage.rank.resetGroupRank;
     }
 }
+//# sourceMappingURL=manage.js.map

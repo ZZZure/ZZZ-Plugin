@@ -22,3 +22,4 @@ export default {
         return this.guideSources.length;
     },
 };
+//# sourceMappingURL=guides.js.map

@@ -14,3 +14,4 @@ export const mapResourcesPath = path.join(resourcesPath, 'map');
 export const configPath = path.join(pluginPath, 'config');
 export const defPath = path.join(pluginPath, 'defSet');
 export const dataPath = path.join(pluginPath, 'data');
+//# sourceMappingURL=path.js.map

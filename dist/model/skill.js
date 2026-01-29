@@ -17,3 +17,4 @@ export class Skill {
         this.items = items;
     }
 }
+//# sourceMappingURL=skill.js.map

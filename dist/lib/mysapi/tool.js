@@ -181,3 +181,4 @@ export default class ZZZApiTool {
         return urlMap[this.game];
     };
 }
+//# sourceMappingURL=tool.js.map

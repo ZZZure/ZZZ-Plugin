@@ -47,3 +47,4 @@ export async function toSetDefaultDevice(e) {
         this.finish('toSetDefaultDevice');
     }
 }
+//# sourceMappingURL=device.js.map

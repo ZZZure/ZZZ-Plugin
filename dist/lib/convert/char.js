@@ -71,3 +71,4 @@ export const skinIdToFilename = (id, skin_id) => {
     const skinData = data.Skin;
     return skinData?.[skin_id]?.Image || null;
 };
+//# sourceMappingURL=char.js.map

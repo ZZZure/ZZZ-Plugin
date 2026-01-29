@@ -12,3 +12,4 @@ export const idToSprite = (bangboo_id) => {
 export const getAllBangbooID = () => {
     return Object.keys(BangbooId2Data);
 };
+//# sourceMappingURL=bangboo.js.map

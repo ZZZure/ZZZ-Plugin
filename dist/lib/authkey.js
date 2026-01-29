@@ -71,3 +71,4 @@ export const getAuthKey = async (e, _user, zzzUid, authAppid = 'csc') => {
     logger.debug(`[zzz:authkey]`, res);
     return res?.data?.authkey;
 };
+//# sourceMappingURL=authkey.js.map

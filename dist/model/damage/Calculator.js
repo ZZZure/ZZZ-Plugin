@@ -722,3 +722,4 @@ export class Calculator {
         return Math.min(Math.max(value, min), max);
     }
 }
+//# sourceMappingURL=Calculator.js.map

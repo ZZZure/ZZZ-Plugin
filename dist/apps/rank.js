@@ -238,3 +238,4 @@ export class Rank extends ZZZPlugin {
         await this.e.reply(`绝区零 UID: ${uid}，深渊排名功能已设置为: ${enableString}`, false, { at: true });
     }
 }
+//# sourceMappingURL=rank.js.map

@@ -6,3 +6,4 @@ const RANK_MAP = {
 export function getRankChar(id) {
     return RANK_MAP[id] || '';
 }
+//# sourceMappingURL=rank.js.map

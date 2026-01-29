@@ -16,3 +16,4 @@ export default {
     device,
     rank
 };
+//# sourceMappingURL=index.js.map

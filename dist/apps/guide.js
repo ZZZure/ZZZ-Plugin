@@ -150,3 +150,4 @@ export class Guide extends ZZZPlugin {
         await this.e.reply(reply_msg.join('\n'));
     }
 }
+//# sourceMappingURL=guide.js.map

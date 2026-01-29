@@ -83,3 +83,4 @@ export async function setCheckUpdateCron(e) {
         recallMsg: 100
     });
 }
+//# sourceMappingURL=version.js.map

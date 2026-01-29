@@ -89,3 +89,4 @@ export class update extends plugin {
         }
     }
 }
+//# sourceMappingURL=update.js.map

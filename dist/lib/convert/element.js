@@ -17,3 +17,4 @@ export function idToPropertyId(id) {
         return null;
     return data.property_id;
 }
+//# sourceMappingURL=element.js.map

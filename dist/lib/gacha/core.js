@@ -42,3 +42,4 @@ export const getZZZGachaLogByAuthkey = async (authKey, gachaType = '2001', initL
         return null;
     return new ZZZGachaLogResp(data.data);
 };
+//# sourceMappingURL=core.js.map

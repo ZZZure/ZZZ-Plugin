@@ -14,3 +14,4 @@ export const fileNameToId = (name) => {
 export const getAllWeaponID = () => {
     return Object.keys(WeaponId2Data);
 };
+//# sourceMappingURL=weapon.js.map

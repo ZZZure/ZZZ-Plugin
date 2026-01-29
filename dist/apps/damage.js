@@ -73,3 +73,4 @@ export class Damage extends ZZZPlugin {
             await redis.set(`ZZZ:PANEL:IMAGE:${res.message_id}`, parsedData.role_icon, { EX: 3600 * 3 });
     }
 }
+//# sourceMappingURL=damage.js.map

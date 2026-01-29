@@ -10,3 +10,4 @@ export function getMapData(fileName) {
     const mapData = fs.readFileSync(mapDataPath, 'utf-8');
     return JSON.parse(mapData);
 }
+//# sourceMappingURL=file.js.map

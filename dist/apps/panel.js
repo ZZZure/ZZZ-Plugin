@@ -279,3 +279,4 @@ export class Panel extends ZZZPlugin {
         await this.reply(segment.image(image));
     }
 }
+//# sourceMappingURL=panel.js.map

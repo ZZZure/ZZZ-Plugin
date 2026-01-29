@@ -101,3 +101,4 @@ export class monthly extends ZZZPlugin {
         return `${_year}${monthStr}`;
     }
 }
+//# sourceMappingURL=monthly.js.map

@@ -156,3 +156,4 @@ export class Weapon {
         this.square_icon = result;
     }
 }
+//# sourceMappingURL=equip.js.map

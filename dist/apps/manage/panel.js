@@ -178,3 +178,4 @@ export async function deleteCharacterImg(e) {
     ];
     return e.reply(await common.makeForwardMsg(e, msgs));
 }
+//# sourceMappingURL=panel.js.map

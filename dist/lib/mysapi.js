@@ -304,3 +304,4 @@ export default class MysZZZApi extends MysApi {
         return _data.data;
     }
 }
+//# sourceMappingURL=mysapi.js.map

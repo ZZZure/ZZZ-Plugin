@@ -67,3 +67,4 @@ export class Card extends ZZZPlugin {
         await this.render('card/index.html', data);
     }
 }
+//# sourceMappingURL=card.js.map

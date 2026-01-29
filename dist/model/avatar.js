@@ -418,3 +418,4 @@ export class ZZZUser {
         this.is_official = is_official;
     }
 }
+//# sourceMappingURL=avatar.js.map

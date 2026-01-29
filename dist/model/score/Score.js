@@ -349,3 +349,4 @@ const predefinedWeights = {
         }
     },
 };
+//# sourceMappingURL=Score.js.map

@@ -396,3 +396,4 @@ export class Character {
         this.cinema_image = result;
     }
 }
+//# sourceMappingURL=character.js.map

@@ -216,3 +216,4 @@ export class GachaLog extends ZZZPlugin {
         await this.reply(link);
     }
 }
+//# sourceMappingURL=gachalog.js.map

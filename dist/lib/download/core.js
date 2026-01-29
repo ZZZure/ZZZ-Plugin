@@ -26,3 +26,4 @@ export const checkFile = async (url, savePath) => {
     const download = await downloadFile(url, savePath);
     return download;
 };
+//# sourceMappingURL=core.js.map

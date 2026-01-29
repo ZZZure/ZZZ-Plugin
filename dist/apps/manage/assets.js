@@ -132,3 +132,4 @@ export async function deleteAll(e) {
     }
     await e.reply('资源图片已删除！', false, { at: true, recallMsg: 100 });
 }
+//# sourceMappingURL=assets.js.map

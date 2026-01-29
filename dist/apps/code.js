@@ -23,3 +23,4 @@ export class Code extends ZZZPlugin {
         return this.reply(msg);
     }
 }
+//# sourceMappingURL=code.js.map

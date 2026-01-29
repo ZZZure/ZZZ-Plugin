@@ -81,3 +81,4 @@ const version = {
     },
 };
 export default version;
+//# sourceMappingURL=version.js.map

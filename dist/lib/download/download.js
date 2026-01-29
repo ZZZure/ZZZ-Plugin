@@ -73,3 +73,4 @@ export const downloadHakushFile = async (_base, _localBase, filename = '') => {
         return null;
     }
 };
+//# sourceMappingURL=download.js.map

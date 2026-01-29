@@ -97,3 +97,4 @@ export async function setRefreshCharInterval(e) {
     settings.setSingleConfig('panel', 'roleInterval', refresh_char_interval);
     await e.reply(`绝区零刷新角色间隔已设置为: ${refresh_char_interval}毫秒`);
 }
+//# sourceMappingURL=config.js.map

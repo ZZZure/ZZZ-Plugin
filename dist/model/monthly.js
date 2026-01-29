@@ -77,3 +77,4 @@ export class Monthly {
         return `${this.data_month.slice(0, 4)}年${this.query_month}`;
     }
 }
+//# sourceMappingURL=monthly.js.map

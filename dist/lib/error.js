@@ -36,3 +36,4 @@ export class MysError extends Error {
         this.name = 'MysError';
     }
 }
+//# sourceMappingURL=error.js.map

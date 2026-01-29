@@ -171,3 +171,4 @@ export class DeadlyTime {
         this.day = data.day;
     }
 }
+//# sourceMappingURL=deadly.js.map

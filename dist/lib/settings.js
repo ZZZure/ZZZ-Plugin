@@ -180,3 +180,4 @@ class Setting {
     }
 }
 export default new Setting();
+//# sourceMappingURL=settings.js.map

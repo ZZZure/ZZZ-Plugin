@@ -219,3 +219,4 @@ export function set_buff(equips, buffM) {
     }
     buffM.default({});
 }
+//# sourceMappingURL=avatar.js.map

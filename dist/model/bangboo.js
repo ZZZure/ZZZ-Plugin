@@ -59,3 +59,4 @@ export class ZZZBangbooResp {
         }
     }
 }
+//# sourceMappingURL=bangboo.js.map

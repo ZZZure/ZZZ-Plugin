@@ -49,3 +49,4 @@ export async function resetGroupRank(e) {
         return e.reply('仅限主人操作', false, { at: true, recallMsg: 100 });
     }
 }
+//# sourceMappingURL=rank.js.map

@@ -30,3 +30,4 @@ export const getMonthlyCollect = async (api, deviceFp) => {
     const mergedData = saveMonthlyNewData(api.uid, ...newDatas);
     return mergedData;
 };
+//# sourceMappingURL=monthly.js.map

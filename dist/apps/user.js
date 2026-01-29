@@ -123,3 +123,4 @@ export class User extends ZZZPlugin {
         await this.reply(await common.makeForwardMsg(this.e, [msgs.join('\n')], '绑定设备帮助'));
     }
 }
+//# sourceMappingURL=user.js.map

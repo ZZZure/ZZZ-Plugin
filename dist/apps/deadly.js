@@ -66,3 +66,4 @@ export class deadly extends ZZZPlugin {
         await this.render('deadly/index.html', finalData, this);
     }
 }
+//# sourceMappingURL=deadly.js.map

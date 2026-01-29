@@ -13,3 +13,4 @@ export function idToSprite(equipId) {
 export function getAllSuitID() {
     return Object.keys(SuitData);
 }
+//# sourceMappingURL=equip.js.map

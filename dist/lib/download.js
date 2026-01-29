@@ -120,3 +120,4 @@ export const getHakushUI = async (filename) => {
     const result = await downloadHakushFile('ZZZ_UI', 'HAKUSH_UI_PATH', filename);
     return result;
 };
+//# sourceMappingURL=download.js.map

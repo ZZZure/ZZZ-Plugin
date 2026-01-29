@@ -61,3 +61,4 @@ export async function deleteAlias(e) {
         recallMsg: 100
     });
 }
+//# sourceMappingURL=alias.js.map

@@ -65,3 +65,4 @@ export class ZZZGachaLogResp {
         this.region_time_zone = region_time_zone;
     }
 }
+//# sourceMappingURL=gacha.js.map

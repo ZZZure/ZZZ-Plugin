@@ -24,3 +24,4 @@ export const getRemotePath = async (type, label, name) => {
 export const getResourceRemotePath = async (label, name) => {
     return getRemotePath(TYPE_PATH.resource, label, name);
 };
+//# sourceMappingURL=assets.js.map

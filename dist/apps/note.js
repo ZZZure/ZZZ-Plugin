@@ -36,3 +36,4 @@ export class Note extends ZZZPlugin {
         await this.render('note/index.html', finalData);
     }
 }
+//# sourceMappingURL=note.js.map

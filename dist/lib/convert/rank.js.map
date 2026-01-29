@@ -1,0 +1,1 @@
+{"version":3,"file":"rank.js","sourceRoot":"","sources":["../../../src/lib/convert/rank.ts"],"names":[],"mappings":"AAAA,MAAM,QAAQ,GAAG;IACf,GAAG,EAAE,GAAG;IACR,GAAG,EAAE,GAAG;IACR,GAAG,EAAE,GAAG;CACT,CAAA;AAKD,MAAM,UAAU,WAAW,CAAC,EAAyB;IACnD,OAAO,QAAQ,CAAC,EAAE,CAAC,IAAI,EAAE,CAAA;AAC3B,CAAC"}

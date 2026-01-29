@@ -100,3 +100,4 @@ function processVoidFrontBattleData(voidFrontBattle) {
     };
     return voidFrontBattle;
 }
+//# sourceMappingURL=voidFrontBattle.js.map

@@ -96,3 +96,4 @@ export async function removeUid2QQsMapping(group_id) {
         await redis.del(keys);
     }
 }
+//# sourceMappingURL=rank.js.map

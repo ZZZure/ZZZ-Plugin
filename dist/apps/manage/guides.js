@@ -51,3 +51,4 @@ export async function setMaxForwardGuide(e) {
     settings.setSingleConfig('guide', 'max_forward_guides', max_forward_guide);
     await e.reply(`绝区零所有攻略显示个数已设置为: ${max_forward_guide}`, false, { at: true, recallMsg: 100 });
 }
+//# sourceMappingURL=guides.js.map

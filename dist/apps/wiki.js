@@ -114,3 +114,4 @@ export class Wiki extends ZZZPlugin {
         await this.render('cinema/index.html', finalData);
     }
 }
+//# sourceMappingURL=wiki.js.map

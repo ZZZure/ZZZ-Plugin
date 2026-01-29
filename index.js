@@ -2,6 +2,12 @@
 import { configPath, dataPath, appPath } from './dist/lib/path.js'
 import fs from 'fs'
 
+try {
+  await import('source-map-support/register.js')
+} catch {
+  //
+}
+
 logger.info('*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*')
 logger.info('ZZZ-Plugin 加载中')
 logger.info('仓库地址 https://github.com/ZZZure/ZZZ-plugin')

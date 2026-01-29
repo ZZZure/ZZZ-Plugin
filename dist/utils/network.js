@@ -32,3 +32,4 @@ export function getQueryVariable(url, variable) {
     const key = searchParams.get(variable);
     return key;
 }
+//# sourceMappingURL=network.js.map

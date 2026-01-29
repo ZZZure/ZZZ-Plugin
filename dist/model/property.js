@@ -13,3 +13,4 @@ export class Property {
         this.final = final;
     }
 }
+//# sourceMappingURL=property.js.map

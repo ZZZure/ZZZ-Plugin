@@ -5,3 +5,4 @@ export * as equip from './convert/equip.js';
 export * as rank from './convert/rank.js';
 export * as property from './convert/property.js';
 export * as bangboo from './convert/bangboo.js';
+//# sourceMappingURL=convert.js.map

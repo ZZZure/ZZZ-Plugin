@@ -110,3 +110,4 @@ export const formatPanelDatas = (data) => {
 export const formatPanelData = (data) => {
     return new ZZZAvatarInfo(data);
 };
+//# sourceMappingURL=avatar.js.map

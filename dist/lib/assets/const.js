@@ -20,3 +20,4 @@ export const RESOURCE_PATH = {
 export const GUIDE_PATH = {
     flower: 'flower',
 };
+//# sourceMappingURL=const.js.map

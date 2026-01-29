@@ -23,3 +23,4 @@ export const mdLogLineToHTML = function (line) {
     line = line.replace(/ⁿᵉʷ/g, '<span class="new"></span>');
     return line.trim();
 };
+//# sourceMappingURL=data.js.map

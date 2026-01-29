@@ -18,3 +18,4 @@ export const isSkillLevelLegal = (key, level) => {
     }
     return Number.isInteger(level) && level >= 1 && level <= 12;
 };
+//# sourceMappingURL=hakush.js.map

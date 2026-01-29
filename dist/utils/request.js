@@ -64,3 +64,4 @@ request.post = async (url, data, options = {}) => {
     return request(url, { ...restOptions, method: 'POST', body }, retry, timeout);
 };
 export default request;
+//# sourceMappingURL=request.js.map

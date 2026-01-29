@@ -45,3 +45,4 @@ export class Calendar extends ZZZPlugin {
         }
     }
 }
+//# sourceMappingURL=calendar.js.map

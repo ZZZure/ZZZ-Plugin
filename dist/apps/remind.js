@@ -459,3 +459,4 @@ export class Remind extends ZZZPlugin {
         await this.reply(`当前全局提醒时间: ${globalRemindTime}`);
     }
 }
+//# sourceMappingURL=remind.js.map

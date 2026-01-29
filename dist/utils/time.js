@@ -5,3 +5,4 @@ export const converSecondsToHM = (seconds) => {
     return [hh, mm];
 };
 export const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+//# sourceMappingURL=time.js.map

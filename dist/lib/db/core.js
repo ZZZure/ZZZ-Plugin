@@ -78,3 +78,4 @@ export function removeAllDB(dbName) {
         return false;
     }
 }
+//# sourceMappingURL=core.js.map

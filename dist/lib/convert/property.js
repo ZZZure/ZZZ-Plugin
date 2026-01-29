@@ -83,3 +83,4 @@ export const nameZHToNameEN = (propNameZH) => {
     ;
     return '';
 };
+//# sourceMappingURL=property.js.map
