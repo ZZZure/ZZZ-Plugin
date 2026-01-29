@@ -28,6 +28,7 @@ export const scoreFnc: {
 
 export type scoreFunction = typeof scoreFnc[string]
 
+/** 角色伤害计算文件默认导出模型 */
 export interface CharCalcModel {
 	/** 规则名 */
 	name: string
@@ -50,11 +51,13 @@ export interface CharCalcModel {
 	skills: skill[]
 }
 
+/** 武器伤害计算文件导出模型 */
 export interface WeaponCalcModel {
 	calc?: (buffM: BuffManager, star: number) => void
 	buffs: buff[]
 }
 
+/** 套装伤害计算文件导出模型 */
 export interface SetCalcModel {
 	calc?: (buffM: BuffManager, count: number) => void
 	buffs: buff[]

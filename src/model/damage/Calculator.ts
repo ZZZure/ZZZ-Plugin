@@ -200,7 +200,7 @@ export class Calculator {
   readonly avatar: ZZZAvatarInfo
   readonly skills: skill[] = []
   /** 对当前所计算的技能有用的buff、计算后的buff */
-  private readonly usefulBuffResults: Map<buff, buff> = new Map()
+  private readonly usefulBuffResults: Map<buff, buff & { value: number }> = new Map()
   /** 技能伤害缓存 */
   private cache: { [type: string]: damage } = Object.create(null)
   /** 角色属性缓存 */
@@ -798,7 +798,7 @@ export class Calculator {
    * @param isRatio 是否启用buff.value为数值/字符串/数组类型且计算结果值<1时按 **`初始数值`** 百分比提高处理
    */
   get(type: buff['type'], initial: number, skill: skill = this.skill, usefulBuffs: buff[] = this.buffM.buffs, isRatio = false): number {
-    const nonStackableBuffRecord = new Map<string, number>()
+    const nonStackableBuffRecord = new Map<string, buff>()
     return this.props[type] ??= this.buffM._filter(usefulBuffs, {
       element: skill?.element,
       range: [skill?.type],
@@ -812,19 +812,18 @@ export class Calculator {
         add *= initial
       // 检查不可叠加buff
       if (buff.stackable === false) {
-        if (nonStackableBuffRecord.has(buff.name)) {
-          const recorded = nonStackableBuffRecord.get(buff.name)!
-          if (Math.abs(recorded) >= Math.abs(add)) {
+        const recorded = nonStackableBuffRecord.get(buff.name)
+        if (recorded) {
+          const recordedValue = this.usefulBuffResults.get(recorded)!.value
+          if (Math.abs(recordedValue) >= Math.abs(add)) {
             logger.debug(`\tBuff：${buff.name}已存在，且数值相同/更高，不计入结果`)
             return previousValue
-          } else {
-            logger.debug(`\tBuff：${buff.name}已存在，且数值更低，替换为更高数值`)
-            previousValue -= recorded
-            nonStackableBuffRecord.set(buff.name, add)
           }
-        } else {
-          nonStackableBuffRecord.set(buff.name, add)
+          logger.debug(`\tBuff：${buff.name}已存在，且数值更低，替换为更高数值`)
+          previousValue -= recordedValue
+          this.usefulBuffResults.delete(recorded)
         }
+        nonStackableBuffRecord.set(buff.name, buff)
       }
       if (!this.usefulBuffResults.has(buff))
         this.usefulBuffResults.set(buff, { ...buff, value: add })

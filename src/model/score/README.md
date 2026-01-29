@@ -50,7 +50,7 @@ export default function (avatar) {
 }
 ```
 
-- 函数参数：[ZZZAvatarInfo](../avatar.ts#L174)（角色数据）
+- 函数参数：[ZZZAvatarInfo](../avatar.ts#L128)（角色数据）
 
 - 函数返回值：
   - 元组：[评分规则名, 权重数据]
