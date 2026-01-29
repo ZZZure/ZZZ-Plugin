@@ -216,7 +216,7 @@ export class ZZZPlugin extends plugin {
                         copyright: `Created By ${version.name}<span class="version">${version.yunzai}</span> & ${pluginName}<span class="version">${version.version}</span>`,
                         createdby: `Created By <div class="highlight"><span>${pluginName}</span><div class="version">${version.version}</div></div> & Powered By <div class="highlight">ZZZure</div>`,
                     },
-                    quality: 90,
+                    quality: cfg.quality || 90,
                 };
             },
         });
