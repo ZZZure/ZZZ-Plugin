@@ -239,7 +239,13 @@ export class ZZZPlugin extends plugin {
     renderData: any = {},
     cfg: {
       e?: EventType
+      /**
+       * 渲染缩放比例，默认1
+       * @description 最终缩放比例为：该值 * (用户配置渲染精度 / 100 * 2)
+       */
       scale?: number
+      /** 渲染质量，取值范围为1-100，默认90 */
+      quality?: number
       retType?: 'default' | 'base64' | 'msgId'
       recallMsg?: number
       beforeRender?: (options: { data: any }) => any
@@ -312,7 +318,7 @@ export class ZZZPlugin extends plugin {
             // 版权信息（简化版）
             createdby: `Created By <div class="highlight"><span>${pluginName}</span><div class="version">${version.version}</div></div> & Powered By <div class="highlight">ZZZure</div>`,
           },
-          quality: 90,
+          quality: cfg.quality || 90,
         }
       },
     })
