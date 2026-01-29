@@ -401,12 +401,19 @@ export class Rank extends ZZZPlugin {
 
     // 类型判断
     let rank_types: string[] = []
+    let rank_type_str = ''
     if (/式舆防卫战|式舆|深渊|防卫战|防卫/.test(this.e.msg)) {
       rank_types = ['ABYSS']
+      rank_type_str = '式舆防卫战'
     } else if (/危局强袭战|危局|强袭|强袭战/.test(this.e.msg)) {
       rank_types = ['DEADLY']
+      rank_type_str = '危局强袭战'
+    } else if (/临界推演|临界|推演/.test(this.e.msg)) {
+      rank_types = ['VOID_FRONT_BATTLE']
+      rank_type_str = '临界推演'
     } else {
-      rank_types = ['ABYSS', 'DEADLY']
+      rank_types = ['ABYSS', 'DEADLY', 'VOID_FRONT_BATTLE']
+      rank_type_str = '式舆防卫战、危局强袭战和临界推演'
     }
 
     for (const rank_type of rank_types) {
@@ -414,7 +421,7 @@ export class Rank extends ZZZPlugin {
     }
     const enableString = isEnable ? '显示' : '隐藏'
     await this.e.reply(
-      `绝区零 UID: ${uid}，深渊排名功能已设置为: ${enableString}`,
+      `绝区零 UID: ${uid}，${rank_type_str}排名功能已设置为: ${enableString}`,
       false,
       { at: true }
     )
