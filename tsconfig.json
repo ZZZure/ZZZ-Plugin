@@ -9,6 +9,7 @@
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
     "removeComments": true,
+    "sourceMap": true,
     "strictPropertyInitialization": false,
     "skipLibCheck": true,
     "declaration": false,

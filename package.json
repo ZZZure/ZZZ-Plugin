@@ -20,6 +20,9 @@
   "imports": {
     "#interface": "./src/@types/interface.d.ts"
   },
+  "dependencies": {
+    "source-map-support": "^0.5.21"
+  },
   "peerDependencies": {
     "chokidar": "^4.0.3",
     "icqq": "*",
