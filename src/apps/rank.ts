@@ -126,9 +126,6 @@ export class Rank extends ZZZPlugin {
       return this.reply('没有式舆防卫战排名，请先 %显示深渊排名，并且用 %深渊 查询战绩')
     }
 
-    // DEBUG: 将scoredData[0] 复制 15 次，加到scoredData 中
-    scoredData = [...scoredData, ...Array(15).fill(scoredData[0])]
-
     // 使用自定义比较函数排序
     scoredData.sort((a, b) => {
       // 首先比较得分，降序
@@ -235,9 +232,6 @@ export class Rank extends ZZZPlugin {
     if (scoredData.length === 0) {
       return this.reply('没有危局强袭战排名，请先 %显示危局排名，并且用 %危局 查询战绩')
     }
-
-    // DEBUG: 将scoredData[0] 复制 15 次，加到scoredData 中
-    scoredData = [...scoredData, ...Array(15).fill(scoredData[0])]
 
     // 使用自定义比较函数排序，避免溢出问题
     scoredData.sort((a, b) => {
@@ -351,9 +345,6 @@ export class Rank extends ZZZPlugin {
     if (scoredData.length === 0) {
       return this.reply('没有危局强袭战排名，请先 %显示危局排名，并且用 %危局 查询战绩')
     }
-
-    // DEBUG: 将scoredData[0] 复制 15 次，加到scoredData 中
-    scoredData = [...scoredData, ...Array(15).fill(scoredData[0])]
 
     // 使用自定义比较函数排序，避免溢出问题
     scoredData.sort((a, b) => {
