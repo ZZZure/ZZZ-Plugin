@@ -15,6 +15,7 @@ import _ from 'lodash'
 
 export class Rank extends ZZZPlugin {
   isGroupRankAllowed: typeof isGroupRankAllowed
+  quality: number
   scale: number
 
   constructor() {
@@ -44,6 +45,7 @@ export class Rank extends ZZZPlugin {
     })
     this.isGroupRankAllowed = isGroupRankAllowed
     this.quality = 60
+    this.scale = 0.5
   }
 
   async abyssRank() {
