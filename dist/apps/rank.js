@@ -1,5 +1,5 @@
 import { isUserRankAllowed, isGroupRankAllowed, getUsersInGroupRank, setUserRankAllowed, getUid2QQsMapping, removeUidAllRecord, } from '../lib/rank.js';
-import { getAbyssDataInGroupRank, getDeadlyDataInGroupRank } from '../lib/db.js';
+import { getAbyssDataInGroupRank, getDeadlyDataInGroupRank, getVoidFrontBattleDataInGroupRank } from '../lib/db.js';
 import { rulePrefix } from '../lib/common.js';
 import { ZZZPlugin } from '../lib/plugin.js';
 import { Deadly } from '../model/deadly.js';
@@ -7,6 +7,7 @@ import settings from '../lib/settings.js';
 import _ from 'lodash';
 export class Rank extends ZZZPlugin {
     isGroupRankAllowed;
+    quality;
     scale;
     constructor() {
         super({
@@ -24,13 +25,18 @@ export class Rank extends ZZZPlugin {
                     fnc: 'deadlyRank'
                 },
                 {
+                    reg: `${rulePrefix}(临界推演|临界|推演)排名$`,
+                    fnc: 'voidFrontBattleRank'
+                },
+                {
                     reg: `${rulePrefix}(显示|展示|开启|打开|on|启用|启动|隐藏|取消显示|关闭|关掉|off|禁用|停止)(式舆防卫战|式舆|深渊|防卫战|防卫|危局强袭战|危局|强袭|强袭战)?(群(内)?)?排名$`,
                     fnc: 'switchRank'
                 }
             ]
         });
         this.isGroupRankAllowed = isGroupRankAllowed;
-        this.scale = 0.25;
+        this.quality = 60;
+        this.scale = 0.5;
     }
     async abyssRank() {
         const rank_type = 'ABYSS';
@@ -201,6 +207,80 @@ export class Rank extends ZZZPlugin {
         const finalData = { scoredData };
         await this.render('rank/deadly/index.html', finalData, this);
     }
+    async voidFrontBattleRank() {
+        const rank_type = 'VOID_FRONT_BATTLE';
+        if (!(this.e?.group_id)) {
+            return this.reply('请在群聊中使用该命令！');
+        }
+        if (!this.isGroupRankAllowed()) {
+            await this.reply('当前群临界推演排名功能已关闭！');
+        }
+        const uidInGroupRank = await getUsersInGroupRank(rank_type, this.e.group_id);
+        const memberMap = await this.e.group?.getMemberMap() || new Map();
+        const qqInGroupSet = new Set(Array.from(memberMap.keys(), String));
+        const uid2qqs = await getUid2QQsMapping(this.e.group_id);
+        const uidInGroupRankFiltered = [];
+        for (const uid of uidInGroupRank) {
+            if (uid in uid2qqs && uid2qqs[uid].some(qq => qqInGroupSet.has(qq))) {
+                uidInGroupRankFiltered.push(uid);
+            }
+            else {
+                await removeUidAllRecord(this.e.group_id, uid);
+            }
+        }
+        const rawData = getVoidFrontBattleDataInGroupRank(uidInGroupRankFiltered);
+        const currentTimestamp = Math.floor(Date.now() / 1000);
+        const filteredByUser = [];
+        for (const item of rawData) {
+            const gameUid = _.get(item, 'player.player.game_uid');
+            const userRankAllowed = await isUserRankAllowed(rank_type, gameUid, this.e.group_id);
+            if (/^[0-9]{8}$/.test(gameUid) && userRankAllowed) {
+                filteredByUser.push(item);
+            }
+        }
+        let scoredData = filteredByUser
+            .filter(item => {
+            const endTS = _.get(item, 'result.void_front_battle_abstract_info_brief.end_ts');
+            return currentTimestamp <= endTS;
+        })
+            .filter(item => _.get(item, 'result.void_front_battle_abstract_info_brief.has_ending_record') === true)
+            .map(item => {
+            const totalScore = _.get(item, 'result.void_front_battle_abstract_info_brief.total_score', 0);
+            const bossChallengeTime = _.get(item, 'result.boss_challenge_record.main_challenge_record.challenge_time');
+            const challenges = _.get(item, 'result.main_challenge_record_list');
+            let updateTime = new Date(bossChallengeTime.year, bossChallengeTime.month - 1, bossChallengeTime.day, bossChallengeTime.hour, bossChallengeTime.minute, bossChallengeTime.second).getTime() / 1000;
+            for (const challenge of challenges) {
+                const { year, month, day, hour, minute, second } = challenge.challenge_time;
+                const challengeTime = new Date(year, month - 1, day, hour, minute, second).getTime() / 1000;
+                updateTime = Math.max(updateTime, challengeTime);
+            }
+            if (updateTime === 0) {
+                updateTime = currentTimestamp;
+            }
+            return {
+                ...item,
+                result: item.result,
+                score: {
+                    totalScore,
+                    updateTime
+                }
+            };
+        });
+        if (scoredData.length === 0) {
+            return this.reply('没有危局强袭战排名，请先 %显示危局排名，并且用 %危局 查询战绩');
+        }
+        scoredData.sort((a, b) => {
+            if (a.score.totalScore !== b.score.totalScore) {
+                return b.score.totalScore - a.score.totalScore;
+            }
+            return a.score.updateTime - b.score.updateTime;
+        });
+        let maxDisplay = _.get(settings.getConfig('rank'), 'max_display', 15);
+        maxDisplay = Math.max(1, Math.min(maxDisplay, 15));
+        scoredData = scoredData.slice(0, maxDisplay);
+        const finalData = { scoredData };
+        await this.render('rank/voidFrontBattle/index.html', finalData, this);
+    }
     async switchRank() {
         if (!(this.e?.group_id)) {
             return this.reply('请在群聊中使用该命令！');
@@ -222,20 +302,28 @@ export class Rank extends ZZZPlugin {
             return this.reply('请输入"显示"或"隐藏"来设置是否显示个人的深渊排名', false, { at: true });
         }
         let rank_types = [];
+        let rank_type_str = '';
         if (/式舆防卫战|式舆|深渊|防卫战|防卫/.test(this.e.msg)) {
             rank_types = ['ABYSS'];
+            rank_type_str = '式舆防卫战';
         }
         else if (/危局强袭战|危局|强袭|强袭战/.test(this.e.msg)) {
             rank_types = ['DEADLY'];
+            rank_type_str = '危局强袭战';
+        }
+        else if (/临界推演|临界|推演/.test(this.e.msg)) {
+            rank_types = ['VOID_FRONT_BATTLE'];
+            rank_type_str = '临界推演';
         }
         else {
-            rank_types = ['ABYSS', 'DEADLY'];
+            rank_types = ['ABYSS', 'DEADLY', 'VOID_FRONT_BATTLE'];
+            rank_type_str = '式舆防卫战、危局强袭战和临界推演';
         }
         for (const rank_type of rank_types) {
             await setUserRankAllowed(rank_type, uid, this.e.group_id, isEnable ? 1 : 0);
         }
         const enableString = isEnable ? '显示' : '隐藏';
-        await this.e.reply(`绝区零 UID: ${uid}，深渊排名功能已设置为: ${enableString}`, false, { at: true });
+        await this.e.reply(`绝区零 UID: ${uid}，${rank_type_str}排名功能已设置为: ${enableString}`, false, { at: true });
     }
 }
 //# sourceMappingURL=rank.js.map

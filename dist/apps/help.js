@@ -184,6 +184,13 @@ const helpData = [
                 commands: ['危局强袭战排名', '危局排名', '强袭战排名'],
             },
             {
+                title: '查看临界推演排名',
+                desc: '查看临界推演战斗群排名',
+                needCK: false,
+                needSK: false,
+                commands: ['临界推演排名', '临界排名', '推演排名'],
+            },
+            {
                 title: '显示/隐藏深渊排名',
                 desc: '显示/隐藏自己的深渊群排名',
                 needCK: false,

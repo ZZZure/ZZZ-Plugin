@@ -1,0 +1,164 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{@sys.currentPath}}/index.css">
+{{/block}}
+
+{{block 'main'}}
+<div class="card">
+  <% include(sys.specialTitle, {en: 'VOID FRONT BATTLE RANK' , cn: '临界推演排名' }) %>
+    {{each scoredData record i}}
+    <div class="record">
+      <div class="user-info">
+        <link rel="stylesheet" type="text/css" href="{{@sys.resourcesPath}}/common/layout/playerinfo.css" />
+        {{set avatar = record.player.avatar}}
+        {{set player = record.player.player}}
+        <div class="avatar">
+          <img src="{{avatar}}" alt="Avatar">
+        </div>
+        <div class="info-bar">
+          <div class="info">
+            <div class="nickname">{{player.nickname}}</div>
+          </div>
+          <div class="info">
+            <div class="label level">Lv{{player.level}}</div>
+            <div class="label server">{{player.region_name}}</div>
+          </div>
+          <div class="uid">UID {{player.game_uid}}</div>
+        </div>
+        <div class="result">
+          <div class="value">
+            <div class="label">总得分</div>
+            {{if record.result.void_front_battle_abstract_info_brief.total_score === 663000}}
+              <div class="max-score-icon score663000"></div>
+            {{else}}
+              <div class="total-score">{{record.result.void_front_battle_abstract_info_brief.total_score}}</div>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+      {{set bossRecord = record.result.boss_challenge_record}}
+      <div class="item-card boss-card">
+        <div class="pop"><img src="{{bossRecord.main_challenge_record.buffer.icon}}" alt=""></div>
+        <div class="content">
+          <div class="header">
+            <div class="left">
+              <div class="name">{{bossRecord.boss_info.name}}</div>
+              {{if bossRecord.main_challenge_record.score === 182000}}
+                <div class="max-score-icon score182000"></div>
+              {{else}}
+                <div class="score">{{bossRecord.main_challenge_record.score}}</div>
+              {{/if}}
+            </div>
+            <div class="right">
+              <div class="rating-icon {{bossRecord.main_challenge_record.star.replace('+', 'P')}}"></div>
+            </div>
+          </div>
+          <div class="list">
+            <% for(let j=0 ; j < 3 ; j++) { %>
+            <div class="char-container">
+              {{if bossRecord.main_challenge_record.avatar_list?.[j]}}
+              <div class="item char">
+                {{if bossRecord.main_challenge_record.avatar_list[j].rank}}
+                <div class="count">{{bossRecord.main_challenge_record.avatar_list[j].rank}}</div>
+                {{/if}}
+                <div class="rank_disp">
+                  <div class="rank rank-icon {{bossRecord.main_challenge_record.avatar_list[j].rarity}}"></div>
+                </div>
+                <div class="image">
+                  <img src="{{bossRecord.main_challenge_record.avatar_list[j].role_square_url}}" alt="">
+                </div>
+              </div>
+              {{else}}
+                <div class="item char"></div>
+                {{/if}}
+            </div>
+            <% } %>
+            <div class="bangboo-container">
+              {{if bossRecord.main_challenge_record.buddy}}
+              <div class="item bangboo">
+                <div class="rank_disp">
+                  <div class="rank rank-icon {{bossRecord.main_challenge_record.buddy.rarity}}"></div>
+                </div>
+                <div class="image">
+                  <img src="{{bossRecord.main_challenge_record.buddy.bangboo_rectangle_url}}" alt="">
+                </div>
+              </div>
+              {{else}}
+              <div class="item bangboo"></div>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <% for(let i=0 ; i < 3 ; i++) { %>
+      {{set stage = record.result.main_challenge_record_list[i]}}
+      <div class="item-card">
+        {{if stage}}
+        <div class="pop"><img src="{{stage.buffer.icon}}" alt=""></div>
+        <div class="content">
+          <div class="header">
+            <div class="left">
+              <div class="name">{{stage.name}}</div>
+              {{if i === 0 && stage.score === 182000}}
+                <div class="max-score-icon score182000"></div>
+              {{else if i > 0 && stage.score === 149500}}
+                <div class="max-score-icon score149500"></div>
+              {{else}}
+                <div class="score">{{stage.score}}</div>
+              {{/if}}
+            </div>
+            <div class="right">
+              <div class="rating-icon {{stage.star.replace('+', 'P')}}"></div>
+            </div>
+          </div>
+          <div class="list">
+            <% for(let j=0 ; j < 3 ; j++) { %>
+            <div class="char-container">
+              {{if stage.avatar_list?.[j]}}
+              <div class="item char">
+                {{if stage.avatar_list[j].rank}}
+                <div class="count">{{stage.avatar_list[j].rank}}</div>
+                {{/if}}
+                <div class="rank_disp">
+                  <div class="rank rank-icon {{stage.avatar_list[j].rarity}}"></div>
+                </div>
+                <div class="image">
+                  <img src="{{stage.avatar_list[j].role_square_url}}" alt="">
+                </div>
+              </div>
+              {{else}}
+                <div class="item char"></div>
+                {{/if}}
+            </div>
+            <% } %>
+            <div class="bangboo-container">
+              {{if stage.buddy}}
+              <div class="item bangboo">
+                <div class="rank_disp">
+                  <div class="rank rank-icon {{stage.buddy.rarity}}"></div>
+                </div>
+                <div class="image">
+                  <img src="{{stage.buddy.bangboo_rectangle_url}}" alt="">
+                </div>
+              </div>
+              {{else}}
+              <div class="item bangboo"></div>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+        {{/if}}
+      </div>
+      <% } %>
+    </div>
+    {{/each}}
+    <div class="notes-container">
+      <ul class="notes">
+        <li>请在群内查询<span class="command">%临界推演</span>，以参与对应群的临界推演排名</li>
+        <li>对于分数持平的情况，会根据分数的更新时间进行排序，更新时间越早的排名越靠前</li>
+      </ul>
+    </div>
+</div>
+
+{{/block}}

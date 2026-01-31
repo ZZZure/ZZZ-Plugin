@@ -86,7 +86,7 @@ export class Manage extends ZZZPlugin {
                     fnc: 'deleteCharacterImg'
                 },
                 {
-                    reg: `${rulePrefix}(开启|打开|on|启用|启动|关闭|关掉|off|禁用|停止)群(内)?(式舆防卫战|式舆|深渊|防卫战|防卫|危局强袭战|危局|强袭|强袭战)排名$`,
+                    reg: `${rulePrefix}(开启|打开|on|启用|启动|关闭|关掉|off|禁用|停止)群(内)?(式舆防卫战|式舆|深渊|防卫战|防卫|危局强袭战|危局|强袭|强袭战|临界推演|临界|推演)排名$`,
                     fnc: 'switchGroupRank'
                 },
                 {
