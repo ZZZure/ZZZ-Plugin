@@ -97,7 +97,7 @@ export const updatePanelData = (uid: string, newData: Mys.Avatar[]) => {
 
   // 标记新数据
   finalData.forEach(item => {
-    item.isNew = !!newData.find(i => i.id === item.id)
+    item.isNew = newData.some(i => i.id === item.id)
   })
 
   return finalData

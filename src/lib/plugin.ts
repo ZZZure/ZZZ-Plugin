@@ -182,9 +182,9 @@ export class ZZZPlugin extends plugin {
    * 获取玩家信息（当调用此方法时，会获取用户的玩家信息，
    * 并将其保存到`e.playerCard`中，方便渲染用户信息（此部分请查阅`lib/render.js`中两个模块的作用））
    */
-  async getPlayerInfo(playerData: Mys.User | null = null) {
-    let player: Mys.User['list'][number] | null = null
-    if (!playerData) {
+  async getPlayerInfo(player: Mys.User['list'][number] | null = null) {
+    let playerData: Mys.User | null = null
+    if (!player) {
       // 获取 米游社 API
       const { api, uid } = await this.getAPI()
       if (!api) {
@@ -199,8 +199,6 @@ export class ZZZPlugin extends plugin {
       if (!playerData) throw new Error('获取用户数据失败')
       // 取第一个用户信息
       player = playerData?.list?.find(item => item.game_uid == uid) || playerData?.list?.[0]
-    } else {
-      player = playerData.list?.[0] || null
     }
     if (!player) {
       throw new Error('获取玩家信息失败')
