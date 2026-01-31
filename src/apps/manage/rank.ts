@@ -46,9 +46,12 @@ export async function resetGroupRank(e: EventType) {
     } else if (/危局强袭战|危局|强袭|强袭战/.test(e.msg)) {
       rank_types = ['DEADLY']
       rank_type_str = '危局强袭战'
+    } else if (/临界推演|临界|推演/.test(e.msg)) {
+      rank_types = ['VOID_FRONT_BATTLE']
+      rank_type_str = '临界推演'
     } else {
-      rank_types = ['ABYSS', 'DEADLY']
-      rank_type_str = '式舆防卫战和危局强袭战'
+      rank_types = ['ABYSS', 'DEADLY', 'VOID_FRONT_BATTLE']
+      rank_type_str = '式舆防卫战、危局强袭战和临界推演'
     }
     for (const rank_type of rank_types) {
       await removeGroupRank(rank_type, e.group_id)
