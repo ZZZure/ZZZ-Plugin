@@ -58,7 +58,7 @@ export const updatePanelData = (uid, newData) => {
     }
     savePanelData(uid, finalData);
     finalData.forEach(item => {
-        item.isNew = !!newData.find(i => i.id === item.id);
+        item.isNew = newData.some(i => i.id === item.id);
     });
     return finalData;
 };

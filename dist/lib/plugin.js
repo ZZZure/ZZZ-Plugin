@@ -142,9 +142,9 @@ export class ZZZPlugin extends plugin {
         }
         return { api, uid, deviceFp };
     }
-    async getPlayerInfo(playerData = null) {
-        let player = null;
-        if (!playerData) {
+    async getPlayerInfo(player = null) {
+        let playerData = null;
+        if (!player) {
             const { api, uid } = await this.getAPI();
             if (!api) {
                 throw new Error('获取米游社API失败');
@@ -156,9 +156,6 @@ export class ZZZPlugin extends plugin {
             if (!playerData)
                 throw new Error('获取用户数据失败');
             player = playerData?.list?.find(item => item.game_uid == uid) || playerData?.list?.[0];
-        }
-        else {
-            player = playerData.list?.[0] || null;
         }
         if (!player) {
             throw new Error('获取玩家信息失败');
