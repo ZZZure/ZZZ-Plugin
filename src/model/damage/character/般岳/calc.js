@@ -41,7 +41,12 @@ export default {
     {
       name: "核心被动：群山如我",
       type: "贯穿力",
-      value: ({ calc }) => Math.trunc(calc.get_HP() * 0.1 + 150 + 25 * calc.get_SkillLevel("C")),
+      value: ({ calc }) => Math.trunc(calc.get_HP() * 0.1),
+    },
+    {
+      name: "核心被动：群山如我",
+      type: "贯穿力",
+      value: [150, 175, 200, 225, 250, 275, 300],
     },
     {
       name: "核心被动：群山如我",
