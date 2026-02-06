@@ -8279,8 +8279,8 @@
         "Image": "IconRole45"
       },
       "3114211": {
-        "Name": "AvatarSkin_PanYinhu_Name_001",
-        "Desc": "AvatarSkin_PanYinhu_Desc_001",
+        "Name": "潘引壶·馔玉烹金",
+        "Desc": "师哥也曾梦想成为一名伟大的厨子，但这世道里，总有想砸你锅碗瓢盆的歹人。\n——「你砸一个试试？」",
         "Image": "IconRole45_01"
       }
     }
@@ -9502,9 +9502,9 @@
     }
   },
   "1491": {
-    "sprite_id": "",
+    "sprite_id": "58",
     "name": "千夏",
-    "full_name": "Partner_Name_1491",
+    "full_name": "千夏",
     "en_name": "Sunna",
     "WeaponType": "4",
     "ElementType": "200",
@@ -9513,7 +9513,7 @@
     "Rarity": "S",
     "Attack": 108,
     "AttackGrowth": 63517,
-    "BreakStun": 83,
+    "BreakStun": 98,
     "Defence": 48,
     "DefenceGrowth": 65524,
     "HpMax": 681,
@@ -9604,7 +9604,7 @@
             "Prop": 12102,
             "Name": "攻击力",
             "Format": "{0:0.#%}",
-            "Value": 600
+            "Value": 700
           }
         }
       },
@@ -9621,7 +9621,7 @@
             "Prop": 12102,
             "Name": "攻击力",
             "Format": "{0:0.#%}",
-            "Value": 600
+            "Value": 700
           }
         }
       },
@@ -9638,7 +9638,7 @@
             "Prop": 12102,
             "Name": "攻击力",
             "Format": "{0:0.#%}",
-            "Value": 1200
+            "Value": 1400
           }
         }
       },
@@ -9655,7 +9655,7 @@
             "Prop": 12102,
             "Name": "攻击力",
             "Format": "{0:0.#%}",
-            "Value": 1200
+            "Value": 1400
           }
         }
       },
@@ -9672,7 +9672,7 @@
             "Prop": 12102,
             "Name": "攻击力",
             "Format": "{0:0.#%}",
-            "Value": 1800
+            "Value": 2100
           }
         }
       },
@@ -9689,23 +9689,28 @@
             "Prop": 12102,
             "Name": "攻击力",
             "Format": "{0:0.#%}",
-            "Value": 1800
+            "Value": 2100
           }
         }
       }
     },
     "Skin": {
       "3114910": {
-        "Name": "AvatarSkin_Summer_Name_000",
-        "Desc": "AvatarSkin_Summer_Desc_000",
-        "Image": "IconRole41"
+        "Name": "千夏·妄念环响",
+        "Desc": "只要穿上少女心目中最可爱的衣服，就能逃离人群的包围，躲进妄想的回声里。",
+        "Image": "IconRole58"
+      },
+      "3114911": {
+        "Name": "千夏·午后茶歇",
+        "Desc": "新鲜出炉的蛋糕、醇香芬芳的咖啡、还有午后温煦的暖阳…\n在所有温柔环绕的时刻，开启今日茶歇时光。",
+        "Image": "IconRole58_01"
       }
     }
   },
   "1501": {
-    "sprite_id": "",
+    "sprite_id": "57",
     "name": "爱芮",
-    "full_name": "Partner_Name_1501",
+    "full_name": "爱芮",
     "en_name": "Aria",
     "WeaponType": "3",
     "ElementType": "205",
@@ -9721,7 +9726,7 @@
     "HpGrowth": 845544,
     "Crit": 500,
     "CritDamage": 5000,
-    "ElementAbnormalPower": 140,
+    "ElementAbnormalPower": 115,
     "ElementMystery": 116,
     "PenDelta": 0,
     "PenRate": 0,
@@ -9805,7 +9810,7 @@
             "Prop": 31401,
             "Name": "异常掌控",
             "Format": "{0:0.#}",
-            "Value": 16
+            "Value": 12
           }
         }
       },
@@ -9822,7 +9827,7 @@
             "Prop": 31401,
             "Name": "异常掌控",
             "Format": "{0:0.#}",
-            "Value": 16
+            "Value": 12
           }
         }
       },
@@ -9839,7 +9844,7 @@
             "Prop": 31401,
             "Name": "异常掌控",
             "Format": "{0:0.#}",
-            "Value": 32
+            "Value": 24
           }
         }
       },
@@ -9856,7 +9861,7 @@
             "Prop": 31401,
             "Name": "异常掌控",
             "Format": "{0:0.#}",
-            "Value": 32
+            "Value": 24
           }
         }
       },
@@ -9873,7 +9878,7 @@
             "Prop": 31401,
             "Name": "异常掌控",
             "Format": "{0:0.#}",
-            "Value": 48
+            "Value": 36
           }
         }
       },
@@ -9890,16 +9895,21 @@
             "Prop": 31401,
             "Name": "异常掌控",
             "Format": "{0:0.#}",
-            "Value": 48
+            "Value": 36
           }
         }
       }
     },
     "Skin": {
       "3115010": {
-        "Name": "AvatarSkin_Aria_Name_000",
-        "Desc": "AvatarSkin_Aria_Desc_000",
-        "Image": "IconRole47"
+        "Name": "爱芮·元气偶像",
+        "Desc": "一点点粉色与白色，一点点灯光和音浪，再加上无数日夜的努力演唱，便组成了舞台上的无尽妄想。",
+        "Image": "IconRole57"
+      },
+      "3115011": {
+        "Name": "爱芮·不协和音",
+        "Desc": "爱芮在特别演出中的表演服装，出场次数屈指可数。\n纯白的「天使」，披上了「恶魔」的羽翼。深呼吸，准备好…聚光灯亮起之后，就是属于「妄想天使」的叛逆时间！",
+        "Image": "IconRole57_01"
       }
     }
   },

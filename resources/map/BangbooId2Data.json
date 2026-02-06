@@ -286,15 +286,15 @@
     "JA": "レゾナンボンプ"
   },
   "54010": {
-    "sprite_id": "",
-    "icon": "",
+    "sprite_id": "46",
+    "icon": "UI/Sprite/A1DynamicLoad/BangbooModGarage/UnPacker/BangbooRole/BangbooGarageRole46.png",
     "rank": 4,
-    "codename": "筆頭ファン",
-    "EN": "Fan",
-    "desc": "Can be exchanged for a custom model Bangboo.\nTo be added",
-    "KO": "Bangboo_Name_54010",
-    "CHS": "粉丝",
-    "JA": "ファン"
+    "codename": "BiggestFan",
+    "EN": "Biggest Fan",
+    "desc": "An Angels of Delusion superfan for life!",
+    "KO": "팬팬",
+    "CHS": "阿饭",
+    "JA": "コサン"
   },
   "54011": {
     "sprite_id": "26",
