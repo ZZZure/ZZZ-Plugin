@@ -18,6 +18,7 @@ export default class ZZZApiTool {
   hostRecord: string
   hostPublicData: string
   hostBbs: string = ''
+  hostGacha: string
   zzzUrlMap: {
     [key in Exclude<keyof Mys.KeyValue, 'zzzGacha_Record' | 'zzzVoidFrontBattleDetail'>]: {
       url: string
@@ -37,11 +38,13 @@ export default class ZZZApiTool {
       this.hostRecord = 'https://api-takumi-record.mihoyo.com/'
       this.hostPublicData = 'https://public-data-api.mihoyo.com/'
       this.hostBbs = 'https://bbs-api.miyoushe.com/'
+      this.hostGacha = 'https://api-takumi-record.mihoyo.com/'
     } else {
       this.gameBiz = 'nap_global'
       this.host = 'https://sg-public-api.hoyolab.com/'
       this.hostRecord = 'https://sg-act-nap-api.hoyolab.com/'
       this.hostPublicData = 'https://sg-public-data-api.hoyoverse.com/'
+      this.hostGacha = 'https://sg-public-api.hoyolab.com/'
     }
     this.zzzUrlMap = {
       zzzUser: {
@@ -197,11 +200,11 @@ export default class ZZZApiTool {
               },
               noDs: true,
             },
-            zzzGacha_Record: {
-              url: `${this.host}event/game_record_zzz/api/zzz/gacha_record`,
-              query: `lang=zh-cn&uid=${this.uid}&region=${this.server}&gacha_type=${data.type}&end_id=${data.endId}`,
-            }
           }),
+        zzzGacha_Record: {
+          url: `${this.host}event/game_record_zzz/api/zzz/gacha_record`,
+          query: `lang=zh-cn&uid=${this.uid}&region=${this.server}&gacha_type=${data.type}&end_id=${data.endId}`,
+        },
         zzzVoidFrontBattleDetail: {
           url: `${this.hostRecord}event/game_record_zzz/api/zzz/void_front_battle_detail`,
           query: `lang=zh-cn&uid=${this.uid}&region=${this.server}&void_front_id=${data.void_front_id}`,
