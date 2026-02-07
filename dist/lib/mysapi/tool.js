@@ -171,7 +171,7 @@ export default class ZZZApiTool {
                         },
                     }),
                 zzzGacha_Record: {
-                    url: `${this.host}event/game_record_zzz/api/zzz/gacha_record`,
+                    url: `${this.hostGacha}event/game_record_zzz/api/zzz/gacha_record`,
                     query: `lang=zh-cn&uid=${this.uid}&region=${this.server}&gacha_type=${data.type}&end_id=${data.endId}`,
                 },
                 zzzVoidFrontBattleDetail: {
