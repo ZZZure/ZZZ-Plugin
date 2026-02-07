@@ -109,7 +109,7 @@ export class GachaLog extends ZZZPlugin {
         const uid = await this.getUID();
         if (!uid)
             return false;
-        if (/^(1[0-9])[0-9]{8}/i.test(uid)) {
+        try {
             const { api, deviceFp } = await this.getAPI();
             this.reply('抽卡记录获取中请稍等...可能需要一段时间，请耐心等待');
             const { data, count } = await updateGachaLog_ck(api, uid, deviceFp);
@@ -119,20 +119,6 @@ export class GachaLog extends ZZZPlugin {
                 msg.push(`${name}新增${count[name] || 0}条记录，一共${data[name].length}条记录`);
             }
             return this.reply(await common.makeForwardMsg(this.e, msg, '抽卡记录更新成功'));
-        }
-        const lastQueryTime = await redis.get(`ZZZ:GACHA:${uid}:LASTTIME`);
-        const gachaConfig = settings.getConfig('gacha');
-        const coldTime = _.get(gachaConfig, 'interval', 300);
-        try {
-            const key = await getAuthKey(this.e, this.User, uid);
-            if (!key) {
-                return this.reply('authKey获取失败，请检查cookie是否过期');
-            }
-            if (lastQueryTime && Date.now() - Number(lastQueryTime) < 1000 * coldTime) {
-                return this.reply(`${coldTime}秒内只能刷新一次，请稍后再试`);
-            }
-            await redis.set(`ZZZ:GACHA:${uid}:LASTTIME`, Date.now());
-            this.getLog(key);
         }
         catch (error) {
             await this.reply(error.message);
