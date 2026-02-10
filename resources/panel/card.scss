@@ -7,7 +7,7 @@
     font-size: 0.6em;
     text-align: center;
     position: absolute;
-    border-image-source: url('./images/CurseBG08.png');
+    border-image-source: url("./images/CurseBG08.png");
     border-image-slice: 30 60 30 60 fill;
     border-image-width: 0.5em 1em 0.5em 1em;
     border-image-outset: 0em 0em 0em 0em;
@@ -31,7 +31,7 @@
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
-        background-image: url('./images/star/#{$i}.png');
+        background-image: url("./images/star/#{$i}.png");
       }
     }
   }
@@ -64,7 +64,7 @@
         position: absolute;
         width: 120%;
         height: 3.5em;
-        background: url('./images/skill_bg.png');
+        background: url("./images/skill_bg.png");
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
@@ -105,7 +105,7 @@
         border-image-width: 0em 1.5em 0em 2em;
         border-image-outset: 0 0 0 0;
         border-image-repeat: stretch stretch;
-        border-image-source: url('./images/CurseBG04.png');
+        border-image-source: url("./images/CurseBG04.png");
         filter: drop-shadow(0 0 0.1em rgb(0, 0, 0));
 
         .base {
@@ -162,7 +162,7 @@
 
             @for $i from 1 through 6 {
               span:nth-child(#{$i}) {
-                background-image: url('./images/ranks/#{$i}.png');
+                background-image: url("./images/ranks/#{$i}.png");
               }
 
               &.r#{$i} {
@@ -198,10 +198,11 @@
           padding-bottom: 0.2em;
 
           .properties {
-            display: flex;
+            display: grid;
             align-items: center;
-            gap: 0.4em;
-            padding: 0.05em 1em 0em 0.05em;
+            grid-template-columns: 1.4em minmax(0, 1fr) minmax(3.2em, 4.4em) minmax(2em, 3em);
+            column-gap: 0.4em;
+            padding: 0.05em 0.5em 0em 0.05em;
 
             &:nth-child(odd) {
               background-color: rgba(221, 224, 221, 0.25);
@@ -213,6 +214,8 @@
               flex-grow: 0;
               flex-shrink: 0;
               margin: 0 0.4em;
+              justify-self: start;
+              grid-column: 1;
             }
 
             .label {
@@ -223,6 +226,8 @@
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
+              justify-self: start;
+              grid-column: 2;
 
               &.yellow {
                 color: rgb(247, 199, 54);
@@ -237,10 +242,36 @@
               }
             }
 
+            .value-detail {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-end;
+              font-size: 0.55em;
+              line-height: 1.1;
+              gap: 0.1em;
+              min-width: 3.2em;
+              flex-grow: 0;
+              flex-shrink: 0;
+              justify-self: end;
+              grid-column: 3;
+              text-align: right;
+
+              .base {
+                color: rgb(182, 182, 182);
+              }
+
+              .add {
+                color: rgb(96, 201, 124);
+              }
+            }
+
             .value {
               flex-grow: 0;
               flex-shrink: 0;
               font-size: 0.8em;
+              justify-self: end;
+              grid-column: 4;
+              text-align: right;
             }
           }
         }
@@ -251,7 +282,7 @@
         border-image-width: 4.5em 0em 2.7em 1.7em;
         border-image-outset: 0em 0em 0em 0em;
         border-image-repeat: stretch stretch;
-        border-image-source: url('./images/weapon_bg.png');
+        border-image-source: url("./images/weapon_bg.png");
         margin-top: -0.8em;
         width: 115%;
         margin-left: -15%;
@@ -375,7 +406,7 @@
   }
 
   .other {
-    border-image-source: url('./images/BgFrame01.png');
+    border-image-source: url("./images/BgFrame01.png");
     border-image-slice: 200 100 70 280 fill;
     border-image-width: 2em 1em 0.7em 2.8em;
     border-image-outset: 2em 1em 0.7em 2.8em;
@@ -389,11 +420,7 @@
   .c,
   .C {
     .comment {
-      background: linear-gradient(
-        0deg,
-        rgba(39, 211, 30, 0.3),
-        rgba(39, 211, 30, 1)
-      );
+      background: linear-gradient(0deg, rgba(39, 211, 30, 0.3), rgba(39, 211, 30, 1));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -403,11 +430,7 @@
   .b,
   .B {
     .comment {
-      background: linear-gradient(
-        0deg,
-        rgba(94, 189, 249, 0.3),
-        rgba(94, 189, 249, 1)
-      );
+      background: linear-gradient(0deg, rgba(94, 189, 249, 0.3), rgba(94, 189, 249, 1));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -417,11 +440,7 @@
   .a,
   .A {
     .comment {
-      background: linear-gradient(
-        0deg,
-        rgba(210, 86, 255, 0.3),
-        rgb(210, 86, 255)
-      );
+      background: linear-gradient(0deg, rgba(210, 86, 255, 0.3), rgb(210, 86, 255));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -431,11 +450,7 @@
   .s,
   .S {
     .comment {
-      background: linear-gradient(
-        0deg,
-        rgba(255, 218, 190, 0.3),
-        rgba(255, 218, 190, 1)
-      );
+      background: linear-gradient(0deg, rgba(255, 218, 190, 0.3), rgba(255, 218, 190, 1));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -445,11 +460,7 @@
   .ss,
   .SS {
     .comment {
-      background: linear-gradient(
-        0deg,
-        rgba(255, 225, 116, 0.4),
-        rgba(255, 225, 116, 1)
-      );
+      background: linear-gradient(0deg, rgba(255, 225, 116, 0.4), rgba(255, 225, 116, 1));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -459,11 +470,7 @@
   .sss,
   .SSS {
     .comment {
-      background: linear-gradient(
-        0deg,
-        rgba(255, 163, 59, 0.4),
-        rgba(255, 163, 59, 1)
-      );
+      background: linear-gradient(0deg, rgba(255, 163, 59, 0.4), rgba(255, 163, 59, 1));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -475,11 +482,7 @@
   .max,
   .MAX {
     .comment {
-      background: linear-gradient(
-        0deg,
-        rgba(255, 59, 59, 0.4),
-        rgb(255, 59, 59)
-      );
+      background: linear-gradient(0deg, rgba(255, 59, 59, 0.4), rgb(255, 59, 59));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -644,7 +647,7 @@
 
     .box {
       $size: 3em;
-      border-image-source: url('./images/equip_bg.png');
+      border-image-source: url("./images/equip_bg.png");
       border-image-slice: 190 90 110 170 fill;
       border-image-width: 1.9 * $size 0.9 * $size 1.1 * $size 1.7 * $size;
       border-image-outset: 0.6 * $size 0.5 * $size 0.6 * $size 0.5 * $size;
@@ -656,14 +659,14 @@
 
       &.empty {
         &::after {
-          content: '';
+          content: "";
           position: absolute;
           width: 2.5em;
           height: 2.5em;
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
-          background-image: url('./images/empty_equip_07.png');
+          background-image: url("./images/empty_equip_07.png");
           background-size: contain;
           background-repeat: no-repeat;
           background-position: center;
@@ -673,7 +676,7 @@
       @for $i from 1 through 6 {
         &:nth-child(#{$i}) {
           &::before {
-            content: '0#{$i}';
+            content: "0#{$i}";
             position: absolute;
             font-size: 2em;
             left: 50%;
@@ -691,7 +694,7 @@
         left: -0.3 * $size;
         top: -0.4 * $size;
         background-color: rgb(0, 0, 0);
-        background-image: url('./images/empty_equip_03.png');
+        background-image: url("./images/empty_equip_03.png");
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
@@ -745,11 +748,7 @@
 
         .value {
           font-size: 0.9em;
-          background: linear-gradient(
-            0deg,
-            rgba(255, 255, 255, 0.1),
-            rgba(255, 255, 255, 1)
-          );
+          background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 1));
           -webkit-background-clip: text;
           background-clip: text;
           color: transparent;
