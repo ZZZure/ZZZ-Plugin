@@ -18,10 +18,11 @@ export const buffs = [
       const multiplier = [0.09, 0.105, 0.12, 0.135, 0.15, 0.165, 0.18][level - 1]
       if (avatar.rank >= 6) {
         const ATK = calc.get_ATK()
-        return Math.min(720, initial_ATK * multiplier + ATK * 0.06)
+        return initial_ATK * multiplier + ATK * 0.06
       }
-      return Math.min(540, initial_ATK * multiplier)
-    }
+      return initial_ATK * multiplier
+    },
+    max: ({ avatar }) => avatar.rank >= 6 ? 720 : 540
   },
   {
     name: '额外能力：食铁纳金',

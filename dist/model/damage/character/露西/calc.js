@@ -14,8 +14,9 @@ export const buffs = [
     value: ({ calc }) => {
       const ratio = calc.calc_value('E1')
       const fixed = calc.calc_value('E2')
-      return Math.min(600, calc.initial_properties.ATK * ratio + fixed)
-    }
+      return calc.initial_properties.ATK * ratio + fixed
+    },
+    max: 600
   }
 ]
 
