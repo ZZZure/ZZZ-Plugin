@@ -6,6 +6,30 @@ export default {
 
   calc(buffM, calc, avatar) {
     /** 注册buff */
+    // 核心被动加成
+    buffM.new({
+      name: '核心被动：',
+      type: ,
+      value: 0,
+      element: ,
+      range: ['']
+    })
+    // 额外能力加成
+    buffM.new({
+      name: '额外能力：',
+      type: ,
+      value: 0,
+      element: ,
+      range: ['']
+    })
+    // 技能加成
+    buffM.new({
+      name: '技能：',
+      type: ,
+      value: 0,
+      element: ,
+      range: ['']
+    })
     // 影画加成
     buffM.new({
       name: '1影',
@@ -29,30 +53,6 @@ export default {
       name: '6影',
       type: ,
       value: 0,
-      range: ['']
-    })
-    // 核心被动加成
-    buffM.new({
-      name: '核心被动：',
-      type: ,
-      value: 0,
-      element: ,
-      range: ['']
-    })
-    // 额外能力加成
-    buffM.new({
-      name: '额外能力：',
-      type: ,
-      value: 0,
-      element: ,
-      range: ['']
-    })
-    // 技能加成
-    buffM.new({
-      name: '技能：',
-      type: ,
-      value: 0,
-      element: ,
       range: ['']
     })
     /** 注册技能 */
