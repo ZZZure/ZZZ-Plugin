@@ -275,10 +275,11 @@
   padding-bottom: 0.2em;
 }
 .damage .basic .info .property_info .list .properties {
-  display: flex;
+  display: grid;
   align-items: center;
-  gap: 0.4em;
-  padding: 0.05em 1em 0em 0.05em;
+  grid-template-columns: 1.4em minmax(0, 1fr) minmax(3.2em, 4.4em) minmax(2em, 3em);
+  column-gap: 0.4em;
+  padding: 0.05em 0.5em 0em 0.05em;
 }
 .damage .basic .info .property_info .list .properties:nth-child(odd) {
   background-color: rgba(221, 224, 221, 0.25);
@@ -289,6 +290,8 @@
   flex-grow: 0;
   flex-shrink: 0;
   margin: 0 0.4em;
+  justify-self: start;
+  grid-column: 1;
 }
 .damage .basic .info .property_info .list .properties .label {
   flex-grow: 1;
@@ -298,6 +301,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  justify-self: start;
+  grid-column: 2;
 }
 .damage .basic .info .property_info .list .properties .label.yellow {
   color: rgb(247, 199, 54);
@@ -308,10 +313,33 @@
 .damage .basic .info .property_info .list .properties .label.white {
   color: rgb(233, 233, 233);
 }
+.damage .basic .info .property_info .list .properties .value-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 0.55em;
+  line-height: 1.1;
+  gap: 0.1em;
+  min-width: 3.2em;
+  flex-grow: 0;
+  flex-shrink: 0;
+  justify-self: end;
+  grid-column: 3;
+  text-align: right;
+}
+.damage .basic .info .property_info .list .properties .value-detail .base {
+  color: rgb(182, 182, 182);
+}
+.damage .basic .info .property_info .list .properties .value-detail .add {
+  color: rgb(96, 201, 124);
+}
 .damage .basic .info .property_info .list .properties .value {
   flex-grow: 0;
   flex-shrink: 0;
   font-size: 0.8em;
+  justify-self: end;
+  grid-column: 4;
+  text-align: right;
 }
 .damage .basic .info .weapon_info {
   border-image-slice: 118 0 68 43 fill;
