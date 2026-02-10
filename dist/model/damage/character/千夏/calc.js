@@ -9,6 +9,7 @@ export default {
       name: '核心被动：可爱即正义',
       type: '攻击力',
       value: 0.3,
+      percentBase: 'initial',
       max: [525, 615, 705, 795, 880, 975, 1050],
       showInPanel: true,
       teamTarget: true,

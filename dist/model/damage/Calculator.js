@@ -53,6 +53,9 @@ export class Calculator {
             resistance: -0.2
         };
     }
+    get base_properties() {
+        return this.avatar.base_properties;
+    }
     get initial_properties() {
         return this.avatar.initial_properties;
     }
@@ -333,7 +336,7 @@ export class Calculator {
                 .map(({ type }) => type);
         }
         const base = {};
-        types.forEach(t => base[t] = t.includes('百分比') ? this.avatar.base_properties[property.nameZHToNameEN(t.replace('百分比', ''))] * subBaseValueData[t][0] : subBaseValueData[t][0]);
+        types.forEach(t => base[t] = t.includes('百分比') ? this.base_properties[property.nameZHToNameEN(t.replace('百分比', ''))] * subBaseValueData[t][0] : subBaseValueData[t][0]);
         logger.debug(logger.red('副词条差异计算变化值：'), base);
         const buffs = types.map(t => ({
             name: t,
@@ -368,7 +371,9 @@ export class Calculator {
                 .map(({ type }) => type);
         }
         const base = {};
-        types.forEach(t => base[t] = (t.includes('百分比') || ['异常掌控', '冲击力', '能量自动回复'].includes(t)) ? this.avatar.base_properties[property.nameZHToNameEN(t.replace('百分比', ''))] * mainBaseValueData[t][0] : mainBaseValueData[t][0]);
+        types.forEach(t => base[t] = (t.includes('百分比') || ['异常掌控', '冲击力', '能量自动回复'].includes(t)) ?
+            this.base_properties[property.nameZHToNameEN(t.replace('百分比', ''))] * mainBaseValueData[t][0] :
+            mainBaseValueData[t][0]);
         logger.debug(logger.red('主词条差异计算变化值：'), base);
         const buffs = types.map(t => {
             const data = {
@@ -548,7 +553,8 @@ export class Calculator {
             default: return 0;
         }
     }
-    calc_final_value(buff, initial) {
+    calc_final_value(buff) {
+        let initial;
         const _calc_final_value = (buff) => {
             const { value } = buff;
             const add = this.calc_value(value, buff);
@@ -557,7 +563,12 @@ export class Calculator {
             if (!(typeof value === 'number' || typeof value === 'string' || Array.isArray(value)))
                 return add;
             if (!initial) {
-                initial = this.initial_properties[property.nameZHToNameEN(buff.type)] || 0;
+                if (buff.percentBase === 'initial') {
+                    initial = this.initial_properties[property.nameZHToNameEN(buff.type)] || 0;
+                }
+                else {
+                    initial = this.base_properties[property.nameZHToNameEN(buff.type)] || 0;
+                }
             }
             if (!initial)
                 return add;
@@ -577,7 +588,7 @@ export class Calculator {
             redirect: skill?.redirect,
             type
         }, this).reduce((previousValue, buff) => {
-            const add = this.calc_final_value(buff, initial);
+            const add = this.calc_final_value(buff);
             if (buff.stackable === false) {
                 const recorded = nonStackableBuffRecord.get(buff.name);
                 if (recorded) {
