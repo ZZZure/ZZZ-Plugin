@@ -55,6 +55,8 @@ export const runtime = { elementType2element, rarityEnum, elementEnum, anomalyEn
 /** 提供部分运行时变量，简化操作 */
 export type Runtime = typeof runtime
 
+export type percentBase = 'base' | 'initial'
+
 export interface buff {
   /** Buff状态，true生效，false无效 */
   status: boolean
@@ -68,7 +70,7 @@ export interface buff {
    * Buff增益数值，可为数值、字符串、数组、函数
    * @number
    * - 此值即为提高值
-   * - 当buff增益类型为**生命值/防御力/攻击力/冲击力/异常掌控**时，若此值 **<1**，则将此值理解为**初始属性**的**百分比提高**
+   * - 当buff增益类型为**生命值/防御力/攻击力/冲击力/异常掌控**时，若此值 **<1**，则将此值默认理解为**基础属性**的**百分比提高**
    * @string
    * 角色自身的buff提高值可能随技能/天赋等级提高而提高，此时可以于data.json的"buff"中添加倍率数组（同上支持百分比提高），此时value即为键名，其首字母必须为对应技能的基类（参考技能类型命名标准）
    * @array
@@ -91,6 +93,8 @@ export interface buff {
    * - 开启`showInPanel`时建议显式设置该值，如无上限可填写`Infinity`
    */
   max?: buff['value']
+  /** 决定当value和max表示百分比时，基于何种属性进行百分比计算 @default 'base' */
+  percentBase?: percentBase
   /**
    * Buff增益技能类型**生效范围**；参考技能类型命名标准
    * - 当技能参数不存在**redirect**时，**range**作用范围向后覆盖生效

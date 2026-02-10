@@ -30,7 +30,8 @@ export const buffs = [
     teamTarget: true,
     showInPanel: true,
     value: 0.4,
-    max: [600, 700, 800, 900, 1000, 1100, 1200]
+    max: [600, 700, 800, 900, 1000, 1100, 1200],
+    percentBase: 'initial',
   },
   {
     name: '核心被动：奇巧缤纷',

@@ -222,6 +222,10 @@ export class Calculator {
     }
   }
 
+  get base_properties() {
+    return this.avatar.base_properties
+  }
+
   get initial_properties() {
     return this.avatar.initial_properties
   }
@@ -532,7 +536,7 @@ export class Calculator {
         .map(({ type }) => type)
     }
     const base: { [type: string]: number } = {}
-    types.forEach(t => base[t] = t.includes('百分比') ? this.avatar.base_properties[property.nameZHToNameEN(t.replace('百分比', '')) as keyof ZZZAvatarInfo['base_properties']] * subBaseValueData[t][0] : subBaseValueData[t][0])
+    types.forEach(t => base[t] = t.includes('百分比') ? this.base_properties[property.nameZHToNameEN(t.replace('百分比', '')) as keyof ZZZAvatarInfo['base_properties']] * subBaseValueData[t][0] : subBaseValueData[t][0])
     logger.debug(logger.red('副词条差异计算变化值：'), base)
     const buffs: {
       name: subStatKeys
@@ -583,7 +587,9 @@ export class Calculator {
         .map(({ type }) => type)
     }
     const base: { [type: string]: number } = {}
-    types.forEach(t => base[t] = (t.includes('百分比') || ['异常掌控', '冲击力', '能量自动回复'].includes(t)) ? this.avatar.base_properties[property.nameZHToNameEN(t.replace('百分比', '')) as keyof ZZZAvatarInfo['base_properties']] * mainBaseValueData[t][0] : mainBaseValueData[t][0])
+    types.forEach(t => base[t] = (t.includes('百分比') || ['异常掌控', '冲击力', '能量自动回复'].includes(t)) ?
+      this.base_properties[property.nameZHToNameEN(t.replace('百分比', '')) as keyof ZZZAvatarInfo['base_properties']] * mainBaseValueData[t][0] :
+      mainBaseValueData[t][0])
     logger.debug(logger.red('主词条差异计算变化值：'), base)
     const buffs: {
       name: mainStatKeys
@@ -823,14 +829,19 @@ export class Calculator {
    * @param buff 待计算buff
    * @param initial 指定初始数值，若不指定则根据角色初始属性和buff类型自动获取
    */
-  calc_final_value(buff: buff, initial?: number): number {
+  calc_final_value(buff: buff): number {
+    let initial: number | undefined
     const _calc_final_value = (buff: buff) => {
       const { value } = buff
       const add = this.calc_value(value, buff)
       if (!add || !ratioAble.has(buff.type) || Math.abs(add) >= 1) return add
       if (!(typeof value === 'number' || typeof value === 'string' || Array.isArray(value))) return add
       if (!initial) {
-        initial = this.initial_properties[property.nameZHToNameEN(buff.type) as keyof ZZZAvatarInfo['initial_properties']] || 0
+        if (buff.percentBase === 'initial') {
+          initial = this.initial_properties[property.nameZHToNameEN(buff.type) as keyof ZZZAvatarInfo['initial_properties']] || 0
+        } else {
+          initial = this.base_properties[property.nameZHToNameEN(buff.type) as keyof ZZZAvatarInfo['base_properties']] || 0
+        }
       }
       if (!initial) return add
       return add * initial
@@ -853,7 +864,7 @@ export class Calculator {
       type
     }, this).reduce((previousValue, buff) => {
       // 计算最终增益值
-      const add = this.calc_final_value(buff, initial)
+      const add = this.calc_final_value(buff)
       // 检查不可叠加buff
       if (buff.stackable === false) {
         const recorded = nonStackableBuffRecord.get(buff.name)
