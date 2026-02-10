@@ -52,8 +52,9 @@ export const buffs = [
     value: ({ calc }) => {
       const Impact = calc.get_Impact()
       const step = 0.0125 + Math.max(0, (Impact - 170) / 10 * 25 / 10000)
-      return Math.min(0.75, step * 20)
-    }
+      return step * 20
+    },
+    max: 0.75
   }
 ]
 

@@ -36,8 +36,9 @@ export const buffs = [
     value: ({ avatar }) => {
       const ATK = avatar.initial_properties.ATK
       if (ATK <= 2800) return 0
-      return Math.min(0.3, (ATK - 2800) / 100 * 0.05)
-    }
+      return (ATK - 2800) / 100 * 0.05
+    },
+    max: 0.3
   },
   {
     name: '核心被动：虎虎生威',

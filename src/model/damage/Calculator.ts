@@ -10,7 +10,7 @@ import _ from 'lodash'
 export interface skill {
   /** 技能名，唯一 */
   name: string
-  /** 技能类型，唯一，参考技能类型命名标准 */
+  /** 技能类型，唯一 @see [技能命名标准](https://github.com/ZZZure/ZZZ-Plugin/blob/dev/src/model/damage/README.md#技能类型命名标准) */
   type: string
   /** 属性类型，不指定时，默认取角色属性 */
   element: element
@@ -195,6 +195,8 @@ interface enemy {
   resistance: number
 }
 
+const ratioAble = new Set<buffType>(['生命值', '防御力', '攻击力', '冲击力', '异常掌控'])
+
 export class Calculator {
   readonly buffM: BuffManager
   readonly avatar: ZZZAvatarInfo
@@ -291,6 +293,7 @@ export class Calculator {
         dmg.skill = skill
       }
       logger.debug('自定义计算最终伤害：', dmg.result)
+      this.usefulBuffResults.clear()
       return dmg
     }
     const props = this.props = skill.props || {}
@@ -338,7 +341,10 @@ export class Calculator {
         }
         const ExtraMultiplier = this.get_ExtraMultiplier(skill, usefulBuffs)
         Multiplier += ExtraMultiplier
-        if (!Multiplier) return logger.warn('技能倍率缺失：', skill)
+        if (!Multiplier) {
+          this.usefulBuffResults.clear()
+          return logger.warn('技能倍率缺失：', skill)
+        }
         if (ExtraMultiplier) logger.debug(`最终倍率：${Multiplier}`)
       }
       props.倍率 = Multiplier
@@ -432,12 +438,12 @@ export class Calculator {
         return target[prop as Exclude<keyof damage, keyof typeof damageHandler>]
       }
     }) as damage
-    this.usefulBuffResults.clear()
     if (skill.after) {
       skill.after({ avatar: this.avatar, calc: this, usefulBuffs, skill, damage, runtime })
     }
     logger.debug('最终伤害：', result)
     if (!skill.banCache) this.cache[skill.type] = damage
+    this.usefulBuffResults.clear()
     // console.log(damage)
     return damage
   }
@@ -447,22 +453,37 @@ export class Calculator {
       .filter(buff => buff.showInPanel)
       .map(buff => {
         try {
-          const value = this.calc_value(buff.value, buff)
-          const { _base_properties, _initial_properties } = this.avatar
-          // @ts-expect-error 自动计算理论最大值
-          this.avatar._base_properties = this.avatar._initial_properties = new Proxy({}, {
-            get: (target, prop) => {
-              // logger.debug(`计算buff理论最大值，访问属性：${String(prop)}`)
-              return Number.MAX_SAFE_INTEGER
-            }
-          })
+          const value = this.calc_final_value(buff)
+          // 计算buff最大值
           let max = 0
-          try {
-            this.props = {}
-            max = this.calc_value(buff.value, buff)
-          } catch { }
-          this.avatar._base_properties = _base_properties
-          this.avatar._initial_properties = _initial_properties
+          // 已指定max，直接获取
+          if (buff.max) {
+            if (buff.max === Infinity) {
+              max = 0
+            } else {
+              max = this.calc_final_value({
+                ...buff,
+                value: buff.max,
+                max: undefined
+              })
+            }
+          } else {
+            // 未指定max，自动计算理论最大值
+            const { _base_properties, _initial_properties } = this.avatar
+            // @ts-expect-error
+            this.avatar._base_properties = this.avatar._initial_properties = new Proxy({}, {
+              get: (target, prop) => {
+                // logger.debug(`计算buff理论最大值，访问属性：${String(prop)}`)
+                return Number.MAX_SAFE_INTEGER
+              }
+            })
+            try {
+              this.props = {}
+              max = this.calc_final_value(buff)
+            } catch { }
+            this.avatar._base_properties = _base_properties
+            this.avatar._initial_properties = _initial_properties
+          }
           if (max === Infinity || !max || max > 9999) {
             max = 0
           }
@@ -702,6 +723,7 @@ export class Calculator {
   /**
    * 获取技能等级
    * @param baseType 技能基类 'A', 'E', 'C', 'R', 'T', 'L'
+   * @see [技能命名标准](https://github.com/ZZZure/ZZZ-Plugin/blob/dev/src/model/damage/README.md#技能类型命名标准)
    */
   get_SkillLevel(baseType: string) {
     const id = ['A', 'E', 'C', 'R', , 'T', 'L'].indexOf(baseType)
@@ -712,6 +734,7 @@ export class Calculator {
   /**
    * 获取技能倍率
    * @param type 参见技能命名标准
+   * @see [技能命名标准](https://github.com/ZZZure/ZZZ-Plugin/blob/dev/src/model/damage/README.md#技能类型命名标准)
    */
   get_SkillMultiplier(type: string) {
     const SkillLevel = this.get_SkillLevel(type[0])
@@ -771,6 +794,7 @@ export class Calculator {
     return Multiplier
   }
 
+  /** 计算buff增益值（可能为百分比） */
   calc_value(value: buff['value'], buff?: buff) {
     switch (typeof value) {
       case 'number': return value
@@ -794,10 +818,33 @@ export class Calculator {
   }
 
   /**
-   * 获取局内属性原始值
-   * @param isRatio 是否启用buff.value为数值/字符串/数组类型且计算结果值<1时按 **`初始数值`** 百分比提高处理
+   * 计算buff增益最终值
+   * - `buff.value`为数值/字符串/数组类型且计算结果绝对值<1时按 **`初始数值`** 百分比提高处理
+   * @param buff 待计算buff
+   * @param initial 指定初始数值，若不指定则根据角色初始属性和buff类型自动获取
    */
-  get(type: buff['type'], initial: number, skill: skill = this.skill, usefulBuffs: buff[] = this.buffM.buffs, isRatio = false): number {
+  calc_final_value(buff: buff, initial?: number): number {
+    const _calc_final_value = (buff: buff) => {
+      const { value } = buff
+      const add = this.calc_value(value, buff)
+      if (!add || !ratioAble.has(buff.type) || Math.abs(add) >= 1) return add
+      if (!(typeof value === 'number' || typeof value === 'string' || Array.isArray(value))) return add
+      if (!initial) {
+        initial = this.initial_properties[property.nameZHToNameEN(buff.type) as keyof ZZZAvatarInfo['initial_properties']] || 0
+      }
+      if (!initial) return add
+      return add * initial
+    }
+    const value = _calc_final_value(buff)
+    if (!value || !buff.max) return value
+    const max = _calc_final_value({ ...buff, value: buff.max })
+    return Math.min(value, max)
+  }
+
+  /**
+   * 获取局内属性原始值
+   */
+  get(type: buff['type'], initial: number, skill: skill = this.skill, usefulBuffs: buff[] = this.buffM.buffs): number {
     const nonStackableBuffRecord = new Map<string, buff>()
     return this.props[type] ??= this.buffM._filter(usefulBuffs, {
       element: skill?.element,
@@ -805,11 +852,8 @@ export class Calculator {
       redirect: skill?.redirect,
       type
     }, this).reduce((previousValue, buff) => {
-      const { value } = buff
-      let add = this.calc_value(value, buff)
-      // 启用isRatio时：若计算值绝对值小于1，按照百分比提高处理
-      if (isRatio && Math.abs(add) < 1 && (typeof value === 'number' || typeof value === 'string' || Array.isArray(value)))
-        add *= initial
+      // 计算最终增益值
+      const add = this.calc_final_value(buff, initial)
       // 检查不可叠加buff
       if (buff.stackable === false) {
         const recorded = nonStackableBuffRecord.get(buff.name)
@@ -834,7 +878,7 @@ export class Calculator {
 
   /** 攻击力 */
   get_ATK(skill?: skill, usefulBuffs?: buff[]) {
-    let ATK = this.get('攻击力', this.initial_properties.ATK, skill, usefulBuffs, true)
+    let ATK = this.get('攻击力', this.initial_properties.ATK, skill, usefulBuffs)
     ATK = this.min_max(0, 10000, ATK)
     logger.debug(`攻击力：${ATK}`)
     return ATK
@@ -953,7 +997,7 @@ export class Calculator {
 
   /** 异常掌控 */
   get_AnomalyMastery(skill?: skill, usefulBuffs?: buff[]) {
-    let AnomalyMastery = this.get('异常掌控', this.initial_properties.AnomalyMastery, skill, usefulBuffs, true)
+    let AnomalyMastery = this.get('异常掌控', this.initial_properties.AnomalyMastery, skill, usefulBuffs)
     AnomalyMastery = this.min_max(0, 1000, AnomalyMastery)
     logger.debug(`异常掌控：${AnomalyMastery}`)
     return AnomalyMastery
@@ -1000,7 +1044,7 @@ export class Calculator {
 
   /** 生命值 */
   get_HP(skill?: skill, usefulBuffs?: buff[]) {
-    let HP = this.get('生命值', this.initial_properties.HP, skill, usefulBuffs, true)
+    let HP = this.get('生命值', this.initial_properties.HP, skill, usefulBuffs)
     HP = this.min_max(0, 100000, HP)
     logger.debug(`生命值：${HP}`)
     return HP
@@ -1008,7 +1052,7 @@ export class Calculator {
 
   /** 防御力 */
   get_DEF(skill?: skill, usefulBuffs?: buff[]) {
-    let DEF = this.get('防御力', this.initial_properties.DEF, skill, usefulBuffs, true)
+    let DEF = this.get('防御力', this.initial_properties.DEF, skill, usefulBuffs)
     DEF = this.min_max(0, 1000, DEF)
     logger.debug(`防御力：${DEF}`)
     return DEF
@@ -1016,7 +1060,7 @@ export class Calculator {
 
   /** 冲击力 */
   get_Impact(skill?: skill, usefulBuffs?: buff[]) {
-    let Impact = this.get('冲击力', this.initial_properties.Impact, skill, usefulBuffs, true)
+    let Impact = this.get('冲击力', this.initial_properties.Impact, skill, usefulBuffs)
     Impact = this.min_max(0, 1000, Impact)
     logger.debug(`冲击力：${Impact}`)
     return Impact
@@ -1026,7 +1070,7 @@ export class Calculator {
   get_SheerForce(skill?: skill, usefulBuffs?: buff[]) {
     // 默认取 攻击力*0.3
     let SheerForce = Math.trunc(this.get_ATK(skill, usefulBuffs) * 0.3)
-    SheerForce = this.get('贯穿力', SheerForce, skill, usefulBuffs, true)
+    SheerForce = this.get('贯穿力', SheerForce, skill, usefulBuffs)
     SheerForce = this.min_max(0, 10000, SheerForce)
     logger.debug(`贯穿力：${SheerForce}`)
     return SheerForce

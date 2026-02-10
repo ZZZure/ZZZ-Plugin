@@ -19,8 +19,9 @@ export const buffs = [
     // 仅对队友生效
     teamTarget: ({ teammates }) => teammates,
     value: ({ calc }) => {
-      return Math.min(0.3, 0.25 * calc.get_PenRatio() + [0.06, 0.075, 0.09, 0.102, 0.108, 0.114, 0.12][calc.get_SkillLevel('T') - 1])
-    }
+      return 0.25 * calc.get_PenRatio() + [0.06, 0.075, 0.09, 0.102, 0.108, 0.114, 0.12][calc.get_SkillLevel('T') - 1]
+    },
+    max: 0.3
   },
   {
     name: '额外能力：完美舞会',

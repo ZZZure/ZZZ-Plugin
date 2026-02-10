@@ -29,12 +29,8 @@ export const buffs = [
     type: '攻击力',
     teamTarget: true,
     showInPanel: true,
-    value: ({ avatar, calc }) => {
-      const initial_ATK = avatar.initial_properties.ATK
-      const level = calc.get_SkillLevel('T')
-      const max = [600, 700, 800, 900, 1000, 1100, 1200][level - 1]
-      return Math.min(max, initial_ATK * 0.4)
-    }
+    value: 0.4,
+    max: [600, 700, 800, 900, 1000, 1100, 1200]
   },
   {
     name: '核心被动：奇巧缤纷',
@@ -50,8 +46,9 @@ export const buffs = [
     value: ({ avatar, calc }) => {
       const AnomalyMastery = calc.get_AnomalyMastery()
       if (AnomalyMastery <= 100) return 0
-      return Math.min(0.2, (AnomalyMastery - 100) * 0.002) * (avatar.rank >= 1 ? 1.3 : 1)
-    }
+      return (AnomalyMastery - 100) * 0.002 * (avatar.rank >= 1 ? 1.3 : 1)
+    },
+    max: ({ avatar }) => 0.2 * (avatar.rank >= 1 ? 1.3 : 1),
   }
 ]
 

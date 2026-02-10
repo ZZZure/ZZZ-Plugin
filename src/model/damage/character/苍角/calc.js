@@ -18,7 +18,8 @@ export const buffs = [
     type: '攻击力',
     teamTarget: true,
     showInPanel: true,
-    value: ({ avatar, calc }) => Math.min(1000, avatar.initial_properties.ATK * calc.calc_value('T') * 2)
+    value: ({ avatar, calc }) => avatar.initial_properties.ATK * calc.calc_value('T') * 2,
+    max: 1000
   },
   {
     name: '额外能力：团膳套餐',

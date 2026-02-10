@@ -19,10 +19,10 @@ export const buffs = [
     showInPanel: true,
     value: ({ avatar, calc }) => {
       const isTwo = avatar.rank >= 2 // 2影额外提升
-      const max = isTwo ? 1600 : 1200
       const multiplier = calc.calc_value('T') + (isTwo ? 0.19 : 0)
-      return Math.min(max, avatar.initial_properties.ATK * multiplier)
+      return avatar.initial_properties.ATK * multiplier
     },
+    max: ({ avatar }) => avatar.rank >= 2 ? 1600 : 1200
   },
   {
     name: '技能：咏叹华彩',

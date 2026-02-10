@@ -68,7 +68,7 @@ export interface buff {
    * Buff增益数值，可为数值、字符串、数组、函数
    * @number
    * - 此值即为提高值
-   * - 当buff增益类型为**攻击力/冲击力/异常精通/异常掌控/防御力/生命值**时，若此值 **<1**，则将此值理解为**初始属性**的**百分比提高**
+   * - 当buff增益类型为**生命值/防御力/攻击力/冲击力/异常掌控**时，若此值 **<1**，则将此值理解为**初始属性**的**百分比提高**
    * @string
    * 角色自身的buff提高值可能随技能/天赋等级提高而提高，此时可以于data.json的"buff"中添加倍率数组（同上支持百分比提高），此时value即为键名，其首字母必须为对应技能的基类（参考技能类型命名标准）
    * @array
@@ -84,6 +84,13 @@ export interface buff {
     calc: Calculator
     runtime: Runtime
   }) => number)
+  /**
+   * Buff增益数值上限
+   * - 与buff.value的类型和用法一致
+   * - 用于简化value上限处理和进行buff上限计算
+   * - 开启`showInPanel`时建议显式设置该值，如无上限可填写`Infinity`
+   */
+  max?: buff['value']
   /**
    * Buff增益技能类型**生效范围**；参考技能类型命名标准
    * - 当技能参数不存在**redirect**时，**range**作用范围向后覆盖生效
