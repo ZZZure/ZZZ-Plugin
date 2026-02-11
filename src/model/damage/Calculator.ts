@@ -583,7 +583,7 @@ export class Calculator {
           return acc
         }, [])
         .sort((a, b) => b.weight - a.weight) // 按权重从大到小排序
-        .slice(0, 6)
+        .slice(0, 8)
         .map(({ type }) => type)
     }
     const base: { [type: string]: number } = {}
