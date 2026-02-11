@@ -367,7 +367,7 @@ export class Calculator {
                 return acc;
             }, [])
                 .sort((a, b) => b.weight - a.weight)
-                .slice(0, 6)
+                .slice(0, 8)
                 .map(({ type }) => type);
         }
         const base = {};
