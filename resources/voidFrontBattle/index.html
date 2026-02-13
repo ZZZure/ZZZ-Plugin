@@ -4,15 +4,19 @@
 <div class="card">
   {{include sys.playerInfo}}
 
+  {{set abstractInfo = voidFrontBattle.void_front_battle_abstract_info_brief}}
   <div class="tips">
     <p>
-      统计周期
-      截止时间：{{voidFrontBattle.formatTimestamp(voidFrontBattle.void_front_battle_abstract_info_brief.end_ts)}}
+      统计周期：{{voidFrontBattle.formatTime(abstractInfo.start_time)}} ~ {{
+        abstractInfo.end_time ? 
+        voidFrontBattle.formatTime(abstractInfo.end_time) : 
+        '超过42天'
+      }}
     </p>
   </div>
 
-  {{set abstractInfo = voidFrontBattle.void_front_battle_abstract_info_brief}} {{set bossChallenge =
-  voidFrontBattle.boss_challenge_record}} {{if abstractInfo && bossChallenge}}
+  {{set bossChallenge = voidFrontBattle.boss_challenge_record}}
+  {{if abstractInfo && bossChallenge}}
 
   <!-- 总分信息行 -->
   <div class="total-info-container">
@@ -70,14 +74,14 @@
             {{/if}}
           </div>
           <div class="score-ratio">
-            得分倍率：{{bossChallenge.main_challenge_record.score_ratio}}
+            得分倍率：{{mainRecord.score_ratio}}
           </div>
         </div>
 
         <!-- 第三行：通关时间 -->
         <div class="boss-row boss-time-row">
           <div class="challenge-time">
-            通关时间：{{voidFrontBattle.formatTime(voidFrontBattle.boss_challenge_record.main_challenge_record.challenge_time)}}
+            通关时间：{{voidFrontBattle.formatTime(mainRecord.challenge_time)}}
           </div>
         </div>
 
@@ -145,7 +149,8 @@
           </div>
           <div class="list">
             <!-- 角色 -->
-            <% for(let j=0 ; j < 3 ; j++) { %> {{if subItem.avatar_list?.[j]}}
+            <% for(let j=0 ; j < 3 ; j++) { %>
+            {{if subItem.avatar_list?.[j]}}
             <div class="item char">
               {{if subItem.avatar_list[j].rank}}
               <div class="count">{{subItem.avatar_list[j].rank}}</div>
@@ -159,7 +164,8 @@
             </div>
             {{else}}
             <div class="item char"></div>
-            {{/if}} <% } %>
+            {{/if}}
+            <% } %>
             <!-- 邦布 -->
             {{if subItem.buddy}}
             <div class="item bangboo">
@@ -203,9 +209,9 @@
         <!-- 第二行：分数 + 积分倍率 -->
         <div class="boss-row boss-score-row">
           <div class="score-section">
-            {{if i == 0 && stageItem.score === 182000}}
+            {{if stageItem.score === stageItem.max_score && stageItem.score === 182000}}
             <div class="max-score-icon score182000"></div>
-            {{else if i > 0 && stageItem.score === 149500}}
+            {{else if stageItem.score === stageItem.max_score && stageItem.score === 149500}}
             <div class="max-score-icon score149500"></div>
             {{else}}
             <div class="score-value">{{stageItem.score}}</div>
