@@ -293,7 +293,11 @@ export class Property {
         if (CoreSkillEnhancement) {
             const extra = this.data.ExtraLevel[CoreSkillEnhancement].Extra;
             const extraIds = Object.keys(extra).map(Number);
-            extraIds.forEach((id) => base[id.toString().slice(0, 3)] += extra[id].Value || 0);
+            extraIds.forEach((id) => {
+                if ([12102].includes(id))
+                    return;
+                base[id.toString().slice(0, 3)] += extra[id].Value || 0;
+            });
         }
         if (this.weapon) {
             for (const property of this.weapon.main_properties) {
@@ -364,6 +368,20 @@ export class Property {
             if (!suitData.properties.length)
                 continue;
             all_properties.push(...suitData.properties);
+        }
+        const CoreSkillEnhancement = this.enkaAvatar.CoreSkillEnhancement || 0;
+        if (CoreSkillEnhancement) {
+            const extra = this.data.ExtraLevel[CoreSkillEnhancement].Extra;
+            const extraIds = Object.keys(extra).map(Number);
+            extraIds.forEach((id) => {
+                if (![12102].includes(id))
+                    return;
+                all_properties.push({
+                    property_name: id2zh[id.toString().slice(0, 3)],
+                    property_id: id,
+                    base: get_base(id, extra[id].Value || 0)
+                });
+            });
         }
         for (const property of all_properties) {
             const propId = +property.property_id.toString().slice(0, 3);
