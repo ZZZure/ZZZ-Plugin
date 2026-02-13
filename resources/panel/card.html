@@ -44,8 +44,8 @@
           <div class="properties">
             <div class="prop-icon hpmax"></div>
             <div class="label {{charData.get_label(11102)}}">生命值</div>
-            {{if basic_properties.hpmax.base && basic_properties.hpmax.add}}
-            <div class="value-detail  no-zzz-font">
+            {{if basic_properties.hpmax.base && basic_properties.hpmax.add && basic_properties.hpmax.add[0] != '0'}}
+            <div class="value-detail no-zzz-font">
               <span class="base">{{basic_properties.hpmax.base}}</span>
               <span class="add">+{{basic_properties.hpmax.add}}</span>
             </div>
@@ -55,8 +55,8 @@
           <div class="properties">
             <div class="prop-icon attack"></div>
             <div class="label {{charData.get_label(12102)}}">攻击力</div>
-            {{if basic_properties.attack.base && basic_properties.attack.add}}
-            <div class="value-detail  no-zzz-font">
+            {{if basic_properties.attack.base && basic_properties.attack.add && basic_properties.attack.add[0] != '0'}}
+            <div class="value-detail no-zzz-font">
               <span class="base">{{basic_properties.attack.base}}</span>
               <span class="add">+{{basic_properties.attack.add}}</span>
             </div>
@@ -66,8 +66,8 @@
           <div class="properties">
             <div class="prop-icon def"></div>
             <div class="label {{charData.get_label(13102)}}">防御力</div>
-            {{if basic_properties.def.base && basic_properties.def.add}}
-            <div class="value-detail  no-zzz-font">
+            {{if basic_properties.def.base && basic_properties.def.add && basic_properties.def.add[0] != '0'}}
+            <div class="value-detail no-zzz-font">
               <span class="base">{{basic_properties.def.base}}</span>
               <span class="add">+{{basic_properties.def.add}}</span>
             </div>
@@ -77,8 +77,8 @@
           <div class="properties">
             <div class="prop-icon breakstun"></div>
             <div class="label {{charData.get_label(12202)}}">冲击力</div>
-            {{if basic_properties.breakstun.base && basic_properties.breakstun.add}}
-            <div class="value-detail  no-zzz-font">
+            {{if basic_properties.breakstun.base && basic_properties.breakstun.add && basic_properties.breakstun.add[0] != '0'}}
+            <div class="value-detail no-zzz-font">
               <span class="base">{{basic_properties.breakstun.base}}</span>
               <span class="add">+{{basic_properties.breakstun.add}}</span>
             </div>
@@ -88,8 +88,8 @@
           <div class="properties">
             <div class="prop-icon crit"></div>
             <div class="label {{charData.get_label(20103)}}">暴击率</div>
-            {{if basic_properties.crit.base && basic_properties.crit.add}}
-            <div class="value-detail  no-zzz-font">
+            {{if basic_properties.crit.base && basic_properties.crit.add && basic_properties.crit.add[0] != '0'}}
+            <div class="value-detail no-zzz-font">
               <span class="base">{{basic_properties.crit.base}}</span>
               <span class="add">+{{basic_properties.crit.add}}</span>
             </div>
@@ -99,8 +99,8 @@
           <div class="properties">
             <div class="prop-icon critdam"></div>
             <div class="label {{charData.get_label(21103)}}">暴击伤害</div>
-            {{if basic_properties.critdam.base && basic_properties.critdam.add}}
-            <div class="value-detail  no-zzz-font">
+            {{if basic_properties.critdam.base && basic_properties.critdam.add && basic_properties.critdam.add[0] != '0'}}
+            <div class="value-detail no-zzz-font">
               <span class="base">{{basic_properties.critdam.base}}</span>
               <span class="add">+{{basic_properties.critdam.add}}</span>
             </div>
@@ -110,8 +110,8 @@
           <div class="properties">
             <div class="prop-icon elementabnormalpower"></div>
             <div class="label {{charData.get_label(31402)}}">异常掌控</div>
-            {{if basic_properties.elementabnormalpower.base && basic_properties.elementabnormalpower.add}}
-            <div class="value-detail  no-zzz-font">
+            {{if basic_properties.elementabnormalpower.base && basic_properties.elementabnormalpower.add && basic_properties.elementabnormalpower.add[0] != '0'}}
+            <div class="value-detail no-zzz-font">
               <span class="base">{{basic_properties.elementabnormalpower.base}}</span>
               <span class="add">+{{basic_properties.elementabnormalpower.add}}</span>
             </div>
@@ -121,8 +121,8 @@
           <div class="properties">
             <div class="prop-icon elementmystery"></div>
             <div class="label {{charData.get_label(31203)}}">异常精通</div>
-            {{if basic_properties.elementmystery.base && basic_properties.elementmystery.add}}
-            <div class="value-detail  no-zzz-font">
+            {{if basic_properties.elementmystery.base && basic_properties.elementmystery.add && basic_properties.elementmystery.add[0] != '0'}}
+            <div class="value-detail no-zzz-font">
               <span class="base">{{basic_properties.elementmystery.base}}</span>
               <span class="add">+{{basic_properties.elementmystery.add}}</span>
             </div>
@@ -133,8 +133,8 @@
           <div class="properties">
             <div class="prop-icon sheerforce"></div>
             <div class="label yellow">贯穿力</div>
-            {{if basic_properties.sheerforce && basic_properties.sheerforce.base && basic_properties.sheerforce.add}}
-            <div class="value-detail  no-zzz-font">
+            {{if basic_properties.sheerforce && basic_properties.sheerforce.base && basic_properties.sheerforce.add && basic_properties.sheerforce.add[0] != '0'}}
+            <div class="value-detail no-zzz-font">
               <span class="base">{{basic_properties.sheerforce.base}}</span>
               <span class="add">+{{basic_properties.sheerforce.add}}</span>
             </div>
@@ -144,8 +144,8 @@
           <div class="properties">
             <div class="prop-icon sprecover"></div>
             <div class="label white">闪能累积</div>
-            {{if basic_properties.adrenalineaccumulate && basic_properties.adrenalineaccumulate.base && basic_properties.adrenalineaccumulate.add}}
-            <div class="value-detail  no-zzz-font">
+            {{if basic_properties.adrenalineaccumulate && basic_properties.adrenalineaccumulate.base && basic_properties.adrenalineaccumulate.add && basic_properties.adrenalineaccumulate.add[0] != '0'}}
+            <div class="value-detail no-zzz-font">
               <span class="base">{{basic_properties.adrenalineaccumulate.base}}</span>
               <span class="add">+{{basic_properties.adrenalineaccumulate.add}}</span>
             </div>
@@ -156,8 +156,8 @@
           <div class="properties">
             <div class="prop-icon penratio"></div>
             <div class="label {{charData.get_label(23103)}}">穿透率</div>
-            {{if basic_properties.penratio.base && basic_properties.penratio.add}}
-            <div class="value-detail  no-zzz-font">
+            {{if basic_properties.penratio.base && basic_properties.penratio.add && basic_properties.penratio.add[0] != '0'}}
+            <div class="value-detail no-zzz-font">
               <span class="base">{{basic_properties.penratio.base}}</span>
               <span class="add">+{{basic_properties.penratio.add}}</span>
             </div>
@@ -167,8 +167,8 @@
           <div class="properties">
             <div class="prop-icon sprecover"></div>
             <div class="label {{charData.get_label(30502)}}">能量回复</div>
-            {{if basic_properties.sprecover.base && basic_properties.sprecover.add}}
-            <div class="value-detail  no-zzz-font">
+            {{if basic_properties.sprecover.base && basic_properties.sprecover.add && basic_properties.sprecover.add[0] != '0'}}
+            <div class="value-detail no-zzz-font">
               <span class="base">{{basic_properties.sprecover.base}}</span>
               <span class="add">+{{basic_properties.sprecover.add}}</span>
             </div>
@@ -180,8 +180,8 @@
           <div class="properties">
             <div class="element-icon {{charData.element_str}}"></div>
             <div class="label {{charData.get_label(basic_properties.dmgbonus.property_id + '03')}}">{{basic_properties.dmgbonus.property_name}}</div>
-            {{if basic_properties.dmgbonus.base && basic_properties.dmgbonus.add}}
-            <div class="value-detail  no-zzz-font">
+            {{if basic_properties.dmgbonus.base && basic_properties.dmgbonus.add && basic_properties.dmgbonus.add[0] != '0'}}
+            <div class="value-detail no-zzz-font">
               <span class="base">{{basic_properties.dmgbonus.base}}</span>
               <span class="add">+{{basic_properties.dmgbonus.add}}</span>
             </div>
