@@ -497,6 +497,7 @@ export function parseInfo(enkaAvatar) {
     info.role_vertical_painting_url = '';
     info.vertical_painting_color = '';
     info.role_square_url = '';
+    info.skin_id = enkaAvatar.SkinId;
     return info;
 }
 export function Enka2Mys(enkaAvatars, __isToFixed__ = true) {

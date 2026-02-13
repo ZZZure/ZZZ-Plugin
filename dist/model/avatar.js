@@ -138,7 +138,7 @@ export class ZZZAvatarInfo {
     small_square_icon;
     role_icon;
     constructor(data) {
-        const { id, level, name_mi18n, full_name_mi18n, element_type, sub_element_type, camp_name_mi18n, avatar_profession, rarity, group_icon_path, hollow_icon_path, equip, weapon, properties, skills, rank, ranks, role_vertical_painting_url, isNew, } = data;
+        const { id, level, name_mi18n, full_name_mi18n, element_type, sub_element_type, camp_name_mi18n, avatar_profession, rarity, group_icon_path, hollow_icon_path, equip, weapon, properties, skills, rank, ranks, role_vertical_painting_url, isNew, skin_id, } = data;
         this.id = id;
         this.level = level;
         this.name_mi18n = name_mi18n;
@@ -167,7 +167,7 @@ export class ZZZAvatarInfo {
         this.sub_element_str = element.idToName(element_type, sub_element_type);
         this.role_vertical_painting_url = role_vertical_painting_url;
         this.isNew = isNew || false;
-        this.skin_id = this.role_vertical_painting_url?.match?.(/role_vertical_painting_\d+_(\d+).png$/)?.[1] || '';
+        this.skin_id = +(skin_id || this.role_vertical_painting_url?.match?.(/role_vertical_painting_\d+_(\d+).png$/)?.[1] || 0);
         this.level_rank = Math.floor(this.level / 10);
         const weight = Score.getFinalWeight(this);
         this.weightRule = weight[0];
