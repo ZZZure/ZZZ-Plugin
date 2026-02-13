@@ -110,7 +110,7 @@ export const getWeaponImage = async (id: string | number) => {
  * @param id 角色ID
  * @param skin_id 皮肤ID
  */
-export const getRoleImage = async (id: string | number, skin_id?: string) => {
+export const getRoleImage = async (id: string | number, skin_id?: string | number) => {
   const sprite = convert.char.idToSprite(id)
   if (!sprite) return null
   let result: string | null = ''

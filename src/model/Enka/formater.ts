@@ -548,7 +548,7 @@ export class Skill {
 }
 
 export function parseInfo(enkaAvatar: Enka.Avatar) {
-  const info = {} as FilterValueType<Mys.Avatar, string | number | boolean>
+  const info = {} as FilterValueType<Mys.Avatar, string | number | boolean> & { skin_id?: number }
   info.id = enkaAvatar.Id
   const data = PartnerId2Data[info.id]
   if (!data) return
@@ -572,6 +572,7 @@ export function parseInfo(enkaAvatar: Enka.Avatar) {
   info.role_vertical_painting_url = ''
   info.vertical_painting_color = ''
   info.role_square_url = ''
+  info.skin_id = enkaAvatar.SkinId
   return info
 }
 

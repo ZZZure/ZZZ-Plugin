@@ -170,8 +170,8 @@ export class ZZZAvatarInfo {
   role_vertical_painting_url: string
   /** 插件更新面板标记 */
   isNew: boolean
-  /** 时装ID。原皮时为空 */
-  skin_id: any
+  /** 时装ID */
+  skin_id: number
   /** 等级级别（取十位数字）*/
   level_rank: number
   /** 评分计算规则 */
@@ -207,7 +207,7 @@ export class ZZZAvatarInfo {
   small_square_icon: string | null
   role_icon: string
 
-  constructor(data: Mys.Avatar) {
+  constructor(data: Mys.Avatar & { skin_id?: number }) {
     const {
       id,
       level,
@@ -228,6 +228,7 @@ export class ZZZAvatarInfo {
       ranks,
       role_vertical_painting_url,
       isNew,
+      skin_id,
     } = data
     this.id = id
     this.level = level
@@ -257,7 +258,7 @@ export class ZZZAvatarInfo {
     this.sub_element_str = element.idToName(element_type, sub_element_type)
     this.role_vertical_painting_url = role_vertical_painting_url
     this.isNew = isNew || false
-    this.skin_id = this.role_vertical_painting_url?.match?.(/role_vertical_painting_\d+_(\d+).png$/)?.[1] || ''
+    this.skin_id = +(skin_id || this.role_vertical_painting_url?.match?.(/role_vertical_painting_\d+_(\d+).png$/)?.[1] || 0)
     this.level_rank = Math.floor(this.level / 10)
     const weight = Score.getFinalWeight(this)
     this.weightRule = weight[0]
