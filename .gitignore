@@ -22,3 +22,5 @@ src/apps/test*
 src/model/Enka/test.js
 src/model/Enka/parseData.js
 src/model/damage/map
+
+/enkaPanel*

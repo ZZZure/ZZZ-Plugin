@@ -350,7 +350,11 @@ export class Property {
     if (CoreSkillEnhancement) {
       const extra = this.data.ExtraLevel[CoreSkillEnhancement].Extra
       const extraIds = Object.keys(extra).map(Number)
-      extraIds.forEach((id) => base[id.toString().slice(0, 3) as IdsString] += extra[id].Value || 0)
+      extraIds.forEach((id) => {
+        // 攻击力百分比
+        if ([12102].includes(id)) return
+        base[id.toString().slice(0, 3) as IdsString] += extra[id].Value || 0
+      })
     }
     // 处理音擎基础属性
     if (this.weapon) {
@@ -412,7 +416,11 @@ export class Property {
         }
         return acc
       }, {})
-    const all_properties: Mys.Property[] = []
+    const all_properties: {
+      property_name: string
+      property_id: number
+      base: string
+    }[] = []
     // 处理音擎高级属性
     if (this.weapon?.properties.length) {
       all_properties.push(...this.weapon.properties)
@@ -432,6 +440,21 @@ export class Property {
       }
       if (!suitData.properties.length) continue
       all_properties.push(...suitData.properties)
+    }
+    // 核心技额外提升
+    const CoreSkillEnhancement = this.enkaAvatar.CoreSkillEnhancement || 0
+    if (CoreSkillEnhancement) {
+      const extra = this.data.ExtraLevel[CoreSkillEnhancement].Extra
+      const extraIds = Object.keys(extra).map(Number)
+      extraIds.forEach((id) => {
+        // 攻击力百分比
+        if (![12102].includes(id)) return
+        all_properties.push({
+          property_name: id2zh[id.toString().slice(0, 3) as IdsString],
+          property_id: id,
+          base: get_base(id, extra[id].Value || 0)
+        })
+      })
     }
     for (const property of all_properties) {
       const propId = +property.property_id.toString().slice(0, 3) as Ids
