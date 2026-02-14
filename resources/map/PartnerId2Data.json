@@ -9913,6 +9913,396 @@
       }
     }
   },
+  "1511": {
+    "sprite_id": "59",
+    "name": "南宫羽",
+    "full_name": "Partner_Name_1511",
+    "en_name": "NangongYu",
+    "WeaponType": "2",
+    "ElementType": "205",
+    "Camp": "妄想天使",
+    "HitType": "打击",
+    "Rarity": "S",
+    "Attack": 107,
+    "AttackGrowth": 63136,
+    "BreakStun": 120,
+    "Defence": 50,
+    "DefenceGrowth": 67901,
+    "HpMax": 673,
+    "HpGrowth": 913706,
+    "Crit": 500,
+    "CritDamage": 5000,
+    "ElementAbnormalPower": 90,
+    "ElementMystery": 93,
+    "PenDelta": 0,
+    "PenRate": 0,
+    "SpRecover": 120,
+    "Level": {
+      "1": {
+        "HpMax": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "LevelMax": 10,
+        "LevelMin": 0,
+        "Materials": {
+          "10": 24000,
+          "100212": 4
+        }
+      },
+      "2": {
+        "HpMax": 462,
+        "Attack": 38,
+        "Defence": 34,
+        "LevelMax": 20,
+        "LevelMin": 10,
+        "Materials": {
+          "10": 56000,
+          "100222": 12
+        }
+      },
+      "3": {
+        "HpMax": 924,
+        "Attack": 77,
+        "Defence": 69,
+        "LevelMax": 30,
+        "LevelMin": 20,
+        "Materials": {
+          "10": 120000,
+          "100222": 20
+        }
+      },
+      "4": {
+        "HpMax": 1386,
+        "Attack": 115,
+        "Defence": 103,
+        "LevelMax": 40,
+        "LevelMin": 30,
+        "Materials": {
+          "10": 200000,
+          "100232": 10
+        }
+      },
+      "5": {
+        "HpMax": 1848,
+        "Attack": 153,
+        "Defence": 137,
+        "LevelMax": 50,
+        "LevelMin": 40,
+        "Materials": {
+          "10": 400000,
+          "100232": 20
+        }
+      },
+      "6": {
+        "HpMax": 2310,
+        "Attack": 192,
+        "Defence": 172,
+        "LevelMax": 60,
+        "LevelMin": 50,
+        "Materials": {}
+      }
+    },
+    "ExtraLevel": {
+      "1": {
+        "MaxLevel": 15,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 0
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 12
+          }
+        }
+      },
+      "2": {
+        "MaxLevel": 25,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 12
+          }
+        }
+      },
+      "3": {
+        "MaxLevel": 35,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 24
+          }
+        }
+      },
+      "4": {
+        "MaxLevel": 45,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 24
+          }
+        }
+      },
+      "5": {
+        "MaxLevel": 55,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 36
+          }
+        }
+      },
+      "6": {
+        "MaxLevel": 60,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 75
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 36
+          }
+        }
+      }
+    },
+    "Skin": {}
+  },
+  "1521": {
+    "sprite_id": "60",
+    "name": "希希芙",
+    "full_name": "Partner_Name_1521",
+    "en_name": "Cissia",
+    "WeaponType": "1",
+    "ElementType": "203",
+    "Camp": "都市秩序部",
+    "HitType": "斩击",
+    "Rarity": "S",
+    "Attack": 135,
+    "AttackGrowth": 82578,
+    "BreakStun": 93,
+    "Defence": 49,
+    "DefenceGrowth": 66203,
+    "HpMax": 617,
+    "HpGrowth": 837238,
+    "Crit": 500,
+    "CritDamage": 5000,
+    "ElementAbnormalPower": 94,
+    "ElementMystery": 93,
+    "PenDelta": 0,
+    "PenRate": 0,
+    "SpRecover": 120,
+    "Level": {
+      "1": {
+        "HpMax": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "LevelMax": 10,
+        "LevelMin": 0,
+        "Materials": {
+          "10": 24000,
+          "100211": 4
+        }
+      },
+      "2": {
+        "HpMax": 423,
+        "Attack": 48,
+        "Defence": 33,
+        "LevelMax": 20,
+        "LevelMin": 10,
+        "Materials": {
+          "10": 56000,
+          "100221": 12
+        }
+      },
+      "3": {
+        "HpMax": 847,
+        "Attack": 96,
+        "Defence": 67,
+        "LevelMax": 30,
+        "LevelMin": 20,
+        "Materials": {
+          "10": 120000,
+          "100221": 20
+        }
+      },
+      "4": {
+        "HpMax": 1270,
+        "Attack": 145,
+        "Defence": 100,
+        "LevelMax": 40,
+        "LevelMin": 30,
+        "Materials": {
+          "10": 200000,
+          "100231": 10
+        }
+      },
+      "5": {
+        "HpMax": 1694,
+        "Attack": 193,
+        "Defence": 134,
+        "LevelMax": 50,
+        "LevelMin": 40,
+        "Materials": {
+          "10": 400000,
+          "100231": 20
+        }
+      },
+      "6": {
+        "HpMax": 2117,
+        "Attack": 241,
+        "Defence": 167,
+        "LevelMax": 60,
+        "LevelMin": 50,
+        "Materials": {}
+      }
+    },
+    "ExtraLevel": {
+      "1": {
+        "MaxLevel": 15,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 0
+          },
+          "30501": {
+            "Prop": 30501,
+            "Name": "基础能量自动回复",
+            "Format": "{0:0.##}",
+            "Value": 12
+          }
+        }
+      },
+      "2": {
+        "MaxLevel": 25,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "30501": {
+            "Prop": 30501,
+            "Name": "基础能量自动回复",
+            "Format": "{0:0.##}",
+            "Value": 12
+          }
+        }
+      },
+      "3": {
+        "MaxLevel": 35,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "30501": {
+            "Prop": 30501,
+            "Name": "基础能量自动回复",
+            "Format": "{0:0.##}",
+            "Value": 24
+          }
+        }
+      },
+      "4": {
+        "MaxLevel": 45,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "30501": {
+            "Prop": 30501,
+            "Name": "基础能量自动回复",
+            "Format": "{0:0.##}",
+            "Value": 24
+          }
+        }
+      },
+      "5": {
+        "MaxLevel": 55,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "30501": {
+            "Prop": 30501,
+            "Name": "基础能量自动回复",
+            "Format": "{0:0.##}",
+            "Value": 36
+          }
+        }
+      },
+      "6": {
+        "MaxLevel": 60,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 75
+          },
+          "30501": {
+            "Prop": 30501,
+            "Name": "基础能量自动回复",
+            "Format": "{0:0.##}",
+            "Value": 36
+          }
+        }
+      }
+    },
+    "Skin": {}
+  },
   "2011": {
     "sprite_id": "",
     "name": "哲",
