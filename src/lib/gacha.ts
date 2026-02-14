@@ -277,7 +277,7 @@ export const anaylizeGachaLog = async (uid: string) => {
       // 设置时间范围
       timeRange = `${latest.time} ～ ${earliest.time}`
       // 计算平均五星次数
-      if (lastFive) {
+      if (lastFive !== null) {
         if (fiveStars > 0)
           avgFive = ((totalCount - lastFive) / fiveStars).toFixed(1)
         // 计算平均UP次数
@@ -289,7 +289,7 @@ export const anaylizeGachaLog = async (uid: string) => {
       }
     }
     // 如果没有最后五星
-    if (!lastFive && fiveStars === 0) {
+    if (lastFive === null && fiveStars === 0) {
       // 设置最后五星为 '-'
       if (totalCount > 0) lastFive = totalCount
       else lastFive = '-'
