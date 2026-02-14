@@ -163,7 +163,7 @@ export const anaylizeGachaLog = async (uid) => {
         let level = 2;
         if (data.length > 0) {
             timeRange = `${latest.time} ～ ${earliest.time}`;
-            if (lastFive) {
+            if (lastFive !== null) {
                 if (fiveStars > 0)
                     avgFive = ((totalCount - lastFive) / fiveStars).toFixed(1);
                 if (upCount > 0)
@@ -173,7 +173,7 @@ export const anaylizeGachaLog = async (uid) => {
                 }
             }
         }
-        if (!lastFive && fiveStars === 0) {
+        if (lastFive === null && fiveStars === 0) {
             if (totalCount > 0)
                 lastFive = totalCount;
             else
