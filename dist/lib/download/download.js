@@ -1,5 +1,4 @@
 import { getResourceRemotePath } from '../assets.js';
-import * as HakushURL from '../assets/hakushurl.js';
 import * as MysURL from '../assets/mysurl.js';
 import * as LocalURI from './const.js';
 import { checkFile } from './core.js';
@@ -36,41 +35,6 @@ export const downloadResourceImage = async (remoteLabel, _localBase, filename, r
     return result;
 };
 export const downloadHakushFile = async (_base, _localBase, filename = '') => {
-    const base = HakushURL[_base];
-    const localBase = LocalURI[_localBase];
-    const finalPath = path.join(localBase, filename);
-    let url = base;
-    if (filename) {
-        url += `/${filename}`;
-    }
-    const filepath = await checkFile(url, finalPath);
-    if (filepath) {
-        if (filename.endsWith('.json')) {
-            const content = fs.readFileSync(filepath, 'utf-8');
-            const data = JSON.parse(content);
-            if (content.includes('(Test') ||
-                !data ||
-                (_base === 'ZZZ_CHARACTER' && (data.PartnerInfo?.ImpressionF === '...' ||
-                    data.PartnerInfo?.ImpressionM === '...' ||
-                    !Object.keys(data.Skin || {}).length ||
-                    !Object.keys(data.SkillList || {}).length))) {
-                logger.debug('Hakush test file, redownloading:', url);
-                fs.rmSync(filepath);
-                const filepath_new = await checkFile(url, finalPath);
-                if (!filepath_new) {
-                    return data;
-                }
-                const content = fs.readFileSync(filepath_new, 'utf-8');
-                return JSON.parse(content);
-            }
-            return data;
-        }
-        else {
-            return filepath;
-        }
-    }
-    else {
-        return null;
-    }
+    return null;
 };
 //# sourceMappingURL=download.js.map
