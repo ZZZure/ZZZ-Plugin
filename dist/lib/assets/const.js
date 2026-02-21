@@ -1,6 +1,5 @@
 export const URL_LIB = {
     "[Lulu]": "http://lulush.microgg.cn",
-    "[Singapore]": "https://sg.qxqx.cf",
     "[Chuncheon]": "https://kr.qxqx.cf",
 };
 export const TYPE_PATH = {
