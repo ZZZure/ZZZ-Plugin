@@ -1,8 +1,8 @@
 // 节点列表
 export const URL_LIB = {
   "[Lulu]": "http://lulush.microgg.cn",
-  "[Singapore]": "https://sg.qxqx.cf",
   "[Chuncheon]": "https://kr.qxqx.cf",
+  // "[Singapore]": "https://sg.qxqx.cf",
   // "[MiniGG]": "http://file.minigg.cn/sayu-bot",
   // "[CNJS]": "http://cn-js-nj-1.lcf.icu:13214",
   // "[TW]": "http://tw-taipei-1.lcf.icu:20532",

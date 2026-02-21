@@ -126,6 +126,9 @@ export const getRoleImage = async (id: string | number, skin_id?: string | numbe
     }
     result = await downloadHakushFile('ZZZ_UI', 'HAKUSH_ZZZ_ROLE_PATH', filename)
   }
+  if (!result && skin_id) {
+    result = await downloadResourceImage('role', 'ZZZ_ROLE_PATH', `IconRole${sprite}.png`)
+  }
   return result
 }
 
