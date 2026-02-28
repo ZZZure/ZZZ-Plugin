@@ -130,14 +130,14 @@ export async function downloadAll(e: EventType) {
     await downloadFnc(getSmallSquareAvatar, id, result.images.charSmallSquare)
     await downloadFnc(getRoleImage, id, result.images.char)
     await downloadFnc(getRoleCircleImage, id, result.images.charCircle)
-    await downloadFnc(getHakushCharacter, id, result.hakush.char)
+    // await downloadFnc(getHakushCharacter, id, result.hakush.char)
   }
   for (const sprite of equipSprites) {
     await downloadFnc(getSuitImage, sprite, result.images.equip)
   }
   for (const sprite of weaponSprites) {
     await downloadFnc(getWeaponImage, sprite, result.images.weapon)
-    await downloadFnc(getHakushWeapon, sprite, result.hakush.equip)
+    // await downloadFnc(getHakushWeapon, sprite, result.hakush.equip)
   }
   for (const id of bangbooIDs) {
     await downloadFnc(getSquareBangboo, id, result.images.bangboo)
@@ -152,8 +152,8 @@ export async function downloadAll(e: EventType) {
     generateMsg('驱动盘套装图', result.images.equip),
     generateMsg('武器图', result.images.weapon),
     generateMsg('邦布图', result.images.bangboo),
-    generateMsg('Hakush角色数据', result.hakush.char),
-    generateMsg('Hakush驱动盘数据', result.hakush.equip),
+    // generateMsg('Hakush角色数据', result.hakush.char),
+    // generateMsg('Hakush驱动盘数据', result.hakush.equip),
     '注：下载失败可能缘于该资源尚处于内测中'
   ]
   downloading = false
