@@ -5,9 +5,17 @@ export function checkFolderExistAndCreate(folderPath) {
         fs.mkdirSync(folderPath, { recursive: true });
     }
 }
-export function getMapData(fileName) {
+const mapDataCache = {};
+export function getMapData(fileName, cache = true) {
+    if (cache && mapDataCache[fileName]) {
+        return mapDataCache[fileName];
+    }
     const mapDataPath = `${mapResourcesPath}/${fileName}.json`;
     const mapData = fs.readFileSync(mapDataPath, 'utf-8');
-    return JSON.parse(mapData);
+    const parsed = JSON.parse(mapData);
+    if (cache) {
+        mapDataCache[fileName] = parsed;
+    }
+    return parsed;
 }
 //# sourceMappingURL=file.js.map

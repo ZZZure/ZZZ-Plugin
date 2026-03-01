@@ -4,7 +4,7 @@ import { idToName } from '../../lib/convert/property.js';
 import { getMapData } from '../../utils/file.js';
 import { scoreFnc } from '../damage/avatar.js';
 import { char } from '../../lib/convert.js';
-const equipScore = getMapData('EquipScore');
+const equipScore = getMapData('EquipScore', false);
 for (const charName in equipScore) {
     const charID = +charName || char.aliasToId(charName);
     if (!charID) {
