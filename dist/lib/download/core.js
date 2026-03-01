@@ -23,6 +23,8 @@ export const checkFile = async (url, savePath) => {
             return savePath;
         }
     }
+    if (!url)
+        return null;
     const download = await downloadFile(url, savePath);
     return download;
 };
