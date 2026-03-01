@@ -8,12 +8,21 @@ export function checkFolderExistAndCreate(folderPath: string) {
   }
 }
 
+const mapDataCache: Partial<MapJSON.KeyValue> = {}
+
 /**
  * 获取resources/map/资源数据
  * @param fileName json文件名（不含后缀）
  */
-export function getMapData<T extends keyof MapJSON.KeyValue>(fileName: T): MapJSON.KeyValue[T] {
+export function getMapData<T extends keyof MapJSON.KeyValue>(fileName: T, cache = true): MapJSON.KeyValue[T] {
+  if (cache && mapDataCache[fileName]) {
+    return mapDataCache[fileName]
+  }
   const mapDataPath = `${mapResourcesPath}/${fileName}.json`
   const mapData = fs.readFileSync(mapDataPath, 'utf-8')
-  return JSON.parse(mapData)
+  const parsed = JSON.parse(mapData)
+  if (cache) {
+    mapDataCache[fileName] = parsed
+  }
+  return parsed
 }

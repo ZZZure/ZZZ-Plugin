@@ -172,19 +172,7 @@ const mainBaseValueData = {
 
 type mainStatKeys = keyof typeof mainBaseValueData
 
-const AnomalyData = getMapData('AnomalyData') as {
-  name: string,
-  element: element,
-  element_type: number,
-  sub_element_type: number,
-  duration: number,
-  interval: number,
-  multiplier: number,
-  discover?: {
-    multiplier: number,
-    fixed_multiplier: number
-  }
-}[]
+const AnomalyData = getMapData('AnomalyData')
 
 interface enemy {
   /** 等级 */
@@ -524,7 +512,7 @@ export class Calculator {
       types = Object.entries(this.avatar.scoreWeight)
         .reduce((acc: { type: subStatKeys, weight: number }[], [id, weight]) => {
           if (weight > 0) {
-            const type = property.idToName(id) as subStatKeys
+            const type = property.idToName(id) as subStatKeys | null
             if (type && subBaseValueData[type]) {
               acc.push({ type, weight })
             }
@@ -575,7 +563,7 @@ export class Calculator {
       types = Object.entries(this.avatar.scoreWeight)
         .reduce((acc: { type: mainStatKeys, weight: number }[], [id, weight]) => {
           if (weight > 0) {
-            const type = property.idToName(id) as mainStatKeys
+            const type = property.idToName(id) as mainStatKeys | null
             if (type && mainBaseValueData[type]) {
               acc.push({ type, weight })
             }

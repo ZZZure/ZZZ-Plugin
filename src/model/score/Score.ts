@@ -9,7 +9,7 @@ import { char } from '../../lib/convert.js'
 
 export type Weight = { [propID: string]: number }
 
-const equipScore = getMapData('EquipScore')
+const equipScore = getMapData('EquipScore', false)
 for (const charName in equipScore) {
   const charID = +charName || char.aliasToId(charName)
   if (!charID) {
@@ -21,7 +21,7 @@ for (const charName in equipScore) {
   delete equipScore[charName]
 }
 /** 主词条可能属性 */
-const mainStats = getMapData('EquipMainStats') as { [partition: string]: number[] }
+const mainStats = getMapData('EquipMainStats')
 /** 副词条可能属性 */
 const subStats = Object.keys(baseValueData).map(Number)
 
