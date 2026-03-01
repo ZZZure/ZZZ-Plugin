@@ -37,6 +37,7 @@ export const checkFile = async (url: any, savePath: string) => {
       return savePath
     }
   }
+  if (!url) return null
   const download = await downloadFile(url, savePath)
   return download
 }

@@ -78,51 +78,50 @@ export const downloadHakushFile = async<Base extends keyof typeof HakushURL>(
   Base extends 'ZZZ_WEAPON' ? (Hakush.WeaponData | null) :
   string | null
 > => {
-  // @ts-expect-error 屏蔽hakush资源下载
-  return null
-  // const base = HakushURL[_base]
-  // const localBase = LocalURI[_localBase]
-  // const finalPath = path.join(localBase, filename)
+  const base = HakushURL[_base]
+  const localBase = LocalURI[_localBase]
+  const finalPath = path.join(localBase, filename)
   // let url: string = base
   // if (filename) {
   //   url += `/${filename}`
   // }
-  // // logger.debug('Hakush file url:', url);
-  // const filepath = await checkFile(url, finalPath)
-  // if (filepath) {
-  //   // 如果是JSON文件，返回JSON对象
-  //   if (filename.endsWith('.json')) {
-  //     // 读取文件内容
-  //     const content = fs.readFileSync(filepath, 'utf-8')
-  //     // 返回文件内容
-  //     const data = JSON.parse(content)
-  //     // 测试数据每次请求都重新下载
-  //     if (
-  //       content.includes('(Test') ||
-  //       !data ||
-  //       (_base === 'ZZZ_CHARACTER' && (
-  //         data.PartnerInfo?.ImpressionF === '...' ||
-  //         data.PartnerInfo?.ImpressionM === '...' ||
-  //         !Object.keys(data.Skin || {}).length ||
-  //         !Object.keys(data.SkillList || {}).length
-  //       ))
-  //     ) {
-  //       logger.debug('Hakush test file, redownloading:', url)
-  //       fs.rmSync(filepath)
-  //       const filepath_new = await checkFile(url, finalPath)
-  //       if (!filepath_new) {
-  //         return data
-  //       }
-  //       const content = fs.readFileSync(filepath_new, 'utf-8')
-  //       return JSON.parse(content)
-  //     }
-  //     return data
-  //   } else {
-  //     // @ts-expect-error
-  //     return filepath
-  //   }
-  // } else {
-  //   // @ts-expect-error
-  //   return null
-  // }
+  const url = '' // 屏蔽下载
+  // logger.debug('Hakush file url:', url);
+  const filepath = await checkFile(url, finalPath)
+  if (filepath) {
+    // 如果是JSON文件，返回JSON对象
+    if (filename.endsWith('.json')) {
+      // 读取文件内容
+      const content = fs.readFileSync(filepath, 'utf-8')
+      // 返回文件内容
+      const data = JSON.parse(content)
+      // 测试数据每次请求都重新下载
+      if (
+        content.includes('(Test') ||
+        !data ||
+        (_base === 'ZZZ_CHARACTER' && (
+          data.PartnerInfo?.ImpressionF === '...' ||
+          data.PartnerInfo?.ImpressionM === '...' ||
+          !Object.keys(data.Skin || {}).length ||
+          !Object.keys(data.SkillList || {}).length
+        ))
+      ) {
+        logger.debug('Hakush test file, redownloading:', url)
+        fs.rmSync(filepath)
+        const filepath_new = await checkFile(url, finalPath)
+        if (!filepath_new) {
+          return data
+        }
+        const content = fs.readFileSync(filepath_new, 'utf-8')
+        return JSON.parse(content)
+      }
+      return data
+    } else {
+      // @ts-expect-error
+      return filepath
+    }
+  } else {
+    // @ts-expect-error
+    return null
+  }
 }
