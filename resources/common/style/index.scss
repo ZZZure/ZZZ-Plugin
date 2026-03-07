@@ -158,7 +158,7 @@
   background-position: center;
   background-size: contain;
 
-  @each $i in (50000, 65000, 149500, 150000, 182000, 195000, 663000) {
+  @each $i in (50000, 65000, 149500, 150000, 182000, 195000, 481000, 663000) {
     &.score#{$i} {
       background-image: url('../images/max_score/#{$i}.png');
     }
@@ -425,18 +425,8 @@
       height: 80%;
       background-color: rgb(246, 202, 69);
       margin-right: -0.2em;
-      -webkit-clip-path: polygon(
-        $pwidth 0%,
-        100% 0%,
-        calc(100% - $pwidth) 100%,
-        0% 100%
-      );
-      clip-path: polygon(
-        $pwidth 0%,
-        100% 0%,
-        calc(100% - $pwidth) 100%,
-        0% 100%
-      );
+      -webkit-clip-path: polygon($pwidth 0%, 100% 0%, calc(100% - $pwidth) 100%, 0% 100%);
+      clip-path: polygon($pwidth 0%, 100% 0%, calc(100% - $pwidth) 100%, 0% 100%);
     }
   }
 

@@ -85,6 +85,14 @@ export default class ZZZApiTool {
                 url: `${this.hostRecord}event/game_record_zzz/api/zzz/void_front_battle_abstract_info`,
                 query: `lang=zh-cn&uid=${this.uid}&region=${this.server}`,
             },
+            zzzVoidFrontBattle: {
+                url: `${this.hostRecord}event/game_record_zzz/api/zzz/void_front_battle_period_detail`,
+                query: `lang=zh-cn&uid=${this.uid}&region=${this.server}&schedule_type=1`,
+            },
+            zzzVoidFrontBattlePeriod: {
+                url: `${this.hostRecord}event/game_record_zzz/api/zzz/void_front_battle_period_detail`,
+                query: `lang=zh-cn&uid=${this.uid}&region=${this.server}&schedule_type=2`,
+            },
             zzzMonthly: {
                 url: `${this.host}event/nap_ledger/month_info`,
                 query: `uid=${this.uid}&region=${this.server}`,
@@ -173,10 +181,6 @@ export default class ZZZApiTool {
                 zzzGacha_Record: {
                     url: `${this.hostGacha}event/game_record_zzz/api/zzz/gacha_record`,
                     query: `lang=zh-cn&uid=${this.uid}&region=${this.server}&gacha_type=${data.type}&end_id=${data.endId}`,
-                },
-                zzzVoidFrontBattleDetail: {
-                    url: `${this.hostRecord}event/game_record_zzz/api/zzz/void_front_battle_detail`,
-                    query: `lang=zh-cn&uid=${this.uid}&region=${this.server}&void_front_id=${data.void_front_id}`,
                 },
                 ...this.zzzUrlMap,
             },
