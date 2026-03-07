@@ -1,7 +1,6 @@
 import request from '../../utils/request.js'
 
 export default new class {
-
   private readonly host = 'https://static.nanoka.cc'
   private readonly versionUrl = `${this.host}/manifest.json`
   private version = '2.7.3+14158029'
@@ -24,7 +23,7 @@ export default new class {
           return res.json() as any
         })).zzz.latest
         if (version && version !== this.version) {
-          logger.debug(`成功获取NanokaURL绝区零最新版本：${version}`)
+          logger.debug(`成功刷新NanokaURL绝区零最新版本：${version}`)
           this.version = version
         }
       } catch (error) {
@@ -71,7 +70,7 @@ export default new class {
   }
 
   get ZZZ_UI() {
-    return `${this.ZZZ_BASE}/UI`
+    return `${this.host}/assets/zzz`
   }
 
 }

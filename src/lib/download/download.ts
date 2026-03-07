@@ -70,7 +70,7 @@ export const downloadResourceImage = async (
  * @param localBase 本地地址
  * @param filename 文件名
  */
-export const downloadHakushFile = async<Base extends keyof typeof HakushURL>(
+export const downloadHakushFile = async<Base extends keyof typeof HakushURL & {}>(
   _base: Base,
   _localBase: keyof typeof LocalURI,
   filename: string = ''
@@ -123,7 +123,7 @@ export const downloadHakushFile = async<Base extends keyof typeof HakushURL>(
     }
   } else {
     // @ts-expect-error
-    return null
+    return downloadNanokaFile(_base, _localBase.replace('HAKUSH_', 'NANOKA_'), filename)
   }
 }
 
@@ -134,7 +134,7 @@ export const downloadHakushFile = async<Base extends keyof typeof HakushURL>(
  * @param localBase 本地地址
  * @param filename 文件名
  */
-export const downloadNanokaFile = async<Base extends keyof typeof NanokaURL>(
+export const downloadNanokaFile = async<Base extends keyof typeof NanokaURL & {}>(
   _base: Base,
   _localBase: keyof typeof LocalURI,
   filename: string = ''
@@ -150,7 +150,7 @@ export const downloadNanokaFile = async<Base extends keyof typeof NanokaURL>(
   if (filename) {
     url += `/${filename}`
   }
-  // logger.debug('Nanoka file url:', url);
+  logger.debug('Nanoka file url:', url)
   const filepath = await checkFile(url, finalPath)
   if (filepath) {
     // 如果是JSON文件，返回JSON对象
