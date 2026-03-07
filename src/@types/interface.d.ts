@@ -1511,3 +1511,266 @@ export namespace Hakush {
   }
 
 }
+
+/** Nanoka接口数据 */
+export namespace Nanoka {
+
+  export interface PartnerData {
+    id: number
+    icon: string
+    name: string
+    code_name: string
+    rarity: number
+    weapon_type: {
+      [profession_id: string]: string
+    }
+    element_type: {
+      [element_id: string]: string
+    }
+    special_element_type: {
+      name?: string
+      title?: string
+      desc?: string
+      icon?: string
+    }
+    hit_type: {
+      [hit_id: string]: string
+    }
+    camp: {
+      [id: string]: string
+    }
+    gender: number
+    partner_info: {
+      birthday: string
+      full_name: string
+      gender: string
+      icon_path: string
+      impression_f: string
+      impression_m: string
+      name: string
+      outlook_desc: string
+      profile_desc: string
+      race: string
+      role_icon: string
+      stature: string
+      unlock_condition: string[]
+      trust_lv: { [key: string]: string }
+    }
+    skin: {
+      [skin_id: string]: {
+        name: string
+        desc: string
+        image: string
+      }
+    }
+    stats: {
+      armor: number
+      armor_growth: number
+      attack: number
+      attack_growth: number
+      avatar_piece_id: number
+      break_stun: number
+      crit: number
+      crit_damage: number
+      crit_dmg_res: number
+      crit_res: number
+      defence: number
+      defence_growth: number
+      element_abnormal_power: number
+      element_mystery: number
+      endurance: number
+      hp_growth: number
+      hp_max: number
+      pen_delta: number
+      pen_rate: number
+      rbl: number
+      rbl_correction_factor: number
+      rbl_probability: number
+      shield: number
+      shield_growth: number
+      sp_bar_point: number
+      sp_recover: number
+      stun: number
+      tags: string[]
+      rp_max: number
+      rp_recover: number
+    }
+    level: {
+      [key: string]: {
+        hp_max: number
+        attack: number
+        defence: number
+        level_max: number
+        level_min: number
+        materials: { [key: string]: number }
+      }
+    }
+    extra_level: {
+      [key: string]: {
+        max_level: number
+        extra: {
+          [key: string]: {
+            prop: number
+            name: string
+            format: string
+            value: number
+          }
+        }
+      }
+    }
+    level_exp: number[]
+    skill: {
+      basic: {
+        description: AssistDescription[]
+        material: { [key: string]: { [key: string]: number } }
+      }
+      dodge: {
+        description: AssistDescription[]
+        material: { [key: string]: { [key: string]: number } }
+      }
+      special: {
+        description: AssistDescription[]
+        material: { [key: string]: { [key: string]: number } }
+      }
+      chain: {
+        description: AssistDescription[]
+        material: { [key: string]: { [key: string]: number } }
+      }
+      assist: {
+        description: AssistDescription[]
+        material: { [key: string]: { [key: string]: number } }
+      }
+    }
+    skill_list: {
+      [key: string]: {
+        name: string
+        desc: string
+        element_type: number
+        hit_type: number
+        potential: any[]
+      }
+    }
+    passive: {
+      level: {
+        [key: string]: {
+          level: number
+          id: number
+          name: string[]
+          desc: string[]
+          extra_property: {}
+          potential: any[]
+        }
+      }
+      materials: { [key: string]: { [key: string]: number } }
+    }
+    talent: {
+      [key: string]: {
+        level: number
+        name: string
+        desc: string
+        desc2: string
+      }
+    }
+    fairy_recommend: {
+      slot4: number
+      slot2: number
+      slot_sub: number
+      part4: Part4
+      part5: Part4
+      part6: Part4
+      part_sub: Part4
+    }
+    potential: any[]
+    potential_detail: {}
+    live2_d: string
+  }
+
+  interface Part4 {
+    prop: number
+    name: string
+    format: string
+    icon: string
+  }
+
+  interface AssistDescription {
+    name: string
+    desc?: string
+    potential: any[]
+    param?: {
+      name: string
+      desc: string
+      param: Param
+      potential: any[]
+    }[]
+  }
+
+  export interface WeaponData {
+    id: number
+    code_name: string
+    name: string
+    desc: string
+    desc2: string
+    desc3: string
+    rarity: number
+    icon: string
+    weapon_type: {
+      [profession_id: string]: string
+    }
+    base_property: {
+      name: string
+      name2: string
+      format: string
+      value: number
+    }
+    rand_property: {
+      name: string
+      name2: string
+      format: string
+      value: number
+    }
+    level: {
+      [level: string]: {
+        exp: number
+        rate: number
+        rate2: number
+      }
+    }
+    stars: {
+      [star: string]: {
+        star_rate: number
+        rand_rate: number
+      }
+    }
+    materials: string
+    talents: {
+      [talent: string]: {
+        name: string
+        desc: string
+      }
+    }
+  }
+
+  export interface EquipmentData {
+    id: number
+    name: string
+    desc2: string
+    desc4: string
+    story: string
+    icon: string
+    icon2: string
+  }
+
+  export interface AllBangbooData {
+    [bangboo_id: string]: {
+      icon: string
+      rank: number
+      codename: string
+      en: string
+      desc: string
+      ko: string
+      zh: string
+      ja: string
+    }
+  }
+
+}

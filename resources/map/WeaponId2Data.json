@@ -12290,10 +12290,10 @@
   "13020": {
     "Id": 13020,
     "CodeName": "Weapon_A_Common_20",
-    "Name": "Item_Weapon_A_Common_20_Name",
-    "Desc": "Item_Weapon_A_Common_20_Desc",
+    "Name": "炎炙沸釜",
+    "Desc": "「辣而不燥，香而不腻，入口浓郁，回口生甘。」复制该文案带图好评，可在「煮釜」火锅店兑换卫非地手打牛肉丸一份。",
     "Desc2": "装备后可提升[击破]代理人的战斗能力",
-    "Desc3": "Item_Weapon_A_Common_20_ShortDesc",
+    "Desc3": "...",
     "Rarity": "A",
     "Icon": "Assets/NapResources/UI/Sprite/A1DynamicLoad/ItemIconWeapon/UnPacker/Weapon_A_Common_20.png",
     "WeaponType": {
@@ -12649,23 +12649,23 @@
     "Materials": "10:9600,101011:3|10:22400,101021:10|10:48000,101021:16|10:80000,101031:8|10:160000,101031:16",
     "Talents": {
       "1": {
-        "Name": "Weapon_TalentTitle_13020",
+        "Name": "红油辣锅",
         "Desc": "发动<color=#FFFFFF>[支援突击]</color> 时，装备者对目标造成的失衡值提升<color=#2BAD00>7.2%</color>，装备者造成的伤害提升<color=#2BAD00>7.2%</color>，持续30秒，重复触发时刷新持续时间。"
       },
       "2": {
-        "Name": "Weapon_TalentTitle_13020",
+        "Name": "红油辣锅",
         "Desc": "发动<color=#FFFFFF>[支援突击]</color> 时，装备者对目标造成的失衡值提升<color=#2BAD00>8.2%</color>，装备者造成的伤害提升<color=#2BAD00>8.2%</color>，持续30秒，重复触发时刷新持续时间。"
       },
       "3": {
-        "Name": "Weapon_TalentTitle_13020",
+        "Name": "红油辣锅",
         "Desc": "发动<color=#FFFFFF>[支援突击]</color> 时，装备者对目标造成的失衡值提升<color=#2BAD00>9.2%</color>，装备者造成的伤害提升<color=#2BAD00>9.2%</color>，持续30秒，重复触发时刷新持续时间。"
       },
       "4": {
-        "Name": "Weapon_TalentTitle_13020",
+        "Name": "红油辣锅",
         "Desc": "发动<color=#FFFFFF>[支援突击]</color> 时，装备者对目标造成的失衡值提升<color=#2BAD00>10.2%</color>，装备者造成的伤害提升<color=#2BAD00>10.2%</color>，持续30秒，重复触发时刷新持续时间。"
       },
       "5": {
-        "Name": "Weapon_TalentTitle_13020",
+        "Name": "红油辣锅",
         "Desc": "发动<color=#FFFFFF>[支援突击]</color> 时，装备者对目标造成的失衡值提升<color=#2BAD00>11.5%</color>，装备者造成的伤害提升<color=#2BAD00>11.5%</color>，持续30秒，重复触发时刷新持续时间。"
       }
     },
@@ -32642,12 +32642,12 @@
   "14151": {
     "Id": 14151,
     "CodeName": "Weapon_S_1511",
-    "Name": "(Test1)南宫羽测试音擎",
-    "Desc": "(Test1)...",
+    "Name": "霓虹妄想",
+    "Desc": "...",
     "Desc2": "装备后可提升[击破]代理人的战斗能力",
-    "Desc3": "钢铁的躯壳中亦有灵魂存在。",
+    "Desc3": "...",
     "Rarity": "S",
-    "Icon": "Assets/NapResources/UI/Sprite/A1DynamicLoad/ItemIconWeapon/UnPacker/Weapon_S_1501.png",
+    "Icon": "Assets/NapResources/UI/Sprite/A1DynamicLoad/ItemIconWeapon/UnPacker/Weapon_S_1511.png",
     "WeaponType": {
       "2": "击破"
     },
@@ -33001,24 +33001,24 @@
     "Materials": "10:12000,101011:4|10:28000,101021:12|10:60000,101021:20|10:100000,101031:10|10:200000,101031:20",
     "Talents": {
       "1": {
-        "Name": "南宫羽测试音擎",
-        "Desc": "(Test1)装备者的异常精通提升<color=#2BAD00>90</color>点；装备者<color=#FFFFFF>[强化特殊技]</color>或<color=#FFFFFF>[普通攻击]</color>造成<color=#ELEMENT_Ether>以太属性</color>伤害时，全队造成的伤害提升<color=#2BAD00>15%</color>，持续40秒，最多叠加2层，同一招式内最多触发一次，重复触发时刷新持续时间，拥有2层效果时，装备者的异常精通该额外提升<color=#2BAD00>60</color>，该效果全队唯一"
+        "Name": "迪斯科恶魔",
+        "Desc": "(Test1)装备者的异常精通提升<color=#2BAD00>90</color>点；装备者<color=#FFFFFF>[强化特殊技]</color>或<color=#FFFFFF>[普通攻击]</color>造成<color=#ELEMENT_Ether>以太属性</color>伤害时，全队造成的伤害提升<color=#2BAD00>15%</color>，持续40秒，最多叠加2层，同一招式内最多触发一次，重复触发时刷新持续时间，拥有2层效果时，装备者的异常精通额外提升<color=#2BAD00>60</color>点，该效果全队唯一。"
       },
       "2": {
-        "Name": "南宫羽测试音擎",
-        "Desc": "(Test1)装备者的异常精通提升<color=#2BAD00>90</color>点；装备者<color=#FFFFFF>[强化特殊技]</color>或<color=#FFFFFF>[普通攻击]</color>造成<color=#ELEMENT_Ether>以太属性</color>伤害时，全队造成的伤害提升<color=#2BAD00>15%</color>，持续40秒，最多叠加2层，同一招式内最多触发一次，重复触发时刷新持续时间，拥有2层效果时，装备者的异常精通该额外提升<color=#2BAD00>60</color>，该效果全队唯一"
+        "Name": "迪斯科恶魔",
+        "Desc": "(Test1)装备者的异常精通提升<color=#2BAD00>90</color>点；装备者<color=#FFFFFF>[强化特殊技]</color>或<color=#FFFFFF>[普通攻击]</color>造成<color=#ELEMENT_Ether>以太属性</color>伤害时，全队造成的伤害提升<color=#2BAD00>15%</color>，持续40秒，最多叠加2层，同一招式内最多触发一次，重复触发时刷新持续时间，拥有2层效果时，装备者的异常精通额外提升<color=#2BAD00>60</color>点，该效果全队唯一。"
       },
       "3": {
-        "Name": "南宫羽测试音擎",
-        "Desc": "(Test1)装备者的异常精通提升<color=#2BAD00>90</color>点；装备者<color=#FFFFFF>[强化特殊技]</color>或<color=#FFFFFF>[普通攻击]</color>造成<color=#ELEMENT_Ether>以太属性</color>伤害时，全队造成的伤害提升<color=#2BAD00>15%</color>，持续40秒，最多叠加2层，同一招式内最多触发一次，重复触发时刷新持续时间，拥有2层效果时，装备者的异常精通该额外提升<color=#2BAD00>60</color>，该效果全队唯一"
+        "Name": "迪斯科恶魔",
+        "Desc": "(Test1)装备者的异常精通提升<color=#2BAD00>90</color>点；装备者<color=#FFFFFF>[强化特殊技]</color>或<color=#FFFFFF>[普通攻击]</color>造成<color=#ELEMENT_Ether>以太属性</color>伤害时，全队造成的伤害提升<color=#2BAD00>15%</color>，持续40秒，最多叠加2层，同一招式内最多触发一次，重复触发时刷新持续时间，拥有2层效果时，装备者的异常精通额外提升<color=#2BAD00>60</color>点，该效果全队唯一。"
       },
       "4": {
-        "Name": "南宫羽测试音擎",
-        "Desc": "(Test1)装备者的异常精通提升<color=#2BAD00>90</color>点；装备者<color=#FFFFFF>[强化特殊技]</color>或<color=#FFFFFF>[普通攻击]</color>造成<color=#ELEMENT_Ether>以太属性</color>伤害时，全队造成的伤害提升<color=#2BAD00>15%</color>，持续40秒，最多叠加2层，同一招式内最多触发一次，重复触发时刷新持续时间，拥有2层效果时，装备者的异常精通该额外提升<color=#2BAD00>60</color>，该效果全队唯一"
+        "Name": "迪斯科恶魔",
+        "Desc": "(Test1)装备者的异常精通提升<color=#2BAD00>90</color>点；装备者<color=#FFFFFF>[强化特殊技]</color>或<color=#FFFFFF>[普通攻击]</color>造成<color=#ELEMENT_Ether>以太属性</color>伤害时，全队造成的伤害提升<color=#2BAD00>15%</color>，持续40秒，最多叠加2层，同一招式内最多触发一次，重复触发时刷新持续时间，拥有2层效果时，装备者的异常精通额外提升<color=#2BAD00>60</color>点，该效果全队唯一。"
       },
       "5": {
-        "Name": "南宫羽测试音擎",
-        "Desc": "(Test1)装备者的异常精通提升<color=#2BAD00>90</color>点；装备者<color=#FFFFFF>[强化特殊技]</color>或<color=#FFFFFF>[普通攻击]</color>造成<color=#ELEMENT_Ether>以太属性</color>伤害时，全队造成的伤害提升<color=#2BAD00>15%</color>，持续40秒，最多叠加2层，同一招式内最多触发一次，重复触发时刷新持续时间，拥有2层效果时，装备者的异常精通该额外提升<color=#2BAD00>60</color>，该效果全队唯一"
+        "Name": "迪斯科恶魔",
+        "Desc": "(Test1)装备者的异常精通提升<color=#2BAD00>90</color>点；装备者<color=#FFFFFF>[强化特殊技]</color>或<color=#FFFFFF>[普通攻击]</color>造成<color=#ELEMENT_Ether>以太属性</color>伤害时，全队造成的伤害提升<color=#2BAD00>15%</color>，持续40秒，最多叠加2层，同一招式内最多触发一次，重复触发时刷新持续时间，拥有2层效果时，装备者的异常精通额外提升<color=#2BAD00>60</color>点，该效果全队唯一。"
       }
     },
     "Profession": 2
@@ -33026,10 +33026,10 @@
   "14152": {
     "Id": 14152,
     "CodeName": "Weapon_S_1521",
-    "Name": "(Test1)希希芙测试音擎",
-    "Desc": "Item_Weapon_S_1521_Desc",
+    "Name": "鳞齿寻踪",
+    "Desc": "...",
     "Desc2": "装备后可提升[强攻]代理人的战斗能力",
-    "Desc3": "Item_Weapon_S_1521_ShortDesc",
+    "Desc3": "...",
     "Rarity": "S",
     "Icon": "Assets/NapResources/UI/Sprite/A1DynamicLoad/ItemIconWeapon/UnPacker/Weapon_S_1521.png",
     "WeaponType": {
@@ -33385,24 +33385,24 @@
     "Materials": "10:12000,101010:4|10:28000,101020:12|10:60000,101020:20|10:100000,101030:10|10:200000,101030:20",
     "Talents": {
       "1": {
-        "Name": "希希芙测试音擎",
-        "Desc": "(Test1)暴击率提高<color=#2BAD00>20%</color>；装备者单次消耗的能量达到20点时，每消耗20点能量，获得3秒增益效果：造成<color=#2EB6FF>电属性伤害</color>时无视目标<color=#2BAD00>30%</color>防御力；重复获得时，延长持续时间，至多延长至30秒；进入接站状态时，获得10秒该增益；装备者为非当前操作中角色时，持续时间不再减少。"
+        "Name": "仿生毒素",
+        "Desc": "暴击率提高<color=#2BAD00>25%</color>；装备者单次消耗的能量达到20点时，每消耗20点能量，获得3秒增益效果：造成<color=#2EB6FF>电属性伤害</color>时无视目标<color=#2BAD00>30%</color>防御力；重复获得时，延长持续时间，至多延长至30秒；进入接战状态时，获得10秒该增益；装备者为非当前操作中角色时，持续时间不再减少。"
       },
       "2": {
-        "Name": "希希芙测试音擎",
-        "Desc": "(Test1)暴击率提高<color=#2BAD00>23%</color>；装备者单次消耗的能量达到20点时，每消耗20点能量，获得3秒增益效果：造成<color=#2EB6FF>电属性伤害</color>时无视目标<color=#2BAD00>34.5%</color>防御力；重复获得时，延长持续时间，至多延长至30秒；进入接站状态时，获得10秒该增益；装备者为非当前操作中角色时，持续时间不再减少。"
+        "Name": "仿生毒素",
+        "Desc": "暴击率提高<color=#2BAD00>28.8%</color>；装备者单次消耗的能量达到20点时，每消耗20点能量，获得3秒增益效果：造成<color=#2EB6FF>电属性伤害</color>时无视目标<color=#2BAD00>34.5%</color>防御力；重复获得时，延长持续时间，至多延长至30秒；进入接战状态时，获得10秒该增益；装备者为非当前操作中角色时，持续时间不再减少。"
       },
       "3": {
-        "Name": "希希芙测试音擎",
-        "Desc": "(Test1)暴击率提高<color=#2BAD00>26%</color>；装备者单次消耗的能量达到20点时，每消耗20点能量，获得3秒增益效果：造成<color=#2EB6FF>电属性伤害</color>时无视目标<color=#2BAD00>39%</color>防御力；重复获得时，延长持续时间，至多延长至30秒；进入接站状态时，获得10秒该增益；装备者为非当前操作中角色时，持续时间不再减少。"
+        "Name": "仿生毒素",
+        "Desc": "暴击率提高<color=#2BAD00>32.5%</color>；装备者单次消耗的能量达到20点时，每消耗20点能量，获得3秒增益效果：造成<color=#2EB6FF>电属性伤害</color>时无视目标<color=#2BAD00>39%</color>防御力；重复获得时，延长持续时间，至多延长至30秒；进入接战状态时，获得10秒该增益；装备者为非当前操作中角色时，持续时间不再减少。"
       },
       "4": {
-        "Name": "希希芙测试音擎",
-        "Desc": "(Test1)暴击率提高<color=#2BAD00>29%</color>；装备者单次消耗的能量达到20点时，每消耗20点能量，获得3秒增益效果：造成<color=#2EB6FF>电属性伤害</color>时无视目标<color=#2BAD00>43.5%</color>防御力；重复获得时，延长持续时间，至多延长至30秒；进入接站状态时，获得10秒该增益；装备者为非当前操作中角色时，持续时间不再减少。"
+        "Name": "仿生毒素",
+        "Desc": "暴击率提高<color=#2BAD00>36.3%</color>；装备者单次消耗的能量达到20点时，每消耗20点能量，获得3秒增益效果：造成<color=#2EB6FF>电属性伤害</color>时无视目标<color=#2BAD00>43.5%</color>防御力；重复获得时，延长持续时间，至多延长至30秒；进入接战状态时，获得10秒该增益；装备者为非当前操作中角色时，持续时间不再减少。"
       },
       "5": {
-        "Name": "希希芙测试音擎",
-        "Desc": "(Test1)暴击率提高<color=#2BAD00>32%</color>；装备者单次消耗的能量达到20点时，每消耗20点能量，获得3秒增益效果：造成<color=#2EB6FF>电属性伤害</color>时无视目标<color=#2BAD00>48%</color>防御力；重复获得时，延长持续时间，至多延长至30秒；进入接站状态时，获得10秒该增益；装备者为非当前操作中角色时，持续时间不再减少。"
+        "Name": "仿生毒素",
+        "Desc": "暴击率提高<color=#2BAD00>40%</color>；装备者单次消耗的能量达到20点时，每消耗20点能量，获得3秒增益效果：造成<color=#2EB6FF>电属性伤害</color>时无视目标<color=#2BAD00>48%</color>防御力；重复获得时，延长持续时间，至多延长至30秒；进入接战状态时，获得10秒该增益；装备者为非当前操作中角色时，持续时间不再减少。"
       }
     },
     "Profession": 1
