@@ -4438,7 +4438,7 @@
     "en_name": "Zhu Yuan",
     "WeaponType": "1",
     "ElementType": "205",
-    "Camp": "刑侦特勤组",
+    "Camp": "新艾利都治安局",
     "HitType": "穿透",
     "Rarity": "S",
     "Attack": 132,
@@ -4639,7 +4639,7 @@
     "en_name": "QingYi",
     "WeaponType": "2",
     "ElementType": "203",
-    "Camp": "刑侦特勤组",
+    "Camp": "新艾利都治安局",
     "HitType": "打击",
     "Rarity": "S",
     "Attack": 109,
@@ -4840,7 +4840,7 @@
     "en_name": "Jane",
     "WeaponType": "3",
     "ElementType": "200",
-    "Camp": "刑侦特勤组",
+    "Camp": "新艾利都治安局",
     "HitType": "斩击",
     "Rarity": "S",
     "Attack": 127,
@@ -5046,7 +5046,7 @@
     "en_name": "Seth",
     "WeaponType": "5",
     "ElementType": "203",
-    "Camp": "刑侦特勤组",
+    "Camp": "新艾利都治安局",
     "HitType": "斩击",
     "Rarity": "A",
     "Attack": 93,
@@ -9916,7 +9916,7 @@
   "1511": {
     "sprite_id": "59",
     "name": "南宫羽",
-    "full_name": "Partner_Name_1511",
+    "full_name": "...",
     "en_name": "NangongYu",
     "WeaponType": "2",
     "ElementType": "205",
@@ -10106,16 +10106,22 @@
         }
       }
     },
-    "Skin": {}
+    "Skin": {
+      "3115110": {
+        "Name": "...",
+        "Desc": "...",
+        "Image": "IconRole59"
+      }
+    }
   },
   "1521": {
     "sprite_id": "60",
     "name": "希希芙",
-    "full_name": "Partner_Name_1521",
+    "full_name": "...",
     "en_name": "Cissia",
     "WeaponType": "1",
     "ElementType": "203",
-    "Camp": "都市秩序部",
+    "Camp": "新艾利都治安局",
     "HitType": "斩击",
     "Rarity": "S",
     "Attack": 135,
@@ -10301,7 +10307,13 @@
         }
       }
     },
-    "Skin": {}
+    "Skin": {
+      "3115210": {
+        "Name": "AvatarSkin_Cissia_Name_000",
+        "Desc": "AvatarSkin_Cissia_Desc_000",
+        "Image": "IconRole60"
+      }
+    }
   },
   "2011": {
     "sprite_id": "",
