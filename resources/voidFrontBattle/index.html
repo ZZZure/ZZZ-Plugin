@@ -26,8 +26,8 @@
     >
       <div class="total-info-row">
         <div class="total-score-section">
-          {{if abstractInfo.total_score === 663000}}
-          <div class="max-score-icon score663000"></div>
+          {{if abstractInfo.total_score === abstractInfo.max_score}}
+          <div class="max-score-icon score{{abstractInfo.max_score}}"></div>
           {{else}}
           <div class="total-score">{{abstractInfo.total_score}}</div>
           {{/if}}
@@ -67,8 +67,8 @@
         <!-- 第二行：分数 + 积分倍率 -->
         <div class="boss-row boss-score-row">
           <div class="score-section">
-            {{if mainRecord.score === 182000}}
-            <div class="max-score-icon score182000"></div>
+            {{if mainRecord.score === mainRecord.max_score}}
+            <div class="max-score-icon score{{mainRecord.max_score}}"></div>
             {{else}}
             <div class="score-value">{{mainRecord.score}}</div>
             {{/if}}
@@ -209,10 +209,8 @@
         <!-- 第二行：分数 + 积分倍率 -->
         <div class="boss-row boss-score-row">
           <div class="score-section">
-            {{if stageItem.score === stageItem.max_score && stageItem.score === 182000}}
-            <div class="max-score-icon score182000"></div>
-            {{else if stageItem.score === stageItem.max_score && stageItem.score === 149500}}
-            <div class="max-score-icon score149500"></div>
+            {{if stageItem.score === stageItem.max_score}}
+            <div class="max-score-icon score{{stageItem.max_score}}"></div>
             {{else}}
             <div class="score-value">{{stageItem.score}}</div>
             {{/if}}
@@ -320,6 +318,7 @@
   {{/each}}
   {{/if}}
 
+  {{if !isPeriod}}
   <div class="item-card">
     <ul class="notes">
       {{if userRankAllowed !== null}}
@@ -333,5 +332,6 @@
       {{/if}}
     </ul>
   </div>
+  {{/if}}
 </div>
 {{/block}}

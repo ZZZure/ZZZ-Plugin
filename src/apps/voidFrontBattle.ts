@@ -21,7 +21,7 @@ export class VoidFrontBattle extends ZZZPlugin {
       priority: settings.getConfig("priority")?.voidFrontBattle ?? 70,
       rule: [
         {
-          reg: `${rulePrefix}(临界推演|临界|推演)$`,
+          reg: `${rulePrefix}(上期|往期)?(临界推演|临界|推演)$`,
           fnc: "voidFrontBattle",
         },
       ],
@@ -33,36 +33,38 @@ export class VoidFrontBattle extends ZZZPlugin {
     const { api, deviceFp } = await this.getAPI()
     await this.getPlayerInfo()
 
-    const voidFrontBattleAbstractInfo = await api
-      .getFinalData("zzzVoidFrontBattleAbstractInfo", {
-        deviceFp,
-      })
-      .catch((e: Error) => {
-        this.reply(e.message)
-        throw e
-      })
-    if (!voidFrontBattleAbstractInfo?.has_detail_record) {
-      return this.reply("暂无临界推演数据")
-    }
-    const abstractInfoBrief = voidFrontBattleAbstractInfo?.void_front_battle_abstract_info_brief
+    // const voidFrontBattleAbstractInfo = await api
+    //   .getFinalData("zzzVoidFrontBattleAbstractInfo", {
+    //     deviceFp,
+    //   })
+    //   .catch((e: Error) => {
+    //     this.reply(e.message)
+    //     throw e
+    //   })
+    // if (!voidFrontBattleAbstractInfo?.has_detail_record) {
+    //   return this.reply("暂无临界推演数据")
+    // }
+    // const abstractInfoBrief = voidFrontBattleAbstractInfo?.void_front_battle_abstract_info_brief
+
+    const isPeriod = this.e.msg.match(`(上期|往期)`)
+    const method = isPeriod ? 'zzzVoidFrontBattlePeriod' : 'zzzVoidFrontBattle'
 
     const voidFrontBattleDetail = await api
-      .getFinalData("zzzVoidFrontBattleDetail", {
+      .getFinalData(method, {
         deviceFp,
-        void_front_id: abstractInfoBrief.void_front_id,
       })
       .catch((e: Error) => {
         this.reply(e.message)
         throw e
       })
-    if (!voidFrontBattleDetail) {
+    if (!voidFrontBattleDetail?.void_front_battle_detail) {
       return this.reply("获取临界推演详情失败")
     }
 
     const rank_type = "VOID_FRONT_BATTLE"
     const uid = await this.getUID()
     let userRankAllowed: boolean | null = null
-    if (uid) {
+    if (!isPeriod && uid) {
       if (this.e?.group_id) {
         await addUserToGroupRank(rank_type, uid, this.e.group_id)
         const qq = this.e.at && !this.e.atBot ? this.e.at : this.e.user_id
@@ -73,14 +75,15 @@ export class VoidFrontBattle extends ZZZPlugin {
       if (this.isGroupRankAllowed()) {
         saveVoidFrontBattleData(uid, {
           player: this.e.playerCard!,
-          result: voidFrontBattleDetail,
+          result: voidFrontBattleDetail.void_front_battle_detail,
         })
       }
     }
-    const voidFrontBattle = processVoidFrontBattleData(voidFrontBattleDetail)
+    const voidFrontBattle = processVoidFrontBattleData(voidFrontBattleDetail.void_front_battle_detail)
     const finalData = {
       voidFrontBattle,
       userRankAllowed,
+      isPeriod,
     }
     await this.render("voidFrontBattle/index.html", finalData, this)
   }

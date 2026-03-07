@@ -193,7 +193,14 @@ export namespace Mys {
     zzzDeadly: Deadly
     zzzDeadlyPeriod: Deadly
     zzzVoidFrontBattleAbstractInfo: VoidFrontBattleAbstractInfo
-    zzzVoidFrontBattleDetail: VoidFrontBattleDetail
+    zzzVoidFrontBattle: {
+      void_front_id: number
+      void_front_battle_detail: VoidFrontBattleDetail
+    }
+    zzzVoidFrontBattlePeriod: {
+      void_front_id: number
+      void_front_battle_detail: VoidFrontBattleDetail
+    }
   }
 
   /** 米游社UrlType */
