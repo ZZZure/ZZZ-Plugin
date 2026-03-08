@@ -45,6 +45,10 @@ export namespace Config {
     url: string
     /** 自定义enkaApi地址 */
     enkaApi: string
+    /** 是否输出评分计算debug日志（debug模式下） */
+    score_debug_log: boolean
+    /** 是否输出伤害计算debug日志（debug模式下） */
+    damage_debug_log: boolean
   }
 
   export interface device {

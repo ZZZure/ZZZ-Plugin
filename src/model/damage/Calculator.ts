@@ -3,6 +3,7 @@ import type { ZZZAvatarInfo } from '../avatar.js'
 import { runtime, elementType2element, anomalyEnum } from './BuffManager.js'
 import { getMapData } from '../../utils/file.js'
 import { property } from '../../lib/convert.js'
+import settings from '../../lib/settings.js'
 import { charData } from './avatar.js'
 import _ from 'lodash'
 
@@ -218,6 +219,11 @@ export class Calculator {
     return this.avatar.initial_properties
   }
 
+  protected debug(...args: any[]) {
+    if (!settings.getConfig('config').damage_debug_log) return
+    logger.debug(...args)
+  }
+
   /** 定义敌方属性 */
   defEnemy<T extends keyof enemy>(key: T, value: enemy[T]): void
   defEnemy(enemy: enemy): void
@@ -278,13 +284,13 @@ export class Calculator {
     this.skill = skill
     if (!skill.banCache && this.cache[skill.type]) return this.cache[skill.type]
     if (skill.check && !skill.check({ avatar: this.avatar, buffM: this.buffM, calc: this, runtime })) return
-    logger.debug(`${logger.green(skill.type)}${skill.name}伤害计算：`)
+    this.debug(`${logger.green(skill.type)}${skill.name}伤害计算：`)
     if (skill.dmg) {
       const dmg = skill.dmg(this)
       if (!dmg.skill || dmg.skill.name !== skill.name) {
         dmg.skill = skill
       }
-      logger.debug('自定义计算最终伤害：', dmg.result)
+      this.debug('自定义计算最终伤害：', dmg.result)
       this.usefulBuffResults.clear()
       return dmg
     }
@@ -297,7 +303,7 @@ export class Calculator {
     }, this)
     const areas = {} as damage['areas']
     if (skill.before) skill.before({ avatar: this.avatar, calc: this, usefulBuffs, skill, props, areas, runtime })
-    logger.debug(`有效buff*${usefulBuffs.length}/${this.buffM.buffs.length}`)
+    this.debug(`有效buff*${usefulBuffs.length}/${this.buffM.buffs.length}`)
     const { isAnomalyDMG = false, isSheerDMG = false } = skill
 
     // 基础伤害区
@@ -337,7 +343,7 @@ export class Calculator {
           this.usefulBuffResults.clear()
           return logger.warn('技能倍率缺失：', skill)
         }
-        if (ExtraMultiplier) logger.debug(`最终倍率：${Multiplier}`)
+        if (ExtraMultiplier) this.debug(`最终倍率：${Multiplier}`)
       }
       props.倍率 = Multiplier
       if (isSheerDMG) {
@@ -346,7 +352,7 @@ export class Calculator {
         areas.BasicArea = this.get_ATK(skill, usefulBuffs) * Multiplier
       }
     }
-    logger.debug(`基础伤害区：${areas.BasicArea}`)
+    this.debug(`基础伤害区：${areas.BasicArea}`)
     // 暴击区
     let CRITRate = 0, CRITDMG = 0
     if (!areas.CriticalArea) {
@@ -361,7 +367,7 @@ export class Calculator {
       }
       areas.CriticalArea = 1 + CRITRate * CRITDMG
     }
-    areas.CriticalArea !== 1 && logger.debug(`暴击期望：${areas.CriticalArea}`)
+    areas.CriticalArea !== 1 && this.debug(`暴击期望：${areas.CriticalArea}`)
     // 通用乘区
     areas.BoostArea ??= this.get_BoostArea(skill, usefulBuffs)
     areas.VulnerabilityArea ??= this.get_VulnerabilityArea(skill, usefulBuffs)
@@ -398,20 +404,20 @@ export class Calculator {
         damage.result.expectDMG = fnc(damage.result.expectDMG)
       },
       x: (n: number) => {
-        logger.debug('伤害系数：' + n)
+        this.debug('伤害系数：' + n)
         damage.fnc(v => v * n)
       },
       add: (d: string | damage) => {
         if (typeof d === 'string') d = this.calc_skill(d)
         if (!d) return
-        logger.debug('增加伤害：' + d.skill.name, d.result)
+        this.debug('增加伤害：' + d.skill.name, d.result)
         damage.result.expectDMG += d.result.expectDMG
         damage.result.critDMG += d.result.critDMG || d.result.expectDMG
       },
       del: (d: string | damage) => {
         if (typeof d === 'string') d = this.calc_skill(d)
         if (!d) return
-        logger.debug('减少伤害：' + d.skill.name, d.result)
+        this.debug('减少伤害：' + d.skill.name, d.result)
         damage.result.expectDMG -= d.result.expectDMG
         damage.result.critDMG -= d.result.critDMG || d.result.expectDMG
       }
@@ -433,7 +439,7 @@ export class Calculator {
     if (skill.after) {
       skill.after({ avatar: this.avatar, calc: this, usefulBuffs, skill, damage, runtime })
     }
-    logger.debug('最终伤害：', result)
+    this.debug('最终伤害：', result)
     if (!skill.banCache) this.cache[skill.type] = damage
     this.usefulBuffResults.clear()
     // console.log(damage)
@@ -465,7 +471,7 @@ export class Calculator {
             // @ts-expect-error
             this.avatar._base_properties = this.avatar._initial_properties = new Proxy({}, {
               get: (target, prop) => {
-                // logger.debug(`计算buff理论最大值，访问属性：${String(prop)}`)
+                // this.debug(`计算buff理论最大值，访问属性：${String(prop)}`)
                 return Number.MAX_SAFE_INTEGER
               }
             })
@@ -525,7 +531,7 @@ export class Calculator {
     }
     const base: { [type: string]: number } = {}
     types.forEach(t => base[t] = t.includes('百分比') ? this.base_properties[property.nameZHToNameEN(t.replace('百分比', '')) as keyof ZZZAvatarInfo['base_properties']] * subBaseValueData[t][0] : subBaseValueData[t][0])
-    logger.debug(logger.red('副词条差异计算变化值：'), base)
+    this.debug(logger.red('副词条差异计算变化值：'), base)
     const buffs: {
       name: subStatKeys
       shortName: string
@@ -578,7 +584,7 @@ export class Calculator {
     types.forEach(t => base[t] = (t.includes('百分比') || ['异常掌控', '冲击力', '能量自动回复'].includes(t)) ?
       this.base_properties[property.nameZHToNameEN(t.replace('百分比', '')) as keyof ZZZAvatarInfo['base_properties']] * mainBaseValueData[t][0] :
       mainBaseValueData[t][0])
-    logger.debug(logger.red('主词条差异计算变化值：'), base)
+    this.debug(logger.red('主词条差异计算变化值：'), base)
     const buffs: {
       name: mainStatKeys
       shortName: string
@@ -661,7 +667,7 @@ export class Calculator {
       result[i_del] = []
       const buff_del = buffs[i_del]
       const { name: name_del = buff_del.type, value: value_del } = buff_del
-      logger.debug(logger.blue(`差异计算：${name_del}`))
+      this.debug(logger.blue(`差异计算：${name_del}`))
       this.buffM.buffs.push({
         ...buff_del,
         name: logger.green(`差异计算：${name_del}`),
@@ -678,7 +684,7 @@ export class Calculator {
         }
         const { name: name_add = buff_add.type } = buff_add
         if (name_del === name_add) continue
-        logger.debug(logger.yellow(`差异计算：${name_del}->${name_add}`))
+        this.debug(logger.yellow(`差异计算：${name_del}->${name_add}`))
         this.buffM.buffs.push({
           ...buff_add,
           name: logger.green(`差异计算：${name_del}->${name_add}`)
@@ -688,7 +694,7 @@ export class Calculator {
         this.cache = Object.create(null)
         data.damage = newDamage
         data.difference = newDamage.result.expectDMG - oriDamage.result.expectDMG
-        logger.debug(logger.magenta(`差异计算：${name_del}->${name_add} 伤害变化：${data.difference}`))
+        this.debug(logger.magenta(`差异计算：${name_del}->${name_add} 伤害变化：${data.difference}`))
       }
       this.buffM.buffs.pop()
     }
@@ -732,9 +738,9 @@ export class Calculator {
    */
   get_SkillMultiplier(type: string) {
     const SkillLevel = this.get_SkillLevel(type[0])
-    logger.debug(`${type[0]}等级：${SkillLevel}`)
+    this.debug(`${type[0]}等级：${SkillLevel}`)
     const Multiplier = charData[this.avatar.id].skill[type]?.[SkillLevel - 1]
-    logger.debug(`技能倍率：${Multiplier}`)
+    this.debug(`技能倍率：${Multiplier}`)
     return Multiplier
   }
 
@@ -768,7 +774,7 @@ export class Calculator {
       times = Math.floor((AnomalyDuration * 10) / (anomalyData.interval * 10))
     }
     const Multiplier = anomalyData.multiplier * (times || 1)
-    logger.debug(`倍率：${Multiplier}`)
+    this.debug(`倍率：${Multiplier}`)
     return Multiplier
   }
 
@@ -784,7 +790,7 @@ export class Calculator {
     const times = Math.floor((AnomalyDuration * 10) / (anomalyData.interval * 10))
     const discover = anomalyData.discover!
     const Multiplier = discover.fixed_multiplier + times * discover.multiplier
-    logger.debug(`${anomalyData.name}紊乱倍率：${Multiplier}`)
+    this.debug(`${anomalyData.name}紊乱倍率：${Multiplier}`)
     return Multiplier
   }
 
@@ -859,10 +865,10 @@ export class Calculator {
         if (recorded) {
           const recordedValue = this.usefulBuffResults.get(recorded)!.value
           if (Math.abs(recordedValue) >= Math.abs(add)) {
-            logger.debug(`\tBuff：${buff.name}已存在，且数值相同/更高，不计入结果`)
+            this.debug(`\tBuff：${buff.name}已存在，且数值相同/更高，不计入结果`)
             return previousValue
           }
-          logger.debug(`\tBuff：${buff.name}已存在，且数值更低，替换为更高数值`)
+          this.debug(`\tBuff：${buff.name}已存在，且数值更低，替换为更高数值`)
           previousValue -= recordedValue
           this.usefulBuffResults.delete(recorded)
         }
@@ -870,7 +876,7 @@ export class Calculator {
       }
       if (!this.usefulBuffResults.has(buff))
         this.usefulBuffResults.set(buff, { ...buff, value: add })
-      logger.debug(`\tBuff：${buff.name}对${(buff.include ? (buff.range ? [buff.range, buff.include] : buff.include) : buff.range) || '全类型'}增加${add}${buff.element || ''}${type}`)
+      this.debug(`\tBuff：${buff.name}对${(buff.include ? (buff.range ? [buff.range, buff.include] : buff.include) : buff.range) || '全类型'}增加${add}${buff.element || ''}${type}`)
       return previousValue + add
     }, initial)
   }
@@ -879,14 +885,14 @@ export class Calculator {
   get_ATK(skill?: skill, usefulBuffs?: buff[]) {
     let ATK = this.get('攻击力', this.initial_properties.ATK, skill, usefulBuffs)
     ATK = this.min_max(0, 10000, ATK)
-    logger.debug(`攻击力：${ATK}`)
+    this.debug(`攻击力：${ATK}`)
     return ATK
   }
 
   /** 额外倍率 */
   get_ExtraMultiplier(skill?: skill, usefulBuffs?: buff[]) {
     const ExtraMultiplier = this.get('倍率', 0, skill, usefulBuffs)
-    ExtraMultiplier && logger.debug(`额外倍率：${ExtraMultiplier}`)
+    ExtraMultiplier && this.debug(`额外倍率：${ExtraMultiplier}`)
     return ExtraMultiplier
   }
 
@@ -894,7 +900,7 @@ export class Calculator {
   get_CRITRate(skill?: skill, usefulBuffs?: buff[]) {
     let CRITRate = this.get('暴击率', this.initial_properties.CRITRate, skill, usefulBuffs)
     CRITRate = this.min_max(0, 1, CRITRate)
-    logger.debug(`暴击率：${CRITRate}`)
+    this.debug(`暴击率：${CRITRate}`)
     return CRITRate
   }
 
@@ -902,7 +908,7 @@ export class Calculator {
   get_CRITDMG(skill?: skill, usefulBuffs?: buff[]) {
     let CRITDMG = this.get('暴击伤害', this.initial_properties.CRITDMG, skill, usefulBuffs)
     CRITDMG = this.min_max(0, 5, CRITDMG)
-    logger.debug(`暴击伤害：${CRITDMG}`)
+    this.debug(`暴击伤害：${CRITDMG}`)
     return CRITDMG
   }
 
@@ -910,7 +916,7 @@ export class Calculator {
   get_BoostArea(skill?: skill, usefulBuffs?: buff[]) {
     let BoostArea = this.get('增伤', 1, skill, usefulBuffs)
     BoostArea = this.min_max(0, 6, BoostArea)
-    logger.debug(`增伤区：${BoostArea}`)
+    this.debug(`增伤区：${BoostArea}`)
     return BoostArea
   }
 
@@ -918,7 +924,7 @@ export class Calculator {
   get_VulnerabilityArea(skill?: skill, usefulBuffs?: buff[]) {
     let VulnerabilityArea = this.get('易伤', 1, skill, usefulBuffs)
     VulnerabilityArea = this.min_max(0.2, 2, VulnerabilityArea)
-    logger.debug(`易伤区：${VulnerabilityArea}`)
+    this.debug(`易伤区：${VulnerabilityArea}`)
     return VulnerabilityArea
   }
 
@@ -926,7 +932,7 @@ export class Calculator {
   get_StunVulnerabilityArea(skill?: skill, usefulBuffs?: buff[]) {
     let StunVulnerabilityArea = this.get('失衡易伤', 1, skill, usefulBuffs)
     StunVulnerabilityArea = this.min_max(0.2, 5, StunVulnerabilityArea)
-    StunVulnerabilityArea !== 1 && logger.debug(`失衡易伤区：${StunVulnerabilityArea}`)
+    StunVulnerabilityArea !== 1 && this.debug(`失衡易伤区：${StunVulnerabilityArea}`)
     return StunVulnerabilityArea
   }
 
@@ -934,14 +940,14 @@ export class Calculator {
   get_ResistanceArea(skill?: skill, usefulBuffs?: buff[]) {
     let ResistanceArea = this.get('无视抗性', 1 - this.enemy.resistance, skill, usefulBuffs)
     ResistanceArea = this.min_max(0, 2, ResistanceArea)
-    logger.debug(`抗性区：${ResistanceArea}`)
+    this.debug(`抗性区：${ResistanceArea}`)
     return ResistanceArea
   }
 
   /** 无视防御 */
   get_IgnoreDEF(skill?: skill, usefulBuffs?: buff[]) {
     const IgnoreDEF = this.get('无视防御', 0, skill, usefulBuffs)
-    IgnoreDEF && logger.debug(`无视防御：${IgnoreDEF}`)
+    IgnoreDEF && this.debug(`无视防御：${IgnoreDEF}`)
     return IgnoreDEF
   }
 
@@ -949,7 +955,7 @@ export class Calculator {
   get_Pen(skill?: skill, usefulBuffs?: buff[]) {
     let Pen = this.get('穿透值', this.initial_properties.Pen, skill, usefulBuffs)
     Pen = Math.min(Pen, 1000)
-    Pen && logger.debug(`穿透值：${Pen}`)
+    Pen && this.debug(`穿透值：${Pen}`)
     return Pen
   }
 
@@ -957,7 +963,7 @@ export class Calculator {
   get_PenRatio(skill?: skill, usefulBuffs?: buff[]) {
     let PenRatio = this.get('穿透率', this.initial_properties.PenRatio, skill, usefulBuffs)
     PenRatio = Math.min(PenRatio, 2)
-    PenRatio && logger.debug(`穿透率：${PenRatio}`)
+    PenRatio && this.debug(`穿透率：${PenRatio}`)
     return PenRatio
   }
 
@@ -976,21 +982,21 @@ export class Calculator {
     /** 有效防御 */
     const effective_defence = Math.max(0, defence * (1 - PenRatio) - Pen)
     const DefenceArea = this.min_max(0, 1, base / (effective_defence + base))
-    logger.debug(`防御区：${DefenceArea}`)
+    this.debug(`防御区：${DefenceArea}`)
     return DefenceArea
   }
 
   /** 等级区 */
   get_LevelArea(level = this.avatar.level) {
     const LevelArea = +(1 + 1 / 59 * (level - 1)).toFixed(4)
-    logger.debug(`等级区：${LevelArea}`)
+    this.debug(`等级区：${LevelArea}`)
     return LevelArea
   }
 
   /** 异常精通 */
   get_AnomalyProficiency(skill?: skill, usefulBuffs?: buff[]) {
     const AnomalyProficiency = this.get('异常精通', this.initial_properties.AnomalyProficiency, skill, usefulBuffs)
-    logger.debug(`异常精通：${AnomalyProficiency}`)
+    this.debug(`异常精通：${AnomalyProficiency}`)
     return AnomalyProficiency
   }
 
@@ -998,7 +1004,7 @@ export class Calculator {
   get_AnomalyMastery(skill?: skill, usefulBuffs?: buff[]) {
     let AnomalyMastery = this.get('异常掌控', this.initial_properties.AnomalyMastery, skill, usefulBuffs)
     AnomalyMastery = this.min_max(0, 1000, AnomalyMastery)
-    logger.debug(`异常掌控：${AnomalyMastery}`)
+    this.debug(`异常掌控：${AnomalyMastery}`)
     return AnomalyMastery
   }
 
@@ -1006,7 +1012,7 @@ export class Calculator {
   get_AnomalyProficiencyArea(skill?: skill, usefulBuffs?: buff[]) {
     const AnomalyProficiency = this.get_AnomalyProficiency(skill, usefulBuffs)
     const AnomalyProficiencyArea = this.min_max(0, 10, AnomalyProficiency / 100)
-    logger.debug(`异常精通区：${AnomalyProficiencyArea}`)
+    this.debug(`异常精通区：${AnomalyProficiencyArea}`)
     return AnomalyProficiencyArea
   }
 
@@ -1014,7 +1020,7 @@ export class Calculator {
   get_AnomalyBoostArea(skill?: skill, usefulBuffs?: buff[]) {
     let AnomalyBoostArea = this.get('异常增伤', 1, skill, usefulBuffs)
     AnomalyBoostArea = this.min_max(0, 3, AnomalyBoostArea)
-    AnomalyBoostArea !== 1 && logger.debug(`异常增伤区：${AnomalyBoostArea}`)
+    AnomalyBoostArea !== 1 && this.debug(`异常增伤区：${AnomalyBoostArea}`)
     return AnomalyBoostArea
   }
 
@@ -1022,7 +1028,7 @@ export class Calculator {
   get_AnomalyCRITRate(skill?: skill, usefulBuffs?: buff[]) {
     let AnomalyCRITRate = this.get('异常暴击率', 0, skill, usefulBuffs)
     AnomalyCRITRate = this.min_max(0, 1, AnomalyCRITRate)
-    AnomalyCRITRate && logger.debug(`异常暴击率：${AnomalyCRITRate}`)
+    AnomalyCRITRate && this.debug(`异常暴击率：${AnomalyCRITRate}`)
     return AnomalyCRITRate
   }
 
@@ -1030,14 +1036,14 @@ export class Calculator {
   get_AnomalyCRITDMG(skill?: skill, usefulBuffs?: buff[]) {
     let AnomalyCRITDMG = this.get('异常暴击伤害', 0, skill, usefulBuffs)
     AnomalyCRITDMG = this.min_max(0, 5, AnomalyCRITDMG)
-    AnomalyCRITDMG && logger.debug(`异常暴击伤害：${AnomalyCRITDMG}`)
+    AnomalyCRITDMG && this.debug(`异常暴击伤害：${AnomalyCRITDMG}`)
     return AnomalyCRITDMG
   }
 
   /** 异常持续时间 */
   get_AnomalyDuration(skill?: skill, usefulBuffs?: buff[], duration: number = 0) {
     const AnomalyDuration = +this.get('异常持续时间', duration, skill, usefulBuffs).toFixed(1)
-    logger.debug(`异常持续时间：${AnomalyDuration}`)
+    this.debug(`异常持续时间：${AnomalyDuration}`)
     return AnomalyDuration
   }
 
@@ -1045,7 +1051,7 @@ export class Calculator {
   get_HP(skill?: skill, usefulBuffs?: buff[]) {
     let HP = this.get('生命值', this.initial_properties.HP, skill, usefulBuffs)
     HP = this.min_max(0, 100000, HP)
-    logger.debug(`生命值：${HP}`)
+    this.debug(`生命值：${HP}`)
     return HP
   }
 
@@ -1053,7 +1059,7 @@ export class Calculator {
   get_DEF(skill?: skill, usefulBuffs?: buff[]) {
     let DEF = this.get('防御力', this.initial_properties.DEF, skill, usefulBuffs)
     DEF = this.min_max(0, 1000, DEF)
-    logger.debug(`防御力：${DEF}`)
+    this.debug(`防御力：${DEF}`)
     return DEF
   }
 
@@ -1061,7 +1067,7 @@ export class Calculator {
   get_Impact(skill?: skill, usefulBuffs?: buff[]) {
     let Impact = this.get('冲击力', this.initial_properties.Impact, skill, usefulBuffs)
     Impact = this.min_max(0, 1000, Impact)
-    logger.debug(`冲击力：${Impact}`)
+    this.debug(`冲击力：${Impact}`)
     return Impact
   }
 
@@ -1071,7 +1077,7 @@ export class Calculator {
     let SheerForce = Math.trunc(this.get_ATK(skill, usefulBuffs) * 0.3)
     SheerForce = this.get('贯穿力', SheerForce, skill, usefulBuffs)
     SheerForce = this.min_max(0, 10000, SheerForce)
-    logger.debug(`贯穿力：${SheerForce}`)
+    this.debug(`贯穿力：${SheerForce}`)
     return SheerForce
   }
 
@@ -1079,7 +1085,7 @@ export class Calculator {
   get_SheerBoostArea(skill?: skill, usefulBuffs?: buff[]) {
     let SheerBoostArea = this.get('贯穿增伤', 1, skill, usefulBuffs)
     SheerBoostArea = this.min_max(0.2, 9, SheerBoostArea)
-    SheerBoostArea !== 1 && logger.debug(`贯穿增伤区：${SheerBoostArea}`)
+    SheerBoostArea !== 1 && this.debug(`贯穿增伤区：${SheerBoostArea}`)
     return SheerBoostArea
   }
 
