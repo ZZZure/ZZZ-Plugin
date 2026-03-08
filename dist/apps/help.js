@@ -170,6 +170,13 @@ const helpData = [
                 commands: ['临界推演', '临界', '推演'],
             },
             {
+                title: '查看上期临界推演数据',
+                desc: '查看上期临界推演战斗数据',
+                needCK: true,
+                needSK: false,
+                commands: ['上期临界推演', '上期临界', '上期推演'],
+            },
+            {
                 title: '查看式舆防卫战排名',
                 desc: '查看式舆防卫战(深渊)群排名',
                 needCK: false,
