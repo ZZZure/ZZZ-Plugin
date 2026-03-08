@@ -31,3 +31,19 @@ export const HAKUSH_CHARACTER_DATA_PATH = path.join(
   HAKUSH_ZZZ_WEAPON_PATH = path.join(HAKUSH_IMAGE_PATH, 'weapon'),
   HAKUSH_ZZZ_SUIT_PATH = path.join(HAKUSH_IMAGE_PATH, 'suit'),
   HAKUSH_ZZZ_SQUARE_BANGBOO_PATH = path.join(HAKUSH_IMAGE_PATH, 'bangboo_square_avatar')
+
+
+export const NANOKA_CHARACTER_DATA_PATH = path.join(
+  dataResourcesPath,
+  'nanoka/character'
+),
+  NANOKA_WEAPON_DATA_PATH = path.join(dataResourcesPath, 'nanoka/weapon'),
+  NANOKA_IMAGE_PATH = path.join(imageResourcesPath, 'nanoka'),
+  NANOKA_UI_PATH = path.join(NANOKA_IMAGE_PATH, 'ui'),
+  NANOKA_ZZZ_ROLE_PATH = path.join(NANOKA_IMAGE_PATH, 'role'),
+  NANOKA_ZZZ_ROLE_CIRCLE_PATH = path.join(NANOKA_IMAGE_PATH, 'role_circle'),
+  NANOKA_ZZZ_SMALL_SQUARE_AVATAR_PATH = path.join(NANOKA_IMAGE_PATH, 'role_general'),
+  NANOKA_ZZZ_SQUARE_AVATAR_PATH = path.join(NANOKA_IMAGE_PATH, 'square_avatar'),
+  NANOKA_ZZZ_WEAPON_PATH = path.join(NANOKA_IMAGE_PATH, 'weapon'),
+  NANOKA_ZZZ_SUIT_PATH = path.join(NANOKA_IMAGE_PATH, 'suit'),
+  NANOKA_ZZZ_SQUARE_BANGBOO_PATH = path.join(NANOKA_IMAGE_PATH, 'bangboo_square_avatar')

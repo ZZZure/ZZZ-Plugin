@@ -266,5 +266,29 @@
         "base": "10%"
       }
     ]
+  },
+  "33700": {
+    "sprite_file": "SuitBunnyinWonderland",
+    "name": "雪兔梦游仙境 ",
+    "desc1": "生命值+10%",
+    "desc2": "[防护]角色装备时：装备者发动<color=#FFFFFF>[强化特殊技]</color>或队伍中任意队友发动<color=#FFFFFF>[招架支援]</color>、[回避支援]时，全队角色造成伤害提升6%，最多叠加3层，持续25秒，层数逐层衰减，获得或者衰减时刷新持续时间，同名被动效果之间不可叠加。",
+    "properties": [
+      {
+        "property_id": 11102,
+        "base": "10%"
+      }
+    ]
+  },
+  "33800": {
+    "sprite_file": "SuitNotesFromtheChained",
+    "name": "囚徒手记",
+    "desc1": "<color=#98EFF0>冰属性伤害</color>+10%。",
+    "desc2": "装备者触发<color=#FFFFFF>[异放]</color>时，装备者异常精通提升48点，持续30秒；重复触发时刷新持续时间；装备者触发<color=#FFFFFF>[冻结]</color>效果时，装备者造成的属性异常伤害、<color=#FFFFFF>[紊乱]</color>伤害提升16%，持续30秒，重复触发时刷新持续时间。",
+    "properties": [
+      {
+        "property_id": 31703,
+        "base": "10%"
+      }
+    ]
   }
 }

@@ -3,6 +3,7 @@ import {
   downloadMysImage,
   downloadResourceImage,
   downloadHakushFile,
+  downloadNanokaFile,
 } from './download/download.js'
 
 /**
@@ -34,18 +35,18 @@ export const getSquareAvatar = async (charID: string | number) => {
 export const getSmallSquareAvatar = async (charID: string | number) => {
   const sprite = convert.char.idToSprite(charID)
   if (!sprite) return null
-  let filename = `IconRoleGeneral${sprite}.png`
+  let filename = `IconRoleGeneral${sprite}.webp`
   let result: string | null = ''
-  result = await downloadResourceImage(
-    'role_general',
-    'ZZZ_SMALL_SQUARE_AVATAR_PATH',
+  result = await downloadHakushFile(
+    'ZZZ_UI',
+    'HAKUSH_ZZZ_SMALL_SQUARE_AVATAR_PATH',
     filename
   )
   if (!result) {
-    filename = `IconRoleSelect${sprite}.webp`
-    result = await downloadHakushFile(
-      'ZZZ_UI',
-      'HAKUSH_ZZZ_SMALL_SQUARE_AVATAR_PATH',
+    filename = `IconRoleGeneral${sprite}.png`
+    result = await downloadResourceImage(
+      'role_general',
+      'ZZZ_SMALL_SQUARE_AVATAR_PATH',
       filename
     )
   }
@@ -201,14 +202,15 @@ export const getHakushCharacter = async (charId: string | number) => {
 }
 
 /**
- * 获取Hakush武器数据
- * @param weaponId 武器ID
+ * 获取Nanoka角色数据
+ * @param charId 角色ID
+ * @returns 文件内容（JSON）
  */
-export const getHakushWeapon = async (weaponId: string | number) => {
-  const filename = `${weaponId}.json`
-  const result = await downloadHakushFile(
-    'ZZZ_WEAPON',
-    'HAKUSH_WEAPON_DATA_PATH',
+export const getNanokaCharacter = async (charId: string | number) => {
+  const filename = `${charId}.json`
+  const result = await downloadNanokaFile(
+    'ZZZ_CHARACTER',
+    'NANOKA_CHARACTER_DATA_PATH',
     filename
   )
   return result
@@ -220,5 +222,14 @@ export const getHakushWeapon = async (weaponId: string | number) => {
  */
 export const getHakushUI = async (filename: string) => {
   const result = await downloadHakushFile('ZZZ_UI', 'HAKUSH_UI_PATH', filename)
+  return result
+}
+
+/**
+ * 获取Nanoka UI
+ * @param filename 文件名
+ */
+export const getNanokaUI = async (filename: string) => {
+  const result = await downloadNanokaFile('ZZZ_UI', 'NANOKA_UI_PATH', filename)
   return result
 }

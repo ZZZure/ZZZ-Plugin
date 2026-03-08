@@ -1,4 +1,4 @@
-import { getHakushCharacterData, isSkillLevelLegal } from '../lib/hakush.js'
+import { getNanokaCharacterData, isSkillLevelLegal } from '../lib/nanoka.js'
 import { rulePrefix } from '../lib/common.js'
 import { ZZZPlugin } from '../lib/plugin.js'
 import settings from '../lib/settings.js'
@@ -86,7 +86,7 @@ export class Wiki extends ZZZPlugin {
     ) {
       return false
     }
-    const charData = await getHakushCharacterData(charname)
+    const charData = await getNanokaCharacterData(charname)
     if (!charData) {
       return this.reply(`暂无${charname}角色数据`)
     }
@@ -111,7 +111,7 @@ export class Wiki extends ZZZPlugin {
     const match = this.e.msg.match(reg)
     const charname = match?.[4]?.trim()
     if (!charname) return false
-    const charData = await getHakushCharacterData(charname)
+    const charData = await getNanokaCharacterData(charname)
     const cinemaData = charData?.Talent
     if (!cinemaData) {
       return this.reply(`未找到${charname}的数据`)

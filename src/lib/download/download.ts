@@ -1,6 +1,7 @@
-import type { Hakush } from '#interface'
+import type { Hakush, Nanoka } from '#interface'
 import { getResourceRemotePath } from '../assets.js'
 import * as HakushURL from '../assets/hakushurl.js'
+import NanokaURL from '../assets/nanokaurl.js'
 import * as MysURL from '../assets/mysurl.js'
 import * as LocalURI from './const.js'
 import { checkFile } from './core.js'
@@ -69,7 +70,7 @@ export const downloadResourceImage = async (
  * @param localBase 本地地址
  * @param filename 文件名
  */
-export const downloadHakushFile = async<Base extends keyof typeof HakushURL>(
+export const downloadHakushFile = async<Base extends keyof typeof HakushURL & {}>(
   _base: Base,
   _localBase: keyof typeof LocalURI,
   filename: string = ''
@@ -86,7 +87,7 @@ export const downloadHakushFile = async<Base extends keyof typeof HakushURL>(
   //   url += `/${filename}`
   // }
   const url = '' // 屏蔽下载
-  // logger.debug('Hakush file url:', url);
+  // logger.debug('Hakush file url:', url)
   const filepath = await checkFile(url, finalPath)
   if (filepath) {
     // 如果是JSON文件，返回JSON对象
@@ -107,6 +108,69 @@ export const downloadHakushFile = async<Base extends keyof typeof HakushURL>(
         ))
       ) {
         logger.debug('Hakush test file, redownloading:', url)
+        fs.rmSync(filepath)
+        const filepath_new = await checkFile(url, finalPath)
+        if (!filepath_new) {
+          return data
+        }
+        const content = fs.readFileSync(filepath_new, 'utf-8')
+        return JSON.parse(content)
+      }
+      return data
+    } else {
+      // @ts-expect-error
+      return filepath
+    }
+  } else {
+    // @ts-expect-error
+    return downloadNanokaFile(_base, _localBase.replace('HAKUSH_', 'NANOKA_'), filename)
+  }
+}
+
+
+/**
+ * 下载Nanoka文件
+ * @param base 远程地址
+ * @param localBase 本地地址
+ * @param filename 文件名
+ */
+export const downloadNanokaFile = async<Base extends keyof typeof NanokaURL & {}>(
+  _base: Base,
+  _localBase: keyof typeof LocalURI,
+  filename: string = ''
+): Promise<
+  Base extends 'ZZZ_CHARACTER' ? (Nanoka.PartnerData | null) :
+  Base extends 'ZZZ_WEAPON' ? (Nanoka.WeaponData | null) :
+  string | null
+> => {
+  const base = NanokaURL[_base]
+  const localBase = LocalURI[_localBase]
+  const finalPath = path.join(localBase, filename)
+  let url: string = base
+  if (filename) {
+    url += `/${filename}`
+  }
+  logger.debug('Nanoka file url:', url)
+  const filepath = await checkFile(url, finalPath)
+  if (filepath) {
+    // 如果是JSON文件，返回JSON对象
+    if (filename.endsWith('.json')) {
+      // 读取文件内容
+      const content = fs.readFileSync(filepath, 'utf-8')
+      // 返回文件内容
+      const data = JSON.parse(content)
+      // 测试数据每次请求都重新下载
+      if (
+        content.includes('(Test') ||
+        !data ||
+        (_base === 'ZZZ_CHARACTER' && (
+          data.partner_info?.impression_f === '...' ||
+          data.partner_info?.impression_m === '...' ||
+          !Object.keys(data.skin || {}).length ||
+          !Object.keys(data.skill_list || {}).length
+        ))
+      ) {
+        logger.debug('Nanoka test file, redownloading:', url)
         fs.rmSync(filepath)
         const filepath_new = await checkFile(url, finalPath)
         if (!filepath_new) {
