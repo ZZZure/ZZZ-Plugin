@@ -3,6 +3,7 @@ import { rarityEnum, professionEnum } from '../damage/BuffManager.js';
 import { idToName } from '../../lib/convert/property.js';
 import { getMapData } from '../../utils/file.js';
 import { scoreFnc } from '../damage/avatar.js';
+import settings from '../../lib/settings.js';
 import { char } from '../../lib/convert.js';
 const equipScore = getMapData('EquipScore', false);
 for (const charName in equipScore) {
@@ -28,6 +29,11 @@ export default class Score {
         this.partition = this.equip.equipment_type;
         this.userMainStat = this.equip.main_properties[0].property_id;
     }
+    debug(...args) {
+        if (!settings.getConfig('config').score_debug_log)
+            return;
+        logger.debug(...args);
+    }
     get_level_multiplier() {
         return (0.25 + +this.equip.level * 0.05) || 1;
     }
@@ -49,10 +55,10 @@ export default class Score {
             .sort((a, b) => this.weight[b] - this.weight[a]).slice(0, 4);
         if (!subMaxStats.length)
             return 0;
-        logger.debug(`[${this.partition}号位]理论副词条：` + subMaxStats.map(idToName).reduce((a, p, i) => a + `${p}*${this.weight[subMaxStats[i]].toFixed(2)} `, ''));
+        this.debug(`[${this.partition}号位]理论副词条：` + subMaxStats.map(idToName).reduce((a, p, i) => a + `${p}*${this.weight[subMaxStats[i]].toFixed(2)} `, ''));
         let count = this.weight[subMaxStats[0]] * 6;
         subMaxStats.slice(1).forEach(p => count += this.weight[p] || 0);
-        logger.debug(`[${this.partition}号位]理论词条数：${logger.blue(count)}`);
+        this.debug(`[${this.partition}号位]理论词条数：${logger.blue(count)}`);
         return count;
     }
     get_actual_count() {
@@ -61,11 +67,11 @@ export default class Score {
             const propID = prop.property_id;
             const weight = this.weight[propID];
             if (weight) {
-                logger.debug(`[${this.partition}号位]实际副词条：${idToName(propID)} ${logger.green(prop.count + 1)}*${weight}`);
+                this.debug(`[${this.partition}号位]实际副词条：${idToName(propID)} ${logger.green(prop.count + 1)}*${weight}`);
                 count += weight * (prop.count + 1);
             }
         }
-        logger.debug(`[${this.partition}号位]实际词条数：${logger.blue(count)}`);
+        this.debug(`[${this.partition}号位]实际词条数：${logger.blue(count)}`);
         return count;
     }
     get_score() {
@@ -81,7 +87,7 @@ export default class Score {
                 return min_score;
             }
             const score = actual_count / max_count * level_multiplier * rarity_multiplier * 55;
-            logger.debug(`[${this.partition}号位] ${logger.magenta(`${actual_count} / ${max_count} * ${level_multiplier} * ${rarity_multiplier} * 55 = ${score}`)}`);
+            this.debug(`[${this.partition}号位] ${logger.magenta(`${actual_count} / ${max_count} * ${level_multiplier} * ${rarity_multiplier} * 55 = ${score}`)}`);
             return Math.max(score, min_score);
         }
         const mainMaxStat = mainStats[this.partition]
@@ -90,7 +96,7 @@ export default class Score {
         const mainScore = mainMaxStat ? 12 * (this.weight[this.userMainStat] || 0) / this.weight[mainMaxStat] : 12;
         const subScore = actual_count / max_count * 43;
         const score = (mainScore + subScore) * level_multiplier * rarity_multiplier;
-        logger.debug(`[${this.partition}号位] ${logger.magenta(`(${mainScore} + ${subScore}) * ${level_multiplier} * ${rarity_multiplier} = ${score}`)}`);
+        this.debug(`[${this.partition}号位] ${logger.magenta(`(${mainScore} + ${subScore}) * ${level_multiplier} * ${rarity_multiplier} = ${score}`)}`);
         return score;
     }
     static main(equip, weight) {
