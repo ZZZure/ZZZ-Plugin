@@ -35,9 +35,9 @@ export const HAKUSH_CHARACTER_DATA_PATH = path.join(
 
 export const NANOKA_CHARACTER_DATA_PATH = path.join(
   dataResourcesPath,
-  'nanoka/data/character'
+  'nanoka/character'
 ),
-  NANOKA_WEAPON_DATA_PATH = path.join(dataResourcesPath, 'nanoka/data/weapon'),
+  NANOKA_WEAPON_DATA_PATH = path.join(dataResourcesPath, 'nanoka/weapon'),
   NANOKA_IMAGE_PATH = path.join(imageResourcesPath, 'nanoka'),
   NANOKA_UI_PATH = path.join(NANOKA_IMAGE_PATH, 'ui'),
   NANOKA_ZZZ_ROLE_PATH = path.join(NANOKA_IMAGE_PATH, 'role'),

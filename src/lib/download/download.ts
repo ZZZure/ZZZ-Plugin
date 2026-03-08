@@ -164,10 +164,10 @@ export const downloadNanokaFile = async<Base extends keyof typeof NanokaURL & {}
         content.includes('(Test') ||
         !data ||
         (_base === 'ZZZ_CHARACTER' && (
-          data.PartnerInfo?.ImpressionF === '...' ||
-          data.PartnerInfo?.ImpressionM === '...' ||
-          !Object.keys(data.Skin || {}).length ||
-          !Object.keys(data.SkillList || {}).length
+          data.partner_info?.impression_f === '...' ||
+          data.partner_info?.impression_m === '...' ||
+          !Object.keys(data.skin || {}).length ||
+          !Object.keys(data.skill_list || {}).length
         ))
       ) {
         logger.debug('Nanoka test file, redownloading:', url)

@@ -3,6 +3,7 @@ import {
   downloadMysImage,
   downloadResourceImage,
   downloadHakushFile,
+  downloadNanokaFile,
 } from './download/download.js'
 
 /**
@@ -201,14 +202,15 @@ export const getHakushCharacter = async (charId: string | number) => {
 }
 
 /**
- * 获取Hakush武器数据
- * @param weaponId 武器ID
+ * 获取Nanoka角色数据
+ * @param charId 角色ID
+ * @returns 文件内容（JSON）
  */
-export const getHakushWeapon = async (weaponId: string | number) => {
-  const filename = `${weaponId}.json`
-  const result = await downloadHakushFile(
-    'ZZZ_WEAPON',
-    'HAKUSH_WEAPON_DATA_PATH',
+export const getNanokaCharacter = async (charId: string | number) => {
+  const filename = `${charId}.json`
+  const result = await downloadNanokaFile(
+    'ZZZ_CHARACTER',
+    'NANOKA_CHARACTER_DATA_PATH',
     filename
   )
   return result

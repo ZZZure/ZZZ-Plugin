@@ -7,8 +7,7 @@ import {
   getSquareAvatar,
   getSuitImage,
   getWeaponImage,
-  getHakushCharacter,
-  getHakushWeapon,
+  getNanokaCharacter,
   getSquareBangboo,
 } from '../../lib/download.js'
 import { char } from '../../lib/convert.js'
@@ -33,9 +32,8 @@ interface DownloadResult {
     weapon: DownloadCounter
     bangboo: DownloadCounter
   }
-  hakush: {
+  nanoka: {
     char: DownloadCounter
-    equip: DownloadCounter
   }
 }
 
@@ -89,17 +87,12 @@ export async function downloadAll(e: EventType) {
         total: bangbooIDs.length
       }
     },
-    hakush: {
+    nanoka: {
       char: {
         success: 0,
         failed: 0,
         total: charIDs.length
       },
-      equip: {
-        success: 0,
-        failed: 0,
-        total: equipSprites.length
-      }
     }
   }
   downloading = true
@@ -130,14 +123,13 @@ export async function downloadAll(e: EventType) {
     await downloadFnc(getSmallSquareAvatar, id, result.images.charSmallSquare)
     await downloadFnc(getRoleImage, id, result.images.char)
     await downloadFnc(getRoleCircleImage, id, result.images.charCircle)
-    // await downloadFnc(getHakushCharacter, id, result.hakush.char)
+    await downloadFnc(getNanokaCharacter, id, result.nanoka.char)
   }
   for (const sprite of equipSprites) {
     await downloadFnc(getSuitImage, sprite, result.images.equip)
   }
   for (const sprite of weaponSprites) {
     await downloadFnc(getWeaponImage, sprite, result.images.weapon)
-    // await downloadFnc(getHakushWeapon, sprite, result.hakush.equip)
   }
   for (const id of bangbooIDs) {
     await downloadFnc(getSquareBangboo, id, result.images.bangboo)
@@ -152,8 +144,7 @@ export async function downloadAll(e: EventType) {
     generateMsg('驱动盘套装图', result.images.equip),
     generateMsg('武器图', result.images.weapon),
     generateMsg('邦布图', result.images.bangboo),
-    // generateMsg('Hakush角色数据', result.hakush.char),
-    // generateMsg('Hakush驱动盘数据', result.hakush.equip),
+    generateMsg('角色数据', result.nanoka.char),
     '注：下载失败可能缘于该资源尚处于内测中'
   ]
   downloading = false
