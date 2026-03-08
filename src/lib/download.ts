@@ -224,3 +224,12 @@ export const getHakushUI = async (filename: string) => {
   const result = await downloadHakushFile('ZZZ_UI', 'HAKUSH_UI_PATH', filename)
   return result
 }
+
+/**
+ * 获取Nanoka UI
+ * @param filename 文件名
+ */
+export const getNanokaUI = async (filename: string) => {
+  const result = await downloadNanokaFile('ZZZ_UI', 'NANOKA_UI_PATH', filename)
+  return result
+}

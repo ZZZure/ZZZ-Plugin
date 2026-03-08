@@ -11,7 +11,7 @@
   </div>
   <div class="info">
     <div class="name">
-      <div class="simple">{{charData.PartnerInfo.Name}}</div>
+      <div class="simple">{{charData.PartnerInfo.Name || charData.Name}}</div>
       <div class="full">{{charData.PartnerInfo.FullName}}</div>
     </div>
     <div class="description no-zzz-font">
@@ -39,5 +39,5 @@
   <div class="image-container">
     <img src="{{charData.cinema_image}}" alt="角色插图" class="character-image">
   </div>
-  <div style="text-align: center; font-size: 1em; color: #666; margin: 2em 0;">数据来源于Hakush</div>
+  <div style="text-align: center; font-size: 1em; color: #666; margin: 2em 0;">数据来源于Nanoka</div>
   {{/block}}

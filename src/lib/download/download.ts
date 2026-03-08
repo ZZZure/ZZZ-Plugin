@@ -87,7 +87,7 @@ export const downloadHakushFile = async<Base extends keyof typeof HakushURL & {}
   //   url += `/${filename}`
   // }
   const url = '' // 屏蔽下载
-  // logger.debug('Hakush file url:', url);
+  // logger.debug('Hakush file url:', url)
   const filepath = await checkFile(url, finalPath)
   if (filepath) {
     // 如果是JSON文件，返回JSON对象
