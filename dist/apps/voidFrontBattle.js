@@ -34,7 +34,7 @@ export class VoidFrontBattle extends ZZZPlugin {
             throw e;
         });
         if (!voidFrontBattleDetail?.void_front_battle_detail) {
-            return this.reply("获取临界推演详情失败");
+            return this.reply("暂无临界推演数据");
         }
         const rank_type = "VOID_FRONT_BATTLE";
         const uid = await this.getUID();

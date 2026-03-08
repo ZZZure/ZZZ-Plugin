@@ -1,5 +1,5 @@
 import * as convert from './convert.js';
-import { downloadMysImage, downloadResourceImage, downloadHakushFile, } from './download/download.js';
+import { downloadMysImage, downloadResourceImage, downloadHakushFile, downloadNanokaFile, } from './download/download.js';
 export const getSquareAvatar = async (charID) => {
     let result = '';
     const sprite = convert.char.idToSprite(charID);
@@ -17,12 +17,12 @@ export const getSmallSquareAvatar = async (charID) => {
     const sprite = convert.char.idToSprite(charID);
     if (!sprite)
         return null;
-    let filename = `IconRoleGeneral${sprite}.png`;
+    let filename = `IconRoleGeneral${sprite}.webp`;
     let result = '';
-    result = await downloadResourceImage('role_general', 'ZZZ_SMALL_SQUARE_AVATAR_PATH', filename);
+    result = await downloadHakushFile('ZZZ_UI', 'HAKUSH_ZZZ_SMALL_SQUARE_AVATAR_PATH', filename);
     if (!result) {
-        filename = `IconRoleSelect${sprite}.webp`;
-        result = await downloadHakushFile('ZZZ_UI', 'HAKUSH_ZZZ_SMALL_SQUARE_AVATAR_PATH', filename);
+        filename = `IconRoleGeneral${sprite}.png`;
+        result = await downloadResourceImage('role_general', 'ZZZ_SMALL_SQUARE_AVATAR_PATH', filename);
     }
     return result;
 };
@@ -114,13 +114,17 @@ export const getHakushCharacter = async (charId) => {
     const result = await downloadHakushFile('ZZZ_CHARACTER', 'HAKUSH_CHARACTER_DATA_PATH', filename);
     return result;
 };
-export const getHakushWeapon = async (weaponId) => {
-    const filename = `${weaponId}.json`;
-    const result = await downloadHakushFile('ZZZ_WEAPON', 'HAKUSH_WEAPON_DATA_PATH', filename);
+export const getNanokaCharacter = async (charId) => {
+    const filename = `${charId}.json`;
+    const result = await downloadNanokaFile('ZZZ_CHARACTER', 'NANOKA_CHARACTER_DATA_PATH', filename);
     return result;
 };
 export const getHakushUI = async (filename) => {
     const result = await downloadHakushFile('ZZZ_UI', 'HAKUSH_UI_PATH', filename);
+    return result;
+};
+export const getNanokaUI = async (filename) => {
+    const result = await downloadNanokaFile('ZZZ_UI', 'NANOKA_UI_PATH', filename);
     return result;
 };
 //# sourceMappingURL=download.js.map

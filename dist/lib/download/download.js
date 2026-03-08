@@ -1,5 +1,6 @@
 import { getResourceRemotePath } from '../assets.js';
 import * as HakushURL from '../assets/hakushurl.js';
+import NanokaURL from '../assets/nanokaurl.js';
 import * as MysURL from '../assets/mysurl.js';
 import * as LocalURI from './const.js';
 import { checkFile } from './core.js';
@@ -52,6 +53,45 @@ export const downloadHakushFile = async (_base, _localBase, filename = '') => {
                     !Object.keys(data.Skin || {}).length ||
                     !Object.keys(data.SkillList || {}).length))) {
                 logger.debug('Hakush test file, redownloading:', url);
+                fs.rmSync(filepath);
+                const filepath_new = await checkFile(url, finalPath);
+                if (!filepath_new) {
+                    return data;
+                }
+                const content = fs.readFileSync(filepath_new, 'utf-8');
+                return JSON.parse(content);
+            }
+            return data;
+        }
+        else {
+            return filepath;
+        }
+    }
+    else {
+        return downloadNanokaFile(_base, _localBase.replace('HAKUSH_', 'NANOKA_'), filename);
+    }
+};
+export const downloadNanokaFile = async (_base, _localBase, filename = '') => {
+    const base = NanokaURL[_base];
+    const localBase = LocalURI[_localBase];
+    const finalPath = path.join(localBase, filename);
+    let url = base;
+    if (filename) {
+        url += `/${filename}`;
+    }
+    logger.debug('Nanoka file url:', url);
+    const filepath = await checkFile(url, finalPath);
+    if (filepath) {
+        if (filename.endsWith('.json')) {
+            const content = fs.readFileSync(filepath, 'utf-8');
+            const data = JSON.parse(content);
+            if (content.includes('(Test') ||
+                !data ||
+                (_base === 'ZZZ_CHARACTER' && (data.partner_info?.impression_f === '...' ||
+                    data.partner_info?.impression_m === '...' ||
+                    !Object.keys(data.skin || {}).length ||
+                    !Object.keys(data.skill_list || {}).length))) {
+                logger.debug('Nanoka test file, redownloading:', url);
                 fs.rmSync(filepath);
                 const filepath_new = await checkFile(url, finalPath);
                 if (!filepath_new) {

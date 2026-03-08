@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { getRoleImage, getRoleCircleImage, getSmallSquareAvatar, getSquareAvatar, getSuitImage, getWeaponImage, getSquareBangboo, } from '../../lib/download.js';
+import { getRoleImage, getRoleCircleImage, getSmallSquareAvatar, getSquareAvatar, getSuitImage, getWeaponImage, getNanokaCharacter, getSquareBangboo, } from '../../lib/download.js';
 import { char } from '../../lib/convert.js';
 import { getAllSuitID } from '../../lib/convert/equip.js';
 import { getAllWeaponID } from '../../lib/convert/weapon.js';
@@ -55,17 +55,12 @@ export async function downloadAll(e) {
                 total: bangbooIDs.length
             }
         },
-        hakush: {
+        nanoka: {
             char: {
                 success: 0,
                 failed: 0,
                 total: charIDs.length
             },
-            equip: {
-                success: 0,
-                failed: 0,
-                total: equipSprites.length
-            }
         }
     };
     downloading = true;
@@ -90,6 +85,7 @@ export async function downloadAll(e) {
         await downloadFnc(getSmallSquareAvatar, id, result.images.charSmallSquare);
         await downloadFnc(getRoleImage, id, result.images.char);
         await downloadFnc(getRoleCircleImage, id, result.images.charCircle);
+        await downloadFnc(getNanokaCharacter, id, result.nanoka.char);
     }
     for (const sprite of equipSprites) {
         await downloadFnc(getSuitImage, sprite, result.images.equip);
@@ -110,6 +106,7 @@ export async function downloadAll(e) {
         generateMsg('驱动盘套装图', result.images.equip),
         generateMsg('武器图', result.images.weapon),
         generateMsg('邦布图', result.images.bangboo),
+        generateMsg('角色数据', result.nanoka.char),
         '注：下载失败可能缘于该资源尚处于内测中'
     ];
     downloading = false;
