@@ -34,18 +34,18 @@ export const getSquareAvatar = async (charID: string | number) => {
 export const getSmallSquareAvatar = async (charID: string | number) => {
   const sprite = convert.char.idToSprite(charID)
   if (!sprite) return null
-  let filename = `IconRoleGeneral${sprite}.png`
+  let filename = `IconRoleGeneral${sprite}.webp`
   let result: string | null = ''
-  result = await downloadResourceImage(
-    'role_general',
-    'ZZZ_SMALL_SQUARE_AVATAR_PATH',
+  result = await downloadHakushFile(
+    'ZZZ_UI',
+    'HAKUSH_ZZZ_SMALL_SQUARE_AVATAR_PATH',
     filename
   )
   if (!result) {
-    filename = `IconRoleSelect${sprite}.webp`
-    result = await downloadHakushFile(
-      'ZZZ_UI',
-      'HAKUSH_ZZZ_SMALL_SQUARE_AVATAR_PATH',
+    filename = `IconRoleGeneral${sprite}.png`
+    result = await downloadResourceImage(
+      'role_general',
+      'ZZZ_SMALL_SQUARE_AVATAR_PATH',
       filename
     )
   }
