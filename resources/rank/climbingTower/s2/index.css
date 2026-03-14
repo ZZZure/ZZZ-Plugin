@@ -1,0 +1,80 @@
+body {
+  width: 1000px;
+}
+
+.card {
+  margin: 0 1em;
+  padding-top: 1em;
+}
+.card .record {
+  display: flex;
+  gap: 1em;
+  margin-bottom: 1em;
+  align-items: center;
+  height: 9em;
+}
+.card .record .user-info {
+  width: 800px;
+  padding: 0.5em;
+  border-image-slice: 200 100 70 280 fill;
+  border-image-width: 2em 1em 0.7em 2.8em;
+  border-image-outset: 0em 0em 0em 0em;
+  border-image-repeat: stretch stretch;
+}
+.card .record .user-info .info-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+.card .record .user-info .result {
+  display: flex;
+  padding: 0.5em;
+  gap: 1em;
+  margin-top: 0.5em;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  align-items: center;
+}
+.card .record .user-info .result .value {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.card .record .user-info .result .value .label {
+  font-size: 1.5em;
+  color: #ddd;
+}
+.card .record .user-info .result .value .max-floor,
+.card .record .user-info .result .value .no-damage-count {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.card .record .user-info .result .medal-icon {
+  width: 3em;
+  height: 3em;
+  object-fit: contain;
+}
+.card .notes-container {
+  padding: 0.5em 1em;
+  border-image-source: url("../abyss/images/BgFrame01.png");
+  border-image-slice: 200 100 70 280 fill;
+  border-image-width: 2em 1em 0.7em 2.8em;
+  border-image-outset: 0em 0em 0em 0em;
+  border-image-repeat: stretch stretch;
+  margin-bottom: 1em;
+  display: flex;
+}
+.card .notes-container .notes {
+  margin: 0;
+  padding-left: 1.5em;
+  color: #ddd;
+  font-size: 1.1em;
+}
+.card .notes-container .notes li {
+  margin-bottom: 0.3em;
+}
+.card .notes-container .notes .command {
+  color: #ffc107;
+  font-weight: bold;
+}
+
+/*# sourceMappingURL=index.css.map */

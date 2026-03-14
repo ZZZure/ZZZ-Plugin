@@ -9,6 +9,7 @@ export const dbPath = {
     abyss: 'abyss',
     deadly: 'deadly',
     voidFrontBattle: 'voidFrontBattle',
+    climbingTower: 'climbingTower',
 };
 export function getDB(dbName, dbFile) {
     const db = dbPath[dbName];

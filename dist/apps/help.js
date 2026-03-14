@@ -177,6 +177,19 @@ const helpData = [
                 commands: ['上期临界推演', '上期临界', '上期推演'],
             },
             {
+                title: '查看拟真鏖战试炼数据',
+                desc: '查看拟真鏖战试炼战斗数据',
+                needCK: true,
+                needSK: false,
+                commands: ['拟真鏖战试炼', '爬塔', '鏖战'],
+            },
+        ],
+    },
+    {
+        title: '排名查询',
+        icon: 'Fire',
+        items: [
+            {
                 title: '查看式舆防卫战排名',
                 desc: '查看式舆防卫战(深渊)群排名',
                 needCK: false,
@@ -198,13 +211,34 @@ const helpData = [
                 commands: ['临界推演排名', '临界排名', '推演排名'],
             },
             {
+                title: '查看拟真鏖战试炼排名',
+                desc: '查看拟真鏖战试炼战斗群排名',
+                needCK: false,
+                needSK: false,
+                commands: ['拟真鏖战试炼排名', '爬塔S1排名'],
+            },
+            {
+                title: '查看鏖战试炼末路排名',
+                desc: '查看鏖战试炼末路战斗群排名',
+                needCK: false,
+                needSK: false,
+                commands: ['鏖战试炼末路排名', '爬塔S2排名'],
+            },
+            {
+                title: '查看鏖战试炼荣耀排名',
+                desc: '查看鏖战试炼荣耀战斗群排名',
+                needCK: false,
+                needSK: false,
+                commands: ['鏖战试炼荣耀排名', '爬塔S3排名'],
+            },
+            {
                 title: '显示/隐藏深渊排名',
                 desc: '显示/隐藏自己的深渊群排名',
                 needCK: false,
                 needSK: false,
                 commands: ['显示深渊排名', '隐藏深渊排名'],
             },
-        ],
+        ]
     },
     {
         title: '卡池记录',

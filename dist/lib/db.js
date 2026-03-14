@@ -62,4 +62,19 @@ export function getMonthlyData(uid) {
 export function saveMonthlyData(uid, data) {
     setDB('monthly', uid, data);
 }
+export function saveClimbingTowerData(uid, data) {
+    setDB('climbingTower', uid, data);
+}
+export function getClimbingTowerData(uid) {
+    return getDB('climbingTower', uid);
+}
+export function removeClimbingTowerData(uid) {
+    return removeDB('climbingTower', uid);
+}
+export function getClimbingTowerDataInGroupRank(uids) {
+    return uids.map(uid => getClimbingTowerData(uid)).filter((item) => item !== null);
+}
+export function removeAllClimbingTowerData() {
+    return removeAllDB('climbingTower');
+}
 //# sourceMappingURL=db.js.map

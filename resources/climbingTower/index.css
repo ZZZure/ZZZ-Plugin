@@ -1,0 +1,223 @@
+.container {
+  width: 500px;
+}
+
+.card {
+  margin: 0 auto;
+  padding: 1em 0;
+}
+.card .season-container {
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 0.4em solid #444;
+  border-radius: 1em;
+  padding: 1em;
+  margin-bottom: 1em;
+  position: relative;
+}
+.card .season-container .season-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+}
+.card .season-container .season-header .season-title {
+  color: #e6e6e6;
+  font-size: 1.5em;
+  margin: 0;
+  text-shadow: 2px 3px #383434;
+}
+.card .season-container .season-header .medal-icon {
+  width: 3em;
+  height: 3em;
+}
+.card .season-container .season-header .medal-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.card .season-container .season-content {
+  display: flex;
+  gap: 2em;
+  align-items: center;
+}
+.card .season-container .season-content .layer-info,
+.card .season-container .season-content .score-info,
+.card .season-container .season-content .mvp-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3em;
+}
+.card .season-container .season-content .layer-info .label,
+.card .season-container .season-content .score-info .label,
+.card .season-container .season-content .mvp-info .label {
+  color: #979797;
+  font-size: 0.9em;
+}
+.card .season-container .season-content .layer-info .value,
+.card .season-container .season-content .score-info .value,
+.card .season-container .season-content .mvp-info .value {
+  color: #e6e6e6;
+  font-size: 1.2em;
+  text-shadow: 2px 3px #383434;
+}
+.card .season-container .mvp-section {
+  display: flex;
+  gap: 2em;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1em;
+  padding-top: 1em;
+  border-top: 0.1em solid #444;
+}
+.card .season-container .mvp-section .mvp-info,
+.card .season-container .mvp-section .rank-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3em;
+}
+.card .season-container .mvp-section .mvp-info .label,
+.card .season-container .mvp-section .rank-info .label {
+  color: #979797;
+  font-size: 0.9em;
+}
+.card .season-container .mvp-section .mvp-info .value,
+.card .season-container .mvp-section .rank-info .value {
+  color: #e6e6e6;
+  font-size: 1.2em;
+  text-shadow: 2px 3px #383434;
+}
+.card .season-container .boss-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.card .season-container .boss-team-row {
+  margin-top: 1em;
+}
+.card .season-container .boss-team-row .list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: flex-end;
+  gap: 1.2em;
+  flex: 1;
+}
+.card .season-container .boss-team-row .list .item {
+  width: 100%;
+  position: relative;
+  border-radius: 0.5em;
+  box-shadow: 0 0 0 0.12em black, 0 0 0 0.24em #333534;
+  filter: drop-shadow(4px 6px 8px black);
+}
+.card .season-container .boss-team-row .list .item > * {
+  position: inherit;
+  z-index: 1;
+}
+.card .season-container .boss-team-row .list .item .rank_disp {
+  position: absolute;
+  top: 0em;
+  left: 0em;
+  background-color: rgb(0, 0, 0);
+  z-index: 2;
+  padding: 0.1em;
+  border-bottom-right-radius: 0.25em;
+  border-top-left-radius: 0.25em;
+}
+.card .season-container .boss-team-row .list .item .rank_disp .rank {
+  width: 1em;
+  color: white;
+  position: relative;
+}
+.card .season-container .boss-team-row .list .item .rank_disp .rank::before {
+  content: "";
+  position: absolute;
+  top: -0.1em;
+  right: -0.4em;
+  width: 0.3em;
+  height: 0.3em;
+  background: radial-gradient(circle at 100% 0, transparent 0.3em, rgb(0, 0, 0) 0.3em);
+  rotate: 90deg;
+}
+.card .season-container .boss-team-row .list .item .rank_disp .rank::after {
+  content: "";
+  position: absolute;
+  bottom: -0.4em;
+  left: -0.1em;
+  width: 0.3em;
+  height: 0.3em;
+  background: radial-gradient(circle at 100% 0, transparent 0.3em, rgb(0, 0, 0) 0.3em);
+  rotate: 90deg;
+}
+.card .season-container .boss-team-row .list .item .rank_disp .rank.S {
+  color: #ffc107;
+}
+.card .season-container .boss-team-row .list .item .rank_disp .rank.A {
+  color: #9c27b0;
+}
+.card .season-container .boss-team-row .list .item .rank_disp .rank.B {
+  color: #2196f3;
+}
+.card .season-container .boss-team-row .list .item .image {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 0.5em;
+  overflow: hidden;
+}
+.card .season-container .boss-team-row .list .item .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+.card .season-container .boss-team-row .list .item .c-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.1em;
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+}
+.card .season-container .boss-team-row .list .item .c-info .score {
+  font-size: 0.6em;
+  font-weight: bold;
+  color: white;
+}
+.card .season-container .boss-team-row .list .item .c-info .rank {
+  font-size: 0.6em;
+  font-weight: bold;
+  color: white;
+}
+.card .s1 .season-content,
+.card .s2 .season-content {
+  justify-content: center;
+}
+.card .s3 .season-content {
+  justify-content: center;
+}
+.card .item-card {
+  border-image-source: url("./images/BgFrame01.png");
+  border-image-slice: 200 100 70 280 fill;
+  border-image-width: 2em 1em 0.7em 2.8em;
+  border-image-outset: 0em 0em 0em 0em;
+  border-image-repeat: stretch stretch;
+  padding: 1em 1.2em;
+  margin-top: 1em;
+}
+.card .notes {
+  font-size: 0.8em;
+  margin: 0 2em;
+}
+.card .notes .command {
+  color: rgb(255, 215, 0);
+  padding: 0 0.3em;
+}
+
+/*# sourceMappingURL=index.css.map */
