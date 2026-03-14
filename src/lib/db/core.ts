@@ -11,6 +11,7 @@ export const dbPath = {
   abyss: 'abyss',
   deadly: 'deadly',
   voidFrontBattle: 'voidFrontBattle',
+  climbingTower: 'climbingTower',
 }
 
 /**
