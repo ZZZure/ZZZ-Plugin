@@ -1,0 +1,62 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" href="{{@sys.currentPath}}/index.css" />
+{{/block}} {{block 'main'}}
+<div class="card">
+  {{include sys.playerInfo}}
+
+  <!-- 探索详情 -->
+  {{if explorationDetail.area_collections && explorationDetail.area_collections.length > 0}}
+  <div class="exploration-container">
+    <div class="exploration-header">
+      <h3 class="exploration-title">区域收集</h3>
+    </div>
+    
+    <div class="area-list">
+      {{each explorationDetail.area_collections area i}}
+      <div class="area-group">
+        <!-- 区域名称和完成度 -->
+        <div class="area-header">
+          <span class="area-name">{{area.name}}</span>
+          <span class="area-progress">{{area.collection_progress}}%</span>
+        </div>
+        
+        <!-- 子区域列表，每行3个 -->
+        {{if area.map_collections && area.map_collections.length > 0}}
+        <div class="subarea-grid">
+          {{each area.map_collections subarea j}}
+          <div class="subarea-item">
+            <!-- 第一列：图标和完成度 -->
+            <div class="subarea-left">
+              <div class="subarea-icon">
+                <img src="{{subarea.icon}}" alt="{{subarea.name}}" />
+              </div>
+              <div class="subarea-progress">{{subarea.collection_progress}}%</div>
+            </div>
+            <!-- 第二列：收集项列表，最多4行 -->
+            <div class="subarea-right">
+              {{each subarea.collections collection k}}
+              {{if k < 4}}
+              <div class="collection-item">
+                <div class="collection-icon">
+                  <img src="{{collection.icon}}" alt="{{collection.name}}" />
+                </div>
+                <div class="collection-count">{{collection.num}}/{{collection.total}}</div>
+              </div>
+              {{/if}}
+              {{/each}}
+            </div>
+          </div>
+          {{/each}}
+        </div>
+        {{/if}}
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  {{else}}
+  <div class="empty-state">
+    <p>暂无探索详情数据</p>
+  </div>
+  {{/if}}
+</div>
+{{/block}}

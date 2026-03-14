@@ -97,6 +97,10 @@ export default class ZZZApiTool {
                 url: `${this.host}event/nap_ledger/month_info`,
                 query: `uid=${this.uid}&region=${this.server}`,
             },
+            zzzExplorationDetail: {
+                url: `${this.hostRecord}event/game_record_zzz/api/zzz/exploration_detail`,
+                query: `uid=${this.uid}&region=${this.server}`,
+            },
         };
     }
     getUrlMap = (data = {}) => {
