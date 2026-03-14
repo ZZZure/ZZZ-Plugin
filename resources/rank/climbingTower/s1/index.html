@@ -1,0 +1,46 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{@sys.currentPath}}/index.css">
+{{/block}}
+
+{{block 'main'}}
+<div class="card">
+  <% include(sys.specialTitle, {en: 'CLIMBING TOWER (S1) RANK' , cn: '拟真鏖战试炼排名' }) %>
+    {{each scoredData record i}}
+    <div class="record">
+      <div class="user-info">
+        <link rel="stylesheet" type="text/css" href="{{@sys.resourcesPath}}/common/layout/playerinfo.css" />
+        {{set avatar = record.player.avatar}}
+        {{set player = record.player.player}}
+        <div class="avatar">
+          <img src="{{avatar}}" alt="Avatar">
+        </div>
+        <div class="info-bar">
+          <div class="info">
+            <div class="nickname">{{player.nickname}}</div>
+          </div>
+          <div class="info">
+            <div class="label level">Lv{{player.level}}</div>
+            <div class="label server">{{player.region_name}}</div>
+          </div>
+          <div class="uid">UID {{player.game_uid}}</div>
+        </div>
+        <div class="result">
+          <div class="value">
+            <div class="label">层数</div>
+            <div class="max-floor">{{record.score.maxFloor}}</div>
+          </div>
+          <img src="{{record.result.climbing_tower_s1.medal_icon}}" alt="Medal" class="medal-icon">
+        </div>
+      </div>
+    </div>
+    {{/each}}
+    <div class="notes-container">
+      <ul class="notes">
+        <li>请在群内查询<span class="command">%拟真鏖战试炼</span>，以参与对应群的拟真鏖战试炼（爬塔 S1）排名</li>
+      </ul>
+    </div>
+</div>
+
+{{/block}}

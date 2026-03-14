@@ -6,7 +6,7 @@ import {
   getUid2QQsMapping,
   removeUidAllRecord,
 } from '../lib/rank.js'
-import { getAbyssDataInGroupRank, getDeadlyDataInGroupRank, getVoidFrontBattleDataInGroupRank } from '../lib/db.js'
+import { getAbyssDataInGroupRank, getDeadlyDataInGroupRank, getVoidFrontBattleDataInGroupRank, getClimbingTowerDataInGroupRank } from '../lib/db.js'
 import { rulePrefix } from '../lib/common.js'
 import { ZZZPlugin } from '../lib/plugin.js'
 import { Deadly } from '../model/deadly.js'
@@ -38,7 +38,19 @@ export class Rank extends ZZZPlugin {
           fnc: 'voidFrontBattleRank'
         },
         {
-          reg: `${rulePrefix}(显示|展示|开启|打开|on|启用|启动|隐藏|取消显示|关闭|关掉|off|禁用|停止)(式舆防卫战|式舆|深渊|防卫战|防卫|危局强袭战|危局|强袭|强袭战)?(群(内)?)?排名$`,
+          reg: `${rulePrefix}(爬塔S1|爬塔s1|拟真鏖战试炼)排名$`,
+          fnc: 'climbingTowerS1'
+        },
+        {
+          reg: `${rulePrefix}(爬塔S2|爬塔s2|鏖战试炼末路|鏖战试炼：末路)排名$`,
+          fnc: 'climbingTowerS2'
+        },
+        {
+          reg: `${rulePrefix}(爬塔S3|爬塔s3|鏖战试炼荣耀|鏖战试炼·荣耀)排名$`,
+          fnc: 'climbingTowerS3'
+        },
+        {
+          reg: `${rulePrefix}(显示|展示|开启|打开|on|启用|启动|隐藏|取消显示|关闭|关掉|off|禁用|停止)(式舆防卫战|式舆|深渊|防卫战|防卫|危局强袭战|危局|强袭|强袭战|临界推演|临界|推演|爬塔S1|爬塔S2|爬塔S3|爬塔 s1|爬塔 s2|爬塔 s3|爬塔s1|爬塔s2|爬塔s3)?(群(内)?)?排名$`,
           fnc: 'switchRank'
         }
       ]
@@ -367,6 +379,243 @@ export class Rank extends ZZZPlugin {
     await this.render('rank/voidFrontBattle/index.html', finalData, this)
   }
 
+  async climbingTowerS1() {
+    const rank_type = 'CLIMBING_TOWER_S1'
+
+    if (!(this.e?.group_id)) {
+      return this.reply('请在群聊中使用该命令！')
+    }
+
+    if (!this.isGroupRankAllowed()) {
+      await this.reply('当前群爬塔S1排名功能已关闭！')
+    }
+    // 先从当前群中筛选出已注册用户
+    const uidInGroupRank = await getUsersInGroupRank(rank_type, this.e.group_id)
+    // 加入是否在群里面的校验
+    // uid 对应的 QQ 如果有还在群里面的，则保留；
+    // 否则删除 UID 对应的记录（包括排行榜和 UID2QQS 映射）
+    const memberMap = await this.e.group?.getMemberMap() || new Map<string, any>()
+    const qqInGroupSet = new Set(Array.from(memberMap.keys(), String))
+
+    const uid2qqs = await getUid2QQsMapping(this.e.group_id)
+    const uidInGroupRankFiltered: string[] = []
+    for (const uid of uidInGroupRank) {
+      if (uid in uid2qqs && uid2qqs[uid].some(qq => qqInGroupSet.has(qq))) {
+        uidInGroupRankFiltered.push(uid)
+      } else {
+        await removeUidAllRecord(this.e.group_id, uid)
+      }
+    }
+    const rawData = getClimbingTowerDataInGroupRank(uidInGroupRankFiltered)
+
+    // 先处理异步筛选
+    const filteredByUser: any[] = []
+    for (const item of rawData) {
+      const gameUid = _.get(item, 'player.player.game_uid') as string
+      const userRankAllowed = await isUserRankAllowed(rank_type, gameUid, this.e.group_id)
+      if (/^[0-9]{8}$/.test(gameUid) && userRankAllowed) {
+        filteredByUser.push(item)
+      }
+    }
+
+    let scoredData = filteredByUser
+      .filter(item => _.get(item, 'result.climbing_tower_s1') !== undefined)
+      .map(item => {
+        // 爬塔S1的排名依据是爬塔层数
+        const maxFloor = _.get(item, 'result.climbing_tower_s1.climbing_tower_layer', 0)
+
+        return {
+          ...item,
+          result: item.result,
+          score: {
+            maxFloor
+          }
+        }
+      })
+
+    if (scoredData.length === 0) {
+      return this.reply('没有爬塔S1排名，请先 %显示爬塔S1排名，并且用 %爬塔 查询战绩')
+    }
+
+    // 使用自定义比较函数排序
+    scoredData.sort((a, b) => {
+      // 首先比较爬塔层数，降序
+      return b.score.maxFloor - a.score.maxFloor
+    })
+    // 读取配置中的最大显示数量
+    let maxDisplay = _.get(settings.getConfig('rank'), 'max_display', 15)
+    maxDisplay = Math.max(1, Math.min(maxDisplay, 15))
+    // 取前maxDisplay个数据
+    scoredData = scoredData.slice(0, maxDisplay)
+
+    const finalData = { scoredData }
+    await this.render('rank/climbingTower/s1/index.html', finalData, this)
+  }
+
+  async climbingTowerS2() {
+    const rank_type = 'CLIMBING_TOWER_S2'
+
+    if (!(this.e?.group_id)) {
+      return this.reply('请在群聊中使用该命令！')
+    }
+
+    if (!this.isGroupRankAllowed()) {
+      await this.reply('当前群爬塔S2排名功能已关闭！')
+    }
+    // 先从当前群中筛选出已注册用户
+    const uidInGroupRank = await getUsersInGroupRank(rank_type, this.e.group_id)
+    // 加入是否在群里面的校验
+    // uid 对应的 QQ 如果有还在群里面的，则保留；
+    // 否则删除 UID 对应的记录（包括排行榜和 UID2QQS 映射）
+    const memberMap = await this.e.group?.getMemberMap() || new Map<string, any>()
+    const qqInGroupSet = new Set(Array.from(memberMap.keys(), String))
+
+    const uid2qqs = await getUid2QQsMapping(this.e.group_id)
+    const uidInGroupRankFiltered: string[] = []
+    for (const uid of uidInGroupRank) {
+      if (uid in uid2qqs && uid2qqs[uid].some(qq => qqInGroupSet.has(qq))) {
+        uidInGroupRankFiltered.push(uid)
+      } else {
+        await removeUidAllRecord(this.e.group_id, uid)
+      }
+    }
+    const rawData = getClimbingTowerDataInGroupRank(uidInGroupRankFiltered)
+
+    // 先处理异步筛选
+    const filteredByUser: any[] = []
+    for (const item of rawData) {
+      const gameUid = _.get(item, 'player.player.game_uid') as string
+      const userRankAllowed = await isUserRankAllowed(rank_type, gameUid, this.e.group_id)
+      if (/^[0-9]{8}$/.test(gameUid) && userRankAllowed) {
+        filteredByUser.push(item)
+      }
+    }
+
+    let scoredData = filteredByUser
+      .filter(item => _.get(item, 'result.climbing_tower_s2') !== undefined)
+      .map(item => {
+        // 爬塔S2的排名依据是爬塔层数和无伤通关数
+        const maxFloor = _.get(item, 'result.climbing_tower_s2.climbing_tower_layer', 0)
+        const noDamageCount = _.get(item, 'result.climbing_tower_s2.floor_mvp_num', 0)
+
+        return {
+          ...item,
+          result: item.result,
+          score: {
+            maxFloor,
+            noDamageCount
+          }
+        }
+      })
+
+    if (scoredData.length === 0) {
+      return this.reply('没有爬塔S2排名，请先 %显示爬塔S2排名，并且用 %爬塔 查询战绩')
+    }
+
+    // 使用自定义比较函数排序
+    scoredData.sort((a, b) => {
+      // 首先比较爬塔层数，降序
+      if (a.score.maxFloor !== b.score.maxFloor) {
+        return b.score.maxFloor - a.score.maxFloor
+      }
+      // 如果层数相同，比较无伤通关数，降序
+      return b.score.noDamageCount - a.score.noDamageCount
+    })
+    // 读取配置中的最大显示数量
+    let maxDisplay = _.get(settings.getConfig('rank'), 'max_display', 15)
+    maxDisplay = Math.max(1, Math.min(maxDisplay, 15))
+    // 取前maxDisplay个数据
+    scoredData = scoredData.slice(0, maxDisplay)
+
+    const finalData = { scoredData }
+    await this.render('rank/climbingTower/s2/index.html', finalData, this)
+  }
+
+  async climbingTowerS3() {
+    const rank_type = 'CLIMBING_TOWER_S3'
+
+    if (!(this.e?.group_id)) {
+      return this.reply('请在群聊中使用该命令！')
+    }
+
+    if (!this.isGroupRankAllowed()) {
+      await this.reply('当前群爬塔S3排名功能已关闭！')
+    }
+    // 先从当前群中筛选出已注册用户
+    const uidInGroupRank = await getUsersInGroupRank(rank_type, this.e.group_id)
+    // 加入是否在群里面的校验
+    // uid 对应的 QQ 如果有还在群里面的，则保留；
+    // 否则删除 UID 对应的记录（包括排行榜和 UID2QQS 映射）
+    const memberMap = await this.e.group?.getMemberMap() || new Map<string, any>()
+    const qqInGroupSet = new Set(Array.from(memberMap.keys(), String))
+
+    const uid2qqs = await getUid2QQsMapping(this.e.group_id)
+    const uidInGroupRankFiltered: string[] = []
+    for (const uid of uidInGroupRank) {
+      if (uid in uid2qqs && uid2qqs[uid].some(qq => qqInGroupSet.has(qq))) {
+        uidInGroupRankFiltered.push(uid)
+      } else {
+        await removeUidAllRecord(this.e.group_id, uid)
+      }
+    }
+    const rawData = getClimbingTowerDataInGroupRank(uidInGroupRankFiltered)
+
+    // 先处理异步筛选
+    const filteredByUser: any[] = []
+    for (const item of rawData) {
+      const gameUid = _.get(item, 'player.player.game_uid') as string
+      const userRankAllowed = await isUserRankAllowed(rank_type, gameUid, this.e.group_id)
+      if (/^[0-9]{8}$/.test(gameUid) && userRankAllowed) {
+        filteredByUser.push(item)
+      }
+    }
+
+    let scoredData = filteredByUser
+      .filter(item => _.get(item, 'result.climbing_tower_s3') !== undefined)
+      .map(item => {
+        // 爬塔S3的排名依据是分数、爬塔层数和无伤通关数
+        const totalScore = _.get(item, 'result.climbing_tower_s3.layer_info.total_score', 0)
+        const maxFloor = _.get(item, 'result.climbing_tower_s3.layer_info.climbing_tower_layer', 0)
+        const noDamageCount = _.get(item, 'result.climbing_tower_s3.mvp_info.floor_mvp_num', 0)
+
+        return {
+          ...item,
+          result: item.result,
+          score: {
+            totalScore,
+            maxFloor,
+            noDamageCount
+          }
+        }
+      })
+
+    if (scoredData.length === 0) {
+      return this.reply('没有爬塔S3排名，请先 %显示爬塔S3排名，并且用 %爬塔 查询战绩')
+    }
+
+    // 使用自定义比较函数排序
+    scoredData.sort((a, b) => {
+      // 首先比较分数，降序
+      if (a.score.totalScore !== b.score.totalScore) {
+        return b.score.totalScore - a.score.totalScore
+      }
+      // 如果分数相同，比较爬塔层数，降序
+      if (a.score.maxFloor !== b.score.maxFloor) {
+        return b.score.maxFloor - a.score.maxFloor
+      }
+      // 如果层数相同，比较无伤通关数，降序
+      return b.score.noDamageCount - a.score.noDamageCount
+    })
+    // 读取配置中的最大显示数量
+    let maxDisplay = _.get(settings.getConfig('rank'), 'max_display', 15)
+    maxDisplay = Math.max(1, Math.min(maxDisplay, 15))
+    // 取前maxDisplay个数据
+    scoredData = scoredData.slice(0, maxDisplay)
+
+    const finalData = { scoredData }
+    await this.render('rank/climbingTower/s3/index.html', finalData, this)
+  }
+
   async switchRank() {
     if (!(this.e?.group_id)) {
       return this.reply('请在群聊中使用该命令！')
@@ -404,9 +653,18 @@ export class Rank extends ZZZPlugin {
     } else if (/临界推演|临界|推演/.test(this.e.msg)) {
       rank_types = ['VOID_FRONT_BATTLE']
       rank_type_str = '临界推演'
+    } else if (/爬塔S1|拟真鏖战试炼/i.test(this.e.msg)) {
+      rank_types = ['CLIMBING_TOWER_S1']
+      rank_type_str = '爬塔S1'
+    } else if (/爬塔S2|鏖战试炼：末路/i.test(this.e.msg)) {
+      rank_types = ['CLIMBING_TOWER_S2']
+      rank_type_str = '爬塔S2'
+    } else if (/爬塔S3|鏖战试炼·荣耀/i.test(this.e.msg)) {
+      rank_types = ['CLIMBING_TOWER_S3']
+      rank_type_str = '爬塔S3'
     } else {
-      rank_types = ['ABYSS', 'DEADLY', 'VOID_FRONT_BATTLE']
-      rank_type_str = '式舆防卫战、危局强袭战和临界推演'
+      rank_types = ['ABYSS', 'DEADLY', 'VOID_FRONT_BATTLE', 'CLIMBING_TOWER_S1', 'CLIMBING_TOWER_S2', 'CLIMBING_TOWER_S3']
+      rank_type_str = '式舆防卫战、危局强袭战、临界推演和爬塔'
     }
 
     for (const rank_type of rank_types) {

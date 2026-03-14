@@ -152,3 +152,38 @@ export function getMonthlyData(uid: string) {
 export function saveMonthlyData(uid: string, data: ZZZ.DBMap['monthly']) {
   setDB('monthly', uid, data)
 }
+
+/**
+ * 保存爬塔数据
+ */
+export function saveClimbingTowerData(uid: string, data: ZZZ.DBMap['climbingTower']) {
+  setDB('climbingTower', uid, data);
+}
+
+/**
+ * 获取爬塔数据
+ */
+export function getClimbingTowerData(uid: string) {
+  return getDB('climbingTower', uid);
+}
+
+/**
+ * 删除爬塔数据
+ */
+export function removeClimbingTowerData(uid: string) {
+  return removeDB('climbingTower', uid);
+}
+
+/**
+ * 批量获取爬塔数据
+ */
+export function getClimbingTowerDataInGroupRank(uids: string[]) {
+  return uids.map(uid => getClimbingTowerData(uid)).filter((item): item is ZZZ.DBMap['climbingTower'] => item !== null);
+}
+
+/**
+ * 删除所有爬塔数据
+ */
+export function removeAllClimbingTowerData() {
+  return removeAllDB('climbingTower');
+}
