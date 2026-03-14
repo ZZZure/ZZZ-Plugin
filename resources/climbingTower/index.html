@@ -1,0 +1,108 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" href="{{@sys.currentPath}}/index.css" />
+{{/block}} {{block 'main'}}
+<div class="card">
+  {{include sys.playerInfo}}
+
+  <!-- S1 拟真鏖战试炼 -->
+  {{if climbingTower.climbing_tower_s1}}
+  <div class="season-container s1">
+    <div class="season-header">
+      <h3 class="season-title">拟真鏖战试炼</h3>
+      <div class="medal-icon">
+        <img src="{{climbingTower.climbing_tower_s1.medal_icon}}" alt="S1徽章" />
+      </div>
+    </div>
+    <div class="season-content">
+      <div class="layer-info">
+        <span class="label">层数</span>
+        <span class="value">{{climbingTower.climbing_tower_s1.climbing_tower_layer}}</span>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+
+  <!-- S2 鏖战试炼：末路 -->
+  {{if climbingTower.climbing_tower_s2}}
+  <div class="season-container s2">
+    <div class="season-header">
+      <h3 class="season-title">鏖战试炼：末路</h3>
+      <div class="medal-icon">
+        <img src="{{climbingTower.climbing_tower_s2.medal_icon}}" alt="S2徽章" />
+      </div>
+    </div>
+    <div class="season-content">
+      <div class="layer-info">
+        <span class="label">层数</span>
+        <span class="value">{{climbingTower.climbing_tower_s2.climbing_tower_layer}}</span>
+      </div>
+      <div class="mvp-info">
+        <span class="label">无伤通关</span>
+        <span class="value">{{climbingTower.climbing_tower_s2.floor_mvp_num}}</span>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+
+  <!-- S3 鏖战试炼·荣耀 -->
+  {{if climbingTower.climbing_tower_s3}}
+  <div class="season-container s3">
+    <!-- 第一行：徽章、层数、分数 -->
+    <div class="season-header">
+      <h3 class="season-title">鏖战试炼·荣耀</h3>
+      <div class="medal-icon">
+        <img src="{{climbingTower.climbing_tower_s3.layer_info.medal_icon}}" alt="S3徽章" />
+      </div>
+    </div>
+    <div class="season-content">
+      <div class="layer-info">
+        <span class="label">层数</span>
+        <span class="value">{{climbingTower.climbing_tower_s3.layer_info.climbing_tower_layer}}</span>
+      </div>
+      <div class="score-info">
+        <span class="label">分数</span>
+        <span class="value">{{climbingTower.climbing_tower_s3.layer_info.total_score}}</span>
+      </div>
+    </div>
+    <!-- 第二行：MVP -->
+    <div class="mvp-section">
+      <div class="mvp-info">
+        <span class="label">无伤通关</span>
+        <span class="value">{{climbingTower.climbing_tower_s3.mvp_info.floor_mvp_num}}</span>
+      </div>
+      <div class="rank-info">
+        <span class="label">排名</span>
+        <span class="value">{{(climbingTower.climbing_tower_s3.mvp_info.rank_percent / 100).toFixed(2)}}%</span>
+      </div>
+    </div>
+    <!-- 角色排名列表 -->
+    {{if climbingTower.climbing_tower_s3.display_avatar_rank_list && climbingTower.climbing_tower_s3.display_avatar_rank_list.length > 0}}
+    <div class="boss-row boss-team-row">
+      <div class="list">
+        {{each climbingTower.climbing_tower_s3.display_avatar_rank_list avatar i}}
+        {{if i < 3}}
+        <div class="item char">
+          <div class="rank_disp">
+            <div class="rank rank-icon {{avatar.rarity}}"></div>
+          </div>
+          <div class="image">
+            <img src="{{avatar.icon}}" alt="{{avatar.name}}" />
+          </div>
+          <div class="c-info">
+            <div class="score">
+              {{avatar.score}}
+            </div>
+            <div class="rank">
+              {{(avatar.rank_percent / 100).toFixed(2)}}%
+            </div>
+          </div>
+        </div>
+        {{/if}}
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+  </div>
+  {{/if}}
+</div>
+{{/block}}

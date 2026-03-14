@@ -92,6 +92,8 @@ export namespace Config {
     deadly: number
     /** 临界推演 */
     voidFrontBattle: number
+    /** 拟真鏖战试炼 */
+    climbingTower: number
     /** 抽卡 */
     gachalog: number
     /** 攻略 */
@@ -175,7 +177,13 @@ export namespace ZZZ {
       player: ZZZ.playerCard
       result: Mys.VoidFrontBattleDetail
     }
+    climbingTower: {
+      player: ZZZ.playerCard
+      result: Mys.ClimbingTower
+    }
   }
+
+
 
 }
 
