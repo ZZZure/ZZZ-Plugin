@@ -66,6 +66,13 @@ const helpData: HelpData[] = [
           '月报统计',
         ],
       },
+      {
+        title: '区域收集',
+        desc: '查看在每个区域的收集进度',
+        needCK: true,
+        needSK: false,
+        commands: ['区域收集', '探索'],
+      },
     ],
   },
   {

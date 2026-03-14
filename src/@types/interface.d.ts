@@ -94,6 +94,8 @@ export namespace Config {
     voidFrontBattle: number
     /** 拟真鏖战试炼 */
     climbingTower: number
+    /** 探索详情 */
+    explorationDetail: number
     /** 抽卡 */
     gachalog: number
     /** 攻略 */
@@ -195,6 +197,7 @@ export namespace Mys {
     zzzAvatarInfo: AvatarInfo
     zzzBuddyList: BuddyList
     zzzClimbingTower: ClimbingTower
+    zzzExplorationDetail: ExplorationDetail
     zzzIndex: Index
     zzzMonthly: Monthly
     zzzNote: Note
@@ -1003,6 +1006,37 @@ export namespace Enka {
     BreakLevel: number
     Exp: number
     UpgradeLevel: number
+  }
+
+  /** 探索详情 */
+  export interface ExplorationDetail {
+    area_collections: AreaCollection[]
+  }
+
+  export interface AreaCollection {
+    urban_area_group_id: number
+    is_lock: boolean
+    name: string
+    collection_progress: number
+    map_collections: MapCollection[]
+  }
+
+  export interface MapCollection {
+    urban_area_id: number
+    name: string
+    icon: string
+    collection_progress: number
+    wiki_url: string
+    collections: Collection[]
+    is_lock: boolean
+  }
+
+  export interface Collection {
+    id: number
+    name: string
+    num: number
+    total: number
+    icon: string
   }
 
 }
