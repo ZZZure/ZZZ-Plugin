@@ -2,7 +2,7 @@ import request from '../../utils/request.js';
 export default new class {
     host = 'https://static.nanoka.cc';
     versionUrl = `${this.host}/manifest.json`;
-    version = '2.7.3+14158029';
+    version = '2.7.12+14324945';
     refreshPromise;
     constructor() {
         this.refresh();
@@ -25,7 +25,7 @@ export default new class {
                 }
             }
             catch (error) {
-                logger.error(`获取NanokaURL绝区零最新版本失败，使用默认版本：${this.version}`);
+                logger.error(`获取NanokaURL绝区零最新版本失败，使用原版本：${this.version}`);
                 logger.error(error);
             }
             finally {
