@@ -3,7 +3,7 @@ import request from '../../utils/request.js'
 export default new class {
   private readonly host = 'https://static.nanoka.cc'
   private readonly versionUrl = `${this.host}/manifest.json`
-  private version = '2.7.3+14158029'
+  private version = '2.7.12+14324945'
   private refreshPromise?: Promise<void>
 
   constructor() {
@@ -27,7 +27,7 @@ export default new class {
           this.version = version
         }
       } catch (error) {
-        logger.error(`获取NanokaURL绝区零最新版本失败，使用默认版本：${this.version}`)
+        logger.error(`获取NanokaURL绝区零最新版本失败，使用原版本：${this.version}`)
         logger.error(error)
       } finally {
         this.refreshPromise = undefined
