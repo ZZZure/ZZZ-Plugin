@@ -10111,6 +10111,11 @@
         "Name": "...",
         "Desc": "...",
         "Image": "IconRole59"
+      },
+      "3115111": {
+        "Name": "...",
+        "Desc": "...",
+        "Image": "IconRole59_01"
       }
     }
   },
@@ -10309,11 +10314,206 @@
     },
     "Skin": {
       "3115210": {
-        "Name": "AvatarSkin_Cissia_Name_000",
-        "Desc": "AvatarSkin_Cissia_Desc_000",
+        "Name": "...",
+        "Desc": "...",
         "Image": "IconRole60"
       }
     }
+  },
+  "1541": {
+    "sprite_id": "61",
+    "name": "普罗米娅",
+    "full_name": "(Test1)...",
+    "en_name": "Promeia",
+    "WeaponType": "3",
+    "ElementType": "202",
+    "Camp": "坎卜斯黑枝",
+    "HitType": "斩击",
+    "Rarity": "S",
+    "Attack": 126,
+    "AttackGrowth": 75860,
+    "BreakStun": 86,
+    "Defence": 49,
+    "DefenceGrowth": 66882,
+    "HpMax": 626,
+    "HpGrowth": 849779,
+    "Crit": 500,
+    "CritDamage": 5000,
+    "ElementAbnormalPower": 112,
+    "ElementMystery": 114,
+    "PenDelta": 0,
+    "PenRate": 0,
+    "SpRecover": 120,
+    "Level": {
+      "1": {
+        "HpMax": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "LevelMax": 10,
+        "LevelMin": 0,
+        "Materials": {
+          "10": 24000,
+          "100213": 4
+        }
+      },
+      "2": {
+        "HpMax": 430,
+        "Attack": 45,
+        "Defence": 34,
+        "LevelMax": 20,
+        "LevelMin": 10,
+        "Materials": {
+          "10": 56000,
+          "100223": 12
+        }
+      },
+      "3": {
+        "HpMax": 859,
+        "Attack": 90,
+        "Defence": 68,
+        "LevelMax": 30,
+        "LevelMin": 20,
+        "Materials": {
+          "10": 120000,
+          "100223": 20
+        }
+      },
+      "4": {
+        "HpMax": 1289,
+        "Attack": 134,
+        "Defence": 101,
+        "LevelMax": 40,
+        "LevelMin": 30,
+        "Materials": {
+          "10": 200000,
+          "100233": 10
+        }
+      },
+      "5": {
+        "HpMax": 1719,
+        "Attack": 179,
+        "Defence": 135,
+        "LevelMax": 50,
+        "LevelMin": 40,
+        "Materials": {
+          "10": 400000,
+          "100233": 20
+        }
+      },
+      "6": {
+        "HpMax": 2149,
+        "Attack": 224,
+        "Defence": 169,
+        "LevelMax": 60,
+        "LevelMin": 50,
+        "Materials": {}
+      }
+    },
+    "ExtraLevel": {
+      "1": {
+        "MaxLevel": 15,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 0
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 12
+          }
+        }
+      },
+      "2": {
+        "MaxLevel": 25,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 12
+          }
+        }
+      },
+      "3": {
+        "MaxLevel": 35,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 24
+          }
+        }
+      },
+      "4": {
+        "MaxLevel": 45,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 24
+          }
+        }
+      },
+      "5": {
+        "MaxLevel": 55,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 36
+          }
+        }
+      },
+      "6": {
+        "MaxLevel": 60,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 75
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 36
+          }
+        }
+      }
+    },
+    "Skin": {}
   },
   "2011": {
     "sprite_id": "",

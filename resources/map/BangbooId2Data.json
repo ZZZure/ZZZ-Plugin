@@ -197,6 +197,17 @@
     "CHS": "乐玩布",
     "JA": "ブロックボンプ"
   },
+  "53021": {
+    "sprite_id": "45",
+    "icon": "UI/Sprite/A1DynamicLoad/BangbooModGarage/UnPacker/BangbooRole/BangbooGarageRole45.png",
+    "rank": 4,
+    "codename": "Bangboo_Name_en_53021",
+    "EN": "Bangboo_Name_53021",
+    "desc": "Bangboo_Desc_53021",
+    "KO": "Bangboo_Name_53021",
+    "CHS": "(Test1)幽浮布",
+    "JA": "Bangboo_Name_53021"
+  },
   "54001": {
     "sprite_id": "07",
     "icon": "UI/Sprite/A1DynamicLoad/BangbooModGarage/UnPacker/BangbooRole/BangbooGarageRole07.png",
