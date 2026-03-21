@@ -3,7 +3,7 @@ import request from '../../utils/request.js'
 export default new class {
   private readonly host = 'https://static.nanoka.cc'
   private readonly versionUrl = `${this.host}/manifest.json`
-  private version = '2.7.12+14324945'
+  private version = '2.8.0+14441350'
   private refreshPromise?: Promise<void>
 
   constructor() {
