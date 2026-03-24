@@ -316,8 +316,8 @@ const predefinedWeights = {
     },
     冲击·双爆: {
         rule: (avatar) => {
-            const { CRITRate, CRITDMG } = avatar.initial_properties;
-            return CRITRate * 2 + CRITDMG >= 1.5;
+            const { CRITRate, CRITDMG, AnomalyMastery, AnomalyProficiency } = avatar.initial_properties;
+            return CRITRate * 2 + CRITDMG >= 1.5 && AnomalyMastery < 150 && AnomalyProficiency < 200;
         },
         value: {
             "生命值百分比": 0,
@@ -336,8 +336,8 @@ const predefinedWeights = {
     },
     冲击·攻击: {
         rule: (avatar) => {
-            const { ATK, CRITRate, CRITDMG } = avatar.initial_properties;
-            return ATK > 2000 && CRITRate * 2 + CRITDMG >= 1;
+            const { ATK, CRITRate, CRITDMG, AnomalyMastery, AnomalyProficiency } = avatar.initial_properties;
+            return ATK > 2000 && CRITRate * 2 + CRITDMG >= 1 && AnomalyMastery < 150 && AnomalyProficiency < 200;
         },
         value: {
             "生命值百分比": 0,
@@ -356,8 +356,8 @@ const predefinedWeights = {
     },
     冲击·异常: {
         rule: (avatar) => {
-            const { CRITRate, CRITDMG, AnomalyProficiency } = avatar.initial_properties;
-            return CRITRate * 2 + CRITDMG < 2 && AnomalyProficiency >= 200;
+            const { CRITRate, CRITDMG, AnomalyMastery, AnomalyProficiency } = avatar.initial_properties;
+            return CRITRate * 2 + CRITDMG < 2 && (AnomalyMastery >= 150 || AnomalyProficiency >= 200);
         },
         value: {
             "生命值百分比": 0,
