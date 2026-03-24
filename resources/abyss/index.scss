@@ -272,20 +272,17 @@
       }
     }
 
-    .info {
-      display: flex;
-      margin-top: 0.3em;
-      margin-bottom: 0.6em;
+    .time {
+      color: #979797;
       font-size: 0.8em;
+      margin-top: 0.3em;
+    }
 
-      .time {
-        color: #979797;
-      }
-
-      .buffer {
-        color: #ccc;
-        margin-left: auto;
-      }
+    .buffer {
+      color: #ccc;
+      font-size: 0.8em;
+      margin-bottom: 0.6em;
+      text-align: left;
     }
 
     .list {

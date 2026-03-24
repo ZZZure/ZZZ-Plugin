@@ -226,18 +226,16 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.card .content .info {
-  display: flex;
-  margin-top: 0.3em;
-  margin-bottom: 0.6em;
-  font-size: 0.8em;
-}
-.card .content .info .time {
+.card .content .time {
   color: #979797;
+  font-size: 0.8em;
+  margin-top: 0.3em;
 }
-.card .content .info .buffer {
+.card .content .buffer {
   color: #ccc;
-  margin-left: auto;
+  font-size: 0.8em;
+  margin-bottom: 0.6em;
+  text-align: left;
 }
 .card .content .list {
   display: grid;
