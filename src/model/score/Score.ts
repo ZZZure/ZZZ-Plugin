@@ -141,7 +141,7 @@ export default class Score {
           def_weight = ['主C·双爆']
           break
         case professionEnum.击破:
-          def_weight = ['冲击·双爆', '冲击·攻击']
+          def_weight = ['冲击·双爆', '冲击·攻击', '冲击·异常']
           break
         case professionEnum.异常:
           def_weight = ['主C·异常', '辅助·异常']
@@ -183,7 +183,7 @@ export default class Score {
     let rule_name = '默认', final_weight: Weight | undefined
     if (Array.isArray(def_weight)) {
       delRules(def_weight)
-    } else if (def_weight.rules) {
+    } else if (def_weight?.rules) {
       const { rules, ...rest } = def_weight
       delRules(rules)
       if (Object.keys(rest).length) {
@@ -378,6 +378,26 @@ const predefinedWeights: Record<string, {
       "能量自动回复": 0,
       "异常精通": 0,
       "异常掌控": 0,
+      "属性伤害加成": 1
+    }
+  },
+  冲击·异常: {
+    rule: (avatar) => {
+      const { CRITRate, CRITDMG, AnomalyProficiency } = avatar.initial_properties
+      return CRITRate * 2 + CRITDMG < 2 && AnomalyProficiency >= 200
+    },
+    value: {
+      "生命值百分比": 0,
+      "攻击力百分比": 0.75,
+      "防御力百分比": 0,
+      "冲击力": 1,
+      "暴击率": 0,
+      "暴击伤害": 0,
+      "穿透率": 0.75,
+      "穿透值": 0.25,
+      "能量自动回复": 1,
+      "异常精通": 1,
+      "异常掌控": 1,
       "属性伤害加成": 1
     }
   },
