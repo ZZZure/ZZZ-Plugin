@@ -36,12 +36,16 @@
         <div class="rating-icon rating-icon {{abyss.brief.rating.replace('+', 'P')}}"></div>
       </div>
       <div class="header-bottom">
+        {{if abyss.brief.challenge_time}}
         <div class="challenge-time">
           通关时间：{{abyss.formatTime(abyss.brief.challenge_time)}}
         </div>
+        {{/if}}
+        {{if abyss.brief.battle_time}}
         <div class="total-battle-time">
           总通关时长：{{abyss.formatBattleTime(abyss.brief.battle_time)}}
         </div>
+        {{/if}}
       </div>
     </div>
 
@@ -63,13 +67,11 @@
               <div class="val">{{item.score}}</div>
             {{/if}}
           </div>
-          <div class="info">
-            <div class="time">
-              通关时长：{{abyss.formatBattleTime(item.battle_time)}}
-            </div>
-            <div class="buffer">
-              增益：{{item.buffer.title}}
-            </div>
+          <div class="time">
+            通关时间：{{abyss.formatTime(item.challenge_time)}}
+          </div>
+          <div class="buffer">
+            增益：{{item.buffer.title}}
           </div>
           <div class="list">
             <!-- 角色 -->
@@ -137,11 +139,6 @@
         <div class="lower-item-card">
           <div class="content">
             <div class="team team-icon team0{{i + 1}}"></div>
-            <div class="info">
-              <div class="time">
-                通关时长：{{abyss.formatBattleTime(item.battle_time)}}
-              </div>
-            </div>
             <div class="list">
               <!-- 角色 -->
               <% for(let j=0 ; j < 3 ; j++) { %>
