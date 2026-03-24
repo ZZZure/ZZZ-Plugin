@@ -4,7 +4,7 @@
 
 ### 基础步骤
 
-0. **源码目录**：普通用户为[ZZZ-plugin/dist](https://github.com/ZZZure/ZZZ-Plugin/tree/dev/src)，开发者为[ZZZ-plugin/src](https://github.com/ZZZure/ZZZ-Plugin/tree/main/dist)
+0. **源码目录**：普通用户为[ZZZ-plugin/dist](https://github.com/ZZZure/ZZZ-Plugin/tree/main/dist)，开发者为[ZZZ-plugin/src](https://github.com/ZZZure/ZZZ-Plugin/tree/dev/src)
 
 1. 复制模板文件：[源码目录/model/damage/character/模板/score.js](../damage/character/模板/score.js)
 
