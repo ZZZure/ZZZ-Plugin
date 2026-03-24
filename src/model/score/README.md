@@ -4,9 +4,12 @@
 
 ### 基础步骤
 
-1. 复制模板文件：[ZZZ-plugin/model/damage/character/模板/score.js](../damage/character/模板/score.js)
+0. **源码目录**：普通用户为[ZZZ-plugin/dist](https://github.com/ZZZure/ZZZ-Plugin/tree/dev/src)，开发者为[ZZZ-plugin/src](https://github.com/ZZZure/ZZZ-Plugin/tree/main/dist)
 
-2. 进入角色数据文件夹：[ZZZ-plugin/model/damage/character/角色名](../damage/character/)（若不存在，自行创建即可）
+1. 复制模板文件：[源码目录/model/damage/character/模板/score.js](../damage/character/模板/score.js)
+
+2. 进入角色数据文件夹：[源码目录/model/damage/character/角色名](../damage/character/)（若角色文件夹
+不存在，自行创建即可）
 
 3. 粘贴文件，并将粘贴的模板文件重命名为**score_user.js**
 
@@ -205,7 +208,7 @@ export default function (avatar) {
 
 所有规则中，穿透率权重均为1（命破·双爆除外），属性伤害加成权重均为1
 
-完整权重详见[此文件](./Score.ts#L210)
+完整权重详见[此文件](./Score.ts#L216)
 
 选择第一个符合适用条件的规则，若皆不符合则选择第一个有效规则
 
