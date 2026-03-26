@@ -265,6 +265,13 @@ const helpData: HelpData[] = [
         commands: ['鏖战试炼狂澜排名', '爬塔S4排名'],
       },
       {
+        title: '查看零号空洞数据',
+        desc: '查看零号空洞的执照等级、任务进度等数据',
+        needCK: false,
+        needSK: false,
+        commands: ['零号空洞', '空洞'],
+      },
+      {
         title: '显示/隐藏深渊排名',
         desc: '显示/隐藏自己的深渊群排名',
         needCK: false,

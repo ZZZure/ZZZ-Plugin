@@ -107,9 +107,9 @@ export default class ZZZApiTool {
         url: `${this.hostRecord}event/game_record_zzz/api/zzz/abyss_abstract`,
         query: `lang=zh-cn&uid=${this.uid}&server=${this.server}`,
       }, // 枯萎苗圃
-      zzzHollowZero2: {
-        url: `${this.hostRecord}event/game_record_zzz/api/zzz/abyss2_abstract`,
-        query: `lang=zh-cn&uid=${this.uid}&server=${this.server}`,
+      zzzHollowZeroS2: {
+        url: `${this.hostRecord}event/game_record_zzz/api/zzz/abysss2_abstract`,
+        query: `lang=zh-cn&uid=${this.uid}&region=${this.server}`,
       }, // 迷失之地
       zzzMonthly: {
         url: `${this.host}event/nap_ledger/month_info`,

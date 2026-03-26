@@ -94,6 +94,8 @@ export namespace Config {
     voidFrontBattle: number
     /** 拟真鏖战试炼 */
     climbingTower: number
+    /** 零号空洞 */
+    hollowZero: number
     /** 探索详情 */
     explorationDetail: number
     /** 抽卡 */
@@ -216,6 +218,8 @@ export namespace Mys {
       void_front_id: number
       void_front_battle_detail: VoidFrontBattleDetail
     }
+    zzzHollowZero: HollowZero // TODO
+    zzzHollowZeroS2: HollowZeroS2
   }
 
   /** 米游社UrlType */
@@ -941,6 +945,74 @@ export namespace Mys {
     }[]
   }
 
+  /** 迷失之地数据 */
+  export interface HollowZeroS2 {
+    abyss_level: AbyssLevel
+    abyss_task: AbyssTask
+    abyss_duty: AbyssDuty
+    refresh_time: number
+    abyss_max: AbyssMax
+    abyss_collect: AbyssCollect[]
+    unlock: boolean
+    abyss_task_force_investigation_max: AbyssTaskForceInvestigationMax
+    special_mission: SpecialMission
+  }
+
+  /** 执照等级信息 */
+  export interface AbyssLevel {
+    cur_level: number
+    max_level: number
+    icon: string
+  }
+
+  /** 探索任务信息 */
+  export interface AbyssTask {
+    cur_task: number
+    max_task: number
+  }
+
+  /** 悬赏委托进度信息 */
+  export interface AbyssDuty {
+    cur_duty: number
+    max_duty: number
+  }
+
+  /** 巅峰挑战（矩阵行动）信息 */
+  export interface AbyssMax {
+    max_name: string
+    heat_count: number
+    max_count: number
+    best_time: number
+    formatted_best_time: string
+    has_data: boolean
+  }
+
+  /** 收集数据信息 */
+  export interface AbyssCollect {
+    type: number
+    cur_collect: number
+    max_collect: number
+  }
+
+  /** 特遣调查信息 */
+  export interface AbyssTaskForceInvestigationMax {
+    max_name: string
+    heat_count: number
+    max_count: number
+    best_time: number
+    formatted_best_time: string
+    has_data: boolean
+  }
+
+  /** 特殊任务信息 */
+  export interface SpecialMission {
+    has_data: boolean
+    heat_count: number
+    high_difficulty: number
+    max_count: number
+    best_time: number
+    formatted_best_time: string
+  }
 }
 
 /** Enka面板数据 */
