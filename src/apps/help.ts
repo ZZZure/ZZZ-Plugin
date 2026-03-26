@@ -258,6 +258,13 @@ const helpData: HelpData[] = [
         commands: ['鏖战试炼荣耀排名', '爬塔S3排名'],
       },
       {
+        title: '查看鏖战试炼狂澜排名',
+        desc: '查看鏖战试炼狂澜战斗群排名',
+        needCK: false,
+        needSK: false,
+        commands: ['鏖战试炼狂澜排名', '爬塔S4排名'],
+      },
+      {
         title: '显示/隐藏深渊排名',
         desc: '显示/隐藏自己的深渊群排名',
         needCK: false,
