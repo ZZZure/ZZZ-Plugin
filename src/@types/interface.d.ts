@@ -218,8 +218,105 @@ export namespace Mys {
       void_front_id: number
       void_front_battle_detail: VoidFrontBattleDetail
     }
-    zzzHollowZero: HollowZero // TODO
+    zzzHollowZero: HollowZero,
+    zzzHollowZeroChallenge: HollowZeroChallenge,
     zzzHollowZeroS2: HollowZeroS2
+  }
+
+  /** 零号空洞数据 */
+  export interface HollowZero {
+    abyss_level: HollowZeroLevel
+    abyss_point: HollowZeroPoint
+    abyss_duty: null
+    abyss_talent: HollowZeroTalent
+    refresh_time: number
+    abyss_collect: HollowZeroCollect[]
+    abyss_nest: HollowZeroNest
+    abyss_throne: HollowZeroThrone
+    unlock: boolean
+  }
+
+  /** 执照等级信息 */
+  interface HollowZeroLevel {
+    cur_level: number
+    max_level: number
+    icon: string
+  }
+
+  /** 探索点数信息 */
+  interface HollowZeroPoint {
+    cur_point: number
+    max_point: number
+  }
+
+  /** 作战机略信息 */
+  interface HollowZeroTalent {
+    cur_talent: number
+    max_talent: number
+  }
+
+  /** 收集数据信息 */
+  interface HollowZeroCollect {
+    type: number
+    cur_collect: number
+    max_collect: number
+  }
+
+  /** 窝穴信息 */
+  interface HollowZeroNest {
+    is_nest: boolean
+    is_hard_nest: boolean
+  }
+
+  /** 刀耕火焚信息 */
+  interface HollowZeroThrone {
+    is_throne: boolean
+    max_damage: string
+  }
+
+  /** 零号空洞挑战数据 */
+  export interface HollowZeroChallenge {
+    abyss_nest: any[]
+    abyss_throne: any[]
+    abyss_throne_max: HollowZeroThroneMax
+  }
+
+  /** 刀耕火焚最高记录 */
+  interface HollowZeroThroneMax {
+    max_damage: string
+    time: number
+    formatted_time: string
+    avatar_list: HollowZeroAvatar[]
+    buddy_list: HollowZeroBuddy[]
+    buddy_collect_list: HollowZeroBuddyCollect[]
+    collect: any[]
+  }
+
+  /** 角色信息 */
+  interface HollowZeroAvatar {
+    id: number
+    level: number
+    element_type: number
+    avatar_profession: number
+    rarity: string
+    rank: number
+    damage_rate: number
+    role_square_url: string
+    sub_element_type: number
+  }
+
+  /** 邦布信息 */
+  interface HollowZeroBuddy {
+    id: number
+    rarity: string
+    level: number
+    bangboo_rectangle_url: string
+  }
+
+  /** 邦布收集信息 */
+  interface HollowZeroBuddyCollect {
+    id: number
+    icon: string
   }
 
   /** 米游社UrlType */

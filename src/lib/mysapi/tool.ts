@@ -105,8 +105,12 @@ export default class ZZZApiTool {
       },
       zzzHollowZero: {
         url: `${this.hostRecord}event/game_record_zzz/api/zzz/abyss_abstract`,
-        query: `lang=zh-cn&uid=${this.uid}&server=${this.server}`,
+        query: `lang=zh-cn&role_id=${this.uid}&server=${this.server}`,
       }, // 枯萎苗圃
+      zzzHollowZeroChallenge: {
+        url: `${this.hostRecord}event/game_record_zzz/api/zzz/abyss_detail`,
+        query: `lang=zh-cn&role_id=${this.uid}&server=${this.server}&type=3`,
+      }, // 枯萎苗圃：刀耕火焚
       zzzHollowZeroS2: {
         url: `${this.hostRecord}event/game_record_zzz/api/zzz/abysss2_abstract`,
         query: `lang=zh-cn&uid=${this.uid}&region=${this.server}`,
