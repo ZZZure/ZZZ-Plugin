@@ -190,6 +190,20 @@ const helpData = [
                 needSK: false,
                 commands: ['拟真鏖战试炼', '爬塔', '鏖战'],
             },
+            {
+                title: '查看零号空洞：枯萎苗圃数据',
+                desc: '查看零号空洞：枯萎苗圃的执照等级、任务进度等数据',
+                needCK: true,
+                needSK: false,
+                commands: ['枯萎苗圃', '苗圃'],
+            },
+            {
+                title: '查看零号空洞：迷失之地数据',
+                desc: '查看零号空洞：迷失之地的执照等级、任务进度等数据',
+                needCK: true,
+                needSK: false,
+                commands: ['迷失之地', '迷失'],
+            },
         ],
     },
     {

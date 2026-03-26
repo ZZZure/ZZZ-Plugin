@@ -1,0 +1,182 @@
+.container {
+    width: 500px;
+}
+
+.card {
+  margin: 0 auto;
+  padding: 1em 0;
+
+  .hollow-zero-header {
+    text-align: center;
+    margin-bottom: 1em;
+
+    .hollow-zero-title {
+      color: #e6e6e6;
+      font-size: 2em;
+      margin: 0;
+      text-shadow: 2px 3px #383434;
+    }
+  }
+
+  .basic-info {
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 0.4em solid #444;
+    border-radius: 1em;
+    padding: 1em;
+    margin-bottom: 1em;
+
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.8em;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .info-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+        color: #e6e6e6;
+        font-size: 1.1em;
+
+        .info-icon {
+          width: 1.5em;
+          height: 1.5em;
+          object-fit: contain;
+        }
+      }
+
+      .info-value {
+        color: #e6e6e6;
+        font-size: 1.2em;
+        text-shadow: 2px 3px #383434;
+      }
+    }
+  }
+
+  .section-container {
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 0.4em solid #444;
+    border-radius: 1em;
+    padding: 1em;
+    margin-bottom: 1em;
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1em;
+
+      .section-title {
+        color: #e6e6e6;
+        font-size: 1.3em;
+        margin: 0;
+        text-shadow: 2px 3px #383434;
+      }
+
+      .section-more {
+        color: #979797;
+        font-size: 0.9em;
+        cursor: pointer;
+      }
+    }
+
+    .collect-data {
+      .collect-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.3em;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        .collect-label {
+          color: #979797;
+          font-size: 1em;
+        }
+
+        .collect-value {
+          color: #e6e6e6;
+          font-size: 1em;
+        }
+      }
+    }
+
+    .challenge-tabs {
+      display: flex;
+      background-color: #333;
+      border-radius: 0.5em;
+      margin-bottom: 1em;
+
+      .tab {
+        flex: 1;
+        text-align: center;
+        padding: 0.5em;
+        color: #979797;
+        cursor: pointer;
+
+        &.active {
+          background-color: #444;
+          color: #e6e6e6;
+          border-radius: 0.5em;
+        }
+      }
+    }
+
+    .challenge-info {
+      .challenge-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.3em;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        .challenge-label {
+          color: #979797;
+          font-size: 1em;
+        }
+
+        .challenge-value {
+          color: #e6e6e6;
+          font-size: 1em;
+
+          &.multi-line {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.2em;
+          }
+        }
+      }
+    }
+  }
+
+  // 提示信息样式
+  .item-card {
+    border-image-source: url("../climbingTower/images/BgFrame01.png");
+    border-image-slice: 200 100 70 280 fill;
+    border-image-width: 2em 1em 0.7em 2.8em;
+    border-image-outset: 0em 0em 0em 0em;
+    border-image-repeat: stretch stretch;
+    padding: 1em 1.2em;
+    margin-top: 1em;
+  }
+
+  .notes {
+    font-size: 0.8em;
+    margin: 0 2em;
+
+    .command {
+      color: rgb(255, 215, 0);
+      padding: 0 0.3em;
+    }
+  }
+}
