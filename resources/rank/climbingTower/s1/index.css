@@ -44,7 +44,6 @@ body {
 }
 .card .record .user-info .result .value .max-floor {
   font-size: 1.5em;
-  font-weight: bold;
 }
 .card .record .user-info .result .medal-icon {
   width: 3em;
@@ -72,7 +71,7 @@ body {
 }
 .card .notes-container .notes .command {
   color: #ffc107;
-  font-weight: bold;
+  padding: 0 0.3em;
 }
 
 /*# sourceMappingURL=index.css.map */

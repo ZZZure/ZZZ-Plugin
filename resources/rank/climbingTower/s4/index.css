@@ -45,7 +45,6 @@ body {
 .card .record .user-info .result .value .max-floor,
 .card .record .user-info .result .value .no-damage-count {
   font-size: 1.5em;
-  font-weight: bold;
 }
 .card .record .user-info .result .score-container {
   width: 8em;
@@ -76,7 +75,7 @@ body {
 }
 .card .notes-container .notes .command {
   color: #ffc107;
-  font-weight: bold;
+  padding: 0 0.3em;
 }
 
 /*# sourceMappingURL=index.css.map */
