@@ -1,0 +1,136 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" href="{{@sys.currentPath}}/index.css" />
+{{/block}} {{block 'main'}}
+<div class="card">
+  {{include sys.playerInfo}}
+
+  <!-- 零号空洞标题 -->
+  <div class="hollow-zero-header">
+    <div class="hollow-zero-title">零号空洞：枯萎苗圃</div>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="basic-info">
+    <div class="info-row">
+      <!-- 执照等级 -->
+      <div class="info-item license-level">
+        <div class="info-content">
+          <div class="info-title">执照等级</div>
+          <div class="info-value">{{hollowZero.abyss_level.cur_level}} / {{hollowZero.abyss_level.max_level}}</div>
+        </div>
+        <div class="info-icon-container">
+          <img src="{{hollowZero.abyss_level.icon}}" alt="执照等级" class="info-icon" />
+        </div>
+      </div>
+
+      <!-- 作战机略 -->
+      <div class="info-item">
+        <div class="info-content">
+          <div class="info-title">作战机略</div>
+          <div class="info-value">{{hollowZero.abyss_talent.cur_talent}} / {{hollowZero.abyss_talent.max_talent}}</div>
+        </div>
+        <div class="info-icon-container">
+          <!-- 作战机略图标，这个暂时不知道怎么搞 -->
+          <img src="https://act-webstatic.mihoyo.com/darkmatter/nap/prod_gf_cn/item_icon_uc45id/3ae6457d965f876adb61a1bdfb2384b8.png" alt="作战机略" class="info-icon" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 收集数据 -->
+  <div class="section-container">
+    <div class="section-header">
+      <div class="section-title">收集数据</div>
+    </div>
+    <div class="collect-data">
+      <div class="collect-item">
+        <span class="collect-label">鸣徽图鉴</span>
+        <span class="collect-value">{{hollowZero.abyss_collect[0].cur_collect}} / {{hollowZero.abyss_collect[0].max_collect}}</span>
+      </div>
+      <div class="collect-item">
+        <span class="collect-label">特殊区域记录</span>
+        <span class="collect-value">{{hollowZero.abyss_collect[1].cur_collect}} / {{hollowZero.abyss_collect[1].max_collect}}</span>
+      </div>
+      <div class="collect-item">
+        <span class="collect-label">哨站课题</span>
+        <span class="collect-value">{{hollowZero.abyss_collect[2].cur_collect}} / {{hollowZero.abyss_collect[2].max_collect}}</span>
+      </div>
+      <div class="collect-item">
+        <span class="collect-label">异域模块</span>
+        <span class="collect-value">{{hollowZero.abyss_collect[3].cur_collect}} / {{hollowZero.abyss_collect[3].max_collect}}</span>
+      </div>
+      <div class="collect-item">
+        <span class="collect-label">战术棱镜方案</span>
+        <span class="collect-value">{{hollowZero.abyss_collect[4].cur_collect}} / {{hollowZero.abyss_collect[4].max_collect}}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 刀耕火焚 -->
+  <div class="section-container">
+    <div class="section-header">
+      <div class="section-title">刀耕火焚</div>
+    </div>
+    
+    <!-- 战斗统计 -->
+    {{if hollowZeroChallenge?.abyss_throne_max}}
+    <div class="battle-stats">
+      <div class="stats-item">
+        <span class="stats-label">探索耗时</span>
+        <span class="stats-value">{{hollowZeroChallenge.abyss_throne_max.formatted_time}}</span>
+      </div>
+      <div class="stats-item">
+        <span class="stats-label">对「尼尼微」造成伤害</span>
+        <span class="stats-value">{{hollowZeroChallenge.abyss_throne_max.max_damage}}</span>
+      </div>
+    </div>
+    
+    <!-- 通关阵容 -->
+    <div class="team-container">
+      <div class="team-title">通关阵容</div>
+      <div class="team-list">
+        <% for(let i=0 ; i < 3 ; i++) { %>
+          {{if hollowZeroChallenge.abyss_throne_max.avatar_list?.[i]}}
+          <div class="item char">
+            <div class="rank_disp">
+              <div class="rank rank-icon {{hollowZeroChallenge.abyss_throne_max.avatar_list[i].rarity}}"></div>
+            </div>
+            {{if hollowZeroChallenge.abyss_throne_max.avatar_list[i].rank}}
+            <div class="count">{{hollowZeroChallenge.abyss_throne_max.avatar_list[i].rank}}</div>
+            {{/if}}
+            <div class="image">
+              <img src="{{hollowZeroChallenge.abyss_throne_max.avatar_list[i].role_square_url}}" alt="">
+            </div>
+            <div class="char-info">
+              <div class="char-info-row">
+                <div class="char-level">LV.{{hollowZeroChallenge.abyss_throne_max.avatar_list[i].level}}</div>
+                <div class="char-damage">{{hollowZeroChallenge.abyss_throne_max.avatar_list[i].damage_rate}}%</div>
+              </div>
+            </div>
+          </div>
+          {{else}}
+          <div class="item char"></div>
+          {{/if}}
+        <% } %>
+        <!-- 邦布 -->
+        {{if hollowZeroChallenge.abyss_throne_max.buddy_list?.[0]}}
+        <div class="item bangboo">
+          <div class="rank_disp">
+            <div class="rank rank-icon {{hollowZeroChallenge.abyss_throne_max.buddy_list[0].rarity}}"></div>
+          </div>
+          <div class="image">
+            <img src="{{hollowZeroChallenge.abyss_throne_max.buddy_list[0].bangboo_rectangle_url}}" alt="">
+          </div>
+          <div class="char-info">
+            <div class="char-info-row">
+              <div class="char-level">LV.{{hollowZeroChallenge.abyss_throne_max.buddy_list[0].level}}</div>
+            </div>
+          </div>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+    {{/if}}
+  </div>
+</div>
+{{/block}}
