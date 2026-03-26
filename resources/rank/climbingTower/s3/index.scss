@@ -1,5 +1,5 @@
 body {
-  width: 1100px;
+  width: 1150px;
 }
 
 .card {
@@ -9,9 +9,8 @@ body {
   .record {
     display: flex;
     gap: 1em;
-    margin-bottom: 1em;
     align-items: center;
-    height: 9em;
+    height: 7em;
 
     .user-info {
       padding: 0.5em;
@@ -50,6 +49,10 @@ body {
             font-size: 1.5em;
             font-weight: bold;
           }
+        }
+
+        .score-container {
+          width: 8em;
         }
 
         .medal-icon {
