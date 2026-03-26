@@ -50,12 +50,10 @@
 .area-list .area-group .area-header .area-name {
   color: #e6e6e6;
   font-size: 1.1em;
-  font-weight: bold;
 }
 .area-list .area-group .area-header .area-progress {
   color: #ffa500;
   font-size: 1.1em;
-  font-weight: bold;
 }
 .area-list .area-group .subarea-grid {
   display: grid;
@@ -89,7 +87,6 @@
 .area-list .area-group .subarea-grid .subarea-item .subarea-left .subarea-progress {
   color: #ffa500;
   font-size: 1em;
-  font-weight: bold;
 }
 .area-list .area-group .subarea-grid .subarea-item .subarea-right {
   display: flex;
