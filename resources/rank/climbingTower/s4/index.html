@@ -6,7 +6,7 @@
 
 {{block 'main'}}
 <div class="card">
-  <% include(sys.specialTitle, {en: 'CLIMBING TOWER (S3) RANK' , cn: '鏖战试炼：荣耀排名' }) %>
+  <% include(sys.specialTitle, {en: 'CLIMBING TOWER (S4) RANK' , cn: '鏖战试炼：狂澜排名' }) %>
     {{each scoredData record i}}
     <div class="record">
       <div class="user-info">
@@ -39,14 +39,14 @@
             <div class="label">无伤通关数</div>
             <div class="no-damage-count">{{record.score.noDamageCount}}</div>
           </div>
-          <img src="{{record.result.climbing_tower_s3.layer_info.medal_icon}}" alt="Medal" class="medal-icon">
+          <img src="{{record.result.climbing_tower_s4.layer_info.medal_icon}}" alt="Medal" class="medal-icon">
         </div>
       </div>
     </div>
     {{/each}}
     <div class="notes-container">
       <ul class="notes">
-        <li>请在群内查询<span class="command">%拟真鏖战试炼</span>，以参与对应群的鏖战试炼：荣耀（爬塔 S3）排名</li>
+        <li>请在群内查询<span class="command">%拟真鏖战试炼</span>，以参与对应群的鏖战试炼：狂澜（爬塔 S4）排名</li>
       </ul>
     </div>
 </div>

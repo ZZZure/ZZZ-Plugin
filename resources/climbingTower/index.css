@@ -199,7 +199,8 @@
 .card .s2 .season-content {
   justify-content: center;
 }
-.card .s3 .season-content {
+.card .s3 .season-content,
+.card .s4 .season-content {
   justify-content: center;
 }
 .card .item-card {

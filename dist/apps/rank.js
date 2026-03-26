@@ -29,16 +29,24 @@ export class Rank extends ZZZPlugin {
                     fnc: 'voidFrontBattleRank'
                 },
                 {
+                    reg: `${rulePrefix}(爬塔|鏖战)排名$`,
+                    fnc: 'climbingTowerHelp'
+                },
+                {
                     reg: `${rulePrefix}(爬塔S1|爬塔s1|拟真鏖战试炼)排名$`,
                     fnc: 'climbingTowerS1'
                 },
                 {
-                    reg: `${rulePrefix}(爬塔S2|爬塔s2|鏖战试炼末路|鏖战试炼：末路)排名$`,
+                    reg: `${rulePrefix}(爬塔S2|爬塔s2|鏖战试炼末路|鏖战试炼：末路|鏖战试炼:末路)排名$`,
                     fnc: 'climbingTowerS2'
                 },
                 {
-                    reg: `${rulePrefix}(爬塔S3|爬塔s3|鏖战试炼荣耀|鏖战试炼·荣耀)排名$`,
+                    reg: `${rulePrefix}(爬塔S3|爬塔s3|鏖战试炼荣耀|鏖战试炼：荣耀|鏖战试炼:荣耀)排名$`,
                     fnc: 'climbingTowerS3'
+                },
+                {
+                    reg: `${rulePrefix}(爬塔S4|爬塔s4|鏖战试炼狂澜|鏖战试炼：狂澜|鏖战试炼:狂澜)排名$`,
+                    fnc: 'climbingTowerS4'
                 },
                 {
                     reg: `${rulePrefix}(显示|展示|开启|打开|on|启用|启动|隐藏|取消显示|关闭|关掉|off|禁用|停止)(式舆防卫战|式舆|深渊|防卫战|防卫|危局强袭战|危局|强袭|强袭战|临界推演|临界|推演|爬塔S1|爬塔S2|爬塔S3|爬塔 s1|爬塔 s2|爬塔 s3|爬塔s1|爬塔s2|爬塔s3)?(群(内)?)?排名$`,
@@ -293,6 +301,19 @@ export class Rank extends ZZZPlugin {
         const finalData = { scoredData };
         await this.render('rank/voidFrontBattle/index.html', finalData, this);
     }
+    async climbingTowerHelp() {
+        let help_msg = [
+            '当前可供查询的爬塔排名有：',
+            '- %爬塔S1排名（%拟真鏖战试炼排名）',
+            '- %爬塔S2排名（%鏖战试炼：末路排名）',
+            '- %爬塔S3排名（%鏖战试炼：荣耀排名）',
+            '- %爬塔S4排名（%鏖战试炼：狂澜排名）',
+        ];
+        if (!(this.e?.group_id)) {
+            help_msg.unshift('请在群聊中查询排名！');
+        }
+        return this.reply(help_msg.join('\n'));
+    }
     async climbingTowerS1() {
         const rank_type = 'CLIMBING_TOWER_S1';
         if (!(this.e?.group_id)) {
@@ -470,6 +491,70 @@ export class Rank extends ZZZPlugin {
         const finalData = { scoredData };
         await this.render('rank/climbingTower/s3/index.html', finalData, this);
     }
+    async climbingTowerS4() {
+        const rank_type = 'CLIMBING_TOWER_S4';
+        if (!(this.e?.group_id)) {
+            return this.reply('请在群聊中使用该命令！');
+        }
+        if (!this.isGroupRankAllowed()) {
+            await this.reply('当前群爬塔S4排名功能已关闭！');
+        }
+        const uidInGroupRank = await getUsersInGroupRank(rank_type, this.e.group_id);
+        const memberMap = await this.e.group?.getMemberMap() || new Map();
+        const qqInGroupSet = new Set(Array.from(memberMap.keys(), String));
+        const uid2qqs = await getUid2QQsMapping(this.e.group_id);
+        const uidInGroupRankFiltered = [];
+        for (const uid of uidInGroupRank) {
+            if (uid in uid2qqs && uid2qqs[uid].some(qq => qqInGroupSet.has(qq))) {
+                uidInGroupRankFiltered.push(uid);
+            }
+            else {
+                await removeUidAllRecord(this.e.group_id, uid);
+            }
+        }
+        const rawData = getClimbingTowerDataInGroupRank(uidInGroupRankFiltered);
+        const filteredByUser = [];
+        for (const item of rawData) {
+            const gameUid = _.get(item, 'player.player.game_uid');
+            const userRankAllowed = await isUserRankAllowed(rank_type, gameUid, this.e.group_id);
+            if (/^[0-9]{8}$/.test(gameUid) && userRankAllowed) {
+                filteredByUser.push(item);
+            }
+        }
+        let scoredData = filteredByUser
+            .filter(item => _.get(item, 'result.climbing_tower_s4') !== undefined)
+            .map(item => {
+            const totalScore = _.get(item, 'result.climbing_tower_s4.layer_info.total_score', 0);
+            const maxFloor = _.get(item, 'result.climbing_tower_s4.layer_info.climbing_tower_layer', 0);
+            const noDamageCount = _.get(item, 'result.climbing_tower_s4.mvp_info.floor_mvp_num', 0);
+            return {
+                ...item,
+                result: item.result,
+                score: {
+                    totalScore,
+                    maxFloor,
+                    noDamageCount
+                }
+            };
+        });
+        if (scoredData.length === 0) {
+            return this.reply('没有爬塔S4排名，请先 %显示爬塔S4排名，并且用 %爬塔 查询战绩');
+        }
+        scoredData.sort((a, b) => {
+            if (a.score.totalScore !== b.score.totalScore) {
+                return b.score.totalScore - a.score.totalScore;
+            }
+            if (a.score.maxFloor !== b.score.maxFloor) {
+                return b.score.maxFloor - a.score.maxFloor;
+            }
+            return b.score.noDamageCount - a.score.noDamageCount;
+        });
+        let maxDisplay = _.get(settings.getConfig('rank'), 'max_display', 15);
+        maxDisplay = Math.max(1, Math.min(maxDisplay, 15));
+        scoredData = scoredData.slice(0, maxDisplay);
+        const finalData = { scoredData };
+        await this.render('rank/climbingTower/s4/index.html', finalData, this);
+    }
     async switchRank() {
         if (!(this.e?.group_id)) {
             return this.reply('请在群聊中使用该命令！');
@@ -512,12 +597,16 @@ export class Rank extends ZZZPlugin {
             rank_types = ['CLIMBING_TOWER_S2'];
             rank_type_str = '爬塔S2';
         }
-        else if (/爬塔S3|鏖战试炼·荣耀/i.test(this.e.msg)) {
+        else if (/爬塔S3|鏖战试炼：荣耀/i.test(this.e.msg)) {
             rank_types = ['CLIMBING_TOWER_S3'];
             rank_type_str = '爬塔S3';
         }
+        else if (/爬塔S4|鏖战试炼：狂澜/i.test(this.e.msg)) {
+            rank_types = ['CLIMBING_TOWER_S4'];
+            rank_type_str = '爬塔S4';
+        }
         else {
-            rank_types = ['ABYSS', 'DEADLY', 'VOID_FRONT_BATTLE', 'CLIMBING_TOWER_S1', 'CLIMBING_TOWER_S2', 'CLIMBING_TOWER_S3'];
+            rank_types = ['ABYSS', 'DEADLY', 'VOID_FRONT_BATTLE', 'CLIMBING_TOWER_S1', 'CLIMBING_TOWER_S2', 'CLIMBING_TOWER_S3', 'CLIMBING_TOWER_S4'];
             rank_type_str = '式舆防卫战、危局强袭战、临界推演和爬塔';
         }
         for (const rank_type of rank_types) {

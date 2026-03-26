@@ -34,7 +34,7 @@ export class ClimbingTower extends ZZZPlugin {
         if (!climbingTowerDetail) {
             return this.reply("暂无爬塔数据");
         }
-        const rank_types = ["CLIMBING_TOWER_S1", "CLIMBING_TOWER_S2", "CLIMBING_TOWER_S3"];
+        const rank_types = ["CLIMBING_TOWER_S1", "CLIMBING_TOWER_S2", "CLIMBING_TOWER_S3", "CLIMBING_TOWER_S4"];
         const uid = await this.getUID();
         let userRankAllowed = null;
         if (uid) {

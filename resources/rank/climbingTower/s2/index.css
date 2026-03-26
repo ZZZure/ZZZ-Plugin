@@ -9,9 +9,8 @@ body {
 .card .record {
   display: flex;
   gap: 1em;
-  margin-bottom: 1em;
   align-items: center;
-  height: 9em;
+  height: 7em;
 }
 .card .record .user-info {
   width: 800px;
