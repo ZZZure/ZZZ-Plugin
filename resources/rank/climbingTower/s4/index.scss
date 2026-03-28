@@ -1,5 +1,5 @@
 body {
-  width: 1000px;
+  width: 1150px;
 }
 
 .card {
@@ -13,7 +13,6 @@ body {
     height: 7em;
 
     .user-info {
-      width: 800px;
       padding: 0.5em;
       border-image-slice: 200 100 70 280 fill;
       border-image-width: 2em 1em 0.7em 2.8em;
@@ -44,10 +43,15 @@ body {
             color: #ddd;
           }
 
+          .total-score,
           .max-floor,
           .no-damage-count {
             font-size: 1.5em;
           }
+        }
+
+        .score-container {
+          width: 8em;
         }
 
         .medal-icon {

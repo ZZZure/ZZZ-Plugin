@@ -9,9 +9,8 @@ body {
   .record {
     display: flex;
     gap: 1em;
-    margin-bottom: 1em;
     align-items: center;
-    height: 9em;
+    height: 7em;
 
     .user-info {
       width: 720px;
@@ -47,7 +46,6 @@ body {
 
           .max-floor {
             font-size: 1.5em;
-            font-weight: bold;
           }
         }
 
@@ -82,7 +80,7 @@ body {
 
       .command {
         color: #ffc107;
-        font-weight: bold;
+        padding: 0 0.3em;
       }
     }
   }

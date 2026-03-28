@@ -1,0 +1,125 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" href="{{@sys.currentPath}}/index.css" />
+{{/block}} {{block 'main'}}
+<div class="card">
+  {{include sys.playerInfo}}
+
+  <!-- 零号空洞标题 -->
+  <div class="hollow-zero-header">
+    <div class="hollow-zero-title">零号空洞：迷失之地</div>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="basic-info">
+    <!-- 执照等级 -->
+    <div class="info-item license-level">
+      <div class="info-label">
+        <img src="{{hollowZero.abyss_level.icon}}" alt="执照等级" class="info-icon" />
+        <span>执照等级</span>
+      </div>
+      <div class="info-value">{{hollowZero.abyss_level.cur_level}} / {{hollowZero.abyss_level.max_level}}</div>
+    </div>
+
+    <!-- 悬赏委托进度 -->
+    <div class="info-item">
+      <div class="info-label">
+        <span>悬赏委托进度</span>
+      </div>
+      <div class="info-value">{{hollowZero.abyss_duty.cur_duty}} / {{hollowZero.abyss_duty.max_duty}}</div>
+    </div>
+
+    <!-- 探索任务 -->
+    <div class="info-item">
+      <div class="info-label">
+        <span>探索任务</span>
+      </div>
+      <div class="info-value">{{hollowZero.abyss_task.cur_task}} / {{hollowZero.abyss_task.max_task}}</div>
+    </div>
+  </div>
+
+  <!-- 收集数据 -->
+  <div class="section-container">
+    <div class="section-header">
+      <div class="section-title">收集数据</div>
+    </div>
+    <div class="collect-data">
+      <div class="collect-item">
+        <span class="collect-label">探究勋证</span>
+        <span class="collect-value">{{hollowZero.abyss_collect[0].cur_collect}} / {{hollowZero.abyss_collect[0].max_collect}}</span>
+      </div>
+      <div class="collect-item">
+        <span class="collect-label">武备图鉴</span>
+        <span class="collect-value">{{hollowZero.abyss_collect[1].cur_collect}} / {{hollowZero.abyss_collect[1].max_collect}}</span>
+      </div>
+      <div class="collect-item">
+        <span class="collect-label">战术档案</span>
+        <span class="collect-value">{{hollowZero.abyss_collect[2].cur_collect}} / {{hollowZero.abyss_collect[2].max_collect}}</span>
+      </div>
+      <div class="collect-item">
+        <span class="collect-label">异域模块</span>
+        <span class="collect-value">{{hollowZero.abyss_collect[3].cur_collect}} / {{hollowZero.abyss_collect[3].max_collect}}</span>
+      </div>
+      <div class="collect-item">
+        <span class="collect-label">战术棱镜方案</span>
+        <span class="collect-value">{{hollowZero.abyss_collect[4].cur_collect}} / {{hollowZero.abyss_collect[4].max_collect}}</span>
+      </div>
+      <div class="collect-item">
+        <span class="collect-label">零号碎片</span>
+        <span class="collect-value">{{hollowZero.abyss_collect[5].cur_collect}} / {{hollowZero.abyss_collect[5].max_collect}}</span>
+      </div>
+      <div class="collect-item">
+        <span class="collect-label">空洞异闻</span>
+        <span class="collect-value">{{hollowZero.abyss_collect[6].cur_collect}} / {{hollowZero.abyss_collect[6].max_collect}}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 矩阵行动 -->
+  <div class="section-container">
+    <div class="section-header">
+      <div class="section-title">矩阵行动</div>
+    </div>
+    <div class="challenge-info">
+      <div class="challenge-item">
+        <span class="challenge-label">已通关最高难度</span>
+        <div class="challenge-value multi-line">
+          <div>{{hollowZero.abyss_max.max_name}}</div>
+          <div>以太活性{{hollowZero.abyss_max.heat_count}}</div>
+        </div>
+      </div>
+      <div class="challenge-item">
+        <span class="challenge-label">通关最高难度次数</span>
+        <span class="challenge-value">{{hollowZero.abyss_max.max_count}}</span>
+      </div>
+      <div class="challenge-item">
+        <span class="challenge-label">通关最高难度最短耗时</span>
+        <span class="challenge-value">{{hollowZero.abyss_max.formatted_best_time}}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 特遣调查 -->
+  <div class="section-container">
+    <div class="section-header">
+      <div class="section-title">特遣调查</div>
+    </div>
+    <div class="challenge-info">
+      <div class="challenge-item">
+        <span class="challenge-label">已通关最高难度</span>
+        <div class="challenge-value multi-line">
+          <div>{{hollowZero.abyss_task_force_investigation_max.max_name}}</div>
+          <div>以太活性{{hollowZero.abyss_task_force_investigation_max.heat_count}}</div>
+        </div>
+      </div>
+      <div class="challenge-item">
+        <span class="challenge-label">通关最高难度次数</span>
+        <span class="challenge-value">{{hollowZero.abyss_task_force_investigation_max.max_count}}</span>
+      </div>
+      <div class="challenge-item">
+        <span class="challenge-label">通关最高难度最短耗时</span>
+        <span class="challenge-value">{{hollowZero.abyss_task_force_investigation_max.formatted_best_time}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+{{/block}}

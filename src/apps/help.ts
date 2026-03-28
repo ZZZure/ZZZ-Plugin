@@ -209,6 +209,20 @@ const helpData: HelpData[] = [
         needSK: false,
         commands: ['拟真鏖战试炼', '爬塔', '鏖战'],
       },
+      {
+        title: '查看零号空洞：枯萎苗圃数据',
+        desc: '查看零号空洞：枯萎苗圃的执照等级、任务进度等数据',
+        needCK: true,
+        needSK: false,
+        commands: ['枯萎苗圃', '苗圃'],
+      },
+      {
+        title: '查看零号空洞：迷失之地数据',
+        desc: '查看零号空洞：迷失之地的执照等级、任务进度等数据',
+        needCK: true,
+        needSK: false,
+        commands: ['迷失之地', '迷失'],
+      },
     ],
   },
   {
@@ -256,6 +270,13 @@ const helpData: HelpData[] = [
         needCK: false,
         needSK: false,
         commands: ['鏖战试炼荣耀排名', '爬塔S3排名'],
+      },
+      {
+        title: '查看鏖战试炼狂澜排名',
+        desc: '查看鏖战试炼狂澜战斗群排名',
+        needCK: false,
+        needSK: false,
+        commands: ['鏖战试炼狂澜排名', '爬塔S4排名'],
       },
       {
         title: '显示/隐藏深渊排名',

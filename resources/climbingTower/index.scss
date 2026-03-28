@@ -214,13 +214,11 @@
 
             .score {
               font-size: 0.6em;
-              font-weight: bold;
               color: white;
             }
 
             .rank {
               font-size: 0.6em;
-              font-weight: bold;
               color: white;
             }
           }
@@ -236,7 +234,8 @@
     }
   }
 
-  .s3 {
+  .s3,
+  .s4 {
     .season-content {
       justify-content: center;
     }

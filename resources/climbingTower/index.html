@@ -8,7 +8,7 @@
   {{if climbingTower.climbing_tower_s1}}
   <div class="season-container s1">
     <div class="season-header">
-      <h3 class="season-title">拟真鏖战试炼</h3>
+      <div class="season-title">拟真鏖战试炼</div>
       <div class="medal-icon">
         <img src="{{climbingTower.climbing_tower_s1.medal_icon}}" alt="S1徽章" />
       </div>
@@ -26,7 +26,7 @@
   {{if climbingTower.climbing_tower_s2}}
   <div class="season-container s2">
     <div class="season-header">
-      <h3 class="season-title">鏖战试炼：末路</h3>
+      <div class="season-title">鏖战试炼：末路</div>
       <div class="medal-icon">
         <img src="{{climbingTower.climbing_tower_s2.medal_icon}}" alt="S2徽章" />
       </div>
@@ -44,12 +44,12 @@
   </div>
   {{/if}}
 
-  <!-- S3 鏖战试炼·荣耀 -->
+  <!-- S3 鏖战试炼：荣耀 -->
   {{if climbingTower.climbing_tower_s3}}
   <div class="season-container s3">
     <!-- 第一行：徽章、层数、分数 -->
     <div class="season-header">
-      <h3 class="season-title">鏖战试炼·荣耀</h3>
+      <div class="season-title">鏖战试炼：荣耀</div>
       <div class="medal-icon">
         <img src="{{climbingTower.climbing_tower_s3.layer_info.medal_icon}}" alt="S3徽章" />
       </div>
@@ -75,11 +75,45 @@
         <span class="value">{{(climbingTower.climbing_tower_s3.mvp_info.rank_percent / 100).toFixed(2)}}%</span>
       </div>
     </div>
+  </div>
+  {{/if}}
+
+  <!-- S4 鏖战试炼：狂澜 -->
+  {{if climbingTower.climbing_tower_s4}}
+  <div class="season-container s4">
+    <!-- 第一行：徽章、层数、分数 -->
+    <div class="season-header">
+      <h3 class="season-title">鏖战试炼：狂澜</h3>
+      <div class="medal-icon">
+        <img src="{{climbingTower.climbing_tower_s4.layer_info.medal_icon}}" alt="S4徽章" />
+      </div>
+    </div>
+    <div class="season-content">
+      <div class="layer-info">
+        <span class="label">层数</span>
+        <span class="value">{{climbingTower.climbing_tower_s4.layer_info.climbing_tower_layer}}</span>
+      </div>
+      <div class="score-info">
+        <span class="label">分数</span>
+        <span class="value">{{climbingTower.climbing_tower_s4.layer_info.total_score}}</span>
+      </div>
+    </div>
+    <!-- 第二行：MVP -->
+    <div class="mvp-section">
+      <div class="mvp-info">
+        <span class="label">无伤通关</span>
+        <span class="value">{{climbingTower.climbing_tower_s4.mvp_info.floor_mvp_num}}</span>
+      </div>
+      <div class="rank-info">
+        <span class="label">排名</span>
+        <span class="value">{{(climbingTower.climbing_tower_s4.mvp_info.rank_percent / 100).toFixed(2)}}%</span>
+      </div>
+    </div>
     <!-- 角色排名列表 -->
-    {{if climbingTower.climbing_tower_s3.display_avatar_rank_list && climbingTower.climbing_tower_s3.display_avatar_rank_list.length > 0}}
+    {{if climbingTower.climbing_tower_s4.display_avatar_rank_list && climbingTower.climbing_tower_s4.display_avatar_rank_list.length > 0}}
     <div class="boss-row boss-team-row">
       <div class="list">
-        {{each climbingTower.climbing_tower_s3.display_avatar_rank_list avatar i}}
+        {{each climbingTower.climbing_tower_s4.display_avatar_rank_list avatar i}}
         {{if i < 3}}
         <div class="item char">
           <div class="rank_disp">
@@ -110,7 +144,7 @@
     <ul class="notes">
       {{if userRankAllowed !== null}}
       <li>
-        当前拟真鏖战试炼排名状态：{{userRankAllowed ? '显示' : '隐藏'}}，可通过<span class="command">%显示/隐藏爬塔S1排名</span>/<span class="command">%显示/隐藏爬塔S2排名</span>/<span class="command">%显示/隐藏爬塔S3排名</span>切换
+        当前拟真鏖战试炼排名状态：{{userRankAllowed ? '显示' : '隐藏'}}，可通过<span class="command">%显示/隐藏爬塔S[1-4]排名</span>切换
       </li>
       {{else}}
       <li>请在群内查询<span class="command">%拟真鏖战试炼</span>，以参与对应群的拟真鏖战试炼排名</li>
