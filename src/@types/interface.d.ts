@@ -5,6 +5,7 @@ export type * from '../model/damage/BuffManager.ts'
 export type * from '../model/damage/Calculator.ts'
 export type * from '../model/score/Score.ts'
 export type * from '../model/avatar.ts'
+export type MysZZZApi = import('../lib/mysapi.ts').default
 
 /** 插件配置 */
 export namespace Config {
