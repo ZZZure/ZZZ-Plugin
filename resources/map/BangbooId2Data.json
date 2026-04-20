@@ -200,12 +200,12 @@
   "53021": {
     "sprite_id": "45",
     "icon": "UI/Sprite/A1DynamicLoad/BangbooModGarage/UnPacker/BangbooRole/BangbooGarageRole45.png",
-    "rank": 4,
+    "rank": 3,
     "codename": "Ghost",
     "EN": "Booltergeist",
     "desc": "Booltergeist",
-    "KO": "Bangboo_Name_53021",
-    "CHS": "(Test1)幽浮布",
+    "KO": "유령부",
+    "CHS": "幽浮布",
     "JA": "ユウレイボンプ"
   },
   "54001": {
