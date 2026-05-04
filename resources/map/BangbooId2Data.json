@@ -201,9 +201,9 @@
     "sprite_id": "45",
     "icon": "UI/Sprite/A1DynamicLoad/BangbooModGarage/UnPacker/BangbooRole/BangbooGarageRole45.png",
     "rank": 3,
-    "codename": "Ghost",
+    "codename": "Booltergeist",
     "EN": "Booltergeist",
-    "desc": "Booltergeist",
+    "desc": "Trick or play!",
     "KO": "유령부",
     "CHS": "幽浮布",
     "JA": "ユウレイボンプ"
@@ -427,5 +427,16 @@
     "KO": "싹싹",
     "CHS": "芽芽",
     "JA": "メメ"
+  },
+  "54022": {
+    "sprite_id": "",
+    "icon": "",
+    "rank": 3,
+    "codename": "Ultraboo",
+    "EN": "Ultraboo",
+    "desc": "Bangboo_Desc_54022",
+    "KO": "Bangboo_Name_54022",
+    "CHS": "(Test1)超级布",
+    "JA": "ウルトラブー"
   }
 }
