@@ -429,14 +429,14 @@
     "JA": "メメ"
   },
   "54022": {
-    "sprite_id": "",
-    "icon": "",
-    "rank": 3,
+    "sprite_id": "47",
+    "icon": "UI/Sprite/A1DynamicLoad/BangbooModGarage/UnPacker/BangbooRole/BangbooGarageRole47.png",
+    "rank": 4,
     "codename": "Ultraboo",
-    "EN": "Ultraboo",
-    "desc": "Bangboo_Desc_54022",
+    "EN": "Ultra Jake",
+    "desc": "The crystallized tech of a beyond-Rank-limit grind.",
     "KO": "Bangboo_Name_54022",
-    "CHS": "(Test1)超级布",
-    "JA": "ウルトラブー"
+    "CHS": "超极杰克",
+    "JA": "ウルトラネイヴ"
   }
 }

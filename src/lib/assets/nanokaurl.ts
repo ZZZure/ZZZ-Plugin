@@ -3,7 +3,7 @@ import request from '../../utils/request.js'
 export default new class {
   private readonly host = 'https://static.nanoka.cc'
   private readonly versionUrl = `${this.host}/manifest.json`
-  private version = '3.0.1+15390262'
+  private version = '3.0.4+16078270'
   private refreshPromise?: Promise<void>
 
   constructor() {
@@ -18,7 +18,7 @@ export default new class {
       try {
         const version = (await request.get(this.versionUrl, {}, { retry: 3 }).then(res => {
           if (!res.ok) {
-            throw new Error(`Failed to fetch manifest：${res.statusText}`)
+            throw new Error(`Failed to fetch manifest：${res.status} ${res.statusText}`)
           }
           return res.json() as any
         })).zzz.latest
