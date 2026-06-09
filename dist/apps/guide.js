@@ -79,9 +79,7 @@ export class Guide extends ZZZPlugin {
                     msg.push(`暂无${name}攻略 (${guides.guideSources[i - 1]})`);
                 }
             }
-            if (msg.length) {
-                await this.reply(await common.makeForwardMsg(this.e, msg));
-            }
+            return await this.reply(await common.makeForwardMsg(this.e, msg));
         }
         const guidePath = await this.getGuidePath(group, name, !!isUpdate);
         if (!guidePath) {
