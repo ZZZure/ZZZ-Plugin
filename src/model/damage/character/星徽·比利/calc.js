@@ -74,9 +74,7 @@ export default {
       type: 'Y6',
       check: 6,
       isHide: true,
-      before: ({ props }) => {
-        props.倍率 = 1.0 * 2
-      }
+      multiplier: 2 * 1.0
     },
   ],
 }
