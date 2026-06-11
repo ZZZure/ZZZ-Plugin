@@ -74,9 +74,8 @@ export default {
       type: 'Y6',
       check: 6,
       isHide: true,
-      before: ({ calc, props }) => {
-        const SheerForce = calc.get_SheerForce()
-        props.倍率 = 1.0 * 2 * SheerForce
+      before: ({ props }) => {
+        props.倍率 = 1.0 * 2
       }
     },
   ],
