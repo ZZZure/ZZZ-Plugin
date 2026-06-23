@@ -290,5 +290,53 @@
         "base": "10%"
       }
     ]
+  },
+  "33900": {
+    "sprite_file": "SuitWutheringSalon",
+    "name": "呼啸沙龙",
+    "desc1": "<color=#A6C5FD>风属性伤害</color>+10%。",
+    "desc2": "装备者发动<color=#FFFFFF>[强化特殊技]</color>时，装备者异常精通提升25点，最多叠加2层，持续40秒，重复触发时刷新持续时间；装备者触发<color=#A6C5FD>[风化]</color>效果后，装备者造成的伤害提升18%，持续40秒，重复触发时刷新持续时间。",
+    "properties": [
+      {
+        "property_id": 0,
+        "base": ""
+      }
+    ]
+  },
+  "34000": {
+    "sprite_file": "SuitTheSkyAblaze",
+    "name": "拂晓行纪",
+    "desc1": "<color=#FE437E>以太伤害</color>+10%。",
+    "desc2": "装备者为<color=#FE437E>以太属性</color>代理人时，暴击伤害提升30%；装备者发动<color=#FFFFFF>[强化特殊技]</color>或<color=#FFFFFF>[终结技]</color>时，装备者的攻击力提升10%，持续30秒，重复触发时刷新持续时间。",
+    "properties": [
+      {
+        "property_id": 31903,
+        "base": "10%"
+      }
+    ]
+  },
+  "34100": {
+    "sprite_file": "",
+    "name": "谶羽之誓",
+    "desc1": "攻击力+10%。",
+    "desc2": "装备者进入战场时，或被切换为当前操作中角色时，获得增益效果：异常精通提升50点，若装备者为<color=#FFA9DD>流明属性</color>，造成的属性异常伤害提升15%，持续15秒；\n当装备者为非操作中角色时，则始终持有该增益效果。",
+    "properties": [
+      {
+        "property_id": 12102,
+        "base": "10%"
+      }
+    ]
+  },
+  "34200": {
+    "sprite_file": "",
+    "name": "荆棘玫瑰",
+    "desc1": "...",
+    "desc2": "(Test1)...",
+    "properties": [
+      {
+        "property_id": 0,
+        "base": ""
+      }
+    ]
   }
 }

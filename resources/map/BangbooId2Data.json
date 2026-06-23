@@ -432,11 +432,44 @@
     "sprite_id": "47",
     "icon": "UI/Sprite/A1DynamicLoad/BangbooModGarage/UnPacker/BangbooRole/BangbooGarageRole47.png",
     "rank": 4,
-    "codename": "Ultraboo",
+    "codename": "Ultra Jake",
     "EN": "Ultra Jake",
-    "desc": "The crystallized tech of a beyond-Rank-limit grind.",
-    "KO": "Bangboo_Name_54022",
+    "desc": "A super-spec En-Nah tech crystal.",
+    "KO": "울트라 제이크",
     "CHS": "超极杰克",
     "JA": "ウルトラネイヴ"
+  },
+  "54023": {
+    "sprite_id": "",
+    "icon": "",
+    "rank": 4,
+    "codename": "Ariel",
+    "EN": "Ariel",
+    "desc": "Bangboo_Desc_54023",
+    "KO": "Bangboo_Name_54023",
+    "CHS": "(Test1)艾瑞儿",
+    "JA": "アリエル"
+  },
+  "55098": {
+    "sprite_id": "",
+    "icon": "",
+    "rank": 3,
+    "codename": "Eous",
+    "EN": "Eous",
+    "desc": "Eous",
+    "KO": "이아스",
+    "CHS": "伊埃斯",
+    "JA": "イアス"
+  },
+  "57001": {
+    "sprite_id": "",
+    "icon": "",
+    "rank": 4,
+    "codename": "Eous",
+    "EN": "Eous",
+    "desc": "Bangboo_Desc_57001",
+    "KO": "Bangboo_Name_57001",
+    "CHS": "(Test1)伊埃斯",
+    "JA": "イアス"
   }
 }
