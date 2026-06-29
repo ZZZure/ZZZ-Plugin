@@ -110,7 +110,7 @@ export default class Score {
     }
     static getFinalWeight(avatar) {
         let def_weight = equipScore[avatar.id];
-        if (!def_weight && !scoreFnc[avatar.id]) {
+        if (!def_weight) {
             switch (avatar.avatar_profession) {
                 case professionEnum.强攻:
                     def_weight = ['主C·双爆'];
