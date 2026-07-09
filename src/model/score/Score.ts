@@ -134,8 +134,8 @@ export default class Score {
 
   static getFinalWeight(avatar: ZZZAvatarInfo): [name: string, Weight] {
     let def_weight = equipScore[avatar.id]
-    // 无预设权重且无计算函数（新角色），选择相应基本规则
-    if (!def_weight && !scoreFnc[avatar.id]) {
+    // 无预设权重（新角色），选择相应基本规则
+    if (!def_weight) {
       switch (avatar.avatar_profession) {
         case professionEnum.强攻:
           def_weight = ['主C·双爆']
@@ -355,7 +355,7 @@ const predefinedWeights: Record<string, {
       "暴击伤害": 1,
       "穿透率": 0.75,
       "穿透值": 0.25,
-      "能量自动回复": 0,
+      "能量自动回复": 1,
       "异常精通": 0,
       "异常掌控": 0,
       "属性伤害加成": 1
@@ -375,7 +375,7 @@ const predefinedWeights: Record<string, {
       "暴击伤害": 0.75,
       "穿透率": 0.75,
       "穿透值": 0.25,
-      "能量自动回复": 0,
+      "能量自动回复": 1,
       "异常精通": 0,
       "异常掌控": 0,
       "属性伤害加成": 1
