@@ -36078,9 +36078,9 @@
     "Id": 14158,
     "CodeName": "Weapon_S_1581",
     "Name": "空羽复归之诗",
-    "Desc": "蕾米埃尔测试引擎描述",
+    "Desc": "...",
     "Desc2": "装备后可提升[异常]代理人的战斗能力",
-    "Desc3": "蕾米埃尔测试引擎短描述",
+    "Desc3": "...",
     "Rarity": "S",
     "Icon": "Assets/NapResources/UI/Sprite/A1DynamicLoad/ItemIconWeapon/UnPacker/Weapon_S_1581.png",
     "WeaponType": {
@@ -36436,24 +36436,24 @@
     "Materials": "10:12000,101012:4|10:28000,101022:12|10:60000,101022:20|10:100000,101032:10|10:200000,101032:20",
     "Talents": {
       "1": {
-        "Name": "(Test1)武器技能",
-        "Desc": "异常精通提升<color=#2BAD00>105</color>点；装备者触发<color=#FFFFFF>[异化]</color>反应时，自身获得一层属性异常伤害提升<color=#2BAD00>14%</color>的效果，最多可叠加至3层，持续30秒，重复触发时刷新持续时间。"
+        "Name": "失乐园",
+        "Desc": "异常精通提升<color=#2BAD00>96</color>点；装备者触发<color=#FFFFFF>[异化]</color>反应时，自身获得属性异常伤害提升<color=#2BAD00>20%</color>的效果，并为全队施加造成的伤害提升<color=#2BAD00>30%</color>效果，效果均持续30秒，重复触发时刷新持续时间。"
       },
       "2": {
-        "Name": "(Test1)武器技能",
-        "Desc": "异常精通提升<color=#2BAD00>120</color>点；装备者触发<color=#FFFFFF>[异化]</color>反应时，自身获得一层属性异常伤害提升<color=#2BAD00>16%</color>的效果，最多可叠加至3层，持续30秒，重复触发时刷新持续时间。"
+        "Name": "失乐园",
+        "Desc": "异常精通提升<color=#2BAD00>100</color>点；装备者触发<color=#FFFFFF>[异化]</color>反应时，自身获得属性异常伤害提升<color=#2BAD00>21.5%</color>的效果，并为全队施加造成的伤害提升<color=#2BAD00>32%</color>效果，效果均持续30秒，重复触发时刷新持续时间。"
       },
       "3": {
-        "Name": "(Test1)武器技能",
-        "Desc": "异常精通提升<color=#2BAD00>135</color>点；装备者触发<color=#FFFFFF>[异化]</color>反应时，自身获得一层属性异常伤害提升<color=#2BAD00>18%</color>的效果，最多可叠加至3层，持续30秒，重复触发时刷新持续时间。"
+        "Name": "失乐园",
+        "Desc": "异常精通提升<color=#2BAD00>105</color>点；装备者触发<color=#FFFFFF>[异化]</color>反应时，自身获得属性异常伤害提升<color=#2BAD00>23%</color>的效果，并为全队施加造成的伤害提升<color=#2BAD00>34%</color>效果，效果均持续30秒，重复触发时刷新持续时间。"
       },
       "4": {
-        "Name": "(Test1)武器技能",
-        "Desc": "异常精通提升<color=#2BAD00>150</color>点；装备者触发<color=#FFFFFF>[异化]</color>反应时，自身获得一层属性异常伤害提升<color=#2BAD00>20%</color>的效果，最多可叠加至3层，持续30秒，重复触发时刷新持续时间。"
+        "Name": "失乐园",
+        "Desc": "异常精通提升<color=#2BAD00>110</color>点；装备者触发<color=#FFFFFF>[异化]</color>反应时，自身获得属性异常伤害提升<color=#2BAD00>24.5%</color>的效果，并为全队施加造成的伤害提升<color=#2BAD00>36%</color>效果，效果均持续30秒，重复触发时刷新持续时间。"
       },
       "5": {
-        "Name": "(Test1)武器技能",
-        "Desc": "异常精通提升<color=#2BAD00>165</color>点；装备者触发<color=#FFFFFF>[异化]</color>反应时，自身获得一层属性异常伤害提升<color=#2BAD00>22%</color>的效果，最多可叠加至3层，持续30秒，重复触发时刷新持续时间。"
+        "Name": "失乐园",
+        "Desc": "异常精通提升<color=#2BAD00>115</color>点；装备者触发<color=#FFFFFF>[异化]</color>反应时，自身获得属性异常伤害提升<color=#2BAD00>26%</color>的效果，并为全队施加造成的伤害提升<color=#2BAD00>38%</color>效果，效果均持续30秒，重复触发时刷新持续时间。"
       }
     },
     "Profession": 3
@@ -36463,7 +36463,7 @@
     "CodeName": "Weapon_S_1591",
     "Name": "...",
     "Desc": "...",
-    "Desc2": "",
+    "Desc2": "装备后可提升[强攻]代理人的战斗能力",
     "Desc3": "...",
     "Rarity": "S",
     "Icon": "Assets/NapResources/UI/Sprite/A1DynamicLoad/ItemIconWeapon/UnPacker/Weapon_S_1591.png",
@@ -36821,23 +36821,23 @@
     "Talents": {
       "1": {
         "Name": "...",
-        "Desc": "(Test1)装备者发动<color=#FFFFFF>[普通攻击]</color>、<color=#FFFFFF>[强化特殊技]</color>和<color=#FFFFFF>[闪避反击]</color>重击命中敌人时，均可获得1层<color=#FFFFFF>[爆伤buff]</color>，<color=#FFFFFF>[爆伤buff]</color>最多叠加3层，且每种招式类型最多提供1层，每层使暴击伤害提升<color=#2BAD00>18%</color>，持续15秒；\n发动上述招式时，刷新<color=#FFFFFF>[爆伤buff]</color>持续时间；\n拥有3层<color=#FFFFFF>[爆伤buff]</color>时，获得<color=#FFFFFF>[霜裂]</color>：造成的<color=#98EFF0>冰属性伤害提升<color=#2BAD00>20%</color></color>，并无视目标10%<color=#98EFF0>冰属性伤害抗性</color>。"
+        "Desc": "装备者发动<color=#FFFFFF>[普通攻击]</color>、<color=#FFFFFF>[强化特殊技]</color>重击命中敌人时，均可获得1层<color=#FFFFFF>[兵锋]</color>，<color=#FFFFFF>[兵锋]</color>最多叠加2层，且每种招式类型最多提供1层，每层使暴击伤害提升<color=#2BAD00>28%</color>，持续25秒；\n发动上述招式时，刷新<color=#FFFFFF>[兵锋]</color>持续时间；\n拥有2层<color=#FFFFFF>[兵锋]</color>时，获得<color=#FFFFFF>[彻骨]</color>：造成的<color=#98EFF0>冰属性伤害提升<color=#2BAD00>14%</color></color>，并无视目标14%<color=#98EFF0>冰属性伤害抗性</color>。"
       },
       "2": {
         "Name": "...",
-        "Desc": "(Test1)装备者发动<color=#FFFFFF>[普通攻击]</color>、<color=#FFFFFF>[强化特殊技]</color>和<color=#FFFFFF>[闪避反击]</color>重击命中敌人时，均可获得1层<color=#FFFFFF>[爆伤buff]</color>，<color=#FFFFFF>[爆伤buff]</color>最多叠加3层，且每种招式类型最多提供1层，每层使暴击伤害提升<color=#2BAD00>20.7%</color>，持续15秒；\n发动上述招式时，刷新<color=#FFFFFF>[爆伤buff]</color>持续时间；\n拥有3层<color=#FFFFFF>[爆伤buff]</color>时，获得<color=#FFFFFF>[霜裂]</color>：造成的<color=#98EFF0>冰属性伤害提升<color=#2BAD00>23%</color></color>，并无视目标11.5%<color=#98EFF0>冰属性伤害抗性</color>。"
+        "Desc": "装备者发动<color=#FFFFFF>[普通攻击]</color>、<color=#FFFFFF>[强化特殊技]</color>重击命中敌人时，均可获得1层<color=#FFFFFF>[兵锋]</color>，<color=#FFFFFF>[兵锋]</color>最多叠加2层，且每种招式类型最多提供1层，每层使暴击伤害提升<color=#2BAD00>32.2%</color>，持续25秒；\n发动上述招式时，刷新<color=#FFFFFF>[兵锋]</color>持续时间；\n拥有2层<color=#FFFFFF>[兵锋]</color>时，获得<color=#FFFFFF>[彻骨]</color>：造成的<color=#98EFF0>冰属性伤害提升<color=#2BAD00>16.1%</color></color>，并无视目标16.1%<color=#98EFF0>冰属性伤害抗性</color>。"
       },
       "3": {
         "Name": "...",
-        "Desc": "(Test1)装备者发动<color=#FFFFFF>[普通攻击]</color>、<color=#FFFFFF>[强化特殊技]</color>和<color=#FFFFFF>[闪避反击]</color>重击命中敌人时，均可获得1层<color=#FFFFFF>[爆伤buff]</color>，<color=#FFFFFF>[爆伤buff]</color>最多叠加3层，且每种招式类型最多提供1层，每层使暴击伤害提升<color=#2BAD00>23.4%</color>，持续15秒；\n发动上述招式时，刷新<color=#FFFFFF>[爆伤buff]</color>持续时间；\n拥有3层<color=#FFFFFF>[爆伤buff]</color>时，获得<color=#FFFFFF>[霜裂]</color>：造成的<color=#98EFF0>冰属性伤害提升<color=#2BAD00>26%</color></color>，并无视目标13%<color=#98EFF0>冰属性伤害抗性</color>。"
+        "Desc": "装备者发动<color=#FFFFFF>[普通攻击]</color>、<color=#FFFFFF>[强化特殊技]</color>重击命中敌人时，均可获得1层<color=#FFFFFF>[兵锋]</color>，<color=#FFFFFF>[兵锋]</color>最多叠加2层，且每种招式类型最多提供1层，每层使暴击伤害提升<color=#2BAD00>36.4%</color>，持续25秒；\n发动上述招式时，刷新<color=#FFFFFF>[兵锋]</color>持续时间；\n拥有2层<color=#FFFFFF>[兵锋]</color>时，获得<color=#FFFFFF>[彻骨]</color>：造成的<color=#98EFF0>冰属性伤害提升<color=#2BAD00>18.2%</color></color>，并无视目标18.2%<color=#98EFF0>冰属性伤害抗性</color>。"
       },
       "4": {
         "Name": "...",
-        "Desc": "(Test1)装备者发动<color=#FFFFFF>[普通攻击]</color>、<color=#FFFFFF>[强化特殊技]</color>和<color=#FFFFFF>[闪避反击]</color>重击命中敌人时，均可获得1层<color=#FFFFFF>[爆伤buff]</color>，<color=#FFFFFF>[爆伤buff]</color>最多叠加3层，且每种招式类型最多提供1层，每层使暴击伤害提升<color=#2BAD00>26.1%</color>，持续15秒；\n发动上述招式时，刷新<color=#FFFFFF>[爆伤buff]</color>持续时间；\n拥有3层<color=#FFFFFF>[爆伤buff]</color>时，获得<color=#FFFFFF>[霜裂]</color>：造成的<color=#98EFF0>冰属性伤害提升<color=#2BAD00>29%</color></color>，并无视目标14.5%<color=#98EFF0>冰属性伤害抗性</color>。"
+        "Desc": "装备者发动<color=#FFFFFF>[普通攻击]</color>、<color=#FFFFFF>[强化特殊技]</color>重击命中敌人时，均可获得1层<color=#FFFFFF>[兵锋]</color>，<color=#FFFFFF>[兵锋]</color>最多叠加2层，且每种招式类型最多提供1层，每层使暴击伤害提升<color=#2BAD00>40.6%</color>，持续25秒；\n发动上述招式时，刷新<color=#FFFFFF>[兵锋]</color>持续时间；\n拥有2层<color=#FFFFFF>[兵锋]</color>时，获得<color=#FFFFFF>[彻骨]</color>：造成的<color=#98EFF0>冰属性伤害提升<color=#2BAD00>20.3%</color></color>，并无视目标20.3%<color=#98EFF0>冰属性伤害抗性</color>。"
       },
       "5": {
         "Name": "...",
-        "Desc": "(Test1)装备者发动<color=#FFFFFF>[普通攻击]</color>、<color=#FFFFFF>[强化特殊技]</color>和<color=#FFFFFF>[闪避反击]</color>重击命中敌人时，均可获得1层<color=#FFFFFF>[爆伤buff]</color>，<color=#FFFFFF>[爆伤buff]</color>最多叠加3层，且每种招式类型最多提供1层，每层使暴击伤害提升<color=#2BAD00>28.8%</color>，持续15秒；\n发动上述招式时，刷新<color=#FFFFFF>[爆伤buff]</color>持续时间；\n拥有3层<color=#FFFFFF>[爆伤buff]</color>时，获得<color=#FFFFFF>[霜裂]</color>：造成的<color=#98EFF0>冰属性伤害提升<color=#2BAD00>32%</color></color>，并无视目标16%<color=#98EFF0>冰属性伤害抗性</color>。"
+        "Desc": "装备者发动<color=#FFFFFF>[普通攻击]</color>、<color=#FFFFFF>[强化特殊技]</color>重击命中敌人时，均可获得1层<color=#FFFFFF>[兵锋]</color>，<color=#FFFFFF>[兵锋]</color>最多叠加2层，且每种招式类型最多提供1层，每层使暴击伤害提升<color=#2BAD00>44.8%</color>，持续25秒；\n发动上述招式时，刷新<color=#FFFFFF>[兵锋]</color>持续时间；\n拥有2层<color=#FFFFFF>[兵锋]</color>时，获得<color=#FFFFFF>[彻骨]</color>：造成的<color=#98EFF0>冰属性伤害提升<color=#2BAD00>22.4%</color></color>，并无视目标22.4%<color=#98EFF0>冰属性伤害抗性</color>。"
       }
     },
     "Profession": 1

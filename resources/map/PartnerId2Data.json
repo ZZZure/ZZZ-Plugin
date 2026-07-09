@@ -10940,7 +10940,7 @@
     "en_name": "Velina",
     "WeaponType": "3",
     "ElementType": "204",
-    "Camp": "罗斯凯利法·外务筹策局",
+    "Camp": "罗斯凯利法",
     "HitType": "斩击",
     "Rarity": "S",
     "Attack": 126,
@@ -11146,7 +11146,7 @@
     "en_name": "Norma",
     "WeaponType": "2",
     "ElementType": "201",
-    "Camp": "罗斯凯利法·外务筹策局",
+    "Camp": "罗斯凯利法",
     "HitType": "打击",
     "Rarity": "S",
     "Attack": 110,
@@ -11343,15 +11343,15 @@
   "1581": {
     "sprite_id": "67",
     "name": "蕾米埃尔",
-    "full_name": "(Test1)...",
-    "en_name": "(Test1)蕾米埃尔",
+    "full_name": "...",
+    "en_name": "Remielle",
     "WeaponType": "3",
     "ElementType": "300",
-    "Camp": "(Test1)达识结社",
+    "Camp": "达识结社",
     "HitType": "斩击",
     "Rarity": "S",
     "Attack": 124,
-    "AttackGrowth": 74992,
+    "AttackGrowth": 68214,
     "BreakStun": 83,
     "Defence": 48,
     "DefenceGrowth": 65524,
@@ -11542,7 +11542,7 @@
       "3115811": {
         "Name": "AvatarSkin_RemielleOrigin_Name_001",
         "Desc": "AvatarSkin_RemielleOrigin_Desc_001",
-        "Image": "IconRole67_01"
+        "Image": "IconRole67_02"
       }
     }
   },
@@ -11553,7 +11553,7 @@
     "en_name": "(Test1)Sigrid",
     "WeaponType": "1",
     "ElementType": "202",
-    "Camp": "罗斯凯利法·外务筹策局",
+    "Camp": "罗斯凯利法",
     "HitType": "穿透",
     "Rarity": "S",
     "Attack": 135,
@@ -11744,6 +11744,11 @@
         "Name": "AvatarSkin_Sigrid_Name_000",
         "Desc": "AvatarSkin_Sigrid_Desc_000",
         "Image": "IconRole66"
+      },
+      "3115911": {
+        "Name": "AvatarSkin_Sigrid_Name_001",
+        "Desc": "AvatarSkin_Sigrid_Desc_001",
+        "Image": "IconRole66_01"
       }
     }
   },
