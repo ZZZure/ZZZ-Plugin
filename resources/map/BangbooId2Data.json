@@ -440,12 +440,12 @@
     "JA": "ウルトラネイヴ"
   },
   "54023": {
-    "sprite_id": "",
-    "icon": "",
+    "sprite_id": "48",
+    "icon": "UI/Sprite/A1DynamicLoad/BangbooModGarage/UnPacker/BangbooRole/BangbooGarageRole48.png",
     "rank": 4,
     "codename": "Ariel",
     "EN": "Ariel",
-    "desc": "Bangboo_Desc_54023",
+    "desc": "Never walk alone in the land of None.",
     "KO": "Bangboo_Name_54023",
     "CHS": "(Test1)艾瑞儿",
     "JA": "アリエル"
