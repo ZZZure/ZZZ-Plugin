@@ -48,6 +48,10 @@
           font-weight: bold;
         }
         &.col-time {
+          .hourglass {
+            font-size: 1.3em;
+            line-height: 1;
+          }
           .value {
             font-size: 1.7em;
             background: linear-gradient(

@@ -978,25 +978,25 @@ export namespace Mys {
 
   /** 拟境湮灭战数据 */
   export interface HoloBoss {
-    start_time: Time
-    end_time: Time
-    list: {
-      rank: number
-      star: number
-      challenge_time: Time
-      boss: {
-        icon: string
-        name: string
-        medal: {
-          medal_icon: string
-          medal_id: number
-          is_no_injured: boolean
-        }
-      }
-      avatar_list: AvatarlistItem[]
-    }[]
-    unlock: boolean
-    refresh_time: number
+    start_time?: Time | null
+    end_time?: Time | null
+    list?: {
+      rank?: number | null
+      star?: number | null
+      challenge_time?: Time | null
+      boss?: {
+        icon?: string | null
+        name?: string | null
+        medal?: {
+          medal_icon?: string | null
+          medal_id?: number | null
+          is_no_injured?: boolean | null
+        } | null
+      } | null
+      avatar_list?: AvatarlistItem[] | null
+    }[] | null
+    unlock?: boolean | null
+    refresh_time?: number | null
   }
 
   /** 临界推演摘要信息 */

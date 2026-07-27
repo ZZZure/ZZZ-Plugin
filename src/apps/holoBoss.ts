@@ -62,7 +62,7 @@ export class holoBoss extends ZZZPlugin {
           // 比较赛季
           const oldStartTime = oldData.result.start_time
           const newStartTime = holoBossData.start_time
-          const isSameSeason = oldStartTime &&
+          const isSameSeason = oldStartTime && newStartTime &&
             oldStartTime.year === newStartTime.year &&
             oldStartTime.month === newStartTime.month &&
             oldStartTime.day === newStartTime.day &&
@@ -72,13 +72,13 @@ export class holoBoss extends ZZZPlugin {
             shouldSave = true
           } else {
             // 计算新旧战绩的星数和用时
-            const newStars = (holoBossData.list || []).reduce((sum, item) => sum + (item.star || 0), 0)
-            const newTimeSec = (holoBossData.list || []).reduce((sum, item) => sum + (item.challenge_time?.minute || 0) * 60 + (item.challenge_time?.second || 0), 0)
-            const newNoInjured = (holoBossData.list || []).reduce((sum, item) => sum + (item.boss?.medal?.is_no_injured ? 1 : 0), 0)
+            const newStars = (holoBossData.list || []).reduce((sum, item) => sum + (item?.star || 0), 0)
+            const newTimeSec = (holoBossData.list || []).reduce((sum, item) => sum + (item?.challenge_time?.minute || 0) * 60 + (item?.challenge_time?.second || 0), 0)
+            const newNoInjured = (holoBossData.list || []).reduce((sum, item) => sum + (item?.boss?.medal?.is_no_injured ? 1 : 0), 0)
 
-            const oldStars = (oldData.result.list || []).reduce((sum, item) => sum + (item.star || 0), 0)
-            const oldTimeSec = (oldData.result.list || []).reduce((sum, item) => sum + (item.challenge_time?.minute || 0) * 60 + (item.challenge_time?.second || 0), 0)
-            const oldNoInjured = (oldData.result.list || []).reduce((sum, item) => sum + (item.boss?.medal?.is_no_injured ? 1 : 0), 0)
+            const oldStars = (oldData.result?.list || []).reduce((sum, item) => sum + (item?.star || 0), 0)
+            const oldTimeSec = (oldData.result?.list || []).reduce((sum, item) => sum + (item?.challenge_time?.minute || 0) * 60 + (item?.challenge_time?.second || 0), 0)
+            const oldNoInjured = (oldData.result?.list || []).reduce((sum, item) => sum + (item?.boss?.medal?.is_no_injured ? 1 : 0), 0)
 
             // 取最优成绩：一定要更优才有资格覆盖
             if (newStars > oldStars) {

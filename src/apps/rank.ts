@@ -339,10 +339,10 @@ export class Rank extends ZZZPlugin {
       })
       .filter(item => _.get(item, 'result.unlock') === true && Array.isArray(_.get(item, 'result.list')))
       .map(item => {
-        const list = _.get(item, 'result.list', []) as Array<{ star: number; challenge_time: { minute: number; second: number }; boss?: { medal?: { is_no_injured?: boolean } } }>
-        const totalStar = list.reduce((sum, bossItem) => sum + (bossItem.star || 0), 0)
-        const totalTimeSec = list.reduce((sum, bossItem) => sum + (bossItem.challenge_time?.minute || 0) * 60 + (bossItem.challenge_time?.second || 0), 0)
-        const noInjuredCount = list.reduce((sum, bossItem) => sum + (bossItem.boss?.medal?.is_no_injured ? 1 : 0), 0)
+        const list = _.get(item, 'result.list', []) as Array<{ star?: number; challenge_time?: { minute?: number; second?: number } | null; boss?: { medal?: { is_no_injured?: boolean } } }>
+        const totalStar = list.reduce((sum, bossItem) => sum + (bossItem?.star || 0), 0)
+        const totalTimeSec = list.reduce((sum, bossItem) => sum + (bossItem?.challenge_time?.minute || 0) * 60 + (bossItem?.challenge_time?.second || 0), 0)
+        const noInjuredCount = list.reduce((sum, bossItem) => sum + (bossItem?.boss?.medal?.is_no_injured ? 1 : 0), 0)
 
         const updateTime = _.get(item, 'updateTime', currentTimestamp)
 

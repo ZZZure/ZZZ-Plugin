@@ -12,6 +12,7 @@
     </div>
     <div class="content">
       <div class="col col-time">
+        <div class="hourglass">⏳</div>
         <div class="value">{{holoBoss.total_time_str}}</div>
       </div>
       <div class="col col-star">
@@ -32,14 +33,14 @@
   </div>
   {{each holoBoss.list item i}}
   <div class="item-card">
-    {{if item.boss.medal && item.boss.medal.medal_icon}}
+    {{if item.boss?.medal?.medal_icon}}
     <div class="pop"><img src="{{item.boss.medal.medal_icon}}" alt="medal"></div>
     {{/if}}
     <div class="cover">
-      <img src="{{item.boss.icon}}" alt="boss">
+      <img src="{{item.boss?.icon || ''}}" alt="boss">
     </div>
     <div class="content">
-      <div class="name">{{item.boss.name}}{{if item.boss.medal && item.boss.medal.is_no_injured}} 🏆{{/if}}</div>
+      <div class="name">{{item.boss?.name || ''}}{{if item.boss?.medal?.is_no_injured}} 🏆{{/if}}</div>
       <div class="value">
         <div class="val">{{item.challenge_time_str}}</div>
         <div class="stars">
@@ -59,7 +60,7 @@
       </div>
       <div class="list">
         <% for(let j=0 ; j < 3 ; j++) { %>
-          {{if item.avatar_list?.[j]}}
+          {{if item.avatar_list?.[j] && item.avatar_list[j].role_square_url}}
           <div class="item char">
             {{if item.avatar_list[j].rank}}
             <div class="count">{{item.avatar_list[j].rank}}</div>

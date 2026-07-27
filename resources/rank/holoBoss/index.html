@@ -45,11 +45,11 @@
       {{set team = record.result.list[i]}}
       <div class="item-card">
         {{if team}}
-        {{if team.boss.medal && team.boss.medal.medal_icon}}
+        {{if team.boss?.medal?.medal_icon}}
         <div class="pop"><img src="{{team.boss.medal.medal_icon}}" alt=""></div>
         {{/if}}
         <div class="content">
-          <div class="name">{{team.boss.name}}{{if team.boss.medal && team.boss.medal.is_no_injured}} 🏆{{/if}}</div>
+          <div class="name">{{team.boss?.name || ''}}{{if team.boss?.medal?.is_no_injured}} 🏆{{/if}}</div>
           <div class="value">
             <div class="val">{{team.challenge_time_str}}</div>
             <div class="stars">
@@ -64,7 +64,7 @@
           <div class="list">
             <% for(let j=0 ; j < 3 ; j++) { %>
             <div class="char-container">
-              {{if team.avatar_list?.[j]}}
+              {{if team.avatar_list?.[j] && team.avatar_list[j].role_square_url}}
               <div class="item char">
                 {{if team.avatar_list[j].rank}}
                 <div class="count">{{team.avatar_list[j].rank}}</div>

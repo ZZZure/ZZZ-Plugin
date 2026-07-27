@@ -14,18 +14,18 @@ export class HoloBoss {
   nick_name: string
   avatar_icon: string
 
-  constructor(data: Mys.HoloBoss, playerCard?: ZZZ.playerCard) {
-    this.start_time = new HoloBossTime(data.start_time)
-    this.end_time = new HoloBossTime(data.end_time)
-    this.unlock = data.unlock
-    this.refresh_time = data.refresh_time
-    this.list = (data.list || []).map(item => new HoloBossListItem(item))
+  constructor(data?: Mys.HoloBoss | null, playerCard?: ZZZ.playerCard) {
+    this.start_time = new HoloBossTime(data?.start_time)
+    this.end_time = new HoloBossTime(data?.end_time)
+    this.unlock = data?.unlock ?? false
+    this.refresh_time = data?.refresh_time ?? 0
+    this.list = (data?.list || []).map(item => new HoloBossListItem(item))
 
     this.nick_name = playerCard?.player?.nickname || ''
     this.avatar_icon = playerCard?.avatar || ''
 
     this.total_star = this.list.reduce((sum, item) => sum + (item.star || 0), 0)
-    this.total_time_seconds = this.list.reduce((sum, item) => sum + item.challenge_time_seconds, 0)
+    this.total_time_seconds = this.list.reduce((sum, item) => sum + (item.challenge_time_seconds || 0), 0)
     this.no_injured_count = this.list.reduce((sum, item) => sum + (item.boss?.medal?.is_no_injured ? 1 : 0), 0)
     
     const minutes = Math.floor(this.total_time_seconds / 60)
@@ -43,7 +43,7 @@ export class HoloBoss {
             `data:image/png;base64,${Buffer.from(buffer).toString('base64')}`
         )
         .catch(() => this.avatar_icon)
-      this.avatar_icon = avatar_b64
+      this.avatar_icon = avatar_b64 || this.avatar_icon
     }
     await Promise.all(this.list.map(item => item.get_assets()))
   }
@@ -54,15 +54,15 @@ export class HoloBossListItem {
   rank_str: string
   rank_bg: number
   star: number
-  challenge_time: HoloBossTime
+  challenge_time?: HoloBossTime | null
   challenge_time_seconds: number
   challenge_time_str: string
   boss: HoloBossDetailBoss
   avatar_list: HoloBossAvatar[]
 
-  constructor(data: Mys.HoloBoss['list'][number]) {
-    this.rank = data.rank
-    if (typeof data.rank === 'number' && data.rank >= 0) {
+  constructor(data?: NonNullable<Mys.HoloBoss['list']>[number] | null) {
+    this.rank = data?.rank ?? 0
+    if (typeof data?.rank === 'number' && data.rank > 0) {
       const pct = data.rank > 100 ? data.rank / 100 : data.rank
       this.rank_str = `${pct.toFixed(2)}%`
       if (pct < 1) {
@@ -81,14 +81,17 @@ export class HoloBossListItem {
       this.rank_bg = 5
     }
 
-    this.star = data.star
-    this.challenge_time = new HoloBossTime(data.challenge_time)
-    this.challenge_time_seconds = (data.challenge_time.minute || 0) * 60 + (data.challenge_time.second || 0)
-    const mm = String(data.challenge_time.minute || 0).padStart(2, '0')
-    const ss = String(data.challenge_time.second || 0).padStart(2, '0')
+    this.star = data?.star ?? 0
+    this.challenge_time = data?.challenge_time ? new HoloBossTime(data.challenge_time) : null
+    const minute = data?.challenge_time?.minute ?? 0
+    const second = data?.challenge_time?.second ?? 0
+    this.challenge_time_seconds = minute * 60 + second
+    const mm = String(minute).padStart(2, '0')
+    const ss = String(second).padStart(2, '0')
     this.challenge_time_str = `${mm}:${ss}`
-    this.boss = new HoloBossDetailBoss(data.boss)
-    this.avatar_list = (data.avatar_list || []).map(item => new HoloBossAvatar(item))
+
+    this.boss = new HoloBossDetailBoss(data?.boss)
+    this.avatar_list = (data?.avatar_list || []).map((item: any) => new HoloBossAvatar(item))
   }
 
   async get_assets() {
@@ -104,17 +107,17 @@ export class HoloBossDetailBoss {
   name: string
   medal?: HoloBossMedal
 
-  constructor(data: Mys.HoloBoss['list'][number]['boss']) {
-    this.icon = data.icon
-    this.name = data.name
-    if (data.medal) {
+  constructor(data?: NonNullable<NonNullable<Mys.HoloBoss['list']>[number]['boss']> | null) {
+    this.icon = data?.icon || ''
+    this.name = data?.name || ''
+    if (data?.medal) {
       this.medal = new HoloBossMedal(data.medal)
     }
   }
 
   async get_assets() {
     let icon_b64 = ''
-    if (this.icon) {
+    if (this.icon && this.icon.startsWith('http')) {
       icon_b64 = await request
         .get(this.icon)
         .then(response => response.arrayBuffer())
@@ -123,7 +126,7 @@ export class HoloBossDetailBoss {
             `data:image/png;base64,${Buffer.from(buffer).toString('base64')}`
         )
         .catch(() => this.icon)
-      this.icon = icon_b64
+      this.icon = icon_b64 || this.icon
     }
     if (this.medal) {
       await this.medal.get_assets()
@@ -136,14 +139,14 @@ export class HoloBossMedal {
   medal_id: number
   is_no_injured: boolean
 
-  constructor(data: Mys.HoloBoss['list'][number]['boss']['medal']) {
-    this.medal_icon = data.medal_icon
-    this.medal_id = data.medal_id
-    this.is_no_injured = data.is_no_injured
+  constructor(data?: NonNullable<NonNullable<NonNullable<Mys.HoloBoss['list']>[number]['boss']>['medal']> | null) {
+    this.medal_icon = data?.medal_icon || ''
+    this.medal_id = data?.medal_id ?? 0
+    this.is_no_injured = data?.is_no_injured ?? false
   }
 
   async get_assets() {
-    if (this.medal_icon) {
+    if (this.medal_icon && this.medal_icon.startsWith('http')) {
       const medal_b64 = await request
         .get(this.medal_icon)
         .then(response => response.arrayBuffer())
@@ -152,7 +155,7 @@ export class HoloBossMedal {
             `data:image/png;base64,${Buffer.from(buffer).toString('base64')}`
         )
         .catch(() => this.medal_icon)
-      this.medal_icon = medal_b64
+      this.medal_icon = medal_b64 || this.medal_icon
     }
   }
 }
@@ -167,19 +170,19 @@ export class HoloBossAvatar {
   role_square_url: string
   sub_element_type: number
 
-  constructor(data: Mys.HoloBoss['list'][number]['avatar_list'][number]) {
-    this.rarity = data.rarity
-    this.element_type = data.element_type
-    this.avatar_profession = data.avatar_profession
-    this.id = data.id
-    this.level = data.level
-    this.rank = data.rank
-    this.role_square_url = data.role_square_url
-    this.sub_element_type = data.sub_element_type
+  constructor(data?: NonNullable<NonNullable<Mys.HoloBoss['list']>[number]['avatar_list']>[number] | null) {
+    this.rarity = data?.rarity || 'S'
+    this.element_type = data?.element_type ?? 0
+    this.avatar_profession = data?.avatar_profession ?? 0
+    this.id = data?.id ?? 0
+    this.level = data?.level ?? 0
+    this.rank = data?.rank ?? 0
+    this.role_square_url = data?.role_square_url || ''
+    this.sub_element_type = data?.sub_element_type ?? 0
   }
 
   async get_assets() {
-    if (this.role_square_url) {
+    if (this.role_square_url && this.role_square_url.startsWith('http')) {
       const role_square_b64 = await request
         .get(this.role_square_url)
         .then(response => response.arrayBuffer())
@@ -188,7 +191,7 @@ export class HoloBossAvatar {
             `data:image/png;base64,${Buffer.from(buffer).toString('base64')}`
         )
         .catch(() => this.role_square_url)
-      this.role_square_url = role_square_b64
+      this.role_square_url = role_square_b64 || this.role_square_url
     }
   }
 }
@@ -201,12 +204,12 @@ export class HoloBossTime {
   month: number
   day: number
 
-  constructor(data: Mys.HoloBoss['start_time']) {
-    this.hour = data.hour
-    this.minute = data.minute
-    this.second = data.second
-    this.year = data.year
-    this.month = data.month
-    this.day = data.day
+  constructor(data?: Mys.HoloBoss['start_time'] | null) {
+    this.hour = data?.hour ?? 0
+    this.minute = data?.minute ?? 0
+    this.second = data?.second ?? 0
+    this.year = data?.year ?? 0
+    this.month = data?.month ?? 0
+    this.day = data?.day ?? 0
   }
 }
