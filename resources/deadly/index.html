@@ -16,7 +16,10 @@
     <div class="content">
       <div class="left">
         <div class="value">{{deadly.total_score}}</div>
-        <div class="percent">{{deadly.rank_percent/100}}%</div>
+        <div class="rank-container">
+          <div class="rank-icon bg{{deadly.rank_bg}}"></div>
+          <div class="rank-text">{{(deadly.rank_percent / 100).toFixed(2)}}%</div>
+        </div>
       </div>
       <div class="right">
         <div class="star">

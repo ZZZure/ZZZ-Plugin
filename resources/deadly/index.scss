@@ -51,11 +51,25 @@
           background-clip: text;
           -webkit-text-fill-color: transparent;
         }
-        .percent {
-          background-color: #ec83de;
-          color: black;
-          padding: 0 1em 0 0.6em;
-          border-radius: 1em;
+        .rank-container {
+          position: relative;
+          width: 5.5em;
+          height: 2.5em;
+
+          .rank-icon {
+            width: 100%;
+            height: 100%;
+          }
+
+          .rank-text {
+            position: absolute;
+            top: 50%;
+            left: 40%;
+            transform: translate(-50%, -50%);
+            color: #222;
+            font-size: 0.9em;
+            z-index: 2;
+          }
         }
       }
       .right {
