@@ -1,0 +1,95 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" href="{{@sys.currentPath}}/index.css">
+{{/block}}
+
+{{block 'main'}}
+<div class="card">
+  <div class="overview">
+    <div class="header-top">
+      <div class="title">拟境湮灭战</div>
+    </div>
+    <div class="content">
+      <div class="col col-time">
+        <div class="hourglass">⏳</div>
+        <div class="value">{{holoBoss.total_time_str}}</div>
+      </div>
+      <div class="col col-star">
+        <div class="star"></div>
+        <div class="value">x{{holoBoss.total_star}}</div>
+      </div>
+      <div class="col col-trophy">
+        <div class="trophy">🏆</div>
+        <div class="value">x{{holoBoss.no_injured_count}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="tips">
+    <p>统计周期 {{holoBoss.start_time.year}}.{{holoBoss.start_time.month.toString().padStart(2,'0')}}.{{holoBoss.start_time.day.toString().padStart(2,'0')}} -
+      {{holoBoss.end_time.year}}.{{holoBoss.end_time.month.toString().padStart(2,'0')}}.{{holoBoss.end_time.day.toString().padStart(2,'0')}}
+    </p>
+    <p>*总得分&排名和挑战详情并非同时刷新，挑战详情存在2小时左右延迟</p>
+  </div>
+  {{each holoBoss.list item i}}
+  <div class="item-card">
+    {{if item.boss?.medal?.medal_icon}}
+    <div class="pop"><img src="{{item.boss.medal.medal_icon}}" alt="medal"></div>
+    {{/if}}
+    <div class="cover">
+      <img src="{{item.boss?.icon || ''}}" alt="boss">
+    </div>
+    <div class="content">
+      <div class="name">{{item.boss?.name || ''}}{{if item.boss?.medal?.is_no_injured}} 🏆{{/if}}</div>
+      <div class="value">
+        <div class="val">{{item.challenge_time_str}}</div>
+        <div class="stars">
+          <% for(let j=0 ; j < item.star ; j++) { %>
+            <div class="star"></div>
+          <% } %>
+          <% for(let j=0 ; j < 4 - item.star ; j++) { %>
+            <div class="star inactive"></div>
+          <% } %>
+        </div>
+        {{if item.rank_str}}
+        <div class="rank-container">
+          <div class="rank-icon bg{{item.rank_bg}}"></div>
+          <div class="rank-text">{{item.rank_str}}</div>
+        </div>
+        {{/if}}
+      </div>
+      <div class="list">
+        <% for(let j=0 ; j < 3 ; j++) { %>
+          {{if item.avatar_list?.[j] && item.avatar_list[j].role_square_url}}
+          <div class="item char">
+            {{if item.avatar_list[j].rank}}
+            <div class="count">{{item.avatar_list[j].rank}}</div>
+            {{/if}}
+            <div class="rank_disp">
+              <div class="rank rank-icon {{item.avatar_list[j].rarity}}"></div>
+            </div>
+            <div class="image">
+              <img src="{{item.avatar_list[j].role_square_url}}" alt="">
+            </div>
+          </div>
+          {{else}}
+            <div class="item char"></div>
+          {{/if}}
+        <% } %>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+
+  <div class="item-card">
+    <ul class="notes">
+      {{if userRankAllowed !== null}}
+        <li>当前拟境湮灭战排名状态：{{userRankAllowed ? '显示' : '隐藏'}}，可通过<span class="command">%显示/隐藏拟境排名</span>切换</li>
+      {{else}}
+        <li>请在群内查询<span class="command">%拟境湮灭战</span>，以参与对应群的拟境湮灭战排名</li>
+      {{/if}}
+    </ul>
+  </div>
+
+</div>
+{{/block}}

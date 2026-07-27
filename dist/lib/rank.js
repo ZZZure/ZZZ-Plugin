@@ -64,8 +64,18 @@ export async function removeUidFromUid2QQ(group_id, uid) {
         await redis.del(keys);
     }
 }
+export const ALL_RANK_TYPES = [
+    'ABYSS',
+    'DEADLY',
+    'HOLO_BOSS',
+    'VOID_FRONT_BATTLE',
+    'CLIMBING_TOWER_S1',
+    'CLIMBING_TOWER_S2',
+    'CLIMBING_TOWER_S3',
+    'CLIMBING_TOWER_S4',
+];
 export async function removeUidAllRecord(group_id, uid) {
-    for (const rank_type of ['ABYSS', 'DEADLY']) {
+    for (const rank_type of ALL_RANK_TYPES) {
         await removeUserRankRecord(rank_type, group_id, uid);
     }
     await removeUidFromUid2QQ(group_id, uid);

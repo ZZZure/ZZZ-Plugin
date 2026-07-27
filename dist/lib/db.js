@@ -77,4 +77,19 @@ export function getClimbingTowerDataInGroupRank(uids) {
 export function removeAllClimbingTowerData() {
     return removeAllDB('climbingTower');
 }
+export function saveHoloBossData(uid, data) {
+    setDB('holoBoss', uid, data);
+}
+export function getHoloBossData(uid) {
+    return getDB('holoBoss', uid);
+}
+export function removeHoloBossData(uid) {
+    return removeDB('holoBoss', uid);
+}
+export function getHoloBossDataInGroupRank(uids) {
+    return uids.map(uid => getHoloBossData(uid)).filter((item) => item !== null);
+}
+export function removeAllHoloBossData() {
+    return removeAllDB('holoBoss');
+}
 //# sourceMappingURL=db.js.map
