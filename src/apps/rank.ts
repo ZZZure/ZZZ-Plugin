@@ -6,10 +6,11 @@ import {
   getUid2QQsMapping,
   removeUidAllRecord,
 } from '../lib/rank.js'
-import { getAbyssDataInGroupRank, getDeadlyDataInGroupRank, getVoidFrontBattleDataInGroupRank, getClimbingTowerDataInGroupRank } from '../lib/db.js'
+import { getAbyssDataInGroupRank, getDeadlyDataInGroupRank, getVoidFrontBattleDataInGroupRank, getClimbingTowerDataInGroupRank, getHoloBossDataInGroupRank } from '../lib/db.js'
 import { rulePrefix } from '../lib/common.js'
 import { ZZZPlugin } from '../lib/plugin.js'
 import { Deadly } from '../model/deadly.js'
+import { HoloBoss } from '../model/holoBoss.js'
 import settings from '../lib/settings.js'
 import _ from 'lodash'
 
@@ -32,6 +33,10 @@ export class Rank extends ZZZPlugin {
         {
           reg: `${rulePrefix}(危局强袭战|危局|强袭|强袭战)排名$`,
           fnc: 'deadlyRank'
+        },
+        {
+          reg: `${rulePrefix}(拟境湮灭战|拟境|湮灭|湮灭战)排名$`,
+          fnc: 'holoBossRank'
         },
         {
           reg: `${rulePrefix}(临界推演|临界|推演)排名$`,
@@ -58,7 +63,7 @@ export class Rank extends ZZZPlugin {
           fnc: 'climbingTowerS4'
         },
         {
-          reg: `${rulePrefix}(显示|展示|开启|打开|on|启用|启动|隐藏|取消显示|关闭|关掉|off|禁用|停止)(式舆防卫战|式舆|深渊|防卫战|防卫|危局强袭战|危局|强袭|强袭战|临界推演|临界|推演|爬塔S1|爬塔S2|爬塔S3|爬塔 s1|爬塔 s2|爬塔 s3|爬塔s1|爬塔s2|爬塔s3)?(群(内)?)?排名$`,
+          reg: `${rulePrefix}(显示|展示|开启|打开|on|启用|启动|隐藏|取消显示|关闭|关掉|off|禁用|停止)(式舆防卫战|式舆|深渊|防卫战|防卫|危局强袭战|危局|强袭|强袭战|拟境湮灭战|拟境|湮灭|湮灭战|临界推演|临界|推演|爬塔S1|爬塔S2|爬塔S3|爬塔 s1|爬塔 s2|爬塔 s3|爬塔s1|爬塔s2|爬塔s3)?(群(内)?)?排名$`,
           fnc: 'switchRank'
         }
       ]
@@ -285,6 +290,111 @@ export class Rank extends ZZZPlugin {
     clearTimeout(timer)
     const finalData = { scoredData }
     await this.render('rank/deadly/index.html', finalData, this)
+  }
+
+  async holoBossRank() {
+    const rank_type = 'HOLO_BOSS'
+
+    if (!(this.e?.group_id)) {
+      return this.reply('请在群聊中使用该命令！')
+    }
+
+    if (!this.isGroupRankAllowed()) {
+      await this.reply('当前群拟境湮灭战排名功能已关闭！')
+    }
+    // 先从当前群中筛选出已注册用户
+    const uidInGroupRank = await getUsersInGroupRank(rank_type, this.e.group_id)
+    const memberMap = await this.e.group?.getMemberMap() || new Map<string, any>()
+    const qqInGroupSet = new Set(Array.from(memberMap.keys(), String))
+
+    const uid2qqs = await getUid2QQsMapping(this.e.group_id)
+    const uidInGroupRankFiltered: string[] = []
+    for (const uid of uidInGroupRank) {
+      if (uid in uid2qqs && uid2qqs[uid].some(qq => qqInGroupSet.has(qq))) {
+        uidInGroupRankFiltered.push(uid)
+      } else {
+        await removeUidAllRecord(this.e.group_id, uid)
+      }
+    }
+    const rawData = getHoloBossDataInGroupRank(uidInGroupRankFiltered)
+    const currentTimestamp = Math.floor(Date.now() / 1000)
+
+    const filteredByUser: any[] = []
+    for (const item of rawData) {
+      const gameUid = _.get(item, 'player.player.game_uid') as string
+      const userRankAllowed = await isUserRankAllowed(rank_type, gameUid, this.e.group_id)
+      if (/^[0-9]{8}$/.test(gameUid) && userRankAllowed) {
+        filteredByUser.push(item)
+      }
+    }
+
+    let scoredData = filteredByUser
+      .filter(item => {
+        const startTimeObj = _.get(item, 'result.start_time')
+        const endTimeObj = _.get(item, 'result.end_time')
+        if (!startTimeObj || !endTimeObj) return false
+        const startTime = new Date(startTimeObj.year, startTimeObj.month - 1, startTimeObj.day, startTimeObj.hour, startTimeObj.minute, startTimeObj.second).getTime() / 1000
+        const endTime = new Date(endTimeObj.year, endTimeObj.month - 1, endTimeObj.day, endTimeObj.hour, endTimeObj.minute, endTimeObj.second).getTime() / 1000
+        return currentTimestamp >= startTime && currentTimestamp <= endTime
+      })
+      .filter(item => _.get(item, 'result.unlock') === true && Array.isArray(_.get(item, 'result.list')))
+      .map(item => {
+        const list = _.get(item, 'result.list', []) as Array<{ star: number; challenge_time: { minute: number; second: number }; boss?: { medal?: { is_no_injured?: boolean } } }>
+        const totalStar = list.reduce((sum, bossItem) => sum + (bossItem.star || 0), 0)
+        const totalTimeSec = list.reduce((sum, bossItem) => sum + (bossItem.challenge_time?.minute || 0) * 60 + (bossItem.challenge_time?.second || 0), 0)
+        const noInjuredCount = list.reduce((sum, bossItem) => sum + (bossItem.boss?.medal?.is_no_injured ? 1 : 0), 0)
+
+        const updateTime = _.get(item, 'updateTime', currentTimestamp)
+
+        return {
+          ...item,
+          result: new HoloBoss(item.result),
+          score: {
+            totalStar,
+            totalTimeSec,
+            noInjuredCount,
+            updateTime
+          }
+        }
+      })
+
+    if (scoredData.length === 0) {
+      return this.reply('没有拟境湮灭战排名，请先 %显示拟境排名，并且用 %拟境 查询战绩')
+    }
+
+    // 排名依据：
+    // 1. 第一关键字：星数，星数更多，排名更前；
+    // 2. 第二关键字：三间用时总和，时间更少，排名更前；
+    // 3. 第三关键字：无伤间数，无伤越多，排名更前；
+    // 4. 第四关键字：持久化时的时间戳，时间更先，排名更前
+    scoredData.sort((a, b) => {
+      if (a.score.totalStar !== b.score.totalStar) {
+        return b.score.totalStar - a.score.totalStar
+      }
+      if (a.score.totalTimeSec !== b.score.totalTimeSec) {
+        return a.score.totalTimeSec - b.score.totalTimeSec
+      }
+      if (a.score.noInjuredCount !== b.score.noInjuredCount) {
+        return b.score.noInjuredCount - a.score.noInjuredCount
+      }
+      return a.score.updateTime - b.score.updateTime
+    })
+
+    let maxDisplay = _.get(settings.getConfig('rank'), 'max_display', 15)
+    maxDisplay = Math.max(1, Math.min(maxDisplay, 15))
+    scoredData = scoredData.slice(0, maxDisplay)
+
+    const timer = setTimeout(() => {
+      if (this?.reply) {
+        this.reply('查询成功，正在下载图片资源，请稍候。')
+      }
+    }, 5000)
+    await Promise.all(_.map(scoredData, async (item) => {
+      await item.result.get_assets()
+    }))
+    clearTimeout(timer)
+    const finalData = { scoredData }
+    await this.render('rank/holoBoss/index.html', finalData, this)
   }
 
   async voidFrontBattleRank() {
@@ -757,6 +867,9 @@ export class Rank extends ZZZPlugin {
     } else if (/危局强袭战|危局|强袭|强袭战/.test(this.e.msg)) {
       rank_types = ['DEADLY']
       rank_type_str = '危局强袭战'
+    } else if (/拟境湮灭战|拟境|湮灭|湮灭战/.test(this.e.msg)) {
+      rank_types = ['HOLO_BOSS']
+      rank_type_str = '拟境湮灭战'
     } else if (/临界推演|临界|推演/.test(this.e.msg)) {
       rank_types = ['VOID_FRONT_BATTLE']
       rank_type_str = '临界推演'
@@ -773,8 +886,8 @@ export class Rank extends ZZZPlugin {
       rank_types = ['CLIMBING_TOWER_S4']
       rank_type_str = '爬塔S4'
     } else {
-      rank_types = ['ABYSS', 'DEADLY', 'VOID_FRONT_BATTLE', 'CLIMBING_TOWER_S1', 'CLIMBING_TOWER_S2', 'CLIMBING_TOWER_S3', 'CLIMBING_TOWER_S4']
-      rank_type_str = '式舆防卫战、危局强袭战、临界推演和爬塔'
+      rank_types = ['ABYSS', 'DEADLY', 'HOLO_BOSS', 'VOID_FRONT_BATTLE', 'CLIMBING_TOWER_S1', 'CLIMBING_TOWER_S2', 'CLIMBING_TOWER_S3', 'CLIMBING_TOWER_S4']
+      rank_type_str = '式舆防卫战、危局强袭战、拟境湮灭战、临界推演和爬塔'
     }
 
     for (const rank_type of rank_types) {

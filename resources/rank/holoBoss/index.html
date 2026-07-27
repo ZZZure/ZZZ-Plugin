@@ -1,0 +1,99 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{@sys.currentPath}}/index.css">
+{{/block}}
+
+{{block 'main'}}
+<div class="card">
+  <% include(sys.specialTitle, {en: 'HOLO BOSS RANK' , cn: '拟境湮灭战排名' }) %>
+    {{each scoredData record i}}
+    <div class="record">
+      <div class="user-info">
+        <link rel="stylesheet" type="text/css" href="{{@sys.resourcesPath}}/common/layout/playerinfo.css" />
+        {{set avatar = record.player.avatar}}
+        {{set player = record.player.player}}
+        <div class="avatar">
+          <img src="{{avatar}}" alt="Avatar">
+        </div>
+        <div class="info-bar">
+          <div class="info">
+            <div class="nickname">{{player.nickname}}</div>
+          </div>
+          <div class="info">
+            <div class="label level">Lv{{player.level}}</div>
+            <div class="label server">{{player.region_name}}</div>
+          </div>
+          <div class="uid">UID {{player.game_uid}}</div>
+        </div>
+        <div class="result">
+          <div class="value">
+            <div class="label">总用时</div>
+            <div class="value">{{record.result.total_time_str}}</div>
+          </div>
+          <div class="rank">
+            <div class="label">星级</div>
+            <div class="value">{{record.result.total_star}}</div>
+          </div>
+          <div class="no-injured">
+            <div class="label">无伤</div>
+            <div class="value">{{record.result.no_injured_count}}</div>
+          </div>
+        </div>
+      </div>      
+      <% for(let i=0 ; i < 3 ; i++) { %>
+      {{set team = record.result.list[i]}}
+      <div class="item-card">
+        {{if team}}
+        {{if team.boss.medal && team.boss.medal.medal_icon}}
+        <div class="pop"><img src="{{team.boss.medal.medal_icon}}" alt=""></div>
+        {{/if}}
+        <div class="content">
+          <div class="name">{{team.boss.name}}{{if team.boss.medal && team.boss.medal.is_no_injured}} 🏆{{/if}}</div>
+          <div class="value">
+            <div class="val">{{team.challenge_time_str}}</div>
+            <div class="stars">
+              <% for(let j=0 ; j < team.star ; j++) { %>
+                <div class="star"></div>
+              <% } %>
+              <% for(let j=0 ; j < 4 - team.star ; j++) { %>
+                <div class="star inactive"></div>
+              <% } %>
+            </div>
+          </div>
+          <div class="list">
+            <% for(let j=0 ; j < 3 ; j++) { %>
+            <div class="char-container">
+              {{if team.avatar_list?.[j]}}
+              <div class="item char">
+                {{if team.avatar_list[j].rank}}
+                <div class="count">{{team.avatar_list[j].rank}}</div>
+                {{/if}}
+                <div class="rank_disp">
+                  <div class="rank rank-icon {{team.avatar_list[j].rarity}}"></div>
+                </div>
+                <div class="image">
+                  <img src="{{team.avatar_list[j].role_square_url}}" alt="">
+                </div>
+              </div>
+              {{else}}
+                <div class="item char"></div>
+              {{/if}}
+            </div>
+            <% } %>
+          </div>
+        </div>
+        {{/if}}
+      </div>
+      <% } %>
+    </div>
+    {{/each}}
+    <div class="notes-container">
+      <ul class="notes">
+        <li>请在群内查询<span class="command">%拟境湮灭战</span>，以参与对应群的拟境湮灭战排名</li>
+        <li>排名依据：1.星数（更多优先） 2.三间用时总和（更少优先） 3.无伤间数（更多优先） 4.战绩记录时间（更早优先）</li>
+      </ul>
+    </div>
+</div>
+
+{{/block}}

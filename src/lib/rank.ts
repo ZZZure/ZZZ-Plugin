@@ -76,7 +76,7 @@ export async function removeUidFromUid2QQ(group_id: string | number, uid: string
 }
 
 export async function removeUidAllRecord(group_id: string | number, uid: string) {
-  for (const rank_type of ['ABYSS', 'DEADLY']) {
+  for (const rank_type of ['ABYSS', 'DEADLY', 'HOLO_BOSS']) {
     await removeUserRankRecord(rank_type, group_id, uid)
   }
   await removeUidFromUid2QQ(group_id, uid)

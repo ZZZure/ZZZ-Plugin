@@ -95,6 +95,8 @@ export namespace Config {
     voidFrontBattle: number
     /** 拟真鏖战试炼 */
     climbingTower: number
+    /** 拟境湮灭战 */
+    holoBoss: number
     /** 零号空洞 */
     hollowZero: number
     /** 探索详情 */
@@ -134,6 +136,8 @@ export namespace Config {
     abyssCheckLevel: number
     /** 危局强袭战星数阈值 */
     deadlyStars: number
+    /** 拟境湮灭战星数阈值 */
+    holoBossStars?: number
   }
 
   export interface rank {
@@ -186,6 +190,11 @@ export namespace ZZZ {
       player: ZZZ.playerCard
       result: Mys.ClimbingTower
     }
+    holoBoss: {
+      player: ZZZ.playerCard
+      result: Mys.HoloBoss
+      updateTime?: number
+    }
   }
 
 
@@ -221,7 +230,9 @@ export namespace Mys {
     }
     zzzHollowZero: HollowZero,
     zzzHollowZeroChallenge: HollowZeroChallenge,
-    zzzHollowZeroS2: HollowZeroS2
+    zzzHollowZeroS2: HollowZeroS2,
+    zzzHoloBoss: HoloBoss,
+    zzzHoloBossPeriod: HoloBoss
   }
 
   /** 零号空洞数据 */
@@ -963,6 +974,29 @@ export namespace Mys {
     zone_id: number
     total_max_score: number
     room_max_score: number
+  }
+
+  /** 拟境湮灭战数据 */
+  export interface HoloBoss {
+    start_time: Time
+    end_time: Time
+    list: {
+      rank: number
+      star: number
+      challenge_time: Time
+      boss: {
+        icon: string
+        name: string
+        medal: {
+          medal_icon: string
+          medal_id: number
+          is_no_injured: boolean
+        }
+      }
+      avatar_list: AvatarlistItem[]
+    }[]
+    unlock: boolean
+    refresh_time: number
   }
 
   /** 临界推演摘要信息 */

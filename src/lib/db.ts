@@ -187,3 +187,38 @@ export function getClimbingTowerDataInGroupRank(uids: string[]) {
 export function removeAllClimbingTowerData() {
   return removeAllDB('climbingTower');
 }
+
+/**
+ * 保存拟境湮灭战数据
+ */
+export function saveHoloBossData(uid: string, data: ZZZ.DBMap['holoBoss']) {
+  setDB('holoBoss', uid, data)
+}
+
+/**
+ * 获取拟境湮灭战数据
+ */
+export function getHoloBossData(uid: string) {
+  return getDB('holoBoss', uid)
+}
+
+/**
+ * 删除拟境湮灭战数据
+ */
+export function removeHoloBossData(uid: string) {
+  return removeDB('holoBoss', uid)
+}
+
+/**
+ * 批量获取拟境湮灭战数据
+ */
+export function getHoloBossDataInGroupRank(uids: string[]) {
+  return uids.map(uid => getHoloBossData(uid)).filter((item): item is ZZZ.DBMap['holoBoss'] => item !== null)
+}
+
+/**
+ * 删除所有拟境湮灭战数据
+ */
+export function removeAllHoloBossData(): boolean {
+  return removeAllDB('holoBoss')
+}

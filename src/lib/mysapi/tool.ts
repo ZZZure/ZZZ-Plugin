@@ -87,6 +87,14 @@ export default class ZZZApiTool {
         url: `${this.hostRecord}event/game_record_zzz/api/zzz/mem_detail`,
         query: `lang=zh-cn&uid=${this.uid}&region=${this.server}&schedule_type=2`,
       },
+      zzzHoloBoss: {
+        url: `${this.hostRecord}event/game_record_zzz/api/zzz/holo_boss_detail`,
+        query: `lang=zh-cn&uid=${this.uid}&region=${this.server}&schedule_type=1`,
+      },
+      zzzHoloBossPeriod: {
+        url: `${this.hostRecord}event/game_record_zzz/api/zzz/holo_boss_detail`,
+        query: `lang=zh-cn&uid=${this.uid}&region=${this.server}&schedule_type=2`,
+      },
       zzzClimbingTower: {
         url: `${this.hostRecord}event/game_record_zzz/api/zzz/climbing_tower_detail`,
         query: `lang=zh-cn&uid=${this.uid}&region=${this.server}`,
