@@ -26,6 +26,15 @@ export class Deadly {
     this.list = data.list.map(item => new DeadlyList(item))
   }
 
+  get rank_bg(): number {
+    const pct = (this.rank_percent || 0) / 100
+    if (pct < 1) return 1
+    if (pct < 5) return 2
+    if (pct < 10) return 3
+    if (pct < 50) return 4
+    return 5
+  }
+
   async get_assets() {
     const avatar_icon_b64 = await request
       .get(this.avatar_icon)
