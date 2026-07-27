@@ -136,8 +136,6 @@ export namespace Config {
     abyssCheckLevel: number
     /** 危局强袭战星数阈值 */
     deadlyStars: number
-    /** 拟境湮灭战星数阈值 */
-    holoBossStars?: number
   }
 
   export interface rank {
