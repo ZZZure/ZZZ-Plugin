@@ -330,8 +330,8 @@
   "34200": {
     "sprite_file": "SuitThornedRose",
     "name": "荆棘玫瑰",
-    "desc1": "...",
-    "desc2": "...",
+    "desc1": "防御力+16%。",
+    "desc2": "装备者造成的伤害提升15%，装备者初始防御力大于等于1000/1800点时，暴击率提升8/16%",
     "properties": [
       {
         "property_id": 0,

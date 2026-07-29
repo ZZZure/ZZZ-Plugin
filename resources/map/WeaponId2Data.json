@@ -36078,9 +36078,9 @@
     "Id": 14158,
     "CodeName": "Weapon_S_1581",
     "Name": "空羽复归之诗",
-    "Desc": "...",
+    "Desc": "被烈日灼伤的羽翼曾坠入苍白的大地、坠入无光的罅隙。\n那便坠落吧…那些沉重的、灰暗的，那些悖逆的愚行、消逝的生命…她都将背负。\n在那被岁月遗忘的长眠中，原来连悲伤也会逝去，连痛苦与绝望也会逝去…还有快乐，还有回忆，它们都将枯萎凋零，凡事皆虚空。\n倏忽百年，地上的国度倾覆而后重生，她仍不复苏醒。\n可无论心中埋藏多少难明的苦暗，鸟儿也无法假装看不见春天。\n\n「春天的花是冬天的梦，秋天的云会想起夏天的风~」\n——沉寂的月夜下，粉发的少女哼唱起古老的童谣",
     "Desc2": "装备后可提升[异常]代理人的战斗能力",
-    "Desc3": "...",
+    "Desc3": "游弋岁月之隙，寻抵流明。",
     "Rarity": "S",
     "Icon": "Assets/NapResources/UI/Sprite/A1DynamicLoad/ItemIconWeapon/UnPacker/Weapon_S_1581.png",
     "WeaponType": {
@@ -36437,23 +36437,23 @@
     "Talents": {
       "1": {
         "Name": "失乐园",
-        "Desc": "异常精通提升<color=#2BAD00>96</color>点；装备者触发<color=#FFFFFF>[异化]</color>反应时，自身获得属性异常伤害提升<color=#2BAD00>20%</color>的效果，并为全队施加造成的伤害提升<color=#2BAD00>30%</color>效果，效果均持续30秒，重复触发时刷新持续时间。"
+        "Desc": "异常精通提升<color=#2BAD00>96</color>点；装备者触发<color=#FFA9DD>[异化]</color>反应时，自身获得属性异常伤害提升<color=#2BAD00>20%</color>的效果，并为全队角色施加造成的伤害提升<color=#2BAD00>30%</color>效果，效果均持续30秒，重复触发时刷新持续时间。"
       },
       "2": {
         "Name": "失乐园",
-        "Desc": "异常精通提升<color=#2BAD00>100</color>点；装备者触发<color=#FFFFFF>[异化]</color>反应时，自身获得属性异常伤害提升<color=#2BAD00>21.5%</color>的效果，并为全队施加造成的伤害提升<color=#2BAD00>32%</color>效果，效果均持续30秒，重复触发时刷新持续时间。"
+        "Desc": "异常精通提升<color=#2BAD00>105</color>点；装备者触发<color=#FFA9DD>[异化]</color>反应时，自身获得属性异常伤害提升<color=#2BAD00>23%</color>的效果，并为全队角色施加造成的伤害提升<color=#2BAD00>34.5%</color>效果，效果均持续30秒，重复触发时刷新持续时间。"
       },
       "3": {
         "Name": "失乐园",
-        "Desc": "异常精通提升<color=#2BAD00>105</color>点；装备者触发<color=#FFFFFF>[异化]</color>反应时，自身获得属性异常伤害提升<color=#2BAD00>23%</color>的效果，并为全队施加造成的伤害提升<color=#2BAD00>34%</color>效果，效果均持续30秒，重复触发时刷新持续时间。"
+        "Desc": "异常精通提升<color=#2BAD00>115</color>点；装备者触发<color=#FFA9DD>[异化]</color>反应时，自身获得属性异常伤害提升<color=#2BAD00>26%</color>的效果，并为全队角色施加造成的伤害提升<color=#2BAD00>39%</color>效果，效果均持续30秒，重复触发时刷新持续时间。"
       },
       "4": {
         "Name": "失乐园",
-        "Desc": "异常精通提升<color=#2BAD00>110</color>点；装备者触发<color=#FFFFFF>[异化]</color>反应时，自身获得属性异常伤害提升<color=#2BAD00>24.5%</color>的效果，并为全队施加造成的伤害提升<color=#2BAD00>36%</color>效果，效果均持续30秒，重复触发时刷新持续时间。"
+        "Desc": "异常精通提升<color=#2BAD00>125</color>点；装备者触发<color=#FFA9DD>[异化]</color>反应时，自身获得属性异常伤害提升<color=#2BAD00>29%</color>的效果，并为全队角色施加造成的伤害提升<color=#2BAD00>43.5%</color>效果，效果均持续30秒，重复触发时刷新持续时间。"
       },
       "5": {
         "Name": "失乐园",
-        "Desc": "异常精通提升<color=#2BAD00>115</color>点；装备者触发<color=#FFFFFF>[异化]</color>反应时，自身获得属性异常伤害提升<color=#2BAD00>26%</color>的效果，并为全队施加造成的伤害提升<color=#2BAD00>38%</color>效果，效果均持续30秒，重复触发时刷新持续时间。"
+        "Desc": "异常精通提升<color=#2BAD00>135</color>点；装备者触发<color=#FFA9DD>[异化]</color>反应时，自身获得属性异常伤害提升<color=#2BAD00>32%</color>的效果，并为全队角色施加造成的伤害提升<color=#2BAD00>48%</color>效果，效果均持续30秒，重复触发时刷新持续时间。"
       }
     },
     "Profession": 3
@@ -36461,10 +36461,10 @@
   "14159": {
     "Id": 14159,
     "CodeName": "Weapon_S_1591",
-    "Name": "...",
-    "Desc": "...",
+    "Name": "骁骑礼赞",
+    "Desc": "历任来自德拉叙尔家的空巡局总务次官都拥有一枚属于自己的特型音擎，属于天空守护者的勋章与赞歌，悉数熔铸于这枚洁白精巧的徽记。守护天空之城的空巡局队员们被孩子们视如童话中的骑士，而那些天际云层之间的安宁祥和，正是属于骑士们的静谧赞歌。\n「童话故事里的骑士都有自己的骏马，那话又说回来了…」\n——林德薇恩·挽昼大人，不怀好意地打量着自己的近卫骑士",
     "Desc2": "装备后可提升[强攻]代理人的战斗能力",
-    "Desc3": "...",
+    "Desc3": "云海穹苍间，骑士的赞歌静谧响彻。",
     "Rarity": "S",
     "Icon": "Assets/NapResources/UI/Sprite/A1DynamicLoad/ItemIconWeapon/UnPacker/Weapon_S_1591.png",
     "WeaponType": {
@@ -36820,24 +36820,24 @@
     "Materials": "10:12000,101010:4|10:28000,101020:12|10:60000,101020:20|10:100000,101030:10|10:200000,101030:20",
     "Talents": {
       "1": {
-        "Name": "...",
-        "Desc": "装备者发动<color=#FFFFFF>[普通攻击]</color>、<color=#FFFFFF>[强化特殊技]</color>重击命中敌人时，均可获得1层<color=#FFFFFF>[兵锋]</color>，<color=#FFFFFF>[兵锋]</color>最多叠加2层，且每种招式类型最多提供1层，每层使暴击伤害提升<color=#2BAD00>28%</color>，持续25秒；\n发动上述招式时，刷新<color=#FFFFFF>[兵锋]</color>持续时间；\n拥有2层<color=#FFFFFF>[兵锋]</color>时，获得<color=#FFFFFF>[彻骨]</color>：造成的<color=#98EFF0>冰属性伤害提升<color=#2BAD00>14%</color></color>，并无视目标14%<color=#98EFF0>冰属性伤害抗性</color>。"
+        "Name": "骑士仪典",
+        "Desc": "装备者的<color=#FFFFFF>[普通攻击]</color>和<color=#FFFFFF>[强化特殊技]</color>的重击命中敌人时，获得1层<color=#FFFFFF>[兵锋]</color>，使暴击伤害提升<color=#2BAD00>32%</color>，持续25秒；<color=#FFFFFF>[兵锋]</color>最多叠加2层，且每种招式类型最多提供1层，重复触发时，刷新所有<color=#FFFFFF>[兵锋]</color>持续时间；\n拥有2层<color=#FFFFFF>[兵锋]</color>时，获得<color=#FFFFFF>[彻骨]</color>：装备者造成的伤害无视目标<color=#2BAD00>20%</color><color=#98EFF0>冰属性伤害抗性</color>。"
       },
       "2": {
-        "Name": "...",
-        "Desc": "装备者发动<color=#FFFFFF>[普通攻击]</color>、<color=#FFFFFF>[强化特殊技]</color>重击命中敌人时，均可获得1层<color=#FFFFFF>[兵锋]</color>，<color=#FFFFFF>[兵锋]</color>最多叠加2层，且每种招式类型最多提供1层，每层使暴击伤害提升<color=#2BAD00>32.2%</color>，持续25秒；\n发动上述招式时，刷新<color=#FFFFFF>[兵锋]</color>持续时间；\n拥有2层<color=#FFFFFF>[兵锋]</color>时，获得<color=#FFFFFF>[彻骨]</color>：造成的<color=#98EFF0>冰属性伤害提升<color=#2BAD00>16.1%</color></color>，并无视目标16.1%<color=#98EFF0>冰属性伤害抗性</color>。"
+        "Name": "骑士仪典",
+        "Desc": "装备者的<color=#FFFFFF>[普通攻击]</color>和<color=#FFFFFF>[强化特殊技]</color>的重击命中敌人时，获得1层<color=#FFFFFF>[兵锋]</color>，使暴击伤害提升<color=#2BAD00>36.8%</color>，持续25秒；<color=#FFFFFF>[兵锋]</color>最多叠加2层，且每种招式类型最多提供1层，重复触发时，刷新所有<color=#FFFFFF>[兵锋]</color>持续时间；\n拥有2层<color=#FFFFFF>[兵锋]</color>时，获得<color=#FFFFFF>[彻骨]</color>：装备者造成的伤害无视目标<color=#2BAD00>23%</color><color=#98EFF0>冰属性伤害抗性</color>。"
       },
       "3": {
-        "Name": "...",
-        "Desc": "装备者发动<color=#FFFFFF>[普通攻击]</color>、<color=#FFFFFF>[强化特殊技]</color>重击命中敌人时，均可获得1层<color=#FFFFFF>[兵锋]</color>，<color=#FFFFFF>[兵锋]</color>最多叠加2层，且每种招式类型最多提供1层，每层使暴击伤害提升<color=#2BAD00>36.4%</color>，持续25秒；\n发动上述招式时，刷新<color=#FFFFFF>[兵锋]</color>持续时间；\n拥有2层<color=#FFFFFF>[兵锋]</color>时，获得<color=#FFFFFF>[彻骨]</color>：造成的<color=#98EFF0>冰属性伤害提升<color=#2BAD00>18.2%</color></color>，并无视目标18.2%<color=#98EFF0>冰属性伤害抗性</color>。"
+        "Name": "骑士仪典",
+        "Desc": "装备者的<color=#FFFFFF>[普通攻击]</color>和<color=#FFFFFF>[强化特殊技]</color>的重击命中敌人时，获得1层<color=#FFFFFF>[兵锋]</color>，使暴击伤害提升<color=#2BAD00>41.6%</color>，持续25秒；<color=#FFFFFF>[兵锋]</color>最多叠加2层，且每种招式类型最多提供1层，重复触发时，刷新所有<color=#FFFFFF>[兵锋]</color>持续时间；\n拥有2层<color=#FFFFFF>[兵锋]</color>时，获得<color=#FFFFFF>[彻骨]</color>：装备者造成的伤害无视目标<color=#2BAD00>26%</color><color=#98EFF0>冰属性伤害抗性</color>。"
       },
       "4": {
-        "Name": "...",
-        "Desc": "装备者发动<color=#FFFFFF>[普通攻击]</color>、<color=#FFFFFF>[强化特殊技]</color>重击命中敌人时，均可获得1层<color=#FFFFFF>[兵锋]</color>，<color=#FFFFFF>[兵锋]</color>最多叠加2层，且每种招式类型最多提供1层，每层使暴击伤害提升<color=#2BAD00>40.6%</color>，持续25秒；\n发动上述招式时，刷新<color=#FFFFFF>[兵锋]</color>持续时间；\n拥有2层<color=#FFFFFF>[兵锋]</color>时，获得<color=#FFFFFF>[彻骨]</color>：造成的<color=#98EFF0>冰属性伤害提升<color=#2BAD00>20.3%</color></color>，并无视目标20.3%<color=#98EFF0>冰属性伤害抗性</color>。"
+        "Name": "骑士仪典",
+        "Desc": "装备者的<color=#FFFFFF>[普通攻击]</color>和<color=#FFFFFF>[强化特殊技]</color>的重击命中敌人时，获得1层<color=#FFFFFF>[兵锋]</color>，使暴击伤害提升<color=#2BAD00>46.4%</color>，持续25秒；<color=#FFFFFF>[兵锋]</color>最多叠加2层，且每种招式类型最多提供1层，重复触发时，刷新所有<color=#FFFFFF>[兵锋]</color>持续时间；\n拥有2层<color=#FFFFFF>[兵锋]</color>时，获得<color=#FFFFFF>[彻骨]</color>：装备者造成的伤害无视目标<color=#2BAD00>29%</color><color=#98EFF0>冰属性伤害抗性</color>。"
       },
       "5": {
-        "Name": "...",
-        "Desc": "装备者发动<color=#FFFFFF>[普通攻击]</color>、<color=#FFFFFF>[强化特殊技]</color>重击命中敌人时，均可获得1层<color=#FFFFFF>[兵锋]</color>，<color=#FFFFFF>[兵锋]</color>最多叠加2层，且每种招式类型最多提供1层，每层使暴击伤害提升<color=#2BAD00>44.8%</color>，持续25秒；\n发动上述招式时，刷新<color=#FFFFFF>[兵锋]</color>持续时间；\n拥有2层<color=#FFFFFF>[兵锋]</color>时，获得<color=#FFFFFF>[彻骨]</color>：造成的<color=#98EFF0>冰属性伤害提升<color=#2BAD00>22.4%</color></color>，并无视目标22.4%<color=#98EFF0>冰属性伤害抗性</color>。"
+        "Name": "骑士仪典",
+        "Desc": "装备者的<color=#FFFFFF>[普通攻击]</color>和<color=#FFFFFF>[强化特殊技]</color>的重击命中敌人时，获得1层<color=#FFFFFF>[兵锋]</color>，使暴击伤害提升<color=#2BAD00>51.2%</color>，持续25秒；<color=#FFFFFF>[兵锋]</color>最多叠加2层，且每种招式类型最多提供1层，重复触发时，刷新所有<color=#FFFFFF>[兵锋]</color>持续时间；\n拥有2层<color=#FFFFFF>[兵锋]</color>时，获得<color=#FFFFFF>[彻骨]</color>：装备者造成的伤害无视目标<color=#2BAD00>32%</color><color=#98EFF0>冰属性伤害抗性</color>。"
       }
     },
     "Profession": 1

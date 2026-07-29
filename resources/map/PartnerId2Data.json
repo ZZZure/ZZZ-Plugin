@@ -3023,8 +3023,8 @@
         "Image": "IconRole27"
       },
       "3111511": {
-        "Name": "AvatarSkin_Lucy_Name_001",
-        "Desc": "AvatarSkin_Lucy_Desc_001",
+        "Name": "露西·公主假日",
+        "Desc": "球棍在沙滩排球中显然并无用武之地，但可以确保无人打扰荒原千金的假日好时光。阿草阿木阿砖，进入度假作战模式！",
         "Image": "IconRole27_01"
       }
     }
@@ -10736,7 +10736,7 @@
     "sprite_id": "63",
     "name": "佩洛伊斯",
     "full_name": "",
-    "en_name": "(Test1)Pyrois",
+    "en_name": "Pyrois",
     "WeaponType": "1",
     "ElementType": "205",
     "Camp": "法厄同",
@@ -11343,7 +11343,7 @@
   "1581": {
     "sprite_id": "67",
     "name": "蕾米埃尔",
-    "full_name": "...",
+    "full_name": "蕾米埃尔·丹",
     "en_name": "Remielle",
     "WeaponType": "3",
     "ElementType": "300",
@@ -11535,22 +11535,32 @@
     },
     "Skin": {
       "3115810": {
-        "Name": "AvatarSkin_RemielleOrigin_Name_000",
-        "Desc": "AvatarSkin_RemielleOrigin_Desc_000",
+        "Name": "蕾米埃尔·空羽呢喃",
+        "Desc": "旧日天使跌落人间，纷纷落羽静默长眠。\n自苍白荒秽中苏醒，于无声尽处，再启新程。",
         "Image": "IconRole67"
       },
       "3115811": {
-        "Name": "AvatarSkin_RemielleOrigin_Name_001",
-        "Desc": "AvatarSkin_RemielleOrigin_Desc_001",
+        "Name": "蕾米埃尔·月夜密语",
+        "Desc": "既然白昼不曾垂怜，那便携月夜共赴沉沦。\n你说玩笑与谎言难以分辨？\n那就再来一轮问答游戏吧，亲爱的共犯。",
         "Image": "IconRole67_02"
+      },
+      "3115812": {
+        "Name": "蕾米埃尔·影池独舞",
+        "Desc": "这本是独属于一人的起舞时刻，但那被黑暗所笼罩的隐秘与孤独已在悄然间被光束所穿透。现在，能与我来一支双人舞吗，共犯？",
+        "Image": "IconRole67_01"
+      },
+      "3115813": {
+        "Name": "蕾米埃尔·月夜密语（面纱）",
+        "Desc": "既然白昼不曾垂怜，那便携月夜共赴沉沦。\n你说玩笑与谎言难以分辨？\n那就再来一轮问答游戏吧，亲爱的共犯。",
+        "Image": "IconRole67_03"
       }
     }
   },
   "1591": {
     "sprite_id": "66",
     "name": "希格莉德",
-    "full_name": "...",
-    "en_name": "(Test1)Sigrid",
+    "full_name": "希格莉德·德拉叙尔",
+    "en_name": "Sigrid",
     "WeaponType": "1",
     "ElementType": "202",
     "Camp": "罗斯凯利法",
@@ -11741,13 +11751,13 @@
     },
     "Skin": {
       "3115910": {
-        "Name": "AvatarSkin_Sigrid_Name_000",
-        "Desc": "AvatarSkin_Sigrid_Desc_000",
+        "Name": "希格莉德·空岛传奇",
+        "Desc": "空巡局总务次官的例行着装，不仅是统领戍卫队员的身份象征，也在许多绘本故事中留下了传奇的剪影。",
         "Image": "IconRole66"
       },
       "3115911": {
-        "Name": "AvatarSkin_Sigrid_Name_001",
-        "Desc": "AvatarSkin_Sigrid_Desc_001",
+        "Name": "希格莉德·惊鸿逐浪",
+        "Desc": "惯于在天空中驰骋的骑士，这一次将要面对来自海浪与阳光的挑战！",
         "Image": "IconRole66_01"
       }
     }
