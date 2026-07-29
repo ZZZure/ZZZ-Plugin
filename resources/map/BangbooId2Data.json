@@ -445,9 +445,9 @@
     "rank": 4,
     "codename": "Ariel",
     "EN": "Ariel",
-    "desc": "Never walk alone in the land of None.",
-    "KO": "Bangboo_Name_54023",
-    "CHS": "(Test1)艾瑞儿",
+    "desc": "You cannot walk alone in the darkness.",
+    "KO": "아리엘",
+    "CHS": "艾瑞儿",
     "JA": "アリエル"
   },
   "55098": {
@@ -459,17 +459,6 @@
     "desc": "Eous",
     "KO": "이아스",
     "CHS": "伊埃斯",
-    "JA": "イアス"
-  },
-  "57001": {
-    "sprite_id": "",
-    "icon": "",
-    "rank": 4,
-    "codename": "Eous",
-    "EN": "Eous",
-    "desc": "Bangboo_Desc_57001",
-    "KO": "Bangboo_Name_57001",
-    "CHS": "(Test1)伊埃斯",
     "JA": "イアス"
   }
 }
