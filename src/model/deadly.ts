@@ -45,6 +45,16 @@ export class Deadly {
     return 5
   }
 
+  get hard_rank_bg(): number {
+    const pct = (this.hard_rank_percent || 0) / 100
+    if (pct < 1) return 1
+    if (pct < 5) return 2
+    if (pct < 10) return 3
+    if (pct < 50) return 4
+    return 5
+  }
+
+
   async get_assets() {
     if (this.avatar_icon && this.avatar_icon.startsWith('http')) {
       try {
