@@ -396,7 +396,7 @@ export class Rank extends ZZZPlugin {
         await this.render('rank/voidFrontBattle/index.html', finalData, this);
     }
     async climbingTowerHelp() {
-        let help_msg = [
+        const help_msg = [
             '当前可供查询的爬塔排名有：',
             '- %爬塔S1排名（%拟真鏖战试炼排名）',
             '- %爬塔S2排名（%鏖战试炼：末路排名）',

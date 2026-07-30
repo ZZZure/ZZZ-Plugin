@@ -41,10 +41,12 @@
       {{set team = record.result.list[i]}}
       <div class="item-card">
         {{if team}}
+        {{if team.buffer && team.buffer[0]}}
         <div class="pop"><img src="{{team.buffer[0].icon}}" alt=""></div>
+        {{/if}}
         <div class="content">
           <div class="header">
-            <div class="name">{{team.boss[0].name}}</div>
+            <div class="name">{{team.boss && team.boss[0] ? team.boss[0].name : ''}}</div>
             <div class="value">
               <div class="val">{{team.score}}</div>
               <div class="stars">

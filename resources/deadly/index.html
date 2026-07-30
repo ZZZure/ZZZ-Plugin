@@ -36,20 +36,22 @@
   </div>
   {{each deadly.list item i}}
   <div class="item-card">
+    {{if item.buffer && item.buffer[0]}}
     <div class="pop"><img src="{{item.buffer[0].icon}}" alt=""></div>
+    {{/if}}
     <div class="cover">
       <div class="bg">
-        <img src="{{item.boss[0].bg_icon}}" alt="">
+        <img src="{{item.boss && item.boss[0] ? item.boss[0].bg_icon : ''}}" alt="">
       </div>
-      {{if item.boss[0].race_icon}}
+      {{if item.boss && item.boss[0] && item.boss[0].race_icon}}
       <div class="icon">
         <img src="{{item.boss[0].race_icon}}" alt="">
       </div>
       {{/if}}
-      <img src="{{item.boss[0].icon}}" alt="">
+      <img src="{{item.boss && item.boss[0] ? item.boss[0].icon : ''}}" alt="">
     </div>
     <div class="content">
-      <div class="name">{{item.boss[0].name}}</div>
+      <div class="name">{{item.boss && item.boss[0] ? item.boss[0].name : ''}}</div>
       <div class="value">
         <div class="val">{{item.score}}</div>
         <div class="stars">
@@ -104,6 +106,7 @@
       {{else}}
         <li>请在群内查询<span class="command">%危局强袭战</span>，以参与对应群的危局强袭战排名</li>
       {{/if}}
+      <li>当前尚未实现绝境关的数据渲染，请等待后续实现</li>
     </ul>
   </div>
 

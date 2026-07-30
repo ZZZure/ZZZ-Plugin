@@ -70,11 +70,11 @@ export default class ZZZApiTool {
                 query: `lang=zh-cn&role_id=${this.uid}&server=${this.server}&schedule_type=2`,
             },
             zzzDeadly: {
-                url: `${this.hostRecord}event/game_record_zzz/api/zzz/mem_detail`,
+                url: `${this.hostRecord}event/game_record_zzz/api/zzz/hadal_mem_detail_v2`,
                 query: `lang=zh-cn&uid=${this.uid}&region=${this.server}&schedule_type=1`,
             },
             zzzDeadlyPeriod: {
-                url: `${this.hostRecord}event/game_record_zzz/api/zzz/mem_detail`,
+                url: `${this.hostRecord}event/game_record_zzz/api/zzz/hadal_mem_detail_v2`,
                 query: `lang=zh-cn&uid=${this.uid}&region=${this.server}&schedule_type=2`,
             },
             zzzHoloBoss: {
