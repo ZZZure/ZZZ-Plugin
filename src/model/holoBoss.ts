@@ -27,7 +27,7 @@ export class HoloBoss {
     this.total_star = this.list.reduce((sum, item) => sum + (item.star || 0), 0)
     this.total_time_seconds = this.list.reduce((sum, item) => sum + (item.challenge_time_seconds || 0), 0)
     this.no_injured_count = this.list.reduce((sum, item) => sum + (item.boss?.medal?.is_no_injured ? 1 : 0), 0)
-    
+
     const minutes = Math.floor(this.total_time_seconds / 60)
     const seconds = this.total_time_seconds % 60
     this.total_time_str = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`

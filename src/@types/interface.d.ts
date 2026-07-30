@@ -957,12 +957,12 @@ export namespace Mys {
         name: string
       }[]
       avatar_list: AvatarlistItem[]
-      buddy: {
+      buddy?: {
         id: number
         rarity: string
         level: number
         bangboo_rectangle_url: string
-      }
+      } | null
     }[]
     has_data: boolean
     nick_name: string
@@ -970,8 +970,34 @@ export namespace Mys {
     total_score: number
     total_star: number
     zone_id: number
-    total_max_score: number
-    room_max_score: number
+    total_max_score?: number
+    room_max_score?: number
+    has_hard?: boolean
+    hard_list?: {
+      score: number
+      star: number
+      total_star: number
+      challenge_time: Time
+      boss: {
+        icon: string
+        name: string
+        race_icon: string
+        bg_icon: string
+      }[]
+      buffer: {
+        icon: string
+        desc: string
+        name: string
+      }[]
+      avatar_list: AvatarlistItem[]
+      buddy?: {
+        id: number
+        rarity: string
+        level: number
+        bangboo_rectangle_url: string
+      } | null
+    }[]
+    hard_rank_percent?: number
   }
 
   /** 拟境湮灭战数据 */

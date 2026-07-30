@@ -12,18 +12,28 @@ export class Deadly {
   rank_percent: number
   total_score: number
   list: DeadlyList[]
+  total_max_score: number
+  room_max_score: number
+  has_hard: boolean
+  hard_list: DeadlyList[]
+  hard_rank_percent: number
 
   constructor(data: Mys.Deadly) {
-    this.start_time = new DeadlyTime(data.start_time)
-    this.end_time = new DeadlyTime(data.end_time)
-    this.nick_name = data.nick_name
-    this.avatar_icon = data.avatar_icon
-    this.has_data = data.has_data
-    this.zone_id = data.zone_id
-    this.total_star = data.total_star
-    this.rank_percent = data.rank_percent
-    this.total_score = data.total_score
-    this.list = data.list.map(item => new DeadlyList(item))
+    this.start_time = new DeadlyTime(data?.start_time)
+    this.end_time = new DeadlyTime(data?.end_time)
+    this.nick_name = data?.nick_name || ''
+    this.avatar_icon = data?.avatar_icon || ''
+    this.has_data = data?.has_data ?? false
+    this.zone_id = data?.zone_id ?? 0
+    this.total_star = data?.total_star ?? 0
+    this.rank_percent = data?.rank_percent ?? 0
+    this.total_score = data?.total_score ?? 0
+    this.list = (data?.list || []).map(item => new DeadlyList(item))
+    this.total_max_score = data?.total_max_score ?? 0
+    this.room_max_score = data?.room_max_score ?? 0
+    this.has_hard = data?.has_hard ?? false
+    this.hard_list = (data?.hard_list || []).map(item => new DeadlyList(item))
+    this.hard_rank_percent = data?.hard_rank_percent ?? 0
   }
 
   get rank_bg(): number {
@@ -36,17 +46,20 @@ export class Deadly {
   }
 
   async get_assets() {
-    const avatar_icon_b64 = await request
-      .get(this.avatar_icon)
-      .then(response => response.arrayBuffer())
-      .then(
-        buffer =>
-          `data:image/png;base64,${Buffer.from(buffer).toString('base64')}`
-      )
-    this.avatar_icon = avatar_icon_b64
-    await Promise.all(this.list.map(item => item.get_assets()))
+    if (this.avatar_icon && this.avatar_icon.startsWith('http')) {
+      try {
+        const response = await request.get(this.avatar_icon)
+        const buffer = await response.arrayBuffer()
+        this.avatar_icon = `data:image/png;base64,${Buffer.from(buffer).toString('base64')}`
+      } catch {
+        // Keep original URL on download failure
+      }
+    }
+    await Promise.all([
+      ...this.list.map(item => item.get_assets()),
+      ...this.hard_list.map(item => item.get_assets()),
+    ])
   }
-
 }
 
 export class DeadlyList {
@@ -54,20 +67,20 @@ export class DeadlyList {
   score: number
   boss: Bos[]
   buffer: DeadBuffer[]
-  buddy: Buddy
+  buddy: Buddy | null
   total_star: number
   challenge_time: DeadlyTime
   avatar_list: AvatarList[]
 
   constructor(data: Mys.Deadly['list'][number]) {
-    this.star = data.star
-    this.score = data.score
-    this.boss = data.boss.map(b => new Bos(b))
-    this.buffer = data.buffer.map(b => new DeadBuffer(b))
-    this.buddy = data.buddy && new Buddy(data.buddy)
-    this.total_star = data.total_star
-    this.challenge_time = new DeadlyTime(data.challenge_time)
-    this.avatar_list = data.avatar_list.map(item => new AvatarList(item))
+    this.star = data?.star ?? 0
+    this.score = data?.score ?? 0
+    this.boss = (data?.boss || []).map(b => new Bos(b))
+    this.buffer = (data?.buffer || []).map(b => new DeadBuffer(b))
+    this.buddy = (data?.buddy && data.buddy.id) ? new Buddy(data.buddy) : null
+    this.total_star = data?.total_star ?? 0
+    this.challenge_time = new DeadlyTime(data?.challenge_time)
+    this.avatar_list = (data?.avatar_list || []).map(item => new AvatarList(item))
   }
 
   async get_assets() {
@@ -78,7 +91,6 @@ export class DeadlyList {
       ...this.buffer.map(buffer => buffer.get_assets()),
     ])
   }
-
 }
 
 export class AvatarList {
@@ -92,27 +104,27 @@ export class AvatarList {
   sub_element_type: number
 
   constructor(data: Mys.Deadly['list'][number]['avatar_list'][number]) {
-    this.rarity = data.rarity
-    this.element_type = data.element_type
-    this.avatar_profession = data.avatar_profession
-    this.id = data.id
-    this.level = data.level
-    this.rank = data.rank
-    this.role_square_url = data.role_square_url
-    this.sub_element_type = data.sub_element_type
+    this.rarity = data?.rarity || 'A'
+    this.element_type = data?.element_type ?? 0
+    this.avatar_profession = data?.avatar_profession ?? 0
+    this.id = data?.id ?? 0
+    this.level = data?.level ?? 1
+    this.rank = data?.rank ?? 0
+    this.role_square_url = data?.role_square_url || ''
+    this.sub_element_type = data?.sub_element_type ?? 0
   }
 
   async get_assets() {
-    const role_square_b64 = await request
-      .get(this.role_square_url)
-      .then(response => response.arrayBuffer())
-      .then(
-        buffer =>
-          `data:image/png;base64,${Buffer.from(buffer).toString('base64')}`
-      )
-    this.role_square_url = role_square_b64
+    if (this.role_square_url && this.role_square_url.startsWith('http')) {
+      try {
+        const response = await request.get(this.role_square_url)
+        const buffer = await response.arrayBuffer()
+        this.role_square_url = `data:image/png;base64,${Buffer.from(buffer).toString('base64')}`
+      } catch {
+        // Keep original URL on error
+      }
+    }
   }
-
 }
 
 export class Buddy {
@@ -121,24 +133,24 @@ export class Buddy {
   level: number
   bangboo_rectangle_url: string
 
-  constructor(data: Mys.Deadly['list'][number]['buddy']) {
-    this.id = data.id
-    this.rarity = data.rarity
-    this.level = data.level
-    this.bangboo_rectangle_url = data.bangboo_rectangle_url
+  constructor(data: NonNullable<Mys.Deadly['list'][number]['buddy']>) {
+    this.id = data?.id ?? 0
+    this.rarity = data?.rarity || 'A'
+    this.level = data?.level ?? 1
+    this.bangboo_rectangle_url = data?.bangboo_rectangle_url || ''
   }
 
   async get_assets() {
-    const bangboo_rectangle_b64 = await request
-      .get(this.bangboo_rectangle_url)
-      .then(response => response.arrayBuffer())
-      .then(
-        buffer =>
-          `data:image/png;base64,${Buffer.from(buffer).toString('base64')}`
-      )
-    this.bangboo_rectangle_url = bangboo_rectangle_b64
+    if (this.bangboo_rectangle_url && this.bangboo_rectangle_url.startsWith('http')) {
+      try {
+        const response = await request.get(this.bangboo_rectangle_url)
+        const buffer = await response.arrayBuffer()
+        this.bangboo_rectangle_url = `data:image/png;base64,${Buffer.from(buffer).toString('base64')}`
+      } catch {
+        // Keep original URL on error
+      }
+    }
   }
-
 }
 
 export class DeadBuffer {
@@ -147,22 +159,22 @@ export class DeadBuffer {
   name: string
 
   constructor(data: Mys.Deadly['list'][number]['buffer'][number]) {
-    this.desc = data.desc
-    this.icon = data.icon
-    this.name = data.name
+    this.desc = data?.desc || ''
+    this.icon = data?.icon || ''
+    this.name = data?.name || ''
   }
 
   async get_assets() {
-    const icon_b64 = await request
-      .get(this.icon)
-      .then(response => response.arrayBuffer())
-      .then(
-        buffer =>
-          `data:image/png;base64,${Buffer.from(buffer).toString('base64')}`
-      )
-    this.icon = icon_b64
+    if (this.icon && this.icon.startsWith('http')) {
+      try {
+        const response = await request.get(this.icon)
+        const buffer = await response.arrayBuffer()
+        this.icon = `data:image/png;base64,${Buffer.from(buffer).toString('base64')}`
+      } catch {
+        // Keep original URL on error
+      }
+    }
   }
-
 }
 
 export class Bos {
@@ -172,43 +184,32 @@ export class Bos {
   bg_icon: string
 
   constructor(data: Mys.Deadly['list'][number]['boss'][number]) {
-    this.race_icon = data.race_icon
-    this.icon = data.icon
-    this.name = data.name
-    this.bg_icon = data.bg_icon
+    this.race_icon = data?.race_icon || ''
+    this.icon = data?.icon || ''
+    this.name = data?.name || ''
+    this.bg_icon = data?.bg_icon || ''
   }
 
   async get_assets() {
-    let race_icon_b64
-    if (this.race_icon) {
-      race_icon_b64 = request
-        .get(this.race_icon)
-        .then(response => response.arrayBuffer())
-        .then(
-          buffer =>
-            `data:image/png;base64,${Buffer.from(buffer).toString('base64')}`
-        )
+    const fetchAsset = async (url: string) => {
+      if (!url || !url.startsWith('http')) return url
+      try {
+        const response = await request.get(url)
+        const buffer = await response.arrayBuffer()
+        return `data:image/png;base64,${Buffer.from(buffer).toString('base64')}`
+      } catch {
+        return url
+      }
     }
-    const icon_b64 = request
-      .get(this.icon)
-      .then(response => response.arrayBuffer())
-      .then(
-        buffer =>
-          `data:image/png;base64,${Buffer.from(buffer).toString('base64')}`
-      )
-    const bg_icon_b64 = request
-      .get(this.bg_icon)
-      .then(response => response.arrayBuffer())
-      .then(
-        buffer =>
-          `data:image/png;base64,${Buffer.from(buffer).toString('base64')}`
-      )
-    const all = await Promise.all([race_icon_b64, icon_b64, bg_icon_b64])
-    this.race_icon = all[0] || ''
-    this.icon = all[1]
-    this.bg_icon = all[2]
+    const [race_icon, icon, bg_icon] = await Promise.all([
+      fetchAsset(this.race_icon),
+      fetchAsset(this.icon),
+      fetchAsset(this.bg_icon),
+    ])
+    this.race_icon = race_icon
+    this.icon = icon
+    this.bg_icon = bg_icon
   }
-
 }
 
 export class DeadlyTime {
@@ -220,12 +221,12 @@ export class DeadlyTime {
   day: number
 
   constructor(data: Mys.Deadly['start_time']) {
-    this.hour = data.hour
-    this.minute = data.minute
-    this.second = data.second
-    this.year = data.year
-    this.month = data.month
-    this.day = data.day
+    this.hour = data?.hour ?? 0
+    this.minute = data?.minute ?? 0
+    this.second = data?.second ?? 0
+    this.year = data?.year ?? 0
+    this.month = data?.month ?? 0
+    this.day = data?.day ?? 0
   }
-
 }
+
