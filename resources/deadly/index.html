@@ -99,6 +99,79 @@
   </div>
   {{/each}}
 
+  {{if deadly.has_hard && deadly.hard_list && deadly.hard_list.length > 0}}
+  {{each deadly.hard_list item i}}
+  <div class="item-card hard">
+    {{if item.buffer && item.buffer[0]}}
+    <div class="pop"><img src="{{item.buffer[0].icon}}" alt=""></div>
+    {{/if}}
+    <div class="cover">
+      <div class="bg">
+        <img src="{{item.boss && item.boss[0] ? item.boss[0].bg_icon : ''}}" alt="">
+      </div>
+      {{if item.boss && item.boss[0] && item.boss[0].race_icon}}
+      <div class="icon">
+        <img src="{{item.boss[0].race_icon}}" alt="">
+      </div>
+      {{/if}}
+      <img src="{{item.boss && item.boss[0] ? item.boss[0].icon : ''}}" alt="">
+    </div>
+    <div class="content">
+      <div class="header">
+        <div class="name">{{item.boss && item.boss[0] ? item.boss[0].name : ''}}</div>
+        <div class="rank-container">
+          <div class="rank-icon bg{{deadly.hard_rank_bg}}"></div>
+          <div class="rank-text">{{(deadly.hard_rank_percent / 100).toFixed(2)}}%</div>
+        </div>
+      </div>
+      <div class="value">
+        <div class="val">{{item.score}}</div>
+        <div class="stars">
+          <% for(let i=0 ; i < item.star ; i++) { %>
+            <div class="star hard-star"></div>
+            <% } %>
+              <% for(let i=0 ; i < item.total_star - item.star ; i++) { %>
+                <div class="star inactive"></div>
+                <% } %>
+        </div>
+      </div>
+      <div class="time">通关时刻：{{item.challenge_time.year}}.{{item.challenge_time.month.toString().padStart(2,'0')}}.{{item.challenge_time.day.toString().padStart(2,'0')}}
+        {{item.challenge_time.hour.toString().padStart(2,'0')}}:{{item.challenge_time.minute.toString().padStart(2,'0')}}:{{item.challenge_time.second.toString().padStart(2,'0')}}
+      </div>
+      <div class="list">
+        <% for(let i=0 ; i < 3 ; i++) { %>
+          {{if item.avatar_list?.[i]}}
+          <div class="item char">
+            {{if item.avatar_list[i].rank}}
+            <div class="count">{{item.avatar_list[i].rank}}</div>
+            {{/if}}
+            <div class="rank_disp">
+              <div class="rank rank-icon {{item.avatar_list[i].rarity}}"></div>
+            </div>
+            <div class="image">
+              <img src="{{item.avatar_list[i].role_square_url}}" alt="">
+            </div>
+          </div>
+          {{else}}
+            <div class="item char"></div>
+            {{/if}}
+            <% } %>
+              {{if item.buddy}}
+              <div class="item bangboo">
+                <div class="rank_disp">
+                  <div class="rank rank-icon {{item.buddy.rarity}}"></div>
+                </div>
+                <div class="image">
+                  <img src="{{item.buddy.bangboo_rectangle_url}}" alt="">
+                </div>
+              </div>
+              {{/if}}
+      </div>
+    </div>
+  </div>
+  {{/each}}
+  {{/if}}
+
   <div class="item-card">
     <ul class="notes">
       {{if userRankAllowed !== null}}
@@ -106,7 +179,6 @@
       {{else}}
         <li>请在群内查询<span class="command">%危局强袭战</span>，以参与对应群的危局强袭战排名</li>
       {{/if}}
-      <li>当前尚未实现绝境关的数据渲染，请等待后续实现</li>
     </ul>
   </div>
 

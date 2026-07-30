@@ -92,6 +92,7 @@
     }
   }
   .item-card {
+    position: relative;
     border-image-source: url('./images/BgFrame01.png');
     border-image-slice: 200 100 70 280 fill;
     border-image-width: 2em 1em 0.7em 2.8em;
@@ -101,7 +102,33 @@
     margin-bottom: 1em;
     display: flex;
     gap: 1.2em;
-    position: relative;
+
+    &.hard {
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        margin: 0.3em;
+        background-image: url('./images/hard-module-inner-bg-m.83b7d1a1.png');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      > * {
+        position: relative;
+        z-index: 2;
+      }
+
+      .value {
+        .stars {
+          .star.hard-star {
+            background-image: url('./images/star-icon-hard.13c9ee51.png');
+          }
+        }
+      }
+    }
     .pop {
       position: absolute;
       top: 0;
@@ -111,12 +138,12 @@
       background-image: url('./images/PetSelectBG.png');
       background-size: 100% 100%;
       padding: 0.3em;
+      z-index: 3;
       img {
         width: 100%;
         height: 100%;
         object-fit: contain;
       }
-      z-index: 2;
     }
     .cover {
       position: relative;
@@ -177,6 +204,32 @@
       gap: 0.2em;
       flex: 1;
       margin-right: 0.3em;
+      .header {
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+
+        .rank-container {
+          position: relative;
+          width: 5.5em;
+          height: 2.5em;
+
+          .rank-icon {
+            width: 100%;
+            height: 100%;
+          }
+
+          .rank-text {
+            position: absolute;
+            top: 50%;
+            left: 40%;
+            transform: translate(-50%, -50%);
+            color: #222;
+            font-size: 0.9em;
+            z-index: 2;
+          }
+        }
+      }
       .name {
         background: linear-gradient(
           180deg,

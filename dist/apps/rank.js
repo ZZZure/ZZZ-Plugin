@@ -26,6 +26,10 @@ export class Rank extends ZZZPlugin {
                     fnc: 'deadlyRank'
                 },
                 {
+                    reg: `${rulePrefix}(绝境|(危局|强袭|强袭战|危局强袭战)绝境|绝境(危局|强袭|强袭战|危局强袭战))排名$`,
+                    fnc: 'deadlyHardRank'
+                },
+                {
                     reg: `${rulePrefix}(拟境湮灭战|拟境|湮灭|湮灭战)排名$`,
                     fnc: 'holoBossRank'
                 },
@@ -231,6 +235,95 @@ export class Rank extends ZZZPlugin {
         clearTimeout(timer);
         const finalData = { scoredData };
         await this.render('rank/deadly/index.html', finalData, this);
+    }
+    async deadlyHardRank() {
+        const rank_type = 'DEADLY';
+        if (!(this.e?.group_id)) {
+            return this.reply('请在群聊中使用该命令！');
+        }
+        if (!this.isGroupRankAllowed()) {
+            await this.reply('当前群危局强袭战排名功能已关闭！');
+        }
+        const uidInGroupRank = await getUsersInGroupRank(rank_type, this.e.group_id);
+        const memberMap = await this.e.group?.getMemberMap() || new Map();
+        const qqInGroupSet = new Set(Array.from(memberMap.keys(), String));
+        const uid2qqs = await getUid2QQsMapping(this.e.group_id);
+        const uidInGroupRankFiltered = [];
+        for (const uid of uidInGroupRank) {
+            if (uid in uid2qqs && uid2qqs[uid].some(qq => qqInGroupSet.has(qq))) {
+                uidInGroupRankFiltered.push(uid);
+            }
+            else {
+                await removeUidAllRecord(this.e.group_id, uid);
+            }
+        }
+        const rawData = getDeadlyDataInGroupRank(uidInGroupRankFiltered);
+        const currentTimestamp = Math.floor(Date.now() / 1000);
+        const filteredByUser = [];
+        for (const item of rawData) {
+            const gameUid = _.get(item, 'player.player.game_uid');
+            const userRankAllowed = await isUserRankAllowed(rank_type, gameUid, this.e.group_id);
+            if (/^[0-9]{8}$/.test(gameUid) && userRankAllowed) {
+                filteredByUser.push(item);
+            }
+        }
+        let scoredData = filteredByUser
+            .filter(item => {
+            const startTimeObj = _.get(item, 'result.start_time');
+            const endTimeObj = _.get(item, 'result.end_time');
+            if (!startTimeObj || !endTimeObj)
+                return false;
+            const startTime = new Date(startTimeObj.year, startTimeObj.month - 1, startTimeObj.day, startTimeObj.hour, startTimeObj.minute, startTimeObj.second).getTime() / 1000;
+            const endTime = new Date(endTimeObj.year, endTimeObj.month - 1, endTimeObj.day, endTimeObj.hour, endTimeObj.minute, endTimeObj.second).getTime() / 1000;
+            return currentTimestamp >= startTime && currentTimestamp <= endTime;
+        })
+            .filter(item => _.get(item, 'result.has_data') === true && _.get(item, 'result.has_hard') === true && Array.isArray(_.get(item, 'result.hard_list')) && _.get(item, 'result.hard_list').length > 0)
+            .map(item => {
+            const hardList = _.get(item, 'result.hard_list', []);
+            const hardScore = hardList.reduce((sum, h) => sum + (h?.score || 0), 0);
+            let updateTime = 0;
+            for (const challenge of hardList) {
+                if (challenge?.challenge_time) {
+                    const { year, month, day, hour, minute, second } = challenge.challenge_time;
+                    const challengeTime = new Date(year, month - 1, day, hour, minute, second).getTime() / 1000;
+                    updateTime = Math.max(updateTime, challengeTime);
+                }
+            }
+            if (updateTime === 0) {
+                updateTime = currentTimestamp;
+            }
+            return {
+                ...item,
+                result: new Deadly(item.result),
+                score: {
+                    score: hardScore,
+                    updateTime
+                }
+            };
+        });
+        if (scoredData.length === 0) {
+            return this.reply('没有危局强袭战绝境排名，请先 %显示危局绝境排名，并且用 %危局 查询战绩');
+        }
+        scoredData.sort((a, b) => {
+            if (a.score.score !== b.score.score) {
+                return b.score.score - a.score.score;
+            }
+            return a.score.updateTime - b.score.updateTime;
+        });
+        let maxDisplay = _.get(settings.getConfig('rank'), 'max_display', 15);
+        maxDisplay = Math.max(1, Math.min(maxDisplay, 15));
+        scoredData = scoredData.slice(0, maxDisplay);
+        const timer = setTimeout(() => {
+            if (this?.reply) {
+                this.reply('查询成功，正在下载图片资源，请稍候。');
+            }
+        }, 5000);
+        await Promise.all(_.map(scoredData, async (item) => {
+            await item.result.get_assets();
+        }));
+        clearTimeout(timer);
+        const finalData = { scoredData };
+        await this.render('rank/deadlyHard/index.html', finalData, this);
     }
     async holoBossRank() {
         const rank_type = 'HOLO_BOSS';
