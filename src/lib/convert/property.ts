@@ -22,6 +22,7 @@ const prop_id = {
   317: 'ice',
   318: 'thunder',
   319: 'dungeonbuffether',
+  323: 'wind',
 }
 
 /** 职业css命名 */
