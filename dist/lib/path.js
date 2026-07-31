@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url';
 const metaUrl = import.meta.url;
 const metaPath = fileURLToPath(new URL(metaUrl));
 export const pluginPath = path.join(metaPath, '../../../');
+export const yunzaiPath = path.join(pluginPath, '../..');
 export const srcPath = path.join(pluginPath, 'src');
 export const distPath = path.join(pluginPath, 'dist');
 export const appPath = path.join(distPath, 'apps');
@@ -13,5 +14,10 @@ export const dataResourcesPath = path.join(resourcesPath, 'data');
 export const mapResourcesPath = path.join(resourcesPath, 'map');
 export const configPath = path.join(pluginPath, 'config');
 export const defPath = path.join(pluginPath, 'defSet');
-export const dataPath = path.join(pluginPath, 'data');
+export const legacyDataPath = path.join(pluginPath, 'data');
+export const defaultDataPath = path.join(yunzaiPath, 'data', pluginName);
+export let dataPath = defaultDataPath;
+export function setDataPath(nextPath) {
+    dataPath = nextPath;
+}
 //# sourceMappingURL=path.js.map
