@@ -1,5 +1,6 @@
 /// <reference path="./src/@types/yunzai/index.d.ts"/>
 import { configPath, dataPath, appPath } from './dist/lib/path.js'
+import { migrateLegacyData } from './dist/lib/migrateData.js'
 import fs from 'fs'
 
 try {
@@ -14,9 +15,11 @@ logger.info('仓库地址 https://github.com/ZZZure/ZZZ-plugin')
 logger.info('Created By ZZZure Project (MIHOMO)')
 logger.info('*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*')
 
+migrateLegacyData()
+
 void [configPath, dataPath].forEach(dir => {
   if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir)
+    fs.mkdirSync(dir, { recursive: true })
   }
 })
 
