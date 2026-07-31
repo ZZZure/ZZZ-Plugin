@@ -183,6 +183,9 @@
 .element-icon.auricink, .element-icon.AuricInk {
   background-image: url("../images/element/AuricInk.png");
 }
+.element-icon.lumiflux, .element-icon.Lumiflux {
+  background-image: url("../images/element/Lumiflux.png");
+}
 
 .prop-icon {
   aspect-ratio: 1;
