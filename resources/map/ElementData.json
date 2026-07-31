@@ -54,6 +54,15 @@
     "property_id": 318
   },
   {
+    "element_type": 204,
+    "sub_element_type": 0,
+    "zh": "风",
+    "zh_sub": "风",
+    "en": "Wind",
+    "en_sub": "Wind",
+    "property_id": 323
+  },
+  {
     "element_type": 205,
     "sub_element_type": 0,
     "zh": "以太",

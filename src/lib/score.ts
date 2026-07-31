@@ -5,7 +5,7 @@ import { char } from './convert.js'
 
 export const baseValueData = getMapData('EquipBaseValue')
 
-const elementType2propId = (elementType: number) => [31503, 31603, 31703, 31803, , 31903][elementType - 200]
+const elementType2propId = (elementType: number) => [31503, 31603, 31703, 31803, 32303, 31903][elementType - 200]
 
 /**
  * 将权重数据格式化为ID格式权重数据
