@@ -2,7 +2,7 @@ import { nameToId } from './convert/property.js';
 import { getMapData } from '../utils/file.js';
 import { char } from './convert.js';
 export const baseValueData = getMapData('EquipBaseValue');
-const elementType2propId = (elementType) => [31503, 31603, 31703, 31803, , 31903][elementType - 200];
+const elementType2propId = (elementType) => [31503, 31603, 31703, 31803, 32303, 31903][elementType - 200];
 export function formatScoreWeight(oriScoreWeight, charID) {
     if (!oriScoreWeight)
         return false;
