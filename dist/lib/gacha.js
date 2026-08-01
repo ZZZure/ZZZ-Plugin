@@ -1,4 +1,4 @@
-import { gacha_type_meta_data, gacha_type_meta_data_ck, item_type_ck, rarity_ck, FLOORS_MAP, HOMO_TAG, EMOJI, NORMAL_LIST, } from './gacha/const.js';
+import { gacha_type_meta_data, gacha_type_meta_data_ck, item_type_ck, rarity_ck, FLOORS_MAP, HOMO_TAG, EMOJI, NORMAL_LIST, CUSTOM_FM_LEAK_LIMIT_LIST, } from './gacha/const.js';
 import { getZZZGachaLogByAuthkey } from './gacha/core.js';
 import { getGachaLog, saveGachaLog } from './db.js';
 import { getLevelFromList } from './gacha/tool.js';
@@ -119,6 +119,10 @@ export const anaylizeGachaLog = async (uid) => {
             if (item.rank_type === '4') {
                 await item.get_assets();
                 if (NORMAL_LIST.includes(item.name)) {
+                    isUp = false;
+                }
+                if (new Date(item.time).getTime() > new Date('2026-07-29 00:00:00').getTime() &&
+                    CUSTOM_FM_LEAK_LIMIT_LIST.includes(+item.item_id)) {
                     isUp = false;
                 }
                 if (lastFive === null) {

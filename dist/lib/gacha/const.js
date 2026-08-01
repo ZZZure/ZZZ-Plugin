@@ -60,4 +60,12 @@ export const NORMAL_LIST = [
     '硫磺石',
     '啜泣摇篮',
 ];
+export const CUSTOM_FM_LEAK_LIMIT_LIST = [
+    1221,
+    1071,
+    1241,
+    14122,
+    14107,
+    14124,
+];
 //# sourceMappingURL=const.js.map

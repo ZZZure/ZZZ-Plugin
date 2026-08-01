@@ -79,7 +79,6 @@ export const downloadNanokaFile = async (_base, _localBase, filename = '') => {
     if (filename) {
         url += `/${filename}`;
     }
-    logger.debug('Nanoka file url:', url);
     const filepath = await checkFile(url, finalPath);
     if (filepath) {
         if (filename.endsWith('.json')) {
@@ -107,6 +106,7 @@ export const downloadNanokaFile = async (_base, _localBase, filename = '') => {
         }
     }
     else {
+        logger.debug('Nanoka file url:', url);
         return null;
     }
 };
