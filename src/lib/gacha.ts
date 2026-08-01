@@ -10,6 +10,7 @@ import {
   EMOJI,
   NORMAL_LIST,
   GachaType,
+  CUSTOM_FM_LEAK_LIMIT_LIST,
 } from './gacha/const.js'
 import { getZZZGachaLogByAuthkey } from './gacha/core.js'
 import { getGachaLog, saveGachaLog } from './db.js'
@@ -215,6 +216,13 @@ export const anaylizeGachaLog = async (uid: string) => {
         await item.get_assets()
         // 判断是否为常驻
         if (NORMAL_LIST.includes(item.name)) {
+          isUp = false
+        }
+        // 暂时将 2026-07-29 00:00:00 之后的所有可歪限定角色、音擎 视为非UP
+        if (
+          new Date(item.time).getTime() > new Date('2026-07-29 00:00:00').getTime() &&
+          CUSTOM_FM_LEAK_LIMIT_LIST.includes(+item.item_id)
+        ) {
           isUp = false
         }
         // 如果是第一个五星
