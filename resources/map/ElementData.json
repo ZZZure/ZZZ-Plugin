@@ -54,6 +54,15 @@
     "property_id": 318
   },
   {
+    "element_type": 204,
+    "sub_element_type": 0,
+    "zh": "风",
+    "zh_sub": "风",
+    "en": "Wind",
+    "en_sub": "Wind",
+    "property_id": 323
+  },
+  {
     "element_type": 205,
     "sub_element_type": 0,
     "zh": "以太",
@@ -70,5 +79,14 @@
     "en": "Ether",
     "en_sub": "AuricInk",
     "property_id": 319
+  },
+  {
+    "element_type": 300,
+    "sub_element_type": 0,
+    "zh": "流明",
+    "zh_sub": "流明",
+    "en": "Lumiflux",
+    "en_sub": "Lumiflux",
+    "property_id": 0
   }
 ]

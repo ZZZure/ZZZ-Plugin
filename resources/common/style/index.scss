@@ -233,6 +233,11 @@
     background-image: url('../images/element/Electric.png');
   }
 
+  &.wind,
+  &.Wind {
+    background-image: url('../images/element/Wind.png');
+  }
+
   &.ether,
   &.Ether {
     background-image: url('../images/element/Ether.png');
@@ -241,6 +246,11 @@
   &.auricink,
   &.AuricInk {
     background-image: url('../images/element/AuricInk.png');
+  }
+
+  &.lumiflux,
+  &.Lumiflux {
+    background-image: url('../images/element/Lumiflux.png');
   }
 }
 
@@ -324,6 +334,10 @@
 
   &.sheerforce {
     background-image: url('../images/property/IconSheerForce.png');
+  }
+
+  &.wind {
+    background-image: url('../images/property/IconWind.png');
   }
 }
 

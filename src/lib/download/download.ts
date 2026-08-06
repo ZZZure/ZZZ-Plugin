@@ -150,7 +150,6 @@ export const downloadNanokaFile = async<Base extends keyof typeof NanokaURL & {}
   if (filename) {
     url += `/${filename}`
   }
-  logger.debug('Nanoka file url:', url)
   const filepath = await checkFile(url, finalPath)
   if (filepath) {
     // 如果是JSON文件，返回JSON对象
@@ -185,6 +184,7 @@ export const downloadNanokaFile = async<Base extends keyof typeof NanokaURL & {}
       return filepath
     }
   } else {
+    logger.debug('Nanoka file url:', url)
     // @ts-expect-error
     return null
   }

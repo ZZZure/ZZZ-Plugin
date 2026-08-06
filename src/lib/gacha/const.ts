@@ -59,7 +59,7 @@ export const EMOJI = [
   [6, 14, 7],
 ]
 
-// 常驻名称
+/** 常驻角色、音擎 */
 export const NORMAL_LIST = [
   '「11号」',
   '猫又',
@@ -73,4 +73,14 @@ export const NORMAL_LIST = [
   '钢铁肉垫',
   '硫磺石',
   '啜泣摇篮',
+]
+
+/** 可歪限定角色、音擎 */
+export const CUSTOM_FM_LEAK_LIMIT_LIST = [
+  1221, // 月城柳
+  1071, // 凯撒
+  1241, // 朱鸢
+  14122, // 时流贤者
+  14107, // 奔袭獠牙
+  14124, // 防暴者Ⅵ型
 ]
