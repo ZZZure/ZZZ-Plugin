@@ -113,6 +113,10 @@ export default class ZZZApiTool {
                 url: `${this.hostRecord}event/game_record_zzz/api/zzz/abysss2_abstract`,
                 query: `lang=zh-cn&uid=${this.uid}&region=${this.server}`,
             },
+            zzzZenkov: {
+                url: `${this.hostRecord}event/game_record_zzz/api/zzz/zenkov_abstract_info`,
+                query: `lang=zh-cn&uid=${this.uid}&region=${this.server}`,
+            },
             zzzMonthly: {
                 url: `${this.host}event/nap_ledger/month_info`,
                 query: `uid=${this.uid}&region=${this.server}`,

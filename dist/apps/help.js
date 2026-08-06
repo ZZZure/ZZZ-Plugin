@@ -218,6 +218,13 @@ const helpData = [
                 needSK: false,
                 commands: ['迷失之地', '迷失'],
             },
+            {
+                title: '查看迷宫诡域数据',
+                desc: '查看迷宫诡域的赛季等级、周常委托、珍品图鉴等数据',
+                needCK: true,
+                needSK: false,
+                commands: ['迷宫诡域', '迷宫'],
+            },
         ],
     },
     {

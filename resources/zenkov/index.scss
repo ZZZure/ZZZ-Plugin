@@ -1,0 +1,376 @@
+.container {
+  width: 500px;
+}
+
+.card {
+  margin: 0 auto;
+  padding: 1em 0;
+
+  .hollow-zero-header {
+    text-align: center;
+    margin-bottom: 1em;
+
+    .hollow-zero-title {
+      color: #e6e6e6;
+      font-size: 2em;
+      margin: 0;
+      text-shadow: 2px 3px #383434;
+    }
+  }
+
+  .section-container {
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 0.4em solid #444;
+    border-radius: 1em;
+    padding: 1em;
+    margin-bottom: 1em;
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1em;
+
+      .section-title {
+        color: #e6e6e6;
+        font-size: 1.3em;
+        margin: 0;
+        text-shadow: 2px 3px #383434;
+      }
+    }
+  }
+
+  // 赛季卡片 (顶部区域)
+  .season-card {
+    display: flex;
+    min-height: 7.5em;
+
+    .info__left {
+      flex: 0 0 32%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid #3d3d3d;
+      padding-right: 1em;
+
+      .season-badge {
+        background-color: #282929;
+        color: #ffffff;
+        font-size: 0.85em;
+        padding: 0.15em 0.7em;
+        border-radius: 1em;
+        font-weight: bold;
+        white-space: nowrap;
+        margin-bottom: 0.2em;
+      }
+
+      .season-level-num {
+        font-size: 2.6em;
+        font-weight: bold;
+        color: #ffd700;
+        text-shadow: 2px 2px #222;
+        line-height: 1;
+        margin: 0.05em 0;
+      }
+
+      .season-level-label {
+        font-size: 0.85em;
+        color: #aaa;
+      }
+    }
+
+    .info__right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-left: 1em;
+
+      .info__right__top {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .status-badge {
+          height: 80%;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.95em;
+          border-radius: 0.5em;
+
+          &.unlocked {
+            background-color: rgba(30, 58, 41, 0.8);
+            color: #4cd964;
+            border: 1px solid rgba(76, 217, 100, 0.3);
+          }
+
+          &.locked {
+            background-color: rgba(58, 30, 30, 0.8);
+            color: #ff3b30;
+            border: 1px solid rgba(255, 59, 48, 0.3);
+          }
+        }
+      }
+
+      .info__right__bottom {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-top: 0.5em;
+
+        .season-time-text {
+          font-size: 0.9em;
+          color: #e6e6e6;
+        }
+      }
+    }
+  }
+
+  // 周常委托
+  .weekly-time-left {
+    color: #aaa;
+    font-size: 0.9em;
+  }
+
+  .weekly-progress-bar-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid #333;
+
+    .progress-label {
+      color: #aaa;
+      font-size: 1em;
+    }
+
+    .progress-value {
+      color: #ffd700;
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+  }
+
+  .weekly-stats-list {
+    .stats-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.4em;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .stats-label {
+        color: #979797;
+        font-size: 0.95em;
+      }
+
+      .stats-value {
+        color: #e6e6e6;
+        font-size: 1em;
+      }
+    }
+  }
+
+  // 地图列表
+  .map-table-header {
+    display: flex;
+    justify-content: space-between;
+    color: #888;
+    font-size: 0.9em;
+    padding-bottom: 0.5em;
+    margin-bottom: 0.5em;
+    border-bottom: 1px solid #333;
+
+    .col-name {
+      flex: 2;
+    }
+    .col-leave {
+      flex: 1;
+      text-align: center;
+    }
+    .col-price {
+      flex: 1;
+      text-align: right;
+    }
+  }
+
+  .map-list {
+    margin-bottom: 1em;
+
+    .map-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5em 0;
+      border-bottom: 1px dashed #333;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .map-name {
+        flex: 2;
+        color: #e6e6e6;
+        font-size: 1em;
+      }
+
+      .map-leave {
+        flex: 1;
+        text-align: center;
+        color: #4cd964;
+      }
+
+      .map-price {
+        flex: 1;
+        text-align: right;
+        color: #ffd700;
+      }
+
+      .map-locked-tips {
+        color: #666;
+        font-size: 0.9em;
+      }
+
+      &.locked {
+        .map-name {
+          color: #666;
+        }
+      }
+    }
+  }
+
+  .rank-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.5em;
+    border-top: 1px solid #333;
+
+    .rank-label {
+      color: #aaa;
+      font-size: 0.95em;
+    }
+
+    .rank-value {
+      color: #ff9500;
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+  }
+
+  // 珍品图鉴
+  .collection-sub-section {
+    margin-bottom: 1em;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .sub-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.6em;
+
+      .sub-title {
+        color: #ccc;
+        font-size: 1em;
+        font-weight: normal;
+      }
+
+      .sub-progress {
+        color: #ffd700;
+        font-size: 0.9em;
+      }
+    }
+
+    .medal-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8em;
+
+      .medal-item {
+        position: relative;
+        width: 3.5em;
+        height: 3.5em;
+        border-radius: 0.5em;
+        background: #222;
+        border: 1px solid #444;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+
+        .medal-icon {
+          width: 80%;
+          height: 80%;
+          object-fit: contain;
+        }
+
+        &.locked {
+          opacity: 0.4;
+          filter: grayscale(80%);
+        }
+      }
+    }
+
+    .goods-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.6em;
+
+      .goods-item {
+        position: relative;
+        aspect-ratio: 1;
+        border-radius: 0.5em;
+        background: #222;
+        border: 1px solid #444;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+
+        .goods-icon-wrap {
+          width: 85%;
+          height: 85%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          .goods-icon {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+          }
+        }
+
+        .goods-count {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          font-size: 0.75em;
+          color: #fff;
+          background-color: rgba(0, 0, 0, 0.65);
+          padding: 0.1em 0.35em;
+          border-top-left-radius: 0.3em;
+          border-bottom-right-radius: 0.5em;
+          line-height: 1.2;
+          z-index: 2;
+        }
+
+        &.locked {
+          opacity: 0.35;
+          filter: grayscale(90%);
+        }
+      }
+    }
+  }
+}
