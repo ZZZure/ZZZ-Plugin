@@ -1,0 +1,136 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" href="{{@sys.currentPath}}/index.css" />
+{{/block}} {{block 'main'}}
+<div class="card">
+  {{include sys.playerInfo}}
+
+  <!-- 标题 -->
+  <div class="hollow-zero-header">
+    <div class="hollow-zero-title">迷宫诡域</div>
+  </div>
+
+  <!-- 赛季信息 -->
+  <div class="section-container season-card">
+    <div class="info__left">
+      <div class="season-badge">
+        SEASON {{zenkov.season_data ? zenkov.season_data.cur_season_id : 1}}
+      </div>
+      <div class="season-level-num">{{zenkov.season_data ? zenkov.season_data.season_level : 1}}</div>
+      <div class="season-level-label">赛季等级</div>
+    </div>
+    <div class="info__right">
+      <div class="info__right__top">
+        <div class="status-badge {{zenkov.season_unlock ? 'unlocked' : 'locked'}}">
+          <span>{{zenkov.season_unlock ? '已解锁' : '未解锁'}}</span>
+        </div>
+      </div>
+      <div class="info__right__bottom">
+        <div class="season-time-text">
+          第{{zenkov.season_data ? zenkov.season_data.cur_season_id : 1}}赛季委托 剩余 {{zenkov.season_data ? zenkov.season_data.formatted_refresh_time : '0天'}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 周常委托 -->
+  <div class="section-container">
+    <div class="section-header">
+      <div class="section-title">周常委托</div>
+      <div class="weekly-time-left">本周剩余时间：{{zenkov.formatted_weekly_refresh_time || '00天00时'}}</div>
+    </div>
+    <div class="weekly-progress-bar-row">
+      <span class="progress-label">进度</span>
+      <span class="progress-value">{{zenkov.abyss_duty ? zenkov.abyss_duty.cur_duty : 0}} / {{zenkov.abyss_duty ? zenkov.abyss_duty.max_duty : 0}}</span>
+    </div>
+    <div class="weekly-stats-list">
+      <div class="stats-line">
+        <span class="stats-label">累计带出</span>
+        <span class="stats-value">{{zenkov.collect_total_value || '0'}}</span>
+      </div>
+      <div class="stats-line">
+        <span class="stats-label">Z级贵重物品获取次数</span>
+        <span class="stats-value">{{zenkov.big_red_num ?? '-'}}</span>
+      </div>
+      <div class="stats-line">
+        <span class="stats-label">百万撤离次数</span>
+        <span class="stats-value">{{zenkov.millions_evacuations ?? '-'}}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 地图 - 高危模式 -->
+  <div class="section-container">
+    <div class="section-header">
+      <div class="section-title">地图-高危模式</div>
+    </div>
+    <div class="map-table-header">
+      <span class="header-col col-name">地图</span>
+      <span class="header-col col-leave">撤离率</span>
+      <span class="header-col col-price">最高带出</span>
+    </div>
+    <div class="map-list">
+      {{each zenkov.map_list mapItem}}
+      <div class="map-item {{mapItem.hell_unlock ? '' : 'locked'}}">
+        <div class="map-name">{{mapItem.map_name}}</div>
+        {{if mapItem.hell_unlock}}
+        <div class="map-leave">{{mapItem.leave_percent}}%</div>
+        <div class="map-price">{{mapItem.max_price}}</div>
+        {{else}}
+        <div class="map-locked-tips">未解锁</div>
+        {{/if}}
+      </div>
+      {{/each}}
+    </div>
+    <div class="rank-row">
+      <span class="rank-label">本赛季最高排名：</span>
+      <span class="rank-value">{{zenkov.formatted_max_rank || '-'}}</span>
+    </div>
+  </div>
+
+  <!-- 珍品图鉴 -->
+  {{if zenkov.collection_data}}
+  <div class="section-container">
+    <div class="section-header">
+      <div class="section-title">珍品图鉴</div>
+    </div>
+
+    <!-- 勋章墙 -->
+    {{if zenkov.collection_data.medal_data}}
+    <div class="collection-sub-section">
+      <div class="sub-header">
+        <span class="sub-title">勋章墙</span>
+        <span class="sub-progress">{{zenkov.collection_data.medal_data.cur}} / {{zenkov.collection_data.medal_data.total}}</span>
+      </div>
+      <div class="medal-list">
+        {{each zenkov.collection_data.medal_data.list item}}
+        <div class="medal-item {{item.unlock ? '' : 'locked'}}" title="{{item.name}}">
+          <img src="{{item.medal_icon}}" alt="{{item.name}}" class="medal-icon" />
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+
+    <!-- 收藏展示 -->
+    {{if zenkov.collection_data.goods_data}}
+    <div class="collection-sub-section">
+      <div class="sub-header">
+        <span class="sub-title">收藏展示</span>
+        <span class="sub-progress">{{zenkov.collection_data.goods_data.cur}} / {{zenkov.collection_data.goods_data.total}}</span>
+      </div>
+      <div class="goods-grid">
+        {{each zenkov.collection_data.goods_data.list item}}
+        <div class="goods-item {{item.unlock ? '' : 'locked'}}" title="{{item.name}}">
+          <div class="goods-icon-wrap">
+            <img src="{{item.goods_icon}}" alt="{{item.name}}" class="goods-icon" />
+          </div>
+          <div class="goods-count">{{item.number}}</div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+  </div>
+  {{/if}}
+</div>
+{{/block}}

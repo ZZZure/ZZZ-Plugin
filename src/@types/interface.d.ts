@@ -99,6 +99,8 @@ export namespace Config {
     holoBoss: number
     /** 零号空洞 */
     hollowZero: number
+    /** 迷宫诡域 */
+    zenkov?: number
     /** 探索详情 */
     explorationDetail: number
     /** 抽卡 */
@@ -230,7 +232,71 @@ export namespace Mys {
     zzzHollowZeroChallenge: HollowZeroChallenge,
     zzzHollowZeroS2: HollowZeroS2,
     zzzHoloBoss: HoloBoss,
-    zzzHoloBossPeriod: HoloBoss
+    zzzHoloBossPeriod: HoloBoss,
+    zzzZenkov: Zenkov
+  }
+
+  /** 迷宫诡域数据 */
+  export interface Zenkov {
+    nick_name: string
+    avatar_icon: string
+    collect_total_value: string
+    big_red_num: string
+    millions_evacuations: string
+    refresh_time: number
+    abyss_duty: {
+      cur_duty: number
+      max_duty: number
+    }
+    abyss_unlock: boolean
+    season_unlock: boolean
+    season_data: {
+      cur_season_id: number
+      season_level: number
+      season_quest: {
+        cur_quest: number
+        max_quest: number
+      }
+      season_coin: {
+        cur_coin: number
+        max_coin: number
+      }
+      refresh_time: number
+      season_stage: number
+    }
+    map_list: {
+      map_id: number
+      map_name: string
+      hell_unlock: boolean
+      leave_percent: number
+      max_price: string
+      is_challenge: boolean
+    }[]
+    max_rank: number
+    is_show_percent: boolean
+    collection_data: {
+      medal_data: {
+        list: {
+          medal_icon: string
+          name: string
+          medal_id: number
+          unlock: boolean
+        }[]
+        cur: number
+        total: number
+      }
+      goods_data: {
+        list: {
+          goods_icon: string
+          number: number
+          name: string
+          goods_id: number
+          unlock: boolean
+        }[]
+        cur: number
+        total: number
+      }
+    }
   }
 
   /** 零号空洞数据 */
