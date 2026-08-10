@@ -132,6 +132,10 @@ export default class ZZZApiTool {
         url: `${this.hostRecord}event/game_record_zzz/api/zzz/zenkov_abstract_info`,
         query: `lang=zh-cn&uid=${this.uid}&region=${this.server}`,
       }, // 迷宫诡域
+      zzzZenkovDetail: {
+        url: `${this.hostRecord}event/game_record_zzz/api/zzz/zenkov_detail`,
+        query: `lang=zh-cn&uid=${this.uid}&region=${this.server}`,
+      }, // 迷宫诡域详细战绩
       zzzMonthly: {
         url: `${this.host}event/nap_ledger/month_info`,
         query: `uid=${this.uid}&region=${this.server}`,

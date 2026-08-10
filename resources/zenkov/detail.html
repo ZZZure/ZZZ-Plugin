@@ -1,0 +1,122 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" href="{{@sys.currentPath}}/detail.css" />
+{{/block}} {{block 'main'}}
+<div class="card container">
+  {{include sys.playerInfo}}
+
+  <!-- 标题 -->
+  <div class="hollow-zero-header">
+    <div class="hollow-zero-title">迷宫诡域战绩</div>
+  </div>
+
+  <!-- 第一大块：地图 - 高危模式 -->
+  <div class="section-container">
+    <div class="section-header">
+      <div class="section-title">地图-高危模式</div>
+    </div>
+    <div class="map-table-header">
+      <span class="header-col col-name">地图</span>
+      <span class="header-col col-leave">撤离率</span>
+      <span class="header-col col-price">最高带出</span>
+    </div>
+    <div class="map-list">
+      {{each zenkov.map_list mapItem}}
+      <div class="map-item {{mapItem.hell_unlock ? '' : 'locked'}}">
+        <div class="map-name">{{mapItem.map_name}}</div>
+        {{if mapItem.hell_unlock}}
+        <div class="map-leave">{{mapItem.leave_percent_display || mapItem.formatted_leave_percent || ((mapItem.leave_percent / 100) + '%')}}</div>
+        <div class="map-price">{{mapItem.max_price}}</div>
+        {{else}}
+        <div class="map-locked-tips">未解锁</div>
+        {{/if}}
+      </div>
+      {{/each}}
+    </div>
+    <div class="rank-row">
+      <span class="rank-label">本赛季最高排名：</span>
+      {{if zenkov.is_show_percent && zenkov.max_rank}}
+      <div class="rank-container">
+        <div class="rank-icon bg{{zenkov.rank_bg || 5}}"></div>
+        <div class="rank-text">{{zenkov.formatted_max_rank}}</div>
+      </div>
+      {{else}}
+      <span class="rank-value">-</span>
+      {{/if}}
+    </div>
+  </div>
+
+  <!-- 第二大块：探索记录 (详细战绩) -->
+  <div class="section-container">
+    <div class="section-header">
+      <div class="section-title">探索记录</div>
+    </div>
+
+    <div class="records-list">
+      {{each zenkov.record_list record}}
+      <div class="records-list__record">
+        <div class="records-list__record__hd">
+          <div class="map-name">{{record.map_name}}</div>
+          <div class="record-time">{{record.formatted_start_time}}</div>
+          <div class="difficulty {{record.difficult === 'Hell' ? 'hell' : ''}}">
+            <div class="diff-tag">{{record.formatted_difficult}}</div>
+          </div>
+        </div>
+
+        <div class="records-list__record__bd">
+          <!-- 第一行：左边（撤离成功、探索时长），右边（钱） -->
+          <div class="record-row row-top">
+            <div class="row-left">
+              <div class="result-text {{record.is_success ? 'success' : 'failed'}}">
+                <span class="result-label">{{record.is_success ? '撤离成功' : '撤离失败'}}</span>
+              </div>
+              <div class="game-duration">
+                <span class="duration-label">探索时长：</span>
+                <span class="duration-val">{{record.formatted_challenge_time}}</span>
+              </div>
+            </div>
+            <div class="row-right">
+              <div class="coins-wrapper">
+                <img src="{{@sys.currentPath}}/images/icon-fund.png" alt="" class="icon-fund" />
+                <div class="coins-text">{{record.formatted_material_total_value}}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 第二行：左边（角色），右边（调查收获） -->
+          <div class="record-row row-bottom">
+            <div class="row-left">
+              <div class="role-list">
+                {{each record.avatar_list avatar}}
+                <div class="role-card">
+                  <div class="avatar-wrap">
+                    <img src="{{avatar.role_square_url}}" class="avatar-img" />
+                  </div>
+                  {{if avatar.rank > 0}}
+                  <div class="rank-badge">{{avatar.rank}}</div>
+                  {{/if}}
+                </div>
+                {{/each}}
+              </div>
+            </div>
+            <div class="row-right">
+              <div class="gains-box">
+                <div class="gains-list__desc">调查收获</div>
+                <div class="gains-list__wrapper">
+                  {{each record.item_list item}}
+                  <div class="gain-card {{item.rarity_class || 'no-bg'}}" title="{{item.name}} ({{item.price}})">
+                    <div class="gain-card__inner">
+                      <div class="gain-icon" style="background-image: url('{{item.icon_url}}');"></div>
+                    </div>
+                  </div>
+                  {{/each}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
+{{/block}}

@@ -244,6 +244,13 @@ const helpData: HelpData[] = [
         needSK: false,
         commands: ['迷宫诡域', '迷宫'],
       },
+      {
+        title: '查看迷宫诡域战绩/详情',
+        desc: '查看迷宫诡域的高危模式地图与详细探索记录',
+        needCK: true,
+        needSK: false,
+        commands: ['迷宫战绩', '迷宫详情'],
+      },
     ],
   },
   {

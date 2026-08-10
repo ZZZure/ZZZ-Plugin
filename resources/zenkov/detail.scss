@@ -1,0 +1,258 @@
+@import './index.scss';
+
+// 详细战绩记录样式
+.records-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  .records-list__record {
+    background: rgba(20, 20, 20, 0.7);
+    border: 1px solid #3d3d3d;
+    border-radius: 0.8em;
+    padding: 0.9em 1em;
+    position: relative;
+    overflow: hidden;
+
+    .records-list__record__hd {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 0.6em;
+      border-bottom: 1px solid #333;
+      margin-bottom: 0.8em;
+
+      .map-name {
+        color: #e6e6e6;
+        font-size: 1.1em;
+        font-weight: bold;
+      }
+
+      .record-time {
+        color: #888;
+        font-size: 0.85em;
+      }
+
+      .difficulty {
+        .diff-tag {
+          background-color: #282929;
+          color: #ccc;
+          font-size: 0.8em;
+          padding: 0.15em 0.6em;
+          border-radius: 0.3em;
+        }
+
+        &.hell {
+          .diff-tag {
+            background-color: rgba(180, 40, 40, 0.8);
+            color: #fff;
+            border: 1px solid rgba(255, 80, 80, 0.4);
+          }
+        }
+      }
+    }
+
+    .records-list__record__bd {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8em;
+
+      .record-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        // 第一行：左边（撤离成功，探索时长分两行），右边（钱）
+        &.row-top {
+          align-items: center;
+
+          .row-left {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.25em;
+
+            .result-text {
+              font-size: 1.25em;
+              font-weight: bold;
+              line-height: 1.2;
+
+              &.success {
+                background: linear-gradient(270deg, rgb(157, 129, 80) 0%, rgb(233, 210, 136) 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                text-shadow: 0 0 10px rgba(233, 210, 136, 0.2);
+              }
+
+              &.failed {
+                color: #888;
+              }
+            }
+
+            .game-duration {
+              display: flex;
+              align-items: center;
+              font-size: 0.85em;
+
+              .duration-label {
+                color: #888;
+              }
+
+              .duration-val {
+                color: #e6e6e6;
+                font-weight: bold;
+              }
+            }
+          }
+
+          .row-right {
+            .coins-wrapper {
+              display: flex;
+              align-items: center;
+              gap: 0.4em;
+
+              .icon-fund {
+                width: 1.2em;
+                height: 1.2em;
+                object-fit: contain;
+              }
+
+              .coins-text {
+                color: #ffd700;
+                font-size: 1.3em;
+                font-weight: bold;
+                text-shadow: 1px 1px #222;
+              }
+            }
+          }
+        }
+
+        // 第二行：左边（角色 2.8em x 2.8em, gap 0.3em），右边（调查收获圆角框，收获图标 2.2em x 2.2em, gap 0.1em）
+        &.row-bottom {
+          align-items: flex-end;
+
+          .row-left {
+            .role-list {
+              display: flex;
+              gap: 0.3em;
+
+              .role-card {
+                position: relative;
+                width: 2.8em;
+                height: 2.8em;
+                border-radius: 0.4em;
+                overflow: hidden;
+                background: #252525;
+                border: 1px solid #3d3d3d;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+
+                .avatar-wrap {
+                  width: 100%;
+                  height: 100%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+
+                  .avatar-img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                  }
+                }
+
+                .rank-badge {
+                  position: absolute;
+                  top: 0;
+                  right: 0;
+                  background-color: rgba(0, 0, 0, 0.65);
+                  color: #fff;
+                  font-size: 0.65em;
+                  font-weight: bold;
+                  padding: 0.05em 0.25em;
+                  border-bottom-left-radius: 0.25em;
+                  line-height: 1;
+                  z-index: 2;
+                }
+              }
+            }
+          }
+
+          .row-right {
+            display: flex;
+            justify-content: flex-end;
+
+            .gains-box {
+              background: rgba(0, 0, 0, 0.35);
+              border: 1px solid #383838;
+              border-radius: 0.5em;
+              padding: 0.35em 0.5em;
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              gap: 0.25em;
+
+              .gains-list__desc {
+                color: #aaa;
+                font-size: 0.78em;
+                text-align: left;
+                width: 100%;
+              }
+
+              .gains-list__wrapper {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.1em;
+
+                .gain-card {
+                  position: relative;
+                  width: 2.2em;
+                  height: 2.2em;
+                  border-radius: 0.3em;
+                  background-size: 100% 100%;
+                  background-repeat: no-repeat;
+                  background-position: center;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+
+                  &.rarity-5 {
+                    background-image: url('./images/icon-gain-bg.png');
+                  }
+
+                  &.rarity-4 {
+                    background-image: url('./images/icon-gain-bg-yellow.png');
+                  }
+
+                  &.rarity-3 {
+                    background-image: url('./images/icon-gain-bg-purple.png');
+                  }
+
+                  &.no-bg {
+                    background-image: none;
+                    background-color: transparent;
+                  }
+
+                  .gain-card__inner {
+                    width: 80%;
+                    height: 80%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    .gain-icon {
+                      width: 100%;
+                      height: 100%;
+                      background-size: contain;
+                      background-repeat: no-repeat;
+                      background-position: center;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

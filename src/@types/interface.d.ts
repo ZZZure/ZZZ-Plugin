@@ -234,6 +234,7 @@ export namespace Mys {
     zzzHoloBoss: HoloBoss,
     zzzHoloBossPeriod: HoloBoss,
     zzzZenkov: Zenkov
+    zzzZenkovDetail: ZenkovDetail
   }
 
   /** 迷宫诡域数据 */
@@ -297,6 +298,61 @@ export namespace Mys {
         total: number
       }
     }
+  }
+
+  /** 迷宫诡域详细战绩数据 */
+  export interface ZenkovDetail {
+    map_list: {
+      map_id: number
+      map_name: string
+      hell_unlock: boolean
+      leave_percent: number
+      max_price: string
+      is_challenge: boolean
+    }[]
+    record_list: {
+      map_id: number
+      map_name: string
+      difficult: string
+      start_time: {
+        year: number
+        month: number
+        day: number
+        hour: number
+        minute: number
+        second: number
+      }
+      is_success: boolean
+      challenge_time: {
+        year: number
+        month: number
+        day: number
+        hour: number
+        minute: number
+        second: number
+      }
+      avatar_list: {
+        id: number
+        level: number
+        element_type: number
+        avatar_profession: number
+        rarity: string
+        rank: number
+        role_square_url: string
+        sub_element_type: number
+      }[]
+      item_list: {
+        id: number
+        name: string
+        icon_url: string
+        price: string
+        is_gt_million: boolean
+        rarity: number
+      }[]
+      material_total_value: string
+    }[]
+    max_rank: number
+    is_show_percent: boolean
   }
 
   /** 零号空洞数据 */
