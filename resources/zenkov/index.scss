@@ -1,5 +1,5 @@
 .container {
-  width: 500px;
+  width: 590px;
 }
 
 .card {
@@ -90,8 +90,64 @@
       .info__right__top {
         flex: 1;
         display: flex;
-        align-items: center;
+        flex-direction: column;
         justify-content: center;
+        gap: 0.3em;
+
+        .season-progress-text {
+          color: #aaa;
+          font-size: 0.85em;
+        }
+
+        .season-phase-row {
+          display: flex;
+          align-items: center;
+          gap: 0.5em;
+
+          .season-phase {
+            background-color: #282929;
+            color: #ffffff;
+            font-size: 0.8em;
+            padding: 0.1em 0.5em;
+            border-radius: 0.3em;
+          }
+
+          .season-phase-progress {
+            color: #ffd700;
+            font-size: 1.05em;
+            font-weight: bold;
+
+            .text-light {
+              color: #888;
+            }
+          }
+        }
+
+        .coins-progress-row {
+          display: flex;
+          align-items: center;
+          gap: 0.5em;
+
+          .coins-progress-text {
+            display: flex;
+            align-items: center;
+            gap: 0.3em;
+            color: #aaa;
+            font-size: 0.85em;
+
+            .icon-fund {
+              width: 1em;
+              height: 1em;
+              object-fit: contain;
+            }
+          }
+
+          .coins-val {
+            color: #ffd700;
+            font-size: 1em;
+            font-weight: bold;
+          }
+        }
 
         .status-badge {
           height: 80%;
@@ -119,12 +175,18 @@
       .info__right__bottom {
         display: flex;
         align-items: center;
-        justify-content: flex-end;
+        justify-content: space-between;
         margin-top: 0.5em;
 
-        .season-time-text {
-          font-size: 0.9em;
+        .season-left-text {
+          font-size: 0.85em;
+          color: #aaa;
+        }
+
+        .season-left-time {
+          font-size: 0.95em;
           color: #e6e6e6;
+          font-weight: bold;
         }
       }
     }
@@ -175,6 +237,15 @@
       .stats-value {
         color: #e6e6e6;
         font-size: 1em;
+        display: flex;
+        align-items: center;
+
+        .icon-fund-sm {
+          width: 0.9em;
+          height: 0.9em;
+          margin-right: 0.2em;
+          object-fit: contain;
+        }
       }
     }
   }
@@ -259,6 +330,30 @@
       font-size: 0.95em;
     }
 
+    .rank-container {
+      position: relative;
+      width: 5.5em;
+      height: 2.2em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .rank-icon {
+        width: 100%;
+        height: 100%;
+      }
+
+      .rank-text {
+        position: absolute;
+        top: 50%;
+        left: 40%;
+        transform: translate(-50%, -50%);
+        color: #222;
+        font-size: 0.9em;
+        z-index: 2;
+      }
+    }
+
     .rank-value {
       color: #ff9500;
       font-size: 1.1em;
@@ -331,16 +426,18 @@
         position: relative;
         aspect-ratio: 1;
         border-radius: 0.5em;
-        background: #222;
-        border: 1px solid #444;
+        background-image: url('./images/icon-gain-bg.png');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
         display: flex;
         align-items: center;
         justify-content: center;
         overflow: hidden;
 
         .goods-icon-wrap {
-          width: 85%;
-          height: 85%;
+          width: 80%;
+          height: 80%;
           display: flex;
           align-items: center;
           justify-content: center;

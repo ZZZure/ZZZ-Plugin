@@ -19,14 +19,36 @@
       <div class="season-level-label">赛季等级</div>
     </div>
     <div class="info__right">
+      {{if zenkov.season_unlock && zenkov.season_data}}
       <div class="info__right__top">
-        <div class="status-badge {{zenkov.season_unlock ? 'unlocked' : 'locked'}}">
-          <span>{{zenkov.season_unlock ? '已解锁' : '未解锁'}}</span>
+        <div class="season-progress-text">赛季委托</div>
+        <div class="season-phase-row">
+          <div class="season-phase">阶段{{zenkov.season_data.season_stage}}</div>
+          <div class="season-phase-progress"><span>{{zenkov.season_data.season_quest ? zenkov.season_data.season_quest.cur_quest : 0}}</span><span class="text-light">/{{zenkov.season_data.season_quest ? zenkov.season_data.season_quest.max_quest : 0}}</span></div>
+        </div>
+        <div class="coins-progress-row">
+          <div class="coins-progress-text">
+            <img src="{{@sys.currentPath}}/images/icon-season-coins.png" alt="" class="icon-fund" />
+            <span class="inner-text">获取上限</span>
+          </div>
+          <div class="coins-val">
+            {{zenkov.season_data.season_coin ? zenkov.season_data.season_coin.cur_coin : 0}}/{{zenkov.season_data.season_coin ? zenkov.season_data.season_coin.max_coin : 0}}
+          </div>
         </div>
       </div>
+      {{else}}
+      <div class="info__right__top">
+        <div class="status-badge locked">
+          <span>未解锁</span>
+        </div>
+      </div>
+      {{/if}}
       <div class="info__right__bottom">
-        <div class="season-time-text">
-          第{{zenkov.season_data ? zenkov.season_data.cur_season_id : 1}}赛季委托 剩余 {{zenkov.season_data ? zenkov.season_data.formatted_refresh_time : '0天'}}
+        <div class="season-left-text">
+          <span class="inner-text">第{{zenkov.season_data ? zenkov.season_data.cur_season_id : 1}}赛季委托</span>
+        </div>
+        <div class="season-left-time">
+          {{zenkov.season_data ? zenkov.season_data.formatted_refresh_time : '0天'}}
         </div>
       </div>
     </div>
@@ -45,7 +67,10 @@
     <div class="weekly-stats-list">
       <div class="stats-line">
         <span class="stats-label">累计带出</span>
-        <span class="stats-value">{{zenkov.collect_total_value || '0'}}</span>
+        <span class="stats-value">
+          <img src="{{@sys.currentPath}}/images/icon-fund.png" alt="" class="icon-fund-sm" />
+          {{zenkov.collect_total_value || '0'}}
+        </span>
       </div>
       <div class="stats-line">
         <span class="stats-label">Z级贵重物品获取次数</span>
@@ -73,7 +98,7 @@
       <div class="map-item {{mapItem.hell_unlock ? '' : 'locked'}}">
         <div class="map-name">{{mapItem.map_name}}</div>
         {{if mapItem.hell_unlock}}
-        <div class="map-leave">{{mapItem.leave_percent}}%</div>
+        <div class="map-leave">{{mapItem.leave_percent_display || mapItem.formatted_leave_percent || ((mapItem.leave_percent / 100) + '%')}}</div>
         <div class="map-price">{{mapItem.max_price}}</div>
         {{else}}
         <div class="map-locked-tips">未解锁</div>
@@ -83,7 +108,14 @@
     </div>
     <div class="rank-row">
       <span class="rank-label">本赛季最高排名：</span>
-      <span class="rank-value">{{zenkov.formatted_max_rank || '-'}}</span>
+      {{if zenkov.is_show_percent && zenkov.max_rank}}
+      <div class="rank-container">
+        <div class="rank-icon bg{{zenkov.rank_bg || 5}}"></div>
+        <div class="rank-text">{{zenkov.formatted_max_rank}}</div>
+      </div>
+      {{else}}
+      <span class="rank-value">-</span>
+      {{/if}}
     </div>
   </div>
 
@@ -124,7 +156,9 @@
           <div class="goods-icon-wrap">
             <img src="{{item.goods_icon}}" alt="{{item.name}}" class="goods-icon" />
           </div>
+          {{if item.number > 0}}
           <div class="goods-count">{{item.number}}</div>
+          {{/if}}
         </div>
         {{/each}}
       </div>

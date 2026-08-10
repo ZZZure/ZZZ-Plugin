@@ -65,12 +65,42 @@ export class Zenkov extends ZZZPlugin {
         this.formatTimeDays(zenkovDetail.season_data.refresh_time)
     }
 
-    // 格式化最高排名
+    // 格式化最高排名 (%防卫战 风格: 底图+数字，显示XX.YY%，不要+)
     let formattedRank = '-'
-    if (zenkovDetail.is_show_percent && zenkovDetail.max_rank) {
-      formattedRank = `${(zenkovDetail.max_rank / 100).toFixed(0)}%+`
+    let rankBg = 5
+    if (zenkovDetail.is_show_percent && zenkovDetail.max_rank !== undefined && zenkovDetail.max_rank !== null) {
+      const numRank = Number(zenkovDetail.max_rank)
+      if (!isNaN(numRank)) {
+        const pct = numRank > 100 ? numRank / 100 : numRank
+        formattedRank = `${pct.toFixed(2)}%`
+        if (pct < 1) rankBg = 1
+        else if (pct < 5) rankBg = 2
+        else if (pct < 10) rankBg = 3
+        else if (pct < 50) rankBg = 4
+        else rankBg = 5
+      }
     }
     ;(zenkovDetail as any).formatted_max_rank = formattedRank
+    ;(zenkovDetail as any).rank_bg = rankBg
+
+    // 格式化地图撤离率 (原数据如 10000 -> 100%)
+    if (Array.isArray(zenkovDetail.map_list)) {
+      zenkovDetail.map_list.forEach((mapItem: any) => {
+        if (mapItem.leave_percent !== undefined && mapItem.leave_percent !== null) {
+          const rawVal = Number(mapItem.leave_percent)
+          if (!isNaN(rawVal)) {
+            const pct = rawVal / 100
+            const formatted = `${pct.toFixed(pct % 1 === 0 ? 0 : 2)}%`
+            mapItem.formatted_leave_percent = formatted
+            mapItem.leave_percent_display = formatted
+          } else {
+            mapItem.leave_percent_display = `${mapItem.leave_percent}`
+          }
+        } else {
+          mapItem.leave_percent_display = '0%'
+        }
+      })
+    }
 
     // 注释：如果后续接口增加关卡详细阵容或详细战绩（如 zenkov_detail），在此处添加逻辑
 
