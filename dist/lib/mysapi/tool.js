@@ -13,7 +13,6 @@ export default class ZZZApiTool {
     hostRecord;
     hostPublicData;
     hostBbs = '';
-    hostGacha;
     zzzUrlMap;
     constructor(uid, server) {
         this.uid = uid;
@@ -27,14 +26,12 @@ export default class ZZZApiTool {
             this.hostRecord = 'https://api-takumi-record.mihoyo.com/';
             this.hostPublicData = 'https://public-data-api.mihoyo.com/';
             this.hostBbs = 'https://bbs-api.miyoushe.com/';
-            this.hostGacha = 'https://api-takumi-record.mihoyo.com/';
         }
         else {
             this.gameBiz = 'nap_global';
             this.host = 'https://sg-public-api.hoyolab.com/';
-            this.hostRecord = 'https://sg-act-nap-api.hoyolab.com/';
+            this.hostRecord = 'https://sg-act-public-api.hoyolab.com/';
             this.hostPublicData = 'https://sg-public-data-api.hoyoverse.com/';
-            this.hostGacha = 'https://sg-public-api.hoyolab.com/';
         }
         this.zzzUrlMap = {
             zzzUser: {
@@ -207,7 +204,7 @@ export default class ZZZApiTool {
                         },
                     }),
                 zzzGacha_Record: {
-                    url: `${this.hostGacha}event/game_record_zzz/api/zzz/gacha_record`,
+                    url: `${this.hostRecord}event/game_record_zzz/api/zzz/gacha_record`,
                     query: `lang=zh-cn&uid=${this.uid}&region=${this.server}&gacha_type=${data.type}&end_id=${data.endId}`,
                 },
                 ...this.zzzUrlMap,
