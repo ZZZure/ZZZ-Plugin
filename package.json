@@ -1,7 +1,7 @@
 {
   "name": "zzz-plugin",
   "type": "module",
-  "version": "2.0.0",
+  "version": "2.5.0",
   "description": "绝区零云崽插件",
   "main": "index.js",
   "keywords": [],
