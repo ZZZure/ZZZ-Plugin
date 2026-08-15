@@ -302,6 +302,12 @@
   font-size: 1.1em;
   font-weight: bold;
 }
+.card .rank-row .rank-value-top {
+  color: #ffd700;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-shadow: 1px 1px #222;
+}
 .card .collection-sub-section {
   margin-bottom: 1em;
 }

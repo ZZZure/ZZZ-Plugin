@@ -113,6 +113,8 @@
         <div class="rank-icon bg{{zenkov.rank_bg || 5}}"></div>
         <div class="rank-text">{{zenkov.formatted_max_rank}}</div>
       </div>
+      {{else if zenkov.max_rank}}
+      <span class="rank-value-top">{{zenkov.formatted_max_rank}}</span>
       {{else}}
       <span class="rank-value">-</span>
       {{/if}}
