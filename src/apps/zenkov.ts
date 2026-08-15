@@ -77,6 +77,35 @@ export class Zenkov extends ZZZPlugin {
     return num.toLocaleString('en-US')
   }
 
+  /**
+   * 格式化本赛季最高排名
+   * - is_show_percent=true:  百分比展示 XX.YY%（%防卫战风格底图+数字，按百分比映射 rank 背景阶级）
+   * - is_show_percent=false: 绝对排名展示 TOP XXX（金色文字）
+   * - 无有效数据: 占位 "-"
+   */
+  formatMaxRank(data: any): void {
+    let formattedRank = '-'
+    let rankBg = 5
+    if (data?.max_rank !== undefined && data?.max_rank !== null) {
+      const numRank = Number(data.max_rank)
+      if (!isNaN(numRank)) {
+        if (data.is_show_percent) {
+          const pct = numRank / 100
+          formattedRank = `${pct.toFixed(2)}%`
+          if (pct < 1) rankBg = 1
+          else if (pct < 5) rankBg = 2
+          else if (pct < 10) rankBg = 3
+          else if (pct < 50) rankBg = 4
+          else rankBg = 5
+        } else {
+          formattedRank = `TOP ${Math.floor(numRank)}`
+        }
+      }
+    }
+    data.formatted_max_rank = formattedRank
+    data.rank_bg = rankBg
+  }
+
   async zenkov() {
     const { api, deviceFp } = await this.getAPI()
     await this.getPlayerInfo()
@@ -104,23 +133,8 @@ export class Zenkov extends ZZZPlugin {
         this.formatTimeDays(zenkovDetail.season_data.refresh_time)
     }
 
-    // 格式化最高排名 (%防卫战 风格: 底图+数字，显示XX.YY%，不要+)
-    let formattedRank = '-'
-    let rankBg = 5
-    if (zenkovDetail.is_show_percent && zenkovDetail.max_rank !== undefined && zenkovDetail.max_rank !== null) {
-      const numRank = Number(zenkovDetail.max_rank)
-      if (!isNaN(numRank)) {
-        const pct = numRank > 100 ? numRank / 100 : numRank
-        formattedRank = `${pct.toFixed(2)}%`
-        if (pct < 1) rankBg = 1
-        else if (pct < 5) rankBg = 2
-        else if (pct < 10) rankBg = 3
-        else if (pct < 50) rankBg = 4
-        else rankBg = 5
-      }
-    }
-    ;(zenkovDetail as any).formatted_max_rank = formattedRank
-    ;(zenkovDetail as any).rank_bg = rankBg
+    // 格式化最高排名 (is_show_percent=true: 百分比底图; =false: TOP 绝对排名)
+    this.formatMaxRank(zenkovDetail)
 
     // 格式化地图撤离率 (原数据如 10000 -> 100%)
     if (Array.isArray(zenkovDetail.map_list)) {
@@ -165,23 +179,8 @@ export class Zenkov extends ZZZPlugin {
       return this.reply('暂无迷宫诡域详细战绩数据')
     }
 
-    // 格式化最高排名 (%防卫战 风格)
-    let formattedRank = '-'
-    let rankBg = 5
-    if (zenkovDetailData.is_show_percent && zenkovDetailData.max_rank !== undefined && zenkovDetailData.max_rank !== null) {
-      const numRank = Number(zenkovDetailData.max_rank)
-      if (!isNaN(numRank)) {
-        const pct = numRank > 100 ? numRank / 100 : numRank
-        formattedRank = `${pct.toFixed(2)}%`
-        if (pct < 1) rankBg = 1
-        else if (pct < 5) rankBg = 2
-        else if (pct < 10) rankBg = 3
-        else if (pct < 50) rankBg = 4
-        else rankBg = 5
-      }
-    }
-    ;(zenkovDetailData as any).formatted_max_rank = formattedRank
-    ;(zenkovDetailData as any).rank_bg = rankBg
+    // 格式化最高排名 (is_show_percent=true: 百分比底图; =false: TOP 绝对排名)
+    this.formatMaxRank(zenkovDetailData)
 
     // 格式化地图撤离率
     if (Array.isArray(zenkovDetailData.map_list)) {
