@@ -1,5 +1,5 @@
 import common from '../../../../lib/common/common.js'
-import { rulePrefix } from '../lib/common.js'
+import { getRecallMsg, rulePrefix } from '../lib/common.js'
 import { ZZZPlugin } from '../lib/plugin.js'
 import settings from '../lib/settings.js'
 import _ from 'lodash'
@@ -52,7 +52,7 @@ export class User extends ZZZPlugin {
     await this.reply(
       `为UID ${uid}绑定设备，请发送设备信息(建议私聊发送)，或者发送“取消”取消绑定`,
       false,
-      { at: true, recallMsg: 100 }
+      { at: true, recallMsg: getRecallMsg() }
     )
   }
 
@@ -64,22 +64,22 @@ export class User extends ZZZPlugin {
     }
     const msg = this.e.msg.trim()
     if (!msg) {
-      return this.reply('请发送设备信息', false, { at: true, recallMsg: 100 })
+      return this.reply('请发送设备信息', false, { at: true, recallMsg: getRecallMsg() })
     }
     if (msg.includes('取消')) {
       this.finish('toBindDevice')
-      return this.reply('已取消', false, { at: true, recallMsg: 100 })
+      return this.reply('已取消', false, { at: true, recallMsg: getRecallMsg() })
     }
     try {
       const info = JSON.parse(msg) as DeviceBindInfo | DeviceInfo
       if (!info) {
-        return this.reply('设备信息格式错误', false, { at: true, recallMsg: 100 })
+        return this.reply('设备信息格式错误', false, { at: true, recallMsg: getRecallMsg() })
       }
       if ((info as DeviceBindInfo)?.device_id && (info as DeviceBindInfo).device_fp) {
         this.finish('toBindDevice')
         await redis.set(`ZZZ:DEVICE_FP:${ltuid}:FP`, (info as DeviceBindInfo).device_fp)
         await redis.set(`ZZZ:DEVICE_FP:${ltuid}:ID`, (info as DeviceBindInfo).device_id)
-        return this.reply('绑定设备成功', false, { at: true, recallMsg: 100 })
+        return this.reply('绑定设备成功', false, { at: true, recallMsg: getRecallMsg() })
       }
       const deviceInfo = info as DeviceInfo
       if (
@@ -91,7 +91,7 @@ export class User extends ZZZPlugin {
         !deviceInfo?.deviceFingerprint ||
         !deviceInfo?.deviceProduct
       ) {
-        return this.reply('设备信息格式错误', false, { at: true, recallMsg: 100 })
+        return this.reply('设备信息格式错误', false, { at: true, recallMsg: getRecallMsg() })
       }
       await redis.del(`ZZZ:DEVICE_FP:${ltuid}:FP`)
       await redis.set(`ZZZ:DEVICE_FP:${ltuid}:BIND`, JSON.stringify(deviceInfo))
@@ -100,9 +100,9 @@ export class User extends ZZZPlugin {
         return this.reply('绑定设备失败')
       }
       logger.debug(`[LTUID:${ltuid}]绑定设备成功，deviceFp:${deviceFp}`)
-      await this.reply(`绑定设备成功${this.e.isGroup ? '\n请撤回设备信息' : ''}`, false, { at: true, recallMsg: 100 })
+      await this.reply(`绑定设备成功${this.e.isGroup ? '\n请撤回设备信息' : ''}`, false, { at: true, recallMsg: getRecallMsg() })
     } catch (error) {
-      return this.reply('设备信息格式错误', false, { at: true, recallMsg: 100 })
+      return this.reply('设备信息格式错误', false, { at: true, recallMsg: getRecallMsg() })
     } finally {
       this.finish('toBindDevice')
     }
@@ -115,7 +115,7 @@ export class User extends ZZZPlugin {
     await redis.del(`ZZZ:DEVICE_FP:${ltuid}:FP`)
     await redis.del(`ZZZ:DEVICE_FP:${ltuid}:BIND`)
     await redis.del(`ZZZ:DEVICE_FP:${ltuid}:ID`)
-    await this.reply('解绑设备成功', false, { at: true, recallMsg: 100 })
+    await this.reply('解绑设备成功', false, { at: true, recallMsg: getRecallMsg() })
   }
 
   async bindDeviceHelp() {

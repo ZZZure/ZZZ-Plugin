@@ -10,6 +10,7 @@ export class Manage extends ZZZPlugin {
   setDefaultGuide: typeof manage.guides.setDefaultGuide
   setMaxForwardGuide: typeof manage.guides.setMaxForwardGuide
   setRenderPrecision: typeof manage.config.setRenderPrecision
+  setRecallMsg: typeof manage.config.setRecallMsg
   setRefreshGachaInterval: typeof manage.config.setRefreshGachaInterval
   setRefreshPanelInterval: typeof manage.config.setRefreshPanelInterval
   setRefreshCharInterval: typeof manage.config.setRefreshCharInterval
@@ -54,6 +55,10 @@ export class Manage extends ZZZPlugin {
         {
           reg: `${rulePrefix}设置渲染精度(\\d+)$`,
           fnc: 'setRenderPrecision'
+        },
+        {
+          reg: `${rulePrefix}设置撤回时间(\\d+)$`,
+          fnc: 'setRecallMsg'
         },
         {
           reg: `${rulePrefix}刷新抽卡间隔(\\d+)$`,
@@ -127,6 +132,7 @@ export class Manage extends ZZZPlugin {
     this.setDefaultGuide = manage.guides.setDefaultGuide
     this.setMaxForwardGuide = manage.guides.setMaxForwardGuide
     this.setRenderPrecision = manage.config.setRenderPrecision
+    this.setRecallMsg = manage.config.setRecallMsg
     this.setRefreshGachaInterval = manage.config.setRefreshGachaInterval
     this.setRefreshPanelInterval = manage.config.setRefreshPanelInterval
     this.setRefreshCharInterval = manage.config.setRefreshCharInterval

@@ -46,6 +46,19 @@ export function supportGuoba() {
           },
         },
         {
+          field: 'config.recallMsg',
+          label: '消息撤回时间',
+          bottomHelpMessage:
+            '设置提示类消息（权限提示、参数错误、设置成功等）的自动撤回时间，单位为秒，可选值0~120，0为不自动撤回',
+          component: 'InputNumber',
+          required: true,
+          componentProps: {
+            min: 0,
+            max: 120,
+            placeholder: '请输入数字，0为不撤回',
+          },
+        },
+        {
           field: 'config.url',
           label: '绑定设备下载url',
           bottomHelpMessage: '设置自定义的绑定绑定设备下载url',

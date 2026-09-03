@@ -31,6 +31,8 @@ export namespace Config {
       /** 渲染精度 */
       scale: number
     }
+    /** 提示类消息自动撤回时间（秒），取值0~120，0为不撤回 */
+    recallMsg: number
     query: {
       /** 允许查询他人信息 */
     }
