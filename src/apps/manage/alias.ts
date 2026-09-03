@@ -1,5 +1,6 @@
 import type { EventType } from '#interface'
 import { char } from '../../lib/convert.js'
+import { rulePrefix } from '../../lib/common.js'
 import settings from '../../lib/settings.js'
 
 export async function addAlias(e: EventType) {
@@ -60,6 +61,30 @@ export async function deleteAlias(e: EventType) {
   }
   settings.removeArrayleConfig('alias', oriName, key)
   await e.reply(`角色 ${key} 别名删除成功`, false, {
+    at: true,
+    recallMsg: 100
+  })
+}
+
+export async function listAlias(e: EventType) {
+  // @ts-expect-error
+  e ||= this.e
+  const msg = e.msg.replace(new RegExp(rulePrefix), '').trim()
+  const match = /^(\S+)别名$/.exec(msg)
+  if (!match) return false
+  const [, key] = match
+  const oriName = char.aliasToName(key)
+  // 指令较为宽泛，未匹配到角色时交还给后续插件处理，避免误吞消息
+  if (!oriName) return false
+  const alias = settings.getConfig('alias')
+  const list = alias[oriName] || []
+  if (!list.length) {
+    return e.reply(`角色 ${oriName} 暂无别名，可发送“添加${oriName}别名xxx”添加`, false, {
+      at: true,
+      recallMsg: 100
+    })
+  }
+  return e.reply(`角色 ${oriName} 共 ${list.length} 个别名：\n${list.join('、')}`, false, {
     at: true,
     recallMsg: 100
   })
