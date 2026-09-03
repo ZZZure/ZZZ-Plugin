@@ -2,6 +2,7 @@ import type { EventType } from '#interface'
 import version from '../../lib/version.js'
 import { ZZZUpdate } from '../../lib/update.js'
 import { pluginName } from '../../lib/path.js'
+import { getRecallMsg } from '../../lib/common.js'
 import settings from '../../lib/settings.js'
 
 export async function getChangeLog(e: EventType) {
@@ -30,7 +31,7 @@ export async function getCommitLog(e: EventType) {
     } catch (error: any) {
       e.reply(`[${pluginName}]获取更新日志失败\n${error.message}`, false, {
         at: true,
-        recallMsg: 100
+        recallMsg: getRecallMsg()
       })
     }
   }
@@ -64,7 +65,7 @@ export async function enableAutoUpdatePush(e: EventType) {
   // @ts-expect-error
   e ||= this.e
   if (!e.isMaster) {
-    return e.reply('仅限主人设置', false, { at: true, recallMsg: 100 })
+    return e.reply('仅限主人设置', false, { at: true, recallMsg: getRecallMsg() })
   }
   let enable = true
   if (e.msg.includes('关闭')) {
@@ -74,7 +75,7 @@ export async function enableAutoUpdatePush(e: EventType) {
   await e.reply(
     `[${pluginName}]自动更新推送${enable ? '已开启' : '已关闭'}`,
     false,
-    { at: true, recallMsg: 100 }
+    { at: true, recallMsg: getRecallMsg() }
   )
 }
 
@@ -83,7 +84,7 @@ export async function setCheckUpdateCron(e: EventType) {
   // @ts-expect-error
   e ||= this.e
   if (!e.isMaster) {
-    return e.reply('仅限主人设置', false, { at: true, recallMsg: 100 })
+    return e.reply('仅限主人设置', false, { at: true, recallMsg: getRecallMsg() })
   }
   const cron = e.msg.split('时间')[1]
   if (!cron) {
@@ -92,13 +93,13 @@ export async function setCheckUpdateCron(e: EventType) {
       false,
       {
         at: true,
-        recallMsg: 100
+        recallMsg: getRecallMsg()
       }
     )
   }
   settings.setSingleConfig('config', 'update', { cron })
   await e.reply(`[${pluginName}]自动更新频率已设置为${cron}`, false, {
     at: true,
-    recallMsg: 100
+    recallMsg: getRecallMsg()
   })
 }

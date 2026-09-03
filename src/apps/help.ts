@@ -596,6 +596,13 @@ export class Help extends ZZZPlugin {
               commands: ['设置渲染精度+50~200'],
             },
             {
+              title: '设置撤回时间',
+              desc: '设置提示类消息的自动撤回时间，单位为秒，取值范围为0~120，0为不撤回',
+              needCK: false,
+              needSK: false,
+              commands: ['设置撤回时间+0~120'],
+            },
+            {
               title: '刷新抽卡间隔',
               desc: '设置刷新抽卡记录的冷却时间，单位为秒，取值范围为0～1000',
               needCK: false,

@@ -1,11 +1,12 @@
 import type { EventType } from '#interface'
 import { setGroupRankAllowed, removeGroupRank } from '../../lib/rank.js'
+import { getRecallMsg } from '../../lib/common.js'
 
 export async function switchGroupRank(e: EventType) {
   // @ts-expect-error
   e ||= this.e
   if (!e.isMaster) {
-    return e.reply('仅限主人设置', false, { at: true, recallMsg: 100 })
+    return e.reply('仅限主人设置', false, { at: true, recallMsg: getRecallMsg() })
   }
   // 使用正则判断是否包含"开启"
   const enableRegex = /开启|打开|on|启用|启动/i
@@ -19,14 +20,14 @@ export async function switchGroupRank(e: EventType) {
   } else {
     // 如果都不匹配，默认使用开启/关闭的逻辑（根据是否有"开启"）
     // 或者返回错误提示
-    return e.reply('请输入"开启"或"关闭"来设置群内深渊排名功能', false, { at: true, recallMsg: 100 })
+    return e.reply('请输入"开启"或"关闭"来设置群内深渊排名功能', false, { at: true, recallMsg: getRecallMsg() })
   }
   setGroupRankAllowed(isEnable)
   const enableString = isEnable ? '开启' : '关闭'
   await e.reply(
     `绝区零群内深渊排名功能已设置为: ${enableString}`,
     false,
-    { at: true, recallMsg: 100 }
+    { at: true, recallMsg: getRecallMsg() }
   )
 }
 
@@ -56,8 +57,8 @@ export async function resetGroupRank(e: EventType) {
     for (const rank_type of rank_types) {
       await removeGroupRank(rank_type, e.group_id)
     }
-    return e.reply(`清除${rank_type_str}排名成功！`, false, { at: true, recallMsg: 100 })
+    return e.reply(`清除${rank_type_str}排名成功！`, false, { at: true, recallMsg: getRecallMsg() })
   } else {
-    return e.reply('仅限主人操作', false, { at: true, recallMsg: 100 })
+    return e.reply('仅限主人操作', false, { at: true, recallMsg: getRecallMsg() })
   }
 }
