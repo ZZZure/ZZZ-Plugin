@@ -1,1 +1,63 @@
-{"version":3,"file":"request.js","sourceRoot":"","sources":["../../src/utils/request.ts"],"names":[],"mappings":"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"}
+import fetch from 'node-fetch';
+const _request = async (url, options) => {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    else if (response.status < 200 || response.status >= 300) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response;
+};
+const request = (url, options = {}, retry = 0, timeout = 15000) => {
+    let err;
+    options.headers = {
+        'Content-Type': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+        Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+        'Accept-Encoding': 'gzip, deflate',
+        'Sec-Ch-Ua': '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
+        'Sec-Ch-Ua-Mobile': '?0',
+        'Sec-Ch-Ua-Platform': '"Windows"',
+        'Sec-Fetch-Dest': 'document',
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'none',
+        'Sec-Fetch-User': '?1',
+        ...(options?.headers || {}),
+    };
+    const _fetch = async (url, options, retryCount = 0) => {
+        if (retryCount > retry) {
+            throw new Error('Retry limit reached', err);
+        }
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
+        try {
+            return await _request(url, { signal: controller.signal, ...options });
+        } catch (error) {
+            logger.debug(`请求失败：` +
+                (error.name === 'AbortError'
+                    ? 'Request timed out '
+                    : `Fetch error: ${error.message} `) + url);
+            err = error;
+            return await _fetch(url, options, retryCount + 1);
+        } finally {
+            clearTimeout(timeoutId);
+        }
+    };
+    return _fetch(url, options);
+};
+request.get = async (url, data = {}, options = {}) => {
+    const u = new URL(url);
+    for (const key in data) {
+        u.searchParams.append(key, data[key]);
+    }
+    const { retry, timeout, ...restOptions } = options;
+    return request(u.toString(), { ...restOptions, method: 'GET' }, retry, timeout);
+};
+request.post = async (url, data, options = {}) => {
+    const body = JSON.stringify(data);
+    const { retry, timeout, ...restOptions } = options;
+    return request(url, { ...restOptions, method: 'POST', body }, retry, timeout);
+};
+export default request;
