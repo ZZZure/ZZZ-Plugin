@@ -15,6 +15,7 @@ export class Manage extends ZZZPlugin {
   setRefreshCharInterval: typeof manage.config.setRefreshCharInterval
   addAlias: typeof manage.alias.addAlias
   deleteAlias: typeof manage.alias.deleteAlias
+  listAlias: typeof manage.alias.listAlias
   uploadCharacterImg: typeof manage.panel.uploadCharacterImg
   getCharacterImages: typeof manage.panel.getCharacterImages
   deleteCharacterImg: typeof manage.panel.deleteCharacterImg
@@ -76,6 +77,10 @@ export class Manage extends ZZZPlugin {
           fnc: 'deleteAlias'
         },
         {
+          reg: `${rulePrefix}(\\S+)别名$`,
+          fnc: 'listAlias'
+        },
+        {
           reg: `${rulePrefix}(上传|添加)(\\S+)(角色|面板)图$`,
           fnc: 'uploadCharacterImg'
         },
@@ -132,6 +137,7 @@ export class Manage extends ZZZPlugin {
     this.setRefreshCharInterval = manage.config.setRefreshCharInterval
     this.addAlias = manage.alias.addAlias
     this.deleteAlias = manage.alias.deleteAlias
+    this.listAlias = manage.alias.listAlias
     this.uploadCharacterImg = manage.panel.uploadCharacterImg
     this.getCharacterImages = manage.panel.getCharacterImages
     this.deleteCharacterImg = manage.panel.deleteCharacterImg

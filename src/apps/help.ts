@@ -624,6 +624,13 @@ export class Help extends ZZZPlugin {
               commands: ['删除别名+角色别名'],
             },
             {
+              title: '查看角色别名',
+              desc: '查看某个角色当前可用的全部别名',
+              needCK: false,
+              needSK: false,
+              commands: ['角色名+别名'],
+            },
+            {
               title: '上传角色面板图',
               desc: '上传自定义角色面板图，可以随消息附带图片，可以通过引用消息中的图片上传',
               needCK: false,
