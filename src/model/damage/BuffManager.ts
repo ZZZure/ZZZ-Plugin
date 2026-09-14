@@ -44,7 +44,7 @@ export enum buffTypeEnum {
 export type buffType = keyof typeof buffTypeEnum
 
 export enum professionEnum {
-  强攻 = 1, 击破, 异常, 支援, 防护, 命破
+  强攻 = 1, 击破, 异常, 支援, 防护, 命破, 锋御
 }
 
 /** ID 2 EN */
