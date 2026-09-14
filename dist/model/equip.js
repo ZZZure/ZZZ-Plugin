@@ -66,7 +66,7 @@ export class Equip {
     equip_suit;
     equipment_type;
     suit_icon;
-    score;
+    score = false;
     constructor(data) {
         const { id, level, name, icon, rarity, properties, main_properties, equip_suit, equipment_type, } = data;
         this.id = id;
@@ -88,13 +88,18 @@ export class Equip {
         this.suit_icon = result;
     }
     get_score(weight) {
-        if (!weight)
+        if (!weight) {
+            this.score = false;
             return this.score;
+        }
         this.properties.forEach(item => item.base_score = weight[item.property_id] || 0);
         this.score = Score.main(this, weight);
         return this.score;
     }
     get comment() {
+        if (this.score === false) {
+            return false;
+        }
         if (this.score <= 12) {
             return 'C';
         }

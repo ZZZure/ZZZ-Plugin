@@ -250,6 +250,15 @@
 .prop-icon.sheerforce {
   background-image: url("../images/property/IconSheerForce.png");
 }
+.prop-icon.laceration {
+  background-image: url("../images/property/IconLaceration.svg");
+}
+.prop-icon.sharpnessaccumulate {
+  background-image: url("../images/property/IconSharpnessAccumulate.svg");
+}
+.prop-icon.adrenalineaccumulate {
+  background-image: url("../images/property/IconAdrenalineAccumulate.svg");
+}
 .prop-icon.wind {
   background-image: url("../images/property/IconWind.png");
 }
@@ -274,6 +283,12 @@
 }
 .pro-icon.support {
   background-image: url("../images/profession/IconSupport.png");
+}
+.pro-icon.rupture {
+  background-image: url("../images/profession/IconRupture.png");
+}
+.pro-icon.armorer {
+  background-image: url("../images/profession/IconArmorer.png");
 }
 
 .skill-icon {

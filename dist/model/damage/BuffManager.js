@@ -56,6 +56,7 @@ export var professionEnum;
     professionEnum[professionEnum["\u652F\u63F4"] = 4] = "\u652F\u63F4";
     professionEnum[professionEnum["\u9632\u62A4"] = 5] = "\u9632\u62A4";
     professionEnum[professionEnum["\u547D\u7834"] = 6] = "\u547D\u7834";
+    professionEnum[professionEnum["\u950B\u5FA1"] = 7] = "\u950B\u5FA1";
 })(professionEnum || (professionEnum = {}));
 export const elementType2element = (elementType) => elementEnum[elementType];
 export const runtime = { elementType2element, rarityEnum, elementEnum, anomalyEnum, buffTypeEnum, professionEnum };

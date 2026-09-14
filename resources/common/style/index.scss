@@ -336,6 +336,18 @@
     background-image: url('../images/property/IconSheerForce.png');
   }
 
+  &.laceration {
+    background-image: url('../images/property/IconLaceration.svg');
+  }
+
+  &.sharpnessaccumulate {
+    background-image: url('../images/property/IconSharpnessAccumulate.svg');
+  }
+
+  &.adrenalineaccumulate {
+    background-image: url('../images/property/IconAdrenalineAccumulate.svg');
+  }
+
   &.wind {
     background-image: url('../images/property/IconWind.png');
   }
@@ -365,6 +377,14 @@
 
   &.support {
     background-image: url('../images/profession/IconSupport.png');
+  }
+
+  &.rupture {
+    background-image: url('../images/profession/IconRupture.png');
+  }
+
+  &.armorer {
+    background-image: url('../images/profession/IconArmorer.png');
   }
 }
 

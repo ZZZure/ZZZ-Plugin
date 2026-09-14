@@ -52,6 +52,19 @@
             {{/if}}
             <div class="value">{{basic_properties.hpmax.final}}</div>
           </div>
+          {{if charData.avatar_profession === 7}}
+          <div class="properties">
+            <div class="prop-icon laceration"></div>
+            <div class="label yellow">锐暴伤害</div>
+            {{if basic_properties.laceration && basic_properties.laceration.base && basic_properties.laceration.add && basic_properties.laceration.add[0] != '0'}}
+            <div class="value-detail no-zzz-font">
+              <span class="base">{{basic_properties.laceration.base}}</span>
+              <span class="add">+{{basic_properties.laceration.add}}</span>
+            </div>
+            {{/if}}
+            <div class="value">{{basic_properties.laceration ? basic_properties.laceration.final : 0}}</div>
+          </div>
+          {{else}}
           <div class="properties">
             <div class="prop-icon attack"></div>
             <div class="label {{charData.get_label(12102)}}">攻击力</div>
@@ -63,6 +76,7 @@
             {{/if}}
             <div class="value">{{basic_properties.attack.final}}</div>
           </div>
+          {{/if}}
           <div class="properties">
             <div class="prop-icon def"></div>
             <div class="label {{charData.get_label(13102)}}">防御力</div>
@@ -142,8 +156,8 @@
             <div class="value">{{basic_properties.sheerforce ? basic_properties.sheerforce.final : 0}}</div>
           </div>
           <div class="properties">
-            <div class="prop-icon sprecover"></div>
-            <div class="label white">闪能累积</div>
+            <div class="prop-icon adrenalineaccumulate"></div>
+            <div class="label white">闪能自动累积</div>
             {{if basic_properties.adrenalineaccumulate && basic_properties.adrenalineaccumulate.base && basic_properties.adrenalineaccumulate.add && basic_properties.adrenalineaccumulate.add[0] != '0'}}
             <div class="value-detail no-zzz-font">
               <span class="base">{{basic_properties.adrenalineaccumulate.base}}</span>
@@ -164,9 +178,22 @@
             {{/if}}
             <div class="value">{{basic_properties.penratio.final}}</div>
           </div>
+          {{if charData.avatar_profession === 7}}
+          <div class="properties">
+            <div class="prop-icon sharpnessaccumulate"></div>
+            <div class="label white">锐能自动累积</div>
+            {{if basic_properties.sharpnessaccumulate && basic_properties.sharpnessaccumulate.base && basic_properties.sharpnessaccumulate.add && basic_properties.sharpnessaccumulate.add[0] != '0'}}
+            <div class="value-detail no-zzz-font">
+              <span class="base">{{basic_properties.sharpnessaccumulate.base}}</span>
+              <span class="add">+{{basic_properties.sharpnessaccumulate.add}}</span>
+            </div>
+            {{/if}}
+            <div class="value">{{basic_properties.sharpnessaccumulate ? basic_properties.sharpnessaccumulate.final : 0}}</div>
+          </div>
+          {{else}}
           <div class="properties">
             <div class="prop-icon sprecover"></div>
-            <div class="label {{charData.get_label(30502)}}">能量回复</div>
+            <div class="label {{charData.get_label(30502)}}">能量自动回复</div>
             {{if basic_properties.sprecover.base && basic_properties.sprecover.add && basic_properties.sprecover.add[0] != '0'}}
             <div class="value-detail no-zzz-font">
               <span class="base">{{basic_properties.sprecover.base}}</span>
@@ -175,6 +202,7 @@
             {{/if}}
             <div class="value">{{basic_properties.sprecover.final}}</div>
           </div>
+          {{/if}}
           {{/if}}
           {{if basic_properties.dmgbonus}}
           <div class="properties">
@@ -285,7 +313,7 @@
           <div class="rarity-icon {{equip.rarity}}"></div>
         </div>
         <div class="name">{{equip.name}}</div>
-        {{if equip.score !== false}}
+        {{if typeof equip.score === 'number'}}
         <div class="score {{equip.comment}}">
           <div class="comment">{{equip.comment}}</div>
           <div class="value">{{equip.score.toFixed(2)}}</div>

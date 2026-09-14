@@ -20,6 +20,8 @@ const prop_id = {
     318: 'thunder',
     319: 'dungeonbuffether',
     323: 'wind',
+    25: 'sharpnessaccumulate',
+    28: 'laceration',
 };
 const pro_id = {
     1: 'attack',
@@ -27,6 +29,8 @@ const pro_id = {
     3: 'anomaly',
     4: 'support',
     5: 'defense',
+    6: 'rupture',
+    7: 'armorer',
 };
 export function idToClassName(_id) {
     const propId = +_id.toString().slice(0, 3);

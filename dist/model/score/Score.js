@@ -128,6 +128,9 @@ export default class Score {
                 case professionEnum.命破:
                     def_weight = ['命破·双爆'];
                     break;
+                case professionEnum.锋御:
+                    def_weight = ['锋御·双爆'];
+                    break;
             }
         }
         const delRules = (rules) => {
@@ -248,6 +251,23 @@ const predefinedWeights = {
             "暴击伤害": 1,
             "穿透率": 0,
             "穿透值": 0,
+            "能量自动回复": 0,
+            "异常精通": 0,
+            "异常掌控": 0,
+            "属性伤害加成": 1
+        }
+    },
+    锋御·双爆: {
+        rule: () => true,
+        value: {
+            "生命值百分比": 0,
+            "攻击力百分比": 0,
+            "防御力百分比": 1,
+            "冲击力": 0,
+            "暴击率": 1,
+            "暴击伤害": 0.75,
+            "穿透率": 1,
+            "穿透值": 0.25,
             "能量自动回复": 0,
             "异常精通": 0,
             "异常掌控": 0,
