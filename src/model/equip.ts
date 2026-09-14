@@ -79,7 +79,8 @@ export class Equip {
   equip_suit: Mys.EquipSuit
   equipment_type: number
   suit_icon: string | null
-  score: any
+  /** 无评分权重时为 false，模板据此隐藏分数 */
+  score: number | false = false
 
   constructor(data: Mys.Avatar['equip'][number]) {
     const {
@@ -121,14 +122,20 @@ export class Equip {
    * 获取装备属性分数
    * @param weight 权重
    */
-  get_score(weight: { [propID: string]: number }): number {
-    if (!weight) return this.score
+  get_score(weight: { [propID: string]: number }): number | false {
+    if (!weight) {
+      this.score = false
+      return this.score
+    }
     this.properties.forEach(item => item.base_score = weight[item.property_id] || 0)
     this.score = Score.main(this, weight)
     return this.score
   }
 
   get comment() {
+    if (this.score === false) {
+      return false
+    }
     if (this.score <= 12) {
       return 'C'
     }

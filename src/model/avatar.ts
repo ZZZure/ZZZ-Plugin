@@ -283,9 +283,11 @@ export class ZZZAvatarInfo {
       elementabnormalpower: this.getProperty('异常掌控'),
       elementmystery: this.getProperty('异常精通'),
       sheerforce: this.getProperty('贯穿力'),
+      laceration: this.getProperty('锐暴伤害'),
       penratio: this.getProperty('穿透率'),
       sprecover: this.getProperty('能量自动回复'),
       adrenalineaccumulate: this.getProperty('闪能自动累积'),
+      sharpnessaccumulate: this.getProperty('锐能自动累积'),
       /** 属性增伤 */
       dmgbonus: this.properties.find(property => property.property_id == element.idToPropertyId(this.element_type)),
     }
@@ -351,7 +353,7 @@ export class ZZZAvatarInfo {
     if (this.scoreWeight) {
       let score = 0
       for (const equip of this.equip) {
-        score += equip.score
+        score += equip.score || 0
       }
       return score
     }
