@@ -1,6 +1,18 @@
 import User from '../../../genshin/model/user.js';
 import { getStoken } from './authkey.js';
+import settings from './settings.js';
 export const rulePrefix = '^((#|%|/)?(zzz|ZZZ|绝区零))';
+export const DEFAULT_RECALL_MSG = 100;
+export const MAX_RECALL_MSG = 120;
+export const getRecallMsg = () => {
+    const raw = settings.getConfig('config')?.recallMsg;
+    const value = typeof raw === 'number' || (typeof raw === 'string' && raw.trim() !== '')
+        ? Number(raw)
+        : NaN;
+    if (!Number.isFinite(value) || value < 0)
+        return DEFAULT_RECALL_MSG;
+    return Math.min(MAX_RECALL_MSG, Math.floor(value));
+};
 export const getCk = async (e, s = false) => {
     e.isZZZ = true;
     let stoken = '';

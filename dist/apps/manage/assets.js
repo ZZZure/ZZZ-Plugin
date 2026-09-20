@@ -5,13 +5,14 @@ import { getAllSuitID } from '../../lib/convert/equip.js';
 import { getAllWeaponID } from '../../lib/convert/weapon.js';
 import { getAllBangbooID } from '../../lib/convert/bangboo.js';
 import * as LocalURI from '../../lib/download/const.js';
+import { getRecallMsg } from '../../lib/common.js';
 let downloading = false;
 export async function downloadAll(e) {
     e ||= this.e;
     if (!e.isMaster)
         return false;
     if (downloading) {
-        return e.reply('下载任务正在进行中，请稍后再试', false, { at: true, recallMsg: 100 });
+        return e.reply('下载任务正在进行中，请稍后再试', false, { at: true, recallMsg: getRecallMsg() });
     }
     const charIDs = char.getAllCharactersID();
     const equipSprites = getAllSuitID();
@@ -64,7 +65,7 @@ export async function downloadAll(e) {
         }
     };
     downloading = true;
-    await e.reply('开始下载全部资源：代理人、音擎、驱动盘、邦布图片等，请耐心等待……', false, { at: true, recallMsg: 100 });
+    await e.reply('开始下载全部资源：代理人、音擎、驱动盘、邦布图片等，请耐心等待……', false, { at: true, recallMsg: getRecallMsg() });
     const downloadFnc = async (fnc, id, info) => {
         try {
             const res = await fnc(id);
@@ -116,13 +117,13 @@ export async function deleteAll(e) {
     e ||= this.e;
     if (!e.isMaster)
         return false;
-    await e.reply('【注意】正在删除所有资源图片，后续使用需要重新下载！', false, { at: true, recallMsg: 100 });
+    await e.reply('【注意】正在删除所有资源图片，后续使用需要重新下载！', false, { at: true, recallMsg: getRecallMsg() });
     for (const dir of Object.values(LocalURI)) {
         logger.debug(`删除文件夹：${dir}`);
         if (fs.existsSync(dir)) {
             fs.rmSync(dir, { recursive: true, force: true });
         }
     }
-    await e.reply('资源图片已删除！', false, { at: true, recallMsg: 100 });
+    await e.reply('资源图片已删除！', false, { at: true, recallMsg: getRecallMsg() });
 }
 //# sourceMappingURL=assets.js.map

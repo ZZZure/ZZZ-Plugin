@@ -4,7 +4,7 @@ import { gacha_type_meta_data } from '../lib/gacha/const.js';
 import { getQueryVariable } from '../utils/network.js';
 import common from '../../../../lib/common/common.js';
 import { getAuthKey } from '../lib/authkey.js';
-import { rulePrefix } from '../lib/common.js';
+import { getRecallMsg, rulePrefix } from '../lib/common.js';
 import { ZZZPlugin } from '../lib/plugin.js';
 import settings from '../lib/settings.js';
 import _ from 'lodash';
@@ -62,14 +62,14 @@ export class GachaLog extends ZZZPlugin {
             if (!currentGroup) {
                 return this.reply('获取群聊ID失败，请尝试私聊发送抽卡链接', false, {
                     at: true,
-                    recallMsg: 100
+                    recallMsg: getRecallMsg()
                 });
             }
             if (!allowGroup) {
                 if (whiteList.length <= 0 || !whiteList?.includes(currentGroup)) {
                     return this.reply('当前群聊未开启链接刷新抽卡记录功能，请私聊发送', false, {
                         at: true,
-                        recallMsg: 100
+                        recallMsg: getRecallMsg()
                     });
                 }
             }
@@ -77,20 +77,20 @@ export class GachaLog extends ZZZPlugin {
                 if (blackList.length > 0 && blackList?.includes(currentGroup)) {
                     return this.reply('当前群聊未开启链接刷新抽卡记录功能，请私聊发送', false, {
                         at: true,
-                        recallMsg: 100
+                        recallMsg: getRecallMsg()
                     });
                 }
             }
-            await this.reply('请注意，当前在群聊中发送抽卡链接，包含authkey，其他人获取authkey可能导致未知后果，请谨慎操作，请在机器人回复你获取链接成功后及时撤回抽卡链接消息。', false, { at: true, recallMsg: 100 });
+            await this.reply('请注意，当前在群聊中发送抽卡链接，包含authkey，其他人获取authkey可能导致未知后果，请谨慎操作，请在机器人回复你获取链接成功后及时撤回抽卡链接消息。', false, { at: true, recallMsg: getRecallMsg() });
         }
         this.setContext('gachaLog');
-        await this.reply('请发送抽卡链接，发送“取消”即可取消本次抽卡链接刷新', false, { at: true, recallMsg: 100 });
+        await this.reply('请发送抽卡链接，发送“取消”即可取消本次抽卡链接刷新', false, { at: true, recallMsg: getRecallMsg() });
     }
     async gachaLog() {
         const msg = this.e.msg.trim();
         if (msg.includes('取消')) {
             this.finish('gachaLog');
-            return this.reply('已取消', false, { at: true, recallMsg: 100 });
+            return this.reply('已取消', false, { at: true, recallMsg: getRecallMsg() });
         }
         const key = getQueryVariable(msg, 'authkey');
         const region = getQueryVariable(msg, 'region');
@@ -99,7 +99,7 @@ export class GachaLog extends ZZZPlugin {
             this.finish('gachaLog');
             return this.reply('抽卡链接格式错误，请重新发起%抽卡链接', false, {
                 at: true,
-                recallMsg: 100
+                recallMsg: getRecallMsg()
             });
         }
         this.finish('gachaLog');
@@ -138,7 +138,7 @@ export class GachaLog extends ZZZPlugin {
         return this.reply(await common.makeForwardMsg(this.e, msg, '抽卡记录更新成功'));
     }
     async getLogWithOutUID(key, region, game_biz) {
-        await this.reply('抽卡链接解析成功，正在查询抽卡记录，可能耗费一段时间，请勿重复发送', false, { at: true, recallMsg: 100 });
+        await this.reply('抽卡链接解析成功，正在查询抽卡记录，可能耗费一段时间，请勿重复发送', false, { at: true, recallMsg: getRecallMsg() });
         let uid;
         queryLabel: for (const name in gacha_type_meta_data) {
             for (const type of gacha_type_meta_data[name]) {
@@ -152,7 +152,7 @@ export class GachaLog extends ZZZPlugin {
         if (!uid) {
             return this.reply('未查询到uid，请检查链接是否正确', false, {
                 at: true,
-                recallMsg: 100
+                recallMsg: getRecallMsg()
             });
         }
         const { data, count } = await updateGachaLog(key, uid, region, game_biz);
@@ -170,13 +170,13 @@ export class GachaLog extends ZZZPlugin {
         await this.getPlayerInfo();
         await this.reply('正在分析抽卡记录，请稍等', false, {
             at: true,
-            recallMsg: 100
+            recallMsg: getRecallMsg()
         });
         const data = await anaylizeGachaLog(uid);
         if (!data) {
             return this.reply('未查询到抽卡记录，请先发送抽卡链接或%更新抽卡记录', false, {
                 at: true,
-                recallMsg: 100
+                recallMsg: getRecallMsg()
             });
         }
         const result = {

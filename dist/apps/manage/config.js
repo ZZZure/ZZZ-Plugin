@@ -1,8 +1,9 @@
+import { getRecallMsg, MAX_RECALL_MSG } from '../../lib/common.js';
 import settings from '../../lib/settings.js';
 export async function setRenderPrecision(e) {
     e ||= this.e;
     if (!e.isMaster) {
-        return e.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
+        return e.reply('仅限主人设置', false, { at: true, recallMsg: getRecallMsg() });
     }
     const match = /渲染精度(\d+)$/.exec(e.msg);
     if (!match)
@@ -11,13 +12,13 @@ export async function setRenderPrecision(e) {
     if (render_precision < 50) {
         return e.reply('渲染精度不能小于50', false, {
             at: true,
-            recallMsg: 100
+            recallMsg: getRecallMsg()
         });
     }
     if (render_precision > 200) {
         return e.reply('渲染精度不能大于200', false, {
             at: true,
-            recallMsg: 100
+            recallMsg: getRecallMsg()
         });
     }
     settings.setSingleConfig('config', 'render', {
@@ -28,7 +29,7 @@ export async function setRenderPrecision(e) {
 export async function setRefreshGachaInterval(e) {
     e ||= this.e;
     if (!e.isMaster) {
-        return e.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
+        return e.reply('仅限主人设置', false, { at: true, recallMsg: getRecallMsg() });
     }
     const match = /刷新抽卡间隔(\d+)$/.exec(e.msg);
     if (!match)
@@ -37,13 +38,13 @@ export async function setRefreshGachaInterval(e) {
     if (refresh_gacha_interval < 0) {
         return e.reply('刷新抽卡间隔不能小于0秒', false, {
             at: true,
-            recallMsg: 100
+            recallMsg: getRecallMsg()
         });
     }
     if (refresh_gacha_interval > 1000) {
         return e.reply('刷新抽卡间隔不能大于1000秒', false, {
             at: true,
-            recallMsg: 100
+            recallMsg: getRecallMsg()
         });
     }
     settings.setSingleConfig('gacha', 'interval', refresh_gacha_interval);
@@ -52,7 +53,7 @@ export async function setRefreshGachaInterval(e) {
 export async function setRefreshPanelInterval(e) {
     e ||= this.e;
     if (!e.isMaster) {
-        return e.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
+        return e.reply('仅限主人设置', false, { at: true, recallMsg: getRecallMsg() });
     }
     const match = /刷新面板间隔(\d+)$/.exec(e.msg);
     if (!match)
@@ -61,22 +62,22 @@ export async function setRefreshPanelInterval(e) {
     if (refresh_panel_interval < 0) {
         return e.reply('刷新面板间隔不能小于0秒', false, {
             at: true,
-            recallMsg: 100
+            recallMsg: getRecallMsg()
         });
     }
     if (refresh_panel_interval > 1000) {
         return e.reply('刷新面板间隔不能大于1000秒', false, {
             at: true,
-            recallMsg: 100
+            recallMsg: getRecallMsg()
         });
     }
     settings.setSingleConfig('panel', 'interval', refresh_panel_interval);
-    await e.reply(`绝区零刷新面板间隔已设置为: ${refresh_panel_interval}`, false, { at: true, recallMsg: 100 });
+    await e.reply(`绝区零刷新面板间隔已设置为: ${refresh_panel_interval}`, false, { at: true, recallMsg: getRecallMsg() });
 }
 export async function setRefreshCharInterval(e) {
     e ||= this.e;
     if (!e.isMaster) {
-        return e.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
+        return e.reply('仅限主人设置', false, { at: true, recallMsg: getRecallMsg() });
     }
     const match = /刷新角色间隔(\d+)$/.exec(e.msg);
     if (!match)
@@ -85,16 +86,36 @@ export async function setRefreshCharInterval(e) {
     if (refresh_char_interval < 100) {
         return e.reply('刷新角色间隔不能小于100毫秒', false, {
             at: true,
-            recallMsg: 100
+            recallMsg: getRecallMsg()
         });
     }
     if (refresh_char_interval > 10000) {
         return e.reply('刷新角色间隔不能大于10000毫秒', false, {
             at: true,
-            recallMsg: 100
+            recallMsg: getRecallMsg()
         });
     }
     settings.setSingleConfig('panel', 'roleInterval', refresh_char_interval);
     await e.reply(`绝区零刷新角色间隔已设置为: ${refresh_char_interval}毫秒`);
+}
+export async function setRecallMsg(e) {
+    e ||= this.e;
+    if (!e.isMaster) {
+        return e.reply('仅限主人设置', false, { at: true, recallMsg: getRecallMsg() });
+    }
+    const match = /撤回时间(\d+)$/.exec(e.msg);
+    if (!match)
+        return false;
+    const recall_msg = Number(match[1]);
+    if (recall_msg > MAX_RECALL_MSG) {
+        return e.reply(`撤回时间不能大于${MAX_RECALL_MSG}秒`, false, {
+            at: true,
+            recallMsg: getRecallMsg()
+        });
+    }
+    settings.setSingleConfig('config', 'recallMsg', recall_msg);
+    await e.reply(recall_msg > 0
+        ? `绝区零提示消息撤回时间已设置为: ${recall_msg}秒`
+        : '绝区零提示消息已设置为不自动撤回');
 }
 //# sourceMappingURL=config.js.map

@@ -1,13 +1,14 @@
 import { char } from '../../lib/convert.js';
 import { downloadFile } from '../../lib/download/core.js';
 import { imageResourcesPath } from '../../lib/path.js';
+import { getRecallMsg } from '../../lib/common.js';
 import common from '../../../../../lib/common/common.js';
 import fs from 'fs';
 import path from 'path';
 export async function uploadCharacterImg(e) {
     e ||= this.e;
     if (!e.isMaster) {
-        return e.reply('只有主人才能添加', false, { at: true, recallMsg: 100 });
+        return e.reply('只有主人才能添加', false, { at: true, recallMsg: getRecallMsg() });
     }
     const reg = /(上传|添加)(.+)(角色|面板)图$/;
     const match = e.msg.match(reg);
@@ -17,7 +18,7 @@ export async function uploadCharacterImg(e) {
     const charName = match[2].trim();
     const name = char.aliasToName(charName);
     if (!name) {
-        return e.reply('未找到对应角色', false, { at: true, recallMsg: 100 });
+        return e.reply('未找到对应角色', false, { at: true, recallMsg: getRecallMsg() });
     }
     const images = [];
     for (const val of e.message) {
@@ -68,7 +69,7 @@ export async function uploadCharacterImg(e) {
         }
     }
     if (images.length <= 0) {
-        return e.reply('消息中未找到图片，请将要发送的图片与消息一同发送或引用要添加的图像。', false, { at: true, recallMsg: 100 });
+        return e.reply('消息中未找到图片，请将要发送的图片与消息一同发送或引用要添加的图像。', false, { at: true, recallMsg: getRecallMsg() });
     }
     const resourcesImagesPath = imageResourcesPath;
     const panelImagesPath = path.join(resourcesImagesPath, `panel/${name}`);
@@ -92,7 +93,7 @@ export async function uploadCharacterImg(e) {
     }
     return e.reply(`成功上传${success}张图片，失败${failed}张图片。`, false, {
         at: true,
-        recallMsg: 100
+        recallMsg: getRecallMsg()
     });
 }
 export async function getCharacterImages(e) {
@@ -106,7 +107,7 @@ export async function getCharacterImages(e) {
     const name = char.aliasToName(charName);
     let page = match[4];
     if (!name) {
-        return e.reply('未找到对应角色', false, { at: true, recallMsg: 100 });
+        return e.reply('未找到对应角色', false, { at: true, recallMsg: getRecallMsg() });
     }
     const pageSize = 5;
     const resourcesImagesPath = imageResourcesPath;
@@ -123,7 +124,7 @@ export async function getCharacterImages(e) {
     const start = (page - 1) * pageSize;
     const end = page * pageSize;
     if (start >= images.length) {
-        return e.reply('哪有这么多图片', false, { at: true, recallMsg: 100 });
+        return e.reply('哪有这么多图片', false, { at: true, recallMsg: getRecallMsg() });
     }
     const imagePaths = images.slice(start, end);
     const imageMsg = imagePaths.map(imagePath => {
@@ -139,7 +140,7 @@ export async function getCharacterImages(e) {
 export async function deleteCharacterImg(e) {
     e ||= this.e;
     if (!e.isMaster) {
-        return e.reply('只有主人才能删除', false, { at: true, recallMsg: 100 });
+        return e.reply('只有主人才能删除', false, { at: true, recallMsg: getRecallMsg() });
     }
     const reg = /(删除)(.+)(角色|面板)图(.+)$/;
     const match = e.msg.match(reg);
@@ -149,7 +150,7 @@ export async function deleteCharacterImg(e) {
     const charName = match[2].trim();
     const name = char.aliasToName(charName);
     if (!name) {
-        return e.reply('未找到对应角色', false, { at: true, recallMsg: 100 });
+        return e.reply('未找到对应角色', false, { at: true, recallMsg: getRecallMsg() });
     }
     const ids = match[4].split(/[,，、\s]+/);
     const resourcesImagesPath = imageResourcesPath;

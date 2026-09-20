@@ -1,9 +1,10 @@
 import guides from '../../lib/guides.js';
+import { getRecallMsg } from '../../lib/common.js';
 import settings from '../../lib/settings.js';
 export async function setDefaultGuide(e) {
     e ||= this.e;
     if (!e.isMaster) {
-        return e.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
+        return e.reply('仅限主人设置', false, { at: true, recallMsg: getRecallMsg() });
     }
     const match = /设置默认攻略(\d+|all)$/.exec(e.msg);
     if (!match)
@@ -25,12 +26,12 @@ export async function setDefaultGuide(e) {
     }
     settings.setSingleConfig('guide', 'default_guide', guide_id);
     const source_name = guide_id == 0 ? 'all' : guides.guideSources[guide_id - 1];
-    await e.reply(`绝区零默认攻略已设置为: ${guide_id} (${source_name})`, false, { at: true, recallMsg: 100 });
+    await e.reply(`绝区零默认攻略已设置为: ${guide_id} (${source_name})`, false, { at: true, recallMsg: getRecallMsg() });
 }
 export async function setMaxForwardGuide(e) {
     e ||= this.e;
     if (!e.isMaster) {
-        return e.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
+        return e.reply('仅限主人设置', false, { at: true, recallMsg: getRecallMsg() });
     }
     const match = /设置所有攻略显示个数(\d+)$/.exec(e.msg);
     if (!match)
@@ -39,16 +40,16 @@ export async function setMaxForwardGuide(e) {
     if (max_forward_guide < 1) {
         return e.reply('所有攻略显示个数不能小于1', false, {
             at: true,
-            recallMsg: 100
+            recallMsg: getRecallMsg()
         });
     }
     if (max_forward_guide > guides.guideMaxNum) {
         return e.reply(`所有攻略显示个数不能大于${guides.guideMaxNum}`, false, {
             at: true,
-            recallMsg: 100
+            recallMsg: getRecallMsg()
         });
     }
     settings.setSingleConfig('guide', 'max_forward_guides', max_forward_guide);
-    await e.reply(`绝区零所有攻略显示个数已设置为: ${max_forward_guide}`, false, { at: true, recallMsg: 100 });
+    await e.reply(`绝区零所有攻略显示个数已设置为: ${max_forward_guide}`, false, { at: true, recallMsg: getRecallMsg() });
 }
 //# sourceMappingURL=guides.js.map

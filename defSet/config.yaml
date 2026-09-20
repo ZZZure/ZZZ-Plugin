@@ -1,5 +1,7 @@
 render:
   scale: 100 # 渲染精度
+# 提示类消息自动撤回时间（秒），取值0~120，0为不撤回
+recallMsg: 100
 query:
   others: true # 允许查询他人信息
 update:

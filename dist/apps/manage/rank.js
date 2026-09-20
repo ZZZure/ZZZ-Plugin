@@ -1,8 +1,9 @@
 import { setGroupRankAllowed, removeGroupRank } from '../../lib/rank.js';
+import { getRecallMsg } from '../../lib/common.js';
 export async function switchGroupRank(e) {
     e ||= this.e;
     if (!e.isMaster) {
-        return e.reply('仅限主人设置', false, { at: true, recallMsg: 100 });
+        return e.reply('仅限主人设置', false, { at: true, recallMsg: getRecallMsg() });
     }
     const enableRegex = /开启|打开|on|启用|启动/i;
     const disableRegex = /关闭|关掉|off|禁用|停止/i;
@@ -14,11 +15,11 @@ export async function switchGroupRank(e) {
         isEnable = false;
     }
     else {
-        return e.reply('请输入"开启"或"关闭"来设置群内深渊排名功能', false, { at: true, recallMsg: 100 });
+        return e.reply('请输入"开启"或"关闭"来设置群内深渊排名功能', false, { at: true, recallMsg: getRecallMsg() });
     }
     setGroupRankAllowed(isEnable);
     const enableString = isEnable ? '开启' : '关闭';
-    await e.reply(`绝区零群内深渊排名功能已设置为: ${enableString}`, false, { at: true, recallMsg: 100 });
+    await e.reply(`绝区零群内深渊排名功能已设置为: ${enableString}`, false, { at: true, recallMsg: getRecallMsg() });
 }
 export async function resetGroupRank(e) {
     e ||= this.e;
@@ -47,10 +48,10 @@ export async function resetGroupRank(e) {
         for (const rank_type of rank_types) {
             await removeGroupRank(rank_type, e.group_id);
         }
-        return e.reply(`清除${rank_type_str}排名成功！`, false, { at: true, recallMsg: 100 });
+        return e.reply(`清除${rank_type_str}排名成功！`, false, { at: true, recallMsg: getRecallMsg() });
     }
     else {
-        return e.reply('仅限主人操作', false, { at: true, recallMsg: 100 });
+        return e.reply('仅限主人操作', false, { at: true, recallMsg: getRecallMsg() });
     }
 }
 //# sourceMappingURL=rank.js.map
