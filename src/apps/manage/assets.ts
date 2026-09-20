@@ -15,6 +15,7 @@ import { getAllSuitID } from '../../lib/convert/equip.js'
 import { getAllWeaponID } from '../../lib/convert/weapon.js'
 import { getAllBangbooID } from '../../lib/convert/bangboo.js'
 import * as LocalURI from '../../lib/download/const.js'
+import { getRecallMsg } from '../../lib/common.js'
 
 interface DownloadCounter {
   success: number
@@ -43,7 +44,7 @@ export async function downloadAll(e: EventType) {
   e ||= this.e
   if (!e.isMaster) return false
   if (downloading) {
-    return e.reply('下载任务正在进行中，请稍后再试', false, { at: true, recallMsg: 100 })
+    return e.reply('下载任务正在进行中，请稍后再试', false, { at: true, recallMsg: getRecallMsg() })
   }
   const charIDs = char.getAllCharactersID()
   const equipSprites = getAllSuitID()
@@ -99,7 +100,7 @@ export async function downloadAll(e: EventType) {
   await e.reply(
     '开始下载全部资源：代理人、音擎、驱动盘、邦布图片等，请耐心等待……',
     false,
-    { at: true, recallMsg: 100 }
+    { at: true, recallMsg: getRecallMsg() }
   )
   const downloadFnc = async (
     fnc: (id: number | string) => Promise<boolean | unknown>,
@@ -158,7 +159,7 @@ export async function deleteAll(e: EventType) {
   await e.reply(
     '【注意】正在删除所有资源图片，后续使用需要重新下载！',
     false,
-    { at: true, recallMsg: 100 }
+    { at: true, recallMsg: getRecallMsg() }
   )
   // 将 localURI 值迭代删除
   for (const dir of Object.values(LocalURI) as string[]) {
@@ -167,5 +168,5 @@ export async function deleteAll(e: EventType) {
       fs.rmSync(dir, { recursive: true, force: true })
     }
   }
-  await e.reply('资源图片已删除！', false, { at: true, recallMsg: 100 })
+  await e.reply('资源图片已删除！', false, { at: true, recallMsg: getRecallMsg() })
 }

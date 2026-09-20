@@ -1,5 +1,5 @@
 import type { MysZZZApi } from '#interface'
-import { rulePrefix } from '../lib/common.js'
+import { getRecallMsg, rulePrefix } from '../lib/common.js'
 import { ZZZPlugin } from '../lib/plugin.js'
 import settings from '../lib/settings.js'
 import _ from 'lodash'
@@ -181,7 +181,7 @@ export class Remind extends ZZZPlugin {
 
   async setGlobalRemindEnable() {
     if (!this.e.isMaster) {
-      return this.reply('仅限主人设置', false, { at: true, recallMsg: 100 })
+      return this.reply('仅限主人设置', false, { at: true, recallMsg: getRecallMsg() })
     }
     const enable = /(开启|启用)全局挑战提醒$/.test(this.e.msg)
     if (settings.getConfig('remind').enable === enable) {
@@ -194,7 +194,7 @@ export class Remind extends ZZZPlugin {
   async setAbyssThreshold() {
     const isGlobal = this.e.msg.includes('全局')
     if (isGlobal && !this.e.isMaster) {
-      return this.reply('仅限主人设置', false, { at: true, recallMsg: 100 })
+      return this.reply('仅限主人设置', false, { at: true, recallMsg: getRecallMsg() })
     }
     if (!isGlobal && !this.checkEnableAndFriend()) return
     const match = this.e.msg.match(/设置(?:全局)?(?:式舆防卫战|式舆|深渊|防卫战|防卫)阈值\s*(\d+)/)
@@ -227,7 +227,7 @@ export class Remind extends ZZZPlugin {
   async setDeadlyThreshold() {
     const isGlobal = this.e.msg.includes('全局')
     if (isGlobal && !this.e.isMaster) {
-      return this.reply('仅限主人设置', false, { at: true, recallMsg: 100 })
+      return this.reply('仅限主人设置', false, { at: true, recallMsg: getRecallMsg() })
     }
     if (!isGlobal && !this.checkEnableAndFriend()) return
     const match = this.e.msg.match(/设置(?:全局)?(?:危局强袭战|危局|强袭|强袭战)阈值\s*(\d+)/)
@@ -518,7 +518,7 @@ export class Remind extends ZZZPlugin {
 
   async setGlobalRemindTime() {
     if (!this.e.isMaster) {
-      return this.reply('仅限主人设置', false, { at: true, recallMsg: 100 })
+      return this.reply('仅限主人设置', false, { at: true, recallMsg: getRecallMsg() })
     }
 
     const { remindTime: globalRemindTime, error } = this.parseRemindTimeMessage(this.e.msg)
