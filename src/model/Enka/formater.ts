@@ -33,7 +33,8 @@ const id2zh = {
   316: '火属性伤害加成',
   317: '冰属性伤害加成',
   318: '电属性伤害加成',
-  319: '以太伤害加成'
+  319: '以太伤害加成',
+  323: '风属性伤害加成'
 } as const
 const zh2id = Object.fromEntries(
   Object.entries(id2zh).map(([key, value]) => [value, +key])
@@ -55,7 +56,8 @@ const id2en = {
   316: 'FireDmgBonus',
   317: 'IceDmgBonus',
   318: 'ThunderDmgBonus',
-  319: 'EtherDmgBonus'
+  319: 'EtherDmgBonus',
+  323: 'WindDmgBonus'
 } as const
 const en2id = Object.fromEntries(
   Object.entries(id2en).map(([key, value]) => [value, +key])
@@ -66,7 +68,7 @@ type IdsString = `${Ids}`
 type Zhs = Values<typeof id2zh>
 type Ens = Values<typeof id2en>
 
-const percentPropId = [11102, 12102, 12202, 13102, 20103, 21103, 23103, 30502, 31402, 31503, 31603, 31703, 31803, 31903]
+const percentPropId = [11102, 12102, 12202, 13102, 20103, 21103, 23103, 30502, 31402, 31503, 31603, 31703, 31803, 31903, 32303]
 function get_base(propId: number, value: number) {
   if (percentPropId.includes(propId)) {
     const v = value / 100
@@ -253,7 +255,7 @@ type initialProperty = {
 
 export class Property {
   readonly data: MapJSON.PartnerId2Data[string]
-  readonly keepPercent = [201, 211, 231, 315, 316, 317, 318, 319]
+  readonly keepPercent = [201, 211, 231, 315, 316, 317, 318, 319, 323]
   constructor(
     readonly info: FilterValueType<Mys.Avatar, string | number | boolean>,
     readonly equips: Mys.Avatar['equip'],
@@ -296,6 +298,7 @@ export class Property {
       201: 316,
       202: 317,
       203: 318,
+      204: 323,
       205: 319
     }
     const elementIds = Object.values(elementType2PropId)
