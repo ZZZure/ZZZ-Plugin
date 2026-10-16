@@ -57,3 +57,6 @@ jobs:
 
       - name: pnpm lint
         run: pnpm lint
+
+      - name: pnpm test
+        run: pnpm test
