@@ -63,7 +63,7 @@ export class HoloBossListItem {
   constructor(data?: NonNullable<Mys.HoloBoss['list']>[number] | null) {
     this.rank = data?.rank ?? 0
     if (typeof data?.rank === 'number' && data.rank > 0) {
-      const pct = data.rank > 100 ? data.rank / 100 : data.rank
+      const pct = data.rank / 100
       this.rank_str = `${pct.toFixed(2)}%`
       if (pct < 1) {
         this.rank_bg = 1
