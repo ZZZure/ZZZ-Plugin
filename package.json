@@ -14,6 +14,7 @@
     "watch:src": "nodemon -w src -e js,ts --exec pnpm run build:src",
     "watch:css": "sass resources:resources --watch --no-error-css",
     "check": "tsc --noEmit",
+    "test": "node --experimental-vm-modules --test tests/*.test.mjs",
     "lint": "eslint \"src/**/*.ts\" \"src/**/*.js\"",
     "lint:fix": "eslint \"src/**/*.ts\" \"src/**/*.js\" --fix"
   },
