@@ -2,6 +2,7 @@ import { mergePanel, getPanelList, refreshPanel as refreshPanelFunction, getPane
 import { parsePlayerInfo, refreshPanelFromEnka } from '../model/Enka/enkaApi.js';
 import { rulePrefix } from '../lib/common.js';
 import { ZZZPlugin } from '../lib/plugin.js';
+import { PanelButtons, appendPanelButtons } from '../lib/panelButtons.js';
 import settings from '../lib/settings.js';
 import { getCk } from '../lib/common.js';
 import _ from 'lodash';
@@ -51,6 +52,7 @@ export class Panel extends ZZZPlugin {
         return false;
     }
     async refreshPanel() {
+        const buttons = new PanelButtons(this.e);
         const uid = await this.getUID();
         const lastQueryTime = await redis.get(`ZZZ:PANEL:${uid}:LASTTIME`);
         const panelSettings = settings.getConfig('panel');
@@ -110,9 +112,10 @@ export class Panel extends ZZZPlugin {
             newChar: newChar.length,
             list: result
         };
-        await this.render('panel/refresh.html', finalData);
+        await this.renderPanel('panel/refresh.html', finalData, buttons.list([...newChar, ...result.filter(item => !item.isNew)], true));
     }
     async getCharPanelList() {
+        const buttons = new PanelButtons(this.e);
         const uid = await this.getUID();
         const result = getPanelList(uid);
         if (!result.length) {
@@ -133,7 +136,7 @@ export class Panel extends ZZZPlugin {
             count: result?.length || 0,
             list: result
         };
-        await this.render('panel/list.html', finalData);
+        await this.renderPanel('panel/list.html', finalData, buttons.list(result));
     }
     async getCharPanelListTool(uid, origin = false) {
         if (!uid) {
@@ -147,6 +150,7 @@ export class Panel extends ZZZPlugin {
         return result;
     }
     async getCharPanel() {
+        const buttons = new PanelButtons(this.e);
         const uid = await this.getUID();
         const reg = new RegExp(`${rulePrefix}(.+)面板$`);
         const match = this.e.msg.match(reg);
@@ -162,10 +166,12 @@ export class Panel extends ZZZPlugin {
         }
         const handler = this.e.runtime.handler || {};
         if (handler.has('zzz.tool.panel')) {
+            const panelButtons = buttons.detail(name);
             await handler.call('zzz.tool.panel', this.e, {
                 uid,
                 data: data,
-                needSave: false
+                needSave: false,
+                ...(panelButtons ? { buttons: panelButtons } : {})
             });
         }
     }
@@ -174,7 +180,7 @@ export class Panel extends ZZZPlugin {
             this.e = e;
         if (e?.reply)
             this.reply = e.reply;
-        const { uid = undefined, data = undefined, needSave = true, reply = true, needImg = true } = _data;
+        const { uid = undefined, data = undefined, needSave = true, reply = true, needImg = true, buttons = undefined } = _data;
         if (!uid) {
             return this.reply('UID为空');
         }
@@ -204,7 +210,8 @@ export class Panel extends ZZZPlugin {
             retType: 'base64'
         }) : needImg;
         if (reply) {
-            const res = await this.reply(image);
+            const replyButtons = needImg && buttons && new PanelButtons(this.e).enabled ? buttons : undefined;
+            const res = await this.reply(appendPanelButtons(image, replyButtons));
             if (res?.message_id && parsedData.role_icon)
                 await redis.set(`ZZZ:PANEL:IMAGE:${res.message_id}`, parsedData.role_icon, {
                     EX: 3600 * 3
@@ -215,6 +222,14 @@ export class Panel extends ZZZPlugin {
             };
         }
         return image;
+    }
+    async renderPanel(renderPath, data, buttons) {
+        if (!buttons)
+            return this.render(renderPath, data);
+        const image = await this.render(renderPath, data, { retType: 'base64' });
+        if (!image)
+            return false;
+        return this.reply(appendPanelButtons(image, buttons));
     }
     async proficiency() {
         const uid = await this.getUID();
