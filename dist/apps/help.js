@@ -596,6 +596,13 @@ export class Help extends ZZZPlugin {
                             commands: ['刷新面板间隔+0~1000'],
                         },
                         {
+                            title: '开启/关闭面板按钮',
+                            desc: '开启/关闭 QQBot 面板操作按钮（默认关闭，仅 TRSS + QQBot 环境生效）',
+                            needCK: false,
+                            needSK: false,
+                            commands: ['开启/关闭面板按钮', '开启/关闭QQBot面板按钮'],
+                        },
+                        {
                             title: '添加角色别名',
                             desc: '添加角色别名，方便查询角色信息',
                             needCK: false,

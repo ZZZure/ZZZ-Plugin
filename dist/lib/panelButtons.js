@@ -1,3 +1,4 @@
+import settings from './settings.js';
 export class PanelButtons {
     enabled;
     userId;
@@ -6,7 +7,8 @@ export class PanelButtons {
         this.userId = e.user_id == null ? '' : String(e.user_id);
         const isGuild = e.isGuild || this.userId.startsWith('qg_') ||
             String(e.group_id ?? '').startsWith('qg_');
-        this.enabled = bot?.adapter?.id === 'QQBot' && !isGuild && !e.at && !!this.userId &&
+        this.enabled = !!settings.getConfig('panel')?.buttons &&
+            bot?.adapter?.id === 'QQBot' && !isGuild && !e.at && !!this.userId &&
             typeof segment !== 'undefined' && typeof segment.button === 'function';
     }
     button(text, command, prefix = '#zzz') {

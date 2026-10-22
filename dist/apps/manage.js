@@ -13,6 +13,7 @@ export class Manage extends ZZZPlugin {
     setRefreshGachaInterval;
     setRefreshPanelInterval;
     setRefreshCharInterval;
+    setPanelButtons;
     addAlias;
     deleteAlias;
     listAlias;
@@ -70,6 +71,10 @@ export class Manage extends ZZZPlugin {
                 {
                     reg: `${rulePrefix}刷新角色间隔(\\d+)$`,
                     fnc: 'setRefreshCharInterval'
+                },
+                {
+                    reg: `${rulePrefix}(开启|关闭)(QQBot)?面板按钮$`,
+                    fnc: 'setPanelButtons'
                 },
                 {
                     reg: `${rulePrefix}添加(\\S+)别名(\\S+)$`,
@@ -138,6 +143,7 @@ export class Manage extends ZZZPlugin {
         this.setRefreshGachaInterval = manage.config.setRefreshGachaInterval;
         this.setRefreshPanelInterval = manage.config.setRefreshPanelInterval;
         this.setRefreshCharInterval = manage.config.setRefreshCharInterval;
+        this.setPanelButtons = manage.config.setPanelButtons;
         this.addAlias = manage.alias.addAlias;
         this.deleteAlias = manage.alias.deleteAlias;
         this.listAlias = manage.alias.listAlias;
