@@ -3846,7 +3846,7 @@
     "WeaponType": "1",
     "ElementType": "203",
     "Camp": "对空洞特别行动部第六课",
-    "HitType": "穿透",
+    "HitType": "斩击",
     "Rarity": "S",
     "Attack": 132,
     "AttackGrowth": 80270,
@@ -5660,7 +5660,7 @@
     "WeaponType": "1",
     "ElementType": "201",
     "Camp": "新艾利都防卫军",
-    "HitType": "穿透",
+    "HitType": "斩击",
     "Rarity": "S",
     "Attack": 134,
     "AttackGrowth": 81654,
@@ -9714,6 +9714,11 @@
         "Name": "千夏·午后茶歇",
         "Desc": "新鲜出炉的蛋糕、醇香芬芳的咖啡、还有午后温煦的暖阳…\n在所有温柔环绕的时刻，开启今日茶歇时光。",
         "Image": "IconRole58_01"
+      },
+      "3114912": {
+        "Name": "千夏·梦想营业中",
+        "Desc": "天使团规第三则：出门前请穿戴好翅膀，天使们的旅程会随时出发！",
+        "Image": "IconRole58_02"
       }
     }
   },
@@ -9920,6 +9925,11 @@
         "Name": "爱芮·不协和音",
         "Desc": "爱芮在特别演出中的表演服装，出场次数屈指可数。\n纯白的「天使」，披上了「恶魔」的羽翼。深呼吸，准备好…聚光灯亮起之后，就是属于「妄想天使」的叛逆时间！",
         "Image": "IconRole57_01"
+      },
+      "3115012": {
+        "Name": "爱芮·萌力加载中",
+        "Desc": "天使团规第二则：无论投影如何变幻，元气偶像的笑容都始终如一！",
+        "Image": "IconRole57_02"
       }
     }
   },
@@ -10126,6 +10136,11 @@
         "Name": "南宫羽·狂想缪斯",
         "Desc": "在失序的节拍中起舞，于狂想的舞台上回旋。\n天使与恶魔的界限，随灯光倾斜，在她的倒影中溶解。",
         "Image": "IconRole59_01"
+      },
+      "3115112": {
+        "Name": "南宫羽·心动应援中",
+        "Desc": "天使团规第一则：章鱼小队长必须以身作则！拥抱粉色、拥抱夏天！",
+        "Image": "IconRole59_02"
       }
     }
   },
@@ -10736,7 +10751,7 @@
     "sprite_id": "63",
     "name": "佩洛伊斯",
     "full_name": "",
-    "en_name": "(Test1)Pyrois",
+    "en_name": "Pyrois",
     "WeaponType": "1",
     "ElementType": "205",
     "Camp": "法厄同",
@@ -11765,7 +11780,7 @@
   "1611": {
     "sprite_id": "1611",
     "name": "克拉蕾",
-    "full_name": "...",
+    "full_name": "克拉蕾·弗林特",
     "en_name": "Claret",
     "WeaponType": "7",
     "ElementType": "203",
@@ -11921,8 +11936,8 @@
     },
     "Skin": {
       "3116110": {
-        "Name": "...",
-        "Desc": "...",
+        "Name": "克拉蕾·灼金绯焰",
+        "Desc": "据传，弗林特家主的衣襟总是缀满余烬…显然那不过是一种浪漫想象，年轻的天才锻造师绝不容许那样醒目的失误。",
         "Image": "IconRole1611"
       }
     }
@@ -11930,7 +11945,7 @@
   "1621": {
     "sprite_id": "68",
     "name": "洛克茜",
-    "full_name": "...",
+    "full_name": "洛克茜·伊芙莉塔·普莱斯",
     "en_name": "Roxy",
     "WeaponType": "2",
     "ElementType": "204",
@@ -12122,9 +12137,426 @@
     },
     "Skin": {
       "3116210": {
-        "Name": "...",
-        "Desc": "...",
+        "Name": "洛克茜·子夜工匠",
+        "Desc": "长夜中能够照彻工匠面庞的，只有熔炉中的火焰与巨锤下的铿锵…这大概就是这位传奇匠人视力受损的症结所在。",
         "Image": "IconRole68"
+      }
+    }
+  },
+  "1631": {
+    "sprite_id": "1631",
+    "name": "赛维里安",
+    "full_name": "赛维里安·洛威尔",
+    "en_name": "Severian",
+    "WeaponType": "1",
+    "ElementType": "204",
+    "Camp": "新艾利都治安局",
+    "HitType": "斩击",
+    "Rarity": "S",
+    "Attack": 134,
+    "AttackGrowth": 82119,
+    "BreakStun": 94,
+    "Defence": 49,
+    "DefenceGrowth": 66203,
+    "HpMax": 629,
+    "HpGrowth": 853932,
+    "Crit": 500,
+    "CritDamage": 5000,
+    "ElementAbnormalPower": 91,
+    "ElementMystery": 90,
+    "PenDelta": 0,
+    "PenRate": 0,
+    "SpRecover": 120,
+    "Level": {
+      "1": {
+        "HpMax": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "LevelMax": 10,
+        "LevelMin": 0,
+        "Materials": {
+          "10": 24000,
+          "100211": 4
+        }
+      },
+      "2": {
+        "HpMax": 432,
+        "Attack": 48,
+        "Defence": 33,
+        "LevelMax": 20,
+        "LevelMin": 10,
+        "Materials": {
+          "10": 56000,
+          "100221": 12
+        }
+      },
+      "3": {
+        "HpMax": 864,
+        "Attack": 96,
+        "Defence": 67,
+        "LevelMax": 30,
+        "LevelMin": 20,
+        "Materials": {
+          "10": 120000,
+          "100221": 20
+        }
+      },
+      "4": {
+        "HpMax": 1296,
+        "Attack": 144,
+        "Defence": 100,
+        "LevelMax": 40,
+        "LevelMin": 30,
+        "Materials": {
+          "10": 200000,
+          "100231": 10
+        }
+      },
+      "5": {
+        "HpMax": 1727,
+        "Attack": 192,
+        "Defence": 134,
+        "LevelMax": 50,
+        "LevelMin": 40,
+        "Materials": {
+          "10": 400000,
+          "100231": 20
+        }
+      },
+      "6": {
+        "HpMax": 2159,
+        "Attack": 240,
+        "Defence": 167,
+        "LevelMax": 60,
+        "LevelMin": 50,
+        "Materials": {}
+      }
+    },
+    "ExtraLevel": {
+      "1": {
+        "MaxLevel": 15,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 0
+          },
+          "21101": {
+            "Prop": 21101,
+            "Name": "暴击伤害",
+            "Format": "{0:0.#%}",
+            "Value": 960
+          }
+        }
+      },
+      "2": {
+        "MaxLevel": 25,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "21101": {
+            "Prop": 21101,
+            "Name": "暴击伤害",
+            "Format": "{0:0.#%}",
+            "Value": 960
+          }
+        }
+      },
+      "3": {
+        "MaxLevel": 35,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "21101": {
+            "Prop": 21101,
+            "Name": "暴击伤害",
+            "Format": "{0:0.#%}",
+            "Value": 1920
+          }
+        }
+      },
+      "4": {
+        "MaxLevel": 45,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "21101": {
+            "Prop": 21101,
+            "Name": "暴击伤害",
+            "Format": "{0:0.#%}",
+            "Value": 1920
+          }
+        }
+      },
+      "5": {
+        "MaxLevel": 55,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "21101": {
+            "Prop": 21101,
+            "Name": "暴击伤害",
+            "Format": "{0:0.#%}",
+            "Value": 2880
+          }
+        }
+      },
+      "6": {
+        "MaxLevel": 60,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 75
+          },
+          "21101": {
+            "Prop": 21101,
+            "Name": "暴击伤害",
+            "Format": "{0:0.#%}",
+            "Value": 2880
+          }
+        }
+      }
+    },
+    "Skin": {
+      "3116310": {
+        "Name": "赛维里安·寒锋执罚",
+        "Desc": "赛维里安亲身执行任务时的着装，装备和外衣永远收拾得干净利落，一如他料理敌人的手段。当他以这副形象出现时，哪怕是共事者也会感到微微的胆寒。",
+        "Image": "IconRole1631"
+      },
+      "3116311": {
+        "Name": "赛维里安·肃仪无犯",
+        "Desc": "领带、衣扣、佩章，每一处着装细节都做到了一丝不苟，仿佛随时可以接受检阅。但他的姿态与神情又总让人觉得——似乎对他的任何审视都是一种冒犯。",
+        "Image": "IconRole1631_01"
+      }
+    }
+  },
+  "1641": {
+    "sprite_id": "1641",
+    "name": "菲欧妮",
+    "full_name": "菲欧妮·蕾法爱菈",
+    "en_name": "Phoenix",
+    "WeaponType": "3",
+    "ElementType": "201",
+    "Camp": "坎卜斯黑枝",
+    "HitType": "斩击",
+    "Rarity": "S",
+    "Attack": 126,
+    "AttackGrowth": 75860,
+    "BreakStun": 86,
+    "Defence": 49,
+    "DefenceGrowth": 66882,
+    "HpMax": 617,
+    "HpGrowth": 837238,
+    "Crit": 500,
+    "CritDamage": 5000,
+    "ElementAbnormalPower": 116,
+    "ElementMystery": 118,
+    "PenDelta": 0,
+    "PenRate": 0,
+    "SpRecover": 120,
+    "Level": {
+      "1": {
+        "HpMax": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "LevelMax": 10,
+        "LevelMin": 0,
+        "Materials": {
+          "10": 24000,
+          "100213": 4
+        }
+      },
+      "2": {
+        "HpMax": 423,
+        "Attack": 45,
+        "Defence": 34,
+        "LevelMax": 20,
+        "LevelMin": 10,
+        "Materials": {
+          "10": 56000,
+          "100223": 12
+        }
+      },
+      "3": {
+        "HpMax": 847,
+        "Attack": 90,
+        "Defence": 68,
+        "LevelMax": 30,
+        "LevelMin": 20,
+        "Materials": {
+          "10": 120000,
+          "100223": 20
+        }
+      },
+      "4": {
+        "HpMax": 1270,
+        "Attack": 134,
+        "Defence": 101,
+        "LevelMax": 40,
+        "LevelMin": 30,
+        "Materials": {
+          "10": 200000,
+          "100233": 10
+        }
+      },
+      "5": {
+        "HpMax": 1694,
+        "Attack": 179,
+        "Defence": 135,
+        "LevelMax": 50,
+        "LevelMin": 40,
+        "Materials": {
+          "10": 400000,
+          "100233": 20
+        }
+      },
+      "6": {
+        "HpMax": 2117,
+        "Attack": 224,
+        "Defence": 169,
+        "LevelMax": 60,
+        "LevelMin": 50,
+        "Materials": {}
+      }
+    },
+    "ExtraLevel": {
+      "1": {
+        "MaxLevel": 15,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 0
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 12
+          }
+        }
+      },
+      "2": {
+        "MaxLevel": 25,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 12
+          }
+        }
+      },
+      "3": {
+        "MaxLevel": 35,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 24
+          }
+        }
+      },
+      "4": {
+        "MaxLevel": 45,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 24
+          }
+        }
+      },
+      "5": {
+        "MaxLevel": 55,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 36
+          }
+        }
+      },
+      "6": {
+        "MaxLevel": 60,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 75
+          },
+          "31401": {
+            "Prop": 31401,
+            "Name": "异常掌控",
+            "Format": "{0:0.#}",
+            "Value": 36
+          }
+        }
+      }
+    },
+    "Skin": {
+      "3116410": {
+        "Name": "菲欧妮·不死祝福",
+        "Desc": "黑枝的隐藏王牌能够燃烧生命横扫战场，偶尔也会因磕疼脚趾再起不能。",
+        "Image": "IconRole1641"
+      },
+      "3116411": {
+        "Name": "菲欧妮·病名为生",
+        "Desc": "病床无法挽留她循环往复的冒险，她要不断回溯、回溯，直至寻抵生命的尽头，直至挣脱世界的麻醉。",
+        "Image": "IconRole1641_01"
+      },
+      "3116412": {
+        "Name": "菲欧妮·空想症候",
+        "Desc": "据说敏感而心理不稳定的年轻人都会患上某种神奇的病，症状包括心灵感应、预知未来、人格交换…\n或许死而复生也是其中之一呢？她漫无边际地想着。漫长的病症至今未能痊愈——所幸，青春也还没有。",
+        "Image": "IconRole1641_02"
       }
     }
   },

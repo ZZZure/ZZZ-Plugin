@@ -2,7 +2,7 @@ import request from '../../utils/request.js';
 export default new class {
     host = 'https://static.nanoka.cc';
     versionUrl = `${this.host}/manifest.json`;
-    version = '3.1';
+    version = '3.3';
     refreshPromise;
     constructor() {
         this.refresh();
