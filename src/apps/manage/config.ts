@@ -112,6 +112,25 @@ export async function setRefreshCharInterval(e: EventType) {
   await e.reply(`绝区零刷新角色间隔已设置为: ${refresh_char_interval}毫秒`)
 }
 
+/** 开启/关闭 QQBot 面板操作按钮 */
+export async function setPanelButtons(e: EventType) {
+  // @ts-expect-error
+  e ||= this.e
+  if (!e.isMaster) {
+    return e.reply('仅限主人设置', false, { at: true, recallMsg: getRecallMsg() })
+  }
+  let enable = true
+  if (e.msg.includes('关闭')) {
+    enable = false
+  }
+  settings.setSingleConfig('panel', 'buttons', enable)
+  await e.reply(
+    `绝区零 QQBot 面板按钮${enable ? '已开启' : '已关闭'}`,
+    false,
+    { at: true, recallMsg: getRecallMsg() }
+  )
+}
+
 /** 设置提示类消息的自动撤回时间 */
 export async function setRecallMsg(e: EventType) {
   // @ts-expect-error

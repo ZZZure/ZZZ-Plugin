@@ -209,6 +209,13 @@ export function supportGuoba() {
           },
         },
         {
+          field: 'panel.buttons',
+          label: 'QQBot 面板按钮',
+          bottomHelpMessage:
+            '是否在 QQBot（TRSS + QQBot-Plugin）环境下为角色面板、面板列表和更新结果附加操作按钮；默认关闭，仅对 QQ 群/C2C 本人查询生效',
+          component: 'Switch',
+        },
+        {
           component: 'SOFT_GROUP_BEGIN',
           label: '提醒功能设置',
         },

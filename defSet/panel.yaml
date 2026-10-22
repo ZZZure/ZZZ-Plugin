@@ -1,2 +1,3 @@
 interval: 60 # 刷新面板的时间间隔（单位：秒）
 roleInterval: 3000 # 查询每个角色的间隔时间（单位：毫秒）
+buttons: false # 是否开启 QQBot 面板操作按钮（默认关闭）

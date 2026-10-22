@@ -84,6 +84,8 @@ export namespace Config {
     interval: number
     /** 查询每个角色的间隔时间（单位：毫秒） */
     roleInterval: number
+    /** 是否开启 QQBot 面板操作按钮（默认关闭） */
+    buttons: boolean
   }
 
   export interface priority {

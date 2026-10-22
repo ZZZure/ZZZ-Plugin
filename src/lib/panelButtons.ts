@@ -1,5 +1,6 @@
 import type { EventType } from '#interface'
 import type { Sendable } from 'icqq'
+import settings from './settings.js'
 
 type PanelButton = {
   text: string
@@ -31,8 +32,9 @@ export class PanelButtons {
     // 频道和频道私信也由 QQBot 接入，但不支持这里的按钮。
     const isGuild = e.isGuild || this.userId.startsWith('qg_') ||
       String(e.group_id ?? '').startsWith('qg_')
-    // 查询他人时按钮不带 UID，点击会查回自己的账号。
-    this.enabled = bot?.adapter?.id === 'QQBot' && !isGuild && !e.at && !!this.userId &&
+    // 查询他人时按钮不带 UID，点击会查回自己的账号；需在锅巴/panel.yaml 中开启 buttons。
+    this.enabled = !!settings.getConfig('panel')?.buttons &&
+      bot?.adapter?.id === 'QQBot' && !isGuild && !e.at && !!this.userId &&
       typeof segment !== 'undefined' && typeof (segment as ButtonSegment).button === 'function'
   }
 

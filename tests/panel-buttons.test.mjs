@@ -29,6 +29,9 @@ async function fixture(options = {}) {
   const handlerCalls = []
   const uidQueries = []
   const characters = options.characters ?? [character('安比'), character('妮可')]
+  // 回归默认开启按钮；传 buttons:false 覆盖为关闭。
+  const panelConfig = { buttons: Object.hasOwn(options, 'buttons') ? options.buttons : true }
+  const settingsMock = { getConfig: () => panelConfig }
   const event = {
     user_id: Object.hasOwn(options, 'userId') ? options.userId : 'fixture-user',
     group_id: options.groupId,
@@ -62,8 +65,14 @@ async function fixture(options = {}) {
   const compile = source => ts.transpileModule(source, {
     compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext }
   }).outputText
+  const settingsModule = new vm.SyntheticModule(['default'], function () {
+    this.setExport('default', settingsMock)
+  }, { context })
   const buttonsModule = new vm.SourceTextModule(compile(buttonSource), { context })
-  await buttonsModule.link(() => { throw new Error('Button helper must not import runtime dependencies') })
+  await buttonsModule.link(specifier => {
+    if (specifier === './settings.js') return settingsModule
+    throw new Error(`Unexpected button helper dependency: ${specifier}`)
+  })
   await buttonsModule.evaluate()
 
   class ZZZPlugin {
@@ -113,7 +122,7 @@ async function fixture(options = {}) {
     },
     '../lib/common.js': { rulePrefix, getCk: async () => options.hasCk ? {} : undefined },
     '../lib/plugin.js': { ZZZPlugin },
-    '../lib/settings.js': { default: { getConfig: () => ({}) } },
+    '../lib/settings.js': { default: settingsMock },
     lodash: { default: { get: (value, key, fallback) => value?.[key] ?? fallback } }
   }
   const modules = new Map()
@@ -389,6 +398,15 @@ test('unknown requesting user does not receive an account-specific keyboard', as
   const { panel, sent } = await fixture({ userId: undefined })
   await panel.handleRule()
   assert.deepEqual(sent, [image])
+})
+
+test('panel.buttons=false keeps the original image-only reply on QQBot', async () => {
+  for (const msg of ['#zzz面板列表', '#zzz安比面板', '#zzz更新展柜面板']) {
+    const { panel, sent, renders } = await fixture({ buttons: false, msg })
+    await panel.handleRule()
+    assert.deepEqual(sent, [image])
+    if (!msg.includes('安比')) assert.equal(renders[0].config, undefined)
+  }
 })
 
 test('failed role rendering does not send buttons or create an original-image cache entry', async () => {
