@@ -8,6 +8,7 @@ export enum elementEnum {
   Fire = 201,
   Ice = 202,
   Electric = 203,
+  Wind = 204,
   Ether = 205
 }
 

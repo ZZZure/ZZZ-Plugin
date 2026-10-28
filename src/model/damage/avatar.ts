@@ -247,7 +247,7 @@ export function set_buff(equips: ZZZAvatarInfo['equip'], buffM: BuffManager) {
   for (const equip of equips) {
     if (equip.equipment_type == 5) {
       // 属伤加成
-      const index = [31503, 31603, 31703, 31803, , 31903].indexOf(equip.main_properties[0].property_id)
+      const index = [31503, 31603, 31703, 31803, 32303, 31903].indexOf(equip.main_properties[0].property_id)
       if (index > -1 && elementEnum[index + 200]) {
         // @ts-expect-error
         buffM.new({
