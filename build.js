@@ -17,6 +17,14 @@ async function init() {
   const args = process.argv.slice(2)
   const onlySrc = args.includes('--only-src')
   const tsconfig = onlySrc ? 'tsconfig.src.json' : 'tsconfig.json'
+  if (!onlySrc) {
+    console.log('编译 SCSS 资源……')
+    try {
+      execSync('npx sass resources:resources --update --no-error-css', { stdio: 'inherit' })
+    } catch (err) {
+      console.warn('编译 SCSS 资源异常：', err.message)
+    }
+  }
   console.log('开始编译……')
   try {
     execSync(`tsc -p ${tsconfig}`)

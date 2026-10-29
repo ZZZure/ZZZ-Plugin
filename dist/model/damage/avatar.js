@@ -189,7 +189,7 @@ export function set_buff(equips, buffM) {
     const setCount = {};
     for (const equip of equips) {
         if (equip.equipment_type == 5) {
-            const index = [31503, 31603, 31703, 31803, , 31903].indexOf(equip.main_properties[0].property_id);
+            const index = [31503, 31603, 31703, 31803, 32303, 31903].indexOf(equip.main_properties[0].property_id);
             if (index > -1 && elementEnum[index + 200]) {
                 buffM.new({
                     name: '驱动盘5号位',

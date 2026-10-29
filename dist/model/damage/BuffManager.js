@@ -10,6 +10,7 @@ export var elementEnum;
     elementEnum[elementEnum["Fire"] = 201] = "Fire";
     elementEnum[elementEnum["Ice"] = 202] = "Ice";
     elementEnum[elementEnum["Electric"] = 203] = "Electric";
+    elementEnum[elementEnum["Wind"] = 204] = "Wind";
     elementEnum[elementEnum["Ether"] = 205] = "Ether";
 })(elementEnum || (elementEnum = {}));
 export var anomalyEnum;
