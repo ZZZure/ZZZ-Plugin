@@ -7,7 +7,7 @@
   "keywords": [],
   "author": "ZZZure",
   "scripts": {
-    "build": "node build.js",
+    "build": "sass resources:resources --update --no-error-css && node build.js",
     "build:src": "node build.js --only-src",
     "build:css": "sass resources:resources --update --no-error-css",
     "watch": "nodemon -w src -e js,ts --exec pnpm run build",
