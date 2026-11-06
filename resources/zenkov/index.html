@@ -92,6 +92,7 @@
       <span class="header-col col-name">地图</span>
       <span class="header-col col-leave">撤离率</span>
       <span class="header-col col-price">最高带出</span>
+      <span class="header-col col-rank">最高排名</span>
     </div>
     <div class="map-list">
       {{each zenkov.map_list mapItem}}
@@ -100,6 +101,18 @@
         {{if mapItem.hell_unlock}}
         <div class="map-leave">{{mapItem.leave_percent_display || mapItem.formatted_leave_percent || ((mapItem.leave_percent / 100) + '%')}}</div>
         <div class="map-price">{{mapItem.max_price}}</div>
+        <div class="map-rank">
+          {{if mapItem.is_show_percent && mapItem.max_rank}}
+          <div class="rank-container">
+            <div class="rank-icon bg{{mapItem.rank_bg || 5}}"></div>
+            <div class="rank-text">{{mapItem.formatted_max_rank}}</div>
+          </div>
+          {{else if mapItem.max_rank}}
+          <span class="rank-value-top">{{mapItem.formatted_max_rank}}</span>
+          {{else}}
+          <span class="rank-value">-</span>
+          {{/if}}
+        </div>
         {{else}}
         <div class="map-locked-tips">未解锁</div>
         {{/if}}
@@ -108,16 +121,18 @@
     </div>
     <div class="rank-row">
       <span class="rank-label">本赛季最高排名：</span>
-      {{if zenkov.is_show_percent && zenkov.max_rank}}
-      <div class="rank-container">
-        <div class="rank-icon bg{{zenkov.rank_bg || 5}}"></div>
-        <div class="rank-text">{{zenkov.formatted_max_rank}}</div>
+      <div class="rank-wrapper">
+        {{if zenkov.is_show_percent && zenkov.max_rank}}
+        <div class="rank-container">
+          <div class="rank-icon bg{{zenkov.rank_bg || 5}}"></div>
+          <div class="rank-text">{{zenkov.formatted_max_rank}}</div>
+        </div>
+        {{else if zenkov.max_rank}}
+        <span class="rank-value-top">{{zenkov.formatted_max_rank}}</span>
+        {{else}}
+        <span class="rank-value">-</span>
+        {{/if}}
       </div>
-      {{else if zenkov.max_rank}}
-      <span class="rank-value-top">{{zenkov.formatted_max_rank}}</span>
-      {{else}}
-      <span class="rank-value">-</span>
-      {{/if}}
     </div>
   </div>
 
