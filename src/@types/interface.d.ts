@@ -276,6 +276,13 @@ export namespace Mys {
       leave_percent: number
       max_price: string
       is_challenge: boolean
+      hard_unlock?: boolean
+      max_rank?: number
+      is_show_percent?: boolean
+      formatted_max_rank?: string
+      rank_bg?: number
+      formatted_leave_percent?: string
+      leave_percent_display?: string
     }[]
     max_rank: number
     is_show_percent: boolean
@@ -313,6 +320,13 @@ export namespace Mys {
       leave_percent: number
       max_price: string
       is_challenge: boolean
+      hard_unlock?: boolean
+      max_rank?: number
+      is_show_percent?: boolean
+      formatted_max_rank?: string
+      rank_bg?: number
+      formatted_leave_percent?: string
+      leave_percent_display?: string
     }[]
     record_list: {
       map_id: number

@@ -86,12 +86,12 @@ export class Zenkov extends ZZZPlugin {
   formatMaxRank(data: any): void {
     let formattedRank = '-'
     let rankBg = 5
-    if (data?.max_rank !== undefined && data?.max_rank !== null) {
+    if (data?.max_rank !== undefined && data?.max_rank !== null && data?.max_rank !== 0) {
       const numRank = Number(data.max_rank)
       if (!isNaN(numRank)) {
         if (data.is_show_percent) {
           const pct = numRank / 100
-          formattedRank = `${pct.toFixed(2)}%`
+          formattedRank = `${parseFloat(pct.toFixed(2))}%`
           if (pct < 1) rankBg = 1
           else if (pct < 5) rankBg = 2
           else if (pct < 10) rankBg = 3
@@ -136,9 +136,10 @@ export class Zenkov extends ZZZPlugin {
     // 格式化最高排名 (is_show_percent=true: 百分比底图; =false: TOP 绝对排名)
     this.formatMaxRank(zenkovDetail)
 
-    // 格式化地图撤离率 (原数据如 10000 -> 100%)
+    // 格式化地图数据 (撤离率、最高排名)
     if (Array.isArray(zenkovDetail.map_list)) {
       zenkovDetail.map_list.forEach((mapItem: any) => {
+        this.formatMaxRank(mapItem)
         if (mapItem.leave_percent !== undefined && mapItem.leave_percent !== null) {
           const rawVal = Number(mapItem.leave_percent)
           if (!isNaN(rawVal)) {
@@ -182,9 +183,10 @@ export class Zenkov extends ZZZPlugin {
     // 格式化最高排名 (is_show_percent=true: 百分比底图; =false: TOP 绝对排名)
     this.formatMaxRank(zenkovDetailData)
 
-    // 格式化地图撤离率
+    // 格式化地图数据 (撤离率、最高排名)
     if (Array.isArray(zenkovDetailData.map_list)) {
       zenkovDetailData.map_list.forEach((mapItem: any) => {
+        this.formatMaxRank(mapItem)
         if (mapItem.leave_percent !== undefined && mapItem.leave_percent !== null) {
           const rawVal = Number(mapItem.leave_percent)
           if (!isNaN(rawVal)) {
