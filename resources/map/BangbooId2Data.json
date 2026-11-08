@@ -450,6 +450,28 @@
     "CHS": "艾瑞儿",
     "JA": "アリエル"
   },
+  "54024": {
+    "sprite_id": "49",
+    "icon": "UI/Sprite/A1DynamicLoad/BangbooModGarage/UnPacker/BangbooRole/BangbooGarageRole49.png",
+    "rank": 4,
+    "codename": "チャーリー",
+    "EN": "Sleepwalkerboo",
+    "desc": "Glory to Roscaelifer, now and forever!",
+    "KO": "몽유부",
+    "CHS": "梦游布",
+    "JA": "ムユウノボンプ"
+  },
+  "54025": {
+    "sprite_id": "50",
+    "icon": "UI/Sprite/A1DynamicLoad/BangbooModGarage/UnPacker/BangbooRole/BangbooGarageRole50.png",
+    "rank": 3,
+    "codename": "ポムポム",
+    "EN": "\"Pam\"",
+    "desc": "Bangboo_Desc_54025",
+    "KO": "Bangboo_Name_54025",
+    "CHS": "「帕姆」",
+    "JA": "「パム」"
+  },
   "55098": {
     "sprite_id": "",
     "icon": "",

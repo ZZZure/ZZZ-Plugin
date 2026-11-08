@@ -11777,6 +11777,171 @@
       }
     }
   },
+  "1601": {
+    "sprite_id": "1601",
+    "name": "挽昼",
+    "full_name": "",
+    "en_name": "Sunbringer",
+    "WeaponType": "7",
+    "ElementType": "201",
+    "Camp": "罗斯凯利法",
+    "HitType": "斩击",
+    "Rarity": "S",
+    "Attack": 101,
+    "AttackGrowth": 58479,
+    "BreakStun": 93,
+    "Defence": 35,
+    "DefenceGrowth": 48155,
+    "HpMax": 461,
+    "HpGrowth": 625913,
+    "Crit": 500,
+    "CritDamage": 5000,
+    "ElementAbnormalPower": 78,
+    "ElementMystery": 77,
+    "PenDelta": 0,
+    "PenRate": 0,
+    "SpRecover": 0,
+    "Level": {
+      "1": {
+        "HpMax": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "LevelMax": 10,
+        "LevelMin": 0,
+        "Materials": {
+          "10": 24000,
+          "100217": 4
+        }
+      },
+      "2": {
+        "HpMax": 317,
+        "Attack": 36,
+        "Defence": 24,
+        "LevelMax": 20,
+        "LevelMin": 10,
+        "Materials": {
+          "10": 56000,
+          "100227": 12
+        }
+      },
+      "3": {
+        "HpMax": 633,
+        "Attack": 72,
+        "Defence": 49,
+        "LevelMax": 30,
+        "LevelMin": 20,
+        "Materials": {
+          "10": 120000,
+          "100227": 20
+        }
+      },
+      "4": {
+        "HpMax": 950,
+        "Attack": 108,
+        "Defence": 73,
+        "LevelMax": 40,
+        "LevelMin": 30,
+        "Materials": {
+          "10": 200000,
+          "100237": 10
+        }
+      },
+      "5": {
+        "HpMax": 1266,
+        "Attack": 144,
+        "Defence": 97,
+        "LevelMax": 50,
+        "LevelMin": 40,
+        "Materials": {
+          "10": 400000,
+          "100237": 20
+        }
+      },
+      "6": {
+        "HpMax": 1583,
+        "Attack": 180,
+        "Defence": 122,
+        "LevelMax": 60,
+        "LevelMin": 50,
+        "Materials": {}
+      }
+    },
+    "ExtraLevel": {
+      "1": {
+        "MaxLevel": 15,
+        "Extra": {
+          "20101": {
+            "Prop": 20101,
+            "Name": "暴击率",
+            "Format": "{0:0.#%}",
+            "Value": 480
+          }
+        }
+      },
+      "2": {
+        "MaxLevel": 25,
+        "Extra": {
+          "20101": {
+            "Prop": 20101,
+            "Name": "暴击率",
+            "Format": "{0:0.#%}",
+            "Value": 960
+          }
+        }
+      },
+      "3": {
+        "MaxLevel": 35,
+        "Extra": {
+          "20101": {
+            "Prop": 20101,
+            "Name": "暴击率",
+            "Format": "{0:0.#%}",
+            "Value": 1440
+          }
+        }
+      },
+      "4": {
+        "MaxLevel": 45,
+        "Extra": {
+          "20101": {
+            "Prop": 20101,
+            "Name": "暴击率",
+            "Format": "{0:0.#%}",
+            "Value": 1920
+          }
+        }
+      },
+      "5": {
+        "MaxLevel": 55,
+        "Extra": {
+          "20101": {
+            "Prop": 20101,
+            "Name": "暴击率",
+            "Format": "{0:0.#%}",
+            "Value": 2400
+          }
+        }
+      },
+      "6": {
+        "MaxLevel": 60,
+        "Extra": {
+          "20101": {
+            "Prop": 20101,
+            "Name": "暴击率",
+            "Format": "{0:0.#%}",
+            "Value": 2880
+          }
+        }
+      }
+    },
+    "Skin": {
+      "3116010": {
+        "Name": "AvatarSkin_Sunbringer_Name_000",
+        "Desc": "AvatarSkin_Sunbringer_Desc_000",
+        "Image": "IconRole1601"
+      }
+    }
+  },
   "1611": {
     "sprite_id": "1611",
     "name": "克拉蕾",
@@ -12557,6 +12722,408 @@
         "Name": "菲欧妮·空想症候",
         "Desc": "据说敏感而心理不稳定的年轻人都会患上某种神奇的病，症状包括心灵感应、预知未来、人格交换…\n或许死而复生也是其中之一呢？她漫无边际地想着。漫长的病症至今未能痊愈——所幸，青春也还没有。",
         "Image": "IconRole1641_02"
+      }
+    }
+  },
+  "1651": {
+    "sprite_id": "1651",
+    "name": "卡芙卡",
+    "full_name": "",
+    "en_name": "(Test1)Kafka",
+    "WeaponType": "3",
+    "ElementType": "203",
+    "Camp": "未明界域",
+    "HitType": "斩击",
+    "Rarity": "S",
+    "Attack": 126,
+    "AttackGrowth": 75860,
+    "BreakStun": 86,
+    "Defence": 49,
+    "DefenceGrowth": 66882,
+    "HpMax": 626,
+    "HpGrowth": 849779,
+    "Crit": 500,
+    "CritDamage": 5000,
+    "ElementAbnormalPower": 112,
+    "ElementMystery": 114,
+    "PenDelta": 0,
+    "PenRate": 0,
+    "SpRecover": 120,
+    "Level": {
+      "1": {
+        "HpMax": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "LevelMax": 10,
+        "LevelMin": 0,
+        "Materials": {
+          "10": 24000,
+          "100213": 4
+        }
+      },
+      "2": {
+        "HpMax": 430,
+        "Attack": 45,
+        "Defence": 34,
+        "LevelMax": 20,
+        "LevelMin": 10,
+        "Materials": {
+          "10": 56000,
+          "100223": 12
+        }
+      },
+      "3": {
+        "HpMax": 859,
+        "Attack": 90,
+        "Defence": 68,
+        "LevelMax": 30,
+        "LevelMin": 20,
+        "Materials": {
+          "10": 120000,
+          "100223": 20
+        }
+      },
+      "4": {
+        "HpMax": 1289,
+        "Attack": 134,
+        "Defence": 101,
+        "LevelMax": 40,
+        "LevelMin": 30,
+        "Materials": {
+          "10": 200000,
+          "100233": 10
+        }
+      },
+      "5": {
+        "HpMax": 1719,
+        "Attack": 179,
+        "Defence": 135,
+        "LevelMax": 50,
+        "LevelMin": 40,
+        "Materials": {
+          "10": 400000,
+          "100233": 20
+        }
+      },
+      "6": {
+        "HpMax": 2149,
+        "Attack": 224,
+        "Defence": 169,
+        "LevelMax": 60,
+        "LevelMin": 50,
+        "Materials": {}
+      }
+    },
+    "ExtraLevel": {
+      "1": {
+        "MaxLevel": 15,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 0
+          },
+          "31201": {
+            "Prop": 31201,
+            "Name": "异常精通",
+            "Format": "{0:0}",
+            "Value": 18
+          }
+        }
+      },
+      "2": {
+        "MaxLevel": 25,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "31201": {
+            "Prop": 31201,
+            "Name": "异常精通",
+            "Format": "{0:0}",
+            "Value": 18
+          }
+        }
+      },
+      "3": {
+        "MaxLevel": 35,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          },
+          "31201": {
+            "Prop": 31201,
+            "Name": "异常精通",
+            "Format": "{0:0}",
+            "Value": 36
+          }
+        }
+      },
+      "4": {
+        "MaxLevel": 45,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "31201": {
+            "Prop": 31201,
+            "Name": "异常精通",
+            "Format": "{0:0}",
+            "Value": 36
+          }
+        }
+      },
+      "5": {
+        "MaxLevel": 55,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          },
+          "31201": {
+            "Prop": 31201,
+            "Name": "异常精通",
+            "Format": "{0:0}",
+            "Value": 54
+          }
+        }
+      },
+      "6": {
+        "MaxLevel": 60,
+        "Extra": {
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 75
+          },
+          "31201": {
+            "Prop": 31201,
+            "Name": "异常精通",
+            "Format": "{0:0}",
+            "Value": 54
+          }
+        }
+      }
+    },
+    "Skin": {
+      "3116510": {
+        "Name": "AvatarSkin_Kafka_Name_000",
+        "Desc": "AvatarSkin_Kafka_Desc_000",
+        "Image": "IconRole1651"
+      }
+    }
+  },
+  "1661": {
+    "sprite_id": "1661",
+    "name": "知更鸟",
+    "full_name": "",
+    "en_name": "(Test1)Robin",
+    "WeaponType": "5",
+    "ElementType": "205",
+    "Camp": "未明界域",
+    "HitType": "打击",
+    "Rarity": "S",
+    "Attack": 108,
+    "AttackGrowth": 63517,
+    "BreakStun": 90,
+    "Defence": 57,
+    "DefenceGrowth": 76993,
+    "HpMax": 704,
+    "HpGrowth": 955238,
+    "Crit": 500,
+    "CritDamage": 5000,
+    "ElementAbnormalPower": 96,
+    "ElementMystery": 95,
+    "PenDelta": 0,
+    "PenRate": 0,
+    "SpRecover": 120,
+    "Level": {
+      "1": {
+        "HpMax": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "LevelMax": 10,
+        "LevelMin": 0,
+        "Materials": {
+          "10": 24000,
+          "100215": 4
+        }
+      },
+      "2": {
+        "HpMax": 483,
+        "Attack": 39,
+        "Defence": 39,
+        "LevelMax": 20,
+        "LevelMin": 10,
+        "Materials": {
+          "10": 56000,
+          "100225": 12
+        }
+      },
+      "3": {
+        "HpMax": 966,
+        "Attack": 77,
+        "Defence": 78,
+        "LevelMax": 30,
+        "LevelMin": 20,
+        "Materials": {
+          "10": 120000,
+          "100225": 20
+        }
+      },
+      "4": {
+        "HpMax": 1449,
+        "Attack": 116,
+        "Defence": 117,
+        "LevelMax": 40,
+        "LevelMin": 30,
+        "Materials": {
+          "10": 200000,
+          "100235": 10
+        }
+      },
+      "5": {
+        "HpMax": 1932,
+        "Attack": 154,
+        "Defence": 156,
+        "LevelMax": 50,
+        "LevelMin": 40,
+        "Materials": {
+          "10": 400000,
+          "100235": 20
+        }
+      },
+      "6": {
+        "HpMax": 2415,
+        "Attack": 193,
+        "Defence": 195,
+        "LevelMax": 60,
+        "LevelMin": 50,
+        "Materials": {}
+      }
+    },
+    "ExtraLevel": {
+      "1": {
+        "MaxLevel": 15,
+        "Extra": {
+          "11102": {
+            "Prop": 11102,
+            "Name": "生命值",
+            "Format": "{0:0.#%}",
+            "Value": 600
+          },
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 0
+          }
+        }
+      },
+      "2": {
+        "MaxLevel": 25,
+        "Extra": {
+          "11102": {
+            "Prop": 11102,
+            "Name": "生命值",
+            "Format": "{0:0.#%}",
+            "Value": 600
+          },
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          }
+        }
+      },
+      "3": {
+        "MaxLevel": 35,
+        "Extra": {
+          "11102": {
+            "Prop": 11102,
+            "Name": "生命值",
+            "Format": "{0:0.#%}",
+            "Value": 1200
+          },
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 25
+          }
+        }
+      },
+      "4": {
+        "MaxLevel": 45,
+        "Extra": {
+          "11102": {
+            "Prop": 11102,
+            "Name": "生命值",
+            "Format": "{0:0.#%}",
+            "Value": 1200
+          },
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          }
+        }
+      },
+      "5": {
+        "MaxLevel": 55,
+        "Extra": {
+          "11102": {
+            "Prop": 11102,
+            "Name": "生命值",
+            "Format": "{0:0.#%}",
+            "Value": 1800
+          },
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 50
+          }
+        }
+      },
+      "6": {
+        "MaxLevel": 60,
+        "Extra": {
+          "11102": {
+            "Prop": 11102,
+            "Name": "生命值",
+            "Format": "{0:0.#%}",
+            "Value": 1800
+          },
+          "12101": {
+            "Prop": 12101,
+            "Name": "基础攻击力",
+            "Format": "{0:0.#}",
+            "Value": 75
+          }
+        }
+      }
+    },
+    "Skin": {
+      "3116610": {
+        "Name": "AvatarSkin_Robin_Name_000",
+        "Desc": "AvatarSkin_Robin_Desc_000",
+        "Image": "IconRole1661"
       }
     }
   },
