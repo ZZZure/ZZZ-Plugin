@@ -14,8 +14,17 @@ export async function getAvatarBasicList(api, deviceFp, origin = false) {
     const result = avatarBaseListData.avatar_list.map(item => new ZZZAvatarBasic(item));
     return result;
 }
-export async function getAvatarInfoList(api, deviceFp, origin = false) {
-    const avatarBaseList = await getAvatarBasicList(api, deviceFp, origin);
+export const resolvePanelChar = (name) => {
+    const id = char.aliasToId(name);
+    const resolved = char.aliasToName(name);
+    if (!id || !resolved)
+        return false;
+    return { id, name: resolved };
+};
+export async function getAvatarInfoList(api, deviceFp, origin = false, ids) {
+    const avatarBaseList = ids?.length
+        ? ids.map(id => ({ id }))
+        : await getAvatarBasicList(api, deviceFp, origin);
     if (!avatarBaseList)
         return null;
     const avatarInfoList = [];
@@ -29,6 +38,8 @@ export async function getAvatarInfoList(api, deviceFp, origin = false) {
         if (!data || !data.avatar_list || data.avatar_list.length === 0)
             continue;
         avatarInfoList.push(data.avatar_list[0]);
+        if (avatarBaseList.length <= 1)
+            continue;
         const time = _.get(settings.getConfig('panel'), 'roleInterval', 3000);
         let refresh;
         if (time > 100) {
@@ -62,8 +73,8 @@ export const updatePanelData = (uid, newData) => {
     });
     return finalData;
 };
-export const refreshPanel = async (api, deviceFp) => {
-    const newData = await getAvatarInfoList(api, deviceFp, true);
+export const refreshPanel = async (api, deviceFp, charIds) => {
+    const newData = await getAvatarInfoList(api, deviceFp, true, charIds?.length ? charIds : undefined);
     if (!newData)
         return null;
     return mergePanel(api.uid, newData);
@@ -75,6 +86,12 @@ export const mergePanel = async (uid, newData) => {
         await item.get_basic_assets();
     }
     return formattedData;
+};
+export const splitPanelCharNames = (raw) => {
+    return raw
+        .split(/[\s,，、]+/)
+        .map(name => name.trim())
+        .filter(Boolean);
 };
 export const getPanelList = (uid) => {
     const data = getPanelData(uid);
