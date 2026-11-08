@@ -30,17 +30,31 @@ export async function getAvatarBasicList(api: MysZZZApi, deviceFp: string, origi
 }
 
 /**
+ * 解析角色名/别称为 ID 与标准名
+ * @returns false 角色不存在
+ */
+export const resolvePanelChar = (name: string) => {
+  const id = char.aliasToId(name)
+  const resolved = char.aliasToName(name)
+  if (!id || !resolved) return false
+  return { id, name: resolved }
+}
+
+/**
  * 获取角色详细信息列表
  * @param api
  * @param deviceFp
  * @param origin 是否返回原始数据
+ * @param ids 指定角色 ID 列表；传入时跳过全量列表拉取
  */
-export async function getAvatarInfoList(api: MysZZZApi, deviceFp: string, origin?: false): Promise<ZZZAvatarInfo[] | null>
-export async function getAvatarInfoList(api: MysZZZApi, deviceFp: string, origin: true): Promise<Mys.Avatar[] | null>
-export async function getAvatarInfoList(api: MysZZZApi, deviceFp: string, origin: boolean = false) {
-  // 获取角色基础信息列表
-  // @ts-expect-error
-  const avatarBaseList = await getAvatarBasicList(api, deviceFp, origin)
+export async function getAvatarInfoList(api: MysZZZApi, deviceFp: string, origin?: false, ids?: number[]): Promise<ZZZAvatarInfo[] | null>
+export async function getAvatarInfoList(api: MysZZZApi, deviceFp: string, origin: true, ids?: number[]): Promise<Mys.Avatar[] | null>
+export async function getAvatarInfoList(api: MysZZZApi, deviceFp: string, origin: boolean = false, ids?: number[]) {
+  // 指定角色时直接按 ID 查询；否则先拉全量基础列表
+  const avatarBaseList = ids?.length
+    ? ids.map(id => ({ id }))
+    // @ts-expect-error
+    : await getAvatarBasicList(api, deviceFp, origin)
   if (!avatarBaseList) return null
   // 获取角色详细信息列表
   const avatarInfoList = []
@@ -53,6 +67,8 @@ export async function getAvatarInfoList(api: MysZZZApi, deviceFp: string, origin
     })
     if (!data || !data.avatar_list || data.avatar_list.length === 0) continue
     avatarInfoList.push(data.avatar_list[0])
+    // 单角色更新无需间隔；多角色仍按配置节流
+    if (avatarBaseList.length <= 1) continue
     const time = _.get(settings.getConfig('panel'), 'roleInterval', 3000)
     let refresh
     if (time > 100) {
@@ -107,10 +123,11 @@ export const updatePanelData = (uid: string, newData: Mys.Avatar[]) => {
  * 刷新面板
  * @param api
  * @param deviceFp
+ * @param charIds 指定角色 ID 列表时仅刷新这些角色；不传则全量
  */
-export const refreshPanel = async (api: MysZZZApi, deviceFp: string) => {
+export const refreshPanel = async (api: MysZZZApi, deviceFp: string, charIds?: number[]) => {
   // 获取新数据
-  const newData = await getAvatarInfoList(api, deviceFp, true)
+  const newData = await getAvatarInfoList(api, deviceFp, true, charIds?.length ? charIds : undefined)
   if (!newData) return null
   return mergePanel(api.uid, newData)
 }
@@ -129,6 +146,17 @@ export const mergePanel = async (uid: string, newData: Mys.Avatar[]) => {
     await item.get_basic_assets()
   }
   return formattedData
+}
+
+/**
+ * 拆分指定更新指令中的角色名
+ * 支持空格、中英文逗号、顿号分隔
+ */
+export const splitPanelCharNames = (raw: string): string[] => {
+  return raw
+    .split(/[\s,，、]+/)
+    .map(name => name.trim())
+    .filter(Boolean)
 }
 
 /**

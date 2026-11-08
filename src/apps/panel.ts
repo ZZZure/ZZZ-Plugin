@@ -6,6 +6,8 @@ import {
   updatePanelData,
   formatPanelData,
   getPanelListOrigin,
+  resolvePanelChar,
+  splitPanelCharNames,
 } from '../lib/avatar.js'
 import { parsePlayerInfo, refreshPanelFromEnka } from '../model/Enka/enkaApi.js'
 import { rulePrefix } from '../lib/common.js'
@@ -45,29 +47,73 @@ export class Panel extends ZZZPlugin {
 
   async handleRule() {
     if (!this.e.msg) return
-    const reg = new RegExp(`${rulePrefix}(.*?)(?:展柜)?面板(?:展柜)?(刷新|更新|列表)?$`)
-    const match = this.e.msg.match(reg)
-    if (!match) return false
-    const pre = match[4]?.trim()
-    const suf = match[5]?.trim()
-    if (['刷新', '更新'].includes(pre || '') || ['刷新', '更新'].includes(suf || ''))
+    const msg = this.e.msg
+    // 全量更新优先：%更新面板 / %更新展柜面板 / %面板更新 等
+    const fullUpdateReg = new RegExp(
+      `${rulePrefix}(?:(?:刷新|更新)(?:展柜)?面板|(?:展柜)?面板(?:刷新|更新))$`
+    )
+    if (fullUpdateReg.test(msg)) {
       return await this.refreshPanel()
-    if (!pre || suf === '列表') return await this.getCharPanelList()
-    const queryPanelReg = new RegExp(`${rulePrefix}(.*)面板$`)
-    if (queryPanelReg.test(this.e.msg)) return await this.getCharPanel()
+    }
+    // 指定角色更新（仅米游社）：%更新维琳娜面板 / %更新菲欧妮、维琳娜面板
+    const charUpdateReg = new RegExp(`${rulePrefix}(?:刷新|更新)(.+)面板$`)
+    const charUpdateMatch = msg.match(charUpdateReg)
+    if (charUpdateMatch) {
+      // 展柜保持全量更新，不支持点名角色
+      if (msg.includes('展柜')) {
+        return this.reply('展柜更新不支持指定角色，请使用%更新展柜面板')
+      }
+      const names = splitPanelCharNames(charUpdateMatch[4] || '')
+      if (!names.length) return false
+      return await this.refreshPanel(names)
+    }
+    // %面板 / %面板列表 / %xxx面板列表
+    const listReg = new RegExp(`${rulePrefix}(?:.*面板列表|面板)$`)
+    if (listReg.test(msg)) return await this.getCharPanelList()
+    const queryPanelReg = new RegExp(`${rulePrefix}(.+)面板$`)
+    if (queryPanelReg.test(msg)) return await this.getCharPanel()
     return false
   }
 
-  async refreshPanel() {
+  /**
+   * 刷新面板
+   * @param charNames 传入时仅更新这些角色；不传则更新全部
+   */
+  async refreshPanel(charNames?: string[]) {
     const buttons = new PanelButtons(this.e)
     const uid = await this.getUID()
+    let targets: { id: number; name: string }[] | undefined
+    if (charNames?.length) {
+      targets = []
+      const missing: string[] = []
+      for (const name of charNames) {
+        const resolved = resolvePanelChar(name)
+        if (!resolved) {
+          missing.push(name)
+          continue
+        }
+        if (!targets.some(item => item.id === resolved.id)) {
+          targets.push(resolved)
+        }
+      }
+      if (missing.length) {
+        const label = missing.map(name => `【${name}】`).join('')
+        return this.reply(`角色${label}不存在，请确保角色名称/别称存在`)
+      }
+    }
     const lastQueryTime = await redis.get(`ZZZ:PANEL:${uid}:LASTTIME`)
     const panelSettings = settings.getConfig('panel')
     const coldTime = _.get(panelSettings, 'interval', 300)
     if (lastQueryTime && Date.now() - Number(lastQueryTime) < 1000 * coldTime) {
       return this.reply(`${coldTime}秒内只能更新一次，请稍后再试`)
     }
-    const isEnka = this.e.msg.includes('展柜') || !(await getCk(this.e))
+    // 指定角色仅走米游社；展柜/无 CK 仍按原逻辑全量更新
+    const hasCk = !!(await getCk(this.e))
+    if (targets?.length && !hasCk) {
+      return this.reply('指定角色更新需要绑定Cookie，请先绑定后重试，或使用%更新展柜面板 更新展柜角色')
+    }
+    const isEnka = this.e.msg.includes('展柜') || !hasCk
+    const targetLabel = targets?.map(item => item.name).join('、')
     let result: any[] | null = null
     if (isEnka) {
       const data = await refreshPanelFromEnka(uid)
@@ -96,10 +142,13 @@ export class Panel extends ZZZPlugin {
       }
       try {
         const { api, deviceFp } = await this.getAPI()
-        await oriReply('正在更新面板列表，请稍候...')
+        await oriReply(targets?.length ? `正在更新${targetLabel}面板，请稍候...` : '正在更新面板列表，请稍候...')
         await this.getPlayerInfo()
         await redis.set(`ZZZ:PANEL:${uid}:LASTTIME`, Date.now())
-        result = await refreshPanelFunction(api, deviceFp)
+        result = await refreshPanelFunction(api, deviceFp, targets?.map(item => item.id))
+        if (targets?.length && !result) {
+          errorMsg = `未能获取角色${targetLabel}的面板数据，请确认已拥有该角色` + errorMsg
+        }
       } catch (err: any) {
         logger.error('面板列表更新失败：', err)
         errorMsg = (err.message || '') + errorMsg
