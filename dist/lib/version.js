@@ -66,6 +66,10 @@ else if (packageJson.name === 'trss-yunzai') {
     isMiao = true;
     name = 'TRSS-Yunzai';
 }
+else if (packageJson.name === 'MangoCat-Yunzai') {
+    isMiao = true;
+    name = 'MangoCat-Yunzai';
+}
 const version = {
     isV3,
     isMiao,
