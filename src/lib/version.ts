@@ -103,6 +103,10 @@ if (packageJson.name === 'miao-yunzai') {
   // 如果是 TRSS-Yunzai，将 isMiao 设置为 true，name 设置为 TRSS-Yunzai
   isMiao = true
   name = 'TRSS-Yunzai'
+} else if (packageJson.name === 'MangoCat-Yunzai') {
+  // MangoCat-Yunzai 为 Miao 衍生分支，沿用 isMiao 约定
+  isMiao = true
+  name = 'MangoCat-Yunzai'
 }
 
 // 导出版本信息
