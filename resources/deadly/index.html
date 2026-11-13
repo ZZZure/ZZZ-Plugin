@@ -15,7 +15,11 @@
     </div>
     <div class="content">
       <div class="left">
-        <div class="value">{{deadly.total_score}}</div>
+        {{if deadly.total_score === 195000}}
+          <div class="max-score-icon score195000"></div>
+        {{else}}
+          <div class="value">{{deadly.total_score}}</div>
+        {{/if}}
         <div class="rank-container">
           <div class="rank-icon bg{{deadly.rank_bg}}"></div>
           <div class="rank-text">{{(deadly.rank_percent / 100).toFixed(2)}}%</div>
@@ -61,7 +65,11 @@
         </div>
       </div>
       <div class="value">
-        <div class="val">{{item.score}}</div>
+        {{if item.score === 65000}}
+          <div class="max-score-icon score65000"></div>
+        {{else}}
+          <div class="val">{{item.score}}</div>
+        {{/if}}
         <div class="stars">
           <% for(let i=0 ; i < item.star ; i++) { %>
           <div class="star hard-star"></div>
@@ -127,7 +135,11 @@
     <div class="content">
       <div class="name">{{item.boss && item.boss[0] ? item.boss[0].name : ''}}</div>
       <div class="value">
-        <div class="val">{{item.score}}</div>
+        {{if item.score === 65000}}
+          <div class="max-score-icon score65000"></div>
+        {{else}}
+          <div class="val">{{item.score}}</div>
+        {{/if}}
         <div class="stars">
           <% for(let i=0 ; i < item.star ; i++) { %>
             <div class="star"></div>

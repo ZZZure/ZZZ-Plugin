@@ -29,7 +29,11 @@
         <div class="result">
           <div class="value">
             <div class="label">总得分</div>
-            <div class="value">{{record.result.total_score}}</div>
+            {{if record.result.total_score === 195000}}
+              <div class="max-score-icon score195000"></div>
+            {{else}}
+              <div class="value">{{record.result.total_score}}</div>
+            {{/if}}
           </div>
           <div class="rank">
             <div class="label">星级</div>
@@ -48,7 +52,11 @@
           <div class="header">
             <div class="name">{{team.boss && team.boss[0] ? team.boss[0].name : ''}}</div>
             <div class="value">
-              <div class="val">{{team.score}}</div>
+              {{if team.score === 65000}}
+                <div class="max-score-icon score65000"></div>
+              {{else}}
+                <div class="val">{{team.score}}</div>
+              {{/if}}
               <div class="stars">
                 <% for(let j=0 ; j < team.star ; j++) { %>
                   <div class="star"></div>
