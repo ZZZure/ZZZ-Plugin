@@ -37,7 +37,11 @@
           <div class="header">
             <div class="name">{{team.boss && team.boss[0] ? team.boss[0].name : ''}}</div>
             <div class="value">
-              <div class="val">{{team.score}}</div>
+              {{if team.score === 65000}}
+                <div class="max-score-icon score65000"></div>
+              {{else}}
+                <div class="val">{{team.score}}</div>
+              {{/if}}
               <div class="stars">
                 <% for(let j=0 ; j < team.star ; j++) { %>
                   <div class="star hard-star"></div>

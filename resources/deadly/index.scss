@@ -40,6 +40,12 @@
         display: flex;
         align-items: center;
         gap: 1em;
+        .max-score-icon.score195000 {
+          filter: drop-shadow(0 0 0.1em rgba(197, 251, 255, 0.6))
+            brightness(1.1);
+          width: 6.5em;
+          height: 2.1em;
+        }
         .value {
           font-size: 1.7em;
           background: linear-gradient(
@@ -246,6 +252,12 @@
         font-size: 1.6em;
         gap: 0.2em;
         align-items: center;
+        .max-score-icon.score65000 {
+          width: 3.2em;
+          height: 1.2em;
+          scale: 1.1;
+          margin-top: 0.2em;
+        }
         .val {
           background: linear-gradient(
             180deg,

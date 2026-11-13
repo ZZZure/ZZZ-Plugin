@@ -2,6 +2,20 @@ body {
   width: 2400px;
 }
 
+.max-score-icon.score65000 {
+  width: 3.2em;
+  height: 1.2em;
+  scale: 1.1;
+  margin-top: 0.2em;
+  filter: drop-shadow(0 0 0.1em rgba(197, 251, 255, 0.6)) brightness(1.1);
+}
+
+.max-score-icon.score195000 {
+  width: 5.6em;
+  height: 1.8em;
+  filter: drop-shadow(0 0 0.1em rgba(197, 251, 255, 0.6)) brightness(1.1);
+}
+
 .card {
   margin: 0 1em;
   padding-top: 1em;
