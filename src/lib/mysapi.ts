@@ -171,7 +171,7 @@ export default class MysZZZApi extends MysApi {
         // 国际服不需要绑定设备，故写入的'User-Agent'为国服
         headers[
           'User-Agent'
-        ] = `Mozilla/5.0 (Linux; Android ${osVersion}; ${modelName} Build/${deviceDisplay}; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/111.0.5563.116 Mobile Safari/537.36 miHoYoBBS/2.73.1`
+        ] = `Mozilla/5.0 (Linux; Android ${osVersion}; ${modelName} Build/${deviceDisplay}; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/111.0.5563.116 Mobile Safari/537.36 miHoYoBBS/2.118.1`
       } catch (error: any) {
         logger.error(`[ZZZ]设备信息解析失败：${error.message}`)
       }
@@ -247,7 +247,7 @@ export default class MysZZZApi extends MysApi {
   getDS2() {
     const t = Math.round(new Date().getTime() / 1000)
     const r = randomString(6)
-    const sign = md5(`salt=WGtruoQrwczmsjLOPXzJLnaAYycsLavx&t=${t}&r=${r}`)
+    const sign = md5(`salt=7a047e46eadd8693f09513e55bdf6bd8&t=${t}&r=${r}`)
     return `${t},${r},${sign}`
   }
 
@@ -277,16 +277,16 @@ export default class MysZZZApi extends MysApi {
       _.get(deviceCfg, 'deviceInfo') ?? _.get(defDeviceCfg, 'deviceInfo')
     const deviceDisplay = deviceInfo.split('/')[3]
     const cn = {
-      app_version: '2.73.1',
-      User_Agent: `Mozilla/5.0 (Linux; Android ${osVersion}; ${modelName} Build/${deviceDisplay}; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/111.0.5563.116 Mobile Safari/537.36 miHoYoBBS/2.73.1`,
+      app_version: '2.118.1',
+      User_Agent: `Mozilla/5.0 (Linux; Android ${osVersion}; ${modelName} Build/${deviceDisplay}; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/111.0.5563.116 Mobile Safari/537.36 miHoYoBBS/2.118.1`,
       client_type: '5',
       Origin: 'https://act.mihoyo.com',
       X_Requested_With: 'com.mihoyo.hyperion',
       Referer: 'https://act.mihoyo.com/',
     }
     const os = {
-      app_version: '2.57.1',
-      User_Agent: `Mozilla/5.0 (Linux; Android ${osVersion}; ${modelName} Build/${deviceDisplay}; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/111.0.5563.116 Mobile Safari/537.36 miHoYoBBSOversea/2.57.1`,
+      app_version: '4.23.0',
+      User_Agent: `Mozilla/5.0 (Linux; Android ${osVersion}; ${modelName} Build/${deviceDisplay}; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/111.0.5563.116 Mobile Safari/537.36 miHoYoBBSOversea/4.23.0`,
       client_type: '2',
       Origin: 'https://act.hoyolab.com',
       X_Requested_With: 'com.mihoyo.hoyolab',
@@ -301,8 +301,8 @@ export default class MysZZZApi extends MysApi {
     return {
       'x-rpc-app_version': client.app_version,
       // 'x-rpc-client_type': client.client_type,
-      'User-Agent': client.User_Agent || 'okhttp/4.8.0',
-      'x-rpc-sys_version': '12',
+      'User-Agent': client.User_Agent || 'okhttp/4.9.3',
+      'x-rpc-sys_version': '13',
       'x-rpc-client_type': '2',
       'x-rpc-channel': 'mihoyo',
       Referer: client.Referer,
