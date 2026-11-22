@@ -63,6 +63,12 @@ export default class MysZZZApi extends MysApi {
     }
   }
 
+  static getLtuid(cookie = ''): string {
+    const ck = String(cookie || '')
+    const v2Id = ck.match(/(?:^|;)\s*(?:ltuid_v2|account_id_v2)=(\d+)\s*(?=;|$)/)?.[1]
+    return v2Id || ck.match(/(?:^|;)\s*(?:ltuid|account_id|stuid)=(\d+)\s*(?=;|$)/)?.[1] || ''
+  }
+
   /**
    * 获取服务器
    */
@@ -383,10 +389,7 @@ export default class MysZZZApi extends MysApi {
     if (data.deviceFp) {
       data.headers['x-rpc-device_fp'] = data.deviceFp
     }
-    // 从 this.cookie 中获取ltuid
-    const ck = this.cookie
-    const m = ck.match(/ltuid=(\d+);/)
-    const ltuid = m ? m[1] : null
+    const ltuid = MysZZZApi.getLtuid(this.cookie)
     if (ltuid) {
       const _bindInfo = await redis.get(`ZZZ:DEVICE_FP:${ltuid}:BIND`)
       if (_bindInfo) {
