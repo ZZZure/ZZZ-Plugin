@@ -35,6 +35,11 @@ export default class MysZZZApi extends MysApi {
             this._device = crypto.randomUUID();
         }
     }
+    static getLtuid(cookie = '') {
+        const ck = String(cookie || '');
+        const v2Id = ck.match(/(?:^|;)\s*(?:ltuid_v2|account_id_v2)=(\d+)\s*(?=;|$)/)?.[1];
+        return v2Id || ck.match(/(?:^|;)\s*(?:ltuid|account_id|stuid)=(\d+)\s*(?=;|$)/)?.[1] || '';
+    }
     getServer() {
         const _uid = this.uid?.toString();
         if (_uid.length < 10) {
@@ -263,9 +268,7 @@ export default class MysZZZApi extends MysApi {
         if (data.deviceFp) {
             data.headers['x-rpc-device_fp'] = data.deviceFp;
         }
-        const ck = this.cookie;
-        const m = ck.match(/ltuid=(\d+);/);
-        const ltuid = m ? m[1] : null;
+        const ltuid = MysZZZApi.getLtuid(this.cookie);
         if (ltuid) {
             const _bindInfo = await redis.get(`ZZZ:DEVICE_FP:${ltuid}:BIND`);
             if (_bindInfo) {

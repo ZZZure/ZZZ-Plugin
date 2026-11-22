@@ -39,7 +39,7 @@ export class ZZZPlugin extends plugin {
         const currentCK = Object.values(ck).find(item => {
             return item.ck && item.uid === uid;
         });
-        return currentCK?.ltuid || '';
+        return MysZZZApi.getLtuid(currentCK?.ck) || currentCK?.ltuid || '';
     }
     async getAPI() {
         this.e.game = 'zzz';
