@@ -14,8 +14,8 @@ export class PanelButtons {
     button(text, command, prefix = '#zzz') {
         return {
             text,
-            input: `${prefix}${command}`,
-            send: true,
+            callback: `${prefix}${command}`,
+            toCallback: true,
             permission: this.userId
         };
     }
