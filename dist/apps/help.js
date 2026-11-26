@@ -62,14 +62,14 @@ const helpData = [
         items: [
             {
                 title: '刷新抽卡记录',
-                desc: '刷新抽卡记录，如果数据过多，可能需要等待很长一段时间，请等待回复后再%查看抽卡记录',
+                desc: '使用当前 UID 绑定的 Cookie 直接更新抽卡记录，不生成链接。记录较多时请等待更新完成后再查看',
                 needCK: true,
-                needSK: true,
+                needSK: false,
                 commands: ['刷新/更新抽卡', '刷新/更新抽卡链接', '刷新/更新抽卡记录'],
             },
             {
                 title: '获取抽卡记录链接',
-                desc: '获取抽卡记录链接，获取链接后可以用于小程序等第三方工具查看抽卡记录',
+                desc: '仅私聊。国服需要 Stoken 和逍遥插件，国际服需要含 CookieToken 的 HoYoLAB Cookie。链接可用于第三方抽卡工具，请勿公开分享',
                 needCK: true,
                 needSK: true,
                 commands: ['获取抽卡链接'],

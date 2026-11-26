@@ -1,7 +1,6 @@
 import { anaylizeGachaLog, updateGachaLog, updateGachaLog_ck } from '../lib/gacha.js';
-import { getZZZGachaLink, getZZZGachaLogByAuthkey } from '../lib/gacha/core.js';
+import { getZZZGachaLink, getZZZGachaLogByAuthkey, parseGachaLink } from '../lib/gacha/core.js';
 import { gacha_type_meta_data } from '../lib/gacha/const.js';
-import { getQueryVariable } from '../utils/network.js';
 import common from '../../../../lib/common/common.js';
 import { getAuthKey } from '../lib/authkey.js';
 import { getRecallMsg, rulePrefix } from '../lib/common.js';
@@ -46,10 +45,11 @@ export class GachaLog extends ZZZPlugin {
             '1. 私聊 bot 发送【#zzz抽卡链接】，等待 bot 回复【请发送抽卡链接】',
             '2. 抓包获取抽卡链接',
             '3. 将获取到的抽卡链接发送给 bot',
-            '二、通过 Cookie 刷新抽卡链接（需 bot 主人安装逍遥插件）',
-            '1. 前提绑定 Cookie 或者 扫码登录',
-            '2. 发送【#zzz刷新抽卡链接】',
-            '当抽卡链接绑定完后，可以通过命令【#zzz抽卡分析】来查看抽卡分析'
+            '二、通过 Cookie 直接刷新抽卡记录',
+            '1. 绑定当前绝区零 UID 对应的有效 Cookie',
+            '2. 发送【#zzz刷新抽卡记录】，不需要抽卡链接或 Stoken',
+            '如需导出链接，请私聊发送【#zzz获取抽卡链接】。国服需要 Stoken 和逍遥插件，国际服需要含 CookieToken 的 HoYoLAB Cookie。',
+            '更新记录后，可以发送【#zzz抽卡分析】查看结果'
         ].join('\n');
         await this.reply(reply_msg);
     }
@@ -92,26 +92,28 @@ export class GachaLog extends ZZZPlugin {
             this.finish('gachaLog');
             return this.reply('已取消', false, { at: true, recallMsg: getRecallMsg() });
         }
-        const key = getQueryVariable(msg, 'authkey');
-        const region = getQueryVariable(msg, 'region');
-        const game_biz = getQueryVariable(msg, 'game_biz');
-        if (!key && !region && !game_biz) {
-            this.finish('gachaLog');
-            return this.reply('抽卡链接格式错误，请重新发起%抽卡链接', false, {
+        this.finish('gachaLog');
+        const link = parseGachaLink(msg);
+        if (!link) {
+            return this.reply('抽卡链接格式错误，请重新发起%抽卡链接并发送完整链接（含 authkey、region 和 game_biz）', false, {
                 at: true,
                 recallMsg: getRecallMsg()
             });
         }
-        this.finish('gachaLog');
-        this.getLogWithOutUID(key || '', region || '', game_biz || '');
+        try {
+            return await this.getLogWithOutUID(link.key, link.region, link.gameBiz);
+        }
+        catch (error) {
+            return this.reply(error instanceof Error ? error.message : '更新抽卡记录失败，请稍后重试', false, {
+                at: true,
+                recallMsg: getRecallMsg()
+            });
+        }
     }
     async refreshGachaLog() {
-        const uid = await this.getUID();
-        if (!uid)
-            return false;
         try {
-            const { api, deviceFp } = await this.getAPI();
-            this.reply('抽卡记录获取中请稍等...可能需要一段时间，请耐心等待');
+            const { api, uid, deviceFp } = await this.getAPI();
+            await this.reply('抽卡记录获取中请稍等...可能需要一段时间，请耐心等待');
             const { data, count } = await updateGachaLog_ck(api, uid, deviceFp);
             const msg = [];
             msg.push(`抽卡记录更新成功，共${Object.keys(data).length}个卡池`);
@@ -185,20 +187,23 @@ export class GachaLog extends ZZZPlugin {
         await this.render('gachalog/index.html', result);
     }
     async getGachaLink() {
-        const uid = await this.getUID();
-        if (/^(1[0-9])[0-9]{8}/i.test(uid)) {
-            return this.reply('国际服不支持此功能');
-        }
-        if (!uid)
-            return false;
-        if (!this.e.isPrivate || this.e.isGroup) {
+        if (!this.e.isPrivate || this.e.isGroup || this.e.isGuild) {
             return this.reply('请私聊获取抽卡链接', false, { at: true });
         }
-        const key = await getAuthKey(this.e, this.User, uid);
-        if (!key) {
-            return this.reply('authKey获取失败，请检查cookie是否过期');
+        if (this.e.at && String(this.e.at) !== String(this.e.user_id)) {
+            return this.reply('只能获取自己绑定账号的抽卡链接');
         }
-        const link = await getZZZGachaLink(key);
+        const uid = await this.getUID();
+        if (!uid)
+            return false;
+        let link;
+        try {
+            const { authKey, region, gameBiz } = await getAuthKey(this.e, this.User, uid);
+            link = await getZZZGachaLink(authKey, '2001', '2', 1, '0', region, gameBiz);
+        }
+        catch (error) {
+            return this.reply(error instanceof Error ? error.message : '获取抽卡链接失败，请稍后重试');
+        }
         await this.reply(link);
     }
 }

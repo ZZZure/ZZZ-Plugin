@@ -1,3 +1,4 @@
+import { getCk } from './common.js';
 import request from '../utils/request.js';
 import MysZZZApi from './mysapi.js';
 import YAML from 'yaml';
@@ -32,43 +33,50 @@ export const getStoken = (e, mysid = '') => {
         return null;
     }
 };
-export const getAuthKey = async (e, _user, zzzUid, authAppid = 'csc') => {
-    if (!User) {
-        throw new Error('未安装逍遥插件，无法自动刷新抽卡链接');
+export const getAuthKey = async (e, user, zzzUid) => {
+    const uidData = user.getUidData(zzzUid, 'zzz', e);
+    if (!uidData || uidData.type !== 'ck' || !uidData.ltuid) {
+        throw new Error(`当前UID${zzzUid}未绑定Cookie，请切换UID后尝试`);
     }
-    const uidData = _user.getUidData(zzzUid, 'zzz', e);
-    if (!uidData || uidData?.type != 'ck' || !uidData?.ltuid) {
-        throw new Error(`当前UID${zzzUid}未绑定cookie，请切换UID后尝试`);
-    }
-    const stoken = getStoken(e, uidData.ltuid);
-    if (!stoken) {
-        throw new Error('获取stoken失败，请确认绑定了stoken且查询的UID与stoken对应，请确认bot所使用的是绝区零UID');
-    }
-    if (String(uidData.ltuid) !== String(stoken.stuid)) {
-        throw new Error(`当前UID${zzzUid}查询所使用的米游社ID${stoken.stuid}与当前切换的米游社ID${uidData.ltuid}不匹配，请切换UID后尝试`);
-    }
-    const ck = `stuid=${stoken.stuid};stoken=${stoken.stoken};mid=${stoken.mid};`;
-    const api = new MysZZZApi(zzzUid, ck);
-    let type = 'zzzAuthKey';
-    switch (authAppid) {
-        case 'csc': {
-            type = 'zzzAuthKey';
-            break;
+    const api = new MysZZZApi(zzzUid, '');
+    const { server: region, apiTool: { gameBiz } } = api;
+    const overseas = gameBiz === 'nap_global';
+    let type;
+    if (overseas) {
+        const cookies = await getCk(e);
+        const binding = Object.values(cookies ?? {}).find(item => item.ck &&
+            String(item.uid) === String(zzzUid) &&
+            String(MysZZZApi.getLtuid(item.ck) || item.ltuid) === String(uidData.ltuid));
+        if (!binding || !/(?:^|;)\s*cookie_token(?:_v2)?=[^;\s]+/.test(binding.ck)) {
+            throw new Error('当前UID未绑定包含 CookieToken 的 HoYoLAB Cookie，请重新绑定后尝试');
         }
-        default:
+        api.cookie = binding.ck;
+        type = 'AuthKeyByCookieToken';
+    }
+    else {
+        if (!User)
+            throw new Error('未安装逍遥插件，无法获取国服抽卡链接');
+        const stoken = getStoken(e, uidData.ltuid);
+        if (!stoken)
+            throw new Error('获取Stoken失败，请确认已绑定与当前绝区零UID对应的Stoken');
+        api.cookie = `stuid=${stoken.stuid};stoken=${stoken.stoken};mid=${stoken.mid};`;
+        type = 'zzzAuthKey';
     }
     const result = api.getUrl(type);
-    if (!result) {
-        throw new Error('获取请求数据失败');
-    }
+    if (!result)
+        throw new Error('获取AuthKey请求参数失败');
     const { url, headers, body } = result;
-    const _res = await request(url, {
-        method: 'POST',
-        headers,
-        body,
-    });
-    const res = await _res.json();
-    logger.debug(`[zzz:authkey]`, res);
-    return res?.data?.authkey;
+    let res;
+    try {
+        res = await (await request(url, { method: 'POST', headers, body })).json();
+    }
+    catch {
+        throw new Error('获取AuthKey请求失败，请稍后重试');
+    }
+    const authKey = res?.data?.authkey;
+    if ((res?.retcode != null && Number(res.retcode) !== 0) || typeof authKey !== 'string' || !authKey.trim()) {
+        throw new Error(`获取AuthKey失败，请检查${overseas ? 'HoYoLAB Cookie' : '国服Stoken'}是否过期`);
+    }
+    return { authKey, region, gameBiz };
 };
 //# sourceMappingURL=authkey.js.map

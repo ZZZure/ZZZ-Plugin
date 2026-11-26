@@ -28,9 +28,7 @@ export class SingleGachaLog {
         this.square_icon = '';
     }
     equals(item) {
-        return (this.uid === item.uid &&
-            this.id === item.id &&
-            this.gacha_type === this.gacha_type);
+        return this.uid === item.uid && this.id === item.id;
     }
     async get_assets() {
         if (this.item_type === '音擎') {

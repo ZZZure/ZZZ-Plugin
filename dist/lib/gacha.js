@@ -21,17 +21,21 @@ export const updateGachaLog = async (authKey, uid, region, game_biz) => {
         for (const type of gacha_type_meta_data[name]) {
             queryLabel: while (true) {
                 const log = await getZZZGachaLogByAuthkey(authKey, type, type[0], page, endId, region, game_biz);
-                if (!log || !log?.list || log?.list?.length === 0) {
+                if (log.list.length === 0)
                     break;
-                }
                 for (const item of log.list) {
+                    if (String(item.uid) !== String(uid))
+                        throw new Error('抽卡记录与链接中的角色不一致，已取消更新');
                     if (lastSaved && lastSaved.equals(item)) {
                         break queryLabel;
                     }
                     newData.push(item);
                     newCount[name]++;
                 }
-                endId = log.list[log.list.length - 1]?.id || endId;
+                const nextId = log.list.at(-1)?.id;
+                if (!nextId || String(nextId) === String(endId))
+                    throw new Error('抽卡记录分页异常，已取消更新');
+                endId = nextId;
                 page++;
                 await sleep(1000);
             }
@@ -63,9 +67,10 @@ export const updateGachaLog_ck = async (api, uid, deviceFp) => {
                     type,
                     endId,
                 });
-                if (!log || !log?.gacha_item_list || log?.gacha_item_list?.length === 0) {
+                if (!Array.isArray(log?.gacha_item_list))
+                    throw new Error('抽卡记录接口返回的数据格式异常，请稍后重试');
+                if (log.gacha_item_list.length === 0)
                     break;
-                }
                 for (let item of log.gacha_item_list) {
                     const date = item.date;
                     item = {
@@ -88,7 +93,10 @@ export const updateGachaLog_ck = async (api, uid, deviceFp) => {
                     newData.push(item);
                     newCount[name]++;
                 }
-                endId = log.gacha_item_list[log.gacha_item_list.length - 1]?.id || endId;
+                const nextId = log.gacha_item_list.at(-1)?.id;
+                if (!nextId || String(nextId) === String(endId))
+                    throw new Error('抽卡记录分页异常，已取消更新');
+                endId = nextId;
                 await sleep(1000);
             }
         }
