@@ -1,4 +1,5 @@
 import type { Mys } from '#interface'
+import { getCk } from './common.js'
 // @ts-ignore
 import type NoteUser from '../../../genshin/model/mys/NoteUser.js'
 import request from '../utils/request.js'
@@ -58,58 +59,48 @@ export const getStoken = (e: any, mysid = '') => {
   }
 }
 
-/**
- * 此方法依赖逍遥插件
- */
-export const getAuthKey = async (e: any, _user: NoteUser, zzzUid: string, authAppid: string = 'csc'): Promise<string> => {
-  if (!User) {
-    throw new Error('未安装逍遥插件，无法自动刷新抽卡链接')
-  }
-  // 获取 UID 数据
+/** 国服使用 Stoken（依赖逍遥插件），国际服使用当前角色绑定的 HoYoLAB Cookie。 */
+export const getAuthKey = async (e: any, user: NoteUser, zzzUid: string) => {
   // @ts-ignore
-  const uidData = _user.getUidData(zzzUid, 'zzz', e)
-  if (!uidData || uidData?.type != 'ck' || !uidData?.ltuid) {
-    throw new Error(`当前UID${zzzUid}未绑定cookie，请切换UID后尝试`)
+  const uidData = user.getUidData(zzzUid, 'zzz', e)
+  if (!uidData || uidData.type !== 'ck' || !uidData.ltuid) {
+    throw new Error(`当前UID${zzzUid}未绑定Cookie，请切换UID后尝试`)
   }
-  // 获取 sk
-  const stoken = getStoken(e, uidData.ltuid)
-  if (!stoken) {
-    throw new Error(
-      '获取stoken失败，请确认绑定了stoken且查询的UID与stoken对应，请确认bot所使用的是绝区零UID'
-    )
-  }
-  if (String(uidData.ltuid) !== String(stoken.stuid)) {
-    throw new Error(
-      `当前UID${zzzUid}查询所使用的米游社ID${stoken.stuid}与当前切换的米游社ID${uidData.ltuid}不匹配，请切换UID后尝试`
-    )
-  }
-  // 拼接 sk
-  const ck = `stuid=${stoken.stuid};stoken=${stoken.stoken};mid=${stoken.mid};`
-  // 实例化 API
-  const api = new MysZZZApi(zzzUid, ck)
-  let type: Mys.UrlType = 'zzzAuthKey'
-  switch (authAppid) {
-    case 'csc': {
-      type = 'zzzAuthKey'
-      break
+
+  const api = new MysZZZApi(zzzUid, '')
+  const { server: region, apiTool: { gameBiz } } = api
+  const overseas = gameBiz === 'nap_global'
+  let type: Mys.UrlType
+  if (overseas) {
+    const cookies = await getCk(e)
+    const binding = Object.values(cookies ?? {}).find(item => item.ck &&
+      String(item.uid) === String(zzzUid) &&
+      String(MysZZZApi.getLtuid(item.ck) || item.ltuid) === String(uidData.ltuid))
+    if (!binding || !/(?:^|;)\s*cookie_token(?:_v2)?=[^;\s]+/.test(binding.ck)) {
+      throw new Error('当前UID未绑定包含 CookieToken 的 HoYoLAB Cookie，请重新绑定后尝试')
     }
-    default:
+    api.cookie = binding.ck
+    type = 'AuthKeyByCookieToken'
+  } else {
+    if (!User) throw new Error('未安装逍遥插件，无法获取国服抽卡链接')
+    const stoken = getStoken(e, uidData.ltuid)
+    if (!stoken) throw new Error('获取Stoken失败，请确认已绑定与当前绝区零UID对应的Stoken')
+    api.cookie = `stuid=${stoken.stuid};stoken=${stoken.stoken};mid=${stoken.mid};`
+    type = 'zzzAuthKey'
   }
-  // 获取链接
+
   const result = api.getUrl(type)
-  if (!result) {
-    throw new Error('获取请求数据失败')
-  }
+  if (!result) throw new Error('获取AuthKey请求参数失败')
   const { url, headers, body } = result
-  // 发送请求
-  const _res = await request(url, {
-    method: 'POST',
-    headers,
-    body,
-  })
-  // 获取数据
-  const res = await _res.json() as any
-  logger.debug(`[zzz:authkey]`, res)
-  // 返回 authkey
-  return res?.data?.authkey
+  let res: { retcode?: number | string; data?: { authkey?: string } }
+  try {
+    res = await (await request(url, { method: 'POST', headers, body })).json() as typeof res
+  } catch {
+    throw new Error('获取AuthKey请求失败，请稍后重试')
+  }
+  const authKey = res?.data?.authkey
+  if ((res?.retcode != null && Number(res.retcode) !== 0) || typeof authKey !== 'string' || !authKey.trim()) {
+    throw new Error(`获取AuthKey失败，请检查${overseas ? 'HoYoLAB Cookie' : '国服Stoken'}是否过期`)
+  }
+  return { authKey, region, gameBiz }
 }

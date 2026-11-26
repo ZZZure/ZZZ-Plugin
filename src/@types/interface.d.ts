@@ -472,7 +472,7 @@ export namespace Mys {
   /** 米游社UrlType */
   export type UrlType =
     | (keyof Mys.KeyValue & {})
-    | 'zzzVoidFrontBattle' | 'getFp' | 'zzzAuthKey' | 'deviceLogin' | 'saveDevice'
+    | 'zzzVoidFrontBattle' | 'getFp' | 'zzzAuthKey' | 'AuthKeyByCookieToken' | 'deviceLogin' | 'saveDevice'
 
   /** 面板角色列表 */
   export interface AvatarList {

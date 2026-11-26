@@ -49,11 +49,8 @@ export class SingleGachaLog {
   }
 
   equals(item: Mys.Gacha['list'][number]) {
-    return (
-      this.uid === item.uid &&
-      this.id === item.id &&
-      this.gacha_type === this.gacha_type
-    )
+    // 调用方已按卡池分组；CK 和链接接口的 gacha_type 表示不同，不能用来跨来源去重。
+    return this.uid === item.uid && this.id === item.id
   }
 
   async get_assets() {

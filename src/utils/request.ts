@@ -55,11 +55,14 @@ const request = (url: string, options: RequestInit = {}, retry = 0, timeout = 15
     try {
       return await _request(url, { signal: controller.signal, ...options })
     } catch (error: any) {
+      // 抽卡请求沿用通用日志，但不记录可能回显 AuthKey 的 URL 参数或错误详情。
+      const hasAuthKey = /[?&]authkey=/i.test(url)
       logger.debug(
         `请求失败：` +
         (error.name === 'AbortError'
           ? 'Request timed out '
-          : `Fetch error: ${error.message} `) + url
+          : hasAuthKey ? 'Fetch error: ' : `Fetch error: ${error.message} `) +
+        (hasAuthKey ? url.split('?')[0] : url)
       )
       err = error
       return await _fetch(url, options, retryCount + 1)

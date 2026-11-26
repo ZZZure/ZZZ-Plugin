@@ -18,6 +18,7 @@ export default class ZZZApiTool {
   hostRecord: string
   hostPublicData: string
   hostBbs: string = ''
+  accountApi_os: string = ''
   zzzUrlMap: {
     [key in Exclude<keyof Mys.KeyValue, 'zzzGacha_Record'>]: {
       url: string
@@ -42,6 +43,7 @@ export default class ZZZApiTool {
       this.host = 'https://sg-public-api.hoyolab.com/'
       this.hostRecord = 'https://sg-act-public-api.hoyolab.com/'
       this.hostPublicData = 'https://sg-public-data-api.hoyoverse.com/'
+      this.accountApi_os = 'https://api-account-os.hoyolab.com/'
     }
     this.zzzUrlMap = {
       zzzUser: {
@@ -201,7 +203,7 @@ export default class ZZZApiTool {
               body: {
                 auth_appid: 'webview_gacha',
                 game_biz: this.gameBiz,
-                game_uid: +this.uid,
+                game_uid: this.uid,
                 region: this.server,
               },
               dsSalt: 'web',
@@ -243,6 +245,15 @@ export default class ZZZApiTool {
                 seed_time: new Date().getTime() + '',
               },
               noDs: true,
+            },
+            AuthKeyByCookieToken: {
+              url: `${this.accountApi_os}binding/api/genAuthKeyByCookieToken`,
+              body: {
+                auth_appid: 'webview_gacha',
+                game_biz: this.gameBiz,
+                game_uid: this.uid,
+                region: this.server,
+              },
             },
           }),
         zzzGacha_Record: {

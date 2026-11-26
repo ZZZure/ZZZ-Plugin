@@ -2,6 +2,35 @@ import { ZZZ_GET_GACHA_LOG_API, ZZZ_GET_GACHA_OS_LOG_API } from '../mysapi/api.j
 import { ZZZGachaLogResp } from '../../model/gacha.js'
 import request from '../../utils/request.js'
 
+type GachaRecordResponse = {
+  retcode?: number | string
+  data?: ConstructorParameters<typeof ZZZGachaLogResp>[0]
+}
+
+const gachaRegions: Record<string, string> = {
+  prod_gf_cn: 'nap_cn',
+  prod_gf_us: 'nap_global',
+  prod_gf_jp: 'nap_global',
+  prod_gf_eu: 'nap_global',
+  prod_gf_sg: 'nap_global',
+}
+
+export function parseGachaLink(input: string) {
+  let url: URL
+  try {
+    url = new URL(input.trim())
+  } catch {
+    return null
+  }
+  if (url.protocol !== 'https:' && url.protocol !== 'http:') return null
+  const { searchParams } = url
+  const key = searchParams.get('authkey')
+  const region = searchParams.get('region')
+  const gameBiz = searchParams.get('game_biz')
+  if (!key?.trim() || !region || !gameBiz || gachaRegions[region] !== gameBiz) return null
+  return { key, region, gameBiz }
+}
+
 /**
  * 获取抽卡链接
  * @param authKey 米游社认证密钥
@@ -78,15 +107,22 @@ export const getZZZGachaLogByAuthkey = async (
     region,
     game_biz
   )
-  // 发送请求
-  const response = await request(link, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    }
-  }, 3)
-  // 获取数据
-  const data = await response.json() as any
-  if (!data || !data?.data) return null
-  return new ZZZGachaLogResp(data.data)
+  let result: GachaRecordResponse
+  try {
+    const response = await request(link, { method: 'GET' }, 3)
+    result = await response.json() as GachaRecordResponse
+  } catch {
+    throw new Error('抽卡记录请求失败，请稍后重试')
+  }
+  const code = result?.retcode == null ? NaN : Number(result.retcode)
+  if ([-100, -101, -110, -111].includes(code)) {
+    throw new Error('抽卡链接的 AuthKey 无效或已过期，请重新获取链接')
+  }
+  if (Number.isFinite(code) && code !== 0) {
+    throw new Error(`抽卡记录接口返回错误（${code}），请检查链接或稍后重试`)
+  }
+  if (code !== 0 || !Array.isArray(result?.data?.list)) {
+    throw new Error('抽卡记录接口返回的数据格式异常，请稍后重试')
+  }
+  return new ZZZGachaLogResp(result.data)
 }

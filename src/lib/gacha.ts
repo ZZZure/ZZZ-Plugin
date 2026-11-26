@@ -9,7 +9,7 @@ import {
   HOMO_TAG,
   EMOJI,
   NORMAL_LIST,
-  GachaType,
+  type GachaType,
   CUSTOM_FM_LEAK_LIMIT_LIST,
 } from './gacha/const.js'
 import { getZZZGachaLogByAuthkey } from './gacha/core.js'
@@ -61,11 +61,10 @@ export const updateGachaLog = async (authKey: string, uid: string, region?: stri
           region,
           game_biz
         )
-        if (!log || !log?.list || log?.list?.length === 0) {
-          break
-        }
+        if (log.list.length === 0) break
         // 遍历数据 (从最新的开始)
         for (const item of log.list) {
+          if (String(item.uid) !== String(uid)) throw new Error('抽卡记录与链接中的角色不一致，已取消更新')
           if (lastSaved && lastSaved.equals(item)) {
             // 如果数据相同，说明已经获取完毕
             break queryLabel
@@ -76,7 +75,9 @@ export const updateGachaLog = async (authKey: string, uid: string, region?: stri
           newCount[name]++
         }
         // 更新页数和最后一个数据的 id
-        endId = log.list[log.list.length - 1]?.id || endId
+        const nextId = log.list.at(-1)?.id
+        if (!nextId || String(nextId) === String(endId)) throw new Error('抽卡记录分页异常，已取消更新')
+        endId = nextId
         page++
         // 防止请求过快
         await sleep(1000)
@@ -132,9 +133,8 @@ export const updateGachaLog_ck = async (api: MysZZZApi, uid: string, deviceFp: s
           type,
           endId,
         })
-        if (!log || !log?.gacha_item_list || log?.gacha_item_list?.length === 0) {
-          break
-        }
+        if (!Array.isArray(log?.gacha_item_list)) throw new Error('抽卡记录接口返回的数据格式异常，请稍后重试')
+        if (log.gacha_item_list.length === 0) break
         // 遍历数据 (从最新的开始)
         for (let item of log.gacha_item_list) {
           const date = item.date!
@@ -162,7 +162,9 @@ export const updateGachaLog_ck = async (api: MysZZZApi, uid: string, deviceFp: s
           newCount[name]++
         }
         // 更新最后一个数据的 id
-        endId = log.gacha_item_list[log.gacha_item_list.length - 1]?.id || endId
+        const nextId = log.gacha_item_list.at(-1)?.id
+        if (!nextId || String(nextId) === String(endId)) throw new Error('抽卡记录分页异常，已取消更新')
+        endId = nextId
         // 防止请求过快
         await sleep(1000)
       }
