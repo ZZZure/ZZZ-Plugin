@@ -4,8 +4,8 @@ import settings from './settings.js'
 
 type PanelButton = {
   text: string
-  input: string
-  send: true
+  callback: string
+  toCallback: true
   permission: string
 }
 
@@ -39,11 +39,10 @@ export class PanelButtons {
   }
 
   private button(text: string, command: string, prefix = '#zzz'): PanelButton {
-    // 发送普通命令，保留 QQ 被动回复所需的消息 ID。
     return {
       text,
-      input: `${prefix}${command}`,
-      send: true,
+      callback: `${prefix}${command}`,
+      toCallback: true,
       permission: this.userId
     }
   }

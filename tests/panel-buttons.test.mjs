@@ -29,7 +29,7 @@ for (const { label, options } of nonQQBotCases) {
     const result = await panel.getCharPanelTool(event, {
       uid: 'fixture-uid', data: characters[0], needSave: false,
       buttons: { type: 'button', data: [[{
-        text: '面板列表', input: '#zzz面板列表', send: true, permission: 'fixture-user'
+        text: '面板列表', callback: '#zzz面板列表', toCallback: true, permission: 'fixture-user'
       }]] }
     })
     assert.deepEqual(sent, [image])
@@ -39,28 +39,30 @@ for (const { label, options } of nonQQBotCases) {
   })
 }
 
-test('QQ buttons submit normal commands immediately so replies keep the incoming message ID', async () => {
+test('all QQ buttons use callbacks instead of sending chat messages', async () => {
   const { buttons, event } = await fixture()
   const helper = new buttons.PanelButtons(event)
   const messages = [helper.detail('妮可'), helper.list([character('安比')]),
     helper.list([character('安比')], true)]
   for (const message of messages) {
     for (const button of allButtons(message)) {
-      assert.equal(button.send, true)
-      assert.match(button.input, new RegExp(rulePrefix))
-      assert.equal(Object.hasOwn(button, 'callback'), false)
+      assert.equal(button.toCallback, true)
+      assert.match(button.callback, new RegExp(rulePrefix))
+      assert.equal(Object.hasOwn(button, 'input'), false)
+      assert.equal(Object.hasOwn(button, 'send'), false)
       assert.equal(button.permission, 'fixture-user')
     }
   }
 })
 
-test('guide button uses the Chinese ZZZ prefix for shared guide routing', async () => {
+test('guide callback preserves the Chinese ZZZ prefix for shared guide routing', async () => {
   const { buttons, event } = await fixture()
   const guide = allButtons(new buttons.PanelButtons(event).detail('妮可'))
     .find(button => button.text === '角色攻略')
-  assert.equal(guide.input, '#绝区零妮可攻略')
-  assert.match(guide.input, new RegExp(`${rulePrefix}\\S+攻略$`))
-  assert.equal(guide.send, true)
+  assert.equal(guide.callback, '#绝区零妮可攻略')
+  const guideRule = new RegExp(`${rulePrefix}(\\S+)攻略$`)
+  assert.equal(guide.callback.match(guideRule)?.[4], '妮可')
+  assert.equal(guide.toCallback, true)
   assert.equal(guide.permission, 'fixture-user')
 })
 
@@ -70,7 +72,7 @@ test('single-role actions are real ZZZ commands and restricted to the requesting
   assert.equal(sent.length, 1)
   assert.equal(sent[0][0], image)
   const buttons = allButtons(sent[0][1])
-  assert.deepEqual(buttons.map(button => button.input), [
+  assert.deepEqual(buttons.map(button => button.callback), [
     '#zzz面板列表', '#zzz练度统计', '#绝区零妮可攻略', '#zzz更新面板'
   ])
   assert.ok(buttons.every(button => button.permission === 'fixture-user'))
@@ -87,7 +89,7 @@ test('panel list renders once and sends image and buttons in one reply', async (
   assert.equal(renders[0].config.retType, 'base64')
   assert.equal(sent.length, 1)
   assert.equal(sent[0][0], image)
-  assert.deepEqual(allButtons(sent[0][1]).map(button => button.input), [
+  assert.deepEqual(allButtons(sent[0][1]).map(button => button.callback), [
     '#zzz更新面板', '#zzz更新展柜面板', '#zzz安比面板', '#zzz妮可面板'
   ])
 })
@@ -100,7 +102,7 @@ for (const command of ['#zzz更新面板', '#zzz更新展柜面板']) {
     })
     await panel.handleRule()
     assert.equal(sent.length, 1)
-    assert.deepEqual(allButtons(sent[0][1]).map(button => button.input), [
+    assert.deepEqual(allButtons(sent[0][1]).map(button => button.callback), [
       '#zzz面板列表', '#zzz更新展柜面板', '#zzz妮可面板', '#zzz安比面板'
     ])
   })
@@ -115,13 +117,13 @@ test('lists stay within five rows of two buttons and skip duplicate or invalid n
   assert.ok(message.data.every(row => row.length <= 2))
   const actions = allButtons(message)
   assert.equal(actions.length, 10)
-  assert.equal(new Set(actions.map(button => button.input)).size, 10)
-  assert.ok(actions.every(button => !button.input.includes('\n')))
+  assert.equal(new Set(actions.map(button => button.callback)).size, 10)
+  assert.ok(actions.every(button => !button.callback.includes('\n')))
 })
 
 test('empty character lists still offer the two existing refresh commands', async () => {
   const { buttons, event } = await fixture()
-  assert.deepEqual(allButtons(new buttons.PanelButtons(event).list([])).map(button => button.input), [
+  assert.deepEqual(allButtons(new buttons.PanelButtons(event).list([])).map(button => button.callback), [
     '#zzz更新面板', '#zzz更新展柜面板'
   ])
 })
@@ -242,9 +244,9 @@ test('clicking a previous menu uses the requesting user current selected UID aft
   await panel.handleRule()
   const menu = allButtons(sent[0][1])[0]
   assert.equal(menu.permission, event.user_id)
-  assert.equal(menu.input, '#zzz面板列表')
+  assert.equal(menu.callback, '#zzz面板列表')
   options.uid = 'second-uid'
-  event.msg = menu.input
+  event.msg = menu.callback
   await panel.handleRule()
   assert.deepEqual(uidQueries, ['first-uid', 'second-uid'])
 })
